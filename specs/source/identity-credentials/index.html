@@ -279,7 +279,7 @@ it. For example:
      "birthdate": "1985-12-14",
      "name": "BOBULA K. BOBMAN",
      "signature": {
-       "@type": "GraphSignature2013",
+       "@type": "GraphSignature2012",
        "signer": "https://ssa.us.gov/keys/27",
        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
      }
@@ -288,7 +288,15 @@ it. For example:
 }</pre>
         
       </section>
-
+    </section>
+    <section>
+      <h1>Accessing the Identity</h1>
+      <p>
+There are two mechanisms that allow a 3rd party to read protected information
+from an identity. The first is to use a browser-based mechanism that
+POSTs a request to an identity, allowing the identity owner to 
+interactively decide what data access to allow or disallow.
+      </p>
       <section>
         <h2>Writing Data to the Identity</h2>
         <p>
@@ -322,6 +330,57 @@ parameter called <code>action</code> appended to the identity URL with a value
 matching <code>read</code>.
         </p>
      </section>
+
+      <section>
+        <h2>Access Control via HTTP Signatures</h2>
+        <p>
+There are two mechanisms that allow a 3rd party to read protected information
+from an identity. The first is to use a browser-based mechanism that
+POSTs a request to an identity, allowing the identity owner to 
+interactively decide what data access to allow or disallow. The second is an
+HTTP Signature [[!HTTP-SIGNATURES]] based mechanism that allows any authorized
+client to access data that has been pre-approved by the entity that controls
+access to the identity information.
+        </p>
+     </section>
+
+       <section>
+        <h2>Claims and Endorsements</h2>
+        <p>
+It is possible for a 3rd party to provide digitally signed assertions to be
+stored with an identity. For example, if an individual would like to store
+digitally signed credentials verifiying their citizenship information, they
+would go through the following process:
+        </p>
+        <ol>
+          <li>Go to a government website and start the verification process.</li>
+          <li>Provide their identity URL to the government website.</li>
+          <li>The government website would digitally sign a claim and attempt to write it to the provided identity.</li>
+          <li>The individual would be provided with a dialog to authorize the write of the information to their identity.</li>
+          <li>If the authorization is successful, the digitally signed information is written to the identity and will be returned in future queries for such an endorsement.</li>
+        <ol>
+      </section>
+    </section>
+
+    <section>
+      <h1>Compatability with other Identity Mechanisms</h1>
+      <p>
+This identity mechanism is designed to be compatible with other identity
+mechanisms in use today such as OpenID, Facebook Connect, and Firefox ID.
+      </p>
+      <section>
+        <h2>Integration with Mozilla Persona / Firefox ID</h2>
+        <p>
+The identity mechanism is such that it can be returned in a 
+Mozilla Persona or FxID-based login. The assertion returned to the FxID-enabled
+website would contain an identity URL which would be compatible with this
+specification. This allows both the basic email address to the validated, and
+extension information (such as citizenship information, age assertions) to be
+discoverable after the login.
+        </p>
+     </section>
+
+
     </section>
   </body> 
 </html>
