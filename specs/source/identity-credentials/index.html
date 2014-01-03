@@ -223,7 +223,7 @@ Web.
     <section>
       <h2>Introduction</h2>
       <p>
-An <tdef>identity</tdef> is a set of information that can be used to 
+An <tref>identity</tref> is a set of information that can be used to 
 identify a particular entity such as a person, animal, or organization. We 
 use identities to access many services throughout our lives. For example,
 we use email addresses to identify ourselves to online services, 
@@ -277,6 +277,30 @@ is JSON-LD [[!JSON-LD]].
     </section>
 
     <section>
+      <h2>Terminology</h2>
+      <dl>
+        <dt><tdef>identity</tdef></dt>
+        <dd>
+A set of information that can be used to identify a particular entity such as 
+a person, animal, or organization.
+        </dd>
+        <dt><tdef>identity owner</tdef></dt>
+        <dd>
+An entity that is in control of a particular <tref>identity</tref>.
+        </dd>
+        <dt><tdef>identity provider</tdef></dt>
+        <dd>
+A website providing access to an <tref>identity</tref> or set of 
+<tref title="identity">identities</tref>.
+        </dd>
+        <dt><tdef>requestor</tdef></dt>
+        <dd>
+An entity that is requesting to access and/or modify an <tref>identity</tref>.
+        </dd>
+      </dl>
+    </section>
+
+    <section>
       <h2>The Identity</h2>
       <p>
 An entity may have one or more identities associated with it. These can be
@@ -308,7 +332,7 @@ A typical identity will have a mix of public and private data associated with
 it. For example:
         </p>
         
-<pre class="example">{
+<pre class="example" title="A typical identity containing address and citizenship information">{
   "@context": "https://w3id.org/identity/v1",
   "id": "https://example.com/identities/bob",
   "type": "Identity",
@@ -365,9 +389,9 @@ mechanism of accessing and modifying an identity:
           <tr>
             <td>GET</td>
             <td>
-Read all of the information that is available to the requestor. Note: This may 
-only be a subset of all of the information based on the level of access the
-requestor has to certain attributes in the resource.
+Read all of the information that is available to the <tref>requestor</tref>. 
+Note: This may only be a subset of all of the information based on the level 
+of access the <tref>requestor</tref> has to certain attributes in the resource.
             </td>
           </tr>
           <tr>
@@ -381,7 +405,8 @@ queries on the identity data.
           <tr>
             <td>PATCH</td>
             <td>
-Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol.
+Modify information in the identity using the JSON Patch [[!JSON-PATCH]] 
+protocol.
             </td>
           </tr>
           <tr>
@@ -436,6 +461,142 @@ Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol
       </table>
 
       <section>
+        <h2>Reading Identity Information</h2>
+        <p>
+Reading identity information can be performed in 3 different ways depending on
+the sensitivity of the information being accessed. An 
+<tref>identity provider</tref> SHOULD
+ensure that sensitive information is always transmitted and received over a
+secure channel, such as TLS [[!TLS]].
+        </p>
+        <p>
+An identity can be accessed using a regular HTTP GET on the identity URL:
+        </p>
+        <pre class="example" title="An attempt to read all identity information without authentication">
+GET /identities/alice HTTP/1.1
+Host: example.org
+Date: Tue, 07 Jun 2013 20:51:35 GMT
+        </pre>
+        <p>
+If the <code>Content-Type</code> HTTP Header is not specified, a response using
+the <code>application/ld+json</code> content type must be provided. Other
+content types MAY be negotiated for between the client and server. The
+<code>application/ld+json</code> content type is the only content type that
+MUST be supported for all requests in this specification.
+        </p>
+        <p>
+The result of the GET request SHOULD be information deemed to be public by the
+<tref>identity owner</tref>:
+        </p>
+        <pre class="example" title="An example result when reading identity information without authentication">
+{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "https://example.org/identities/alice",
+  "type": "Identity",
+  "name": "Alice Smith"
+  "publicKey": [{ "id": "https://example.org/identities/alice/keys/1" }]
+}
+        </pre>
+        <p>
+As the response above shows, the only information that the 
+<tref>identity owner</tref> has specified as being public is their
+<code>name</code> and a reference to their <code>publicKey</code>.
+        </p>
+        <p>
+In order to access identity information that is not public, the request SHOULD
+be authenticated and authorized against a known identity. The HTTP Signatures
+[[!HTTP-SIGNATURES]] specification is used to digitally sign the request:
+        </p>
+        <pre class="example" title="An attempt to read all identity information with HTTP Signature-based authentication">
+GET /identities/alice HTTP/1.1
+Host: example.org
+Date: Tue, 07 Jun 2013 20:52:12 GMT
+Content-Type: application/ld+json
+Authorization: Signature 
+  keyId="http://example.org/identities/bob/keys/4",
+  algorithm="rsa-sha256",
+  headers="request-line host date content-type",
+  signature="Gm7W/r+e90REDpWyt.../VebAsNUtvQMe6cTjnDY="
+        </pre>
+<p>
+The result of the GET request will now include information that the
+<tref>requestor</tref> has been pre-authorized to read by the
+<tref>identity owner</tref>:
+        </p>
+        <pre class="example" title="An example result when reading identity information without authentication">
+{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "https://example.org/identities/alice",
+  "type": "Identity",
+  "name": "Alice Smith",
+  "email": "bbob@example.com",
+  "mobileNumber": "4424672637162",
+  "publicKey": [{ "id": "https://example.org/identities/alice/keys/1" }]
+}
+        </pre>
+        <p>
+As the response above shows, in addition to the public information, the
+<tref>identity owner</tref> has authorized the <tref>requestor</tref> to
+access their <code>email</code> and <code>mobileNumber</code> as well.
+        </p>
+        <p>
+In the event that the <tref>requestor</tref> has not authorized itself prior
+to the request, or if it is not capable of performing an HTTP Signature
+[[!HTTP-SIGNATURE]], it may utilize a POST-and-callback-based approach, as
+demonstrated below:
+        </p>
+        <pre class="example" title="A request to read citizenship information from an identity">
+POST /identities/alice?action=query&callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
+Host: example.org
+Date: Tue, 07 Jun 2013 20:52:12 GMT
+Content-Type: application/ld+json
+
+{
+  "@context": "https://w3id.org/identity/v1",
+  "citizenship": {}
+}</pre>
+        <p>
+The result of the POST request will be a dialog that the 
+<tref>identity provider</tref> displays to the <tref>identity owner</tref>
+asking them to verify the information that will be transmitted to the
+<tref>requestor</tref>. The mechanism used to present this dialog to the
+<tref>identity owner</tref> is outside of the scope of this specification.
+The result of a successful interaction with the verification dialog will be 
+a POST back to the callback URL provided by the <tref>requestor</tref>:
+        </p>
+        <pre class="example" title="A successful response to an interactive request for citizenship information from an identity">
+POST /verify?session=7f8nddn HTTP/1.1
+Host: flights.example.org
+Date: Tue, 07 Jun 2013 20:53:28 GMT
+Content-Type: application/ld+json
+
+{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "https://example.org/identities/alice",
+  "type": "Identity",
+  "citizenship": {
+    "assignee": "https://example.org/identities/alice",
+    "country": "USA",
+    "citizenshipId": "834-27-2333",
+    "birthdate": "1989-05-09",
+    "name": "ALICE Q. SMITH",
+    "signature": {
+      "type": "GraphSignature2012",
+      "signer": "https://ssa.us.gov/keys/27",
+      "signature": "3q0fhhfiq3q9f8ahsi...780eyfhhaishdfhf29r3"
+    }
+  }
+}
+        </pre>
+        <p>
+As the response above shows, the <tref>identity owner</tref> accepted the
+request for information and the <tref>identity provider</tref> has performed
+a POST to the callback URL provided by the <tref>requestor</tref> via the
+<tref>identity owner</tref>'s web browser.
+        </p>
+     </section>
+
+      <section>
         <h2>Writing Data to the Identity</h2>
         <p>
 JSON-LD data in the body of the request is written to the identity by 
@@ -454,15 +615,6 @@ Applies a JSON Patch document specified in the POST body to the identity.
           </dd>
         </dl>
       </section>
-
-      <section>
-        <h2>Reading Data from the Identity</h2>
-        <p>
-Reading data from an identity is performed via an HTTP POST call with a query
-parameter called <code>action</code> appended to the identity URL with a value
-matching <code>read</code>.
-        </p>
-     </section>
 
       <section>
         <h2>Access Control via HTTP Signatures</h2>
