@@ -8,17 +8,11 @@
       For the three scripts below, if your spec resides on dev.w3 you can check them
       out in the same tree and use relative links so that they'll work offline,
      --> 
+    <link rel="stylesheet" href="spec.css">
     <script src='../../respec-w3c-common.js' class='remove'></script> 
     <script type="text/javascript" class="remove">
     var preProc = {
           apply:  function(c) {
-                    // extend the bibliography entries
-                    berjon.biblio["HTML-RDFA"] = "Manu Sporny; et al. <a href=\"http://www.w3.org/TR/rdfa-in-html/\"><cite>HTML+RDFa</cite></a> 04 March 2010. W3C Working Draft. URL: <a href=\"http://www.w3.org/TR/rdfa-in-html/\">http://www.w3.org/TR/rdfa-in-html/</a>";
-                    berjon.biblio["JSON-LD"] = "Manu Sporny; Gregg Kellogg; Dave Longley; et al. <a href=\"http://json-ld.org/spec/latest/\"><cite>JSON-LD</cite></a> latest. W3C Community Group Working Draft. URL: <a href=\"http://json-ld.org/spec/latest/\">http://json-ld.org/spec/latest/</a>";
-                    berjon.biblio["HTTP-SIGNATURES"] = "Mark Cavage; Manu Sporny <a href=\"http://tools.ietf.org/html/draft-cavage-http-signatures\"><cite>HTTP Signatures</cite></a> latest. IETF Network Working Group Internet Draft. URL: <a href=\"http://tools.ietf.org/html/draft-cavage-http-signatures\">http://tools.ietf.org/html/draft-cavage-http-signatures</a>";
-                    berjon.biblio["REST"] = "Fielding, Roy Thomas. <a href=\"http://www.ics.uci.edu/~fielding/pubs/dissertation/\"><cite>Architectural Styles and the Design of Network-based Software Architectures</cite></a> 2000. University of California, Irvine. URL: <a href=\"http://www.ics.uci.edu/~fielding/pubs/dissertation/\">http://www.ics.uci.edu/~fielding/pubs/dissertation/</a>";
-                    berjon.biblio["FIPS-197"] = "Information Technology Laboratory. <a href=\"http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf\"><cite>Specification for the ADVANCED ENCRYPTION STANDARD (AES)</cite></a> November 26th, 2001. Department of Commerce, National Institute of Standards and Technology. URL: <a href=\"http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf\">http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf</a>";
-
 
                     // process the document before anything else is done
                     var refs = document.querySelectorAll('adef') ;
@@ -156,10 +150,6 @@
           // if this is a LCWD, uncomment and set the end of its review period
           // lcEnd: "2009-08-05",
  
-          // if you want to have extra CSS, append them to this list
-          // it is recommended that the respec.css stylesheet be kept
-          extraCSS:             ["spec.css", "prettify.css"],
- 
           // editors, add as many as you like
           // only "name" is required
           editors:  [
@@ -197,8 +187,6 @@
           */
       };
     </script> 
-    <script type="text/javascript" src="prettify.js" class="remove"></script>
-    <script type="text/javascript" src="lang-jsonld.js" class="remove"></script>
     <script type="text/javascript" class="remove">
       var oldonload = window.onload;
       window.onload = function() {
@@ -214,17 +202,77 @@ An <em>identity</em> is a Linked Data description of a particular entity
 such as a person or organization. This specification describes a mechanism of 
 reading and writing to an online Linked Data identity. Linked Data identities
 are useful for storing arbitrary information, such as a person's shipping
-address, verified citizenship information, or age. The data is only accessible 
+address, passport information, or age. The data is only accessible 
 by authorized applications.
+      </p>
+    </section>
+
+    <section id='sotd'> 
+      <p>
+This is a highly experimental specification that is attempting to unify the
+work performed in the the Web Payments Community Group, 
+the Linked Data community, the WebID Community Group, 
+and the Mozilla Persona team. As such, the specification borrows a number of
+concepts from each group and attempts to sythesize these concepts into a
+solution that would be easily implemented and deployed by Web developers in
+order to provide an elegant readable and writable identity mechanism for the
+Web.
       </p>
     </section>
 
     <section>
       <h2>Introduction</h2>
-      <p class="issue">
-Explain what a Linked Data identity does, what it's useful for, and
-why reading and writing to the identity must be secured using a mechanism 
-that is equivalent to role-based access control.
+      <p>
+An <tdef>identity</tdef> is a set of information that can be used to 
+identify a particular entity such as a person, animal, or organization. We 
+use identities to access many services throughout our lives. For example,
+we use email addresses to identify ourselves to online services, 
+driver's licenses to prove that we are capable of operating a motor vehicle,
+and government issued passports to travel between countries. It is the goal
+of this specification to provide an easy way of expressing all of this
+identity information on the Web.
+      </p>
+      <p>
+There are a number of design principles that have gone into the creation of
+this specification. The following is a brief list of these requirements:
+      </p>
+      <ul>
+        <li>
+It must be decentralized.
+        </li>
+        <li>
+It must support discoverability by using a resolvable address, like a URL 
+or email address.
+        </li>
+        <li>
+It must support, with authorization, arbitrary machine-readable information 
+being attached to the identity by 3rd parties.
+        </li>
+        <li>
+It must be able to provide both public and private data to external sites, 
+based on who is accessing the resource.
+        </li>
+        <li>
+It must provide a secure digital signature and encryption mechanism.
+        </li>
+      </ul>
+      <p>
+This specification enables secure, decentralized, discoverable, controlled 
+access to arbitrary machine-readable information associated with an identity.
+Since each identity has a varying degree of personal information associated 
+with it, the specification ensures that a single entity can associate themselves 
+with multiple identities. For example, one may want to use one identity to 
+access  banking services while another identity could be used to play 
+online games.
+      </p>
+      <p>
+In order to store the breadth of information that is typically associated with
+an identity, a simple but extensible data model is utilized. 
+The specification uses a data storage and expression approach called
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. it
+is a way of expressing information on the Web that is both simple and
+extensible. Specifically, the Linked Data technology used by this specification 
+is JSON-LD [[!JSON-LD]].
       </p>
     </section>
 
@@ -246,9 +294,9 @@ A basic identity contains at least the type information for the identity.
         <dl>
         <dt><code>@context</code></dt>
         <dd>The value <code>https://w3id.org/identity/v1</code>, or an equivalent
-JSON-LD Context expressing the terminology necessary for the expression of the
-data.</dd>
-        <dt><code>@type</code></dt>
+JSON-LD Context [[!JSON-LD]] expressing the terminology necessary for the 
+expression of the data.</dd>
+        <dt><code>type</code></dt>
         <dd>The value <code>Identity</code>.</dd>
         </p>
       </section>
@@ -262,8 +310,8 @@ it. For example:
         
 <pre class="example">{
   "@context": "https://w3id.org/identity/v1",
-  "@id": "https://example.com/identities/bob",
-  "@type": "Identity",
+  "id": "https://example.com/identities/bob",
+  "type": "Identity",
   "name": "Bob Bobman",
   "shippingAddress": {
     "street": "372 Sumter Lane",
@@ -274,17 +322,17 @@ it. For example:
   "email": "bbob@example.com",
   "mobileNumber": "4424672637162",
   "citizenship": {
+     "assignee": "https://example.com/identities/bob",
      "country": "USA",
      "citizenshipId": "223-93-2422",
      "birthdate": "1985-12-14",
      "name": "BOBULA K. BOBMAN",
      "signature": {
-       "@type": "GraphSignature2012",
+       "type": "GraphSignature2012",
        "signer": "https://ssa.us.gov/keys/27",
        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
      }
   }
-
 }</pre>
         
       </section>
@@ -293,10 +341,100 @@ it. For example:
       <h1>Accessing the Identity</h1>
       <p>
 There are two mechanisms that allow a 3rd party to read protected information
-from an identity. The first is to use a browser-based mechanism that
-POSTs a request to an identity, allowing the identity owner to 
+from an identity. The first is an
+HTTP Signature [[!HTTP-SIGNATURES]] based mechanism that allows any authorized
+client to access data that has been pre-approved by the entity that controls
+access to the identity information. The second is to use a browser-based 
+mechanism that POSTs a request to an identity, allowing the identity owner to 
 interactively decide what data access to allow or disallow.
       </p>
+
+      <p>
+The table below summarizes the HTTP Signatures-based [[!HTTP-SIGNATURES]] 
+mechanism of accessing and modifying an identity:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="white-space: nowrap;">HTTP Method</th>
+            <th>Description of Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GET</td>
+            <td>
+Read all of the information that is available to the requestor. Note: This may 
+only be a subset of all of the information based on the level of access the
+requestor has to certain attributes in the resource.
+            </td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>
+Used to perform operations on the identity for applications that are not
+capable of using HTTP Signatures [[!HTTP-SIGNATURES]] or to perform specific
+queries on the identity data.
+            </td>
+          </tr>
+          <tr>
+            <td>PATCH</td>
+            <td>
+Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol.
+            </td>
+          </tr>
+          <tr>
+            <td>PUT</td>
+            <td>
+Replace the entire identity with the provided identity document. This operation 
+SHOULD only be accessible to the owner of the identity.
+            </td>
+          </tr>
+          <tr>
+            <td>DELETE</td>
+            <td>
+Deletes the identity. This operation SHOULD only be accessible to the owner of 
+the identity.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="issue">
+It's questionable whether we would want a PUT or DELETE mechanism at all.
+      </p>
+
+      <p>
+Not every Web application is capable of pre-arranging access to an identity,
+performing HTTP Signatures [[!HTTP-SIGNATURES]], or executing 
+HTTP PATCH requests. In these cases, a regular HTTP POST mechanism is provided
+for Web applications to read, write, and query information about the identity.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="white-space: nowrap;">POST Parameter</th>
+            <th>Description of Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>action=query</td>
+            <td>
+Performs a query on the identity given a JSON-LD Frame in the POST body.
+            </td>
+          </tr>
+          <tr>
+            <td>action=patch</td>
+            <td>
+Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       <section>
         <h2>Writing Data to the Identity</h2>
         <p>
@@ -306,20 +444,15 @@ parameter called <code>action</code> appended to the identity URL with a value
 matching one of the possibilities below:
         </p>
         <dl>
-          <dt><code>append</code></dt>
-          <dd>Appends data specified in the POST body to the identity. If
-          data does not already exist, it is created.</dd>
-          <dt><code>delete</code></dt>
-          <dd>Deletes data specified in the POST body from the identity.</dd>
-          <dt><code>replace</code></dt>
-          <dd>Replaces data specified in the POST body in the identity. If
-          the data does not already exist, it is created.</dd>
+          <dt><code>query</code></dt>
+          <dd>
+Performs a query on the identity given a JSON-LD Frame in the POST body.
+          </dd>
+          <dt><code>patch</code></dt>
+          <dd>
+Applies a JSON Patch document specified in the POST body to the identity.
+          </dd>
         </dl>
-        <p class="issue">
-Should the POST request must be digitally signed using the HTTP Signatures 
-mechanism, or should we require a browser-redirect? We should probably support
-both?
-        </p>
       </section>
 
       <section>
