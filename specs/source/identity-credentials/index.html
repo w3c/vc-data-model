@@ -10,125 +10,8 @@
      --> 
     <link rel="stylesheet" href="spec.css">
     <script src='../../respec-w3c-common.js' class='remove'></script> 
+    <script src='../../web-payments-common.js' class='remove'></script> 
     <script type="text/javascript" class="remove">
-    var preProc = {
-          apply:  function(c) {
-
-                    // process the document before anything else is done
-                    var refs = document.querySelectorAll('adef') ;
-                    for (var i = 0; i < refs.length; i++) {
-                        var item = refs[i];
-                        var p = item.parentNode ;
-                        var con = item.innerHTML ;
-                        var sp = document.createElement( 'dfn' ) ;
-                        var tit = item.getAttribute('title') ;
-                        if (!tit) {
-                            tit = con;
-                        }
-                        sp.className = 'adef' ;
-                        sp.title=tit ;
-                        sp.innerHTML = con ;
-                        p.replaceChild(sp, item) ;
-                    }
-                    refs = document.querySelectorAll('aref') ;
-                    for (var i = 0; i < refs.length; i++) {
-                        var item = refs[i];
-                        var p = item.parentNode ;
-                        var con = item.innerHTML ;
-                        var sp = document.createElement( 'a' ) ;
-                        sp.className = 'aref' ;
-                        sp.setAttribute('title', con);
-                        sp.innerHTML = '@'+con ;
-                        p.replaceChild(sp, item) ;
-                    }
-                    // local datatype references
-                    refs = document.querySelectorAll('ldtref') ;
-                    for (var i = 0; i < refs.length; i++) {
-                        var item = refs[i];
-                        if (!item) continue ;
-                        var p = item.parentNode ;
-                        var con = item.innerHTML ;
-                        var ref = item.getAttribute('title') ;
-                        if (!ref) {
-                            ref = item.textContent ;
-                        }
-                        if (ref) {
-                            ref = ref.replace(/\n/g, '_') ;
-                            ref = ref.replace(/\s+/g, '_') ;
-                        }
-                        var sp = document.createElement( 'a' ) ;
-                        sp.className = 'datatype';
-                        sp.title = ref ;
-                        sp.innerHTML = con ;
-                        p.replaceChild(sp, item) ;
-                    }
-                    // external datatype references
-                    refs = document.querySelectorAll('dtref') ;
-                    for (var i = 0; i < refs.length; i++) {
-                        var item = refs[i];
-                        if (!item) continue ;
-                        var p = item.parentNode ;
-                        var con = item.innerHTML ;
-                        var ref = item.getAttribute('title') ;
-                        if (!ref) {
-                            ref = item.textContent ;
-                        }
-                        if (ref) {
-                            ref = ref.replace(/\n/g, '_') ;
-                            ref = ref.replace(/\s+/g, '_') ;
-                        }
-                        var sp = document.createElement( 'a' ) ;
-                        sp.className = 'externalDFN';
-                        sp.title = ref ;
-                        sp.innerHTML = con ;
-                        p.replaceChild(sp, item) ;
-                    }
-                    // now do terms
-                    refs = document.querySelectorAll('tdef') ;
-                    for (var i = 0; i < refs.length; i++) {
-                        var item = refs[i];
-                        if (!item) continue ;
-                        var p = item.parentNode ;
-                        var con = item.innerHTML ;
-                        var ref = item.getAttribute('title') ;
-                        if (!ref) {
-                            ref = item.textContent ;
-                        }
-                        if (ref) {
-                            ref = ref.replace(/\n/g, '_') ;
-                            ref = ref.replace(/\s+/g, '_') ;
-                        }
-                        var sp = document.createElement( 'dfn' ) ;
-                        sp.title = ref ;
-                        sp.innerHTML = con ;
-                        p.replaceChild(sp, item) ;
-                    }
-                    // now term references
-                    refs = document.querySelectorAll('tref') ;
-                    for (var i = 0; i < refs.length; i++) {
-                        var item = refs[i];
-                        if (!item) continue ;
-                        var p = item.parentNode ;
-                        var con = item.innerHTML ;
-                        var ref = item.getAttribute('title') ;
-                        if (!ref) {
-                            ref = item.textContent ;
-                        }
-                        if (ref) {
-                            ref = ref.replace(/\n/g, '_') ;
-                            ref = ref.replace(/\s+/g, '_') ;
-                        }
-
-                        var sp = document.createElement( 'a' ) ;
-                        var id = item.textContent ;
-                        sp.className = 'tref' ;
-                        sp.title = ref ;
-                        sp.innerHTML = con ;
-                        p.replaceChild(sp, item) ;
-                    }
-                }
-        } ;
-
       var respecConfig = {
           // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
           specStatus:           "CG-DRAFT",
@@ -165,6 +48,9 @@
           //    { name: "Your Name", url: "http://example.org/",
           //      company: "Your Company", companyURL: "http://example.com/" },
           //],
+
+          // extend the bibliography entries
+          localBiblio: webpayments.localBiblio,
           
           // name of the WG
           wg:           "W3C Web Payments Community Group",
@@ -182,7 +68,7 @@
           // Team Contact.
           wgPatentURI:  "",
           maxTocLevel: 4,
-          preProcess: [ preProc ] /*,
+          preProcess: [ webpayments.preProcess ] /*,
           alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
           */
       };
