@@ -168,7 +168,18 @@ is JSON-LD [[!JSON-LD]].
         <dt><tdef>identity</tdef></dt>
         <dd>
 A set of information that can be used to identify a particular entity such as 
-a person, animal, or organization.
+a person, animal, or organization. An entity may have multiple identities
+associated with it.
+        </dd>
+        <dt><tdef>identifier URL</tdef></dt>
+        <dd>
+A URL that denotes a particular <tref>identity</tref>, such as
+<code>https://example.org/identities/manu</code>.
+        </dd>
+        <dt><tdef>assertion</tdef></dt>
+        <dd>
+A verifiable statement by an entity. The assertion is directed at a
+particular <tref>identity</tref> via an <tref>identifier URL</tref>.
         </dd>
         <dt><tdef>identity owner</tdef></dt>
         <dd>
@@ -223,28 +234,58 @@ it. For example:
   "id": "https://example.com/identities/bob",
   "type": "Identity",
   "name": "Bob Bobman",
+  "governmentId": "123-45-6789",
+  "birthdate": "1985-12-14",
+  "email": "bbob@example.com",
+  "mobileNumber": "12345678910",
   "shippingAddress": {
     "street": "372 Sumter Lane",
     "city": "Blackrock",
     "region": "Nevada",
     "postalCode": "237842"
   },
-  "email": "bbob@example.com",
-  "mobileNumber": "4424672637162",
-  "citizenship": {
-     "assignee": "https://example.com/identities/bob",
-     "country": "USA",
-     "citizenshipId": "223-93-2422",
-     "birthdate": "1985-12-14",
-     "name": "BOBULA K. BOBMAN",
-     "signature": {
+  "assertion": [{
+    "id": "http://ssa.us.gov/assertions/3732",
+    "type": "PassportAssertion",
+    "endorsement": {
+      "id": "https://example.com/identities/bob",
+      "name": "Bob Bobman",
+      "birthdate": "1985-12-14",
+      "governmentId": "123-45-6789"
+    },
+    "expires": "2018-01-01",
+    "signature": {
        "type": "GraphSignature2012",
        "signer": "https://ssa.us.gov/keys/27",
        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
-     }
-  }
+    }
+  }, ... ]
 }</pre>
-        
+       <p>
+The example above contains a mix of public and private information. For example,
+the <tref>identity owner</tref> may be comfortable with making their 
+<code>name</code> publicly readable and would do so using the 
+<tref title="identity provider">identity provider's</tref> website interface.
+Other information, such as <code>governmentId</code> and <code>email</code>
+would be marked as private, and would only be shared after the request for
+that particular information has been approved by the 
+<tref>identity owner</tref>.
+       </p>
+       <p>
+Information can be <tref title="assertion">asserted</tref> by a trusted
+third party and written to the identity using the mechanism described in
+<a href="#writing-data-to-the-identity">Section 4: Writing Data to
+the Identity</a>. Not all information needs to be verifiably 
+<tref title="assertion">asserted</tref>. For example, 
+<code>shippingAddress</code> above is not asserted and is thus unverifiable. A
+<tref>requestor</tref> would just have to trust that the 
+<code>shippingAddress</code> information provided
+by the <tref>identity owner</tref> is trustworthy. Other information, such as
+<code>name</code>, <code>birthdate</code>, and <code>governmentId</code> 
+have been <tref title="assertion">asserted</tref> in a verifiable way by a
+3rd party. In this particular case, the information has been asserted by
+the Social Security Administration of the United States government.
+       </p>
       </section>
     </section>
     <section>
@@ -401,7 +442,7 @@ Content-Type: application/ld+json
 Authorization: Signature 
   keyId="http://example.org/identities/bob/keys/4",
   algorithm="rsa-sha256",
-  headers="request-line host date content-type",
+  headers="(request-line) host date content-type",
   signature="Gm7W/r+e90REDpWyt.../VebAsNUtvQMe6cTjnDY="
         </pre>
 <p>
@@ -409,13 +450,13 @@ The result of the GET request will now include information that the
 <tref>requestor</tref> has been pre-authorized to read by the
 <tref>identity owner</tref>:
         </p>
-        <pre class="example" title="An example result when reading identity information without authentication">
+        <pre class="example" title="An example result when reading identity information with authentication">
 {
   "@context": "https://w3id.org/identity/v1",
   "id": "https://example.org/identities/alice",
   "type": "Identity",
   "name": "Alice Smith",
-  "email": "bbob@example.com",
+  "email": "asmith@example.com",
   "mobileNumber": "4424672637162",
   "publicKey": [{ "id": "https://example.org/identities/alice/keys/1" }]
 }
@@ -432,14 +473,17 @@ to the request, or if it is not capable of performing an HTTP Signature
 demonstrated below:
         </p>
         <pre class="example" title="A request to read citizenship information from an identity">
-POST /identities/alice?action=query&callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
+POST /identities/alice?action=query&assertions=true&callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
 Host: example.org
 Date: Tue, 07 Jun 2013 20:52:12 GMT
 Content-Type: application/ld+json
 
 {
   "@context": "https://w3id.org/identity/v1",
-  "citizenship": {}
+  "id": "https://example.org/identities/alice",
+  "name": ""
+  "governmentId": ""
+  "birthdate": ""
 }</pre>
         <p>
 The result of the POST request will be a dialog that the 
@@ -460,25 +504,35 @@ Content-Type: application/ld+json
   "@context": "https://w3id.org/identity/v1",
   "id": "https://example.org/identities/alice",
   "type": "Identity",
-  "citizenship": {
-    "assignee": "https://example.org/identities/alice",
-    "country": "USA",
-    "citizenshipId": "834-27-2333",
-    "birthdate": "1989-05-09",
-    "name": "ALICE Q. SMITH",
+  "name": "Alice Smith",
+  "birthdate": "1988-11-02",
+  "governmentId": "321-54-9876"
+  "assertion": [{
+    "id": "http://ssa.us.gov/assertions/8273",
+    "type": "PassportAssertion",
+    "endorsement": {
+      "id": "https://example.org/identities/alice",
+      "name": "Alice Smith",
+      "birthdate": "1988-11-02",
+      "governmentId": "321-54-9876"
+    },
+    "expires": "2017-02-04",
     "signature": {
-      "type": "GraphSignature2012",
-      "signer": "https://ssa.us.gov/keys/27",
-      "signature": "3q0fhhfiq3q9f8ahsi...780eyfhhaishdfhf29r3"
+       "type": "GraphSignature2012",
+       "signer": "https://ssa.us.gov/keys/27",
+       "signature": "fhhfiq3q9f8ahfh3q029rhaishsidfhf3780ey"
     }
-  }
+  }]
 }
         </pre>
         <p>
 As the response above shows, the <tref>identity owner</tref> accepted the
 request for information and the <tref>identity provider</tref> has performed
 a POST to the callback URL provided by the <tref>requestor</tref> via the
-<tref>identity owner</tref>'s web browser.
+<tref>identity owner</tref>'s web browser. Since the request included the
+<code>assertions=true</code> flag, the assertions for the information requested
+have been included so that the <tref>requestor</tref> may validate the 
+information against the 3rd party assertions.
         </p>
      </section>
 
@@ -549,8 +603,34 @@ specification. This allows both the basic email address to the validated, and
 extension information (such as citizenship information, age assertions) to be
 discoverable after the login.
         </p>
+        <pre class="example" title="Example of a Mozilla Persona login assertion that also includes the identity URL of the entity">
+{
+  "public-key": {
+    "algorithm": "DS",
+    "y": "8e65e949e2e...1263ea6",
+    "p": "ff600483dab...7fc26d0",
+    "q": "e21e04f91d1...ecaab3b",
+    "g": "c52a4a0ff34...233397a"
+  },
+  "principal": {
+    "@context": "https://w3id.org/identity/v1",
+    "email": "asmith@example.org",
+    "identity": "https://example.org/identities/alice"   &lt;--- This bootstraps the identity assertion discovery process
+  },
+  "iat": 1392697368513,
+  "exp": 1392783768513,
+  "iss": "example.org"
+}</pre>
      </section>
 
+      <section>
+        <h2>Integration with OpenID, OAuth1, and OAuth2</h2>
+        <p class="issue">
+The mechanism should be able to be used via OpenID, OpenID Connect, and possibly
+both versions of OAuth. This section should elaborate how one can provide
+pointers to the identity assertion URL using those methods.
+        </p>
+     </section>
 
     </section>
   </body> 
