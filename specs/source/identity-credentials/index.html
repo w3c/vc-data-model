@@ -85,11 +85,13 @@
     <section id='abstract'> 
       <p>
 An <em>identity</em> is a Linked Data description of a particular entity 
-such as a person or organization. This specification describes a mechanism of 
-reading and writing to an online Linked Data identity. Linked Data identities
-are useful for storing arbitrary information, such as a person's shipping
-address, passport information, or age. The data is only accessible 
-by authorized applications.
+such as a person or organization. A <em>credential</em> is a qualification, 
+achievement, quality, or information about an identity's background such as
+a name, government ID, home address, or univeristy degree. This specification 
+describes a mechanism of reading and writing credentials to a Linked Data 
+identity. Linked Data identities are useful for storing arbitrary information, 
+such as a person's shipping address, passport information, or age. The data 
+is only accessible by authorized applications.
       </p>
     </section>
 
@@ -111,12 +113,13 @@ Web.
       <p>
 An <tref>identity</tref> is a set of information that can be used to 
 identify a particular entity such as a person, animal, or organization. We 
-use identities to access many services throughout our lives. For example,
+typically associate <tref title="credential">credentials</tref> with
+identities to access many services throughout our lives. For example,
 we use email addresses to identify ourselves to online services, 
 driver's licenses to prove that we are capable of operating a motor vehicle,
 and government issued passports to travel between countries. It is the goal
 of this specification to provide an easy way of expressing all of this
-identity information on the Web.
+identity and credential information on the Web.
       </p>
       <p>
 There are a number of design principles that have gone into the creation of
@@ -155,7 +158,7 @@ online games.
 In order to store the breadth of information that is typically associated with
 an identity, a simple but extensible data model is utilized. 
 The specification uses a data storage and expression approach called
-<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. it
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. It
 is a way of expressing information on the Web that is both simple and
 extensible. Specifically, the Linked Data technology used by this specification 
 is JSON-LD [[!JSON-LD]].
@@ -176,10 +179,12 @@ associated with it.
 A URL that denotes a particular <tref>identity</tref>, such as
 <code>https://example.org/identities/manu</code>.
         </dd>
-        <dt><tdef>assertion</tdef></dt>
+        <dt><tdef>credential</tdef></dt>
         <dd>
-A verifiable statement by an entity. The assertion is directed at a
-particular <tref>identity</tref> via an <tref>identifier URL</tref>.
+A qualification, achievement, personal quality, aspect of an entity's 
+background, or verifiable statement by an entity about another entity. 
+The credential is directed at a particular <tref>identity</tref> via 
+an <tref>identifier URL</tref>.
         </dd>
         <dt><tdef>identity owner</tdef></dt>
         <dd>
@@ -244,10 +249,10 @@ it. For example:
     "region": "Nevada",
     "postalCode": "237842"
   },
-  "assertion": [{
+  "credential": [{
     "id": "http://ssa.us.gov/assertions/3732",
     "type": "PassportAssertion",
-    "endorsement": {
+    "claim": {
       "id": "https://example.com/identities/bob",
       "name": "Bob Bobman",
       "birthdate": "1985-12-14",
@@ -272,18 +277,18 @@ that particular information has been approved by the
 <tref>identity owner</tref>.
        </p>
        <p>
-Information can be <tref title="assertion">asserted</tref> by a trusted
+Information can be asserted, via a <tref>credential</tref>, by a trusted
 third party and written to the identity using the mechanism described in
 <a href="#writing-data-to-the-identity">Section 4: Writing Data to
-the Identity</a>. Not all information needs to be verifiably 
-<tref title="assertion">asserted</tref>. For example, 
-<code>shippingAddress</code> above is not asserted and is thus unverifiable. A
-<tref>requestor</tref> would just have to trust that the 
+the Identity</a>. Not all information needs to be placed into a 
+<tref>credential</tref>. For example, 
+<code>shippingAddress</code> above is not in a <tref>credential</tref> and is 
+thus unverifiable. A <tref>requestor</tref> would just have to trust that the 
 <code>shippingAddress</code> information provided
 by the <tref>identity owner</tref> is trustworthy. Other information, such as
 <code>name</code>, <code>birthdate</code>, and <code>governmentId</code> 
-have been <tref title="assertion">asserted</tref> in a verifiable way by a
-3rd party. In this particular case, the information has been asserted by
+have been asserted via a <tref>credential</tref> by a 3rd party. In this 
+particular case, the information has been asserted by
 the Social Security Administration of the United States government.
        </p>
       </section>
@@ -473,7 +478,7 @@ to the request, or if it is not capable of performing an HTTP Signature
 demonstrated below:
         </p>
         <pre class="example" title="A request to read citizenship information from an identity">
-POST /identities/alice?action=query&assertions=true&callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
+POST /identities/alice?action=query&credentials=true&callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
 Host: example.org
 Date: Tue, 07 Jun 2013 20:52:12 GMT
 Content-Type: application/ld+json
@@ -507,10 +512,10 @@ Content-Type: application/ld+json
   "name": "Alice Smith",
   "birthdate": "1988-11-02",
   "governmentId": "321-54-9876"
-  "assertion": [{
-    "id": "http://ssa.us.gov/assertions/8273",
-    "type": "PassportAssertion",
-    "endorsement": {
+  "credential": [{
+    "id": "http://ssa.us.gov/credential/8273",
+    "type": "PassportCredential",
+    "claim": {
       "id": "https://example.org/identities/alice",
       "name": "Alice Smith",
       "birthdate": "1988-11-02",
@@ -570,9 +575,9 @@ access to the identity information.
      </section>
 
        <section>
-        <h2>Claims and Endorsements</h2>
+        <h2>Credentials and Claims</h2>
         <p>
-It is possible for a 3rd party to provide digitally signed assertions to be
+It is possible for a 3rd party to provide digitally signed credentials to be
 stored with an identity. For example, if an individual would like to store
 digitally signed credentials verifiying their citizenship information, they
 would go through the following process:
@@ -580,9 +585,9 @@ would go through the following process:
         <ol>
           <li>Go to a government website and start the verification process.</li>
           <li>Provide their identity URL to the government website.</li>
-          <li>The government website would digitally sign a claim and attempt to write it to the provided identity.</li>
-          <li>The individual would be provided with a dialog to authorize the write of the information to their identity.</li>
-          <li>If the authorization is successful, the digitally signed information is written to the identity and will be returned in future queries for such an endorsement.</li>
+          <li>The government website would digitally sign a credential and attempt to write it to the provided identity.</li>
+          <li>The individual would be provided with a dialog to authorize the write of the credential to their identity.</li>
+          <li>If the authorization is successful, the digitally signed credential is written to the identity and will be returned in future queries for such a credential.</li>
         <ol>
       </section>
     </section>
