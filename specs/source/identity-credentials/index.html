@@ -489,20 +489,28 @@ access their <code>email</code> and <code>mobileNumber</code> as well.
         <p>
 In the event that the <tref>requestor</tref> has not authorized itself prior
 to the request, or if it is not capable of performing an HTTP Signature
-[[!HTTP-SIGNATURES]], it may utilize a POST-and-callback-based approach, as
-demonstrated below:
+[[!HTTP-SIGNATURES]], it may utilize a POST-and-callback-based approach. The
+following diagram provides an overview of how the POST-and-callback-based 
+approach works:
+
+<img style="display: block; margin-left: auto; margin-right: auto; 
+  max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
+        </p>
+        <p>
+Once the <tref>requestor</tref> has tried to access a protected resource, 
+the website can request a particular set of credentials from the customer:
         </p>
         <pre class="example" title="A request to read citizenship information from an identity">
-POST /identities/alice?action=query&credentials=true&callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
-Host: example.org
+POST /query?credentials=true&callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
+Host: login-hub.com
 Date: Tue, 07 Jun 2013 20:52:12 GMT
 Content-Type: application/ld+json
 
 {
   "@context": "https://w3id.org/identity/v1",
-  "id": "https://example.org/identities/alice",
-  "name": ""
-  "governmentId": ""
+  "id": "",
+  "name": "",
+  "governmentId": "",
   "birthdate": ""
 }</pre>
         <p>
@@ -631,12 +639,20 @@ to a specific <tref>identity document</tref>. Since the request is unsigned,
 the <tref>identity provider</tref> would initiate an interactive authorization
 where the <tref>identity owner</tref> would verify that the information to
 be written is acceptable. The specifics of the interactive authorization flow 
-are outside the scope of this document:
+are outside the scope of this document, but are roughly outlined in the diagram
+below:
+
+<img style="display: block; margin-left: auto; margin-right: auto; 
+  max-height:100%; max-width:50%;" src="basicCredentialCreation.svg">
+        </p>
+        
+        <p>
+The data that is sent back and forth is outlined below:
         </p>
         
         <pre class="example" title="An unsigned attempt to write identity information to an identity document">
-POST /identities/alice?action=patch HTTP/1.1
-Host: example.org
+POST /create?action=patch HTTP/1.1
+Host: login-hub.com
 Date: Tue, 07 Jun 2013 20:52:12 GMT
 Content-Type: application/json-patch+json
 {
@@ -698,6 +714,12 @@ credentials posted by the user agent, verifies the signatures, and creates a
 session for the user.
         </li>
       </ol>
+
+      <p>
+The diagram below outlines the basic login flow described above.
+<img style="display: block; margin-left: auto; margin-right: auto; 
+  max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
+      </p>
 
       <section>
         <h2>Detailed Flow for Credential-based Login</h1>
