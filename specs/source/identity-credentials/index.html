@@ -9,7 +9,7 @@
       out in the same tree and use relative links so that they'll work offline,
      --> 
     <link rel="stylesheet" href="spec.css">
-    <script src='../../respec-w3c-common.js' class='remove'></script> 
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
     <script src='../../opencreds-common.js' class='remove'></script> 
     <script type="text/javascript" class="remove">
       var respecConfig = {
@@ -68,9 +68,18 @@
           // Team Contact.
           wgPatentURI:  "",
           maxTocLevel: 4,
-          preProcess: [ opencreds.preProcess ] /*,
-          alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
-          */
+          otherLinks: [{
+            key: "Version control",
+            data: [{
+              value: "Github Repository",
+              href: "https://github.com/opencreds/website"
+            }, {
+              value: "Issues",
+              href: "https://github.com/opencreds/website/issues"
+            }]
+          }],
+          inlineCSS: true,
+          issueBase: "https://github.com/w3c/csvw/issues/",
       };
     </script> 
     <script type="text/javascript" class="remove">
@@ -110,10 +119,10 @@ Web.
     <section>
       <h2>Introduction</h2>
       <p>
-An <tref>identity</tref> is a set of information that can be used to 
+An <a>identity</a> is a set of information that can be used to 
 identify a particular entity such as a person, software agent, animal, or 
 organization. We typically associate 
-<tref title="credential">credentials</tref> with identities to access many 
+<a title="credential">credentials</a> with identities to access many 
 services throughout our lives. For example, we use email addresses to identify 
 ourselves to online services, driver's licenses to prove that we are capable 
 of operating a motor vehicle, and government issued passports to travel 
@@ -168,44 +177,44 @@ is JSON-LD [[!JSON-LD]].
     <section>
       <h2>Terminology</h2>
       <dl>
-        <dt><tdef>identity</tdef></dt>
+        <dt><dfn>identity</dfn></dt>
         <dd>
 A set of information that can be used to identify a particular entity such as 
 a person, software agent, or organization. An entity may have multiple 
 identities associated with it.
         </dd>
-        <dt><tdef>identity document</tdef></dt>
+        <dt><dfn>identity document</dfn></dt>
         <dd>
 A Web-based document that contains statements about a 
-particular <tref>identity</tref>. Identity documents MUST be accessible in
+particular <a>identity</a>. Identity documents MUST be accessible in
 JSON-LD [[!JSON-LD]] format and MAY be accessible in other RDF-compatible formats.
         </dd>
-        <dt><tdef>identity document URL</tdef></dt>
+        <dt><dfn>identity document URL</dfn></dt>
         <dd>
 An identity document URL consists of an HTTP or HTTPS scheme and denotes 
-an <tref>identity</tref>. For example: 
+an <a>identity</a>. For example: 
 <code>https://example.org/identities/manu</code>.
         </dd>
-        <dt><tdef>credential</tdef></dt>
+        <dt><dfn>credential</dfn></dt>
         <dd>
 A qualification, achievement, personal quality, aspect of an entity's 
 background, or verifiable statement by an entity about another entity. 
 Credentials may be stored in 
-<tref title="identity document">identity documents</tref>.
+<a title="identity document">identity documents</a>.
         </dd>
-        <dt><tdef>identity owner</tdef></dt>
+        <dt><dfn>identity owner</dfn></dt>
         <dd>
-An entity that is in control of a particular <tref>identity document</tref>.
+An entity that is in control of a particular <a>identity document</a>.
         </dd>
-        <dt><tdef>identity provider</tdef></dt>
+        <dt><dfn>identity provider</dfn></dt>
         <dd>
 A website providing access to one or more 
-<tref title="identity document">identity documents</tref>.
+<a title="identity document">identity documents</a>.
         </dd>
-        <dt><tdef>requestor</tdef></dt>
+        <dt><dfn>requestor</dfn></dt>
         <dd>
 An entity that is requesting to access and/or modify an 
-<tref>identity document</tref>.
+<a>identity document</a>.
         </dd>
       </dl>
     </section>
@@ -217,9 +226,9 @@ An entity may have one or more identities associated with it. These can be
 anonymous identities, pseudo-anonymous identities, protected identities, 
 and public identities. The creation of these identities is out of scope
 for this document, but typically result in the creation of a long-lived
-<tref>identity document URL</tref>. 
+<a>identity document URL</a>. 
 For example, <code>https://example.com/identities/john</code> is
-an example of a long-lived <tref>identity document URL</tref>.
+an example of a long-lived <a>identity document URL</a>.
       </p>
 
       <section>
@@ -279,26 +288,26 @@ it. For example:
 }</pre>
        <p>
 The example above contains a mix of public and private information. For example,
-the <tref>identity owner</tref> may be comfortable with making their 
+the <a>identity owner</a> may be comfortable with making their 
 <code>name</code> publicly readable and would do so using the 
-<tref title="identity provider">identity provider's</tref> website interface.
+<a title="identity provider">identity provider's</a> website interface.
 Other information, such as <code>governmentId</code> and <code>email</code>
 would be marked as private, and would only be shared after the request for
 that particular information has been approved by the 
-<tref>identity owner</tref>.
+<a>identity owner</a>.
        </p>
        <p>
-Information can be asserted, via a <tref>credential</tref>, by a trusted
+Information can be asserted, via a <a>credential</a>, by a trusted
 third party and written to the identity using the mechanism described in
 <a href="#writing-data-to-the-identity">Section 4: Writing Data to
 the Identity</a>. Not all information needs to be placed into a 
-<tref>credential</tref>. For example, 
-<code>shippingAddress</code> above is not in a <tref>credential</tref> and is 
-thus unverifiable. A <tref>requestor</tref> would have to trust that the 
+<a>credential</a>. For example, 
+<code>shippingAddress</code> above is not in a <a>credential</a> and is 
+thus unverifiable. A <a>requestor</a> would have to trust that the 
 <code>shippingAddress</code> information provided
-by the <tref>identity owner</tref> is trustworthy. Other information, such as
+by the <a>identity owner</a> is trustworthy. Other information, such as
 <code>name</code>, <code>birthdate</code>, and <code>governmentId</code> 
-have been asserted via a <tref>credential</tref> by a third party. In this 
+have been asserted via a <a>credential</a> by a third party. In this 
 particular case, the information has been asserted by
 the Social Security Administration of the United States government.
        </p>
@@ -332,9 +341,9 @@ mechanism of accessing and modifying an identity:
           <tr>
             <td>GET</td>
             <td>
-Read all of the information that is available to the <tref>requestor</tref>. 
+Read all of the information that is available to the <a>requestor</a>. 
 Note: This may only be a subset of all of the information based on the level 
-of access the <tref>requestor</tref> has to certain attributes in the resource.
+of access the <a>requestor</a> has to certain attributes in the resource.
             </td>
           </tr>
           <tr>
@@ -412,7 +421,7 @@ Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol
         <p>
 Reading identity information can be performed in 3 different ways depending on
 the sensitivity of the information being accessed. An 
-<tref>identity provider</tref> SHOULD
+<a>identity provider</a> SHOULD
 ensure that sensitive information is always transmitted and received over a
 secure channel, such as TLS [[!TLS]].
         </p>
@@ -433,7 +442,7 @@ MUST be supported for all requests in this specification.
         </p>
         <p>
 The result of the GET request SHOULD be information deemed to be public by the
-<tref>identity owner</tref>:
+<a>identity owner</a>:
         </p>
         <pre class="example" title="An example result when reading identity information without authentication">
 {
@@ -446,7 +455,7 @@ The result of the GET request SHOULD be information deemed to be public by the
         </pre>
         <p>
 As the response above shows, the only information that the 
-<tref>identity owner</tref> has specified as being public is their
+<a>identity owner</a> has specified as being public is their
 <code>name</code> and a reference to their <code>publicKey</code>.
         </p>
         <p>
@@ -467,8 +476,8 @@ Authorization: Signature
         </pre>
 <p>
 The result of the GET request will now include information that the
-<tref>requestor</tref> has been pre-authorized to read by the
-<tref>identity owner</tref>:
+<a>requestor</a> has been pre-authorized to read by the
+<a>identity owner</a>:
         </p>
         <pre class="example" title="An example result when reading identity information with authentication">
 {
@@ -483,11 +492,11 @@ The result of the GET request will now include information that the
         </pre>
         <p>
 As the response above shows, in addition to the public information, the
-<tref>identity owner</tref> has authorized the <tref>requestor</tref> to
+<a>identity owner</a> has authorized the <a>requestor</a> to
 access their <code>email</code> and <code>mobileNumber</code> as well.
         </p>
         <p>
-In the event that the <tref>requestor</tref> has not authorized itself prior
+In the event that the <a>requestor</a> has not authorized itself prior
 to the request, or if it is not capable of performing an HTTP Signature
 [[!HTTP-SIGNATURES]], it may utilize a POST-and-callback-based approach. The
 following diagram provides an overview of how the POST-and-callback-based 
@@ -498,7 +507,7 @@ approach works:
   max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
         </p>
         <p>
-Once the <tref>requestor</tref> has tried to access a protected resource, 
+Once the <a>requestor</a> has tried to access a protected resource, 
 the website can request a particular set of credentials from the customer:
         </p>
         <pre class="example" title="A request to read citizenship information from an identity">
@@ -516,12 +525,12 @@ Content-Type: application/ld+json
 }</pre>
         <p>
 The result of the POST request will be a dialog that the 
-<tref>identity provider</tref> displays to the <tref>identity owner</tref>
+<a>identity provider</a> displays to the <a>identity owner</a>
 asking them to verify the information that will be transmitted to the
-<tref>requestor</tref>. The mechanism used to present this dialog to the
-<tref>identity owner</tref> is outside of the scope of this specification.
+<a>requestor</a>. The mechanism used to present this dialog to the
+<a>identity owner</a> is outside of the scope of this specification.
 The result of a successful interaction with the verification dialog will be 
-a POST back to the callback URL provided by the <tref>requestor</tref>:
+a POST back to the callback URL provided by the <a>requestor</a>:
         </p>
         <pre class="example" title="A successful response to an interactive request for citizenship information from an identity">
 POST /verify?session=7f8nddn HTTP/1.1
@@ -555,12 +564,12 @@ Content-Type: application/ld+json
 }
         </pre>
         <p>
-As the response above shows, the <tref>identity owner</tref> accepted the
-request for information and the <tref>identity provider</tref> has performed
-a POST to the callback URL provided by the <tref>requestor</tref> via the
-<tref>identity owner</tref>'s web browser. Since the request included the
+As the response above shows, the <a>identity owner</a> accepted the
+request for information and the <a>identity provider</a> has performed
+a POST to the callback URL provided by the <a>requestor</a> via the
+<a title="identity owner">identity owner's</a> web browser. Since the request included the
 <code>credentials=true</code> flag, the credentials for the information 
-requested have been included so that the <tref>requestor</tref> may 
+requested have been included so that the <a>requestor</a> may 
 validate the information against the third party credentials.
         </p>
       </section>
@@ -586,18 +595,18 @@ would go through the following process:
        <h2>Writing Data to the Identity</h2>
        <p>
 There are two mechanisms that allow a third party to write information
-to an <tref>identity document</tref>. The first is an HTTP Signature 
+to an <a>identity document</a>. The first is an HTTP Signature 
 [[!HTTP-SIGNATURES]] based mechanism that allows any authorized
 client to write data that has been pre-approved by the entity that controls
 access to the identity information. The second is to use a browser-based 
-mechanism that POSTs a patch request to an <tref>identity document</tref>, 
-allowing the <tref>identity owner</tref> to interactively decide what data 
-to write to the <tref>identity document</tref>.
+mechanism that POSTs a patch request to an <a>identity document</a>, 
+allowing the <a>identity owner</a> to interactively decide what data 
+to write to the <a>identity document</a>.
         </p>
 
         <p>
 The example below demonstrates a digitally signed request to write information
-to a specific <tref>identity document</tref> using an HTTP Signature:
+to a specific <a>identity document</a> using an HTTP Signature:
         </p>
         
         <pre class="example" title="An attempt to write identity information using HTTP Signature-based authentication">
@@ -636,9 +645,9 @@ Authorization: Signature
         
         <p>
 The example below demonstrates an unsigned request to write information
-to a specific <tref>identity document</tref>. Since the request is unsigned,
-the <tref>identity provider</tref> would initiate an interactive authorization
-where the <tref>identity owner</tref> would verify that the information to
+to a specific <a>identity document</a>. Since the request is unsigned,
+the <a>identity provider</a> would initiate an interactive authorization
+where the <a>identity owner</a> would verify that the information to
 be written is acceptable. The specifics of the interactive authorization flow 
 are outside the scope of this document, but are roughly outlined in the diagram
 below:
@@ -682,7 +691,7 @@ Content-Type: application/json-patch+json
         <p>
 The format for the message above is JSON-PATCH where the <code>path</code> 
 value is the complete URL for JSON-LD property to add to the 
-<tref>identity document</tref>.
+<a>identity document</a>.
         </p>
       </section>
 
