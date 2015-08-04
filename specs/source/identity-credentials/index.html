@@ -182,7 +182,7 @@ is JSON-LD [[!JSON-LD]].
       <h2>Terminology</h2>
 
       <div data-include="../common/terms.html"
-        data-oninclude="opencreds.restrictReferences">
+        data-oninclude="rescrictReferences">
       </div>
 
     </section>
@@ -194,9 +194,9 @@ An entity may have one or more identities associated with it. These can be
 anonymous identities, pseudo-anonymous identities, protected identities, 
 and public identities. The creation of these identities is out of scope
 for this document, but typically result in the creation of a long-lived
-<a>identity document URL</a>. 
+<a>identity document</a> URL. 
 For example, <code>https://example.com/identities/john</code> is
-an example of a long-lived <a>identity document URL</a>.
+an example of a long-lived <a>identity document</a> URL.
       </p>
 
       <section>
@@ -271,7 +271,7 @@ third party and written to the identity using the mechanism described in
 the Identity</a>. Not all information needs to be placed into a 
 <a>credential</a>. For example, 
 <code>shippingAddress</code> above is not in a <a>credential</a> and is 
-thus unverifiable. A <a>requestor</a> would have to trust that the 
+thus unverifiable. A <a>credential consumer</a> would have to trust that the 
 <code>shippingAddress</code> information provided
 by the <a>identity owner</a> is trustworthy. Other information, such as
 <code>name</code>, <code>birthdate</code>, and <code>governmentId</code> 
@@ -309,9 +309,9 @@ mechanism of accessing and modifying an identity:
           <tr>
             <td>GET</td>
             <td>
-Read all of the information that is available to the <a>requestor</a>. 
+Read all of the information that is available to the <a>credential consumer</a>. 
 Note: This may only be a subset of all of the information based on the level 
-of access the <a>requestor</a> has to certain attributes in the resource.
+of access the <a>credential consumer</a> has to certain attributes in the resource.
             </td>
           </tr>
           <tr>
@@ -438,7 +438,7 @@ Authorization: Signature
         </pre>
 <p>
 The result of the GET request will now include information that the
-<a>requestor</a> has been pre-authorized to read by the
+<a>credential consumer</a> has been pre-authorized to read by the
 <a>identity owner</a>:
         </p>
         <pre class="example" title="An example result when reading identity information with authentication">
@@ -454,11 +454,11 @@ The result of the GET request will now include information that the
         </pre>
         <p>
 As the response above shows, in addition to the public information, the
-<a>identity owner</a> has authorized the <a>requestor</a> to
+<a>identity owner</a> has authorized the <a>credential consumer</a> to
 access their <code>email</code> and <code>mobileNumber</code> as well.
         </p>
         <p>
-In the event that the <a>requestor</a> has not authorized itself prior
+In the event that the <a>credential consumer</a> has not authorized itself prior
 to the request, or if it is not capable of performing an HTTP Signature
 [[!HTTP-SIGNATURES]], it may utilize a POST-and-callback-based approach. The
 following diagram provides an overview of how the POST-and-callback-based 
@@ -469,7 +469,7 @@ approach works:
   max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
         </p>
         <p>
-Once the <a>requestor</a> has tried to access a protected resource, 
+Once the <a>credential consumer</a> has tried to access a protected resource, 
 the website can request a particular set of credentials from the customer:
         </p>
         <pre class="example" title="A request to read citizenship information from an identity">
@@ -489,10 +489,10 @@ Content-Type: application/ld+json
 The result of the POST request will be a dialog that the 
 <a>identity provider</a> displays to the <a>identity owner</a>
 asking them to verify the information that will be transmitted to the
-<a>requestor</a>. The mechanism used to present this dialog to the
+<a>credential consumer</a>. The mechanism used to present this dialog to the
 <a>identity owner</a> is outside of the scope of this specification.
 The result of a successful interaction with the verification dialog will be 
-a POST back to the callback URL provided by the <a>requestor</a>:
+a POST back to the callback URL provided by the <a>credential consumer</a>:
         </p>
         <pre class="example" title="A successful response to an interactive request for citizenship information from an identity">
 POST /verify?session=7f8nddn HTTP/1.1
@@ -528,10 +528,10 @@ Content-Type: application/ld+json
         <p>
 As the response above shows, the <a>identity owner</a> accepted the
 request for information and the <a>identity provider</a> has performed
-a POST to the callback URL provided by the <a>requestor</a> via the
+a POST to the callback URL provided by the <a>credential consumer</a> via the
 <a>identity owner's</a> web browser. Since the request included the
 <code>credentials=true</code> flag, the credentials for the information 
-requested have been included so that the <a>requestor</a> may 
+requested have been included so that the <a>credential consumer</a> may 
 validate the information against the third party credentials.
         </p>
       </section>
