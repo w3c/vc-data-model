@@ -1,22 +1,22 @@
-<!DOCTYPE html> 
-<html> 
-  <head> 
+<!DOCTYPE html>
+<html>
+  <head>
     <meta content="width=device-width,initial-scale=1" name="viewport" />
-    <title>Identity Credentials 1.0</title> 
-    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/> 
-    <!-- 
+    <title>Identity Credentials 1.0</title>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <!--
       === NOTA BENE ===
       For the three scripts below, if your spec resides on dev.w3 you can check them
       out in the same tree and use relative links so that they'll work offline,
-     --> 
+     -->
     <link rel="stylesheet" href="spec.css">
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
-    <script src='../common/common.js' class='remove'></script> 
+    <script src='../common/common.js' class='remove'></script>
     <script type="text/javascript" class="remove">
       var respecConfig = {
         // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
         specStatus:           "CG-DRAFT",
-        
+
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName:            "identity-credentials",
 
@@ -43,25 +43,28 @@
         // editors, add as many as you like
         // only "name" is required
         editors:  [
-            { name: "Manu Sporny", url: "http://digitalbazaar.com/",
-              company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/" },
+          { name: "Manu Sporny", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/" },
+          { name: "Dave Longley", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/"}
         ],
 
-        // authors, add as many as you like. 
+        // authors, add as many as you like.
         // This is optional, uncomment if you have authors as well as editors.
         // only "name" is required. Same format as editors.
+        authors:  [
+            { name: "Manu Sporny", url: "http://digitalbazaar.com/",
+              company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/" },
+            { name: "Dave Longley", url: "http://digitalbazaar.com/",
+              company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/"}
+        ],
 
-        //authors:  [
-        //    { name: "Your Name", url: "http://example.org/",
-        //      company: "Your Company", companyURL: "http://example.com/" },
-        //],
-        
         // name of the WG
         wg:           "W3C Credentials Community Group",
-        
+
         // URI of the public WG page
         wgURI:        "http://www.w3.org/community/credentials/",
-        
+
         // name (with the @w3c.org) of the public mailing to which comments are due
         wgPublicList: "public-credentials",
 
@@ -85,7 +88,7 @@
         inlineCSS: true,
         issueBase: "https://github.com/w3c/csvw/issues/",
       };
-    </script> 
+    </script>
     <script type="text/javascript" class="remove">
       var oldonload = window.onload;
       window.onload = function() {
@@ -93,25 +96,35 @@
         prettyPrint();
       };
     </script>
-  </head> 
-  <body> 
-    <section id='abstract'> 
+  </head>
+  <body>
+    <section id='abstract'>
       <p>
-An <em>identity</em> is a description of a particular entity 
-such as a person, software agent, or organization. A 
-<em>credential</em> is a qualification, achievement, quality, or information 
-about an identity's background such as a name, government ID, home address, 
-or university degree. This specification describes mechanisms for 
-reading credentials from and writing credentials to an identity while ensuring 
-that the information is only accessible to authorized applications.
+An <em>identity</em> is a set of claims about an entity, such as a person,
+organization, concept, or device. Some entities, such as people, are
+multifaceted; having multiple identities that they present to the world.
+People are often able to establish trust by demonstrating that others have
+made valuable claims about their identities. One way of doing this is by
+presenting a <em>credential</em>. A <em>credential</em> is a qualification,
+achievement, quality, or other information about an identity such as a name,
+government ID, home address, or university degree that typically indicates
+suitability. Another way to describe a <em>credential</em> is to say that it
+is a set of claims made by one <em>identity</em> about another
+<em>identity</em>.
+      </p>
+      <p>
+This specification describes how to express a digital identity and a collection
+of digital credentials that assert claims about that identity. It also
+describes a set of mechanisms for issuing, requesting, and securely reading
+and writing credentials.
       </p>
     </section>
 
-    <section id='sotd'> 
+    <section id='sotd'>
       <p>
 This is an experimental specification that is attempting to unify the
-work performed in the the Web Payments Community Group, 
-the Linked Data community, the WebID Community Group, 
+work performed in the the Web Payments Community Group,
+the Linked Data community, the WebID Community Group,
 and the Mozilla Persona team. As such, the specification borrows a number of
 concepts from each group and attempts to sythesize these concepts into a
 solution that would be easily implemented and deployed by Web developers in
@@ -123,14 +136,14 @@ Web.
     <section>
       <h2>Introduction</h2>
       <p>
-An <a>identity</a> is a set of information that can be used to 
-identify a particular entity such as a person, software agent, animal, or 
-organization. We typically associate 
-<a>credentials</a> with identities to access many 
-services throughout our lives. For example, we use email addresses to identify 
-ourselves to online services, driver's licenses to prove that we are capable 
-of operating a motor vehicle, and government issued passports to travel 
-between countries. It is the goal of this specification to provide an easy 
+An <a>identity</a> is a set of information that can be used to
+identify a particular entity such as a person, software agent, animal, or
+organization. We typically associate
+<a>credentials</a> with identities to access many
+services throughout our lives. For example, we use email addresses to identify
+ourselves to online services, driver's licenses to prove that we are capable
+of operating a motor vehicle, and government issued passports to travel
+between countries. It is the goal of this specification to provide an easy
 way of expressing all of this identity and credential information on the Web.
       </p>
       <p>
@@ -142,38 +155,38 @@ this specification. The following is a brief list of these requirements:
 An identity and credentialing solution for the Web should be decentralized.
         </li>
         <li>
-It must support discoverability by using a resolvable address, like a URL 
+It must support discoverability by using a resolvable address, like a URL
 or email address.
         </li>
         <li>
-It must support, with authorization, arbitrary machine-readable information 
+It must support, with authorization, arbitrary machine-readable information
 being attached to the identity by third parties.
         </li>
         <li>
-It must be able to provide both public and private data to external sites 
+It must be able to provide both public and private data to external sites
 based on who is accessing the resource.
         </li>
         <li>
-The credential information must be protected by a secure digital signature 
+The credential information must be protected by a secure digital signature
 and encryption mechanism.
         </li>
       </ul>
       <p>
-This specification enables secure, decentralized, discoverable, controlled 
+This specification enables secure, decentralized, discoverable, controlled
 access to arbitrary machine-readable information associated with an identity.
-Since it's useful to associate varying degrees of sensitive information 
-with a particular identity, the specification ensures that a single entity 
-can associate themselves with multiple identities. For example, one may want 
-to use one identity to access banking services while another identity 
+Since it's useful to associate varying degrees of sensitive information
+with a particular identity, the specification ensures that a single entity
+can associate themselves with multiple identities. For example, one may want
+to use one identity to access banking services while another identity
 could be used to play online games.
       </p>
       <p>
 In order to store the breadth of information that is typically associated with
-an identity, a simple but extensible data model is utilized. 
+an identity, a simple but extensible data model is utilized.
 The specification uses a data storage and expression approach called
 <a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. It
 is a way of expressing information on the Web that is both simple and
-extensible. Specifically, the Linked Data technology used by this specification 
+extensible. Specifically, the Linked Data technology used by this specification
 is JSON-LD [[!JSON-LD]].
       </p>
     </section>
@@ -191,10 +204,10 @@ is JSON-LD [[!JSON-LD]].
       <h2>The Identity</h2>
       <p>
 An entity may have one or more identities associated with it. These can be
-anonymous identities, pseudo-anonymous identities, protected identities, 
+anonymous identities, pseudo-anonymous identities, protected identities,
 and public identities. The creation of these identities is out of scope
 for this document, but typically result in the creation of a long-lived
-<a>identity document</a> URL. 
+<a>identity document</a> URL.
 For example, <code>https://example.com/identities/john</code> is
 an example of a long-lived <a>identity document</a> URL.
       </p>
@@ -206,10 +219,10 @@ A basic identity contains at least the type information for the identity.
         <dl>
         <dt><code>@context</code></dt>
         <dd>The value <code>https://w3id.org/identity/v1</code>, or an equivalent
-JSON-LD Context [[!JSON-LD]] expressing the terminology necessary for the 
+JSON-LD Context [[!JSON-LD]] expressing the terminology necessary for the
 expression of the data.</dd>
         <dt><code>type</code></dt>
-        <dd>The value <code>Identity</code>. Note that this field usually 
+        <dd>The value <code>Identity</code>. Note that this field usually
 contains more specific type information in addition to <code>Identity</code>
 such as <code>Person</code> or <code>Organization</code>.</dd>
         </dl>
@@ -221,7 +234,7 @@ such as <code>Person</code> or <code>Organization</code>.</dd>
 A typical identity will have a mix of public and private data associated with
 it. For example:
         </p>
-        
+
 <pre class="example" title="A typical identity containing address and citizenship information">{
   "@context": "https://w3id.org/identity/v1",
   "id": "https://example.com/identities/bob",
@@ -256,26 +269,26 @@ it. For example:
 }</pre>
        <p>
 The example above contains a mix of public and private information. For example,
-the <a>identity owner</a> may be comfortable with making their 
-<code>name</code> publicly readable and would do so using the 
+the <a>identity owner</a> may be comfortable with making their
+<code>name</code> publicly readable and would do so using the
 <a>identity provider's</a> website interface.
 Other information, such as <code>governmentId</code> and <code>email</code>
 would be marked as private, and would only be shared after the request for
-that particular information has been approved by the 
+that particular information has been approved by the
 <a>identity owner</a>.
        </p>
        <p>
 Information can be asserted, via a <a>credential</a>, by a trusted
 third party and written to the identity using the mechanism described in
 <a href="#writing-data-to-the-identity">Section 4: Writing Data to
-the Identity</a>. Not all information needs to be placed into a 
-<a>credential</a>. For example, 
-<code>shippingAddress</code> above is not in a <a>credential</a> and is 
-thus unverifiable. A <a>credential consumer</a> would have to trust that the 
+the Identity</a>. Not all information needs to be placed into a
+<a>credential</a>. For example,
+<code>shippingAddress</code> above is not in a <a>credential</a> and is
+thus unverifiable. A <a>credential consumer</a> would have to trust that the
 <code>shippingAddress</code> information provided
 by the <a>identity owner</a> is trustworthy. Other information, such as
-<code>name</code>, <code>birthdate</code>, and <code>governmentId</code> 
-have been asserted via a <a>credential</a> by a third party. In this 
+<code>name</code>, <code>birthdate</code>, and <code>governmentId</code>
+have been asserted via a <a>credential</a> by a third party. In this
 particular case, the information has been asserted by
 the Social Security Administration of the United States government.
        </p>
@@ -288,13 +301,13 @@ There are two mechanisms that allow a third party to read protected information
 from an identity. The first is an
 HTTP Signature [[!HTTP-SIGNATURES]] based mechanism that allows any authorized
 client to access data that has been pre-approved by the entity that controls
-access to the identity information. The second is to use a browser-based 
-mechanism that POSTs a request to an identity, allowing the identity owner to 
+access to the identity information. The second is to use a browser-based
+mechanism that POSTs a request to an identity, allowing the identity owner to
 interactively decide what data access to allow or disallow.
       </p>
 
       <p>
-The table below summarizes the HTTP Signatures-based [[!HTTP-SIGNATURES]] 
+The table below summarizes the HTTP Signatures-based [[!HTTP-SIGNATURES]]
 mechanism of accessing and modifying an identity:
       </p>
 
@@ -309,8 +322,8 @@ mechanism of accessing and modifying an identity:
           <tr>
             <td>GET</td>
             <td>
-Read all of the information that is available to the <a>credential consumer</a>. 
-Note: This may only be a subset of all of the information based on the level 
+Read all of the information that is available to the <a>credential consumer</a>.
+Note: This may only be a subset of all of the information based on the level
 of access the <a>credential consumer</a> has to certain attributes in the resource.
             </td>
           </tr>
@@ -325,21 +338,21 @@ queries on the identity data.
           <tr>
             <td>PATCH</td>
             <td>
-Modify information in the identity using the JSON Patch [[!JSON-PATCH]] 
+Modify information in the identity using the JSON Patch [[!JSON-PATCH]]
 protocol.
             </td>
           </tr>
           <tr>
             <td>PUT</td>
             <td>
-Replace the entire identity with the provided identity document. This operation 
+Replace the entire identity with the provided identity document. This operation
 SHOULD only be accessible to the owner of the identity.
             </td>
           </tr>
           <tr>
             <td>DELETE</td>
             <td>
-Deletes the identity. This operation SHOULD only be accessible to the owner of 
+Deletes the identity. This operation SHOULD only be accessible to the owner of
 the identity.
             </td>
           </tr>
@@ -350,7 +363,7 @@ the identity.
 
       <p>
 Not every Web application is capable of pre-arranging access to an identity,
-performing HTTP Signatures [[!HTTP-SIGNATURES]], or executing 
+performing HTTP Signatures [[!HTTP-SIGNATURES]], or executing
 HTTP PATCH requests. In these cases, a regular HTTP POST mechanism is provided
 for Web applications to read, write, and query information about the identity.
       </p>
@@ -382,7 +395,7 @@ Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol
         <h2>Reading Identity Information</h2>
         <p>
 Reading identity information can be performed in 3 different ways depending on
-the sensitivity of the information being accessed. An 
+the sensitivity of the information being accessed. An
 <a>identity provider</a> SHOULD
 ensure that sensitive information is always transmitted and received over a
 secure channel, such as TLS [[!TLS]].
@@ -416,7 +429,7 @@ The result of the GET request SHOULD be information deemed to be public by the
 }
         </pre>
         <p>
-As the response above shows, the only information that the 
+As the response above shows, the only information that the
 <a>identity owner</a> has specified as being public is their
 <code>name</code> and a reference to their <code>publicKey</code>.
         </p>
@@ -430,7 +443,7 @@ GET /identities/alice HTTP/1.1
 Host: example.org
 Date: Tue, 07 Jun 2013 20:52:12 GMT
 Content-Type: application/ld+json
-Authorization: Signature 
+Authorization: Signature
   keyId="http://example.org/identities/bob/keys/4",
   algorithm="rsa-sha256",
   headers="(request-line) host date content-type",
@@ -461,15 +474,15 @@ access their <code>email</code> and <code>mobileNumber</code> as well.
 In the event that the <a>credential consumer</a> has not authorized itself prior
 to the request, or if it is not capable of performing an HTTP Signature
 [[!HTTP-SIGNATURES]], it may utilize a POST-and-callback-based approach. The
-following diagram provides an overview of how the POST-and-callback-based 
+following diagram provides an overview of how the POST-and-callback-based
 approach works:
 
 <img id="diagram-reading" alt="Basic Credential Flow"
-  style="display: block; margin-left: auto; margin-right: auto; 
+  style="display: block; margin-left: auto; margin-right: auto;
   max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
         </p>
         <p>
-Once the <a>credential consumer</a> has tried to access a protected resource, 
+Once the <a>credential consumer</a> has tried to access a protected resource,
 the website can request a particular set of credentials from the customer:
         </p>
         <pre class="example" title="A request to read citizenship information from an identity">
@@ -486,12 +499,12 @@ Content-Type: application/ld+json
   "birthdate": ""
 }</pre>
         <p>
-The result of the POST request will be a dialog that the 
+The result of the POST request will be a dialog that the
 <a>identity provider</a> displays to the <a>identity owner</a>
 asking them to verify the information that will be transmitted to the
 <a>credential consumer</a>. The mechanism used to present this dialog to the
 <a>identity owner</a> is outside of the scope of this specification.
-The result of a successful interaction with the verification dialog will be 
+The result of a successful interaction with the verification dialog will be
 a POST back to the callback URL provided by the <a>credential consumer</a>:
         </p>
         <pre class="example" title="A successful response to an interactive request for citizenship information from an identity">
@@ -530,8 +543,8 @@ As the response above shows, the <a>identity owner</a> accepted the
 request for information and the <a>identity provider</a> has performed
 a POST to the callback URL provided by the <a>credential consumer</a> via the
 <a>identity owner's</a> web browser. Since the request included the
-<code>credentials=true</code> flag, the credentials for the information 
-requested have been included so that the <a>credential consumer</a> may 
+<code>credentials=true</code> flag, the credentials for the information
+requested have been included so that the <a>credential consumer</a> may
 validate the information against the third party credentials.
         </p>
       </section>
@@ -553,16 +566,16 @@ would go through the following process:
         </ol>
       </section>
 
-      <section>      
+      <section>
        <h2>Writing Data to the Identity</h2>
        <p>
 There are two mechanisms that allow a third party to write information
-to an <a>identity document</a>. The first is an HTTP Signature 
+to an <a>identity document</a>. The first is an HTTP Signature
 [[!HTTP-SIGNATURES]] based mechanism that allows any authorized
 client to write data that has been pre-approved by the entity that controls
-access to the identity information. The second is to use a browser-based 
-mechanism that POSTs a patch request to an <a>identity document</a>, 
-allowing the <a>identity owner</a> to interactively decide what data 
+access to the identity information. The second is to use a browser-based
+mechanism that POSTs a patch request to an <a>identity document</a>,
+allowing the <a>identity owner</a> to interactively decide what data
 to write to the <a>identity document</a>.
         </p>
 
@@ -570,13 +583,13 @@ to write to the <a>identity document</a>.
 The example below demonstrates a digitally signed request to write information
 to a specific <a>identity document</a> using an HTTP Signature:
         </p>
-        
+
         <pre class="example" title="An attempt to write identity information using HTTP Signature-based authentication">
 POST /identities/alice?action=patch HTTP/1.1
 Host: example.org
 Date: Tue, 07 Jun 2013 20:52:12 GMT
 Content-Type: application/json-patch+json
-Authorization: Signature 
+Authorization: Signature
   keyId="https://ssa.us.gov/keys/27",
   algorithm="rsa-sha256",
   headers="(request-line) host date content-type",
@@ -604,25 +617,25 @@ Authorization: Signature
   }
 }
         </pre>
-        
+
         <p>
 The example below demonstrates an unsigned request to write information
 to a specific <a>identity document</a>. Since the request is unsigned,
 the <a>identity provider</a> would initiate an interactive authorization
 where the <a>identity owner</a> would verify that the information to
-be written is acceptable. The specifics of the interactive authorization flow 
+be written is acceptable. The specifics of the interactive authorization flow
 are outside the scope of this document, but are roughly outlined in the diagram
 below:
 
 <img id="diagram-writing" alt="Creating a Credential"
-  style="display: block; margin-left: auto; margin-right: auto; 
+  style="display: block; margin-left: auto; margin-right: auto;
   max-height:100%; max-width:50%;" src="basicCredentialCreation.svg">
         </p>
-        
+
         <p>
 The data that is sent back and forth is outlined below:
         </p>
-        
+
         <pre class="example" title="An unsigned attempt to write identity information to an identity document">
 POST /create?action=patch HTTP/1.1
 Host: login-hub.com
@@ -651,8 +664,8 @@ Content-Type: application/json-patch+json
 }
         </pre>
         <p>
-The format for the message above is JSON-PATCH where the <code>path</code> 
-value is the complete URL for JSON-LD property to add to the 
+The format for the message above is JSON-PATCH where the <code>path</code>
+value is the complete URL for JSON-LD property to add to the
 <a>identity document</a>.
         </p>
       </section>
@@ -674,7 +687,7 @@ Go to a website that requires a valid email address for login.
 The website requests the email address for login.
         </li>
         <li>
-A document is fetched from the domain of the email address checking for a 
+A document is fetched from the domain of the email address checking for a
 Web Identity endpoint and identity service URL.
         </li>
         <li>
@@ -691,7 +704,7 @@ session for the user.
       <p>
 The diagram below outlines the basic login flow described above.
 <img id="diagram-login" alt="Basic Login Flow"
-  style="display: block; margin-left: auto; margin-right: auto; 
+  style="display: block; margin-left: auto; margin-right: auto;
   max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
       </p>
 
@@ -700,9 +713,9 @@ The diagram below outlines the basic login flow described above.
         <p class="issue" data-number="7"></p>
         <p>
 In the following example, a login prompt is provided on
-<code>store.example.org</code> where the person that is logging in provides 
+<code>store.example.org</code> where the person that is logging in provides
 the <code>asmith@example.com</code> email address. The first step constitutes
-<code>store.example.org</code> fetching the identity endpoint information 
+<code>store.example.org</code> fetching the identity endpoint information
 from <code>example.com</code>:
         </p>
         <pre class="example" title="Step 1a: Web Identity endpoint requested">
@@ -727,9 +740,9 @@ Date: Wed, 08 Jun 2013 22:54:43 GMT
 }
         </pre>
         <p>
-The <code>store.example.org</code> software may then construct the proper query 
+The <code>store.example.org</code> software may then construct the proper query
 to the identity service:
-        </p>        
+        </p>
         <pre class="example" title="Step 2a: Request verified e-mail information">
 POST /identities?action=query&amp;credentials=true&amp;callback=https://store.example.org/verify?session=8d73j320s HTTP/1.1
 Host: example.com
@@ -742,8 +755,8 @@ Content-Type: application/ld+json
 }
         </pre>
         <p>
-After a UI interaction with Alice on <code>example.com</code> verifies that 
-the email information should be sent to <code>store.example.org</code>, 
+After a UI interaction with Alice on <code>example.com</code> verifies that
+the email information should be sent to <code>store.example.org</code>,
 the following message is transmitted from Alice's user agent to
 <code>store.example.org</code>:
         </p>
@@ -775,8 +788,8 @@ Content-Type: application/ld+json
 }
         </pre>
         <p class="note">
-Note that for the purposes of simplicity in the example above, there is 
-no tracking protection to prevent <code>example.com</code> from knowing which 
+Note that for the purposes of simplicity in the example above, there is
+no tracking protection to prevent <code>example.com</code> from knowing which
 website Alice is logging in to. Tracking protection is easily implemented by
 adding a trusted third party, such as the browser UI or a third party mixer service,
 that decouples the identity provider from the relying party.
@@ -793,7 +806,7 @@ mechanisms in use today such as OpenID, Facebook Connect, and Firefox ID.
       <section>
         <h2>Integration with Mozilla Persona / Firefox ID</h2>
         <p>
-The identity mechanism is such that it can be returned in a 
+The identity mechanism is such that it can be returned in a
 Mozilla Persona or FxID-based login. The assertion returned to the FxID-enabled
 website would contain an identity URL which would be compatible with this
 specification. This allows both the basic email address to the validated, and
@@ -826,6 +839,6 @@ discoverable after the login.
      </section>
 
     </section>
-  </body> 
+  </body>
 </html>
 
