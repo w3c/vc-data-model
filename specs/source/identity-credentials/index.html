@@ -131,6 +131,54 @@ solution that would be easily implemented and deployed by Web developers in
 order to provide an elegant readable and writable identity mechanism for the
 Web.
       </p>
+
+      <p class="issue">
+This spec hasn't been updated in many months and the work has evolved quite
+a bit since then. An update will occur as soon as other supporting documents
+are in order and time permits. -- 9/24/15
+      </p>
+
+      <p class="issue">
+Add a section specifying how blank nodes or pseudonyms can be used for
+self-signed and IdP-asserted credentials.
+      </p>
+
+      <p class="issue">
+Add a security/privacy consideration section that clearly marks out that
+a single key should not be used for authentication at all websites and
+that specifies how a different CryptographicKeyCredential can be generated
+and signed by an IdP for every new origin visited. Add a note that this
+approach is only for presenting identities that contain attributes that
+are asserted by self-signed or IdP-asserted credentials.
+
+This section should also detail best practices for creating a number of
+separate identities that aggregate credentials asserted by different third
+parties that are intended to be linked. There should be no doubt that this
+system is engineered to support many different identities per individual user.
+      </p>
+
+    <p class="issue">
+Add a section about revocation that also includes privacy concerns (leakage
+of credential use at particular consumers to issuers). Specify how
+credentials may self-describe their revocation rules and how issuers may
+either publish revocation status credentials that can be aggregated over time
+or on demand by IdPs or how they can periodically resign previously issued
+credentials with new revocation validity periods (and these credentials can
+then be refetched by users, IdPs, or authorized value-add third party services).
+    </p>
+
+    <p class="issue">
+Add a section on the conversion of certain credentials, by anonymizer services,
+to short-lived bearer credentials. These bearer credentials allow information
+to be asserted with a level of trust that is dependent upon the anonymizer
+service (which may actually be the same issuer that issued a credential), but
+can be used to help enhance privacy.
+    </p>
+
+    <p class="issue">
+Add a section on the use of ephemeral keys for public terminal use.
+    </p>
+
     </section>
 
     <section>
@@ -195,7 +243,7 @@ is JSON-LD [[!JSON-LD]].
       <h2>Terminology</h2>
 
       <div data-include="../common/terms.html"
-        data-oninclude="rescrictReferences">
+        data-oninclude="restrictReferences">
       </div>
 
     </section>
