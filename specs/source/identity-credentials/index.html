@@ -201,11 +201,27 @@ identified as requirements for this specification:
       </p>
       <ul>
         <li>
-User-centric credentials; credentials are linked to identities, not particular
-Web sites or services. Holders control which credentials to use and when.
-Credential consumers need only trust issuers, allowing holders to freely choose
-and swap out the services they employ to help them manage and share their
+Credentials are user-centric. This refers to an architecture where:
+          <ul>
+            <li>
+Credential holders are positioned in the middle between credential issuers
+and consumers.
+            </li>
+            <li>
+Credential holders receive and store credentials from issuers through an
+agent that the issuer does not need to trust.
+            </li>
+            <li>
+Credential holders provide credentials to credential consumers through
+an agent that consumers needn't trust, they only need to trust issuers.
+            </li>
+            <li>
+Credentials are linked to identities, not particular Web sites or services.
+Credential holders control which credentials to use and when. They may freely
+choose and swap out the agents they employ to help them manage and share their
 credentials.
+            </li>
+          </ul>
         </li>
         <li>
 A standard, machine-readable data format for expressing identity credentials
@@ -251,18 +267,36 @@ is JSON-LD [[!JSON-LD]].
     <section>
       <h2>Expressing Identities and Credentials</h2>
 
-      <p class="issue">
-Provide better introduction to expressing identity and credentials. Perhaps
-merge them into a single section with subsections. Indicate that credentials
-make assertions about identities; show an example identity with credentials in
-it at the end to demonstrate the data format for both at once.
+      <p>
+Any arbitrary information about an identity can be expressed using JSON-LD.
+However, in order to express verifiable claims, credentials must be associated
+with the identity. This section demonstrates how to express identities and
+credentials.
       </p>
 
       <section>
         <h2>Expressing an Identity</h2>
 
+        <p>
+The following example demonstrates how to express a simple identity that
+contains no independently verifiable claims. Each property of the identity,
+such as <code>name</code> or <code>email</code>, is given context via
+the <code>@context</code> value. Other contexts can be used or combined to
+express any arbitrary information about an identity in idiomatic JSON.
+        </p>
+
+<pre class="example" title="A simple identity">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+  "type": ["Identity", "Person"],
+  "name": "Alice Bobman",
+  "email": "alice@example.com",
+  "birthDate": "1985-12-14",
+  "telephone": "12345678910"
+}</pre>
+
         <p class="issue">
-TODO: Show simple identity, no credentials. Explain relationship to IdP.
+TODO: Explain relationship to IdP.
         </p>
       </section>
 
