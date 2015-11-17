@@ -100,36 +100,35 @@
   <body>
     <section id='abstract'>
       <p>
-An <em>identity</em> is a set of claims about an entity. Entities may be
-anything with distinct existence, such as a person, organization, concept, or
-device. Some entities, such as people, are multifaceted, having multiple
-identities that they present to the world. People are often able to establish
-trust by demonstrating that others have made valuable claims about their
-identities. One way of doing this is by presenting a <em>credential</em>. A
-<em>credential</em> is a set of claims made by one <em>identity</em> about
-another <em>identity</em>. A <em>credential</em> may be a qualification,
-achievement, quality, or other information about an entity such as a name,
-government ID, home address, or university degree that typically indicates
-suitability.
+An <a>identity</a> is a collection of attributes about an entity that
+distinguish it from other entities. Entities are anything with distinct
+existence, such as people, organizations, concepts, or devices. Some entities,
+such as people, are multifaceted, having multiple identities that they present
+to the world. People are often able to establish trust by demonstrating that
+others have made valuable claims about their identities. One way of doing this
+is by presenting a <a>credential</a>. A <a>credential</a> is a set of
+<a>claims</a> made by an <a>entity</a> about an <a>identity</a>. A
+<a>credential</a> may refer to a qualification, achievement, quality, or other
+information about an <a>identity</a> such as a name, government ID, home
+address, or university degree that typically indicates suitability.
       </p>
       <p>
-This specification describes how to express a digital identity and a collection
-of digital credentials that assert claims about that identity. It also
-describes a set of mechanisms for issuing, requesting, and securely reading
-and writing credentials.
+This specification describes how to express a digital <a>identity</a> and a
+collection of digital <a>credentials</a> that assert <a>claims</a> about that
+<a>identity</a>. It also describes a set of mechanisms for issuing and
+requesting <a>credentials</a>.
       </p>
     </section>
 
     <section id='sotd'>
       <p>
 This is an experimental specification that is attempting to unify the
-work performed in the the Web Payments Community Group,
-the Linked Data community, the WebID Community Group,
-and the Mozilla Persona team. As such, the specification borrows a number of
-concepts from each group. It attempts to synthesize these concepts into a
-comprehensive solution that can be easily implemented and deployed by Web
-developers in order to help foster a rich ecosystem of digital identities and
-credentials on the Web.
+work performed in the Credentials Community Group, the Web Payments Community
+Group, the Linked Data community, the WebID Community Group, and the Mozilla
+Persona team. As such, the specification borrows a number of concepts from each
+group. It attempts to synthesize these concepts into a comprehensive solution
+that can be easily implemented and deployed by Web developers in order to help
+foster a rich ecosystem of digital identities and credentials on the Web.
       </p>
 
       <p class="issue">
@@ -184,53 +183,54 @@ Add a section on the use of ephemeral keys for public terminal use.
     <section>
       <h2>Introduction</h2>
       <p>
-An <a>identity</a> is a set of information that can be used to
-identify a particular entity such as a person, software agent, animal, or
-organization. We typically associate
-<a>credentials</a> with identities to access many
-services throughout our lives. For example, we use email addresses to identify
-ourselves to online services, driver's licenses to prove that we are capable
-of operating a motor vehicle, and government issued passports to travel
-between countries. It is the goal of this specification to provide an easy
-way of expressing all of this identity and credential information on the Web.
+An <a>identity</a> is a set of information that can be used to identify
+a particular <a>entity</a>. Entities are anything with distinct existence,
+such as a person, organization, concept, or device. We typically use
+<a>credentials</a>, or claims made by others about our identities, to
+authenticate ourselves and ultimately gain access to various services. For
+example, we use email addresses to identify ourselves to online services,
+driver's licenses to prove that we are capable of operating a motor vehicle,
+university degrees to prove we are well-trained and knowledgeable, and
+government-issued passports to travel between countries or to access financial
+services. It is the goal of this specification to provide an easy, standard
+way to express, issue, and consume identity credentials on the Web.
       </p>
       <p>
-There are a number of design principles that have gone into the creation of
-this specification. The following is a brief list of these requirements:
+There are a number of desirable capabilities for credentials that have been
+identified as requirements for this specification:
       </p>
       <ul>
         <li>
-An identity and credentialing solution for the Web should be decentralized.
+User-centric credentials; credentials are linked to identities, not paricular
+Web sites or services. Holders control which credentials to use and when.
+Credential consumers need only trust issuers, allowing holders to freely choose
+and swap out the services they employ to help them manage and share their
+credentials.
         </li>
         <li>
-It must support discoverability by using a resolvable address, like a URL
-or email address.
+A standard, machine-readable data format for expressing identity credentials
+that can be extended with minimal coordination.
         </li>
         <li>
-It must support, with authorization, arbitrary machine-readable information
-being attached to the identity by third parties.
+Independent issuance, storage, and cryptographic verification of credentials.
         </li>
         <li>
-It must be able to provide both public and private data to external sites
-based on who is accessing the resource.
+A standard mechanism for requesting credentials.
         </li>
         <li>
-The credential information must be protected by a secure digital signature
-and encryption mechanism.
+The ability to revoke previously issued credentials.
+        </li>
+        <li>
+Web Browser APIs for storing and consuming credentials.
+        </li>
+        <li>
+Privacy-enhanced credentials; holders may share credentials without revealing
+the identity of the credential consumer to identity providers or issuers.
         </li>
       </ul>
       <p>
-This specification enables secure, decentralized, discoverable, controlled
-access to arbitrary machine-readable information associated with an identity.
-Since it's useful to associate varying degrees of sensitive information
-with a particular identity, the specification ensures that a single entity
-can associate themselves with multiple identities. For example, one may want
-to use one identity to access banking services while another identity
-could be used to play online games.
-      </p>
-      <p>
-In order to store the breadth of information that is typically associated with
-an identity, a simple but extensible data model is utilized.
+In order to store the unbounded variety of attributes that could be claimed
+in identity credentials, a simple but extensible data model is utilized.
 The specification uses a data storage and expression approach called
 <a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. It
 is a way of expressing information on the Web that is both simple and
@@ -249,15 +249,37 @@ is JSON-LD [[!JSON-LD]].
     </section>
 
     <section>
+      <p class="issue">
+Provide better introduction to expressing identity and credentials. Indicate
+that credentials make assertions about identities, so we'll show an example
+identity with credentials in it to demonstrate the data format for both
+at once.
+      </p>
+
+      <p class="issue">
+The following sections on identity were originally about differentiating
+between how one accessed private vs. public data in the identity. Instead,
+it should just be able minimum properties that must be present in an
+identity document ("idp" URL) and then talk about how credentials can be
+associated with an identity. It may be better to then indicate what services
+are expected at an IdP and document query and storage that way. So steps
+are: 1. this is what an identity document looks like, 2. one property that
+must exist is "idp" URL, 3. following that URL must give a description of the
+IdP and its available services such as its endpoints for querying and storage.
+Put focus on storing/getting credentials.
+      </p>
+
       <h2>The Identity</h2>
       <p>
-An entity may have one or more identities associated with it. These can be
-anonymous identities, pseudo-anonymous identities, protected identities,
-and public identities. The creation of these identities is out of scope
-for this document, but typically result in the creation of a long-lived
-<a>identity document</a> URL.
-For example, <code>https://example.com/identities/john</code> is
-an example of a long-lived <a>identity document</a> URL.
+An entity may have one or more identities associated with it. Each identity may
+fall on a different part of the anonymity spectrum. As such, more anonymous
+identities will use identifiers that contain no personally identifiable
+information, and less anonymous ones may include pseudonyms. The creation of
+identifiers for these identities is out of scope for this document, but they
+are typically in the form of a long-lived <a>identity document</a> URL. For
+example, <code>did:aceb7ec32r734rcb3217b23c</code> or
+<code>https://example.com/identities/john</code> are examples of long-lived
+<a>identity document</a> URLs.
       </p>
 
       <section>
@@ -283,78 +305,121 @@ A typical identity will have a mix of public and private data associated with
 it. For example:
         </p>
 
-<pre class="example" title="A typical identity containing address and citizenship information">{
+<pre class="example" title="A typical identity containing credentials">{
   "@context": "https://w3id.org/identity/v1",
-  "id": "https://example.com/identities/bob",
+  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
   "type": ["Identity", "Person"],
-  "name": "Bob Bobman",
-  "governmentId": "123-45-6789",
-  "birthdate": "1985-12-14",
-  "email": "bbob@example.com",
-  "mobileNumber": "12345678910",
-  "shippingAddress": {
-    "street": "372 Sumter Lane",
-    "city": "Blackrock",
-    "region": "Nevada",
-    "postalCode": "237842"
-  },
+  "name": "Alice Bobman",
+  "email": "alice@example.com",
+  "birthDate": "1985-12-14",
+  "telephone": "12345678910",
   "credential": [{
-    "id": "http://ssa.us.gov/credentials/3732",
-    "type": "PassportCredential",
-    "claim": {
-      "id": "https://example.com/identities/bob",
-      "name": "Bob Bobman",
-      "birthdate": "1985-12-14",
-      "governmentId": "123-45-6789"
-    },
-    "expires": "2018-01-01",
-    "signature": {
-       "type": "GraphSignature2012",
-       "creator": "https://ssa.us.gov/keys/27",
-       "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
+    "@graph": {
+      "id": "http://example.com/credentials/1234",
+      "type": ["Credential", "VerifiedEmailCredential"],
+      "name": "Verified Email",
+      "issuer": "https://example.com",
+      "issued": "2010-01-01",
+      "claim": {
+        "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+        "email": "alice@example.com"
+      },
+      "signature": {
+        "type": "LinkedDataSignature2015",
+        "creator": "https://example.com/keys/2",
+        "signature": "153eaabegeacesd35f34234dfdfevese2435343eve132r=="
+      }
+    }
+  }, {
+    "@graph": {
+      "id": "http://example.gov/credentials/3732",
+      "type": ["Credential", "PassportCredential"],
+      "name": "Passport",
+      "issuer": "https://example.gov",
+      "issued": "2010-01-01",
+      "claim": {
+        "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+        "name": "Alice Bobman",
+        "birthDate": "1985-12-14",
+        "gender": "female",
+        "nationality": {
+          "name": "United States"
+        },
+        "address": {
+          "type": "PostalAddress",
+          "addressStreet": "372 Sumter Lane",
+          "addressLocality": "Blackrock",
+          "addressRegion": "Nevada",
+          "postalCode": "237842",
+          "addressCountry": "US"
+        },
+        "passport": {
+          "type": "Passport",
+          "name": "United States Passport",
+          "documentId": "123-45-6789",
+          "issuer": "https://example.gov",
+          "issued": "2010-01-07T01:02:03Z",
+          "expires": "2020-01-07T01:02:03Z"
+        }
+      },
+      "signature": {
+        "type": "LinkedDataSignature2015",
+        "creator": "https://example.gov/keys/27",
+        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
+      }
     }
   }, ... ]
 }</pre>
        <p>
 The example above contains a mix of public and private information. For example,
-the <a>identity owner</a> may be comfortable with making their
-<code>name</code> publicly readable and would do so using the
-<a>identity provider's</a> website interface.
-Other information, such as <code>governmentId</code> and <code>email</code>
-would be marked as private, and would only be shared after the request for
-that particular information has been approved by the
-<a>identity owner</a>.
+the <a>identity owner</a> may be comfortable with making their <code>name</code>
+publicly readable and could do so using the <a>identity provider's</a> website
+interface. Other information, such as that found in <code>credential</code>,
+may be marked as private, and would only be shared after appropriate
+authentication and authorization checks.
        </p>
+
+      <p class="issue">
+Indicate that how an IdP decides to do authorization is out-of-scope. All
+that matters is that an identity URL can be query via HTTP to obtain its
+IdP URL.
+      </p>
+
        <p>
-Information can be asserted, via a <a>credential</a>, by a trusted
-third party and written to the identity using the mechanism described in
-<a href="#writing-data-to-the-identity">Section 4: Writing Data to
-the Identity</a>. Not all information needs to be placed into a
-<a>credential</a>. For example,
-<code>shippingAddress</code> above is not in a <a>credential</a> and is
-thus unverifiable. A <a>credential consumer</a> would have to trust that the
-<code>shippingAddress</code> information provided
-by the <a>identity owner</a> is trustworthy. Other information, such as
-<code>name</code>, <code>birthdate</code>, and <code>governmentId</code>
-have been asserted via a <a>credential</a> by a third party. In this
-particular case, the information has been asserted by
-the Social Security Administration of the United States government.
+Information can be asserted, via a <a>credential</a>, by a third party and
+stored with the identity using the mechanism described in
+<a href="#storing-a-credential">Section 4: Storing a Credential</a>. Not all
+information needs to be placed into a <a>credential</a>, only data asserted
+by third parties whose authenticity can be verified via a digital-signature
+needs to be expressed as a <a>credential</a>. For example,
+<code>telephone</code> above is not in a <a>credential</a> as it is merely
+self-asserted and its authenticity cannot be independently, cryptographically
+verified. Other information, such as <code>name</code>, <code>birthDate</code>,
+and <code>email</code> have been asserted via a <a>credential</a> by a third
+party. In this particular case, two different credentials are shown, one
+that indicates that the identity's email address has been verified by an
+example company, and one that indicates that the identity's address and various
+other information has been asserted by an example government.
        </p>
       </section>
     </section>
     <section>
-      <h1>Accessing the Identity</h1>
+      <h1>Requesting Identity Credentials</h1>
       <p>
-There are two mechanisms that allow a third party to read protected information
-from an identity. The first is an
-HTTP Signature [[!HTTP-SIGNATURES]] based mechanism that allows any authorized
-client to access data that has been pre-approved by the entity that controls
-access to the identity information. The second is to use a browser-based
-mechanism that POSTs a request to an identity, allowing the identity owner to
-interactively decide what data access to allow or disallow.
+There are two mechanisms that allow a third party to access an Identity's
+credentials. The first is an HTTP Signature [[!HTTP-SIGNATURES]] based
+mechanism that allows any authorized client to access credentials that have
+been pre-approved by the entity that controls access to their identity
+information. The second is to use a browser-based API that POSTs a request to
+the identity owner's IdP, allowing the identity owner to interactively decide
+which credentials to share.
       </p>
 
-      <p>
+      <p class="issue">
+        Add HTTP API information.
+      </p>
+
+<!--       <p>
 The table below summarizes the HTTP Signatures-based [[!HTTP-SIGNATURES]]
 mechanism of accessing and modifying an identity:
       </p>
@@ -406,17 +471,20 @@ the identity.
           </tr>
         </tbody>
       </table>
-
+-->
       <p class="issue" data-number="6"></p>
 
       <p>
-Not every Web application is capable of pre-arranging access to an identity,
-performing HTTP Signatures [[!HTTP-SIGNATURES]], or executing
-HTTP PATCH requests. In these cases, a regular HTTP POST mechanism is provided
-for Web applications to read, write, and query information about the identity.
+Not every Web application is capable of prearranging access to credentials
+or performing HTTP Signatures [[!HTTP-SIGNATURES]]. In these cases, a Web
+Browser API is provided to store or get credentials from a holder.
       </p>
 
-      <table>
+      <p class="issue">
+        Add overview of extensions to Credential Management API 1.0.
+      </p>
+
+<!--      <table>
         <thead>
           <tr>
             <th style="white-space: nowrap;">POST Parameter</th>
@@ -438,7 +506,7 @@ Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol
           </tr>
         </tbody>
       </table>
-
+-->
       <section>
         <h2>Reading Identity Information</h2>
         <p>
@@ -615,7 +683,11 @@ would go through the following process:
       </section>
 
       <section>
-       <h2>Writing Data to the Identity</h2>
+       <h2>Storing a credential</h2>
+       <p class="issue">
+Rewrite section to focus on storing credentials.
+       </p>
+
        <p>
 There are two mechanisms that allow a third party to write information
 to an <a>identity document</a>. The first is an HTTP Signature
