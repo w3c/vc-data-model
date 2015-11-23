@@ -178,6 +178,10 @@ can be used to help enhance privacy.
 Add a section on the use of ephemeral keys for public terminal use.
     </p>
 
+    <p class="issue">
+Add a section on integration with hardware security devices, FIDO, etc.
+    </p>
+
     </section>
 
     <section>
@@ -204,8 +208,7 @@ identified as requirements for this specification:
 Credentials are user-centric. This refers to an architecture where:
           <ul>
             <li>
-Credential holders are positioned in the middle between credential issuers
-and consumers.
+Credential holders are positioned in the middle between issuers and consumers.
             </li>
             <li>
 Credential holders receive and store credentials from issuers through an
@@ -213,18 +216,26 @@ agent that the issuer does not need to trust.
             </li>
             <li>
 Credential holders provide credentials to credential consumers through
-an agent that consumers needn't trust, they only need to trust issuers.
+an agent that consumers needn't trust; they only need to trust issuers.
             </li>
             <li>
-Credentials are linked to identities, not particular Web sites or services.
-Credential holders can control and own their own identifiers. They can control
-which credentials to use and when. They may also freely choose and swap out
-the agents they employ to help them manage and share their credentials.
+Credentials are associated with identities, not particular services; credential
+holders can decide how to aggregate credentials and manage their own
+identities.
             </li>
             <li>
-Credentials are privacy-enhancing; the architecture does not require
-credential holders that share credentials to reveal the identity of the
-credential consumer to their agent or to issuers.
+Credential holders can control and own their own identifiers.
+            </li>
+            <li>
+Credential holders can control which credentials to use and when.
+            </li>
+            <li>
+Credential holders may freely choose and swap out the agents they employ to
+help them manage and share their credentials.
+            </li>
+            <li>
+Credential holders that share verifiable claims are not required to reveal the
+identity of the consumer to their agent or to issuers.
             </li>
           </ul>
         </li>
@@ -300,128 +311,104 @@ express any arbitrary information about an identity in idiomatic JSON.
       <section>
         <h2>Expressing a Credential</h2>
 
-        <p class="issue">
-TODO: Show credential with claim section, explanation of relationship to
-identity.
+        <p>
+The following example demonstrates how to express a simple credential that
+contains one verifiable claim about a particular identity. In this case, the
+claim is that the <a>entity</a> with the <a>identity</a> identified by
+<code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years of age or older. While
+a human reading the property <code>ageOver</code> may be able to guess its
+meaning by its name, the context maps it a global identifier (URL) where
+a document could be retrieved that provides its semantics in a machine-readable
+data format. There is also information about the credential itself, such
+as an identifier for the entity that issued it and a date for when it was
+issued. The credential contains a <code>signature</code> that can be used
+to verify its entire contents, including the claim.
         </p>
+
+<pre class="example" title="A simple credential">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "signature": {
+    "type": "LinkedDataSignature2015",
+    "creator": "https://dmv.example.gov/keys/6",
+    "signature": "2332f32g43ve23g23g23g/g3223gegvgre212fb488vh"
+  }
+}</pre>
+
+        <p>
+The following example demonstrates how to express a more complex credential that
+contains some more verifiable claims about a particular identity.
+        </p>
+
+        <p class="issue">
+TODO: Show use of another context to demonstrate decentralized extensibility.
+        </p>
+
+<pre class="example" title="A more complex credential">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "PassportCredential"],
+  "name": "Passport",
+  "issuer": "https://example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Alice Bobman",
+    "birthDate": "1985-12-14",
+    "gender": "female",
+    "nationality": {
+      "name": "United States"
+    },
+    "address": {
+      "type": "PostalAddress",
+      "addressStreet": "372 Sumter Lane",
+      "addressLocality": "Blackrock",
+      "addressRegion": "Nevada",
+      "postalCode": "237842",
+      "addressCountry": "US"
+    },
+    "passport": {
+      "type": "Passport",
+      "name": "United States Passport",
+      "documentId": "123-45-6789",
+      "issuer": "https://example.gov",
+      "issued": "2010-01-07T01:02:03Z",
+      "expires": "2020-01-07T01:02:03Z"
+    }
+  },
+  "signature": {
+    "type": "LinkedDataSignature2015",
+    "creator": "https://example.gov/keys/27",
+    "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
+  }
+}</pre>
       </section>
 
       <section>
         <h2>Expressing Credentials in an Identity</h2>
 
-        <p class="issue">
-TODO: Show combined identity with credentials, explain how some fields in
-identity are asserted by credentials.
-        </p>
-      </section>
-    </section>
-
-    <section>
-      <h2>Identity Providers</h2>
-
-      <p>
-An <a>identity provider</a> is a software service that acts as an agent for
-a credential holder. It helps the credential holder manage one or more of
-their <a>identities</a> and their associated <a>credentials</a>. For the
-purpose of this specification, its primary utility is to implement standard
-APIs to allow the storage and retrieval of <a>credentials</a>.
-      </p>
-
-      <p>
-A credential holder may specify the URL to their <a>identity provider</a>
-in their <a>identity document</a>. This URL can be retrieved to determine
-the service endpoints for the <a>identity provider</a>.
-      </p>
-
-<pre class="example" title="An identity with a specified identity provider">{
-  "@context": "https://w3id.org/identity/v1",
-  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
-  "type": "Identity",
-  "idp": "https://idp.example.com"
-}</pre>
-
-      <p class="issue">
-Show example of JSON-LD document that is returned when querying IDP url.
-      </p>
-
-<!-- TODO: clearly articulate layering w/DIDs/WebDHT (refer to WebDHT spec) -->
-
-    </section>
-
-    <section>
-      <h2>HTTP API</h2>
-
-      <p class="issue">
-Show how to store and get credentials with an HTTP API.
-      </p>
-    </section>
-
-    <section>
-      <h2>Extension to Credential Management API</h2>
-
-      <p class="issue">
-Show additions to Credential Management API for IdentityCredentials.
-Demonstrates imperative JS API for storing/getting credentials w/browser
-mediation.
-      </p>
-    </section>
-
-    <section>
-      <p class="issue">
-See the above outline for new sections. This section and those that follow
-are out-dated.
-      </p>
-
-      <p class="issue">
-The following sections on identity were originally about differentiating
-between how one accessed private vs. public data in the identity. Instead,
-it should just be able minimum properties that must be present in an
-identity document ("idp" URL) and then talk about how credentials can be
-associated with an identity. It may be better to then indicate what services
-are expected at an IdP and document query and storage that way. So steps
-are: 1. this is what an identity document looks like, 2. one property that
-must exist is "idp" URL, 3. following that URL must give a description of the
-IdP and its available services such as its endpoints for querying and storage.
-Put focus on storing/getting credentials.
-      </p>
-
-      <h2>The Identity</h2>
-      <p>
-An entity may have one or more identities associated with it. Each identity may
-fall on a different part of the anonymity spectrum. As such, more anonymous
-identities will use identifiers that contain no personally identifiable
-information, and less anonymous ones may include pseudonyms. The creation of
-identifiers for these identities is out of scope for this document, but they
-are typically in the form of a long-lived <a>identity document</a> URL. For
-example, <code>did:aceb7ec32r734rcb3217b23c</code> or
-<code>https://example.com/identities/john</code> are examples of long-lived
-<a>identity document</a> URLs.
-      </p>
-
-      <section>
-        <h2>A Basic Identity</h2>
         <p>
-A basic identity contains at least the type information for the identity.
-        <dl>
-        <dt><code>@context</code></dt>
-        <dd>The value <code>https://w3id.org/identity/v1</code>, or an equivalent
-JSON-LD Context [[!JSON-LD]] expressing the terminology necessary for the
-expression of the data.</dd>
-        <dt><code>type</code></dt>
-        <dd>The value <code>Identity</code>. Note that this field usually
-contains more specific type information in addition to <code>Identity</code>
-such as <code>Person</code> or <code>Organization</code>.</dd>
-        </dl>
-      </section>
-
-      <section>
-        <h2>A Typical Identity</h2>
-        <p>
-A typical identity will have a mix of public and private data associated with
-it. For example:
+The following example demonstrates how to express one or more credentials along
+with an identity. This approach allows one to express an identity and some
+credentials that assert certain properties about it without losing data
+fidelity. Because Linked Data is a graph-based format and credentials have been
+digitally-signed as independent graphs of information, they are expressed using
+the <code>@graph</code> keyword. An application that receives an
+<a>identity</a> in this format can be ensured that the credential data won't be
+accidentally mixed with data in any other graphs in the
+<a>identity document</a>. Once the application has verified the digital
+signatures in each credential, it can safely merge all of the claim data into a
+single graph of information about the identity.
         </p>
 
-<pre class="example" title="A typical identity containing credentials">{
+<pre class="example" title="An identity with a credential">{
   "@context": "https://w3id.org/identity/v1",
   "id": "did:ebfeb1f712ebc6f1c276e12ec21",
   "type": ["Identity", "Person"],
@@ -431,23 +418,7 @@ it. For example:
   "telephone": "12345678910",
   "credential": [{
     "@graph": {
-      "id": "http://example.com/credentials/1234",
-      "type": ["Credential", "VerifiedEmailCredential"],
-      "name": "Verified Email",
-      "issuer": "https://example.com",
-      "issued": "2010-01-01",
-      "claim": {
-        "id": "did:ebfeb1f712ebc6f1c276e12ec21",
-        "email": "alice@example.com"
-      },
-      "signature": {
-        "type": "LinkedDataSignature2015",
-        "creator": "https://example.com/keys/2",
-        "signature": "153eaabegeacesd35f34234dfdfevese2435343eve132r=="
-      }
-    }
-  }, {
-    "@graph": {
+      "@context": "https://w3id.org/identity/v1",
       "id": "http://example.gov/credentials/3732",
       "type": ["Credential", "PassportCredential"],
       "name": "Passport",
@@ -484,58 +455,380 @@ it. For example:
         "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
       }
     }
-  }, ... ]
+  }]
 }</pre>
-       <p>
-The example above contains a mix of public and private information. For example,
-the <a>identity owner</a> may be comfortable with making their <code>name</code>
-publicly readable and could do so using the <a>identity provider's</a> website
-interface. Other information, such as that found in <code>credential</code>,
-may be marked as private, and would only be shared after appropriate
-authentication and authorization checks.
-       </p>
-
-      <p class="issue">
-Indicate that how an IdP decides to do authorization is out-of-scope. All
-that matters is that an identity URL can be query via HTTP to obtain its
-IdP URL.
-      </p>
-
-       <p>
-Information can be asserted, via a <a>credential</a>, by a third party and
-stored with the identity using the mechanism described in
-<a href="#storing-a-credential">Section 4: Storing a Credential</a>. Not all
-information needs to be placed into a <a>credential</a>, only data asserted
-by third parties whose authenticity can be verified via a digital-signature
-needs to be expressed as a <a>credential</a>. For example,
-<code>telephone</code> above is not in a <a>credential</a> as it is merely
-self-asserted and its authenticity cannot be independently, cryptographically
-verified. Other information, such as <code>name</code>, <code>birthDate</code>,
-and <code>email</code> have been asserted via a <a>credential</a> by a third
-party. In this particular case, two different credentials are shown, one
-that indicates that the identity's email address has been verified by an
-example company, and one that indicates that the identity's address and various
-other information has been asserted by an example government.
-       </p>
       </section>
     </section>
+
     <section>
-      <h1>Requesting Identity Credentials</h1>
+      <h2>Identity Providers</h2>
+
+      <p class="issue">
+The term Identity Provider may be too overloaded at this point. In other
+systems such as SAML and OpenID Connect, identity providers essentially double
+as issuers and what this spec refers to as identity providers. Because
+this spec's view of an identity provider is more limited (it is more like
+a simple identity agent), perhaps another term would be more fitting and
+reduce confusion when comparing architectures.
+      </p>
+
       <p>
-There are two mechanisms that allow a third party to access an Identity's
-credentials. The first is an HTTP Signature [[!HTTP-SIGNATURES]] based
-mechanism that allows any authorized client to access credentials that have
-been pre-approved by the entity that controls access to their identity
-information. The second is to use a browser-based API that POSTs a request to
-the identity owner's IdP, allowing the identity owner to interactively decide
-which credentials to share.
+An <a>identity provider</a> is a software service that acts as an agent for
+a credential holder. It helps the credential holder manage one or more of
+their <a>identities</a> and their associated <a>credentials</a>. It does
+not typically act as an <a>issuer</a>. For the purpose of this specification,
+its primary utility is to implement standard APIs to allow the storage and
+retrieval of <a>credentials</a>.
+      </p>
+
+      <p>
+A credential holder may specify the URL to their <a>identity provider</a>
+in their <a>identity document</a>. This URL can be retrieved to determine
+the service endpoints for the <a>identity provider</a>.
       </p>
 
       <p class="issue">
-        Add HTTP API information.
+Specify the service endpoints that an IdP should/must define. Include that it
+can optionally provide a credential management URL. Indicate that how an IdP
+decides to authenticate a user whose user agent visits its credential
+management URL is out-of-scope.
       </p>
 
-<!--       <p>
+<pre class="example" title="An identity with a specified identity provider">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+  "type": "Identity",
+  "idp": "https://idp.example.com"
+}</pre>
+
+      <p class="issue">
+Show example of JSON-LD document that is returned when querying IDP url.
+      </p>
+
+<!-- TODO: clearly articulate layering w/DIDs/WebDHT (refer to WebDHT spec) -->
+  </section>
+
+  <section>
+    <h1>Getting and Storing Identity Credentials</h1>
+
+    <p>
+There are two mechanisms that allow access an Identity's credentials. The first
+is mechanism that allows an authorized client to access credentials via an
+HTTP API. HTTP API clients are granted authorization by authenticating with an
+HTTP Signature [[!HTTP-SIGNATURES]] or by using a macaroon [[!Macaroons]]. The
+second mechanism is to use a browser-based API that extends Credential
+Management Level 1 [[!CREDENTIAL-MANAGEMENT]] and allows the identity owner to
+interactively decide which credentials to share.
+    </p>
+
+    <p class="issue">
+Consider adding, to the new HTTP API section, a flow with 4xx Credentials
+Required (if Authorization Required doesn't fit) with a response that includes
+a location to get a credentials query, which when fulfilled via a POST to
+an endpoint, will result in a macaroon. The macaroon can then be used to
+access a resource or be attenuated and given out to delegate access.
+    </p>
+
+    <section>
+      <h2>HTTP API</h2>
+
+      <p>
+The HTTP API can be used to store or get an identity containing credentials. In
+for a client to be authorized to use the HTTP API it must either be
+pre-authorized and use HTTP Signatures [[!HTTP-SIGNATURES]] to authenticate or
+it must possess an appropriate macaroon.
+      </p>
+
+      <p class="issue">
+Add section for authenticating to the various endpoints using plain
+HTTP Signatures [[!HTTP-SIGNATURES]] (no macaroon) for pre-authorized clients.
+      </p>
+
+      <section>
+        <h2>Getting a Macaroon</h2>
+
+        <p>
+The only entity that is automatically authorized to store or get an identity
+with credentials from an <a>identity provider</a> is the entity that is
+identified by the identity. This entity may directly access the HTTP API by
+authenticating with an HTTP Signature [[!HTTP-SIGNATURES]] or it may request a
+macaroon that can be attenuated to delegate authorization to another party. To
+get a macaroon a client must:
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Get the identifier for the <a>identity's</a> <a>identity provider</a> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Dereference the <a>identity provider's</a> identifier.
+          </li>
+          <li>
+Get the <a>identity provider's</a> <em>macaroon factory URL</em> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Request a macaroon from the <em>macaroon factory URL</em>, authenticating with
+an HTTP Signature [[!HTTP-SIGNATURES]] or some other mechanism (eg: a cookie).
+          </li>
+        </ol>
+
+        <p>
+The retrieved macaroon grants full authorization to both the get and store
+endpoints for the <a>identity</a>. It should be attenuated prior to delegating
+authorization to a third party. For example, the following caveats could be
+added to the macaroon: an expiration date, the specific types of credentials
+that can be retrieved, and a requirement to provide a credential that
+authenticates the user of the macaroon as being identified by a particular
+identity.
+        </p>
+      </section>
+
+      <p class="issue">
+The following subsections are very high-level, incomplete, and rough. Add
+details.
+      </p>
+
+      <section>
+        <h2>Storing Credentials</h2>
+
+        <p>
+New credentials can be stored at an <a>identity provider</a> via its HTTP API.
+To store credentials using this mechanism, a client must follow this algorithm:
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Get the identifier for the <a>identity's</a> <a>identity provider</a> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Dereference the <a>identity provider's</a> identifier.
+          </li>
+          <li>
+Get the <a>identity provider's</a> <em>credential storage URL</em> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Perform an HTTP POST to the <em>credential storage URL</em> with the
+identity containing the credentials to store as the body of the request and
+a macaroon as a cookie.
+          </li>
+          <li>
+The response will be an acknowledgement of storage.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Getting Credentials</h2>
+
+        <p>
+A "view" of an identity can be requested by querying for certain attributes
+or particular types of credentials from an <a>identity provider</a> via its
+HTTP API. To get credentials using this mechanism, a client must follow this
+algorithm:
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Get the identifier for the <a>identity's</a> <a>identity provider</a> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Dereference the <a>identity provider's</a> identifier.
+          </li>
+          <li>
+Get the <a>identity provider's</a> <em>credential query URL</em> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Perform an HTTP POST to the <em>credential query URL</em> with the
+credential query as the body of the request and a macaroon as a cookie.
+          </li>
+          <li>
+The response body will be an <a>identity</a> containing any credentials that
+match the query.
+          </li>
+        </ol>
+      </section>
+    </section>
+
+    <section>
+      <h2>Extension to Credential Management API</h2>
+
+      <p>
+This section of this specification describes an extension to
+[[!CREDENTIAL-MANAGEMENT]].
+      </p>
+
+      <p class="issue">
+This section needs a lot of detail added to it. It currently only shows a
+very high level view of the extensions. More details about how this spec
+extends [[!CREDENTIAL-MANAGEMENT]] are needed, for an implementation, see:
+https://github.com/digitalbazaar/credentials-polyfill
+      </p>
+
+      <section>
+        <h2>IdentityCredential</h2>
+
+        <p>
+This specification adds a new type of credential, <code>IdentityCredential</code>:
+        </p>
+
+        <pre class="idl">
+[Constructor(dictionary identity), Exposed=Window]
+interface IdentityCredential : Credential {
+  readonly attribute dictionary identity;
+
+  static Promise<any> register(dictionary options);
+};
+        </pre>
+
+        <p>
+An <a>identity provider</a> may pass its identifier to the
+<code>register</code> method to ask the user agent to help the
+user register the <a>identity provider</a> with one of their identities.
+        </p>
+
+        <p class="issue">
+Provide more details about <code>register</code>. Indicate a new identity
+can be created by the user or an existing one can be used. Specify valid
+options, return value, and expected behavior for IdP.
+        </p>
+
+      </section>
+
+      <section>
+        <h2>Storing an IdentityCredential</h2>
+
+        <p>
+When storing an <code>IdentityCredential</code>, <var>credential</var>, via
+<em>navigator.credentials.store</em>, the user agent must follow this algorithm:
+        </p>
+
+        <p class="issue">
+Provide steps for dealing with ensuring the user has a public/private key pair
+on their device that matches <var>credential.identity</var>. If one doesn't
+yet exist, provide steps for generating one.
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Dereference the <code>id</code> property of <var>credential</var> to get
+the <a>identity document</a>.
+          </li>
+          <li>
+Get the identifier for the <a>identity's</a> <a>identity provider</a> from
+the <a>identity document</a>.
+          </li>
+          <li>
+Dereference the <a>identity provider's</a> identifier.
+          </li>
+          <li>
+Get the <a>identity provider's</a> <em>credential management URL</em> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Create a pending <em>CredentialOperation</em>, <var>operation</var>. Set its
+<em>name</em> to <code>store</code>, its <em>options.store</em> to
+<var>credential.identity</var>, and its <em>identity</em> to a
+digitally-signed copy of the identity matching <var>credential.identity</var>
+along with a <code>CryptographicKeyCredential</code> containing a self-signed
+public key. When this <em>CredentialOperation</em> is completed, the promise
+associated with <em>navigator.credentials.store</em> will be resolved.
+          </li>
+          <li>
+Open a new, secure, browsing context and request the
+<em>credential management URL</em>.
+          </li>
+          <li>
+Wait for the <a>identity provider</a> to complete the operation.
+          </li>
+        </ol>
+
+        <p class="issue">
+Spec out an alternative approach where the <a>identity provider</a> elects to
+have the user agent provide the UI for storing the IdentityCredential; the user
+agent uses the <a>identity provider's</a> HTTP API to ultimately store the
+IdentityCredential.
+        </p>
+
+        <img id="diagram-writing" alt="Creating a Credential"
+          style="display: block; margin-left: auto; margin-right: auto;
+          max-height:100%; max-width:50%;" src="basicCredentialCreation.svg">
+      </section>
+
+      <section>
+        <h2>Getting an IdentityCredential</h2>
+
+        <p>
+When getting an <code>IdentityCredential</code>, via
+<em>navigator.credentials.get</em>, the user agent must follow this algorithm:
+        </p>
+
+        <p class="issue">
+Provide steps for allowing a user to register an existing identity to their
+user agent.
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Show an identity chooser that allows the user to select the identity
+they would like to use to fulfill the request. They may also register an
+existing identity with the user agent if the desired entity cannot be found
+with the chooser (ie: the identity was created with another device).
+          </li>
+          <li>
+After the user selects an identity, get the identifier for the
+<a>identity's</a> <a>identity provider</a> from its <a>identity document</a>.
+          </li>
+          <li>
+Dereference the <a>identity provider's</a> identifier.
+          </li>
+          <li>
+Get the <a>identity provider's</a> <em>credential management URL</em> from
+its <a>identity document</a>.
+          </li>
+          <li>
+Create a pending <em>CredentialOperation</em>, <var>operation</var>. Set its
+<em>name</em> to <code>get</code>, its <em>options.query</em> to the
+query passed in the options for <em>navigator.credentials.get</em>, and its
+<em>identity</em> to a digitally-signed copy of the identity selected
+along with a <code>CryptographicKeyCredential</code> containing a self-signed
+public key. When this <em>CredentialOperation</em> is completed, the promise
+associated with <em>navigator.credentials.get</em> will be resolved.
+          </li>
+          <li>
+Open a new, secure, browsing context and request the
+<em>credential management URL</em>.
+          </li>
+          <li>
+Wait for the <a>identity provider</a> to complete the operation.
+          </li>
+        </ol>
+
+        <p class="issue">
+Spec out an alternative approach where the <a>identity provider</a> elects to
+have the user agent provide the UI for getting the IdentityCredential; the user
+agent uses the <a>identity provider's</a> HTTP API to process the query and
+retrieve any data that must be shown on the UI.
+        </p>
+
+        <p class="issue">
+Add section detailing how the browser can synthesize a
+CryptographicKeyCredential for simple website login.
+        </p>
+
+        <img id="diagram-reading" alt="Basic Credential Flow"
+          style="display: block; margin-left: auto; margin-right: auto;
+          max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
+      </section>
+    </section>
+
+<!--
+       <p>
 The table below summarizes the HTTP Signatures-based [[!HTTP-SIGNATURES]]
 mechanism of accessing and modifying an identity:
       </p>
@@ -588,147 +881,20 @@ the identity.
         </tbody>
       </table>
 -->
-      <p class="issue" data-number="6"></p>
 
-      <p>
-Not every Web application is capable of prearranging access to credentials
-or performing HTTP Signatures [[!HTTP-SIGNATURES]]. In these cases, a Web
-Browser API is provided to store or get credentials from a holder.
-      </p>
+    <!-- <section>
+      <h2>Integration with OpenID, OAuth1, and OAuth2</h2>
+      <p class="issue" data-number="8"></p>
+    </section> -->
 
-      <p class="issue">
-        Add overview of extensions to Credential Management API 1.0.
-      </p>
-
-<!--      <table>
-        <thead>
-          <tr>
-            <th style="white-space: nowrap;">POST Parameter</th>
-            <th>Description of Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>action=query</td>
-            <td>
-Performs a query on the identity given a JSON-LD Frame in the POST body.
-            </td>
-          </tr>
-          <tr>
-            <td>action=patch</td>
-            <td>
-Modify information in the identity using the JSON Patch [[!JSON-PATCH]] protocol.
-            </td>
-          </tr>
-        </tbody>
-      </table>
--->
-
-      <p class="issue">
-Consider adding, to the new HTTP API section, a flow with 4xx Credentials
-Required (if Authorization Required doesn't fit) with a response that includes
-a location to get a credentials query, which when fulfilled via a POST to
-an endpoint, will result in a macaroon. The macaroon can then be used to
-access a resource or be attenuated and given out to delegate access.
-      </p>
-
-      <section>
-        <h2>Reading Identity Information</h2>
-        <p>
-Reading identity information can be performed in 3 different ways depending on
-the sensitivity of the information being accessed. An
-<a>identity provider</a> SHOULD
-ensure that sensitive information is always transmitted and received over a
-secure channel, such as TLS [[!TLS]].
-        </p>
-        <p>
-An identity can be accessed using a regular HTTP GET on the identity URL:
-        </p>
-        <pre class="example" title="An attempt to read all identity information without authentication">
-GET /identities/alice HTTP/1.1
-Host: example.org
-Date: Tue, 07 Jun 2013 20:51:35 GMT
-        </pre>
-        <p>
-If the <code>Content-Type</code> HTTP Header is not specified, a response using
-the <code>application/ld+json</code> content type must be provided. Other
-content types MAY be negotiated for between the client and server. The
-<code>application/ld+json</code> content type is the only content type that
-MUST be supported for all requests in this specification.
-        </p>
-        <p>
-The result of the GET request SHOULD be information deemed to be public by the
-<a>identity owner</a>:
-        </p>
-        <pre class="example" title="An example result when reading identity information without authentication">
-{
-  "@context": "https://w3id.org/identity/v1",
-  "id": "https://example.org/identities/alice",
-  "type": ["Identity", "Person"],
-  "name": "Alice Smith"
-  "publicKey": [{ "id": "https://example.org/identities/alice/keys/1" }]
-}
-        </pre>
-        <p>
-As the response above shows, the only information that the
-<a>identity owner</a> has specified as being public is their
-<code>name</code> and a reference to their <code>publicKey</code>.
-        </p>
-        <p>
-In order to access identity information that is not public, the request SHOULD
-be authenticated and authorized against a known identity. The HTTP Signatures
-[[!HTTP-SIGNATURES]] specification is used to digitally sign the request:
-        </p>
-        <pre class="example" title="An attempt to read all identity information with HTTP Signature-based authentication">
-GET /identities/alice HTTP/1.1
-Host: example.org
-Date: Tue, 07 Jun 2013 20:52:12 GMT
-Content-Type: application/ld+json
-Authorization: Signature
-  keyId="http://example.org/identities/bob/keys/4",
-  algorithm="rsa-sha256",
-  headers="(request-line) host date content-type",
-  signature="Gm7W/r+e90REDpWyt.../VebAsNUtvQMe6cTjnDY="
-        </pre>
-<p>
-The result of the GET request will now include information that the
-<a>credential consumer</a> has been pre-authorized to read by the
-<a>identity owner</a>:
-        </p>
-        <pre class="example" title="An example result when reading identity information with authentication">
-{
-  "@context": "https://w3id.org/identity/v1",
-  "id": "https://example.org/identities/alice",
-  "type": ["Identity", "Person"],
-  "name": "Alice Smith",
-  "email": "asmith@example.com",
-  "mobileNumber": "4424672637162",
-  "publicKey": [{ "id": "https://example.org/identities/alice/keys/1" }]
-}
-        </pre>
-        <p>
-As the response above shows, in addition to the public information, the
-<a>identity owner</a> has authorized the <a>credential consumer</a> to
-access their <code>email</code> and <code>mobileNumber</code> as well.
-        </p>
-        <p>
-In the event that the <a>credential consumer</a> has not authorized itself prior
-to the request, or if it is not capable of performing an HTTP Signature
-[[!HTTP-SIGNATURES]], it may utilize a POST-and-callback-based approach. The
-following diagram provides an overview of how the POST-and-callback-based
-approach works:
-
-<img id="diagram-reading" alt="Basic Credential Flow"
-  style="display: block; margin-left: auto; margin-right: auto;
-  max-height:100%; max-width:50%;" src="basicCredentialFlow.svg">
-        </p>
+<!--
         <p>
 Once the <a>credential consumer</a> has tried to access a protected resource,
 the website can request a particular set of credentials from the customer:
         </p>
         <pre class="example" title="A request to read citizenship information from an identity">
-POST /query?credentials=true&amp;callback=https://flights.example.org/verify?session=7f8nddn HTTP/1.1
-Host: login-hub.com
+POST /credentials-query HTTP/1.1
+Host: idp.example.com
 Date: Tue, 07 Jun 2013 20:52:12 GMT
 Content-Type: application/ld+json
 
@@ -1076,14 +1242,10 @@ discoverable after the login.
   "exp": 1392783768513,
   "iss": "example.org"
 }</pre>
-     </section>
-
-      <section>
-        <h2>Integration with OpenID, OAuth1, and OAuth2</h2>
-        <p class="issue" data-number="8"></p>
-     </section>
+      </section>
 
     </section>
+-->
   </body>
 </html>
 
