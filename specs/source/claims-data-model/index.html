@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Verifiable Claims Data Model</title>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    <link rel="stylesheet" href="spec.css">
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script src="../common/common.js"></script>
+    <script type="text/javascript" class="remove">
+      var respecConfig = {
+        // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+        specStatus: "CG-DRAFT",
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName: "claims-data-model",
+
+        // if you wish the publication date to be other than today, set this
+        // publishDate:  "2009-08-06",
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "1977-03-15",
+        // previousMaturity:  "WD",
+
+        // extend the bibliography entries
+        localBiblio: opencreds.localBiblio,
+
+        issueBase: "https://github.com/opencreds/website/issues/",
+        githubAPI: "https://api.github.com/repos/opencreds/website",
+
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI: "https://opencreds.github.org/website/specs/source/claims-data-model/index.html",
+
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors:  [
+          { name: "Manu Sporny", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/" },
+          { name: "Dave Longley", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/"}
+        ],
+
+        // authors, add as many as you like.
+        // This is optional, uncomment if you have authors as well as editors.
+        // only "name" is required. Same format as editors.
+        authors:  
+          { name: "Manu Sporny", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/" },
+          { name: "Dave Longley", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/"}
+        ],
+
+        // name of the WG
+        wg:           "W3C Credentials Community Group",
+
+        // URI of the public WG page
+        wgURI:        "http://www.w3.org/community/credentials/",
+
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: "public-credentials",
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI:  "",
+        maxTocLevel: 4,
+        otherLinks: [{
+          key: "Version control",
+          data: [{
+            value: "Github Repository",
+            href: "https://github.com/opencreds/website"
+          }, {
+            value: "Issues",
+            href: "https://github.com/opencreds/website/issues"
+          }]
+        }],
+        inlineCSS: true
+      };
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+An <a>identity</a> is a collection of attributes about an entity that
+distinguish it from other entities. Entities are anything with distinct
+existence, such as people, organizations, concepts, or devices. Some entities,
+such as people, are multifaceted, having multiple identities that they present
+to the world. People are often able to establish trust by demonstrating that
+others have made valuable claims about their identities. One way of doing this
+is by presenting a <a>credential</a>. A <a>credential</a> is a set of
+<a>claims</a> made by an <a>entity</a> about an <a>identity</a>. A
+<a>credential</a> may refer to a qualification, achievement, quality, or other
+information about an <a>identity</a> such as a name, government ID, home
+address, or university degree that typically indicates suitability.
+      </p>
+      <p>
+This specification describes how to express a digital <a>identity</a> and a
+collection of digital <a>credentials</a> that assert <a>claims</a> about that
+<a>identity</a>. It also describes a set of mechanisms for issuing and
+requesting <a>credentials</a>.
+      </p>
+    </section>
+
+    <section id='sotd'>
+      <p>
+This is an experimental specification that is attempting to unify the
+work performed in the Credentials Community Group, the Web Payments Community
+Group, the Linked Data community, the WebID Community Group, and the Mozilla
+Persona team. As such, the specification borrows a number of concepts from each
+group. It attempts to synthesize these concepts into a comprehensive solution
+that can be easily implemented and deployed by Web developers in order to help
+foster a rich ecosystem of digital identities and credentials on the Web.
+      </p>
+
+      <p class="issue">
+This spec hasn't been updated in many months and the work has evolved quite
+a bit since then. An update will occur as soon as other supporting documents
+are in order and time permits. -- 9/24/15
+      </p>
+
+      <p class="issue">
+Add a section specifying how blank nodes or pseudonyms can be used for
+self-signed and IdP-asserted credentials.
+      </p>
+
+      <p class="issue">
+Add a security/privacy consideration section that clearly marks out that
+a single key should not be used for authentication at all websites and
+that specifies how a different CryptographicKeyCredential can be generated
+and signed by an IdP for every new origin visited. Add a note that this
+approach is only for presenting identities that contain attributes that
+are asserted by self-signed or IdP-asserted credentials.
+
+This section should also detail best practices for creating a number of
+separate identities that aggregate credentials asserted by different third
+parties that are intended to be linked. There should be no doubt that this
+system is engineered to support many different identities per individual user.
+      </p>
+
+    <p class="issue">
+Add a section about revocation that also includes privacy concerns (leakage
+of credential use at particular consumers to issuers). Specify how
+credentials may self-describe their revocation rules and how issuers may
+either publish revocation status credentials that can be aggregated over time
+or on demand by IdPs or how they can periodically resign previously issued
+credentials with new revocation validity periods (and these credentials can
+then be refetched by users, IdPs, or authorized value-add third party services).
+    </p>
+
+    <p class="issue">
+Add a section on the conversion of certain credentials, by anonymizer services,
+to short-lived bearer credentials. These bearer credentials allow information
+to be asserted with a level of trust that is dependent upon the anonymizer
+service (which may actually be the same issuer that issued a credential), but
+can be used to help enhance privacy.
+    </p>
+
+    <p class="issue">
+Add a section on the use of ephemeral keys for public terminal use.
+    </p>
+
+    <p class="issue">
+Add a section on integration with hardware security devices, FIDO, etc.
+    </p>
+
+    <p class="issue">
+Add a section credential revocation. Indicate that credentials can specify
+revocation policies/validity periods before revocation needs to be checked
+again and that IdPs can fetch digitally-signed up-to-date credentials and/or
+revocation information from issuers that can be forwarded to consumers
+by the user agent (one privacy protecting mechanism for checking revocation).
+    </p>
+
+    </section>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>
+An <a>identity</a> is a set of information that can be used to identify
+a particular <a>entity</a>. Entities are anything with distinct existence,
+such as a person, organization, concept, or device. We typically use
+<a>credentials</a>, or claims made by others about our identities, to
+authenticate ourselves and ultimately gain access to various services. For
+example, we use email addresses to identify ourselves to online services,
+driver's licenses to prove that we are capable of operating a motor vehicle,
+university degrees to prove we are well-trained and knowledgeable, and
+government-issued passports to travel between countries or to access financial
+services. It is the goal of this specification to provide an easy, standard
+way to express, issue, and consume identity credentials on the Web.
+      </p>
+      <p>
+There are a number of desirable capabilities for credentials that have been
+identified as requirements for this specification:
+      </p>
+      <ul>
+        <li>
+Credentials are user-centric. This refers to an architecture where:
+          <ul>
+            <li>
+Credential holders are positioned in the middle between issuers and consumers.
+            </li>
+            <li>
+Credential holders receive and store credentials from issuers through an
+agent that the issuer does not need to trust.
+            </li>
+            <li>
+Credential holders provide credentials to credential consumers through
+an agent that consumers needn't trust; they only need to trust issuers.
+            </li>
+            <li>
+Credentials are associated with identities, not particular services; credential
+holders can decide how to aggregate credentials and manage their own
+identities.
+            </li>
+            <li>
+Credential holders can control and own their own identifiers.
+            </li>
+            <li>
+Credential holders can control which credentials to use and when.
+            </li>
+            <li>
+Credential holders may freely choose and swap out the agents they employ to
+help them manage and share their credentials.
+            </li>
+            <li>
+Credential holders that share verifiable claims are not required to reveal the
+identity of the consumer to their agent or to issuers.
+            </li>
+          </ul>
+        </li>
+        <li>
+A standard, machine-readable data format for expressing identity credentials
+that can be extended with minimal coordination.
+        </li>
+        <li>
+Independent issuance, storage, and cryptographic verification of credentials.
+        </li>
+        <li>
+A standard mechanism for requesting credentials.
+        </li>
+        <li>
+The ability to revoke previously issued credentials.
+        </li>
+        <li>
+Web Browser APIs for storing and consuming credentials.
+        </li>
+      </ul>
+      <p>
+In order to store the unbounded variety of attributes that could be claimed
+in identity credentials, a simple but extensible data model is utilized.
+The specification uses a data storage and expression approach called
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. It
+is a way of expressing information on the Web that is both simple and
+extensible. Specifically, the Linked Data technology used by this specification
+is JSON-LD [[!JSON-LD]].
+      </p>
+    </section>
+
+    <section>
+      <h2>Terminology</h2>
+
+      <div data-include="../common/terms.html"
+        data-oninclude="restrictReferences">
+      </div>
+
+    </section>
+
+    <section>
+      <h2>Expressing Identities and Credentials</h2>
+
+      <p>
+Any arbitrary information about an identity can be expressed using JSON-LD.
+However, in order to express verifiable claims, credentials must be associated
+with the identity. This section demonstrates how to express identities and
+credentials.
+      </p>
+
+      <section>
+        <h2>Expressing an Identity</h2>
+
+        <p>
+The following example demonstrates how to express a simple identity that
+contains no independently verifiable claims. Each property of the identity,
+such as <code>name</code> or <code>email</code>, is given context via
+the <code>@context</code> value. Other contexts can be used or combined to
+express any arbitrary information about an identity in idiomatic JSON.
+        </p>
+
+<pre class="example" title="A simple identity">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+  "type": ["Identity", "Person"],
+  "name": "Alice Bobman",
+  "email": "alice@example.com",
+  "birthDate": "1985-12-14",
+  "telephone": "12345678910"
+}</pre>
+      </section>
+
+      <section>
+        <h2>Expressing a Credential</h2>
+
+        <p>
+The following example demonstrates how to express a simple credential that
+contains one verifiable claim about a particular identity. In this case, the
+claim is that the <a>entity</a> with the <a>identity</a> identified by
+<code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years of age or older. While
+a human reading the property <code>ageOver</code> may be able to guess its
+meaning by its name, the context maps it a global identifier (URL) where
+a document could be retrieved that provides its semantics in a machine-readable
+data format. There is also information about the credential itself, such
+as an identifier for the entity that issued it and a date for when it was
+issued. The credential contains a <code>signature</code> that can be used
+to verify its entire contents, including the claim.
+        </p>
+
+<pre class="example" title="A simple credential">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "signature": {
+    "type": "LinkedDataSignature2015",
+    "creator": "https://dmv.example.gov/keys/6",
+    "signature": "2332f32g43ve23g23g23g/g3223gegvgre212fb488vh"
+  }
+}</pre>
+
+        <p>
+The following example demonstrates how to express a more complex credential that
+contains some more verifiable claims about a particular identity.
+        </p>
+
+        <p class="issue">
+TODO: Show use of another context to demonstrate decentralized extensibility.
+        </p>
+
+<pre class="example" title="A more complex credential">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "PassportCredential"],
+  "name": "Passport",
+  "issuer": "https://example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Alice Bobman",
+    "birthDate": "1985-12-14",
+    "gender": "female",
+    "nationality": {
+      "name": "United States"
+    },
+    "address": {
+      "type": "PostalAddress",
+      "addressStreet": "372 Sumter Lane",
+      "addressLocality": "Blackrock",
+      "addressRegion": "Nevada",
+      "postalCode": "23784",
+      "addressCountry": "US"
+    },
+    "passport": {
+      "type": "Passport",
+      "name": "United States Passport",
+      "documentId": "123-45-6789",
+      "issuer": "https://example.gov",
+      "issued": "2010-01-07T01:02:03Z",
+      "expires": "2020-01-07T01:02:03Z"
+    }
+  },
+  "signature": {
+    "type": "LinkedDataSignature2015",
+    "creator": "https://example.gov/keys/27",
+    "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
+  }
+}</pre>
+      </section>
+
+      <section>
+        <h2>Expressing Credentials in an Identity</h2>
+
+        <p>
+The following example demonstrates how to express one or more credentials along
+with an identity. This approach allows one to express an identity and some
+credentials that assert certain properties about it without losing data
+fidelity. Because Linked Data is a graph-based format and credentials have been
+digitally-signed as independent graphs of information, they are expressed using
+the <code>@graph</code> keyword. An application that receives an
+<a>identity</a> in this format can be ensured that the credential data won't be
+accidentally mixed with data in any other graphs in the
+<a>identity document</a>. Once the application has verified the digital
+signatures in each credential, it can safely merge all of the claim data into a
+single graph of information about the identity.
+        </p>
+
+<pre class="example" title="An identity with a credential">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+  "type": ["Identity", "Person"],
+  "name": "Alice Bobman",
+  "email": "alice@example.com",
+  "birthDate": "1985-12-14",
+  "telephone": "12345678910",
+  "credential": [{
+    "@graph": {
+      "@context": "https://w3id.org/identity/v1",
+      "id": "http://example.gov/credentials/3732",
+      "type": ["Credential", "PassportCredential"],
+      "name": "Passport",
+      "issuer": "https://example.gov",
+      "issued": "2010-01-01",
+      "claim": {
+        "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+        "name": "Alice Bobman",
+        "birthDate": "1985-12-14",
+        "gender": "female",
+        "nationality": {
+          "name": "United States"
+        },
+        "address": {
+          "type": "PostalAddress",
+          "addressStreet": "372 Sumter Lane",
+          "addressLocality": "Blackrock",
+          "addressRegion": "Nevada",
+          "postalCode": "23784",
+          "addressCountry": "US"
+        },
+        "passport": {
+          "type": "Passport",
+          "name": "United States Passport",
+          "documentId": "123-45-6789",
+          "issuer": "https://example.gov",
+          "issued": "2010-01-07T01:02:03Z",
+          "expires": "2020-01-07T01:02:03Z"
+        }
+      },
+      "signature": {
+        "type": "LinkedDataSignature2015",
+        "creator": "https://example.gov/keys/27",
+        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
+      }
+    }
+  }]
+}</pre>
+      </section>
+    </section>
+
+  </body>
+</html>
+
