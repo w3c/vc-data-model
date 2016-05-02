@@ -130,6 +130,99 @@ requesting <a>credentials</a>.
     </section>
 
     <section>
+      <h2>Data Model</h2>
+      <p>This section describes a data model for identities and
+      verifiable claims that is compatible with the requirements and
+      use cases expected to be addressed by this group.</p>
+
+      <section>
+        <h2>General</h2>
+        <p>Both identities and verifiable claims consist of a
+        collection of name-value pairs which will be referred to as
+        <dfn data-lt="property|properties">properties</dfn> in this
+        document.  The following subsections describe the required and
+        optional properties for both.  The link between the two is in
+        the <var>id</var> property.  An Identity data set defines the
+        identifier given in
+        the <a data-lt="identity-id"><var>id</var></a> property, while
+        a Verifiable Claim data set uses
+        the <var>id</var> property to refer to
+        the Identity data set that defines the given <var>id</var>
+        value.</p>
+        <p>This document purposely defines the data model without
+        using WebIDL, JSON, JSON-LD, or XML since users of all of
+        those representations are expected.
+        Section <a href="#expressing-identities-and-verifiable-claims"></a>
+        defines how the data model is to be expressed in those
+        representation languages.</p>
+      </section>
+
+      <section>
+        <h2><dfn data-lt="identity|identities">Identities</dfn></h2>
+        <p>Unlike <a>verifiable claims</a>, the <a>properties</a> in
+        an Identity are not intended to be verifiable.  They are
+        merely properties that, together with an
+        identifier <a data-lt="identity-id"><var>id</var></a>,
+        constitute an identity.</p>
+        <p>The following properties are required in an Identity:</p>
+        <dl>
+          <dt><var><dfn data-lt="identity-id">id</dfn></var></dt>
+          <dd>(Need help with what goes here)</dd>
+        </dl>
+        <p>The following properties are optional in an Identity:</p>
+        <dl>
+          <dt><var>type</var></dt>
+          <dd>&nbsp;</dd>
+          <dt><var>signature</var></dt>
+          <dd>&nbsp;</dd>
+        <dl>
+        <p>Additionally, any property name not listed above is
+        permitted as an optional custom property.</p>
+      </section>
+
+      <section>
+        <h2><dfn data-lt="verifiable claim|verifiable
+        claims">Verifiable Claims</dfn></h2>
+        <p>Unlike <a>identities</a>, the <a>properties</a>
+        in a Verifiable Claim are expected to be verifiable.  As
+        such, the data model includes both issue-related properties
+        and a <a><var>claim</var></a> property that further contains the
+        properties of the claim itself.</p>
+        <p>The following properties are required in a Verifiable Claim:</p>
+        <dl>
+          <dt><var><dfn data-lt="vc-id">id</dfn></var></dt>
+          <dd>(Need help with what goes here)</dd>
+          <dt><var>issuer</var></dt>
+          <dd>This is the issuer of the claim.</dd>
+          <dt><var>issued</var></dt>
+          <dd>This is the date when the claim was issued.</dd>
+          <dt><var><dfn>claim<dfn></var></dt>
+          <dd>This is the actual claim.  Its value is a set of
+          properties as follows:
+            <p>The following properties are required in
+            a <var>claim</var> value:</p>
+            <dl>
+              <dt><var><dfn data-lt="claim-id">id</dfn></var></dt>
+              <dd>The property value is expected to be a valid
+              <a data-lt="identity-id">Identity <var>id</var></a>.</dd>
+            </dl>
+           <p>Additionally, any property name not listed above is
+           permitted as an optional custom property.</p>
+	  </dd>
+        </dl>
+        <p>The following properties are optional in a Verifiable Claim:</p>
+        <dl>
+          <dt><var>type</var></dt>
+          <dd>&nbsp;</dd>
+          <dt><var>signature</var></dt>
+          <dd>&nbsp;</dd>
+        <dl>
+        <p>Additionally, any property name not listed above is
+        permitted as an optional custom property.</p>
+      </section>
+    </section>
+
+    <section>
       <h2>Expressing Identities and Verifiable Claims</h2>
 
       <p>
