@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Verifiable Claims Data Model</title>
+    <title>Verifiable Claims Data Model and Representations</title>
     <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
     <!--
       === NOTA BENE ===
@@ -112,158 +112,12 @@ requesting <a>credentials</a>.
     </section>
 
     <section id='sotd'>
-      <p>
-This is an experimental specification that is attempting to unify the
-work performed in the Credentials Community Group, the Web Payments Community
-Group, the Linked Data community, the WebID Community Group, and the Mozilla
-Persona team. As such, the specification borrows a number of concepts from each
-group. It attempts to synthesize these concepts into a comprehensive solution
-that can be easily implemented and deployed by Web developers in order to help
-foster a rich ecosystem of digital identities and credentials on the Web.
-      </p>
-
-      <p class="issue">
-This spec hasn't been updated in many months and the work has evolved quite
-a bit since then. An update will occur as soon as other supporting documents
-are in order and time permits. -- 9/24/15
-      </p>
-
-      <p class="issue">
-Add a section specifying how blank nodes or pseudonyms can be used for
-self-signed and IdP-asserted credentials.
-      </p>
-
-      <p class="issue">
-Add a security/privacy consideration section that clearly marks out that
-a single key should not be used for authentication at all websites and
-that specifies how a different CryptographicKeyCredential can be generated
-and signed by an IdP for every new origin visited. Add a note that this
-approach is only for presenting identities that contain attributes that
-are asserted by self-signed or IdP-asserted credentials.
-
-This section should also detail best practices for creating a number of
-separate identities that aggregate credentials asserted by different third
-parties that are intended to be linked. There should be no doubt that this
-system is engineered to support many different identities per individual user.
-      </p>
-
-    <p class="issue">
-Add a section about revocation that also includes privacy concerns (leakage
-of credential use at particular consumers to issuers). Specify how
-credentials may self-describe their revocation rules and how issuers may
-either publish revocation status credentials that can be aggregated over time
-or on demand by IdPs or how they can periodically resign previously issued
-credentials with new revocation validity periods (and these credentials can
-then be refetched by users, IdPs, or authorized value-add third party services).
-    </p>
-
-    <p class="issue">
-Add a section on the conversion of certain credentials, by anonymizer services,
-to short-lived bearer credentials. These bearer credentials allow information
-to be asserted with a level of trust that is dependent upon the anonymizer
-service (which may actually be the same issuer that issued a credential), but
-can be used to help enhance privacy.
-    </p>
-
-    <p class="issue">
-Add a section on the use of ephemeral keys for public terminal use.
-    </p>
-
-    <p class="issue">
-Add a section on integration with hardware security devices, FIDO, etc.
-    </p>
-
-    <p class="issue">
-Add a section credential revocation. Indicate that credentials can specify
-revocation policies/validity periods before revocation needs to be checked
-again and that IdPs can fetch digitally-signed up-to-date credentials and/or
-revocation information from issuers that can be forwarded to consumers
-by the user agent (one privacy protecting mechanism for checking revocation).
-    </p>
-
+      <p>Write something appropriate here</p>
     </section>
 
     <section>
       <h2>Introduction</h2>
-      <p>
-An <a>identity</a> is a set of information that can be used to identify
-a particular <a>entity</a>. Entities are anything with distinct existence,
-such as a person, organization, concept, or device. We typically use
-<a>credentials</a>, or claims made by others about our identities, to
-authenticate ourselves and ultimately gain access to various services. For
-example, we use email addresses to identify ourselves to online services,
-driver's licenses to prove that we are capable of operating a motor vehicle,
-university degrees to prove we are well-trained and knowledgeable, and
-government-issued passports to travel between countries or to access financial
-services. It is the goal of this specification to provide an easy, standard
-way to express, issue, and consume identity credentials on the Web.
-      </p>
-      <p>
-There are a number of desirable capabilities for credentials that have been
-identified as requirements for this specification:
-      </p>
-      <ul>
-        <li>
-Credentials are user-centric. This refers to an architecture where:
-          <ul>
-            <li>
-Credential holders are positioned in the middle between issuers and consumers.
-            </li>
-            <li>
-Credential holders receive and store credentials from issuers through an
-agent that the issuer does not need to trust.
-            </li>
-            <li>
-Credential holders provide credentials to credential consumers through
-an agent that consumers needn't trust; they only need to trust issuers.
-            </li>
-            <li>
-Credentials are associated with identities, not particular services; credential
-holders can decide how to aggregate credentials and manage their own
-identities.
-            </li>
-            <li>
-Credential holders can control and own their own identifiers.
-            </li>
-            <li>
-Credential holders can control which credentials to use and when.
-            </li>
-            <li>
-Credential holders may freely choose and swap out the agents they employ to
-help them manage and share their credentials.
-            </li>
-            <li>
-Credential holders that share verifiable claims are not required to reveal the
-identity of the consumer to their agent or to issuers.
-            </li>
-          </ul>
-        </li>
-        <li>
-A standard, machine-readable data format for expressing identity credentials
-that can be extended with minimal coordination.
-        </li>
-        <li>
-Independent issuance, storage, and cryptographic verification of credentials.
-        </li>
-        <li>
-A standard mechanism for requesting credentials.
-        </li>
-        <li>
-The ability to revoke previously issued credentials.
-        </li>
-        <li>
-Web Browser APIs for storing and consuming credentials.
-        </li>
-      </ul>
-      <p>
-In order to store the unbounded variety of attributes that could be claimed
-in identity credentials, a simple but extensible data model is utilized.
-The specification uses a data storage and expression approach called
-<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. It
-is a way of expressing information on the Web that is both simple and
-extensible. Specifically, the Linked Data technology used by this specification
-is JSON-LD [[!JSON-LD]].
-      </p>
+      <p>&nbsp;</p>
     </section>
 
     <section>
@@ -276,7 +130,100 @@ is JSON-LD [[!JSON-LD]].
     </section>
 
     <section>
-      <h2>Expressing Identities and Credentials</h2>
+      <h2>Data Model</h2>
+      <p>This section describes a data model for identities and
+      verifiable claims that is compatible with the requirements and
+      use cases expected to be addressed by this group.</p>
+
+      <section>
+        <h2>General</h2>
+        <p>Both identities and verifiable claims consist of a
+        collection of name-value pairs which will be referred to as
+        <dfn data-lt="property|properties">properties</dfn> in this
+        document.  The following subsections describe the required and
+        optional properties for both.  The link between the two is in
+        the <var>id</var> property.  An Identity data set defines the
+        identifier given in
+        the <a data-lt="identity-id"><var>id</var></a> property, while
+        a Verifiable Claim data set uses
+        the <var>id</var> property to refer to
+        the Identity data set that defines the given <var>id</var>
+        value.</p>
+        <p>This document purposely defines the data model without
+        using WebIDL, JSON, JSON-LD, or XML since users of all of
+        those representations are expected.
+        Section <a href="#expressing-identities-and-verifiable-claims"></a>
+        defines how the data model is to be expressed in those
+        representation languages.</p>
+      </section>
+
+      <section>
+        <h2><dfn data-lt="identity|identities">Identities</dfn></h2>
+        <p>Unlike <a>verifiable claims</a>, the <a>properties</a> in
+        an Identity are not intended to be verifiable.  They are
+        merely properties that, together with an
+        identifier <a data-lt="identity-id"><var>id</var></a>,
+        constitute an identity.</p>
+        <p>The following properties are required in an Identity:</p>
+        <dl>
+          <dt><var><dfn data-lt="identity-id">id</dfn></var></dt>
+          <dd>(Need help with what goes here)</dd>
+        </dl>
+        <p>The following properties are optional in an Identity:</p>
+        <dl>
+          <dt><var>type</var></dt>
+          <dd>&nbsp;</dd>
+          <dt><var>signature</var></dt>
+          <dd>&nbsp;</dd>
+        <dl>
+        <p>Additionally, any property name not listed above is
+        permitted as an optional custom property.</p>
+      </section>
+
+      <section>
+        <h2><dfn data-lt="verifiable claim|verifiable
+        claims">Verifiable Claims</dfn></h2>
+        <p>Unlike <a>identities</a>, the <a>properties</a>
+        in a Verifiable Claim are expected to be verifiable.  As
+        such, the data model includes both issue-related properties
+        and a <a><var>claim</var></a> property that further contains the
+        properties of the claim itself.</p>
+        <p>The following properties are required in a Verifiable Claim:</p>
+        <dl>
+          <dt><var><dfn data-lt="vc-id">id</dfn></var></dt>
+          <dd>(Need help with what goes here)</dd>
+          <dt><var>issuer</var></dt>
+          <dd>This is the issuer of the claim.</dd>
+          <dt><var>issued</var></dt>
+          <dd>This is the date when the claim was issued.</dd>
+          <dt><var><dfn>claim<dfn></var></dt>
+          <dd>This is the actual claim.  Its value is a set of
+          properties as follows:
+            <p>The following properties are required in
+            a <var>claim</var> value:</p>
+            <dl>
+              <dt><var><dfn data-lt="claim-id">id</dfn></var></dt>
+              <dd>The property value is expected to be a valid
+              <a data-lt="identity-id">Identity <var>id</var></a>.</dd>
+            </dl>
+           <p>Additionally, any property name not listed above is
+           permitted as an optional custom property.</p>
+	  </dd>
+        </dl>
+        <p>The following properties are optional in a Verifiable Claim:</p>
+        <dl>
+          <dt><var>type</var></dt>
+          <dd>&nbsp;</dd>
+          <dt><var>signature</var></dt>
+          <dd>&nbsp;</dd>
+        <dl>
+        <p>Additionally, any property name not listed above is
+        permitted as an optional custom property.</p>
+      </section>
+    </section>
+
+    <section>
+      <h2>Expressing Identities and Verifiable Claims</h2>
 
       <p>
 Any arbitrary information about an identity can be expressed using JSON-LD.
@@ -457,6 +404,164 @@ single graph of information about the identity.
   }]
 }</pre>
       </section>
+    </section>
+
+    <section class="appendix">
+      <h2>SOTD</h2>
+      <p>This is an experimental specification that is attempting to unify the
+work performed in the Credentials Community Group, the Web Payments Community
+Group, the Linked Data community, the WebID Community Group, and the Mozilla
+Persona team. As such, the specification borrows a number of concepts from each
+group. It attempts to synthesize these concepts into a comprehensive solution
+that can be easily implemented and deployed by Web developers in order to help
+foster a rich ecosystem of digital identities and credentials on the Web.
+      </p>
+
+      <p class="issue">
+This spec hasn't been updated in many months and the work has evolved quite
+a bit since then. An update will occur as soon as other supporting documents
+are in order and time permits. -- 9/24/15
+      </p>
+
+      <p class="issue">
+Add a section specifying how blank nodes or pseudonyms can be used for
+self-signed and IdP-asserted credentials.
+      </p>
+
+      <p class="issue">
+Add a security/privacy consideration section that clearly marks out that
+a single key should not be used for authentication at all websites and
+that specifies how a different CryptographicKeyCredential can be generated
+and signed by an IdP for every new origin visited. Add a note that this
+approach is only for presenting identities that contain attributes that
+are asserted by self-signed or IdP-asserted credentials.
+
+This section should also detail best practices for creating a number of
+separate identities that aggregate credentials asserted by different third
+parties that are intended to be linked. There should be no doubt that this
+system is engineered to support many different identities per individual user.
+      </p>
+
+    <p class="issue">
+Add a section about revocation that also includes privacy concerns (leakage
+of credential use at particular consumers to issuers). Specify how
+credentials may self-describe their revocation rules and how issuers may
+either publish revocation status credentials that can be aggregated over time
+or on demand by IdPs or how they can periodically resign previously issued
+credentials with new revocation validity periods (and these credentials can
+then be refetched by users, IdPs, or authorized value-add third party services).
+    </p>
+
+    <p class="issue">
+Add a section on the conversion of certain credentials, by anonymizer services,
+to short-lived bearer credentials. These bearer credentials allow information
+to be asserted with a level of trust that is dependent upon the anonymizer
+service (which may actually be the same issuer that issued a credential), but
+can be used to help enhance privacy.
+    </p>
+
+    <p class="issue">
+Add a section on the use of ephemeral keys for public terminal use.
+    </p>
+
+    <p class="issue">
+Add a section on integration with hardware security devices, FIDO, etc.
+    </p>
+
+    <p class="issue">
+Add a section credential revocation. Indicate that credentials can specify
+revocation policies/validity periods before revocation needs to be checked
+again and that IdPs can fetch digitally-signed up-to-date credentials and/or
+revocation information from issuers that can be forwarded to consumers
+by the user agent (one privacy protecting mechanism for checking revocation).
+    </p>
+    </section>
+
+    <section class="appendix">
+      <h2>Introduction</h2>
+      <p>An <a>identity</a> is a set of information that can be used to identify
+a particular <a>entity</a>. Entities are anything with distinct existence,
+such as a person, organization, concept, or device. We typically use
+<a>credentials</a>, or claims made by others about our identities, to
+authenticate ourselves and ultimately gain access to various services. For
+example, we use email addresses to identify ourselves to online services,
+driver's licenses to prove that we are capable of operating a motor vehicle,
+university degrees to prove we are well-trained and knowledgeable, and
+government-issued passports to travel between countries or to access financial
+services. It is the goal of this specification to provide an easy, standard
+way to express, issue, and consume identity credentials on the Web.
+      </p>
+      <p>
+There are a number of desirable capabilities for credentials that have been
+identified as requirements for this specification:
+      </p>
+      <ul>
+        <li>
+Credentials are user-centric. This refers to an architecture where:
+          <ul>
+            <li>
+Credential holders are positioned in the middle between issuers and consumers.
+            </li>
+            <li>
+Credential holders receive and store credentials from issuers through an
+agent that the issuer does not need to trust.
+            </li>
+            <li>
+Credential holders provide credentials to credential consumers through
+an agent that consumers needn't trust; they only need to trust issuers.
+            </li>
+            <li>
+Credentials are associated with identities, not particular services; credential
+holders can decide how to aggregate credentials and manage their own
+identities.
+            </li>
+            <li>
+Credential holders can control and own their own identifiers.
+            </li>
+            <li>
+Credential holders can control which credentials to use and when.
+            </li>
+            <li>
+Credential holders may freely choose and swap out the agents they employ to
+help them manage and share their credentials.
+            </li>
+            <li>
+Credential holders that share verifiable claims are not required to reveal the
+identity of the consumer to their agent or to issuers.
+            </li>
+          </ul>
+        </li>
+        <li>
+A standard, machine-readable data format for expressing identity credentials
+that can be extended with minimal coordination.
+        </li>
+        <li>
+Independent issuance, storage, and cryptographic verification of credentials.
+        </li>
+        <li>
+A standard mechanism for requesting credentials.
+        </li>
+        <li>
+The ability to revoke previously issued credentials.
+        </li>
+        <li>
+Web Browser APIs for storing and consuming credentials.
+        </li>
+      </ul>
+      <p>
+In order to store the unbounded variety of attributes that could be claimed
+in identity credentials, a simple but extensible data model is utilized.
+The specification uses a data storage and expression approach called
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. It
+is a way of expressing information on the Web that is both simple and
+extensible. Specifically, the Linked Data technology used by this specification
+is JSON-LD [[!JSON-LD]].
+      </p>
+    </section>
+
+    <section class="appendix">
+    <p>
+    </p>
     </section>
 
   </body>
