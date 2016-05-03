@@ -131,48 +131,51 @@ requesting <a>credentials</a>.
 
     <section>
       <h2>Data Model</h2>
-      <p>This section describes a data model for identities and
+      <p>This section describes a data model for identities, claims, and
       verifiable claims that is compatible with the requirements and
       use cases expected to be addressed by this group.</p>
 
       <section>
         <h2>General Characteristics</h2>
-        <p>Both identities and verifiable claims consist of a
-        collection of name-value pairs which will be referred to as
+        <p>Both identities and claims, including verifiable claims,
+        consist of a collection of name-value pairs which will be
+        referred to as
         <dfn lt="property|properties">properties</dfn> in this
         document.  The following subsections describe the required and
         optional properties for both.  The link between the two is in
         the <var>id</var> property.  An Identity data set defines the
         identifier given in
         the <a data-lt="identity-id"><var>id</var></a> property, while
-        a Verifiable Claim data set uses
-        the <var>id</var> property to refer to
+        a Claim data set uses the <var>id</var> property to refer to
         the Identity data set that defines the given <var>id</var>
         value.</p>
         <p>This document purposely defines the data model without
         using WebIDL, JSON, JSON-LD, or XML since users of all of
         those representations are expected.
-        Section <a href="#expressing-identities-and-verifiable-claims"></a>
+        Section <a href="#expressing-identities-and-claims"></a>
         defines how the data model is to be expressed in those
         representation languages.</p>
       </section>
 
       <section>
         <h2><dfn lt="identity|identities">Identities</dfn></h2>
-        <p>Unlike <a>verifiable claims</a>, the <a>properties</a> in
-        an Identity are not intended to be verifiable.  They are
-        merely properties that, together with an
+        <p>Unlike with <a>claims</a>, the <a>properties</a> in an
+        Identity are merely properties that, together with an
         identifier <a data-lt="identity-id"><var>id</var></a>,
-        constitute an identity.</p>
+        constitute an identity.  The properties are not claims and are
+        not intended to be verifiable.</p>
         <p>The following properties are required in an Identity:</p>
         <dl>
           <dt><var><dfn lt="identity-id">id</dfn></var></dt>
-          <dd>(Need help with what goes here)</dd>
+          <dd>This is an Identity URI.</dd>
+          <dt><var>type</var></dt>
+          <dd>This is a set of types, or classes, of which this data
+          set is a member.  As an Identity, at a minimum the class
+          "Identity" must be one of the values in the set.  Additional
+          application-specific values are permitted in the set.</dd>
         </dl>
         <p>The following properties are optional in an Identity:</p>
         <dl>
-          <dt><var>type</var></dt>
-          <dd>&nbsp;</dd>
           <dt><var>signature</var></dt>
           <dd>&nbsp;</dd>
         <dl>
@@ -181,21 +184,22 @@ requesting <a>credentials</a>.
       </section>
 
       <section>
-        <h2><dfn lt="verifiable claim|verifiable
-        claims">Verifiable Claims</dfn></h2>
-        <p>Unlike <a>identities</a>, the <a>properties</a>
-        in a Verifiable Claim are expected to be verifiable.  As
-        such, the data model includes both issue-related properties
-        and a <a><var>claim</var></a> property that further contains the
-        properties of the claim itself.</p>
-        <p>The following properties are required in a Verifiable Claim:</p>
+        <h2><dfn>Claims</dfn></h2>
+        <p>Unlike with <a>identities</a>, the <a>properties</a> in a
+        Claim data set are claims made by an entity about an
+        identity.  As such, the data model includes both
+        issuance-related properties and a <a><var>claim</var></a>
+        property that further contains the properties of the claim
+        itself.</p>
+        <p>The following properties are required in a Claim:</p>
         <dl>
-          <dt><var><dfn lt="vc-id">id</dfn></var></dt>
-          <dd>(Need help with what goes here)</dd>
-          <dt><var>issuer</var></dt>
-          <dd>This is the issuer of the claim.</dd>
-          <dt><var>issued</var></dt>
-          <dd>This is the date when the claim was issued.</dd>
+          <dt><var><dfn lt="claim-id">id</dfn></var></dt>
+          <dd>Claim URI</dd>
+          <dt><var>type</var></dt>
+          <dd>This is a set of types, or classes, of which this data
+          set is a member.  As a Claim, at a minimum the class
+          "Credential" must be one of the values in the set.  Additional
+          application-specific values are permitted in the set.</dd>
           <dt><var><dfn>claim<dfn></var></dt>
           <dd>This is the actual claim.  Its value is a set of
           properties as follows:
@@ -210,20 +214,31 @@ requesting <a>credentials</a>.
            permitted as an optional custom property.</p>
 	  </dd>
         </dl>
-        <p>The following properties are optional in a Verifiable Claim:</p>
+        <p>The following properties are optional in a Claim:</p>
         <dl>
-          <dt><var>type</var></dt>
-          <dd>&nbsp;</dd>
-          <dt><var>signature</var></dt>
-          <dd>&nbsp;</dd>
+          <dt><var>issuer</var></dt>
+          <dd>This is the issuer of the claim.</dd>
+          <dt><var>issued</var></dt>
+          <dd>This is the date when the claim was issued.</dd>
         <dl>
         <p>Additionally, any property name not listed above is
         permitted as an optional custom property.</p>
       </section>
+
+      <section>
+        <h2><dfn>Verifiable Claims</dfn></h2>
+        <p>A verifiable claim is a <a data-lt="claims">claim</a> that
+        contains the following additional property:</p>
+        <dl>
+          <dt><var>signature</var></dt>
+          <dd>&nbsp;</dd>
+	  </dd>
+        </dl>
+      </section>
     </section>
 
     <section>
-      <h2>Expressing Identities and Verifiable Claims</h2>
+      <h2>Expressing Identities and Claims</h2>
 
       <p>
 Any arbitrary information about an identity can be expressed using JSON-LD.
