@@ -228,17 +228,47 @@
     <section>
       <h2>Expressing Identities and Claims</h2>
 
-      <p>
-Any arbitrary information about an identity can be expressed using JSON-LD.
-However, in order to express verifiable claims, credentials must be associated
-with the identity. This section demonstrates how to express identities and
-credentials.
+      <p>This section defines how the data model described in
+      Section <a href="data-model"></a> is realized in each of 3
+      different languages: JSON, JSON-LD, and WebIDL.  Applications
+      and services may also use any other language that can support
+      the data model.
       </p>
 
       <section>
-        <h2>Expressing an Identity</h2>
+        <h2>Expressing Identities and Claims in JSON</h2>
+        <section>
+          <h2>Expressing an Identity in JSON</h2>
+            <p>In JSON, an Identity data set is expressed as a single
+            JSON object whose properties are the identity's
+            properties, with the following value type assignments:</p>
+            <ul>
+              <li>Any number value MUST be represented as a Number type.</li>
+              <li>Any boolean value MUST be representd as a Boolean type.</li>
+              <li>Any set value MUST be represented as an Object type.</li>
+              <li>Any sequence value MUST be represented as an Array type.</li>
+              <li>Any empty value MUST be represented as a null value.</li>
+              <li>Any other value MUST be represented as a String type.</li>
+            </ul>
+	    <p>The following example demonstrates how to express a
+	    simple identity.</p>
 
-        <p>
+<pre class="example" title="A simple identity">{
+  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+  "type": ["Identity", "Person"],
+  "name": "Alice Bobman",
+  "email": "alice@example.com",
+  "birthDate": "1985-12-14",
+  "telephone": "12345678910"
+}</pre>
+        </section>
+      </section>
+
+      <section>
+        <h2>Expressing Identities and Claims in JSON-LD</h2>
+        <section>
+          <h2>Expressing an Identity</h2>
+            <p>
 The following example demonstrates how to express a simple identity that
 contains no independently verifiable claims. Each property of the identity,
 such as <code>name</code> or <code>email</code>, is given context via
@@ -255,12 +285,11 @@ express any arbitrary information about an identity in idiomatic JSON.
   "birthDate": "1985-12-14",
   "telephone": "12345678910"
 }</pre>
-      </section>
+        </section>
 
-      <section>
-        <h2>Expressing a Credential</h2>
-
-        <p>
+        <section>
+          <h2>Expressing a Credential</h2>
+            <p>
 The following example demonstrates how to express a simple credential that
 contains one verifiable claim about a particular identity. In this case, the
 claim is that the <a>entity</a> with the <a>identity</a> identified by
@@ -338,6 +367,11 @@ TODO: Show use of another context to demonstrate decentralized extensibility.
     "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
   }
 }</pre>
+        </section>
+      </section>
+
+      <section>
+        <h2>Expressing Identities and Claims in WebIDL</h2>
       </section>
 
       <section>
