@@ -306,7 +306,7 @@
             can be used to verify its entire contents, including the
             claim.</p>
 
-<pre class="example" title="A simple claim">{
+<pre class="example" title="A simple verifiable claim">{
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
@@ -327,14 +327,17 @@
       <section>
         <h2>Expressing Identities and Claims in JSON-LD</h2>
         <section>
-          <h2>Expressing an Identity</h2>
-            <p>
-The following example demonstrates how to express a simple identity that
-contains no independently verifiable claims. Each property of the identity,
-such as <code>name</code> or <code>email</code>, is given context via
-the <code>@context</code> value. Other contexts can be used or combined to
-express any arbitrary information about an identity in idiomatic JSON.
-        </p>
+          <h2>Expressing an Identity in JSON-LD</h2>
+            <p>Identities are expressed in JSON-LD in the same way
+            they are expressed in JSON (***link***), except that there
+            is an additional property <code>@context</code>.  Each
+            property of the identity, such as <code>name</code>
+            or <code>email</code>, is given context via
+            the <code>@context</code> value. Other contexts can be
+            used or combined to express any arbitrary information
+            about an identity in idiomatic JSON.  </p>
+	    <p>The following example demonstrates how to express a
+	    simple identity.</p>
 
 <pre class="example" title="A simple identity">{
   "@context": "https://w3id.org/identity/v1",
@@ -348,22 +351,51 @@ express any arbitrary information about an identity in idiomatic JSON.
         </section>
 
         <section>
-          <h2>Expressing a Credential</h2>
-            <p>
-The following example demonstrates how to express a simple credential that
-contains one verifiable claim about a particular identity. In this case, the
-claim is that the <a>entity</a> with the <a>identity</a> identified by
-<code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years of age or older. While
-a human reading the property <code>ageOver</code> may be able to guess its
-meaning by its name, the context maps it a global identifier (URL) where
-a document could be retrieved that provides its semantics in a machine-readable
-data format. There is also information about the credential itself, such
-as an identifier for the entity that issued it and a date for when it was
-issued. The credential contains a <code>signature</code> that can be used
-to verify its entire contents, including the claim.
-        </p>
+          <h2>Expressing a Claim in JSON-HD</h2>
+            <p>Claims are expressed in JSON-LD in the same way they
+            are expressed in JSON (***link***), except that there is
+            an additional property <code>@context</code>.  Each
+            property of the claim structure itself and within
+            the <code>claim</code> property, such as the
+            generic <code>issuer</code> property or the
+            app-specific <code>ageOver</code>, is given context via
+            the <code>@context</code> value. Other contexts can be
+            used or combined to express any arbitrary information
+            about a claim in idiomatic JSON.</p>
 
-<pre class="example" title="A simple credential">{
+            <p>The following example demonstrates how to express a
+            simple (unverifiable) claim about a particular
+            identity. In this case, the claim is that
+            the <a>entity</a> with the <a>identity</a> identified
+            by <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21
+            years of age or older. While a human reading the
+            property <code>ageOver</code> may be able to guess its
+            meaning by its name, the context maps it a global
+            identifier (URL) where a document could be retrieved that
+            provides its semantics in a machine-readable data
+            format. There is also information about the claim itself,
+            such as an identifier for the entity that issued it and a
+            date for when it was issued.</p>
+
+<pre class="example" title="A simple claim">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  }
+}</pre>
+
+            <p>The following example demonstrates how to express the
+            same claim about the same identity, but in a verifiable
+            form. As such, it contains a <code>signature</code> that
+            can be used to verify its entire contents, including the
+            claim.</p>
+
+<pre class="example" title="A simple verifiable claim">{
   "@context": "https://w3id.org/identity/v1",
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
@@ -381,15 +413,11 @@ to verify its entire contents, including the claim.
 }</pre>
 
         <p>
-The following example demonstrates how to express a more complex credential that
-contains some more verifiable claims about a particular identity.
+The following example demonstrates how to express a more complex set
+of verifiable claims about a particular identity.
         </p>
 
-        <p class="issue">
-TODO: Show use of another context to demonstrate decentralized extensibility.
-        </p>
-
-<pre class="example" title="A more complex credential">{
+<pre class="example" title="A more complex verifiable claim">{
   "@context": "https://w3id.org/identity/v1",
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "PassportCredential"],
