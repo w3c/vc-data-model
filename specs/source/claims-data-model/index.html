@@ -201,9 +201,10 @@
         <p>The following properties are optional in a Claim:</p>
         <dl>
           <dt><var>issuer</var></dt>
-          <dd>This is the issuer of the claim.</dd>
+          <dd>This is a URI for the issuer of the claim.</dd>
           <dt><var>issued</var></dt>
-          <dd>This is the date when the claim was issued.</dd>
+          <dd>This is the date, in string format, when the claim was
+          issued.</dd>
         <dl>
         <p>Additionally, any property name not listed above is
         permitted as an optional custom property.</p>
@@ -260,6 +261,65 @@
   "email": "alice@example.com",
   "birthDate": "1985-12-14",
   "telephone": "12345678910"
+}</pre>
+        </section>
+
+        <section>
+          <h2>Expressing a Claim in JSON</h2>
+            <p>In JSON, a Claim data set is expressed as a single
+            JSON object whose properties are the claim's
+            properties, with the following value type assignments:</p>
+            <ul>
+              <li>Any number value MUST be represented as a Number type.</li>
+              <li>Any boolean value MUST be representd as a Boolean type.</li>
+              <li>Any set value MUST be represented as an Object type.</li>
+              <li>Any sequence value MUST be represented as an Array type.</li>
+              <li>Any empty value MUST be represented as a null value.</li>
+              <li>Any other value MUST be represented as a String type.</li>
+            </ul>
+            <p>The following example demonstrates how to express a
+            simple (unverifiable) claim about a particular
+            identity. In this case, the claim is that
+            the <a>entity</a> with the <a>identity</a> identified by
+            <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
+            of age or older. While a human reading the
+            property <code>ageOver</code> may be able to guess its
+            meaning by its name, no machine-readable semantics for the
+            name are provided. There is information about the claim
+            itself, such as an identifier for the entity that issued
+            it and a date for when it was issued. </p>
+
+<pre class="example" title="A simple claim">{
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  }
+}</pre>
+
+            <p>The following example demonstrates how to express the
+            same claim about the same identity, but in a verifiable
+            form. As such, it contains a <code>signature</code> that
+            can be used to verify its entire contents, including the
+            claim.</p>
+
+<pre class="example" title="A simple claim">{
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "signature": {
+    "type": "LinkedDataSignature2015",
+    "creator": "https://dmv.example.gov/keys/6",
+    "signature": "2332f32g43ve23g23g23g/g3223gegvgre212fb488vh"
+  }
 }</pre>
         </section>
       </section>
