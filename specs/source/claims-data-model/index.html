@@ -503,8 +503,287 @@ of verifiable claims about a particular identity.
 
       <section>
         <h2>Expressing Identities and Claims in WebIDL</h2>
+
+        <section>
+          <h2>Expressing an Identity in WebIDL</h2>
+            <p>In WebIDL, an Identity data set is expressed as an
+            Interface whose attributes are the identity's properties,
+            with the following value type assignments:</p>
+            <ul>
+              <li>Any number value MUST be represented as an
+              appropriate valid numeric type, e.g. double or unsigned
+              long.</li>
+              <li>Any boolean value MUST be represented as a boolean type.</li>
+              <li>Any set value MUST be represented as either an
+              Interface or Dictionary type.</li>
+              <li>Any sequence value MUST be represented as a sequence
+              type.</li>
+              <li>Any property whose value may be null MUST be marked
+              as nullable.</li>
+              <li>Any other value MUST be represented as either an
+              Enumeration type or a DOMString type, depending on
+              whether the values are expected to be selected from a
+              restricted, pre-determined set or are expected to be
+              either unrestricted or extended in the future.</li>
+            </ul>
+	    <p>The following example demonstrates how to express a
+	    simple identity.</p>
+
+<pre class="idl">
+  [Constructor]
+  interface Identity {
+    DOMString id;
+    sequence&lt;DOMString> type;
+    DOMString name;
+    DOMString email;
+    DOMString birthDate;
+    DOMString telephone;
+  };
+</pre>
+
+            <p>The Identity could then be used as follows in JavaScript:</p>
+
+<pre class="example" title="Using a simple identity">
+  var identity = new Identity();
+  identity.id = "did:ebfeb1f712ebc6f1c276e12ec21";
+  identity.type = ["Identity", "Person"];
+  identity.name = "Alice Bobman";
+  identity.email = "alice@example.com";
+  identity.birthDate = "1985-12-14";
+  identity.telephone = "12345678910";
+</pre>
+        </section>
+
+        <section>
+          <h2>Expressing a Claim in WebIDL</h2>
+            <p>In WebIDL, a Claim data set is expressed as an
+            Interface whose attributes are the claim's properties,
+            with the following value type assignments:</p>
+            <ul>
+              <li>Any number value MUST be represented as an
+              appropriate valid numeric type, e.g. double or unsigned
+              long.</li>
+              <li>Any boolean value MUST be representd as a boolean type.</li>
+              <li>Any set value MUST be represented as either an
+              Interface or Dictionary type.</li>
+              <li>Any sequence value MUST be represented as a sequence
+              type.</li>
+              <li>Any property whose value may be null MUST be marked
+              as nullable.</li>
+              <li>Any other value MUST be represented as either an
+              Enumeration type or a DOMString type, depending on
+              whether the values are expected to be selected from a
+              restricted, pre-determined set or are expected to be
+              either unrestricted or extended in the future.</li>
+            </ul>
+            <p>The following example demonstrates how to express a
+            simple (unverifiable) claim about a particular
+            identity. In this case, the claim is that
+            the <a>entity</a> with the <a>identity</a> identified by
+            <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
+            of age or older. While a human reading the
+            property <code>ageOver</code> may be able to guess its
+            meaning by its name, no machine-readable semantics for the
+            name are provided. There is information about the claim
+            itself, such as an identifier for the entity that issued
+            it and a date for when it was issued. </p>
+
+<pre class="idl">
+  interface ClaimBase {
+    DOMString id;
+    sequence&lt;DOMString> type;
+    DOMString issuer;
+    DOMString issued;
+  };
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface Claim : ClaimBase {
+    ClaimDetails1 claim;
+  };
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface ClaimDetails1 {
+    DOMString id;
+    unsigned short ageOver;
+  };
+</pre>
+
+            <p>The Claim could then be used as follows in JavaScript:</p>
+
+<pre class="example" title="Using a simple claim">
+  var claimDetails = new ClaimDetails1();
+  claimdetails.id = "http://example.gov/credentials/3732";
+  claimdetails.ageOver = 21;
+
+  var claim = new Claim();
+  claim.type = ["Credential", "ProofOfAgeCredential"];
+  claim.issuer = "https://dmv.example.gov";
+  claim.issued = "2010-01-01";
+  claim.claim = claimdetails;
+</pre>
+
+            <p>The following example demonstrates how to express the
+            same claim about the same identity, but in a verifiable
+            form. As such, it contains a <code>signature</code> that
+            can be used to verify its entire contents, including the
+            claim.</p>
+
+<pre class="idl">
+  interface VerifiableClaimBase : ClaimBase {
+    Signature signature;
+  };
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface Signature {
+    DOMString type;
+    DOMString creator;
+    DOMString signature;
+  };
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface VerifiableClaim1 : VerifiableClaimBase {
+    ClaimDetails1 claim;
+  };
+</pre>
+            <p>The Verifiable Claim could then be used as follows in
+            JavaScript:</p>
+
+<pre class="example" title="Using a simple verifiable claim">
+  var claimDetails = new ClaimDetails1();
+  claimdetails.id = "http://example.gov/credentials/3732";
+  claimdetails.ageOver = 21;
+
+  var signature = new Signature();
+  signature.type = "LinkedDataSignature2015";
+  signature.creator = "https://dmv.example.gov/keys/6";
+  signature.signature = "2332f32g43ve23g23g23g/g3223gegvgre212fb488vh";
+
+  var claim = new VerifiableClaim1();
+  claim.type = ["Credential", "ProofOfAgeCredential"];
+  claim.issuer = "https://dmv.example.gov";
+  claim.issued = "2010-01-01";
+  claim.claim = claimdetails;
+  claim.signature = signature;
+</pre>
+
+        <p>
+The following example demonstrates how to express a more complex set
+of verfiable claims about a particular identity.
+        </p>
+
+<pre class="idl">
+  [Constructor]
+  interface VC2 : VerifiableClaimBase {
+    DOMString name;
+    ClaimDetails2 claim;
+  }
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface ClaimDetails2 {
+    DOMString id;
+    DOMString name;
+    DOMString birthDate;
+    Gender gender;
+    Nationality nationality;
+    Address address;
+    Passport passport;
+};
+</pre>
+
+<pre class="idl">
+  enum Gender {"male", "female"};
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface Nationality {
+    DOMString name;
+  };
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface Address {
+    DOMString type;
+    DOMString addressStreet;
+    DOMString addressLocality;
+    DOMString addressRegion;
+    DOMString postalCode;
+    DOMString addressCountry;
+  };
+</pre>
+
+<pre class="idl">
+  [Constructor]
+  interface Passport {
+    DOMString type;
+    DOMString name;
+    DOMString documentId;
+    DOMString issuer;
+    DOMString issued;
+    DOMString expires;
+</pre>
+            <p>The Verifiable Claim could then be used as follows in
+            JavaScript:</p>
+
+<pre class="example" title="Using a more complex verifiable claim">{
+  var nationality = new Nationality();
+  nationality.name = "United States";
+
+  var address = new Address();
+  address.type = "PostalAddress";
+  address.addressStreet = "372 Sumter Lane";
+  address.addressLocality = "Blackrock";
+  address.addressRegion = "Nevada";
+  address.postalCode = "23784";
+  address.addressCountry = "US";
+
+  var passport = new Passport();
+  passport.type = "Passport";
+  passport.name = "United States Passport";
+  passport.documentId = "123-45-6789";
+  passport.issuer = "https://example.gov";
+  passport.issued = "2010-01-07T01:02:03Z";
+  passport.expires = "2020-01-07T01:02:03Z";
+
+  var claim = new ClaimDetails2();
+  claim.id = "did:ebfeb1f712ebc6f1c276e12ec21";
+  claim.name = "Alice Bobman";
+  claim.birthDate = "1985-12-14";
+  claim.gender = "female";
+  claim.nationality = nationality;
+  claim.address = address;
+  claim.passport = passport;
+
+  var signature = new Signature();
+  signature.type = "LinkedDataSignature2015";
+  signature.creator = "https://example.gov/keys/27";
+  signature.signature = "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish";
+
+  var vc = new VC2();
+  vc.id = "http://example.gov/credentials/3732";
+  vc.type = ["Credential", "PassportCredential"];
+  vc.name = "Passport";
+  vc.issuer = "https://example.gov";
+  vc.issued = "2010-01-01";
+  vc.claim = claim;
+  vc.signature = signature;
+}</pre>
+        </section>
       </section>
 
+
+<!-- ignore for now -->
       <section>
         <h2>Expressing Credentials in an Identity</h2>
 
