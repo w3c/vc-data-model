@@ -781,76 +781,6 @@ of verfiable claims about a particular identity.
 }</pre>
         </section>
       </section>
-
-
-<!-- ignore for now -->
-      <section>
-        <h2>Expressing Credentials in an Identity</h2>
-
-        <p>
-The following example demonstrates how to express one or more credentials along
-with an identity. This approach allows one to express an identity and some
-credentials that assert certain properties about it without losing data
-fidelity. Because Linked Data is a graph-based format and credentials have been
-digitally-signed as independent graphs of information, they are expressed using
-the <code>@graph</code> keyword. An application that receives an
-<a>identity</a> in this format can be ensured that the credential data won't be
-accidentally mixed with data in any other graphs in the
-<a>identity document</a>. Once the application has verified the digital
-signatures in each credential, it can safely merge all of the claim data into a
-single graph of information about the identity.
-        </p>
-
-<pre class="example" title="An identity with a credential">{
-  "@context": "https://w3id.org/identity/v1",
-  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["Identity", "Person"],
-  "name": "Alice Bobman",
-  "email": "alice@example.com",
-  "birthDate": "1985-12-14",
-  "telephone": "12345678910",
-  "credential": [{
-    "@graph": {
-      "@context": "https://w3id.org/identity/v1",
-      "id": "http://example.gov/credentials/3732",
-      "type": ["Credential", "PassportCredential"],
-      "name": "Passport",
-      "issuer": "https://example.gov",
-      "issued": "2010-01-01",
-      "claim": {
-        "id": "did:ebfeb1f712ebc6f1c276e12ec21",
-        "name": "Alice Bobman",
-        "birthDate": "1985-12-14",
-        "gender": "female",
-        "nationality": {
-          "name": "United States"
-        },
-        "address": {
-          "type": "PostalAddress",
-          "addressStreet": "372 Sumter Lane",
-          "addressLocality": "Blackrock",
-          "addressRegion": "Nevada",
-          "postalCode": "23784",
-          "addressCountry": "US"
-        },
-        "passport": {
-          "type": "Passport",
-          "name": "United States Passport",
-          "documentId": "123-45-6789",
-          "issuer": "https://example.gov",
-          "issued": "2010-01-07T01:02:03Z",
-          "expires": "2020-01-07T01:02:03Z"
-        }
-      },
-      "signature": {
-        "type": "LinkedDataSignature2015",
-        "creator": "https://example.gov/keys/27",
-        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
-      }
-    }
-  }]
-}</pre>
-      </section>
     </section>
 
     <section class='appendix'>
@@ -1030,8 +960,71 @@ is JSON-LD [[!JSON-LD]].
     </section>
 
     <section class="appendix">
-    <p>
-    </p>
+        <h2>Expressing Credentials in an Identity</h2>
+
+        <p>
+The following example demonstrates how to express one or more credentials along
+with an identity. This approach allows one to express an identity and some
+credentials that assert certain properties about it without losing data
+fidelity. Because Linked Data is a graph-based format and credentials have been
+digitally-signed as independent graphs of information, they are expressed using
+the <code>@graph</code> keyword. An application that receives an
+<a>identity</a> in this format can be ensured that the credential data won't be
+accidentally mixed with data in any other graphs in the
+<a>identity document</a>. Once the application has verified the digital
+signatures in each credential, it can safely merge all of the claim data into a
+single graph of information about the identity.
+        </p>
+
+<pre class="example" title="An identity with a credential">{
+  "@context": "https://w3id.org/identity/v1",
+  "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+  "type": ["Identity", "Person"],
+  "name": "Alice Bobman",
+  "email": "alice@example.com",
+  "birthDate": "1985-12-14",
+  "telephone": "12345678910",
+  "credential": [{
+    "@graph": {
+      "@context": "https://w3id.org/identity/v1",
+      "id": "http://example.gov/credentials/3732",
+      "type": ["Credential", "PassportCredential"],
+      "name": "Passport",
+      "issuer": "https://example.gov",
+      "issued": "2010-01-01",
+      "claim": {
+        "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+        "name": "Alice Bobman",
+        "birthDate": "1985-12-14",
+        "gender": "female",
+        "nationality": {
+          "name": "United States"
+        },
+        "address": {
+          "type": "PostalAddress",
+          "addressStreet": "372 Sumter Lane",
+          "addressLocality": "Blackrock",
+          "addressRegion": "Nevada",
+          "postalCode": "23784",
+          "addressCountry": "US"
+        },
+        "passport": {
+          "type": "Passport",
+          "name": "United States Passport",
+          "documentId": "123-45-6789",
+          "issuer": "https://example.gov",
+          "issued": "2010-01-07T01:02:03Z",
+          "expires": "2020-01-07T01:02:03Z"
+        }
+      },
+      "signature": {
+        "type": "LinkedDataSignature2015",
+        "creator": "https://example.gov/keys/27",
+        "signature": "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish"
+      }
+    }
+  }]
+}</pre>
     </section>
 
   </body>
