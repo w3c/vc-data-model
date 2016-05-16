@@ -534,20 +534,20 @@ of verifiable claims about a particular identity.
 	    simple identity.</p>
 
 <pre class="idl">
-  [Constructor]
-  interface Identity {
-    DOMString id;
-    sequence&lt;DOMString> type;
-    DOMString name;
-    DOMString email;
-    DOMString birthDate;
-    DOMString telephone;
-  };
+[Constructor]
+interface Identity {
+    attribute DOMString id;
+    attribute FrozenArray&lt;DOMString> types;
+    attribute DOMString name;
+    attribute DOMString email;
+    attribute DOMString birthDate;
+    attribute DOMString telephone;
+};
 </pre>
 
             <p>The Identity could then be used as follows in JavaScript:</p>
 
-<pre class="example" title="Using a simple identity">
+<pre class="highlight example" title="Using a simple identity">
   var identity = new Identity();
   identity.id = "did:ebfeb1f712ebc6f1c276e12ec21";
   identity.type = ["Identity", "Person"];
@@ -594,25 +594,21 @@ of verifiable claims about a particular identity.
 
 <pre class="idl">
   interface ClaimBase {
-    DOMString id;
-    sequence&lt;DOMString> type;
-    DOMString issuer;
-    DOMString issued;
+    attribute DOMString id;
+    attribute FrozenArray&lt;DOMString> type;
+    attribute DOMString issuer;
+    attribute DOMString issued;
   };
-</pre>
 
-<pre class="idl">
   [Constructor]
   interface Claim : ClaimBase {
-    ClaimDetails1 claim;
+    attribute ClaimDetails1 claim;
   };
-</pre>
 
-<pre class="idl">
   [Constructor]
   interface ClaimDetails1 {
-    DOMString id;
-    unsigned short ageOver;
+    attribute DOMString id;
+    attribute unsigned short ageOver;
   };
 </pre>
 
@@ -638,23 +634,19 @@ of verifiable claims about a particular identity.
 
 <pre class="idl">
   interface VerifiableClaimBase : ClaimBase {
-    Signature signature;
+    attribute Signature signature;
   };
-</pre>
 
-<pre class="idl">
   [Constructor]
   interface Signature {
-    DOMString type;
-    DOMString creator;
-    DOMString signature;
+    attribute DOMString type;
+    attribute DOMString creator;
+    attribute DOMString signature;
   };
-</pre>
 
-<pre class="idl">
   [Constructor]
   interface VerifiableClaim1 : VerifiableClaimBase {
-    ClaimDetails1 claim;
+    attribute ClaimDetails1 claim;
   };
 </pre>
             <p>The Verifiable Claim could then be used as follows in
@@ -686,56 +678,47 @@ of verfiable claims about a particular identity.
 <pre class="idl">
   [Constructor]
   interface VC2 : VerifiableClaimBase {
-    DOMString name;
-    ClaimDetails2 claim;
-  }
-</pre>
+    attribute DOMString name;
+    attribute ClaimDetails2 claim;
+  };
 
-<pre class="idl">
   [Constructor]
   interface ClaimDetails2 {
-    DOMString id;
-    DOMString name;
-    DOMString birthDate;
-    Gender gender;
-    Nationality nationality;
-    Address address;
-    Passport passport;
-};
-</pre>
+    attribute DOMString id;
+    attribute DOMString name;
+    attribute DOMString birthDate;
+    attribute Gender gender;
+    attribute Nationality nationality;
+    attribute Address address;
+    attribute Passport passport;
+  };
 
-<pre class="idl">
   enum Gender {"male", "female"};
-</pre>
 
-<pre class="idl">
   [Constructor]
   interface Nationality {
-    DOMString name;
+    attribute DOMString name;
   };
-</pre>
 
-<pre class="idl">
   [Constructor]
   interface Address {
-    DOMString type;
-    DOMString addressStreet;
-    DOMString addressLocality;
-    DOMString addressRegion;
-    DOMString postalCode;
-    DOMString addressCountry;
+    attribute DOMString type;
+    attribute DOMString addressStreet;
+    attribute DOMString addressLocality;
+    attribute DOMString addressRegion;
+    attribute DOMString postalCode;
+    attribute DOMString addressCountry;
   };
-</pre>
 
-<pre class="idl">
   [Constructor]
   interface Passport {
-    DOMString type;
-    DOMString name;
-    DOMString documentId;
-    DOMString issuer;
-    DOMString issued;
-    DOMString expires;
+    attribute DOMString type;
+    attribute DOMString name;
+    attribute DOMString documentId;
+    attribute DOMString issuer;
+    attribute DOMString issued;
+    attribute DOMString expires;
+  };
 </pre>
             <p>The Verifiable Claim could then be used as follows in
             JavaScript:</p>
