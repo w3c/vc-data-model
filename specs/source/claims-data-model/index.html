@@ -172,13 +172,15 @@
 
       <section>
         <h2><dfn>Claims</dfn></h2>
-        <p>Unlike with <a>identities</a>, the <a>properties</a> in a
-        Claim data set are claims made by an entity about an
-        identity.  As such, the data model includes both
-        issuance-related properties and a <a><var>claim</var></a>
+        <p>For notational convenience, in this document the container
+        for a collection of Claims will be referred to as
+        a <dfn>Credential</dfn>.  Unlike with <a>identities</a>,
+        the <a>properties</a> in a Credential are claims made by
+        an entity about an identity.  As such, the data model includes
+        both issuance-related properties and a <a><var>claim</var></a>
         property that further contains the properties of the claim
         itself.</p>
-        <p>The following properties are required in a Claim:</p>
+        <p>The following properties are required in a Credential:</p>
         <dl>
           <dt><var><dfn data-lt="claim-id">id</dfn></var></dt>
           <dd>Claim URI</dd>
@@ -203,7 +205,7 @@
            permitted as an optional custom property.</p>
 	  </dd>
         </dl>
-        <p>The following properties are optional in a Claim:</p>
+        <p>The following properties are optional in a Credential:</p>
         <dl>
           <dt><var>issuer</var></dt>
           <dd>This is a URI for the issuer of the claim.</dd>
@@ -217,8 +219,8 @@
 
       <section>
         <h2><dfn>Verifiable Claims</dfn></h2>
-        <p>A verifiable claim is a <a data-lt="claims">claim</a> that
-        contains the following additional property:</p>
+        <p>The claims in a <a>Credential</a> can be made verifiable by
+        adding the following property to the Credential:</p>
         <dl>
           <dt><var>signature</var></dt>
           <dd>The method used for a signature will vary by
@@ -269,8 +271,8 @@
         </section>
 
         <section>
-          <h2>Expressing a Claim in JSON</h2>
-            <p>In JSON, a Claim data set is expressed as a single
+          <h2>Expressing Claims in JSON</h2>
+            <p>In JSON, a <a>Credential</a> is expressed as a single
             JSON object whose properties are the claim's
             properties, with the following value type assignments:</p>
             <ul>
@@ -398,17 +400,17 @@ of verfiable claims about a particular identity.
         </section>
 
         <section>
-          <h2>Expressing a Claim in JSON-HD</h2>
+          <h2>Expressing Claims in JSON-HD</h2>
             <p>Claims are expressed in JSON-LD in the same way they
             are expressed in JSON (***link***), except that there is
             an additional property <code>@context</code>.  Each
-            property of the claim structure itself and within
-            the <code>claim</code> property, such as the
+            property of the <a>Credential</a>, and within
+            the <code>claim</code> property itself, such as the
             generic <code>issuer</code> property or the
             app-specific <code>ageOver</code>, is given context via
             the <code>@context</code> value. Other contexts can be
             used or combined to express any arbitrary information
-            about a claim in idiomatic JSON.</p>
+            about claims in idiomatic JSON.</p>
 
             <p>The following example demonstrates how to express a
             simple (unverifiable) claim about a particular
@@ -559,8 +561,8 @@ interface Identity {
         </section>
 
         <section>
-          <h2>Expressing a Claim in WebIDL</h2>
-            <p>In WebIDL, a Claim data set is expressed as an
+          <h2>Expressing Claims in WebIDL</h2>
+            <p>In WebIDL, a <a>Credential</a> is expressed as an
             Interface whose attributes are the claim's properties,
             with the following value type assignments:</p>
             <ul>
@@ -593,7 +595,7 @@ interface Identity {
             it and a date for when it was issued. </p>
 
 <pre class="idl">
-  interface ClaimBase {
+  interface CredentialBase {
     attribute DOMString id;
     attribute FrozenArray&lt;DOMString> type;
     attribute DOMString issuer;
@@ -601,39 +603,39 @@ interface Identity {
   };
 
   [Constructor]
-  interface Claim : ClaimBase {
-    attribute ClaimDetails1 claim;
+  interface Credential : CredentialBase {
+    attribute Claim1 claim;
   };
 
   [Constructor]
-  interface ClaimDetails1 {
+  interface Claim1 {
     attribute DOMString id;
     attribute unsigned short ageOver;
   };
 </pre>
 
-            <p>The Claim could then be used as follows in JavaScript:</p>
+            <p>The Credential could then be used as follows in JavaScript:</p>
 
 <pre class="example" title="Using a simple claim">
-  var claimDetails = new ClaimDetails1();
-  claimdetails.id = "http://example.gov/credentials/3732";
-  claimdetails.ageOver = 21;
+  var claim = new Claim1();
+  claim.id = "http://example.gov/credentials/3732";
+  claim.ageOver = 21;
 
-  var claim = new Claim();
-  claim.type = ["Credential", "ProofOfAgeCredential"];
-  claim.issuer = "https://dmv.example.gov";
-  claim.issued = "2010-01-01";
-  claim.claim = claimdetails;
+  var credential = new Credential();
+  credential.type = ["Credential", "ProofOfAgeCredential"];
+  credential.issuer = "https://dmv.example.gov";
+  credential.issued = "2010-01-01";
+  credential.claim = claim;
 </pre>
 
             <p>The following example demonstrates how to express the
             same claim about the same identity, but in a verifiable
-            form. As such, it contains a <code>signature</code> that
-            can be used to verify its entire contents, including the
-            claim.</p>
+            form. As such, the Credential contains
+            a <code>signature</code> that can be used to verify its
+            entire contents, including the claim.</p>
 
 <pre class="idl">
-  interface VerifiableClaimBase : ClaimBase {
+  interface VerifiableCredentialBase : CredentialBase {
     attribute Signature signature;
   };
 
@@ -645,29 +647,29 @@ interface Identity {
   };
 
   [Constructor]
-  interface VerifiableClaim1 : VerifiableClaimBase {
-    attribute ClaimDetails1 claim;
+  interface VerifiableCredential1 : VerifiableCredentialBase {
+    attribute Claim1 claim;
   };
 </pre>
-            <p>The Verifiable Claim could then be used as follows in
+            <p>The Verifiable Credential could then be used as follows in
             JavaScript:</p>
 
 <pre class="example" title="Using a simple verifiable claim">
-  var claimDetails = new ClaimDetails1();
-  claimdetails.id = "http://example.gov/credentials/3732";
-  claimdetails.ageOver = 21;
+  var claim = new Claim1();
+  claim.id = "http://example.gov/credentials/3732";
+  claim.ageOver = 21;
 
   var signature = new Signature();
   signature.type = "LinkedDataSignature2015";
   signature.creator = "https://dmv.example.gov/keys/6";
   signature.signature = "2332f32g43ve23g23g23g/g3223gegvgre212fb488vh";
 
-  var claim = new VerifiableClaim1();
-  claim.type = ["Credential", "ProofOfAgeCredential"];
-  claim.issuer = "https://dmv.example.gov";
-  claim.issued = "2010-01-01";
-  claim.claim = claimdetails;
-  claim.signature = signature;
+  var credential = new VerifiableCredential1();
+  credential.type = ["Credential", "ProofOfAgeCredential"];
+  credential.issuer = "https://dmv.example.gov";
+  credential.issued = "2010-01-01";
+  credential.claim = claim;
+  credential.signature = signature;
 </pre>
 
         <p>
@@ -677,13 +679,13 @@ of verfiable claims about a particular identity.
 
 <pre class="idl">
   [Constructor]
-  interface VC2 : VerifiableClaimBase {
+  interface VC2 : VerifiableCredentialBase {
     attribute DOMString name;
-    attribute ClaimDetails2 claim;
+    attribute Claim2 claim;
   };
 
   [Constructor]
-  interface ClaimDetails2 {
+  interface Claim2 {
     attribute DOMString id;
     attribute DOMString name;
     attribute DOMString birthDate;
@@ -720,7 +722,7 @@ of verfiable claims about a particular identity.
     attribute DOMString expires;
   };
 </pre>
-            <p>The Verifiable Claim could then be used as follows in
+            <p>The Verifiable Credential could then be used as follows in
             JavaScript:</p>
 
 <pre class="example" title="Using a more complex verifiable claim">{
@@ -743,7 +745,7 @@ of verfiable claims about a particular identity.
   passport.issued = "2010-01-07T01:02:03Z";
   passport.expires = "2020-01-07T01:02:03Z";
 
-  var claim = new ClaimDetails2();
+  var claim = new Claim2();
   claim.id = "did:ebfeb1f712ebc6f1c276e12ec21";
   claim.name = "Alice Bobman";
   claim.birthDate = "1985-12-14";
