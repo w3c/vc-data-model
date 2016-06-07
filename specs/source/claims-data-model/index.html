@@ -127,7 +127,112 @@ JSON, JSON-LD, and WebIDL.
 
     <section>
       <h2>Introduction</h2>
-      <p>&nbsp;</p>
+      <p>This specification is based upon work presented in the
+      <a href="http://opencreds.org/specs/source/identity-credentials/#expressing-identities-and-credentials">Identity
+      Credentials 1.0 Credentials Community Group Report</a>
+      specification.  In particular, examples from that document have
+      been used to infer a general data model for representation and
+      use of verifiable claims.  This document is intended to provide
+      only one example of what could potentially be defined and
+      standardized in a Recommendation-track Working Group at W3C.
+      The two pieces of possible standardization work demonstrated in
+      this document are:</p>
+      <ol>
+        <li>A generic data model covering the minimum information
+        necessary to create and use verifiable claims that would meet
+        the needs described in the [[\Use Cases Document]].</li>
+        <li>Instructions on how to express specific instances of the
+        data model in three different syntactic formulations: JSON,
+        JSON-LD, and WebIDL.</li>
+      </ol>
+     
+      <p>As background for understanding the data model,
+      an <a>identity</a> is a set of information that can be used to
+      identify a particular <a>entity</a>. Entities are anything with
+      distinct existence, such as a person, organization, concept, or
+      device. We typically use <a>credentials</a>, or claims made by
+      others about our identities, to authenticate ourselves and
+      ultimately gain access to various services. For example, we use
+      email addresses to identify ourselves to online services,
+      driver's licenses to prove that we are capable of operating a
+      motor vehicle, university degrees to prove we are well-trained
+      and knowledgeable, and government-issued passports to travel
+      between countries or to access financial services. It is the
+      goal of this specification to provide an easy, standard way to
+      express identity credentials on the Web.
+      </p>
+      <p>
+      There are a number of desirable capabilities for these kinds of
+      credentials, referred to in this specification
+      as <dfn data-lt="tbd credential|tbd credentials">TBD
+      credentials</dfn>, that have been identified as requirements for
+      this specification:
+      </p>
+      <ul>
+        <li>
+<a>TBD Credentials</a> are user-centric. This refers to an architecture where:
+          <ul>
+            <li>
+<a>TBD Credential</a> holders are positioned in the middle between issuers and consumers.
+            </li>
+            <li>
+<a>TBD Credential</a> holders receive and store credentials from issuers through an
+agent that the issuer does not need to trust.
+            </li>
+            <li>
+<a>TBD Credential</a> holders provide credentials to credential consumers through
+an agent that consumers needn't trust; they only need to trust issuers.
+            </li>
+            <li>
+<a>TBD Credentials</a> are associated with identities, not particular services; credential
+holders can decide how to aggregate credentials and manage their own
+identities.
+            </li>
+            <li>
+<a>TBD Credential</a> holders can control and own their own identifiers.
+            </li>
+            <li>
+<a>TBD Credential</a> holders can control which credentials to use and when.
+            </li>
+            <li>
+<a>TBD Credential</a> holders may freely choose and swap out the agents they employ to
+help them manage and share their credentials.
+            </li>
+            <li>
+<a>TBD Credential</a> holders that share verifiable claims are not required to reveal the
+identity of the consumer to their agent or to issuers.
+            </li>
+          </ul>
+        </li>
+        <li>
+A standard, machine-readable data format for expressing <a>TBD credentials</a>
+that can be extended with minimal coordination.
+        </li>
+        <li>
+Independent issuance, storage, and cryptographic verification of <a>TBD Credentials.
+        </li>
+        <li>
+A standard mechanism for requesting <a>TBD Credentials</a>.
+        </li>
+        <li>
+The ability to revoke previously issued <a>TBD Credentials</a>.
+        </li>
+        <li>
+Web Browser APIs for storing and consuming <a>TBD Credentials</a>.
+        </li>
+      </ul>
+      <p>
+In order to store the unbounded variety of attributes that could be
+claimed in <a>TBD Credentials</a>, a simple but extensible data model
+is utilized.  The remainder of this specification is structured as
+follows: first, some general definitions of terms are provided.  These
+are imported from a master lexicon used by all of the specifications
+of the Credentials CG.  Second, the data model is described in text
+prose to avoid any suggestion of bias in terms of syntactic
+representation.  Third, instructions are provided for how to express
+instances of the data model in terms of JSON, JSON-LD [[!JSON-LD]],
+and WebIDL.</p>
+      </p>
     </section>
 
     <section>
@@ -201,9 +306,7 @@ JSON, JSON-LD, and WebIDL.
 
       <section>
         <h2><dfn>Claims</dfn></h2>
-        <p>For notational convenience, in this document the container
-        for a collection of Claims will be referred to as
-        a <dfn>TBD Credential</dfn>.  Unlike with <a>identities</a>,
+        <p>Unlike with <a>identities</a>,
         the <a>properties</a> in a TBD Credential are claims made by
         an entity about an identity.  As such, the data model includes
         both issuance-related properties and a <a><var>claim</var></a>
@@ -441,6 +544,12 @@ of verfiable claims about a particular identity.
 
       <section>
         <h2>Expressing Identities and Claims in JSON-LD</h2>
+        <p>JSON-LD [[!JSON-LD]] is a data storage and expression
+        approach called
+        <a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked
+        Data</a>. It is a way of expressing information on the Web
+        that is both simple and extensible.</p>
+
         <section>
           <h2>Expressing an Identity in JSON-LD</h2>
             <p>Identities are expressed in JSON-LD in the same way
