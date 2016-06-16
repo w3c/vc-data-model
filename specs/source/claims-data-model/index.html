@@ -96,20 +96,20 @@
   <body>
     <section id='abstract'>
       <p>
-An <a>identity</a> is a collection of attributes about an entity that
+An <a>identity profile</a> is a collection of attributes about an entity that
 distinguish it from other entities. Entities are anything with distinct
 existence, such as people, organizations, concepts, or devices. Some entities,
-such as people, are multifaceted, having multiple identities that they present
+such as people, are multifaceted, having multiple identities (profiles) that they present
 to the world. People are often able to establish trust by demonstrating that respected others have made claims about their identities. One way of doing this
-is by presenting a <a>TBD credential</a>. A <a>TBD credential</a> is a set of
-<a>claims</a> made by an <a>entity</a> about an <a>identity</a>. A
-<a>TBD credential</a> may refer to a qualification, achievement, quality, or other
+is by presenting an <a>Entity Credential</a>. An <a>Entity Credential</a> is a set of
+<a>claims</a> made by an <a>entity</a> about an <a>identity</a>. An
+<a>Entity Credential</a> may refer to a qualification, achievement, quality, or other
 information about an <a>identity</a> such as a name, government ID, home
 address, or university degree that typically indicates suitability.
       </p>
       <p>
 This specification describes a data model for a digital <a>identity</a> and a
-collection of digital <a>TBD credentials</a> that assert <a>claims</a> about that
+collection of digital <a>Entity Credentials</a> that assert <a>claims</a> about that
 <a>identity</a>. It also describes how to express that data model in
 JSON, JSON-LD, and WebIDL.
       </p>
@@ -170,60 +170,60 @@ JSON, JSON-LD, and WebIDL.
       </p>
       <ul>
         <li>
-<a>TBD Credentials</a> are user-centric. This refers to an architecture where:
+<a>Entity Credentials</a> are user-centric. This refers to an architecture where:
           <ul>
             <li>
-<a>TBD Credential</a> holders are positioned in the middle between issuers and consumers.
+<a>Entity Credential</a> holders are positioned in the middle between issuers and consumers.
             </li>
             <li>
-<a>TBD Credential</a> holders receive and store credentials from issuers through an
+<a>Entity Credential</a> holders receive and store credentials from issuers through an
 agent that the issuer does not need to trust.
             </li>
             <li>
-<a>TBD Credential</a> holders provide credentials to credential consumers through
+<a>Entity Credential</a> holders provide credentials to credential consumers through
 an agent that consumers needn't trust; they only need to trust issuers.
             </li>
             <li>
-<a>TBD Credentials</a> are associated with identities, not particular services; credential
+<a>Entity Credentials</a> are associated with identities, not particular services; credential
 holders can decide how to aggregate credentials and manage their own
 identities.
             </li>
             <li>
-<a>TBD Credential</a> holders can control and own their own identifiers.
+<a>Entity Credential</a> holders can control and own their own identifiers.
             </li>
             <li>
-<a>TBD Credential</a> holders can control which credentials to use and when.
+<a>Entity Credential</a> holders can control which credentials to use and when.
             </li>
             <li>
-<a>TBD Credential</a> holders may freely choose and swap out the agents they employ to
+<a>Entity Credential</a> holders may freely choose and swap out the agents they employ to
 help them manage and share their credentials.
             </li>
             <li>
-<a>TBD Credential</a> holders that share verifiable claims are not required to reveal the
+<a>Entity Credential</a> holders that share verifiable claims are not required to reveal the
 identity of the consumer to their agent or to issuers.
             </li>
           </ul>
         </li>
         <li>
-A standard, machine-readable data format for expressing <a>TBD credentials</a>
+A standard, machine-readable data format for expressing <a>Entity Credentials</a>
 that can be extended with minimal coordination.
         </li>
         <li>
-Independent issuance, storage, and cryptographic verification of <a>TBD Credentials</a>.
+Independent issuance, storage, and cryptographic verification of <a>Entity Credentials</a>.
         </li>
         <li>
-A standard mechanism for requesting <a>TBD Credentials</a>.
+A standard mechanism for requesting <a>Entity Credentials</a>.
         </li>
         <li>
-The ability to revoke previously issued <a>TBD Credentials</a>.
+The ability to revoke previously issued <a>Entity Credentials</a>.
         </li>
         <li>
-Web Browser APIs for storing and consuming <a>TBD Credentials</a>.
+Web Browser APIs for storing and consuming <a>Entity Credentials</a>.
         </li>
       </ul>
       <p>
 In order to store the unbounded variety of attributes that could be
-claimed in <a>TBD Credentials</a>, a simple but extensible data model
+claimed in <a>Entity Credentials</a>, a simple but extensible data model
 is utilized.  The remainder of this specification is structured as
 follows: first, some general definitions of terms are provided.  These
 are imported from a master lexicon used by all of the specifications
@@ -254,7 +254,7 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
       verifiable claims that is compatible with the requirements and
       use cases expected to be addressed by this group.</p>
 
-<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="390px" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 390" preserveAspectRatio="xMidYMid meet" ><defs id="svgEditorDefs"><path id="svgEditorClosePathDefs" stroke="black" style="stroke-width: 1px;" fill="khaki"/><marker id="arrow20-16-right" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="-3" refY="0" viewBox="-15 -5 20 20"><path d="M -15 -5 L 0 0 L -15 5 z" fill="black"/></marker><marker id="arrow15-12-left" markerHeight="12" markerUnits="strokeWidth" markerWidth="15" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker><marker id="arrow20-16-left" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker></defs><rect id="svgEditorBackground" x="0" y="0" width="990" height="490" style="fill: none; stroke: none;"/><rect x="3" y="5" style="stroke-width: 1px;" stroke="black" id="e1_rectangle" width="230" height="94" fill="khaki"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="81" y="25" id="e2_texte">Identity</text><line id="e3_line" x1="3" y1="32" x2="233" y2="32" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="90" y="167" id="e4_texte"></text><text fill="black" style="font-family: Arial; font-size: 12px;" x="20" y="60" id="e5_texte">type: unordered set of URIs<tspan x="20" dy="1.25em" style="font-size: 12px;">signature: Signature [0..1]</tspan></text><rect x="358" y="4" style="stroke-width: 1px;" stroke="black" id="e6_rectangle" width="230" height="77" fill="khaki"/><line id="e8_line" x1="358" y1="31" x2="588" y2="31" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="462" y="167" id="e14_texte"></text><rect x="3" y="150" style="stroke-width: 1px;" stroke="black" id="e16_rectangle" width="230" height="170" fill="khaki"/><line id="e17_line" x1="3" y1="177" x2="233" y2="177" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="49" y="171" id="e18_texte">TBD Credential</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="27" y="206" id="e19_texte">id: URI<tspan x="27" dy="1.25em" id="e20_tspan">type: unordered set of URIs</tspan><tspan x="27" dy="1.25em" id="e21_tspan">issuer: URI</tspan><tspan x="27" dy="1.25em" id="e22_tspan">issued: date in string form</tspan><tspan x="27" dy="1.25em" id="e23_tspan">claim: Claim</tspan></text><text fill="black" style="font-family: Arial; font-size: 20px;" x="445" y="25" id="e24_texte">Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="375" y="58" id="e25_texte">(at least one custom property)</text><rect x="358" y="147" style="stroke-width: 1px;" stroke="black" id="e26_rectangle" width="230" height="77" fill="khaki"/><line id="e27_line" x1="358" y1="174" x2="588" y2="174" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="405" y="169" id="e30_texte">Verifiable Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="377" y="197" id="e31_texte">signature: Signature</text><rect x="357" y="268" style="stroke-width: 1px;" stroke="black" id="e32_rectangle" width="229" height="119" fill="khaki"/><line id="e33_line" x1="357" y1="295" x2="587" y2="295" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="424" y="289" id="e36_texte">Signature</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="374" y="317" id="e38_texte">(varies, but expected to include<tspan x="374" dy="1.25em">at least a signature, a reference</tspan><tspan x="374" dy="1.25em">to the signing entity, and a</tspan><tspan x="374" dy="1.25em">representation of the signing date)</tspan></text><line id="e42_line" x1="233" y1="58" x2="357" y2="58" stroke="black" style="stroke-width: 1px; fill: none;"/><line id="e43_line" x1="470" y1="148" x2="470" y2="81" stroke="black" style="stroke-width: 1px; fill: none; marker-end: url(&quot;#arrow20-16-right&quot;);"/><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="72" id="e44_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="341" y="52" id="e45_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="51" id="e46_texte">1</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="332" y="71" id="e47_texte">0..*</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="390px" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 390" preserveAspectRatio="xMidYMid meet" ><defs id="svgEditorDefs"><path id="svgEditorClosePathDefs" stroke="black" style="stroke-width: 1px;" fill="khaki"/><marker id="arrow20-16-right" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="-3" refY="0" viewBox="-15 -5 20 20"><path d="M -15 -5 L 0 0 L -15 5 z" fill="black"/></marker><marker id="arrow15-12-left" markerHeight="12" markerUnits="strokeWidth" markerWidth="15" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker><marker id="arrow20-16-left" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker></defs><rect id="svgEditorBackground" x="0" y="0" width="990" height="490" style="fill: none; stroke: none;"/><rect x="3" y="5" style="stroke-width: 1px;" stroke="black" id="e1_rectangle" width="230" height="94" fill="khaki"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="81" y="25" id="e2_texte">Identity</text><line id="e3_line" x1="3" y1="32" x2="233" y2="32" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="90" y="167" id="e4_texte"></text><text fill="black" style="font-family: Arial; font-size: 12px;" x="20" y="60" id="e5_texte">type: unordered set of URIs<tspan x="20" dy="1.25em" style="font-size: 12px;">signature: Signature [0..1]</tspan></text><rect x="358" y="4" style="stroke-width: 1px;" stroke="black" id="e6_rectangle" width="230" height="77" fill="khaki"/><line id="e8_line" x1="358" y1="31" x2="588" y2="31" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="462" y="167" id="e14_texte"></text><rect x="3" y="150" style="stroke-width: 1px;" stroke="black" id="e16_rectangle" width="230" height="170" fill="khaki"/><line id="e17_line" x1="3" y1="177" x2="233" y2="177" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="49" y="171" id="e18_texte">Entity Credential</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="27" y="206" id="e19_texte">id: URI<tspan x="27" dy="1.25em" id="e20_tspan">type: unordered set of URIs</tspan><tspan x="27" dy="1.25em" id="e21_tspan">issuer: URI</tspan><tspan x="27" dy="1.25em" id="e22_tspan">issued: date in string form</tspan><tspan x="27" dy="1.25em" id="e23_tspan">claim: Claim</tspan></text><text fill="black" style="font-family: Arial; font-size: 20px;" x="445" y="25" id="e24_texte">Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="375" y="58" id="e25_texte">(at least one custom property)</text><rect x="358" y="147" style="stroke-width: 1px;" stroke="black" id="e26_rectangle" width="230" height="77" fill="khaki"/><line id="e27_line" x1="358" y1="174" x2="588" y2="174" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="405" y="169" id="e30_texte">Verifiable Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="377" y="197" id="e31_texte">signature: Signature</text><rect x="357" y="268" style="stroke-width: 1px;" stroke="black" id="e32_rectangle" width="229" height="119" fill="khaki"/><line id="e33_line" x1="357" y1="295" x2="587" y2="295" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="424" y="289" id="e36_texte">Signature</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="374" y="317" id="e38_texte">(varies, but expected to include<tspan x="374" dy="1.25em">at least a signature, a reference</tspan><tspan x="374" dy="1.25em">to the signing entity, and a</tspan><tspan x="374" dy="1.25em">representation of the signing date)</tspan></text><line id="e42_line" x1="233" y1="58" x2="357" y2="58" stroke="black" style="stroke-width: 1px; fill: none;"/><line id="e43_line" x1="470" y1="148" x2="470" y2="81" stroke="black" style="stroke-width: 1px; fill: none; marker-end: url(&quot;#arrow20-16-right&quot;);"/><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="72" id="e44_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="341" y="52" id="e45_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="51" id="e46_texte">1</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="332" y="71" id="e47_texte">0..*</text></svg>
 
       <section>
         <h2>General Characteristics</h2>
@@ -267,7 +267,7 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
         the <var>id</var> property.  An Identity data set defines the
         identifier given in
         the <a data-lt="identity-id"><var>id</var></a> property, while
-        a Claim data set, referred to as a <a>TBD Credential</a>, uses
+        a Claim data set, referred to as an <a>Entity Credential</a>, uses
         the <var>id</var> property to refer to the Identity data set
         that defines the given <var>id</var> value.</p>
         <p>This document purposely defines the data model without
@@ -309,19 +309,19 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
       <section>
         <h2><dfn>Claims</dfn></h2>
         <p>Unlike with <a>identities</a>,
-        the <a>properties</a> in a TBD Credential are claims made by
+        the <a>properties</a> in an <a>Entity Credential</a> are claims made by
         an entity about an identity.  As such, the data model includes
         both issuance-related properties and a <a><var>claim</var></a>
         property that further contains the properties of the claim
         itself.</p>
-        <p>The following properties are required in a TBD Credential:</p>
+        <p>The following properties are required in an Entity Credential:</p>
         <dl>
           <dt><var>id</var></dt>
           <dd>Claim URI</dd>
           <dt><var>type</var></dt>
           <dd>This is an unordered set of URIs representing the types
-          or classes of which this data set is a member.  As a
-          TBD Credential, at a minimum the class "Credential" must be a
+          or classes of which this data set is a member.  As an
+          Entity Credential, at a minimum the class "Credential" must be a
           member of the set.  Additional application-specific values
           are permitted in the sequence.</dd>
           <dt><var><dfn>claim</dfn></var></dt>
@@ -340,7 +340,7 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
            permitted as an optional custom property.</p>
 	  </dd>
         </dl>
-        <p>The following properties are optional in a TBD Credential:</p>
+        <p>The following properties are optional in an Entity Credential:</p>
         <dl>
           <dt><var>issuer</var></dt>
           <dd>This is a URI for the issuer of the claim.</dd>
@@ -354,8 +354,8 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
 
       <section>
         <h2><dfn>Verifiable Claims</dfn></h2>
-        <p>The claims in a <a>TBD Credential</a> can be made verifiable by
-        adding the following property to the TBD Credential:</p>
+        <p>The claims in an <a>Entity Credential</a> can be made verifiable by
+        adding the following property to the Entity Credential:</p>
         <dl>
           <dt><var>signature</var></dt>
           <dd>The method used for a signature will vary by
@@ -410,7 +410,7 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
 
         <section>
           <h2>Expressing Claims in JSON</h2>
-            <p>In JSON, a <a>TBD Credential</a> is expressed as a single
+            <p>In JSON, an <a>Entity Credential</a> is expressed as a single
             JSON object whose properties are the claim's
             <a>properties</a>, with the following value type assignments:</p>
             <ul>
@@ -581,7 +581,7 @@ of verfiable claims about a particular identity.
             <p>Claims are expressed in JSON-LD in the same way they
             are expressed in JSON (***link***), except that there is
             an additional property <code>@context</code>.  Each
-            property of the <a>TBD Credential</a>, and within
+            property of the <a>Entity Credential</a>, and within
             the <code>claim</code> property itself, such as the
             generic <code>issuer</code> property or the
             app-specific <code>ageOver</code>, is given context via
@@ -741,7 +741,7 @@ interface Identity {
 
         <section>
           <h2>Expressing Claims in WebIDL</h2>
-            <p>In WebIDL, a <a>TBD Credential</a> is expressed as an
+            <p>In WebIDL, an <a>Entity Credential</a> is expressed as an
             Interface whose attributes are the claim's <a>properties</a>,
             with the following value type assignments:</p>
             <ul>
@@ -795,7 +795,7 @@ interface Identity {
   };
 </pre>
 
-            <p>The TBD Credential could then be used as follows in JavaScript:</p>
+            <p>The Entity Credential could then be used as follows in JavaScript:</p>
 
 <pre class="example" title="Using a simple claim">
   var claim = new Claim1();
@@ -811,7 +811,7 @@ interface Identity {
 
             <p>The following example demonstrates how to express the
             same claim about the same identity, but in a verifiable
-            form. As such, the TBD Credential contains
+            form. As such, the Entity Credential contains
             a <code>signature</code> that can be used to verify its
             entire contents, including the claim.</p>
 
@@ -832,7 +832,7 @@ interface Identity {
     attribute Claim1 claim;
   };
 </pre>
-            <p>The Verifiable TBD Credential could then be used as follows in
+            <p>The Verifiable Entity Credential could then be used as follows in
             JavaScript:</p>
 
 <pre class="example" title="Using a simple verifiable claim">
@@ -903,7 +903,7 @@ of verfiable claims about a particular identity.
     attribute DOMString expires;
   };
 </pre>
-            <p>The Verifiable TBD Credential could then be used as follows in
+            <p>The Verifiable Entity Credential could then be used as follows in
             JavaScript:</p>
 
 <pre class="example" title="Using a more complex verifiable claim">{
