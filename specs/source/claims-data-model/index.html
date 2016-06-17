@@ -247,6 +247,12 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
       </div>
 
       <dl class="termlist">
+        <dt><dfn>identity profile expression</dfn></dt>
+        <dd>
+        The realization of an <a>identity profile</a> in a specific
+        syntax (e.g., JSON, JSON-LD, or WebIDL) that satisfies the
+        rules of the <a>identity profile model</a>.
+        </dd>
         <dt><dfn>entity credential expression</dfn></dt>
         <dd>
         The realization of an <a>entity credential</a> in a specific
@@ -270,14 +276,14 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
         <p>Both identity profiles and claims, including verifiable claims,
         consist of a collection of name-value pairs which will be
         referred to as
-        <dfn data-lt="property|properties">properties</dfn> in this
+        <dfn data-lt="property">properties</dfn> in this
         document.  The following subsections describe the required and
         optional properties for both.  The link between the two is in
         the <var>id</var> property.  An Identity Profile defines a
         Subject identifier in
-        the <a data-lt="identity-id"><var>id</var></a> property, while
+        the <a href="#identity-id"><var>id</var></a> property, while
         the claims section of an <a>Entity Credential</a> uses
-        the <var>id</var> property to refer to that Subject identifier.</p>
+        the <a href="#claim-id"><var>id</var></a> property to refer to that Subject identifier.</p>
         <p>This document purposely defines the data model without
         using WebIDL, JSON, JSON-LD, or XML since users of all of
         those representations are expected.
@@ -287,15 +293,15 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
       </section>
 
       <section>
-        <h2><dfn data-lt="identity|identities">Identity Profiles</dfn></h2>
-        <p>Unlike with <a>claims</a>, the <a>properties</a> in an
-        Identity Profile are merely information that, together with a Subject
-        identifier <a data-lt="identity-id"><var>id</var></a>,
+        <h2><dfn>Identity Profile Model</dfn></h2>
+        <p>Unlike with <a>claims</a>, the <a>properties</a> in the
+        Identity Profile Model are merely information that, together with a Subject
+        identifier <a href="#identity-id"><var>id</var></a>,
         constitute an identity profile.  The properties are not claims and are
         not intended to be verifiable.</p>
         <p>The following properties are required in an Identity Profile:</p>
         <dl>
-          <dt><var><dfn data-lt="identity-id">id</dfn></var></dt>
+          <dt><a id="identity-id"><var>id</var></a></dt>
           <dd>This is a URI representing the Subject.  This identifier MAY be
           long-lived but does not have to be.</dd>
           <dt><var>type</var></dt>
@@ -338,9 +344,9 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
             <p>The following properties are required in
             a <var>claim</var> value:</p>
             <dl>
-              <dt><var><dfn data-lt="claim-id">id</dfn></var></dt>
+              <dt><a id="claim-id"><var>id</var></a></dt>
               <dd>The Subject of the claim, the property value is expected to be a valid
-              <a data-lt="identity-id">Identity Profile<var>id</var></a>.</dd>
+              <a href="#identity-id">Identity Profile<var>id</var></a>.</dd>
               <dt>At least one custom property</dt>
               <dd>N/A</dd>
             </dl>
