@@ -102,15 +102,15 @@ existence, such as people, organizations, concepts, or devices. Some entities,
 such as people, are multifaceted, having multiple identities (profiles) that they present
 to the world. People are often able to establish trust by demonstrating that respected others have made claims about their identities. One way of doing this
 is by presenting an <a>Entity Credential</a>. An <a>Entity Credential</a> is a set of
-<a>claims</a> made by an <a>entity</a> about an <a>identity</a>. An
+<a>claims</a> made by an <a>entity</a> about an <a>identity profile</a> referred to as the Subject of the claims. An
 <a>Entity Credential</a> may refer to a qualification, achievement, quality, or other
-information about an <a>identity</a> such as a name, government ID, home
+information about the Subject such as a name, government ID, home
 address, or university degree that typically indicates suitability.
       </p>
       <p>
-This specification describes a data model for a digital <a>identity</a> and a
+This specification describes a data model for a digital <a>identity profile</a> and a
 collection of digital <a>Entity Credentials</a> that assert <a>claims</a> about that
-<a>identity</a>. It also describes how to express that data model in
+<a>identity profile</a>. It also describes how to express that data model in
 JSON, JSON-LD, and WebIDL.
       </p>
     </section>
@@ -147,7 +147,7 @@ JSON, JSON-LD, and WebIDL.
       </ol>
      
       <p>As background for understanding the data model,
-      an <a>identity</a> is a set of information that can be used to
+      an <a>identity profile</a> is a set of information that can be used to
       identify a particular <a>entity</a>. Entities are anything with
       distinct existence, such as a person, organization, concept, or
       device. We typically use <a>credentials</a>, or claims made by
@@ -159,13 +159,13 @@ JSON, JSON-LD, and WebIDL.
       and knowledgeable, and government-issued passports to travel
       between countries or to access financial services. It is the
       goal of this specification to provide an easy, standard way to
-      express identity credentials on the Web.
+      express such credentials on the Web.
       </p>
       <p>
       There are a number of desirable capabilities for these kinds of
       credentials, referred to in this specification
-      as <dfn data-lt="tbd credential|tbd credentials">TBD
-      credentials</dfn>, that have been identified as requirements for
+      as <dfn>Entity
+      Credentials</dfn>, that have been identified as requirements for
       this specification:
       </p>
       <ul>
@@ -258,18 +258,17 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
 
       <section>
         <h2>General Characteristics</h2>
-        <p>Both identities and claims, including verifiable claims,
+        <p>Both identity profiles and claims, including verifiable claims,
         consist of a collection of name-value pairs which will be
         referred to as
         <dfn data-lt="property|properties">properties</dfn> in this
         document.  The following subsections describe the required and
         optional properties for both.  The link between the two is in
-        the <var>id</var> property.  An Identity data set defines the
-        identifier given in
+        the <var>id</var> property.  An Identity Profile defines a
+        Subject identifier in
         the <a data-lt="identity-id"><var>id</var></a> property, while
-        a Claim data set, referred to as an <a>Entity Credential</a>, uses
-        the <var>id</var> property to refer to the Identity data set
-        that defines the given <var>id</var> value.</p>
+        the claims section of an <a>Entity Credential</a> uses
+        the <var>id</var> property to refer to that Subject identifier.</p>
         <p>This document purposely defines the data model without
         using WebIDL, JSON, JSON-LD, or XML since users of all of
         those representations are expected.
@@ -279,25 +278,25 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
       </section>
 
       <section>
-        <h2><dfn data-lt="identity|identities">Identities</dfn></h2>
+        <h2><dfn data-lt="identity|identities">Identity Profiles</dfn></h2>
         <p>Unlike with <a>claims</a>, the <a>properties</a> in an
-        Identity are merely properties that, together with an
+        Identity Profile are merely information that, together with a Subject
         identifier <a data-lt="identity-id"><var>id</var></a>,
-        constitute an identity.  The properties are not claims and are
+        constitute an identity profile.  The properties are not claims and are
         not intended to be verifiable.</p>
-        <p>The following properties are required in an Identity:</p>
+        <p>The following properties are required in an Identity Profile:</p>
         <dl>
           <dt><var><dfn data-lt="identity-id">id</dfn></var></dt>
-          <dd>This is an Identity URI.  This identifier MAY be
+          <dd>This is a URI representing the Subject.  This identifier MAY be
           long-lived but does not have to be.</dd>
           <dt><var>type</var></dt>
           <dd>This is an unordered set of URIs representing the types
           or classes of which this data set is a member.  As an
-          Identity, at a minimum the class "Identity" must be a member
+          Identity Profile, at a minimum the class "Identity" must be a member
           of the set.  Additional application-specific values are
           permitted in the set.</dd>
         </dl>
-        <p>The following properties are optional in an Identity:</p>
+        <p>The following properties are optional in an Identity Profile:</p>
         <dl>
           <dt><var>signature</var></dt>
           <dd>&nbsp;</dd>
@@ -308,9 +307,9 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
 
       <section>
         <h2><dfn>Claims</dfn></h2>
-        <p>Unlike with <a>identities</a>,
+        <p>Unlike with <a>identity profiles</a>,
         the <a>properties</a> in an <a>Entity Credential</a> are claims made by
-        an entity about an identity.  As such, the data model includes
+        an entity about the Subject defined in an identity profile.  As such, the data model includes
         both issuance-related properties and a <a><var>claim</var></a>
         property that further contains the properties of the claim
         itself.</p>
@@ -331,8 +330,8 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
             a <var>claim</var> value:</p>
             <dl>
               <dt><var><dfn data-lt="claim-id">id</dfn></var></dt>
-              <dd>The property value is expected to be a valid
-              <a data-lt="identity-id">Identity <var>id</var></a>.</dd>
+              <dd>The Subject of the claim, the property value is expected to be a valid
+              <a data-lt="identity-id">Identity Profile<var>id</var></a>.</dd>
               <dt>At least one custom property</dt>
               <dd>N/A</dd>
             </dl>
@@ -380,9 +379,9 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
       <section>
         <h2>Expressing Identities and Claims in JSON</h2>
         <section>
-          <h2>Expressing an Identity in JSON</h2>
-            <p>In JSON, an Identity data set is expressed as a single
-            JSON object whose properties are the identity's
+          <h2>Expressing an Identity Profile in JSON</h2>
+            <p>In JSON, an Identity Profile is expressed as a single
+            JSON object whose properties are the identity profile's
             <a>properties</a>, with the following value type assignments:</p>
             <ul>
               <li>Any number value MUST be represented as a Number type.</li>
@@ -396,9 +395,9 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
               <li>Any other value MUST be represented as a String type.</li>
             </ul>
 	    <p>The following example demonstrates how to express a
-	    simple identity.</p>
+	    simple identity profile.</p>
 
-<pre class="example" title="A simple identity">{
+<pre class="example" title="A simple identity profile">{
   "id": "did:ebfeb1f712ebc6f1c276e12ec21",
   "type": ["Identity", "Person"],
   "name": "Alice Bobman",
@@ -426,8 +425,8 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
             </ul>
             <p>The following example demonstrates how to express a
             simple (unverifiable) claim about a particular
-            identity. In this case, the claim is that
-            the <a>entity</a> with the <a>identity</a> identified by
+            Subject. In this case, the claim is that
+            the Subject <a>entity</a> with the <a>identity profile</a> id of
             <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
             of age or older. While a human reading the
             property <code>ageOver</code> may be able to guess its
@@ -448,7 +447,7 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
 }</pre>
 
             <p>The following example demonstrates how to express the
-            same claim about the same identity, but in a verifiable
+            same claim about the same Subject, but in a verifiable
             form. As such, it contains a <code>signature</code> that
             can be used to verify its entire contents, including the
             claim.</p>
@@ -470,10 +469,10 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
 }</pre>
 
             <p>The following example demonstrates how one could
-            express the same claim about the same identity, but in a
-            signed JSON Web Token.</p>
+            express the same claim about the same Subject, but with a
+            JSON Web Signature.</p>
 
-<pre class="example" title="A signed JWT">{
+<pre class="example" title="A JWS verifiable claim">{
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
@@ -490,7 +489,7 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
   "signature": {
     "type": "HS256",
     "key": "qwertyuiopasdfghjklzxcvbnm123456",
-    "signedJWT": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiO\
+    "JWS": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiO\
 iJodHRwczovL2Rtdi5leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwI\
 joxNDgzMjI4ODAwLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6Z\
 WJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiaWQiOiJkaWQ6ZWJmZWIxZjcxM\
@@ -501,7 +500,7 @@ tGzOBuqX5DH-RV7jCwybPzcQeU"
 
         <p>
 The following example demonstrates how to express a more complex set
-of verfiable claims about a particular identity.
+of verfiable claims about a particular Subject.
         </p>
 
 <pre class="example" title="A more complex verifiable claim">{
@@ -553,19 +552,19 @@ of verfiable claims about a particular identity.
         that is both simple and extensible.</p>
 
         <section>
-          <h2>Expressing an Identity in JSON-LD</h2>
-            <p>Identities are expressed in JSON-LD in the same way
+          <h2>Expressing an Identity Profile in JSON-LD</h2>
+            <p>Identity profiles are expressed in JSON-LD in the same way
             they are expressed in JSON (***link***), except that there
             is an additional property <code>@context</code>.  Each
-            property of the identity, such as <code>name</code>
+            property of the identity profile, such as <code>name</code>
             or <code>email</code>, is given context via
             the <code>@context</code> value. Other contexts can be
             used or combined to express any arbitrary information
-            about an identity in idiomatic JSON.  </p>
+            about an identity profile in idiomatic JSON.  </p>
 	    <p>The following example demonstrates how to express a
-	    simple identity.</p>
+	    simple identity profile.</p>
 
-<pre class="example" title="A simple identity">{
+<pre class="example" title="A simple identity profile">{
   "@context": "https://w3id.org/identity/v1",
   "id": "did:ebfeb1f712ebc6f1c276e12ec21",
   "type": ["Identity", "Person"],
@@ -591,9 +590,9 @@ of verfiable claims about a particular identity.
 
             <p>The following example demonstrates how to express a
             simple (unverifiable) claim about a particular
-            identity. In this case, the claim is that
-            the <a>entity</a> with the <a>identity</a> identified
-            by <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21
+            Subject. In this case, the claim is that
+            the Subject <a>entity</a> with the <a>identity profile</a> id
+            of <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21
             years of age or older. While a human reading the
             property <code>ageOver</code> may be able to guess its
             meaning by its name, the context maps it a global
@@ -616,7 +615,7 @@ of verfiable claims about a particular identity.
 }</pre>
 
             <p>The following example demonstrates how to express the
-            same claim about the same identity, but in a verifiable
+            same claim about the same Subject, but in a verifiable
             form. As such, it contains a <code>signature</code> that
             can be used to verify its entire contents, including the
             claim.</p>
@@ -640,7 +639,7 @@ of verfiable claims about a particular identity.
 
         <p>
 The following example demonstrates how to express a more complex set
-of verifiable claims about a particular identity.
+of verifiable claims about a particular Subject.
         </p>
 
 <pre class="example" title="A more complex verifiable claim">{
@@ -688,9 +687,9 @@ of verifiable claims about a particular identity.
         <h2>Expressing Identities and Claims in WebIDL</h2>
 
         <section>
-          <h2>Expressing an Identity in WebIDL</h2>
-            <p>In WebIDL, an Identity data set is expressed as an
-            Interface whose attributes are the identity's <a>properties</a>,
+          <h2>Expressing an Identity Profile in WebIDL</h2>
+            <p>In WebIDL, an Identity Profile is expressed as an
+            Interface whose attributes are the identity profile's <a>properties</a>,
             with the following value type assignments:</p>
             <ul>
               <li>Any number value MUST be represented as an
@@ -712,11 +711,11 @@ of verifiable claims about a particular identity.
               either unrestricted or extended in the future.</li>
             </ul>
 	    <p>The following example demonstrates how to express a
-	    simple identity.</p>
+	    simple identity profile.</p>
 
 <pre class="idl">
 [Constructor]
-interface Identity {
+interface IdentityProfile {
     attribute DOMString id;
     attribute FrozenArray&lt;DOMString> types;
     attribute DOMString name;
@@ -726,16 +725,16 @@ interface Identity {
 };
 </pre>
 
-            <p>The Identity could then be used as follows in JavaScript:</p>
+            <p>The Identity Profile could then be used as follows in JavaScript:</p>
 
-<pre class="highlight example" title="Using a simple identity">
-  var identity = new Identity();
-  identity.id = "did:ebfeb1f712ebc6f1c276e12ec21";
-  identity.type = ["Identity", "Person"];
-  identity.name = "Alice Bobman";
-  identity.email = "alice@example.com";
-  identity.birthDate = "1985-12-14";
-  identity.telephone = "12345678910";
+<pre class="highlight example" title="Using a simple identity profile">
+  var identity = new IdentityProfile();
+  profile.id = "did:ebfeb1f712ebc6f1c276e12ec21";
+  profile.type = ["Identity", "Person"];
+  profile.name = "Alice Bobman";
+  profile.email = "alice@example.com";
+  profile.birthDate = "1985-12-14";
+  profile.telephone = "12345678910";
 </pre>
         </section>
 
@@ -765,8 +764,8 @@ interface Identity {
             </ul>
             <p>The following example demonstrates how to express a
             simple (unverifiable) claim about a particular
-            identity. In this case, the claim is that
-            the <a>entity</a> with the <a>identity</a> identified by
+            Subject. In this case, the claim is that
+            the Subject <a>entity</a> with the <a>identity profile</a> id of
             <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
             of age or older. While a human reading the
             property <code>ageOver</code> may be able to guess its
@@ -810,7 +809,7 @@ interface Identity {
 </pre>
 
             <p>The following example demonstrates how to express the
-            same claim about the same identity, but in a verifiable
+            same claim about the same Subject, but in a verifiable
             form. As such, the Entity Credential contains
             a <code>signature</code> that can be used to verify its
             entire contents, including the claim.</p>
@@ -855,7 +854,7 @@ interface Identity {
 
         <p>
 The following example demonstrates how to express a more complex set
-of verfiable claims about a particular identity.
+of verfiable claims about a particular Subject.
         </p>
 
 <pre class="idl">
