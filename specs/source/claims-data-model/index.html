@@ -121,7 +121,7 @@ describes how to express that data model in JSON, JSON-LD, and WebIDL.
 
     <section id='sotd'>
       <p>Drawn initially from
-      [[!IDENTITY-CREDENTIALS]], this
+      [[IDENTITY-CREDENTIALS]], this
       document is intended to provide a rough outline of the kind of
       standardization work that a Verifiable Claims Working Group
       might do.
@@ -130,28 +130,8 @@ describes how to express that data model in JSON, JSON-LD, and WebIDL.
 
     <section>
       <h2>Introduction</h2>
-      <p>This specification is based upon work presented in
-      [[!IDENTITY-CREDENTIALS]].  In particular, examples from that
-      document have been used to infer a general data model for
-      representation and use of verifiable claims.  This document is
-      intended to provide only one example of what could potentially
-      be defined and standardized in a Recommendation-track Working
-      Group at W3C.  The two pieces of possible standardization work
-      demonstrated in this document are:</p>
-      <ol>
-        <li>A generic data model covering the minimum information
-        necessary to create and use verifiable claims that would meet
-        the needs described in the [[\Use Cases Document]].</li>
-        <li>Instructions on how to express specific instances of the
-        data model in three different syntactic formulations: JSON,
-        JSON-LD, and WebIDL.</li>
-      </ol>
-     
-      <p>As background for understanding the data model,
-      an <a>identity profile</a> is a set of information that can be used to
-      identify a particular <a>entity</a>. Entities are anything with
-      distinct existence, such as a person, organization, concept, or
-      device. We typically use credentials, or claims made by
+      <p>
+      We typically use credentials, or claims made by
       others about our identities, to authenticate ourselves and
       ultimately gain access to various services. For example, we use
       email addresses to identify ourselves to online services,
@@ -162,6 +142,7 @@ describes how to express that data model in JSON, JSON-LD, and WebIDL.
       goal of this specification to provide an easy, standard way to
       express such credentials on the Web.
       </p>
+
       <p>
       There are a number of desirable capabilities for these kinds of
       credentials, referred to in this specification as <a>entity
@@ -221,26 +202,42 @@ The ability to revoke previously issued <a>entity credentials</a>.
 Web Browser APIs for storing and consuming <a>entity credentials</a>.
         </li>
       </ul>
-      <p>
-In order to store the unbounded variety of attributes that could be
-claimed in <a>entity credentials</a>, a simple but extensible data model
-is utilized.  The remainder of this specification is structured as
-follows: first, some general definitions of terms are provided.  These
-are imported from a master lexicon used by all of the specifications
-of the Credentials CG.  Second, the data model is described in text
-prose to avoid any suggestion of bias in terms of syntactic
-representation.  It is also presented as a UML diagram. Third,
-instructions are provided for how to express instances of the data
-model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
+      <p>This specification is based upon work presented in
+      [[IDENTITY-CREDENTIALS]].  In particular, examples from that
+      document have been used to infer a simple but extensible data
+      model capable of representing the unbounded variety
+      of attributes that could be claimed in <a>entity
+      credentials</a>.  This document is intended to provide only one
+      example of what could potentially be defined and standardized in
+      a Recommendation-track Working Group at W3C.  The two pieces of
+      possible standardization work demonstrated in this document
+      are:</p>
+      <ol>
+        <li>A generic data model covering the minimum information
+        necessary to create and use <a>entity credentials</a> that
+        would meet the needs described in the [[\Use Cases
+        Document]].</li>
+        <li>Instructions on how to express specific instances of the
+        data model in three different syntactic formulations: JSON,
+        JSON-LD, and WebIDL.</li>
+      </ol>
+
+      <p>The remainder of this specification is structured as follows:
+first, some general definitions of terms are provided.  Second, the
+data model is described in text prose to avoid any suggestion of bias
+in terms of syntactic representation.  It is also presented as a UML
+diagram. Third, instructions are provided for how to express instances
+of the data model in terms of JSON, JSON-LD [[!JSON-LD]], and
+WebIDL.</p>
       </p>
     </section>
 
     <section>
       <h2>Terminology</h2>
 
-      <p class="issue">Note that the following definitions are
-      automatically loaded from a common lexicon.  We are discussing
-      their appropriateness for this document.</p>
+      <p class="issue">Warning: these definitions are loaded
+      automatically from another document and are currently
+      inaccurate.  They will be corrected soon.</p>
 
       <div data-include="../common/terms.html"
         data-oninclude="restrictReferences">
@@ -265,96 +262,117 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
 
     <section>
       <h2>Data Model</h2>
-      <p>This section describes a data model for identities, claims, and
-      verifiable claims that is compatible with the requirements and
-      use cases expected to be addressed by this group.</p>
+      <p>This section describes a data model for <a>identity
+      profiles</a> and <a>entity credentials</a>, the latter covering
+      both claims and verifiable claims, that is compatible with the
+      requirements and use cases expected to be addressed by this
+      group.</p>
 
 <svg xmlns="http://www.w3.org/2000/svg" width="600px" height="390px" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 390" preserveAspectRatio="xMidYMid meet" ><defs id="svgEditorDefs"><path id="svgEditorClosePathDefs" stroke="black" style="stroke-width: 1px;" fill="khaki"/><marker id="arrow20-16-right" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="-3" refY="0" viewBox="-15 -5 20 20"><path d="M -15 -5 L 0 0 L -15 5 z" fill="black"/></marker><marker id="arrow15-12-left" markerHeight="12" markerUnits="strokeWidth" markerWidth="15" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker><marker id="arrow20-16-left" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker></defs><rect id="svgEditorBackground" x="0" y="0" width="990" height="490" style="fill: none; stroke: none;"/><rect x="3" y="5" style="stroke-width: 1px;" stroke="black" id="e1_rectangle" width="230" height="94" fill="khaki"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="81" y="25" id="e2_texte">Identity</text><line id="e3_line" x1="3" y1="32" x2="233" y2="32" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="90" y="167" id="e4_texte"></text><text fill="black" style="font-family: Arial; font-size: 12px;" x="20" y="60" id="e5_texte">type: unordered set of URIs<tspan x="20" dy="1.25em" style="font-size: 12px;">signature: Signature [0..1]</tspan></text><rect x="358" y="4" style="stroke-width: 1px;" stroke="black" id="e6_rectangle" width="230" height="77" fill="khaki"/><line id="e8_line" x1="358" y1="31" x2="588" y2="31" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="462" y="167" id="e14_texte"></text><rect x="3" y="150" style="stroke-width: 1px;" stroke="black" id="e16_rectangle" width="230" height="170" fill="khaki"/><line id="e17_line" x1="3" y1="177" x2="233" y2="177" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="49" y="171" id="e18_texte">Entity Credential</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="27" y="206" id="e19_texte">id: URI<tspan x="27" dy="1.25em" id="e20_tspan">type: unordered set of URIs</tspan><tspan x="27" dy="1.25em" id="e21_tspan">issuer: URI</tspan><tspan x="27" dy="1.25em" id="e22_tspan">issued: date in string form</tspan><tspan x="27" dy="1.25em" id="e23_tspan">claim: Claim</tspan></text><text fill="black" style="font-family: Arial; font-size: 20px;" x="445" y="25" id="e24_texte">Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="375" y="58" id="e25_texte">(at least one custom property)</text><rect x="358" y="147" style="stroke-width: 1px;" stroke="black" id="e26_rectangle" width="230" height="77" fill="khaki"/><line id="e27_line" x1="358" y1="174" x2="588" y2="174" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="405" y="169" id="e30_texte">Verifiable Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="377" y="197" id="e31_texte">signature: Signature</text><rect x="357" y="268" style="stroke-width: 1px;" stroke="black" id="e32_rectangle" width="229" height="119" fill="khaki"/><line id="e33_line" x1="357" y1="295" x2="587" y2="295" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="424" y="289" id="e36_texte">Signature</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="374" y="317" id="e38_texte">(varies, but expected to include<tspan x="374" dy="1.25em">at least a signature, a reference</tspan><tspan x="374" dy="1.25em">to the signing entity, and a</tspan><tspan x="374" dy="1.25em">representation of the signing date)</tspan></text><line id="e42_line" x1="233" y1="58" x2="357" y2="58" stroke="black" style="stroke-width: 1px; fill: none;"/><line id="e43_line" x1="470" y1="148" x2="470" y2="81" stroke="black" style="stroke-width: 1px; fill: none; marker-end: url(&quot;#arrow20-16-right&quot;);"/><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="72" id="e44_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="341" y="52" id="e45_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="51" id="e46_texte">1</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="332" y="71" id="e47_texte">0..*</text></svg>
 
       <section>
         <h2>General Characteristics</h2>
-        <p>Both identity profiles and claims, including verifiable claims,
-        consist of a collection of name-value pairs which will be
-        referred to as
-        <dfn data-lt="property">properties</dfn> in this
-        document.  The following subsections describe the required and
-        optional properties for both.  The link between the two is in
-        the <var>id</var> property.  An Identity Profile defines a
-        <a>subject</a> identifier in
+        <p>Both the <a>Identity Profile Model</a> and <a>Entity
+        Credential Model</a> consist of a collection of name-value
+        pairs which will be referred to as
+        <dfn data-lt="property">properties</dfn> in this document.
+        The following subsections describe the required and optional
+        properties for both.  The link between the two is in
+        the <var>id</var> property.  The <a>Identity Profile Model</a>
+        defines a <a>subject</a> identifier in
         the <a href="#identity-id"><var>id</var></a> property, while
-        the claims section of an <a>Entity Credential</a> uses
-        the <a href="#claim-id"><var>id</var></a> property to refer to that <a>subject</a> identifier.</p>
+        the claims section of the <a>Entity Credential Model</a> uses
+        the <a href="#claim-id"><var>id</var></a> property to refer to
+        that <a>subject</a> identifier.</p>
         <p>This document purposely defines the data model without
-        using WebIDL, JSON, JSON-LD, or XML since users of all of
-        those representations are expected.
-        Section <a href="#expressing-identities-and-claims"></a>
+        using a concrete syntax such as WebIDL, JSON, or JSON-LD to
+        avoid implying a bias towards any particular one syntax.
+        Section <a href="#expressing-identity-profiles-entity-credentials-and-verifiable-claims"></a>
         defines how the data model is to be expressed in those
         representation languages.</p>
       </section>
 
       <section>
         <h2><dfn>Identity Profile Model</dfn></h2>
-        <p>Unlike with <a>claims</a>, the <a>properties</a> in the
-        Identity Profile Model are merely information that, together with a <a>subject</a>
+        <p>Unlike the <a>properties</a> in
+        the <a href="#ec-claim"><var>claim</var></a> section of
+        the <a>Entity Credential Model</a>, the <a>properties</a> in
+        the Identity Profile Model are merely information that,
+        together with a <a>subject</a>
         identifier <a href="#identity-id"><var>id</var></a>,
-        constitute an identity profile.  The properties are not claims and are
-        not intended to be verifiable.</p>
-        <p>The following properties are required in an Identity Profile:</p>
+        constitute an identity profile.  The properties are not claims
+        and are not intended to be verifiable.</p>
+        <p>The following properties are required in the Identity
+        Profile Model:</p>
         <dl>
           <dt><a id="identity-id"><var>id</var></a></dt>
-          <dd>This is a URI representing the <a>subject</a>.  This identifier MAY be
-          long-lived but does not have to be.</dd>
+          <dd>This is a URI representing the <a>subject</a>.  This
+          identifier MAY be long-lived but does not have to be.</dd>
           <dt><var>type</var></dt>
           <dd>This is an unordered set of URIs representing the types
           or classes of which this data set is a member.  As an
-          Identity Profile, at a minimum the class "Identity" must be a member
-          of the set.  Additional application-specific values are
-          permitted in the set.</dd>
+          <a>identity profile</a>, at a minimum the class "Identity"
+          must be a member of the set.  Additional
+          application-specific values are permitted in the set.</dd>
         </dl>
-        <p>The following properties are optional in an Identity Profile:</p>
+        <p>The following properties are optional in the Identity
+        Profile Model:</p>
         <dl>
           <dt><var>signature</var></dt>
-          <dd>&nbsp;</dd>
+          <dd>The method used for a signature will vary by
+          representation language.  However, if present this property
+          is expected to have a value that is a set of name-value
+          pairs including at least a signature, a reference to the
+          signing entity, and a representation of the signing
+          date.</dd>
         </dl>
         <p>Additionally, any property name not listed above is
-        permitted as an optional custom property.</p>
+        permitted as an optional custom <a>property</a>.</p>
       </section>
 
       <section>
-        <h2>Claims Model</h2>
-        <p>Unlike with <a>identity profiles</a>,
-        the <a>properties</a> in an <a>entity credential</a> are claims made by
-        an entity about the <a>subject</a> defined in an identity profile.  As such, the data model includes
-        both issuance-related properties and a <a><var>claim</var></a>
+        <h2>Entity Credential Model</h2>
+        <p>Unlike the <a>properties</a> in the <a>Identity Profile
+        Model</a>, the <a>properties</a> in
+        the <a href="#ec-claim"><var>claim</var></a> section of the
+        Entity Credential Model are claims made by an <a>entity</a>
+        about the <a>subject</a> defined in an <a>identity
+        profile</a>.  The Entity Credential Model includes both
+        issuance-related properties and the
+        aforementioned <a href="ec-claim"><var>claim</var></a>
         property that further contains the properties of the claim
         itself.</p>
-        <p>The following properties are required in an Entity Credential:</p>
+        <p>The following properties are required in the Entity
+        Credential Model:</p>
         <dl>
           <dt><var>id</var></dt>
-          <dd>Claim URI</dd>
+          <dd>URI representing this specific <a>entity credential</a></dd>
           <dt><var>type</var></dt>
           <dd>This is an unordered set of URIs representing the types
           or classes of which this data set is a member.  As an
-          entity credential, at a minimum the class "Credential" must be a
-          member of the set.  Additional application-specific values
-          are permitted in the sequence.</dd>
-          <dt><var>claim</var></dt>
+          <a>entity credential</a>, at a minimum the class
+          "Credential" must be a member of the set.  Additional
+          application-specific values are permitted in the
+          set.</dd>
+          <dt><a id="ec-claim"><var>claim</var></a></dt>
           <dd>This is the actual claim.  Its value is a set of
           <a>properties</a> as follows:
             <p>The following properties are required in
             a <var>claim</var> value:</p>
             <dl>
               <dt><a id="claim-id"><var>id</var></a></dt>
-              <dd>The <a>subject</a> of the claim, the property value is expected to be a valid
+              <dd>The <a>subject</a> of the claim, the property value
+              is expected to be a valid
               <a href="#identity-id">Identity Profile<var>id</var></a>.</dd>
-              <dt>At least one custom property</dt>
+              <dt>At least one custom <a>property</a></dt>
               <dd>N/A</dd>
             </dl>
            <p>Additionally, any property name not listed above is
-           permitted as an optional custom property.</p>
+           permitted as an optional custom <a>property</a>.</p>
 	  </dd>
         </dl>
-        <p>The following properties are optional in an Entity Credential:</p>
+        <p>The following <a>properties</a> are optional in the Entity
+        Credential Model:</p>
         <dl>
           <dt><var>issuer</var></dt>
           <dd>This is a URI for the issuer of the claim.</dd>
@@ -363,13 +381,14 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
           issued.</dd>
         </dl>
         <p>Additionally, any property name not listed above is
-        permitted as an optional custom property.</p>
+        permitted as an optional custom <a>property</a>.</p>
       </section>
 
       <section>
         <h2>Verifiable Claims Model</h2>
-        <p>The claims in an <a>Entity Credential</a> can be made verifiable by
-        adding the following property to the Entity Credential:</p>
+        <p>The claims in the <a>Entity Credential Model</a> can be
+        made verifiable by adding the following <a>property</a> to
+        the <a>Entity Credential Model</a>:</p>
         <dl>
           <dt><var>signature</var></dt>
           <dd>The method used for a signature will vary by
@@ -382,13 +401,16 @@ model in terms of JSON, JSON-LD [[!JSON-LD]], and WebIDL.</p>
     </section>
 
     <section>
-      <h2>Expressing Identities and Claims</h2>
+      <h2>Expressing Identity Profiles, Entity Credentials, and
+      Verifiable Claims</h2>
 
       <p>This section defines how the data model described in
       Section <a href="data-model"></a> is realized in each of 3
-      different languages: JSON, JSON-LD, and WebIDL.  Applications
-      and services may also use any other language that can support
-      the data model.
+      different languages: JSON, JSON-LD, and WebIDL.  Although
+      syntactic mappings are only provided for these three different
+      languages, applications and services may also use any other data
+      representation language (XML, for example) that can support the
+      data model.
       </p>
 
       <section>
@@ -569,7 +591,7 @@ of verfiable claims about a particular <a>subject</a>.
         <section>
           <h2>Expressing an Identity Profile in JSON-LD</h2>
             <p>Identity profiles are expressed in JSON-LD in the same way
-            they are expressed in JSON (***link***), except that there
+            they are expressed in JSON (Section <a href="#expressing-an-identity-profile-in-json"></a>), except that there
             is an additional property <code>@context</code>.  Each
             property of the identity profile, such as <code>name</code>
             or <code>email</code>, is given context via
