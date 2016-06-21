@@ -906,8 +906,11 @@ interface IdentityProfile {
   [Constructor]
   interface Signature {
     attribute DOMString type;
+    attribute DOMString created;
     attribute DOMString creator;
-    attribute DOMString signature;
+    attribute DOMString domain;
+    attribute DOMString nonce;
+    attribute DOMString signatureValue;
   };
 
   [Constructor]
@@ -925,8 +928,10 @@ interface IdentityProfile {
 
   var signature = new Signature();
   signature.type = "LinkedDataSignature2015";
-  signature.creator = "https://dmv.example.gov/keys/6";
-  signature.signature = "2332f32g43ve23g23g23g/g3223gegvgre212fb488vh";
+  signature.created = "2016-06-18T21:10:38Z";
+  signature.creator = "https://example.com/jdoe/keys/1";
+  signature.domain = "json-ld.org";
+  signature.signatureValue = "g4j9UrpHM4/uu32NlTw0HDaSaYF2sykskfuByD7UbuqEcJIKa+IoLJLrLjqDnMz0adwpBCHWaqqpnd47r0NKZbnJarGYrBFcRTwPQSeqGwac8E2SqjylTBbSGwKZkprEXTywyV7gILlC8a+naA7lBRi4y29FtcUJBTFQq4R5XzI=";
 
   var credential = new VerifiableCredential1();
   credential.type = ["Credential", "ProofOfAgeCredential"];
@@ -1020,8 +1025,11 @@ of verfiable claims about a particular <a>subject</a>.
 
   var signature = new Signature();
   signature.type = "LinkedDataSignature2015";
-  signature.creator = "https://example.gov/keys/27";
-  signature.signature = "3780eyfh3q0fhhfiq3q9f8ahsidfhf29rhaish";
+  signature.created = "2016-06-21T03:43:29Z";
+  signature.creator = "https://example.com/jdoe/keys/1";
+  signature.domain = "json-ld.org";
+  signature.nonce = "c168dfab";
+  signature.signatureValue = "jz4bEW2FBMDkANyEjiPnrIctucHQCIwxrtzBXt+rVGmYMEflHrOwf7FYLH60E3Oz54VwSSQCi9J4tXQIhv4SofT5opbcIUj7ji6QrC6c+a3YLjg8l/+/uFjhzsLelAO4gh2k0FJxM04ljH0GZGuXTzhRnqTzJTnYSVo72PC92NA=";
 
   var vc = new VC2();
   vc.id = "http://example.gov/credentials/3732";
