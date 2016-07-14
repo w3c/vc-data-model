@@ -41,7 +41,7 @@
         // editors, add as many as you like
         // only "name" is required
         editors:  [
-          { name: "Daniel C. Burnett", 
+          { name: "Daniel C. Burnett",
             company: "Standards Play", companyURL: "http://standardsplay.com/"},
           { name: "Shane McCarron", url: "http://blog.halindrome.com.com/",
             company: "Spec-Ops", companyURL: "https://spec-ops.io/", w3cid: "23346" },
@@ -54,7 +54,7 @@
         // authors, add as many as you like.
         // This is optional, uncomment if you have authors as well as editors.
         // only "name" is required. Same format as editors.
-        authors:  
+        authors:
         [
           { name: "Manu Sporny", url: "http://digitalbazaar.com/",
             company: "Digital Bazaar, Inc.", companyURL: "http://digitalbazaar.com/" },
@@ -484,6 +484,7 @@ WebIDL.</p>
             entire contents, including the claim.</p>
 
 <pre class="example" title="A simple verifiable claim">{
+  "@context": "https://w3id.org/security/v1",
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
@@ -492,49 +493,62 @@ WebIDL.</p>
     "id": "did:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
-  "@context": "https://w3id.org/security/v1",
   "signature": {
     "type": "LinkedDataSignature2015",
     "created": "2016-06-18T21:19:10Z",
     "creator": "https://example.com/jdoe/keys/1",
     "domain": "json-ld.org",
     "nonce": "598c63d6",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wpsPRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed+W3JT24="
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+    +W3JT24="
   }
 }</pre>
 
             <p>The following example demonstrates how one could
             express the same <a>claim</a> about the
-            same <a>subject</a>, but with a JSON Web Signature.  The
-            signature can be verified
-            at <a href="https://jwt.io/#debugger-io">https://jwt.io/#debugger-io</a>
-            using the key "qwertyuiopasdfghjklzxcvbnm123456".</p>
+            same <a>subject</a> using a JSON Web Token.</p>
 
-<pre class="example" title="A JWS verifiable claim">{
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "header": {
-    "alg": "HS256",
-    "type": "JWT"
-  },
-  "claim": {
-    "iss": "https://dmv.example.gov",
-    "iat": 1262304000,
-    "exp": 1483228800,
-    "aud": "www.example.com",
-    "sub": "did:ebfeb1f712ebc6f1c276e12ec21",
-    "id": "did:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "signature": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOi\
-JodHRwczovL2Rtdi5leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIj\
-oxNDgzMjI4ODAwLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZW\
-JmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiaWQiOiJkaWQ6ZWJmZWIxZjcxMm\
-ViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6MjF9.iXWMxCzjDd6TH2zQ6MO5an\
-5ECcswBmR3FAj90zYoF6E"
-}</pre>
+<pre class="example" title="A JOSE JWT verifiable claim">
+// JWT Header
+{
+  "alg": "RS256",
+  "typ": "JWT"
+}
+// JWT Payload
+{
+  "iss": "https://dmv.example.gov",
+  "iat": 1262304000,
+  "exp": 1483228800,
+  "aud": "www.example.com",
+  "sub": "did:ebfeb1f712ebc6f1c276e12ec21",
+  "entityCredential": {
+    "@context": "https://w3id.org/security/v1",
+    "id": "http://example.gov/credentials/3732",
+    "type": ["Credential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov",
+    "issued": "2010-01-01",
+    "claim": {
+      "id": "did:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    }
+  }
+}
+// Output of the JWT algorithm
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Rtdi
+5leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL
+CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi
+YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI
+6Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG
+FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI
+iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu
+ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ
+iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj
+F9fX0.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6
+NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1
+fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4
+</pre>
 
         <p>
 The following example demonstrates how to express a more complex set
@@ -542,6 +556,10 @@ of verfiable claims about a particular <a>subject</a>.
         </p>
 
 <pre class="example" title="A more complex verifiable claim">{
+  "@context": [
+    "https://w3id.org/identity/v1",
+    "https://w3id.org/security/v1"
+  ],
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "PassportCredential"],
   "name": "Passport",
@@ -572,7 +590,6 @@ of verfiable claims about a particular <a>subject</a>.
       "expires": "2020-01-07T01:02:03Z"
     }
   },
-  "@context": "https://w3id.org/security/v1"
   "signature": {
     "type": "LinkedDataSignature2015",
     "created": "2016-06-21T03:40:19Z",
