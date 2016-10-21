@@ -1062,6 +1062,257 @@ of verfiable claims about a particular <a>subject</a>.
       </section>
     </section>
 
+    <section>
+      <h2>Privacy Considerations</h2>
+
+      <p>
+This section details the general privacy considerations and specific privacy
+implications of deploying the verifiable claims data model into production
+environments.
+      </p>
+
+      <section>
+        <h3>Spectrum of Privacy</h3>
+        <p>
+It is important to recognize that there is a spectrum of privacy that ranges
+from pseudo-anonymous to strongly identified. Depending on the use case,
+people have different appetites when it comes to what information they
+are willing to provide and what information may be derived from what
+is provided.
+        </p>
+
+        <figure>
+          <img style="margin: auto; display: block;" width="50%" src="request.svg">
+          <figcaption style="text-align: center;">
+      - The structure of a payment request.
+          </figcaption>
+        </figure>
+
+        <p>
+For example, one would most likely desire to remain anonymous when purchasing
+alcohol because the regulatory check that’s required is solely whether or
+not the person is above a particular age. However, when a doctor is writing a
+prescription for a patient, the pharmacy fulfilling the prescription is
+required to more strongly identify the medical professional. Therefore it
+is important to recognize that there is not one approach to privacy that
+works for all use cases; privacy solutions tend to be use case specific.
+        </p>
+
+        <p>
+The Verifiable Claims data model strives to support the full spectrum of
+privacy and does not take philosophical positions on the right level of
+anonymity for any particular transaction. The following sections provide
+guidance for implementers that want to avoid specific scenarios that are
+hostile to privacy.
+        </p>
+      </section>
+
+      <section>
+        <h3>Personally Identifiable Information</h3>
+
+        <p>
+The data associated with verifiable claims stored in the
+<code>credential.claim</code> field are largely susceptible to privacy
+violations when shared with Inspectors. Personally identifying data
+such as a government-issued identifier, shipping address, and full name
+can be easily used to determine, track, and correlate an entity. Even
+information that does not seem personally identifiable like the
+combination of a birth date and zip code have very powerful correlation
+and de-anonymizing capabilities.
+        </p>
+
+        <p>
+Implementers are strongly advised to
+warn Holders when they share data with these sorts of characteristics.
+Issuers are strongly advised to provide privacy-protecting credentials
+when possible. For example, issuing ageOver credentials instead of
+birthdate credentials when the Inspector desires to determine if an
+entity is over the age of 18.
+        </p>
+      </section>
+
+      <section>
+        <h3>Identifier-based Correlation</h3>
+
+        <p>
+Subjects of verifiable claims are identified via the
+<code>credential.claim.id</code> field. The identifiers that are used
+to identify the subject of a claim create a danger of correlation when
+the identifiers are long-lived or used across more than one web domain.
+        </p>
+        <p>
+If strong anti-correlation properties are a requirement in a system using
+verifiable claims, it is strongly advised that identifiers are bound to a
+single origin or that identifiers are single-use or not used at all and
+are replaced by short-lived, single use bearer tokens.
+        </p>
+      </section>
+
+      <section>
+        <h3>Signature-based Correlation</h3>
+
+        <p>
+The contents of verifiable claims are secured via the
+<code>credential.signature</code> field. The
+<code>credential.signature.signatureValue</code> field creates a danger
+of correlation when it is used across more than one web domain and the
+value does not change.
+        </p>
+
+        <p>
+If strong anti-correlation properties are desired,
+it is strongly advised that signature values and metadata are regenerated
+each time using technologies like group signatures.
+        </p>
+      </section>
+
+      <section>
+        <h3>Device Fingerprinting</h3>
+
+        <p>
+There are mechanisms external to Verifiable Claims that are used to track and
+correlate individuals on the Internet and the Web. Some of these mechanisms
+include Internet Protocol address tracking, Web Browser fingerprinting,
+Evercookies, Advertising Network trackers, mobile network position information,
+and in-application Global Positioning System APIs. The use of Verifiable
+Claims cannot prevent the use of these other tracking technologies. In addition,
+when these technologies are used in concert with Verifiable Claims, new
+correlatable information may be discovered. For example, a birthday coupled
+with a GPS position can be used to strongly correlate an individual across
+multiple websites.
+        </p>
+
+        <p>
+It is advised that privacy preserving systems prevent the use of these other
+tracking technologies when verifiable claims are being utilized. In some cases,
+these tracking technologies may need to be disabled entirely on devices that
+transmit verifiable claims on behalf of the Holder.
+        </p>
+      </section>
+
+      <section>
+        <h3>Favor Abstract Claims</h3>
+
+        <p class="issue">
+Favor “proof of” vs. “actual data”. Example: overAge: 21 vs. birthdate.
+        </p>
+      </section>
+
+      <section>
+        <h3>Atomize Information for Principle of Least Authority</h3>
+
+        <p class="issue">
+When issuing information, issue it in the smallest pieces possible.
+When requesting information, only ask for the data points that you need.
+Issue abstract claims alongside actual data when possible.
+        </p>
+      </section>
+
+      <section>
+        <h3>Bearer Claims</h3>
+
+        <p class="issue">
+Bearer claims containing PII or unique identifiers can be correlated.
+Bearer claims can be tracked based on usage patterns.
+        </p>
+      </section>
+
+      <section>
+        <h3>Validity Checks</h3>
+
+        <p class="issue">
+Inspector (corporation) is required to check revocation via Issuer
+(government).
+        </p>
+      </section>
+
+      <section>
+        <h3>Storage Location of Claims</h3>
+
+        <p class="issue">
+Storage location of claims may mine data or forward data.
+        </p>
+      </section>
+
+      <section>
+        <h3>Aggregation of Claims</h3>
+
+        <p class="issue">
+Aggregation of claims can reveal more information than just the attributes
+being aggregated.
+        </p>
+      </section>
+
+      <section>
+        <h3>Usage Patterns</h3>
+
+        <p class="issue">
+When verifiable claims are used can be used for correlation purposes.
+        </p>
+      </section>
+
+      <section>
+        <h3>Sharing Information with the Wrong Party</h3>
+
+        <p class="issue">
+Tokenize identifiers (like bank account numbers) when possible.
+Granting of rights to a service via cryptographic mechanisms.
+        </p>
+      </section>
+
+      <section>
+        <h3>Frequency of Claim Issuance</h3>
+
+        <p class="issue">
+The rate at which an issuer issues claims may be a privacy violation.
+        </p>
+      </section>
+
+      <section>
+        <h3>Prefer Single Use Claims</h3>
+
+        <p class="issue">
+Single-use, origin bound claims are generally safer than long-lived
+claims.
+        </p>
+      </section>
+
+
+    </section>
+
+    <section>
+      <h2>Security Considerations</h2>
+
+      <p>
+
+      </p>
+
+      <section>
+        <h3>Unsigned Claims</h3>
+
+        <p>
+Claims that are not digitally signed are not verifiable.
+        </p>
+      </section>
+
+      <section>
+        <h3>Bundling Dependent Claims</h3>
+
+        <p class="issue">
+Dependent claims should be bundled together so they're not used for
+the wrong purposes.
+        </p>
+      </section>
+
+      <section>
+        <h3>Highly Dynamic Information</h3>
+
+        <p class="issue">
+Time periods should be shorter for highly dynamic information.
+        </p>
+      </section>
+    </section>
+
   </body>
 </html>
 
