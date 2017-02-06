@@ -386,6 +386,30 @@ WebIDL.</p>
           a representation of the signing date.</dd>
         </dl>
       </section>
+
+      <section>
+        <h2>Revocation Model</h2>
+        <p>A <a>Verifiable Claim</a> may provide revocation information
+        by referring to a revocation list by adding the following
+        <a>property</a> to the <a>Verifiable Claims Model</a>:</p>
+        <dl>
+          <dt><var>revocationList</var></dt>
+          <dd>The format of the revocation list will vary depending on the
+          signature scheme used, but will almost always be a URL to a
+          resource that contains zero or more revocation entries.
+          </dd>
+        </dl>
+
+        <p class="issue" data-number="35" data-title="Define ONE concrete format for the revocationList parameter ">
+What is the format of the revocation list? Options include 1)
+a list of strings, which are IDs, 2) a list of JSON objects each with an 'id'
+entry, 3) a data-model agnostic list of items that each have an id that is
+associated with the provided claim. If the issued verifiable claim's id
+is in the list of IDs, then its status is revoked. Note that the mechanism
+used for pseudonymous revocation will be calculated differently, which is
+why the format of the revocation list is signature scheme specific.
+        </p>
+      </section>
     </section>
 
     <section>
