@@ -390,18 +390,20 @@ WebIDL.</p>
       <section>
         <h2>Revocation Model</h2>
         <p>A <a>Verifiable Claim</a> may provide revocation information
-        by referring to a revocation list by adding the following
+        by referring to a revocation scheme by adding the following
         <a>property</a> to the <a>Verifiable Claims Model</a>:</p>
         <dl>
-          <dt><var>revocationList</var></dt>
-          <dd>The format of the revocation list will vary depending on the
-          signature scheme used, but will almost always be a URL to a
-          resource that contains zero or more revocation entries.
+          <dt><var>revocation</var></dt>
+          <dd>The value of this property MUST be a revocation scheme that
+            provides enough information to determine whether or not the
+            credential has been revoked. The revocation scheme will vary
+            depending on a variety of factors, such as whether it is
+            simple to implement or privacy-enhancing.
           </dd>
         </dl>
 
         <p class="issue" data-number="35" data-title="Define ONE concrete format for the revocationList parameter ">
-What is the format of the revocation list? Options include 1)
+What is the format of a simple revocation list? Options include 1)
 a list of strings, which are IDs, 2) a list of JSON objects each with an 'id'
 entry, 3) a data-model agnostic list of items that each have an id that is
 associated with the provided claim. If the issued verifiable claim's id
@@ -516,6 +518,10 @@ why the format of the revocation list is signature scheme specific.
   "claim": {
     "id": "did:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
+  },
+  "revocation": {
+    "id": "http://example.gov/revocations/738",
+    "type": "SimpleRevocationList2017"
   },
   "signature": {
     "type": "LinkedDataSignature2015",
