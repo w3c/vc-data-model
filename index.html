@@ -1257,7 +1257,27 @@ being aggregated.
         <h3>Usage Patterns</h3>
 
         <p class="issue">
-When verifiable claims are used can be used for correlation purposes.
+		
+Despite the best efforts to assure privacy, the actual use of verifiable claims can potentially lead to de-anonymization and a loss of privacy. 
+		This correlation can occur<br/>
+	    <ol>
+		    <li>When the same claim is presented to the same inspector more than once – that inspector could infer that the holder is the same individual.</li>
+<li>When the same claim is presented to different inspectors, and either those inspectors collude or a third party has access to transaction records from both inspectors -- the observant party could infer that the individual presenting the claims is the same person at both services, i.e., the accounts are controlled by the same person.</li>
+<li>When the same subject ID of a claim refers to the same subject across presentations or inspectors. Even when different claims are presented, if the subject ID is the same, inspectors (and those with access to inspector logs) could infer that the holder of the claims is the same person.</li>
+<li>When the underlying information in a claim can be used to identify an individual across services – using information from other sources (including information provided directly by the user), inspectors can use the information inside the claim to correlate the individual with an existing profile. For example, if a holder presents claims that include zip code, age, and income, the inspector can potentially correlate the subject of that claim with an established profile which already contains the subject’s zip code, age, and income.</li>
+<li>When passing the ID of a claim to a centralized revocation server – the centralized server can correlate the claim usage across interactions. For example, if a verifiable claim is used for proof of age in this manner, the centralized service could know everywhere that claim was presented: all liquor stores, bars, adult stores, lottery purchases, etc.</li>
+	      </ol>
+	      It’s possible to mitigate this in part:<br/>
+	      <ol>
+		<li>Use a globally unique id as the subject for any given claim and never re-use that claim.</li>
+		<li>Use a globally distributed service for revocation, such as a public ledger.</li>
+		<li>Use a revocation service with an API that worked without submitting the ID of the claim, e.g., with a revocation list.</li>
+		<li>Avoid associating personally identifiable information with any particular long-lived subject ID.</li>
+	      </ol>
+It is understood that these mitigation techniques are not always practical or even compatible with necessary usage. Sometimes correlation is the point.<br/>
+In state prescription monitoring programs, usage monitoring is a requirement: enforcement entities need to be able to confirm that individuals are not cheating the system to get multiple prescriptions for controlled substances. This statutory or regulatory need to correlate usage overrides individual privacy concerns. <br/>
+Verifiable claims will so be used to intentionally correlate individuals across services, for example, when using a common persona to log in to multiple services, so all activity on each of those services is intentionally linked to the same individual. This is not a privacy issue as long as each of those services uses the correlation in the expected manner.<br/>
+Privacy risks of claim usage occur when unintended or unexpected correlation arises from the presentation of verifiable claims. 
         </p>
       </section>
 
