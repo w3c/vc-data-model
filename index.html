@@ -108,7 +108,7 @@ claims (aka: credentials, attestations) via the Web.
 This specification describes a data model for a digital <a>identity
 profile</a> and a collection of digital <a>entity credentials</a> that
 assert verifiable <a>claims</a> about that <a>identity profile</a>. It also
-describes how to express that data model in JSON, JSON-LD, and WebIDL.
+describes how to express that data model in JSON, JSON-LD, and WebL.
       </p>
     </section>
 
@@ -1275,9 +1275,9 @@ presenting the claims is the same person at both services, i.e., the
 accounts are controlled by the same person.
           </li>
           <li>
-When the same subject ID of a claim refers to the same subject across
+When the same subject identifier of a claim refers to the same subject across
 presentations or inspectors. Even when different claims are presented,
-if the subject ID is the same, inspectors (and those with access to
+if the subject identifier is the same, inspectors (and those with access to
 inspector logs) could infer that the holder of the claims is the same
 person.
           </li>
@@ -1292,7 +1292,7 @@ subject of that claim with an established profile [see Sweeney 2000 <a href="htt
             Demographics Often Identify People Uniquely</a>].
           </li>
           <li>
-When passing the ID of a claim to a centralized revocation server – the
+When passing the identifier of a claim to a centralized revocation server – the
 centralized server can correlate the claim usage across interactions. For
 example, if a verifiable claim is used for proof of age in this manner, the
 centralized service could know everywhere that claim was presented: all
@@ -1306,19 +1306,19 @@ It’s possible to mitigate this in part:
 
         <ol>
           <li>
-Use a globally unique id as the subject for any given claim and never
+Use a globally unique identifier as the subject for any given claim and never
 re-use that claim.
           </li>
           <li>
 If the claim supports revocation, use a globally distributed service for revocation.
           </li>
           <li>
-Use a revocation service with an API that works without submitting the ID
-of the claim, e.g., with a revocation list.
+Design revocation APIs that do not depend on submitting the ID
+of the claim, e.g., use a revocation list rather than a query.
           </li>
           <li>
 Avoid associating personally identifiable information with any particular
-long-lived subject ID.
+long-lived subject identifier.
           </li>
         </ol>
 
