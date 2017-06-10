@@ -16,7 +16,7 @@ var vcwg = {
     },
     "VC-USECASES": {
       title: "Verifiable Claims Use Cases",
-      href: "http://w3c.github.io/vc-use-cases/",
+      href: "https://www.w3.org/TR/verifiable-claims-use-cases/",
       authors: [
       	"Shane McCarron",
         "Daniel Burnett",
@@ -24,8 +24,8 @@ var vcwg = {
         "Brian Sletten",
         "Manu Sporny"
       ],
-      status: "IG-DRAFT",
-      publisher: "Web Payments Interest Group Verifiable Claims Task Force"
+      status: "FPWD",
+      publisher: "Verifiable Claims Working Group"
     },
     // aliases to known references
     "HTTP-SIGNATURES": {
@@ -64,7 +64,7 @@ var vcwg = {
 // referenced from the common definitions
 //
 // the termlist is in a block of class "termlist", so make sure that
-// has an ID and put that ID into the termLists array so we can 
+// has an ID and put that ID into the termLists array so we can
 // interrogate all of the included termlists later.
 var termNames = [] ;
 var termLists = [] ;
@@ -78,7 +78,7 @@ function restrictReferences(utils, content) {
     // New new logic:
     //
     // 1. build a list of all term-internal references
-    // 2. When ready to process, for each reference INTO the terms, 
+    // 2. When ready to process, for each reference INTO the terms,
     // remove any terms they reference from the termNames array too.
     $.each(base.querySelectorAll("dfn"), function(i, item) {
         var $t = $(item) ;
@@ -92,7 +92,7 @@ function restrictReferences(utils, content) {
                     dropit = true;
                 }
             });
-        } 
+        }
         // do we have an includeTerms
         if (window.hasOwnProperty("includeTerms")) {
             var found = false;
@@ -158,7 +158,7 @@ require(["core/pubsubhub"], function(respecEvents) {
                 }
             }) ;
 
-            // clearRefs is recursive.  Walk down the tree of 
+            // clearRefs is recursive.  Walk down the tree of
             // references to ensure that all references are resolved.
             var clearRefs = function(theTerm) {
                 if ( termsReferencedByTerms[theTerm] ) {
@@ -174,9 +174,9 @@ require(["core/pubsubhub"], function(respecEvents) {
                     delete termNames[theTerm];
                 }
             };
-           
-            // now termsReferencedByTerms has ALL terms that 
-            // reference other terms, and a list of the 
+
+            // now termsReferencedByTerms has ALL terms that
+            // reference other terms, and a list of the
             // terms that they reference
             $("a.internalDFN").each(function () {
                 var $item = $(this) ;
