@@ -248,89 +248,92 @@ provide benefit.
     <section>
       <h3>Use Cases and Requirements</h3>
       <p>
-      There are a number of desirable capabilities for these kinds of
-      credentials, referred to in this specification as <a>entity
-      credentials</a>, that have been identified as requirements for
-      this specification:
+The Verifiable Claims Use Cases[[VC-USECASES]] document outlines a number of
+key topics that readers may find useful, including:
       </p>
       <ul>
         <li>
-<a>Entity credentials</a> refer to an architecture where:
-          <ul>
-            <li>
-<a>Entity credential</a> holders are positioned in the middle between issuers and inspectors.
-            </li>
-            <li>
-<a>Entity credential</a> holders receive and store credentials from issuers through an
-agent that the issuer does not need to trust.
-            </li>
-            <li>
-<a>Entity credential</a> holders provide credentials to credential inspectors through
-an agent that inspectors needn't trust; they only need to trust issuers.
-            </li>
-            <li>
-<a>Entity credentials</a> are associated with identities, not particular services; credential
-holders can decide how to aggregate credentials and manage their own
-identities.
-            </li>
-            <li>
-<a>Entity credential</a> holders can control and own their own identifiers.
-            </li>
-            <li>
-<a>Entity credential</a> holders can control which credentials to use and when.
-            </li>
-            <li>
-<a>Entity credential</a> holders may freely choose and swap out the agents they employ to
-help them manage and share their credentials.
-            </li>
-            <li>
-<a>Entity credential</a> holders that share verifiable claims are not required to reveal the
-identity of the inspector to their agent or to issuers.
-            </li>
-          </ul>
+a more thorough explanation of the
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-roles">roles</a>
+introduced above,
         </li>
         <li>
-A standard, machine-readable data format for expressing <a>entity credentials</a>
-that can be extended with minimal coordination.
+the
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-needs">needs</a>
+identified in market verticals like education, finance, healthcare, retail,
+professional licensing, and government,
         </li>
         <li>
-Independent issuance, storage, and cryptographic verification of <a>entity credentials</a>.
+common
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-tasks">tasks and requirement</a>
+performed by the roles in the ecosystem, and
         </li>
         <li>
-A standard mechanism for requesting <a>entity credentials</a>.
-        </li>
-        <li>
-The ability to revoke previously issued <a>entity credentials</a>.
-        </li>
-        <li>
-Web Browser APIs for storing and consuming <a>entity credentials</a>.
+common
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-sequences">sequences and flows</a>
+identified by the Working Group.
         </li>
       </ul>
-      <p>This specification defines a simple but extensible data
-      model capable of representing the unbounded variety
-      of attributes that could be claimed in <a>entity
-      credentials</a>.  This document is intended to provide only one
-      example of what could potentially be defined and standardized in
-      a Recommendation-track Working Group at W3C.  The two pieces of
-      possible standardization work demonstrated in this document
-      are:</p>
-      <ol>
-        <li>A generic data model covering the minimum information
-        necessary to create and use <a>entity credentials</a> that
-        would meet the needs described in the [[VC-USECASES]]
-        Document.</li>
-        <li>Instructions on how to express specific instances of the
-        data model in two different syntactic formulations: JSON,
-        and JSON-LD.</li>
-      </ol>
-
-      <p>The remainder of this specification is structured as follows:
-first, some general definitions of terms are provided.  Second, the
-data model is described in text prose to avoid any suggestion of bias
-in terms of syntactic representation.  It is also presented as a UML
-diagram. Third, instructions are provided for how to express instances
-of the data model in terms of JSON, JSON-LD [[!JSON-LD]], and
-WebIDL.</p>
+      <p>
+As a result of documenting and analyzing the use cases document, a number of
+desirable capabilities have been identified as requirements for this
+specification, specifically:
+      </p>
+      <ul>
+        <li>
+<a>Holders</a> MUST receive and store <a>verifiable claims</a> from
+<a>issuers</a> through an agent that the issuer does not need to trust.
+        </li>
+        <li>
+<a>Holders</a> SHOULD be positioned between <a>issuers</a> and <a>inspectors</a>
+and mediate the transmission of <a>verifiable claims</a>.
+        </li>
+        <li>
+<a>Holders</a> MUST provide <a>verifiable claims</a> to <a>inspectors</a>
+through an agent that inspectors needn't trust; they only need to trust
+<a>issuers</a>.
+        </li>
+        <li>
+<a>Verifiable claims</a> MUST be associated with <a>subjects</a>, not
+particular services; <a>holders</a> SHOULD decide how to aggregate and manage
+<a>verifiable claims</a>.
+        </li>
+        <li>
+<a>Holders</a> SHOULD be able to easily control and own their own identifiers.
+        </li>
+        <li>
+<a>Holders</a> MUST control which <a>verifiable claims</a> to use and when.
+        </li>
+        <li>
+<a>Holders</a> MUST be able to freely choose and change the agents they employ
+to help them manage and share their <a>verifiable claims</a>.
+        </li>
+        <li>
+<a>Holders</a> that share <a>verifiable claims</a> MUST NOT be required to
+reveal the identity of the <a>inspector</a> to <a>issuers</a>.
+        </li>
+        <li>
+A <a>verifiable claim</a> MUST be expressed in one or more standard,
+machine-readable data formats for expressing <a>verifiable claims</a> which
+can also be extended with minimal coordination.
+        </li>
+        <li>
+<a>Verifiable claims</a> MUST be able to be indepenently issued, stored, and
+verified.
+        </li>
+        <li>
+<a>Verifiable Claims</a> MUST be able to be revoked by the <a>issuer</a>.
+        </li>
+      </ul>
+      <p class="issue">
+There are
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-tasks">other requirements</a>
+listed in the Verifiable Claims Use Cases
+document that may or may not be aligned with the requirements listed above.
+The VCWG will be ensuring alignment of the list of requirements from both
+documents over time and will most likely move the list of requirements to a
+single document.
+      </p>
     </section>
 
   </section>
@@ -530,7 +533,7 @@ very simple scheme for revocation as a part of this specification.
         <h2>JSON</h2>
         <section>
           <h2>Expressing an Entity Profile in JSON</h2>
-            <p>In JSON, an instance of the <a>Entity Profile
+            <p>In JSON [[!JSON]], an instance of the <a>Entity Profile
             Model</a> is expressed as a single JSON object whose
             properties are the entity profile's
             <a>properties</a>, with the following value type assignments:</p>
