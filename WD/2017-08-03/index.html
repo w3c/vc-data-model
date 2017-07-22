@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" typeof="bibo:Document " prefix="bibo: http://purl.org/ontology/bibo/ w3p: http://www.w3.org/2001/02pd/rec54#">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta lang="" property="dc:language" content="en">
+    <style>
+        /* --- EXAMPLES --- */
+
+        div.example-title {
+            min-width: 7.5em;
+            color: #b9ab2d;
+        }
+
+        div.example-title span {
+            text-transform: uppercase;
+        }
+
+        aside.example,
+        div.example,
+        div.illegal-example {
+            padding: 0.5em;
+            margin: 1em 0;
+            position: relative;
+            clear: both;
+        }
+
+        div.illegal-example {
+            color: red
+        }
+
+        div.illegal-example p {
+            color: black
+        }
+
+        aside.example,
+        div.example {
+            padding: .5em;
+            border-left-width: .5em;
+            border-left-style: solid;
+            border-color: #e0cb52;
+            background: #fcfaee;
+        }
+
+        aside.example div.example {
+            border-left-width: .1em;
+            border-color: #999;
+            background: #fff;
+        }
+
+        aside.example div.example div.example-title {
+            color: #999;
+        }
+    </style>
+    <style>
+        /* --- ISSUES/NOTES --- */
+
+        div.issue-title,
+        div.note-title,
+        div.ednote-title,
+        div.warning-title {
+            padding-right: 1em;
+            min-width: 7.5em;
+            color: #b9ab2d;
+        }
+
+        div.issue-title {
+            color: #e05252;
+        }
+
+        div.note-title,
+        div.ednote-title {
+            color: #2b2;
+        }
+
+        div.warning-title {
+            color: #f22;
+        }
+
+        div.issue-title span,
+        div.note-title span,
+        div.ednote-title span,
+        div.warning-title span {
+            text-transform: uppercase;
+        }
+
+        div.note,
+        div.issue,
+        div.ednote,
+        div.warning {
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
+        .note>p:first-child,
+        .ednote>p:first-child,
+        .issue>p:first-child,
+        .warning>p:first-child {
+            margin-top: 0
+        }
+
+        .issue,
+        .note,
+        .ednote,
+        .warning {
+            padding: .5em;
+            border-left-width: .5em;
+            border-left-style: solid;
+        }
+
+        div.issue,
+        div.note,
+        div.ednote,
+        div.warning {
+            padding: 1em 1.2em 0.5em;
+            margin: 1em 0;
+            position: relative;
+            clear: both;
+        }
+
+        span.note,
+        span.ednote,
+        span.issue,
+        span.warning {
+            padding: .1em .5em .15em;
+        }
+
+        .issue {
+            border-color: #e05252;
+            background: #fbe9e9;
+        }
+
+        .note,
+        .ednote {
+            border-color: #52e052;
+            background: #e9fbe9;
+        }
+
+        .warning {
+            border-color: #f11;
+            border-width: .2em;
+            border-style: solid;
+            background: #fbe9e9;
+        }
+
+        .warning-title:before {
+            content: "⚠";
+            /*U+26A0 WARNING SIGN*/
+            font-size: 3em;
+            float: left;
+            height: 100%;
+            padding-right: .3em;
+            vertical-align: top;
+            margin-top: -0.5em;
+        }
+
+        li.task-list-item {
+            list-style: none;
+        }
+
+        input.task-list-item-checkbox {
+            margin: 0 0.35em 0.25em -1.6em;
+            vertical-align: middle;
+        }
+    </style>
+    <title>Verifiable Claims Data Model and Representations</title>
+
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+
+    <script src="./common.js"></script>
+
+    <style id="respec-mainstyle">
+        /*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+        /* Override code highlighter background */
+
+        .hljs {
+            background: transparent !important;
+        }
+        /* --- INLINES --- */
+
+        em.rfc2119 {
+            text-transform: lowercase;
+            font-style: normal;
+            color: #900;
+        }
+
+        h1 abbr,
+        h2 abbr,
+        h3 abbr,
+        h4 abbr,
+        h5 abbr,
+        h6 abbr,
+        a abbr {
+            border: none;
+        }
+
+        dfn {
+            font-weight: bold;
+        }
+
+        a.internalDFN {
+            color: inherit;
+            border-bottom: 1px solid #99c;
+            text-decoration: none;
+        }
+
+        a.externalDFN {
+            color: inherit;
+            border-bottom: 1px dotted #ccc;
+            text-decoration: none;
+        }
+
+        a.bibref {
+            text-decoration: none;
+        }
+
+        cite .bibref {
+            font-style: normal;
+        }
+
+        code {
+            color: #C83500;
+        }
+
+        th code {
+            color: inherit;
+        }
+        /* --- TOC --- */
+
+        .toc a,
+        .tof a {
+            text-decoration: none;
+        }
+
+        a .secno,
+        a .figno {
+            color: #000;
+        }
+
+        ul.tof,
+        ol.tof {
+            list-style: none outside none;
+        }
+
+        .caption {
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        /* --- TABLE --- */
+
+        table.simple {
+            border-spacing: 0;
+            border-collapse: collapse;
+            border-bottom: 3px solid #005a9c;
+        }
+
+        .simple th {
+            background: #005a9c;
+            color: #fff;
+            padding: 3px 5px;
+            text-align: left;
+        }
+
+        .simple th[scope="row"] {
+            background: inherit;
+            color: inherit;
+            border-top: 1px solid #ddd;
+        }
+
+        .simple td {
+            padding: 3px 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .simple tr:nth-child(even) {
+            background: #f0f6ff;
+        }
+        /* --- DL --- */
+
+        .section dd>p:first-child {
+            margin-top: 0;
+        }
+
+        .section dd>p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section dd {
+            margin-bottom: 1em;
+        }
+
+        .section dl.attrs dd,
+        .section dl.eldef dd {
+            margin-bottom: 0;
+        }
+
+        #issue-summary>ul,
+        .respec-dfn-list {
+            column-count: 2;
+        }
+
+        #issue-summary li,
+        .respec-dfn-list li {
+            list-style: none;
+        }
+
+        @media print {
+            .removeOnSave {
+                display: none;
+            }
+        }
+    </style>
+    <style>
+        /*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            color: #333;
+            background: #f8f8f8;
+        }
+
+        .hljs-comment,
+        .hljs-quote {
+            color: #998;
+            font-style: italic;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-subst {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .hljs-number,
+        .hljs-literal,
+        .hljs-variable,
+        .hljs-template-variable,
+        .hljs-tag .hljs-attr {
+            color: #008080;
+        }
+
+        .hljs-string,
+        .hljs-doctag {
+            color: #d14;
+        }
+
+        .hljs-title,
+        .hljs-section,
+        .hljs-selector-id {
+            color: #900;
+            font-weight: bold;
+        }
+
+        .hljs-subst {
+            font-weight: normal;
+        }
+
+        .hljs-type,
+        .hljs-class .hljs-title {
+            color: #458;
+            font-weight: bold;
+        }
+
+        .hljs-tag,
+        .hljs-name,
+        .hljs-attribute {
+            color: #000080;
+            font-weight: normal;
+        }
+
+        .hljs-regexp,
+        .hljs-link {
+            color: #009926;
+        }
+
+        .hljs-symbol,
+        .hljs-bullet {
+            color: #990073;
+        }
+
+        .hljs-built_in,
+        .hljs-builtin-name {
+            color: #0086b3;
+        }
+
+        .hljs-meta {
+            color: #999;
+            font-weight: bold;
+        }
+
+        .hljs-deletion {
+            background: #fdd;
+        }
+
+        .hljs-addition {
+            background: #dfd;
+        }
+
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/W3C-WD">
+    <link rel="canonical" href="https://www.w3.org/TR/verifiable-claims-data-model/">
+    <meta name="generator" content="ReSpec 15.5.0">
+    <script id="initialUserConfig" type="application/json">
+        {
+            "specStatus": "FPWD",
+            "shortName": "verifiable-claims-data-model",
+            "publishDate": "2017-08-03",
+            "localBiblio": {
+                "REST": {
+                    "title": "Architectural Styles and the Design of Network-based Software Architectures",
+                    "date": "2000",
+                    "href": "http://www.ics.uci.edu/~fielding/pubs/dissertation/",
+                    "authors": [
+                        "Fielding, Roy Thomas"
+                    ],
+                    "publisher": "University of California, Irvine."
+                },
+                "VC-USECASES": {
+                    "title": "Verifiable Claims Use Cases",
+                    "href": "https://www.w3.org/TR/verifiable-claims-use-cases/",
+                    "authors": [
+                        "Shane McCarron",
+                        "Daniel Burnett",
+                        "Gregg Kellogg",
+                        "Brian Sletten",
+                        "Manu Sporny"
+                    ],
+                    "status": "FPWD",
+                    "publisher": "Verifiable Claims Working Group"
+                },
+                "HTTP-SIGNATURES": {
+                    "aliasOf": "http-signatures"
+                },
+                "MACAROONS": {
+                    "title": "Macaroons",
+                    "href": "http://macaroons.io/",
+                    "authors": [
+                        "Arnar Birgisson",
+                        "Joe Gibbs Politz",
+                        "Úlfar Erlingsson",
+                        "Ankur Taly",
+                        "Michael Vrable",
+                        "Mark Lentczner"
+                    ],
+                    "status": "unofficial",
+                    "publisher": "Credentials Community Group"
+                },
+                "OPEN-BADGES": {
+                    "title": "Open Badges",
+                    "href": "https://github.com/openbadges/openbadges-specification",
+                    "authors": [
+                        "Brian Brennan",
+                        "Mike Larsson",
+                        "Chris McAvoy",
+                        "Nate Otto",
+                        "Kerri Lemoie"
+                    ],
+                    "status": "BA-DRAFT",
+                    "publisher": "Badge Alliance Standard Working Group"
+                },
+                "RDF-NORMALIZATION": {
+                    "title": "RDF Dataset Normalization",
+                    "href": "http://json-ld.github.io/normalization/spec/",
+                    "authors": [
+                        "Dave Longley",
+                        "Manu Sporny"
+                    ],
+                    "status": "CG-DRAFT",
+                    "publisher": "Credentials W3C Community Group"
+                }
+            },
+            "github": "https://github.com/w3c/vc-use-cases",
+            "includePermalinks": false,
+            "edDraftURI": "https://w3c.github.io/vc-data-model/",
+            "editors": [{
+                    "name": "Daniel C. Burnett",
+                    "company": "Standards Play",
+                    "companyURL": "http://standardsplay.com/"
+                },
+                {
+                    "name": "Manu Sporny",
+                    "url": "http://digitalbazaar.com/",
+                    "company": "Digital Bazaar",
+                    "companyURL": "http://digitalbazaar.com/"
+                },
+                {
+                    "name": "Dave Longley",
+                    "url": "http://digitalbazaar.com/",
+                    "company": "Digital Bazaar",
+                    "companyURL": "http://digitalbazaar.com/"
+                },
+                {
+                    "name": "Gregg Kellogg",
+                    "url": "http://greggkellogg.net/",
+                    "company": "Spec-Ops",
+                    "companyURL": "https://spec-ops.io/",
+                    "w3cid": "44770"
+                }
+            ],
+            "authors": [{
+                    "name": "Manu Sporny",
+                    "url": "http://digitalbazaar.com/",
+                    "company": "Digital Bazaar",
+                    "companyURL": "http://digitalbazaar.com/"
+                },
+                {
+                    "name": "Dave Longley",
+                    "url": "http://digitalbazaar.com/",
+                    "company": "Digital Bazaar",
+                    "companyURL": "http://digitalbazaar.com/"
+                }
+            ],
+            "wg": "Verifiable Claims Working Group",
+            "wgURI": "https://www.w3.org/2017/vc/",
+            "wgPublicList": "public-vc-comments",
+            "wgPatentURI": "https://www.w3.org/2004/01/pp-impl/98922/status",
+            "maxTocLevel": 4,
+            "inlineCSS": true,
+            "publishISODate": "2017-08-03T00:00:00.000Z",
+            "generatedSubtitle": "First Public Working Draft 03 August 2017"
+        }
+    </script>
+</head>
+
+<body aria-busy="false" class="h-entry" id="respecDocument">
+    <div class="head" role="contentinfo" id="respecHeader">
+        <p>
+            <a class="logo" href="https://www.w3.org/"><img width="72" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" alt="W3C"></a>
+        </p>
+        <p></p>
+        <h1 class="title p-name" id="title" property="dcterms:title">Verifiable Claims Data Model and Representations</h1>
+        <h2 id="w3c-first-public-working-draft-03-august-2017"><abbr title="World Wide Web Consortium">W3C</abbr> First Public Working Draft <time property="dcterms:issued" class="dt-published" datetime="2017-08-03">03 August 2017</time></h2>
+        <dl>
+            <dt>This version:</dt>
+            <dd><a class="u-url" href="https://www.w3.org/TR/2017/WD-verifiable-claims-data-model-20170803/">https://www.w3.org/TR/2017/WD-verifiable-claims-data-model-20170803/</a></dd>
+            <dt>Latest published version:</dt>
+            <dd><a href="https://www.w3.org/TR/verifiable-claims-data-model/">https://www.w3.org/TR/verifiable-claims-data-model/</a></dd>
+            <dt>Latest editor's draft:</dt>
+            <dd><a href="https://w3c.github.io/vc-data-model/">https://w3c.github.io/vc-data-model/</a></dd>
+            <dt>Editors:</dt>
+            <dd class="p-author h-card vcard" property="bibo:editor" resource="_:editor0"><span property="rdf:first" typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Daniel C. Burnett</span>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="http://standardsplay.com/">Standards Play</a></span>
+                <span property="rdf:rest" resource="_:editor1"></span>
+            </dd>
+            <dd class="p-author h-card vcard" resource="_:editor1"><span property="rdf:first" typeof="foaf:Person"><meta property="foaf:name" content="Manu Sporny"><a class="u-url url p-name fn" property="foaf:homepage" href="http://digitalbazaar.com/">Manu Sporny</a>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a></span>
+                <span property="rdf:rest" resource="_:editor2"></span>
+            </dd>
+            <dd class="p-author h-card vcard" resource="_:editor2"><span property="rdf:first" typeof="foaf:Person"><meta property="foaf:name" content="Dave Longley"><a class="u-url url p-name fn" property="foaf:homepage" href="http://digitalbazaar.com/">Dave Longley</a>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a></span>
+                <span property="rdf:rest" resource="_:editor3"></span>
+            </dd>
+            <dd class="p-author h-card vcard" resource="_:editor3" data-editor-id="44770"><span property="rdf:first" typeof="foaf:Person"><meta property="foaf:name" content="Gregg Kellogg"><a class="u-url url p-name fn" property="foaf:homepage" href="http://greggkellogg.net/">Gregg Kellogg</a>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="https://spec-ops.io/">Spec-Ops</a></span>
+                <span property="rdf:rest" resource="rdf:nil"></span>
+            </dd>
+
+            <dt>Authors:</dt>
+            <dd class="p-author h-card vcard"><span property="dc:contributor" typeof="foaf:Person"><meta property="foaf:name" content="Manu Sporny"><a class="u-url url p-name fn" property="foaf:homepage" href="http://digitalbazaar.com/">Manu Sporny</a>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a></span>
+            </dd>
+            <dd class="p-author h-card vcard"><span property="dc:contributor" typeof="foaf:Person"><meta property="foaf:name" content="Dave Longley"><a class="u-url url p-name fn" property="foaf:homepage" href="http://digitalbazaar.com/">Dave Longley</a>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a></span>
+            </dd>
+
+            <dt>Participate:</dt>
+            <dd>
+                <a href="https://github.com/w3c/vc-use-cases">
+                      GitHub w3c/vc-use-cases
+                    </a>
+            </dd>
+            <dd>
+                <a href="https://github.com/w3c/vc-use-cases/issues/">
+                      File a bug
+                    </a>
+            </dd>
+            <dd>
+                <a href="https://github.com/w3c/vc-use-cases/commits/gh-pages">
+                      Commit history
+                    </a>
+            </dd>
+        </dl>
+        <p class="copyright">
+            <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2017
+
+            <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+            <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+            <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>).
+            <abbr title="World Wide Web Consortium">W3C</abbr> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+            <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
+            <a rel="license" href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">permissive document license</a> rules apply.
+        </p>
+        <hr title="Separator for header">
+    </div>
+    <section id="abstract" class="introductory" property="dc:abstract">
+        <h2 id="abstract-0" resource="#abstract-0"><span property="xhv:role" resource="xhv:heading">Abstract</span></h2>
+        <p>
+            Driver's licenses are used to claim that we are capable of operating a motor vehicle, university degrees can be used to claim our education status, and government-issued passports enable holders to travel between countries. This specification provides
+            a standard way to express these sorts of claims on the Web in a way that is cryptographically secure, privacy respecting, and automatically verifiable.
+        </p>
+    </section>
+
+    <section id="sotd" class="introductory">
+        <h2 id="status-of-this-document" resource="#status-of-this-document"><span property="xhv:role" resource="xhv:heading">Status of This Document</span></h2>
+        <p>
+            <em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications and the latest revision of this technical report can be found in the <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports index</a> at https://www.w3.org/TR/.</em>
+        </p>
+
+        <p>
+            Comments regarding this document are welcome. Please file issues directly on <a href="https://github.com/w3c/vc-data-model/issues/">GitHub</a>, or send them to
+            <a href="mailto:public-vc-comments@w3.org">public-vc-comments@w3.org</a> (<a href="mailto:public-vc-comments-request@w3.org?subject=subscribe">subscribe</a>,
+            <a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
+        </p>
+
+        <p>
+            This document was published by the <a href="https://www.w3.org/2017/vc/">Verifiable Claims Working Group</a> as a First Public Working Draft. This document is intended to become a <abbr title="World Wide Web Consortium">W3C</abbr> Recommendation.
+            Comments regarding this document are welcome. Please send them to
+            <a href="mailto:public-vc-comments@w3.org">public-vc-comments@w3.org</a> (<a href="mailto:public-vc-comments-request@w3.org?subject=subscribe">subscribe</a>,
+            <a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
+        </p>
+        <p>
+            Publication as a First Public Working Draft does not imply endorsement by the <abbr title="World Wide Web Consortium">W3C</abbr> Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time.
+            It is inappropriate to cite this document as other than work in progress.
+        </p>
+        <p>
+            This document was produced by a group operating under the
+            <a id="sotd_patent" property="w3p:patentRules" href="https://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 <abbr title="World Wide Web Consortium">W3C</abbr> Patent
+            Policy</a>.
+            <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="https://www.w3.org/2004/01/pp-impl/98922/status" rel="disclosure">public list of any patent
+              disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains
+            <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
+            Claim(s)</a> must disclose the information in accordance with
+            <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
+            6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+        </p>
+        <p>This document is governed by the <a id="w3c_process_revision" href="https://www.w3.org/2017/Process-20170301/">1 March 2017 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+        </p>
+
+
+    </section>
+    <nav id="toc">
+        <h2 class="introductory" id="table-of-contents" resource="#table-of-contents"><span property="xhv:role" resource="xhv:heading">Table of Contents</span></h2>
+        <ol class="toc" role="directory">
+            <li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a>
+                <ol class="toc">
+                    <li class="tocline"><a href="#what-is-a-verifiable-claim?" class="tocxref"><span class="secno">1.1 </span>What is a Verifiable Claim?</a></li>
+                    <li class="tocline"><a href="#ecosystem-overview" class="tocxref"><span class="secno">1.2 </span>Ecosystem Overview</a></li>
+                    <li class="tocline"><a href="#use-cases-and-requirements" class="tocxref"><span class="secno">1.3 </span>Use Cases and Requirements</a></li>
+                </ol>
+            </li>
+            <li class="tocline"><a href="#terminology" class="tocxref"><span class="secno">2. </span>Terminology</a></li>
+            <li class="tocline"><a href="#data-model" class="tocxref"><span class="secno">3. </span>Data Model</a>
+                <ol class="toc">
+                    <li class="tocline"><a href="#general-characteristics" class="tocxref"><span class="secno">3.1 </span>General Characteristics</a></li>
+                    <li class="tocline"><a href="#entity-profile-model" class="tocxref"><span class="secno">3.2 </span><span data-dfn-type="dfn">Entity Profile Model</span></a></li>
+                    <li class="tocline"><a href="#entity-credential-model" class="tocxref"><span class="secno">3.3 </span><span data-dfn-type="dfn">Entity Credential Model</span></a></li>
+                    <li class="tocline"><a href="#verifiable-claims-model" class="tocxref"><span class="secno">3.4 </span>Verifiable Claims Model</a></li>
+                    <li class="tocline"><a href="#revocation-model" class="tocxref"><span class="secno">3.5 </span>Revocation Model</a></li>
+                </ol>
+            </li>
+            <li class="tocline"><a href="#syntaxes" class="tocxref"><span class="secno">4. </span>Syntaxes</a>
+                <ol class="toc">
+                    <li class="tocline"><a href="#json" class="tocxref"><span class="secno">4.1 </span>JSON</a>
+                        <ol class="toc">
+                            <li class="tocline"><a href="#expressing-an-entity-profile-in-json" class="tocxref"><span class="secno">4.1.1 </span>Expressing an Entity Profile in JSON</a></li>
+                            <li class="tocline"><a href="#expressing-an-entity-credential-in-json" class="tocxref"><span class="secno">4.1.2 </span>Expressing an Entity Credential in JSON</a></li>
+                        </ol>
+                    </li>
+                    <li class="tocline"><a href="#json-ld" class="tocxref"><span class="secno">4.2 </span>JSON-LD</a>
+                        <ol class="toc">
+                            <li class="tocline"><a href="#expressing-an-entity-profile-in-json-ld" class="tocxref"><span class="secno">4.2.1 </span>Expressing an Entity Profile in JSON-LD</a></li>
+                            <li class="tocline"><a href="#expressing-an-entity-credential-in-json-ld" class="tocxref"><span class="secno">4.2.2 </span>Expressing an Entity Credential in JSON-LD</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </li>
+            <li class="tocline"><a href="#privacy-considerations" class="tocxref"><span class="secno">5. </span>Privacy Considerations</a>
+                <ol class="toc">
+                    <li class="tocline"><a href="#spectrum-of-privacy" class="tocxref"><span class="secno">5.1 </span>Spectrum of Privacy</a></li>
+                    <li class="tocline"><a href="#personally-identifiable-information" class="tocxref"><span class="secno">5.2 </span>Personally Identifiable Information</a></li>
+                    <li class="tocline"><a href="#identifier-based-correlation" class="tocxref"><span class="secno">5.3 </span>Identifier-based Correlation</a></li>
+                    <li class="tocline"><a href="#signature-based-correlation" class="tocxref"><span class="secno">5.4 </span>Signature-based Correlation</a></li>
+                    <li class="tocline"><a href="#device-fingerprinting" class="tocxref"><span class="secno">5.5 </span>Device Fingerprinting</a></li>
+                    <li class="tocline"><a href="#favor-abstract-claims" class="tocxref"><span class="secno">5.6 </span>Favor Abstract Claims</a></li>
+                    <li class="tocline"><a href="#the-principle-of-minimum-disclosure" class="tocxref"><span class="secno">5.7 </span>The Principle of Minimum Disclosure</a></li>
+                    <li class="tocline"><a href="#bearer-claims" class="tocxref"><span class="secno">5.8 </span>Bearer Claims</a></li>
+                    <li class="tocline"><a href="#validity-checks" class="tocxref"><span class="secno">5.9 </span>Validity Checks</a></li>
+                    <li class="tocline"><a href="#storage-providers-and-data-mining" class="tocxref"><span class="secno">5.10 </span>Storage Providers and Data Mining</a></li>
+                    <li class="tocline"><a href="#aggregation-of-claims" class="tocxref"><span class="secno">5.11 </span>Aggregation of Claims</a></li>
+                    <li class="tocline"><a href="#usage-patterns" class="tocxref"><span class="secno">5.12 </span>Usage Patterns</a></li>
+                    <li class="tocline"><a href="#sharing-information-with-the-wrong-party" class="tocxref"><span class="secno">5.13 </span>Sharing Information with the Wrong Party</a></li>
+                    <li class="tocline"><a href="#frequency-of-claim-issuance" class="tocxref"><span class="secno">5.14 </span>Frequency of Claim Issuance</a></li>
+                    <li class="tocline"><a href="#prefer-single-use-claims" class="tocxref"><span class="secno">5.15 </span>Prefer Single Use Claims</a></li>
+                </ol>
+            </li>
+            <li class="tocline"><a href="#security-considerations" class="tocxref"><span class="secno">6. </span>Security Considerations</a>
+                <ol class="toc">
+                    <li class="tocline"><a href="#unsigned-claims" class="tocxref"><span class="secno">6.1 </span>Unsigned Claims</a></li>
+                    <li class="tocline"><a href="#bundling-dependent-claims" class="tocxref"><span class="secno">6.2 </span>Bundling Dependent Claims</a></li>
+                    <li class="tocline"><a href="#highly-dynamic-information" class="tocxref"><span class="secno">6.3 </span>Highly Dynamic Information</a></li>
+                </ol>
+            </li>
+            <li class="tocline"><a href="#verification" class="tocxref"><span class="secno">7. </span>Verification</a>
+                <ol class="toc">
+                    <li class="tocline"><a href="#structural-validity" class="tocxref"><span class="secno">7.1 </span>Structural Validity</a></li>
+                    <li class="tocline"><a href="#entity-validity" class="tocxref"><span class="secno">7.2 </span>Entity Validity</a></li>
+                    <li class="tocline"><a href="#fitness-for-purpose" class="tocxref"><span class="secno">7.3 </span>Fitness for Purpose</a></li>
+                </ol>
+            </li>
+            <li class="tocline"><a href="#references" class="tocxref"><span class="secno">A. </span>References</a>
+                <ol class="toc">
+                    <li class="tocline"><a href="#normative-references" class="tocxref"><span class="secno">A.1 </span>Normative references</a></li>
+                    <li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">A.2 </span>Informative references</a></li>
+                </ol>
+            </li>
+        </ol>
+    </nav>
+
+    <section id="introduction" typeof="bibo:Chapter" resource="#introduction" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="x1.-introduction" resource="#x1.-introduction"><span property="xhv:role" resource="xhv:heading"><span class="secno">1. </span>Introduction</span>
+        </h2>
+        <p>
+            Granting a benefit requires proof and verification. Some benefits demand a formal process that includes three parties. In this process, the <strong>holder</strong> asks for the benefit and the <strong>inspector-verifier
+</strong> grants or denies the benefit based on verification of the holder’s qualification from a trusted <strong>issuer</strong>.
+        </p>
+
+        <p>
+            For example, we use a driver's licenses to prove that we are capable of operating a motor vehicle, a university degree to prove our education status, and government-issued passports to grant travel between countries. This specification provides a standard
+            way to express these claims on the Web in a way that is cryptographically secure, privacy respecting, and automatically verifiable.
+        </p>
+        <p>
+            For those that are unfamiliar with the concepts related to verifiable claims, the following sections provide an overview of:
+        </p>
+        <ol>
+            <li>
+                what a verifiable claim contains,
+            </li>
+            <li>
+                an ecosystem where verifiable claims are expected to be useful, and
+            </li>
+            <li>
+                the use cases and requirements that informed this specification
+            </li>
+        </ol>
+        <p></p>
+
+        <section id="what-is-a-verifiable-claim?" typeof="bibo:Chapter" resource="#what-is-a-verifiable-claim?" property="bibo:hasPart">
+            <h3 id="x1.1-what-is-a-verifiable-claim?" resource="#x1.1-what-is-a-verifiable-claim?"><span property="xhv:role" resource="xhv:heading"><span class="secno">1.1 </span>What is a Verifiable Claim?</span>
+            </h3>
+            <p>
+                In order to explore what makes a verifiable claim useful, it is helpful to understand the basic terminology used to talk about a verifiable claim:
+            </p>
+
+            <dl>
+                <dt><a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a></dt>
+                <dd>
+                    A thing with distinct and independent existence such as a person, organization, concept, or device.
+                </dd>
+                <dt><a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> about which <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claims</a> may be made.
+                </dd>
+                <dt><a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a></dt>
+                <dd>
+                    A statement made by an <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> about a <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>. A
+                    <strong>verifiable claim</strong> is a claim that is effectively tamper-proof and whose authorship can be cryptographically verified. Multiple claims may be bundled together into a set of claims.
+                </dd>
+            </dl>
+
+            <p>
+                The basic components of a set of verifiable claims are shown in the diagram below:
+            </p>
+
+            <figure id="fig-xthe-basic-components-of-a-set-of-verifiable-claims.">
+                <img style="margin: auto; display: block;" width="50%" src="diagrams/verifiable-claims.svg">
+                <figcaption style="text-align: center;">Figure <span class="figno">1</span> <span class="fig-title">
+The basic components of a set of verifiable claims.
+        </span></figcaption>
+            </figure>
+
+            <p>
+                Claim set metadata refers to information about the set of verifiable claims, such as the entity that made the claims and an expiration date for the claims.
+            </p>
+        </section>
+
+        <section id="ecosystem-overview" typeof="bibo:Chapter" resource="#ecosystem-overview" property="bibo:hasPart">
+            <h3 id="x1.2-ecosystem-overview" resource="#x1.2-ecosystem-overview"><span property="xhv:role" resource="xhv:heading"><span class="secno">1.2 </span>Ecosystem Overview</span>
+            </h3>
+
+            <p>
+                This section outlines a basic set of roles and an ecosystem where verifiable claims are expected to be useful. In this section, we distinguish the essential roles of core actors and the relationships between them; how do they interact? A role is an abstraction
+                that might be implemented in many different ways. The separation of roles suggests likely interfaces and/or protocols for standardization. The following roles are introduced in this specification:
+            </p>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue1"><span>Issue</span></div>
+                <p class="" data-title="Incomplete list of roles and terminology">
+                    The VCWG is actively discussing the number of roles and terminology used in this specification. The group expects terminology and role identification to be an ongoing discussion and will be influenced by public feedback on the specification. At present,
+                    the following incomplete list of roles and terminology have been considered: Subject, Issuer, Authority, Author, Signatory, Holder, Presenter, Asserter, Claimant, Sharer, Subject's Agent, Prover, Mediator, Inspector, Evaluator, Verifier,
+                    Consumer, and Relying Party. Some of these are aliases for the same concept, others are possibly new roles in the ecosystem. Reviewers should be aware that the terminology used in this document is not necessarily final and the group
+                    is actively soliciting feedback on the roles and terminology used in this specification.
+                </p>
+            </div>
+
+            <dl>
+                <dt><a href="#dfn-holder" class="internalDFN" data-link-type="dfn">holder</a></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that is in control of one or more <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a>. Examples of holders include students,
+                    employees, and customers.
+                </dd>
+                <dt><a href="#dfn-issuer" class="internalDFN" data-link-type="dfn">issuer</a></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that creates a <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claim</a>, associates it with a particular <a href="#dfn-subject"
+                        class="internalDFN" data-link-type="dfn">subject</a>, and transmits it to a <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">holder</a>. Examples of issuers include corporations, governments, and individuals.
+                </dd>
+                <dt><a href="#dfn-inspector-verifier" class="internalDFN" data-link-type="dfn">inspector-verifier</a></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that receives one or more <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a> for processing. Examples of inspector-verifiers
+                    include employers, security personnel, and websites.
+                </dd>
+                <dt><a href="#dfn-identifier-registry" class="internalDFN" data-link-type="dfn">identifier registry</a></dt>
+                <dd>
+                    Mediates the creation and verification of <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> identifiers. Examples of identifier registries include corporate employee databases, government ID databases, and
+                    distributed ledgers.
+                </dd>
+            </dl>
+
+            <figure id="fig-xthe-roles-and-information-flows-that-form-the-basis-for-this-specification.">
+                <img style="margin: auto; display: block;" width="75%" src="diagrams/vc-ecosystem-overview.svg">
+                <figcaption style="text-align: center;">Figure <span class="figno">2</span> <span class="fig-title">
+The roles and information flows that form the basis for this specification.
+        </span></figcaption>
+            </figure>
+
+            <div class="note">
+                <div class="note-title marker" aria-level="4" role="heading" id="h-note1"><span>Note</span></div>
+                <p class="">
+                    The ecosystem above is provided as an example to the reader in order to ground the rest of the concepts in this specification. Other ecosystems exist, such as protected environments or proprietary systems, where verifiable claims also provide benefit.
+                </p>
+            </div>
+
+        </section>
+
+        <section id="use-cases-and-requirements" typeof="bibo:Chapter" resource="#use-cases-and-requirements" property="bibo:hasPart">
+            <h3 id="x1.3-use-cases-and-requirements" resource="#x1.3-use-cases-and-requirements"><span property="xhv:role" resource="xhv:heading"><span class="secno">1.3 </span>Use Cases and Requirements</span>
+            </h3>
+            <p>
+                The Verifiable Claims Use Cases[<cite><a class="bibref" href="#bib-VC-USECASES">VC-USECASES</a></cite>] document outlines a number of key topics that readers may find useful, including:
+            </p>
+            <ul>
+                <li>
+                    a more thorough explanation of the
+                    <a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-roles">roles</a> introduced above,
+                </li>
+                <li>
+                    the
+                    <a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-needs">needs</a> identified in market verticals like education, finance, healthcare, retail, professional licensing, and government,
+                </li>
+                <li>
+                    common
+                    <a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-tasks">tasks and requirement</a> performed by the roles in the ecosystem, and
+                </li>
+                <li>
+                    common
+                    <a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-sequences">sequences and flows</a> identified by the Working Group.
+                </li>
+            </ul>
+            <p>
+                As a result of documenting and analyzing the use cases document, a number of desirable capabilities have been identified as requirements for this specification, specifically:
+            </p>
+            <ul>
+                <li>
+                    <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">Holders</a> <em class="rfc2119" title="MUST">MUST</em> receive and store <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a> from
+                    <a href="#dfn-issuer" class="internalDFN" data-link-type="dfn">issuers</a> through an agent that the issuer does not need to trust.
+                </li>
+                <li>
+                    <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">Holders</a> <em class="rfc2119" title="SHOULD">SHOULD</em> be positioned between <a href="#dfn-issuer" class="internalDFN" data-link-type="dfn">issuers</a> and <a href="#dfn-inspector-verifier"
+                        class="internalDFN" data-link-type="dfn">inspector-verifiers</a> and mediate the transmission of <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a>.
+                </li>
+                <li>
+                    <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">Holders</a> <em class="rfc2119" title="MUST">MUST</em> provide <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a> to <a href="#dfn-inspector-verifier"
+                        class="internalDFN" data-link-type="dfn">inspector-verifiers</a> through an agent that inspector-verifiers needn't trust; they only need to trust
+                    <a href="#dfn-issuer" class="internalDFN" data-link-type="dfn">issuers</a>.
+                </li>
+                <li>
+                    <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">Verifiable claims</a> <em class="rfc2119" title="MUST">MUST</em> be associated with <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subjects</a>, not particular
+                    services; <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">holders</a> <em class="rfc2119" title="SHOULD">SHOULD</em> decide how to aggregate and manage
+                    <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a>.
+                </li>
+                <li>
+                    <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">Holders</a> <em class="rfc2119" title="SHOULD">SHOULD</em> be able to easily control and own their own identifiers.
+                </li>
+                <li>
+                    <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">Holders</a> <em class="rfc2119" title="MUST">MUST</em> control which <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a> to use and when.
+                </li>
+                <li>
+                    <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">Holders</a> <em class="rfc2119" title="MUST">MUST</em> be able to freely choose and change the agents they employ to help them manage and share their <a href="#dfn-claim"
+                        class="internalDFN" data-link-type="dfn">verifiable claims</a>.
+                </li>
+                <li>
+                    <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">Holders</a> that share <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a> <em class="rfc2119" title="MUST NOT">MUST NOT</em> be required
+                    to reveal the identity of the <a href="#dfn-inspector-verifier" class="internalDFN" data-link-type="dfn">inspector-verifier</a> to <a href="#dfn-issuer" class="internalDFN" data-link-type="dfn">issuers</a>.
+                </li>
+                <li>
+                    A <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claim</a> <em class="rfc2119" title="MUST">MUST</em> be expressed in one or more standard, machine-readable data formats for expressing <a href="#dfn-claim"
+                        class="internalDFN" data-link-type="dfn">verifiable claims</a> which can also be extended with minimal coordination.
+                </li>
+                <li>
+                    <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">Verifiable claims</a> <em class="rfc2119" title="MUST">MUST</em> be able to be indepenently issued, stored, and verified.
+                </li>
+                <li>
+                    <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">Verifiable Claims</a> <em class="rfc2119" title="MUST">MUST</em> be able to be revoked by the <a href="#dfn-issuer" class="internalDFN" data-link-type="dfn">issuer</a>.
+                </li>
+            </ul>
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue2"><span>Issue</span></div>
+                <p class="">
+                    There are
+                    <a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-tasks">other requirements</a> listed in the Verifiable Claims Use Cases document that may or may not be aligned with the requirements listed above. The VCWG will be ensuring
+                    alignment of the list of requirements from both documents over time and will most likely move the list of requirements to a single document.
+                </p>
+            </div>
+        </section>
+
+    </section>
+
+    <section id="terminology" typeof="bibo:Chapter" resource="#terminology" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="x2.-terminology" resource="#x2.-terminology"><span property="xhv:role" resource="xhv:heading"><span class="secno">2. </span>Terminology</span>
+        </h2>
+
+        <div data-oninclude="restrictReferences">
+            <p>
+                This document attempts to communicate the concepts outlined in the Verifiable Claims space by using specific terms to discuss particular concepts. This terminology is included below and linked to throughout the document to aid the reader:
+            </p>
+
+            <dl class="termlist" id="terms">
+                <dt><dfn id="dfn-claim" data-dfn-type="dfn">claim</dfn></dt>
+                <dd>
+                    A statement made by an <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> about a <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>. A
+                    <strong>verifiable claim</strong> is a claim that is effectively tamper-proof and whose authorship can be cryptographically verified.
+                </dd>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <dt><dfn id="dfn-entity" data-dfn-type="dfn">entity</dfn></dt>
+                <dd>
+                    A thing with distinct and independent existence such as a person, organization, concept, or device.
+                </dd>
+                <dt><dfn id="dfn-entity-credential" data-dfn-type="dfn">entity credential</dfn></dt>
+                <dd>
+                    A set of one or more claims made by the same <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> about a
+                    <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>.
+                </dd>
+                <dt><dfn id="dfn-holder" data-dfn-type="dfn">holder</dfn></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that is in control of one or more <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a>. Typically a holder is also the primary
+                    <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> of the
+                    <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a> that they are holding.
+                </dd>
+
+
+
+
+
+
+
+
+                <dt><dfn id="dfn-entity-profile" data-dfn-type="dfn">entity profile</dfn></dt>
+                <dd>
+                    A set of <a href="#dfn-entity-credential" class="internalDFN" data-link-type="dfn">entity credentials</a> related to the same <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>. An <a href="#dfn-entity" class="internalDFN"
+                        data-link-type="dfn">entity</a> may have multiple entity profiles and each entity profile may contain <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claims</a> issued by multiple <a href="#dfn-entity" class="internalDFN"
+                        data-link-type="dfn">entities</a>.
+                </dd>
+                <dt><dfn id="dfn-identifier-registry" data-dfn-type="dfn">identifier registry</dfn></dt>
+                <dd>
+                    Mediates the creation and verification of <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> identifiers.
+                </dd>
+                <dt><dfn id="dfn-issuer" data-dfn-type="dfn">issuer</dfn></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that creates a <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claim</a>, associates it with a particular <a href="#dfn-subject"
+                        class="internalDFN" data-link-type="dfn">subject</a>, and transmits it to a <a href="#dfn-holder" class="internalDFN" data-link-type="dfn">holder</a>.
+                </dd>
+                <dt><dfn id="dfn-subject" data-dfn-type="dfn">subject</dfn></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> which may have multiple <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity profiles</a> and about which <a href="#dfn-claim" class="internalDFN"
+                        data-link-type="dfn">claims</a> may be made.
+                </dd>
+
+
+                <dt><dfn id="dfn-inspector-verifier" data-dfn-type="dfn">inspector-verifier</dfn></dt>
+                <dd>
+                    An <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that receives one or more <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">verifiable claims</a> for processing.
+                </dd>
+            </dl>
+        </div>
+
+        <div class="issue" id="issue-55">
+            <div class="issue-title marker" aria-level="3" role="heading" id="h-issue3"><a href="https://github.com/w3c/vc-use-cases/issues/55"><span>Issue 55</span></a></div>
+            <p class="" data-title="Multiple subjects in a credential">
+                It is currently possible to include multiple subjects in a credential. The terminology above glosses over that fact. The group is debating if the terminology should be modified to include this nuance, or if the nuance would make grasping the basic concepts
+                more difficult.
+            </p>
+        </div>
+
+    </section>
+
+    <section id="data-model" typeof="bibo:Chapter" resource="#data-model" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="x3.-data-model" resource="#x3.-data-model"><span property="xhv:role" resource="xhv:heading"><span class="secno">3. </span>Data Model</span>
+        </h2>
+        <p>This section describes a data model for <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity
+      profiles</a> and <a href="#dfn-entity-credential" class="internalDFN" data-link-type="dfn">entity credentials</a>, the latter covering both claims and verifiable claims, that is compatible with the requirements and use cases expected to be addressed
+            by this group.
+        </p>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="600px" height="390px" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 390" preserveAspectRatio="xMidYMid meet"><defs id="svgEditorDefs"><path id="svgEditorClosePathDefs" stroke="black" style="stroke-width: 1px;" fill="khaki"></path><marker id="arrow20-16-right" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="-3" refY="0" viewBox="-15 -5 20 20"><path d="M -15 -5 L 0 0 L -15 5 z" fill="black"></path></marker><marker id="arrow15-12-left" markerHeight="12" markerUnits="strokeWidth" markerWidth="15" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"></path></marker><marker id="arrow20-16-left" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"></path></marker></defs><rect id="svgEditorBackground" x="0" y="0" width="990" height="490" style="fill: none; stroke: none;"></rect><rect x="3" y="5" style="stroke-width: 1px;" stroke="black" id="e1_rectangle" width="230" height="94" fill="khaki"></rect><text fill="black" style="font-family: Arial; font-size: 20px;" x="60" y="25" id="e2_texte">Entity Profile</text><line id="e3_line" x1="3" y1="32" x2="233" y2="32" stroke="black" style="stroke-width: 1px; fill: none;"></line><text fill="black" style="font-family: Arial; font-size: 20px;" x="90" y="167" id="e4_texte"></text><text fill="black" style="font-family: Arial; font-size: 12px;" x="20" y="60" id="e5_texte">type: unordered set of URIs<tspan x="20" dy="1.25em" style="font-size: 12px;">signature: Signature [0..1]</tspan></text><rect x="358" y="4" style="stroke-width: 1px;" stroke="black" id="e6_rectangle" width="230" height="77" fill="khaki"></rect><line id="e8_line" x1="358" y1="31" x2="588" y2="31" stroke="black" style="stroke-width: 1px; fill: none;"></line><text fill="black" style="font-family: Arial; font-size: 20px;" x="462" y="167" id="e14_texte"></text><rect x="3" y="150" style="stroke-width: 1px;" stroke="black" id="e16_rectangle" width="230" height="170" fill="khaki"></rect><line id="e17_line" x1="3" y1="177" x2="233" y2="177" stroke="black" style="stroke-width: 1px; fill: none;"></line><text fill="black" style="font-family: Arial; font-size: 20px;" x="49" y="171" id="e18_texte">Entity Credential</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="27" y="206" id="e19_texte">id: URI<tspan x="27" dy="1.25em" id="e20_tspan">type: unordered set of URIs</tspan><tspan x="27" dy="1.25em" id="e21_tspan">issuer: URI</tspan><tspan x="27" dy="1.25em" id="e22_tspan">issued: date in string form</tspan><tspan x="27" dy="1.25em" id="e23_tspan">claim: Claim</tspan></text><text fill="black" style="font-family: Arial; font-size: 20px;" x="445" y="25" id="e24_texte">Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="375" y="58" id="e25_texte">(at least one custom property)</text><rect x="358" y="147" style="stroke-width: 1px;" stroke="black" id="e26_rectangle" width="230" height="77" fill="khaki"></rect><line id="e27_line" x1="358" y1="174" x2="588" y2="174" stroke="black" style="stroke-width: 1px; fill: none;"></line><text fill="black" style="font-family: Arial; font-size: 20px;" x="405" y="169" id="e30_texte">Verifiable Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="377" y="197" id="e31_texte">signature: Signature</text><rect x="357" y="268" style="stroke-width: 1px;" stroke="black" id="e32_rectangle" width="229" height="119" fill="khaki"></rect><line id="e33_line" x1="357" y1="295" x2="587" y2="295" stroke="black" style="stroke-width: 1px; fill: none;"></line><text fill="black" style="font-family: Arial; font-size: 20px;" x="424" y="289" id="e36_texte">Signature</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="374" y="317" id="e38_texte">(varies, but expected to include<tspan x="374" dy="1.25em">at least a signature, a reference</tspan><tspan x="374" dy="1.25em">to the signing entity, and a</tspan><tspan x="374" dy="1.25em">representation of the signing date)</tspan></text><line id="e42_line" x1="233" y1="58" x2="357" y2="58" stroke="black" style="stroke-width: 1px; fill: none;"></line><line id="e43_line" x1="470" y1="148" x2="470" y2="81" stroke="black" style="stroke-width: 1px; fill: none; marker-end: url(&quot;#arrow20-16-right&quot;);"></line><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="72" id="e44_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="341" y="52" id="e45_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="51" id="e46_texte">1</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="332" y="71" id="e47_texte">0..*</text></svg>
+
+        <section id="general-characteristics" typeof="bibo:Chapter" resource="#general-characteristics" property="bibo:hasPart">
+            <h3 id="x3.1-general-characteristics" resource="#x3.1-general-characteristics"><span property="xhv:role" resource="xhv:heading"><span class="secno">3.1 </span>General Characteristics</span>
+            </h3>
+            <p>Both the <a href="#dfn-entity-profile-model" class="internalDFN" data-link-type="dfn">Entity Profile Model</a> and <a href="#dfn-entity-credential-model" class="internalDFN" data-link-type="dfn">Entity
+        Credential Model</a> consist of a collection of name-value pairs which will be referred to as
+                <dfn data-dfn-type="dfn" id="dfn-properties">properties</dfn> in this document. The following subsections describe the required and optional properties for both. The link between the two is in the <var>id</var> property. The <a href="#dfn-entity-profile-model"
+                    class="internalDFN" data-link-type="dfn">Entity Profile Model</a> defines a <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> identifier in the <a href="#entity-id"><var>id</var></a> property, while the claims
+                section of the <a href="#dfn-entity-credential-model" class="internalDFN" data-link-type="dfn">Entity Credential Model</a> uses the <a href="#claim-id"><var>id</var></a> property to refer to that <a href="#dfn-subject" class="internalDFN"
+                    data-link-type="dfn">subject</a> identifier.</p>
+            <p>This document purposely defines the data model without using a concrete syntax such as WebIDL, JSON, or JSON-LD to avoid implying a bias towards any particular one syntax. Section <a href="#expressing-entity-profiles-entity-credentials-and-verifiable-claims"></a>                defines how the data model is to be expressed in those representation languages.</p>
+        </section>
+
+        <section id="entity-profile-model" typeof="bibo:Chapter" resource="#entity-profile-model" property="bibo:hasPart">
+            <h3 id="x3.2-entity-profile-model" resource="#x3.2-entity-profile-model"><span property="xhv:role" resource="xhv:heading"><span class="secno">3.2 </span><dfn data-dfn-type="dfn" id="dfn-entity-profile-model">Entity Profile Model</dfn></span>
+            </h3>
+            <p>Unlike the <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> in the <a href="#ec-claim"><var>claim</var></a> section of the <a href="#dfn-entity-credential-model" class="internalDFN" data-link-type="dfn">Entity Credential Model</a>,
+                the <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> in the Entity Profile Model are merely information that, together with a <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>                identifier <a href="#entity-id"><var>id</var></a>, constitute an entity profile. The properties are not claims and are not intended to be verifiable.</p>
+            <p>The following properties are required in the Entity Profile Model:</p>
+            <dl>
+                <dt><span id="entity-id"><var>id</var></span></dt>
+                <dd>This is a URI representing the <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>. This identifier <em class="rfc2119" title="MAY">MAY</em> be long-lived but does not have to be.</dd>
+                <dt><var>type</var></dt>
+                <dd>This is an unordered set of URIs representing the types or classes of which this data set is a member. As an
+                    <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity profile</a>, at a minimum the class "Entity" must be a member of the set. Additional application-specific values are permitted in the set.</dd>
+            </dl>
+            <p>The following properties are optional in the Entity Profile Model:</p>
+            <dl>
+                <dt><var>signature</var></dt>
+                <dd>The method used for a signature will vary by representation language. However, if present this property is expected to have a value that is a set of name-value pairs including at least a signature, a reference to the signing entity, and
+                    a representation of the signing date.
+                </dd>
+            </dl>
+            <p>Additionally, any property name not listed above is permitted as an optional custom <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">property</a>.</p>
+        </section>
+
+        <section id="entity-credential-model" typeof="bibo:Chapter" resource="#entity-credential-model" property="bibo:hasPart">
+            <h3 id="x3.3-entity-credential-model" resource="#x3.3-entity-credential-model"><span property="xhv:role" resource="xhv:heading"><span class="secno">3.3 </span><dfn data-dfn-type="dfn" id="dfn-entity-credential-model">Entity Credential Model</dfn></span>
+            </h3>
+            <p>Unlike the <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> in the <a href="#dfn-entity-profile-model" class="internalDFN" data-link-type="dfn">Entity Profile
+        Model</a>, the <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> in the <a href="#ec-claim"><var>claim</var></a> section of the Entity Credential Model are claims made by an <a href="#dfn-entity" class="internalDFN"
+                    data-link-type="dfn">entity</a> about the <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> defined in an <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity
+        profile</a>. The Entity Credential Model includes both issuance-related properties and the aforementioned <a href="ec-claim"><var>claim</var></a> property that further contains the properties of the claim itself.
+            </p>
+            <p>The following properties are required in the Entity Credential Model:</p>
+            <dl>
+                <dt><var>id</var></dt>
+                <dd>URI representing this specific <a href="#dfn-entity-credential" class="internalDFN" data-link-type="dfn">entity credential</a></dd>
+                <dt><var>type</var></dt>
+                <dd>This is an unordered set of URIs representing the types or classes of which this data set is a member. As an
+                    <a href="#dfn-entity-credential" class="internalDFN" data-link-type="dfn">entity credential</a>, at a minimum the class "Credential" must be a member of the set. Additional application-specific values are permitted in the set.
+                </dd>
+                <dt><span id="ec-claim"><var>claim</var></span></dt>
+                <dd>This is the actual claim. Its value is a set of
+                    <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> as follows:
+                    <p>The following properties are required in a <var>claim</var> value:</p>
+                    <dl>
+                        <dt><span id="claim-id"><var>id</var></span></dt>
+                        <dd>The <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> of the claim, the property value is expected to be a valid
+                            <a href="#entity-id">Entity Profile <var>id</var></a>.</dd>
+                        <dt>At least one custom <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">property</a></dt>
+                        <dd>N/A</dd>
+                    </dl>
+                    <p>Additionally, any property name not listed above is permitted as an optional custom <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">property</a>.</p>
+                </dd>
+            </dl>
+            <p>The following <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> are optional in the Entity Credential Model:</p>
+            <dl>
+                <dt><var>issuer</var></dt>
+                <dd>This is a URI for the issuer of the claim.</dd>
+                <dt><var>issued</var></dt>
+                <dd>This is the date, in string format, when the claim was issued.
+                </dd>
+            </dl>
+            <p>Additionally, any property name not listed above is permitted as an optional custom <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">property</a>.</p>
+        </section>
+
+        <section id="verifiable-claims-model" typeof="bibo:Chapter" resource="#verifiable-claims-model" property="bibo:hasPart">
+            <h3 id="x3.4-verifiable-claims-model" resource="#x3.4-verifiable-claims-model"><span property="xhv:role" resource="xhv:heading"><span class="secno">3.4 </span>Verifiable Claims Model</span>
+            </h3>
+            <p>The claims in the <a href="#dfn-entity-credential-model" class="internalDFN" data-link-type="dfn">Entity Credential Model</a> can be made verifiable by adding the following <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">property</a>                to the <a href="#dfn-entity-credential-model" class="internalDFN" data-link-type="dfn">Entity Credential Model</a>:</p>
+            <dl>
+                <dt><var>signature</var></dt>
+                <dd>The method used for a signature will vary by representation language. However, this property is expected to have a value that is a set of name-value pairs including at least a signature, a reference to the signing entity, and a representation
+                    of the signing date.</dd>
+            </dl>
+        </section>
+
+        <section id="revocation-model" typeof="bibo:Chapter" resource="#revocation-model" property="bibo:hasPart">
+            <h3 id="x3.5-revocation-model" resource="#x3.5-revocation-model"><span property="xhv:role" resource="xhv:heading"><span class="secno">3.5 </span>Revocation Model</span>
+            </h3>
+            <p>Revocation information for the claims in the Verifiable Claims Model may be provided by adding the following <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">property</a>:
+            </p>
+
+            <dl>
+                <dt><var>revocation</var></dt>
+                <dd>The value of this property <em class="rfc2119" title="MUST">MUST</em> be a revocation scheme that provides enough information to determine whether or not the credential has been revoked. The revocation scheme will vary depending on a variety
+                    of factors, such as whether it is simple to implement or privacy-enhancing.
+                </dd>
+            </dl>
+
+            <div class="issue" id="issue-35">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue4"><a href="https://github.com/w3c/vc-use-cases/issues/35"><span>Issue 35</span></a><span style="text-transform: none">: Establish criteria for use cases, provide outlet for examples</span></div>
+                <p class="" data-title="Define ONE concrete format for the revocationList parameter ">
+                    The group is currently determining whether or not they should publish a very simple scheme for revocation as a part of this specification.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <section id="syntaxes" typeof="bibo:Chapter" resource="#syntaxes" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="x4.-syntaxes" resource="#x4.-syntaxes"><span property="xhv:role" resource="xhv:heading"><span class="secno">4. </span>Syntaxes</span>
+        </h2>
+
+        <p>This section defines how the data model described in Section <a href="data-model"></a> is realized in each of 3 different languages: JSON, JSON-LD, and WebIDL. Although syntactic mappings are only provided for these three different languages,
+            applications and services may also use any other data representation language (XML, for example) that can support the data model.
+        </p>
+
+        <section id="json" typeof="bibo:Chapter" resource="#json" property="bibo:hasPart">
+            <h3 id="x4.1-json" resource="#x4.1-json"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.1 </span>JSON</span>
+            </h3>
+            <section id="expressing-an-entity-profile-in-json" typeof="bibo:Chapter" resource="#expressing-an-entity-profile-in-json" property="bibo:hasPart">
+                <h4 id="x4.1.1-expressing-an-entity-profile-in-json" resource="#x4.1.1-expressing-an-entity-profile-in-json"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.1.1 </span>Expressing an Entity Profile in JSON</span>
+                </h4>
+                <p>In JSON [<cite><a class="bibref" href="#bib-JSON">JSON</a></cite>], an instance of the <a href="#dfn-entity-profile-model" class="internalDFN" data-link-type="dfn">Entity Profile
+            Model</a> is expressed as a single JSON object whose properties are the entity profile's
+                    <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a>, with the following value type assignments:</p>
+                <ul>
+                    <li>Any number value <em class="rfc2119" title="MUST">MUST</em> be represented as a Number type.</li>
+                    <li>Any boolean value <em class="rfc2119" title="MUST">MUST</em> be represented as a Boolean type.</li>
+                    <li>Any sequence value <em class="rfc2119" title="MUST">MUST</em> be represented as an Array type.</li>
+                    <li>Any unordered set of values <em class="rfc2119" title="MUST">MUST</em> be represented as an Array type.</li>
+                    <li>Any set of <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> <em class="rfc2119" title="MUST">MUST</em> be represented as an Object type.</li>
+                    <li>Any empty value <em class="rfc2119" title="MUST">MUST</em> be represented as a null value.</li>
+                    <li>Any other value <em class="rfc2119" title="MUST">MUST</em> be represented as a String type.</li>
+                </ul>
+                <p>The following example demonstrates how to express a simple <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity profile</a>.</p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 1</span><span style="text-transform: none">: A simple entity profile</span></div>
+                    <pre class="hljs json" aria-busy="false" aria-live="polite">{
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+  <span class="hljs-attr">"type"</span>: [<span class="hljs-string">"Entity"</span>, <span class="hljs-string">"Person"</span>],
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Alice Bobman"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"alice@example.com"</span>,
+  <span class="hljs-attr">"birthDate"</span>: <span class="hljs-string">"1985-12-14"</span>,
+  <span class="hljs-attr">"telephone"</span>: <span class="hljs-string">"12345678910"</span>
+}</pre>
+                </div>
+            </section>
+
+            <section id="expressing-an-entity-credential-in-json" typeof="bibo:Chapter" resource="#expressing-an-entity-credential-in-json" property="bibo:hasPart">
+                <h4 id="x4.1.2-expressing-an-entity-credential-in-json" resource="#x4.1.2-expressing-an-entity-credential-in-json"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.1.2 </span>Expressing an Entity Credential in JSON</span>
+                </h4>
+                <p>In JSON, an instance of the <a href="#dfn-entity-credential-model" class="internalDFN" data-link-type="dfn">Entity Credential
+            Model</a> is expressed as a single JSON object whose properties are the entity credential's
+                    <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a>, with the following value type assignments:</p>
+                <ul>
+                    <li>Any number value <em class="rfc2119" title="MUST">MUST</em> be represented as a Number type.</li>
+                    <li>Any boolean value <em class="rfc2119" title="MUST">MUST</em> be represented as a Boolean type.</li>
+                    <li>Any sequence value <em class="rfc2119" title="MUST">MUST</em> be represented as an Array type.</li>
+                    <li>Any unordered set of values <em class="rfc2119" title="MUST">MUST</em> be represented as an Array type.</li>
+                    <li>Any set of <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">properties</a> <em class="rfc2119" title="MUST">MUST</em> be represented as an Object type.</li>
+                    <li>Any empty value <em class="rfc2119" title="MUST">MUST</em> be represented as a null value.</li>
+                    <li>Any other value <em class="rfc2119" title="MUST">MUST</em> be represented as a String type.</li>
+                </ul>
+                <p>The following example demonstrates how to express an <a href="#dfn-entity-credential" class="internalDFN" data-link-type="dfn">entity credential</a> containing a simple (unverifiable) <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a>                    about a particular
+                    <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>. In this case, the claim is that the <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> with the <a href="#entity-id">Entity Profile <var>id</var></a>                    of
+                    <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years of age or older. While a human reading the property <code>ageOver</code> may be able to guess its meaning by its name, no machine-readable semantics for the name are provided.
+                    There is information about the <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a> itself, such as an identifier for the <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that issued it and
+                    a date for when it was issued. </p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 2</span><span style="text-transform: none">: A simple claim</span></div>
+                    <pre class="hljs json" aria-busy="false" aria-live="polite">{
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+  <span class="hljs-attr">"type"</span>: [<span class="hljs-string">"Credential"</span>, <span class="hljs-string">"ProofOfAgeCredential"</span>],
+  <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+  <span class="hljs-attr">"issued"</span>: <span class="hljs-string">"2010-01-01"</span>,
+  <span class="hljs-attr">"claim"</span>: {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    <span class="hljs-attr">"ageOver"</span>: <span class="hljs-number">21</span>
+  }
+}</pre>
+                </div>
+
+                <p>The following example demonstrates how to express the same <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a> about the same <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>, but in a verifiable
+                    form. As such, it contains a <code>signature</code> that can be used to verify its entire contents, including the claim.</p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 3</span><span style="text-transform: none">: A simple verifiable claim</span></div>
+                    <pre class="hljs" aria-busy="false" aria-live="polite">{
+  "@context": "https://w3id.org/security/v1",
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "revocation": {
+    "id": "http://example.gov/revocations/738",
+    "type": "SimpleRevocationList2017"
+  },
+  "signature": {
+    "type": "LinkedDataSignature2015",
+    "created": "2016-06-18T21:19:10Z",
+    "creator": "https://example.com/jdoe/keys/1",
+    "domain": "json-ld.org",
+    "nonce": "598c63d6",
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+    +W3JT24="
+  }
+}</pre>
+                </div>
+
+                <p>The following example demonstrates how one could express the same <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a> about the same <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> using
+                    a JSON Web Token.</p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 4</span><span style="text-transform: none">: A JOSE JWT verifiable claim</span></div>
+                    <pre class="hljs css" aria-busy="false" aria-live="polite"><span class="hljs-selector-tag">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9</span><span class="hljs-selector-class">.eyJpc3MiOiJodHRwczovL2Rtdi</span>
+5<span class="hljs-selector-tag">leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL</span>
+<span class="hljs-selector-tag">CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi</span>
+<span class="hljs-selector-tag">YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI</span>
+6<span class="hljs-selector-tag">Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG</span>
+<span class="hljs-selector-tag">FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI</span>
+<span class="hljs-selector-tag">iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu</span>
+<span class="hljs-selector-tag">ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ</span>
+<span class="hljs-selector-tag">iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj</span>
+<span class="hljs-selector-tag">F9fX0</span><span class="hljs-selector-class">.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6</span>
+<span class="hljs-selector-tag">NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1</span>
+<span class="hljs-selector-tag">fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4</span></pre>
+                </div>
+
+                <p>
+                    The JWT above was produced using the inputs below:
+                </p>
+
+                <div class="issue">
+                    <div class="issue-title marker" aria-level="5" role="heading" id="h-issue5"><span>Issue</span></div>
+                    <p class="">
+                        A number of the concerns have been raised around security, composability, reusability, and extensibility with respect to the use of JWTs for Verifiable Claims. These concerns will be documented in time in at least the Verfiable Claims Model and Security
+                        Considerations section of this document.
+                    </p>
+                </div>
+
+                <pre aria-busy="false" aria-live="polite" class="hljs javascript"><span class="hljs-comment">// JWT Header</span>
+{
+  <span class="hljs-string">"alg"</span>: <span class="hljs-string">"RS256"</span>,
+  <span class="hljs-string">"typ"</span>: <span class="hljs-string">"JWT"</span>
+}
+<span class="hljs-comment">// JWT Payload</span>
+{
+  <span class="hljs-string">"iss"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+  <span class="hljs-string">"iat"</span>: <span class="hljs-number">1262304000</span>,
+  <span class="hljs-string">"exp"</span>: <span class="hljs-number">1483228800</span>,
+  <span class="hljs-string">"aud"</span>: <span class="hljs-string">"www.example.com"</span>,
+  <span class="hljs-string">"sub"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+  <span class="hljs-string">"entityCredential"</span>: {
+    <span class="hljs-string">"@context"</span>: <span class="hljs-string">"https://w3id.org/security/v1"</span>,
+    <span class="hljs-string">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+    <span class="hljs-string">"type"</span>: [<span class="hljs-string">"Credential"</span>, <span class="hljs-string">"ProofOfAgeCredential"</span>],
+    <span class="hljs-string">"issuer"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+    <span class="hljs-string">"issued"</span>: <span class="hljs-string">"2010-01-01"</span>,
+    <span class="hljs-string">"claim"</span>: {
+      <span class="hljs-string">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+      <span class="hljs-string">"ageOver"</span>: <span class="hljs-number">21</span>
+    }
+  }
+}
+</pre>
+
+                <p>
+                    The following example demonstrates how to express a more complex set of verfiable claims about a particular <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>.
+                </p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 5</span><span style="text-transform: none">: A more complex verifiable claim</span></div>
+                    <pre class="hljs json" aria-busy="false" aria-live="polite">{
+  <span class="hljs-attr">"@context"</span>: [
+    <span class="hljs-string">"https://w3id.org/identity/v1"</span>,
+    <span class="hljs-string">"https://w3id.org/security/v1"</span>
+  ],
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+  <span class="hljs-attr">"type"</span>: [<span class="hljs-string">"Credential"</span>, <span class="hljs-string">"PassportCredential"</span>],
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Passport"</span>,
+  <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"https://example.gov"</span>,
+  <span class="hljs-attr">"issued"</span>: <span class="hljs-string">"2010-01-01"</span>,
+  <span class="hljs-attr">"claim"</span>: {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Alice Bobman"</span>,
+    <span class="hljs-attr">"birthDate"</span>: <span class="hljs-string">"1985-12-14"</span>,
+    <span class="hljs-attr">"gender"</span>: <span class="hljs-string">"female"</span>,
+    <span class="hljs-attr">"nationality"</span>: {
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"United States"</span>
+    },
+    <span class="hljs-attr">"address"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"PostalAddress"</span>,
+      <span class="hljs-attr">"addressStreet"</span>: <span class="hljs-string">"372 Sumter Lane"</span>,
+      <span class="hljs-attr">"addressLocality"</span>: <span class="hljs-string">"Blackrock"</span>,
+      <span class="hljs-attr">"addressRegion"</span>: <span class="hljs-string">"Nevada"</span>,
+      <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">"23784"</span>,
+      <span class="hljs-attr">"addressCountry"</span>: <span class="hljs-string">"US"</span>
+    },
+    <span class="hljs-attr">"passport"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Passport"</span>,
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"United States Passport"</span>,
+      <span class="hljs-attr">"documentId"</span>: <span class="hljs-string">"123-45-6789"</span>,
+      <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"https://example.gov"</span>,
+      <span class="hljs-attr">"issued"</span>: <span class="hljs-string">"2010-01-07T01:02:03Z"</span>,
+      <span class="hljs-attr">"expires"</span>: <span class="hljs-string">"2020-01-07T01:02:03Z"</span>
+    }
+  },
+  <span class="hljs-attr">"signature"</span>: {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"LinkedDataSignature2015"</span>,
+    <span class="hljs-attr">"created"</span>: <span class="hljs-string">"2016-06-21T03:40:19Z"</span>,
+    <span class="hljs-attr">"creator"</span>: <span class="hljs-string">"https://example.com/jdoe/keys/1"</span>,
+    <span class="hljs-attr">"domain"</span>: <span class="hljs-string">"json-ld.org"</span>,
+    <span class="hljs-attr">"nonce"</span>: <span class="hljs-string">"783b4dfa"</span>,
+    <span class="hljs-attr">"signatureValue"</span>: <span class="hljs-string">"Rxj7Kb/tDbGHFAs6ddHjVLsHDiNyYzxs2MPmNG8G47oS06N8i0Dis5mUePIzII4+p/ewcOTjvH7aJxnKEePCO9IrlqaHnO1TfmTut2rvXxE5JNzur0qoNq2yXl+TqUWmDXoHZF+jQ7gCsmYqTWhhsG5ufo9oyqDMzPoCb9ibsNk="</span>
+  }
+}</pre>
+                </div>
+            </section>
+        </section>
+
+        <section id="json-ld" typeof="bibo:Chapter" resource="#json-ld" property="bibo:hasPart">
+            <h3 id="x4.2-json-ld" resource="#x4.2-json-ld"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2 </span>JSON-LD</span>
+            </h3>
+            <p>JSON-LD [<cite><a class="bibref" href="#bib-JSON-LD">JSON-LD</a></cite>] is a data storage and expression approach called
+                <a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked
+        Data</a>. It is a way of expressing information on the Web that is both simple and extensible.</p>
+
+            <section id="expressing-an-entity-profile-in-json-ld" typeof="bibo:Chapter" resource="#expressing-an-entity-profile-in-json-ld" property="bibo:hasPart">
+                <h4 id="x4.2.1-expressing-an-entity-profile-in-json-ld" resource="#x4.2.1-expressing-an-entity-profile-in-json-ld"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.1 </span>Expressing an Entity Profile in JSON-LD</span>
+                </h4>
+                <p>Instances of the <a href="#dfn-entity-profile-model" class="internalDFN" data-link-type="dfn">Entity Profile Model</a> are expressed in JSON-LD in the same way they are expressed in JSON (Section <a href="#expressing-an-entity-profile-in-json"
+                        class="sec-ref"><span class="secno">4.1.1</span> <span class="sec-title">Expressing an Entity Profile in JSON</span></a>), except that there is an additional property <code>@context</code>. Each property of the entity profile, such
+                    as <code>name</code> or <code>email</code>, is given context via the <code>@context</code> value. Other contexts can be used or combined to express any arbitrary information about an <a href="#dfn-entity-profile" class="internalDFN"
+                        data-link-type="dfn">entity profile</a> in idiomatic JSON. </p>
+                <p>The following example demonstrates how to express a simple <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity profile</a>.</p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 6</span><span style="text-transform: none">: A simple entity profile</span></div>
+                    <pre class="hljs json" aria-busy="false" aria-live="polite">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"https://w3id.org/identity/v1"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+  <span class="hljs-attr">"type"</span>: [<span class="hljs-string">"Entity"</span>, <span class="hljs-string">"Person"</span>],
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Alice Bobman"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"alice@example.com"</span>,
+  <span class="hljs-attr">"birthDate"</span>: <span class="hljs-string">"1985-12-14"</span>,
+  <span class="hljs-attr">"telephone"</span>: <span class="hljs-string">"12345678910"</span>
+}</pre>
+                </div>
+            </section>
+
+            <section id="expressing-an-entity-credential-in-json-ld" typeof="bibo:Chapter" resource="#expressing-an-entity-credential-in-json-ld" property="bibo:hasPart">
+                <h4 id="x4.2.2-expressing-an-entity-credential-in-json-ld" resource="#x4.2.2-expressing-an-entity-credential-in-json-ld"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.2 </span>Expressing an Entity Credential in JSON-LD</span>
+                </h4>
+                <p>Instances of the <a href="#dfn-entity-credential-model" class="internalDFN" data-link-type="dfn">Entity Credential Model</a> are expressed in JSON-LD in the same way they are expressed in JSON (Section <a href="#expressing-entity-credentials-in-json"></a>),
+                    except that there is an additional
+                    <a href="#dfn-properties" class="internalDFN" data-link-type="dfn">property</a> <code>@context</code>. Each property of the <a href="#dfn-entity-credential" class="internalDFN" data-link-type="dfn">entity credential</a> expression,
+                    along with each sub-property within the <code>claim</code> property (such as the generic <code>issuer</code> property or the app-specific <code>ageOver</code>), is given context via the <code>@context</code> value. Other contexts can
+                    be used or combined to express any arbitrary information about claims in idiomatic JSON.</p>
+
+                <p>The following example demonstrates how to express a simple (unverifiable) <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a> about a particular
+                    <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>. In this case, the claim is that the <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a> with the <a href="#entity-id">Entity
+            Profile <var>id</var></a> of <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years of age or older. While a human reading the property <code>ageOver</code> may be able to guess its meaning by its name, the context maps it to a global identifier
+                    (URL) where a document could be retrieved that provides its semantics in a machine-readable data format. There is also information about the <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a> itself, such as an
+                    identifier for the <a href="#dfn-entity" class="internalDFN" data-link-type="dfn">entity</a> that issued it and a date for when it was issued.</p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 7</span><span style="text-transform: none">: A simple claim</span></div>
+                    <pre class="hljs json" aria-busy="false" aria-live="polite">{
+  <span class="hljs-attr">"@context"</span>: <span class="hljs-string">"https://w3id.org/identity/v1"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+  <span class="hljs-attr">"type"</span>: [<span class="hljs-string">"Credential"</span>, <span class="hljs-string">"ProofOfAgeCredential"</span>],
+  <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+  <span class="hljs-attr">"issued"</span>: <span class="hljs-string">"2010-01-01"</span>,
+  <span class="hljs-attr">"claim"</span>: {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    <span class="hljs-attr">"ageOver"</span>: <span class="hljs-number">21</span>
+  }
+}</pre>
+                </div>
+
+                <p>The following example demonstrates how to express the same <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a> about the same <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>, but in a verifiable
+                    form. As such, it contains a <code>signature</code> that can be used to verify its entire contents, including the claim.</p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 8</span><span style="text-transform: none">: A simple verifiable claim</span></div>
+                    <pre class="hljs json" aria-busy="false" aria-live="polite">{
+  <span class="hljs-attr">"@context"</span>: [
+    <span class="hljs-string">"https://w3id.org/identity/v1"</span>,
+    <span class="hljs-string">"https://w3id.org/security/v1"</span>
+  ],
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+  <span class="hljs-attr">"type"</span>: [<span class="hljs-string">"Credential"</span>, <span class="hljs-string">"ProofOfAgeCredential"</span>],
+  <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+  <span class="hljs-attr">"issued"</span>: <span class="hljs-string">"2010-01-01"</span>,
+  <span class="hljs-attr">"claim"</span>: {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    <span class="hljs-attr">"ageOver"</span>: <span class="hljs-number">21</span>
+  },
+  <span class="hljs-attr">"signature"</span>: {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"LinkedDataSignature2015"</span>,
+    <span class="hljs-attr">"created"</span>: <span class="hljs-string">"2016-06-18T21:10:38Z"</span>,
+    <span class="hljs-attr">"creator"</span>: <span class="hljs-string">"https://example.com/jdoe/keys/1"</span>,
+    <span class="hljs-attr">"domain"</span>: <span class="hljs-string">"json-ld.org"</span>,
+    <span class="hljs-attr">"nonce"</span>: <span class="hljs-string">"6165d7e8"</span>,
+    <span class="hljs-attr">"signatureValue"</span>: <span class="hljs-string">"g4j9UrpHM4/uu32NlTw0HDaSaYF2sykskfuByD7UbuqEcJIKa+IoLJLrLjqDnMz0adwpBCHWaqqpnd47r0NKZbnJarGYrBFcRTwPQSeqGwac8E2SqjylTBbSGwKZkprEXTywyV7gILlC8a+naA7lBRi4y29FtcUJBTFQq4R5XzI="</span>
+  }
+}</pre>
+                </div>
+
+                <p>
+                    The following example demonstrates how to express a more complex set of verifiable claims about a particular <a href="#dfn-subject" class="internalDFN" data-link-type="dfn">subject</a>.
+                </p>
+
+                <div class="example">
+                    <div class="example-title marker"><span>Example 9</span><span style="text-transform: none">: A more complex verifiable claim</span></div>
+                    <pre class="hljs json" aria-busy="false" aria-live="polite">{
+  <span class="hljs-attr">"@context"</span>: [
+    <span class="hljs-string">"https://w3id.org/identity/v1"</span>,
+    <span class="hljs-string">"https://w3id.org/security/v1"</span>
+  ],
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+  <span class="hljs-attr">"type"</span>: [<span class="hljs-string">"Credential"</span>, <span class="hljs-string">"PassportCredential"</span>],
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Passport"</span>,
+  <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"https://example.gov"</span>,
+  <span class="hljs-attr">"issued"</span>: <span class="hljs-string">"2010-01-01"</span>,
+  <span class="hljs-attr">"claim"</span>: {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Alice Bobman"</span>,
+    <span class="hljs-attr">"birthDate"</span>: <span class="hljs-string">"1985-12-14"</span>,
+    <span class="hljs-attr">"gender"</span>: <span class="hljs-string">"female"</span>,
+    <span class="hljs-attr">"nationality"</span>: {
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"United States"</span>
+    },
+    <span class="hljs-attr">"address"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"PostalAddress"</span>,
+      <span class="hljs-attr">"addressStreet"</span>: <span class="hljs-string">"372 Sumter Lane"</span>,
+      <span class="hljs-attr">"addressLocality"</span>: <span class="hljs-string">"Blackrock"</span>,
+      <span class="hljs-attr">"addressRegion"</span>: <span class="hljs-string">"Nevada"</span>,
+      <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">"23784"</span>,
+      <span class="hljs-attr">"addressCountry"</span>: <span class="hljs-string">"US"</span>
+    },
+    <span class="hljs-attr">"passport"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Passport"</span>,
+      <span class="hljs-attr">"name"</span>: <span class="hljs-string">"United States Passport"</span>,
+      <span class="hljs-attr">"documentId"</span>: <span class="hljs-string">"123-45-6789"</span>,
+      <span class="hljs-attr">"issuer"</span>: <span class="hljs-string">"https://example.gov"</span>,
+      <span class="hljs-attr">"issued"</span>: <span class="hljs-string">"2010-01-07T01:02:03Z"</span>,
+      <span class="hljs-attr">"expires"</span>: <span class="hljs-string">"2020-01-07T01:02:03Z"</span>
+    }
+  },
+  <span class="hljs-attr">"signature"</span>: {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"LinkedDataSignature2015"</span>,
+    <span class="hljs-attr">"created"</span>: <span class="hljs-string">"2016-06-21T03:43:29Z"</span>,
+    <span class="hljs-attr">"creator"</span>: <span class="hljs-string">"https://example.com/jdoe/keys/1"</span>,
+    <span class="hljs-attr">"domain"</span>: <span class="hljs-string">"json-ld.org"</span>,
+    <span class="hljs-attr">"nonce"</span>: <span class="hljs-string">"c168dfab"</span>,
+    <span class="hljs-attr">"signatureValue"</span>: <span class="hljs-string">"jz4bEW2FBMDkANyEjiPnrIctucHQCIwxrtzBXt+rVGmYMEflHrOwf7FYLH60E3Oz54VwSSQCi9J4tXQIhv4SofT5opbcIUj7ji6QrC6c+a3YLjg8l/+/uFjhzsLelAO4gh2k0FJxM04ljH0GZGuXTzhRnqTzJTnYSVo72PC92NA="</span>
+  }
+}</pre>
+                </div>
+            </section>
+        </section>
+
+        <!-- section>
+        <h2>Expressing Entity Profiles, Entity Credentials, and
+        Verifiable Claims in WebIDL</h2>
+
+        <section>
+          <h2>Expressing an Entity Profile in WebIDL</h2>
+            <p>In WebIDL, an instance of the <a>Entity Profile
+            Model</a> is expressed as an Interface whose attributes
+            are the entity profile's <a>properties</a>, with the
+            following value type assignments:</p>
+            <ul>
+              <li>Any number value MUST be represented as an
+              appropriate valid numeric type, e.g. double or unsigned
+              long.</li>
+              <li>Any boolean value MUST be represented as a boolean type.</li>
+              <li>Any sequence value MUST be represented as a sequence
+              type.</li>
+              <li>Any unordered set of values MUST be represented as
+              a Frozen Array type.</li>
+              <li>Any set of name-value pairs MUST be represented as
+              either an Interface or Dictionary type.</li>
+              <li>Any property whose value may be null MUST be marked
+              as nullable.</li>
+              <li>Any other value MUST be represented as either an
+              Enumeration type or a DOMString type, depending on
+              whether the values are expected to be selected from a
+              restricted, pre-determined set or are expected to be
+              either unrestricted or extended in the future.</li>
+            </ul>
+      <p>The following example demonstrates how to express a
+      simple <a>entity profile</a>.</p>
+
+<pre class="idl">
+[Constructor]
+interface EntityProfile {
+    attribute DOMString id;
+    attribute FrozenArray&lt;DOMString> types;
+    attribute DOMString name;
+    attribute DOMString email;
+    attribute DOMString birthDate;
+    attribute DOMString telephone;
+};
+</pre>
+
+            <p>This <a>entity profile expression</a> could then be
+            used as follows in JavaScript:</p>
+
+<pre class="highlight example" title="Using a simple entity profile">
+  var entity = new EntityProfile();
+  profile.id = "did:example:ebfeb1f712ebc6f1c276e12ec21";
+  profile.type = ["Entity", "Person"];
+  profile.name = "Alice Bobman";
+  profile.email = "alice@example.com";
+  profile.birthDate = "1985-12-14";
+  profile.telephone = "12345678910";
+</pre>
+        </section>
+
+        <section>
+          <h2>Expressing Entity Credentials in WebIDL</h2>
+            <p>In WebIDL, an intance of the <a>Entity Credential
+            Model</a> is expressed as an Interface whose attributes
+            are the claim's <a>properties</a>, with the following
+            value type assignments:</p>
+            <ul>
+              <li>Any number value MUST be represented as an
+              appropriate valid numeric type, e.g. double or unsigned
+              long.</li>
+              <li>Any boolean value MUST be represented as a boolean type.</li>
+              <li>Any sequence value MUST be represented as a sequence
+              type.</li>
+              <li>Any unordered set of values MUST be represented as
+              a Frozen Array type.</li>
+              <li>Any set of name-value pairs MUST be represented as
+              either an Interface or Dictionary type.</li>
+              <li>Any property whose value may be null MUST be marked
+              as nullable.</li>
+              <li>Any other value MUST be represented as either an
+              Enumeration type or a DOMString type, depending on
+              whether the values are expected to be selected from a
+              restricted, pre-determined set or are expected to be
+              either unrestricted or extended in the future.</li>
+            </ul>
+            <p>The following example demonstrates how to express
+            an <a>entity credential</a> containing a simple
+            (unverifiable) <a>claim</a> about a particular
+            <a>subject</a>. In this case, the claim is that
+            the <a>subject</a> with
+            the <a href="#entity-id">Entity
+            Profile <var>id</var></a> of
+            <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
+            of age or older. While a human reading the
+            property <code>ageOver</code> may be able to guess its
+            meaning by its name, no machine-readable semantics for the
+            name are provided. There is information about the <a>claim</a>
+            itself, such as an identifier for the <a>entity</a> that issued
+            it and a date for when it was issued. </p>
+
+<pre class="idl">
+  interface CredentialBase {
+    attribute DOMString id;
+    attribute FrozenArray&lt;DOMString> type;
+    attribute DOMString issuer;
+    attribute DOMString issued;
+  };
+
+  [Constructor]
+  interface Credential : CredentialBase {
+    attribute Claim1 claim;
+  };
+
+  [Constructor]
+  interface Claim1 {
+    attribute DOMString id;
+    attribute unsigned short ageOver;
+  };
+</pre>
+
+            <p>This <a>entity credential expression</a> could then be
+            used as follows in JavaScript:</p>
+
+<pre class="example" title="Using a simple claim">
+  var claim = new Claim1();
+  claim.id = "http://example.gov/credentials/3732";
+  claim.ageOver = 21;
+
+  var credential = new Credential();
+  credential.type = ["Credential", "ProofOfAgeCredential"];
+  credential.issuer = "https://dmv.example.gov";
+  credential.issued = "2010-01-01";
+  credential.claim = claim;
+</pre>
+
+            <p>The following example demonstrates how to express the
+            same <a>claim</a> about the same <a>subject</a>, but in a
+            verifiable form. As such, it contains
+            a <code>signature</code> that can be used to verify its
+            entire contents, including the claim.</p>
+
+<pre class="idl">
+  interface VerifiableCredentialBase : CredentialBase {
+    attribute Signature signature;
+  };
+
+  [Constructor]
+  interface Signature {
+    attribute DOMString type;
+    attribute DOMString created;
+    attribute DOMString creator;
+    attribute DOMString domain;
+    attribute DOMString nonce;
+    attribute DOMString signatureValue;
+  };
+
+  [Constructor]
+  interface VerifiableCredential1 : VerifiableCredentialBase {
+    attribute Claim1 claim;
+  };
+</pre>
+            <p>This verifiable <a>entity credential expression</a>
+            could then be used as follows in JavaScript:</p>
+
+<pre class="example" title="Using a simple verifiable claim">
+  var claim = new Claim1();
+  claim.id = "http://example.gov/credentials/3732";
+  claim.ageOver = 21;
+
+  var signature = new Signature();
+  signature.type = "LinkedDataSignature2015";
+  signature.created = "2016-06-18T21:10:38Z";
+  signature.creator = "https://example.com/jdoe/keys/1";
+  signature.domain = "json-ld.org";
+  signature.signatureValue = "g4j9UrpHM4/uu32NlTw0HDaSaYF2sykskfuByD7UbuqEcJIKa+IoLJLrLjqDnMz0adwpBCHWaqqpnd47r0NKZbnJarGYrBFcRTwPQSeqGwac8E2SqjylTBbSGwKZkprEXTywyV7gILlC8a+naA7lBRi4y29FtcUJBTFQq4R5XzI=";
+
+  var credential = new VerifiableCredential1();
+  credential.type = ["Credential", "ProofOfAgeCredential"];
+  credential.issuer = "https://dmv.example.gov";
+  credential.issued = "2010-01-01";
+  credential.claim = claim;
+  credential.signature = signature;
+</pre>
+
+        <p>
+The following example demonstrates how to express a more complex set
+of verfiable claims about a particular <a>subject</a>.
+        </p>
+
+<pre class="idl">
+  [Constructor]
+  interface VC2 : VerifiableCredentialBase {
+    attribute DOMString name;
+    attribute Claim2 claim;
+  };
+
+  [Constructor]
+  interface Claim2 {
+    attribute DOMString id;
+    attribute DOMString name;
+    attribute DOMString birthDate;
+    attribute Gender gender;
+    attribute Nationality nationality;
+    attribute Address address;
+    attribute Passport passport;
+  };
+
+  enum Gender {"male", "female"};
+
+  [Constructor]
+  interface Nationality {
+    attribute DOMString name;
+  };
+
+  [Constructor]
+  interface Address {
+    attribute DOMString type;
+    attribute DOMString addressStreet;
+    attribute DOMString addressLocality;
+    attribute DOMString addressRegion;
+    attribute DOMString postalCode;
+    attribute DOMString addressCountry;
+  };
+
+  [Constructor]
+  interface Passport {
+    attribute DOMString type;
+    attribute DOMString name;
+    attribute DOMString documentId;
+    attribute DOMString issuer;
+    attribute DOMString issued;
+    attribute DOMString expires;
+  };
+</pre>
+            <p>This verifiable <a>entity credential expression</a>
+            could then be used as follows in JavaScript:</p>
+
+<pre class="example" title="Using a more complex verifiable claim">{
+  var nationality = new Nationality();
+  nationality.name = "United States";
+
+  var address = new Address();
+  address.type = "PostalAddress";
+  address.addressStreet = "372 Sumter Lane";
+  address.addressLocality = "Blackrock";
+  address.addressRegion = "Nevada";
+  address.postalCode = "23784";
+  address.addressCountry = "US";
+
+  var passport = new Passport();
+  passport.type = "Passport";
+  passport.name = "United States Passport";
+  passport.documentId = "123-45-6789";
+  passport.issuer = "https://example.gov";
+  passport.issued = "2010-01-07T01:02:03Z";
+  passport.expires = "2020-01-07T01:02:03Z";
+
+  var claim = new Claim2();
+  claim.id = "did:example:ebfeb1f712ebc6f1c276e12ec21";
+  claim.name = "Alice Bobman";
+  claim.birthDate = "1985-12-14";
+  claim.gender = "female";
+  claim.nationality = nationality;
+  claim.address = address;
+  claim.passport = passport;
+
+  var signature = new Signature();
+  signature.type = "LinkedDataSignature2015";
+  signature.created = "2016-06-21T03:43:29Z";
+  signature.creator = "https://example.com/jdoe/keys/1";
+  signature.domain = "json-ld.org";
+  signature.nonce = "c168dfab";
+  signature.signatureValue = "jz4bEW2FBMDkANyEjiPnrIctucHQCIwxrtzBXt+rVGmYMEflHrOwf7FYLH60E3Oz54VwSSQCi9J4tXQIhv4SofT5opbcIUj7ji6QrC6c+a3YLjg8l/+/uFjhzsLelAO4gh2k0FJxM04ljH0GZGuXTzhRnqTzJTnYSVo72PC92NA=";
+
+  var vc = new VC2();
+  vc.id = "http://example.gov/credentials/3732";
+  vc.type = ["Credential", "PassportCredential"];
+  vc.name = "Passport";
+  vc.issuer = "https://example.gov";
+  vc.issued = "2010-01-01";
+  vc.claim = claim;
+  vc.signature = signature;
+}</pre>
+        </section>
+      </section -->
+        <div class="issue" id="issue-54">
+            <div class="issue-title marker" aria-level="3" role="heading" id="h-issue6"><a href="https://github.com/w3c/vc-use-cases/issues/54"><span>Issue 54</span></a></div>
+            <p class="" data-title="Should spec include WebIDL and XML expressions">
+                The group is currently considering which expressions of the data model should be listed in the spec. WebIDL and XML are two of the expressions that are being considered.
+            </p>
+        </div>
+    </section>
+
+    <section id="privacy-considerations" typeof="bibo:Chapter" resource="#privacy-considerations" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="x5.-privacy-considerations" resource="#x5.-privacy-considerations"><span property="xhv:role" resource="xhv:heading"><span class="secno">5. </span>Privacy Considerations</span>
+        </h2>
+
+        <p>
+            This section details the general privacy considerations and specific privacy implications of deploying the verifiable claims data model into production environments.
+        </p>
+
+        <section id="spectrum-of-privacy" typeof="bibo:Chapter" resource="#spectrum-of-privacy" property="bibo:hasPart">
+            <h3 id="x5.1-spectrum-of-privacy" resource="#x5.1-spectrum-of-privacy"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.1 </span>Spectrum of Privacy</span>
+            </h3>
+            <p>
+                It is important to recognize that there is a spectrum of privacy that ranges from pseudo-anonymous to strongly identified. Depending on the use case, people have different appetites when it comes to what information they are willing to provide and what
+                information may be derived from what is provided.
+            </p>
+
+            <figure id="fig-xprivacy-is-a-spectrum-that-ranges-from-pseudo-anonymous-to-fully-identified.">
+                <img style="margin: auto; display: block;" width="80%" src="diagrams/privacy-spectrum.svg">
+                <figcaption style="text-align: center;">Figure <span class="figno">3</span> <span class="fig-title">
+- Privacy is a spectrum that ranges from pseudo-anonymous to fully identified.
+          </span></figcaption>
+            </figure>
+
+            <p>
+                For example, one would most likely desire to remain anonymous when purchasing alcohol because the regulatory check that’s required is solely whether or not the person is above a particular age. However, when a doctor is writing a prescription for a patient,
+                the pharmacy fulfilling the prescription is required to more strongly identify the medical professional. Therefore it is important to recognize that there is not one approach to privacy that works for all use cases; privacy solutions tend
+                to be use case specific.
+            </p>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue7"><span>Issue</span></div>
+                <p class="">
+                    Note that even if one may desire to remain anonymous when purchasing alcohol, a photo ID may still be required to provide appropriate assurance to the merchant. The merchant may not need to know your name or other details (other than that you are over
+                    a certain age), but in many cases a mere proof of age may still be insufficient to meet regulations.
+                </p>
+            </div>
+
+            <p>
+                The Verifiable Claims data model strives to support the full spectrum of privacy and does not take philosophical positions on the right level of anonymity for any particular transaction. The following sections provide guidance for implementers that want
+                to avoid specific scenarios that are hostile to privacy.
+            </p>
+        </section>
+
+        <section id="personally-identifiable-information" typeof="bibo:Chapter" resource="#personally-identifiable-information" property="bibo:hasPart">
+            <h3 id="x5.2-personally-identifiable-information" resource="#x5.2-personally-identifiable-information"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.2 </span>Personally Identifiable Information</span>
+            </h3>
+
+            <p>
+                The data associated with verifiable claims stored in the
+                <code>credential.claim</code> field are largely susceptible to privacy violations when shared with Inspector-verifiers. Personally identifying data such as a government-issued identifier, shipping address, and full name can be easily used
+                to determine, track, and correlate an entity. Even information that does not seem personally identifiable like the combination of a birth date and zip code have very powerful correlation and de-anonymizing capabilities.
+            </p>
+
+            <p>
+                Implementers are strongly advised to warn Holders when they share data with these sorts of characteristics. Issuers are strongly advised to provide privacy-protecting credentials when possible. For example, issuing ageOver credentials instead of birthdate
+                credentials when the Inspector-verifier desires to determine if an entity is over the age of 18.
+            </p>
+        </section>
+
+        <section id="identifier-based-correlation" typeof="bibo:Chapter" resource="#identifier-based-correlation" property="bibo:hasPart">
+            <h3 id="x5.3-identifier-based-correlation" resource="#x5.3-identifier-based-correlation"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.3 </span>Identifier-based Correlation</span>
+            </h3>
+
+            <p>
+                Subjects of verifiable claims are identified via the
+                <code>credential.claim.id</code> field. The identifiers that are used to identify the subject of a claim create a danger of correlation when the identifiers are long-lived or used across more than one web domain.
+            </p>
+            <p>
+                If strong anti-correlation properties are a requirement in a system using verifiable claims, it is strongly advised that identifiers are bound to a single origin or that identifiers are single-use or not used at all and are replaced by short-lived, single
+                use bearer tokens.
+            </p>
+        </section>
+
+        <section id="signature-based-correlation" typeof="bibo:Chapter" resource="#signature-based-correlation" property="bibo:hasPart">
+            <h3 id="x5.4-signature-based-correlation" resource="#x5.4-signature-based-correlation"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.4 </span>Signature-based Correlation</span>
+            </h3>
+
+            <p>
+                The contents of verifiable claims are secured via the
+                <code>credential.signature</code> field. The
+                <code>credential.signature.signatureValue</code> field creates a danger of correlation when it is used across more than one web domain and the value does not change.
+            </p>
+
+            <p>
+                If strong anti-correlation properties are desired, it is strongly advised that signature values and metadata are regenerated each time using technologies like group signatures.
+            </p>
+        </section>
+
+        <section id="device-fingerprinting" typeof="bibo:Chapter" resource="#device-fingerprinting" property="bibo:hasPart">
+            <h3 id="x5.5-device-fingerprinting" resource="#x5.5-device-fingerprinting"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.5 </span>Device Fingerprinting</span>
+            </h3>
+
+            <p>
+                There are mechanisms external to Verifiable Claims that are used to track and correlate individuals on the Internet and the Web. Some of these mechanisms include Internet Protocol address tracking, Web Browser fingerprinting, Evercookies, Advertising
+                Network trackers, mobile network position information, and in-application Global Positioning System APIs. The use of Verifiable Claims cannot prevent the use of these other tracking technologies. In addition, when these technologies are
+                used in concert with Verifiable Claims, new correlatable information may be discovered. For example, a birthday coupled with a GPS position can be used to strongly correlate an individual across multiple websites.
+            </p>
+
+            <p>
+                It is advised that privacy preserving systems prevent the use of these other tracking technologies when verifiable claims are being utilized. In some cases, these tracking technologies may need to be disabled entirely on devices that transmit verifiable
+                claims on behalf of the Holder.
+            </p>
+        </section>
+
+        <section id="favor-abstract-claims" typeof="bibo:Chapter" resource="#favor-abstract-claims" property="bibo:hasPart">
+            <h3 id="x5.6-favor-abstract-claims" resource="#x5.6-favor-abstract-claims"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.6 </span>Favor Abstract Claims</span>
+            </h3>
+
+            <p>
+                In order to enable recipients of verifiable claims to use them in a variety of circumstances without revealing more personally identifiable information than necessary for the transaction, issuers should consider limiting the information published in a
+                claim to a minimal set needed for the expected purposes. One way to avoid placing personally identifiable information in a claim is to use an "abstract" property that meets the needs of inspector-verifiers without providing specific information
+                about the subject.
+            </p>
+            <p>
+                An example in this document is the use of the <code>ageOver</code> property as opposed to a specific birthdate that would constitute much stronger personally identifiable information. If retailers in a market commonly require purchasers
+                to be older than a specific age, an issuer trusted in that market may choose to offer a credential claiming that subjects have met that requirement as opposed to offering claims of their specific birthdates. This enables individual customers
+                to purchase items without revealing specific personally identifiable information.
+            </p>
+        </section>
+
+        <section id="the-principle-of-minimum-disclosure" typeof="bibo:Chapter" resource="#the-principle-of-minimum-disclosure" property="bibo:hasPart">
+            <h3 id="x5.7-the-principle-of-minimum-disclosure" resource="#x5.7-the-principle-of-minimum-disclosure"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.7 </span>The Principle of Minimum Disclosure</span>
+            </h3>
+
+            <p>
+                Privacy violations occur when information divulged in one context leaks into another. Accepted best practice for preventing such violations is to limit the information requested, and received, to the absolute minimum necessary. This minimal disclosure
+                approach is required by regulation in multiple jurisdictions, including HIPAA in the US and GDPR in the EU.
+            </p>
+            <p>
+                With verifiable claims, minimal disclosure for issuers means limiting the content of a claim to the minimum required by potential inspector-verifiers for expected use. For inspector-verifiers, it means limiting the scope of claims request or required
+                for accessing services.
+            </p>
+            <p>
+                For example, a driver's license containing a driver's ID number, height, weight, birthday, and home address is an example of a claim set containing more information than is necessary to establish that the person is above a certain age.
+            </p>
+
+            <p>
+                It is considered a best practice for issuers to atomize information or use a signature scheme that allows for selective disclosure. For example, an issuer that issues driver's licenses could issue a claim set containing every attribute that appears on
+                a driver's license in addition to individual claims (a singular claim containing the person's birthday), and individual claims that are more abstract (a singular claim containing an
+                <code>ageOver</code> attribute). In addition, the issuer is encouraged to provide secure HTTP endpoints for retrieving single-use bearer claims to promote the pseudonymous usage of claims when it is safe for the issuer to issue such claims.
+            </p>
+            <p>
+                Similarly, inspector-verifiers are urged to only request information that is absolutely necessary for a particular transaction to occur. This is important for at least two reasons: 1) it reduces the liability on the inspector-verifier for handling highly
+                sensitive information that it does not need, and 2) it enhances the privacy of the individual by only asking for information that is required for the particular transaction.
+            </p>
+        </section>
+
+        <section id="bearer-claims" typeof="bibo:Chapter" resource="#bearer-claims" property="bibo:hasPart">
+            <h3 id="x5.8-bearer-claims" resource="#x5.8-bearer-claims"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.8 </span>Bearer Claims</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue8"><span>Issue</span></div>
+                <p class="">
+                    Bearer claims containing PII or unique identifiers can be correlated. Bearer claims can be tracked based on usage patterns.
+                </p>
+            </div>
+        </section>
+
+        <section id="validity-checks" typeof="bibo:Chapter" resource="#validity-checks" property="bibo:hasPart">
+            <h3 id="x5.9-validity-checks" resource="#x5.9-validity-checks"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.9 </span>Validity Checks</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue9"><span>Issue</span></div>
+                <p class="">
+                    Inspector-verifier (corporation) is required to check revocation via Issuer (government).
+                </p>
+            </div>
+        </section>
+
+        <section id="storage-providers-and-data-mining" typeof="bibo:Chapter" resource="#storage-providers-and-data-mining" property="bibo:hasPart">
+            <h3 id="x5.10-storage-providers-and-data-mining" resource="#x5.10-storage-providers-and-data-mining"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.10 </span>Storage Providers and Data Mining</span>
+            </h3>
+
+            <p>
+                When a holder receives a claim from an issuer, the claim will need to be stored somewhere (e.g. in a credential repository). Holders are warned that the information in a verifiable claim may be sensitive in nature and highly individualized, making it
+                a high value target for data mining. Therefore, there may be services that store verifiable claims for free and mine personal data and sell it to organizations that desire individualized profiles on people and organizations (i.e. if the
+                service is free, you are the product).
+            </p>
+            <p>
+                It is suggested that holders be aware of the terms of service for their credential repository, specifically the correlation and data mining protections that are in place for those who store their verifiable claims at the service provider.
+            </p>
+            <p>
+                There are a number of effective mitigations for data mining and profiling:
+            </p>
+
+            <ul>
+                <li>
+                    Use service providers that do not sell your information to third parties.
+                </li>
+                <li>
+                    Use software that encrypts verifiable claims such that a service provider cannot view the contents of the claims.
+                </li>
+                <li>
+                    Use software that stores verifiable claims locally on a device that you control and that does not upload or analyze your information beyond your expectations.
+                </li>
+            </ul>
+        </section>
+
+        <section id="aggregation-of-claims" typeof="bibo:Chapter" resource="#aggregation-of-claims" property="bibo:hasPart">
+            <h3 id="x5.11-aggregation-of-claims" resource="#x5.11-aggregation-of-claims"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.11 </span>Aggregation of Claims</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue10"><span>Issue</span></div>
+                <p class="">
+                    Aggregation of claims can reveal more information than just the attributes being aggregated.
+                </p>
+            </div>
+        </section>
+
+        <section id="usage-patterns" typeof="bibo:Chapter" resource="#usage-patterns" property="bibo:hasPart">
+            <h3 id="x5.12-usage-patterns" resource="#x5.12-usage-patterns"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.12 </span>Usage Patterns</span>
+            </h3>
+
+            <p>
+                Despite the best efforts to assure privacy, the actual use of verifiable claims can potentially lead to de-anonymization and a loss of privacy. This correlation can occur:
+            </p>
+
+            <ol>
+                <li>
+                    When the same claim is presented to the same inspector-verifier more than once – that inspector-verifier could infer that the holder is the same individual.
+                </li>
+                <li>
+                    When the same claim is presented to different inspector-verifiers, and either those inspector-verifiers collude or a third party has access to transaction records from both inspector-verifiers – the observant party could infer that the individual presenting
+                    the claims is the same person at both services, i.e., the accounts are controlled by the same person.
+                </li>
+                <li>
+                    When the same subject identifier of a claim refers to the same subject across presentations or inspector-verifiers. Even when different claims are presented, if the subject identifier is the same, inspector-verifiers (and those with access to inspector-verifier
+                    logs) could infer that the holder of the claims is the same person.
+                </li>
+                <li>
+                    When the underlying information in a claim can be used to identify an individual across services – using information from other sources (including information provided directly by the user), inspector-verifiers can use the information inside the claim
+                    to correlate the individual with an existing profile. For example, if a holder presents claims that include zip code, age, and sex, the inspector-verifier can potentially correlate the subject of that claim with an established profile
+                    [see Sweeney 2000 <a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">Simple
+            Demographics Often Identify People Uniquely</a>].
+                </li>
+                <li>
+                    When passing the identifier of a claim to a centralized revocation server – the centralized server can correlate the claim usage across interactions. For example, if a verifiable claim is used for proof of age in this manner, the centralized service could
+                    know everywhere that claim was presented: all liquor stores, bars, adult stores, lottery purchases, etc.
+                </li>
+            </ol>
+
+            <p>
+                It’s possible to mitigate this in part:
+            </p>
+
+            <ol>
+                <li>
+                    Use a globally unique identifier as the subject for any given claim and never re-use that claim.
+                </li>
+                <li>
+                    If the claim supports revocation, use a globally distributed service for revocation.
+                </li>
+                <li>
+                    Design revocation APIs that do not depend on submitting the ID of the claim, e.g., use a revocation list rather than a query.
+                </li>
+                <li>
+                    Avoid associating personally identifiable information with any particular long-lived subject identifier.
+                </li>
+            </ol>
+
+            <p>
+                It is understood that these mitigation techniques are not always practical or even compatible with necessary usage. Sometimes correlation is the point.
+            </p>
+            <p>
+                In state prescription monitoring programs, usage monitoring is a requirement: enforcement entities need to be able to confirm that individuals are not cheating the system to get multiple prescriptions for controlled substances. This statutory or regulatory
+                need to correlate usage overrides individual privacy concerns.
+            </p>
+
+            <p>
+                Verifiable claims will so be used to intentionally correlate individuals across services, for example, when using a common persona to log in to multiple services, so all activity on each of those services is intentionally linked to the same individual.
+                This is not a privacy issue as long as each of those services uses the correlation in the expected manner.
+            </p>
+
+            <p>
+                Privacy risks of claim usage occur when unintended or unexpected correlation arises from the presentation of verifiable claims.
+            </p>
+        </section>
+
+        <section id="sharing-information-with-the-wrong-party" typeof="bibo:Chapter" resource="#sharing-information-with-the-wrong-party" property="bibo:hasPart">
+            <h3 id="x5.13-sharing-information-with-the-wrong-party" resource="#x5.13-sharing-information-with-the-wrong-party"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.13 </span>Sharing Information with the Wrong Party</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue11"><span>Issue</span></div>
+                <p class="">
+                    Tokenize identifiers (like bank account numbers) when possible. Granting of rights to a service via cryptographic mechanisms.
+                </p>
+            </div>
+        </section>
+
+        <section id="frequency-of-claim-issuance" typeof="bibo:Chapter" resource="#frequency-of-claim-issuance" property="bibo:hasPart">
+            <h3 id="x5.14-frequency-of-claim-issuance" resource="#x5.14-frequency-of-claim-issuance"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.14 </span>Frequency of Claim Issuance</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue12"><span>Issue</span></div>
+                <p class="">
+                    The rate at which an issuer issues claims may be a privacy violation.
+                </p>
+            </div>
+        </section>
+
+        <section id="prefer-single-use-claims" typeof="bibo:Chapter" resource="#prefer-single-use-claims" property="bibo:hasPart">
+            <h3 id="x5.15-prefer-single-use-claims" resource="#x5.15-prefer-single-use-claims"><span property="xhv:role" resource="xhv:heading"><span class="secno">5.15 </span>Prefer Single Use Claims</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue13"><span>Issue</span></div>
+                <p class="">
+                    Single-use, origin bound claims are generally safer than long-lived claims.
+                </p>
+            </div>
+        </section>
+
+
+    </section>
+
+    <section id="security-considerations" typeof="bibo:Chapter" resource="#security-considerations" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="x6.-security-considerations" resource="#x6.-security-considerations"><span property="xhv:role" resource="xhv:heading"><span class="secno">6. </span>Security Considerations</span>
+        </h2>
+
+        <p>
+
+        </p>
+
+        <section id="unsigned-claims" typeof="bibo:Chapter" resource="#unsigned-claims" property="bibo:hasPart">
+            <h3 id="x6.1-unsigned-claims" resource="#x6.1-unsigned-claims"><span property="xhv:role" resource="xhv:heading"><span class="secno">6.1 </span>Unsigned Claims</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue14"><span>Issue</span></div>
+                <p class="">
+                    Claims that are not digitally signed are not verifiable.
+                </p>
+            </div>
+        </section>
+
+        <section id="bundling-dependent-claims" typeof="bibo:Chapter" resource="#bundling-dependent-claims" property="bibo:hasPart">
+            <h3 id="x6.2-bundling-dependent-claims" resource="#x6.2-bundling-dependent-claims"><span property="xhv:role" resource="xhv:heading"><span class="secno">6.2 </span>Bundling Dependent Claims</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue15"><span>Issue</span></div>
+                <p class="">
+                    Dependent claims should be bundled together so they're not used for the wrong purposes.
+                </p>
+            </div>
+        </section>
+
+        <section id="highly-dynamic-information" typeof="bibo:Chapter" resource="#highly-dynamic-information" property="bibo:hasPart">
+            <h3 id="x6.3-highly-dynamic-information" resource="#x6.3-highly-dynamic-information"><span property="xhv:role" resource="xhv:heading"><span class="secno">6.3 </span>Highly Dynamic Information</span>
+            </h3>
+
+            <div class="issue">
+                <div class="issue-title marker" aria-level="4" role="heading" id="h-issue16"><span>Issue</span></div>
+                <p class="">
+                    Time periods should be shorter for highly dynamic information.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <section id="verification" typeof="bibo:Chapter" resource="#verification" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="x7.-verification" resource="#x7.-verification"><span property="xhv:role" resource="xhv:heading"><span class="secno">7. </span>Verification</span>
+        </h2>
+
+        <p>
+            This section describes a number of checks required to verify a claim. Some checks are essential for all verifiable claims, while some are applicable to only some claims.
+        </p>
+        <section id="structural-validity" typeof="bibo:Chapter" resource="#structural-validity" property="bibo:hasPart">
+            <h3 id="x7.1-structural-validity" resource="#x7.1-structural-validity"><span property="xhv:role" resource="xhv:heading"><span class="secno">7.1 </span>Structural Validity</span>
+            </h3>
+            <ul>
+                <li>Document is valid JSON-LD.</li>
+                <li>Required properties are present. For example, for a Credential, <code>type</code> and <code>claim</code> are required.
+                </li>
+                <li>Property values match expectations described in the specification. For example, the document type for a verifiable claim must contain the class "Credential".</li>
+            </ul>
+        </section>
+        <section id="entity-validity" typeof="bibo:Chapter" resource="#entity-validity" property="bibo:hasPart">
+            <h3 id="x7.2-entity-validity" resource="#x7.2-entity-validity"><span property="xhv:role" resource="xhv:heading"><span class="secno">7.2 </span>Entity Validity</span>
+            </h3>
+            <p>
+                A number of checks must be implemented to ensure a set of entities related to a Credential have mutually compatible properties and are trustworthy.
+            </p>
+            <ul>
+                <li>The <code>issuer</code> id must match expectations. Likely, that means it is the id of a known and trusted <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity
+          profile</a>.</li>
+                <li>The claim subject identifier must match expectations. Likely, that means it is the id of a known and trusted
+                    <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity profile </a> for the subject of the claim. If the entity that is subject of a claim has transmitted it to the inspector-verifier, the subject may be able
+                    to prove ownership of key identifying properties such as email address(es) and public key(s).
+                </li>
+                <li>The <code>issued</code> date must be in the expected range. For example, an inspector-verifier may wish to ensure that the recorded issued date of valid claims is not in the future.</li>
+                <li>The document signature is available in the form of a known signature suite.</li>
+                <li>The public key associated with the signature is available and a trustworthy link between this signing key and the issuer's <a href="#dfn-entity-profile" class="internalDFN" data-link-type="dfn">entity profile</a> may be established.</li>
+                <li>If revocation instructions are present, the claim must not have been revoked.</li>
+            </ul>
+        </section>
+        <section id="fitness-for-purpose" typeof="bibo:Chapter" resource="#fitness-for-purpose" property="bibo:hasPart">
+            <h3 id="x7.3-fitness-for-purpose" resource="#x7.3-fitness-for-purpose"><span property="xhv:role" resource="xhv:heading"><span class="secno">7.3 </span>Fitness for Purpose</span>
+            </h3>
+            <ul>
+                <li>The custom properties in the <a href="#dfn-claim" class="internalDFN" data-link-type="dfn">claim</a> should be appropriate for the inspector-verifier's purpose. For example if an inspector-verifier needs to determine that a subject is
+                    older than 21 years of age, they may accept claims of specific birthdate or abstract properties such as <code>ageOver</code>.</li>
+                <li>The issuer is trusted by the inspector-verifier to make the claims at hand. For example, Fast Food Resturant A will not be trusted to make a claim that an individual may enjoy a lifetime 10% discount to its competitor Fast Food Restaurant
+                    B.</li>
+            </ul>
+        </section>
+    </section>
+
+
+
+    <section id="references" class="appendix" typeof="bibo:Chapter" resource="#references" property="bibo:hasPart">
+        <!--OddPage-->
+        <h2 id="a.-references" resource="#a.-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">A. </span>References</span>
+        </h2>
+        <section id="normative-references" typeof="bibo:Chapter" resource="#normative-references" property="bibo:hasPart">
+            <h3 id="a.1-normative-references" resource="#a.1-normative-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">A.1 </span>Normative references</span>
+            </h3>
+            <dl class="bibliography" resource=""><dt id="bib-JSON">[JSON]</dt>
+                <dd><a href="https://tools.ietf.org/html/rfc4627" property="dc:requires"><cite>The application/json Media Type for JavaScript Object Notation (JSON)</cite></a>. D. Crockford. IETF. July 2006. Informational. URL: <a href="https://tools.ietf.org/html/rfc4627"
+                        property="dc:requires">https://tools.ietf.org/html/rfc4627</a>
+                </dd><dt id="bib-JSON-LD">[JSON-LD]</dt>
+                <dd><a href="https://www.w3.org/TR/json-ld/" property="dc:requires"><cite>JSON-LD 1.0</cite></a>. Manu Sporny; Gregg Kellogg; Markus Lanthaler. W3C. 16 January 2014. W3C Recommendation. URL: <a href="https://www.w3.org/TR/json-ld/" property="dc:requires">https://www.w3.org/TR/json-ld/</a>
+                </dd>
+            </dl>
+        </section>
+        <section id="informative-references" typeof="bibo:Chapter" resource="#informative-references" property="bibo:hasPart">
+            <h3 id="a.2-informative-references" resource="#a.2-informative-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">A.2 </span>Informative references</span>
+            </h3>
+            <dl class="bibliography" resource=""><dt id="bib-VC-USECASES">[VC-USECASES]</dt>
+                <dd><a href="https://www.w3.org/TR/verifiable-claims-use-cases/" property="dc:references"><cite>Verifiable Claims Use Cases</cite></a>. Shane McCarron; Daniel Burnett; Gregg Kellogg; Brian Sletten; Manu Sporny. Verifiable Claims Working Group.
+                    W3C First Public Working Draft. URL: <a href="https://www.w3.org/TR/verifiable-claims-use-cases/" property="dc:references">https://www.w3.org/TR/verifiable-claims-use-cases/</a>
+                </dd>
+            </dl>
+        </section>
+    </section>
+    <p role="navigation" id="back-to-top"><a href="#toc"><abbr title="Back to Top">↑</abbr></a></p>
+    <script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+</body>
+
+</html>
