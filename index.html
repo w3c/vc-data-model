@@ -536,7 +536,7 @@ was issued. Note that this date represents the earliest date when the
 information associated with the <var>claim</var> property became valid.
           </dd>
         </dl>
-        <pre class="example nohighlight" title="foo">
+        <pre class="example nohighlight" title="Usage of issuer properties">
 {
   "@context": "https://w3id.org/security/v1",
   "id": "http://dmv.example.gov/credentials/3732",
@@ -581,7 +581,27 @@ information associated with the <var>claim</var> property became valid.
 The group is currently determining whether or not they should publish a
 very simple scheme for revocation as a part of this specification.
         </p>
+
+        <pre class="example nohighlight" title="Usage of revocation property">
+{
+  "@context": "https://w3id.org/security/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"revocation": {
+    "id": "https://dmv.example.gov/revocation/24,
+    "type": "RevocationList2017"
+  }</span>,
+  "signature": { ... }
+}
+        </pre>
       </section>
+
 
     </section>
 
