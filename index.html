@@ -538,7 +538,6 @@ information associated with the <var>claim</var> property became valid.
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
-  "@context": "https://w3id.org/security/v1",
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
@@ -554,6 +553,40 @@ information associated with the <var>claim</var> property became valid.
 
       <section>
         <h2>Signature</h2>
+        <p>
+A <a>credential</a> MAY be made verifiable by adding the following
+<a>property</a>:
+        </p>
+        <dl>
+          <dt><var>signature</var></dt>
+          <dd>
+The method used for a signature will vary byrepresentation language.  However,
+this property is expected to have a value that is a set of name-value pairs
+including at least a signature, a reference to the signing entity, and
+a representation of the signing date.</dd>
+        </dl>
+        <pre class="example nohighlight" title="Usage of signature property">
+{
+  "id": "http://example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"signature": {
+    "type": "LinkedDataSignature2017",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "https://example.com/jdoe/keys/1",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+    +W3JT24="
+  }</span>
+}
+        </pre>
       </section>
 
       <section>
@@ -572,9 +605,8 @@ will cease to be valid.
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of revocation property">
+        <pre class="example nohighlight" title="Usage of expires property">
 {
-  "@context": "https://w3id.org/security/v1",
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
@@ -613,7 +645,6 @@ very simple scheme for revocation as a part of this specification.
 
         <pre class="example nohighlight" title="Usage of revocation property">
 {
-  "@context": "https://w3id.org/security/v1",
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
@@ -654,7 +685,6 @@ very simple scheme for evidence as a part of this specification.
 
         <pre class="example nohighlight" title="Usage of evidence property">
 {
-  "@context": "https://w3id.org/security/v1",
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
