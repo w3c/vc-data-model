@@ -602,6 +602,51 @@ very simple scheme for revocation as a part of this specification.
         </pre>
       </section>
 
+      <section>
+        <h2>Evidence</h2>
+        <p>Evidence information for the claims in the
+        Verifiable Claims Model may be provided by adding the
+        following <a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>evidence</var></dt>
+          <dd>The value of this property MUST be one or more evidence schemes
+            that provides enough information to a <a>inspector-verifier</a>
+            to determine whether or not the evidence gathered meets their
+            requirements.
+          </dd>
+        </dl>
+
+        <p class="issue" data-title="Define ONE concrete format for the evidence parameter ">
+The group is currently determining whether or not they should publish a
+very simple scheme for evidence as a part of this specification.
+        </p>
+
+        <pre class="example nohighlight" title="Usage of evidence property">
+{
+  "@context": "https://w3id.org/security/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"evidence": {
+    "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+    "type": "DocumentVerification",
+    "verifier": "https://dmv.example.gov/issuers/14",
+    "evidenceDocument": "DriversLicense",
+    "subjectPresence": "Physical",
+    "documentPresence": "Physical"
+  }</span>,
+  "signature": { ... }
+}
+        </pre>
+
+      </section>
 
     </section>
 
