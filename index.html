@@ -530,7 +530,7 @@ the issuer that may be used to verify the information expressed in the
           </dd>
           <dt><var>issued</var></dt>
           <dd>
-The value of this property MUST be a string value of an [ISO8601] combined
+The value of this property MUST be a string value of an [[!ISO8601]] combined
 date and time string and represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
 information associated with the <var>claim</var> property became valid.
@@ -558,6 +558,35 @@ information associated with the <var>claim</var> property became valid.
 
       <section>
         <h2>Expiration</h2>
+        <p>
+Expiration information for the <a>credential</a> MAY be provided by adding
+the following <a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>expires</var></dt>
+          <dd>
+The value of this property MUST be a string value of an [[!ISO8601]] combined
+date and time string and represents the date and time the <a>credential</a>
+will cease to be valid.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of revocation property">
+{
+  "@context": "https://w3id.org/security/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  <span class="highlight">"expires": "2020-01-01T19:73:24Z"</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "signature": { ... }
+}
+        </pre>
       </section>
 
       <section>
