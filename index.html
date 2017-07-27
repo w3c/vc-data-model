@@ -517,6 +517,39 @@ make grasping the basic concepts more difficult.
       <h1>Basic Concepts</h1>
       <section>
         <h2>Issuer</h2>
+        <p>
+Issuer information may be expressed via the following <a>properties</a>:
+        </p>
+        <dl>
+          <dt><var>issuer</var></dt>
+          <dd>
+The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
+the URI results in a document containing machine-readable information about
+the issuer that may be used to verify the information expressed in the
+<a>credential</a>.
+          </dd>
+          <dt><var>issued</var></dt>
+          <dd>
+The value of this property MUST be a string value of an [ISO8601] combined
+date and time string and represents the date and time the <a>credential</a>
+was issued. Note that this date represents the earliest date when the
+information associated with the <var>claim</var> property became valid.
+          </dd>
+        </dl>
+        <pre class="example nohighlight" title="foo">
+{
+  "@context": "https://w3id.org/security/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
+  <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "signature": { ... }
+}
+        </pre>
       </section>
 
       <section>
