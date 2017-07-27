@@ -85,6 +85,12 @@
         inlineCSS: true
       };
     </script>
+    <style>
+pre .highlight {
+  font-weight: bold;
+  color: green;
+}
+</style>
   </head>
   <body>
     <section id='abstract'>
@@ -368,7 +374,7 @@ make grasping the basic concepts more difficult.
     </section>
 
     <section>
-      <h2>Data Model</h2>
+      <h2>Core Data Model</h2>
       <p>This section describes a data model for <a>entity
       profiles</a> and <a>entity credentials</a>, the latter covering
       both claims and verifiable claims, that is compatible with the
@@ -505,9 +511,24 @@ make grasping the basic concepts more difficult.
           a representation of the signing date.</dd>
         </dl>
       </section>
+    </section>
+
+    <section>
+      <h1>Basic Concepts</h1>
+      <section>
+        <h2>Issuer</h2>
+      </section>
 
       <section>
-        <h2>Revocation Model</h2>
+        <h2>Signature</h2>
+      </section>
+
+      <section>
+        <h2>Expiration</h2>
+      </section>
+
+      <section>
+        <h2>Revocation</h2>
         <p>Revocation information for the claims in the
         Verifiable Claims Model may be provided by adding the
         following <a>property</a>:
@@ -527,6 +548,72 @@ make grasping the basic concepts more difficult.
 The group is currently determining whether or not they should publish a
 very simple scheme for revocation as a part of this specification.
         </p>
+      </section>
+
+    </section>
+
+    <section>
+      <h1>Verification</h1>
+
+      <p>
+This section describes a number of checks required to verify a claim.
+Some checks are essential for all verifiable claims, while some are
+applicable to only some claims.
+      </p>
+      <section>
+        <h3>Structural Validity</h3>
+        <ul>
+          <li>Document is valid JSON-LD.</li>
+          <li>Required properties are present. For example, for a
+          Credential, <code>type</code> and <code>claim</code> are
+          required.</li>
+          <li>Property values match expectations described in the
+          specification. For example, the document type for a verifiable
+          claim must contain the class "Credential".</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Entity Validity</h3>
+        <p>
+A number of checks must be implemented to ensure a set of entities related
+to a Credential have mutually compatible properties and are trustworthy.
+        </p>
+        <ul>
+          <li>The <code>issuer</code> id must match expectations. Likely,
+          that means it is the id of a known and trusted <a>entity
+          profile</a>.</li>
+          <li>The claim subject identifier must match expectations.
+          Likely, that means it is the id of a known and trusted
+          <a>entity profile </a> for the subject of the claim. If the
+          entity that is subject of a claim has transmitted it to the
+          inspector-verifier, the subject may be able to prove ownership of key
+          identifying properties such as email address(es) and public
+          key(s).</li>
+          <li>The <code>issued</code> date must be in the expected range.
+          For example, an inspector-verifier may wish to ensure that the recorded
+          issued date of valid claims is not in the future.</li>
+          <li>The document signature is available in the form of a known
+          signature suite.</li>
+          <li>The public key associated with the signature is available
+          and a trustworthy link between this signing key and the
+          issuer's <a>entity profile</a> may be established.</li>
+          <li>If revocation instructions are present, the claim must not
+          have been revoked.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Fitness for Purpose</h3>
+        <ul>
+          <li>The custom properties in the <a>claim</a> should be
+          appropriate for the inspector-verifier's purpose. For example if an
+          inspector-verifier needs to determine that a subject is older than 21
+          years of age, they may accept claims of specific birthdate or
+          abstract properties such as <code>ageOver</code>.</li>
+          <li>The issuer is trusted by the inspector-verifier to make the claims
+          at hand. For example, Fast Food Resturant A will not be trusted
+          to make a claim that an individual may enjoy a lifetime 10%
+          discount to its competitor Fast Food Restaurant B.</li>
+        </ul>
       </section>
     </section>
 
@@ -1632,70 +1719,6 @@ Time periods should be shorter for highly dynamic information.
       </section>
     </section>
 
-    <section>
-      <h2>Verification</h2>
-
-      <p>
-This section describes a number of checks required to verify a claim.
-Some checks are essential for all verifiable claims, while some are
-applicable to only some claims.
-      </p>
-      <section>
-        <h3>Structural Validity</h3>
-        <ul>
-          <li>Document is valid JSON-LD.</li>
-          <li>Required properties are present. For example, for a
-          Credential, <code>type</code> and <code>claim</code> are
-          required.</li>
-          <li>Property values match expectations described in the
-          specification. For example, the document type for a verifiable
-          claim must contain the class "Credential".</li>
-        </ul>
-      </section>
-      <section>
-        <h3>Entity Validity</h3>
-        <p>
-A number of checks must be implemented to ensure a set of entities related
-to a Credential have mutually compatible properties and are trustworthy.
-        </p>
-        <ul>
-          <li>The <code>issuer</code> id must match expectations. Likely,
-          that means it is the id of a known and trusted <a>entity
-          profile</a>.</li>
-          <li>The claim subject identifier must match expectations.
-          Likely, that means it is the id of a known and trusted
-          <a>entity profile </a> for the subject of the claim. If the
-          entity that is subject of a claim has transmitted it to the
-          inspector-verifier, the subject may be able to prove ownership of key
-          identifying properties such as email address(es) and public
-          key(s).</li>
-          <li>The <code>issued</code> date must be in the expected range.
-          For example, an inspector-verifier may wish to ensure that the recorded
-          issued date of valid claims is not in the future.</li>
-          <li>The document signature is available in the form of a known
-          signature suite.</li>
-          <li>The public key associated with the signature is available
-          and a trustworthy link between this signing key and the
-          issuer's <a>entity profile</a> may be established.</li>
-          <li>If revocation instructions are present, the claim must not
-          have been revoked.</li>
-        </ul>
-      </section>
-      <section>
-        <h3>Fitness for Purpose</h3>
-        <ul>
-          <li>The custom properties in the <a>claim</a> should be
-          appropriate for the inspector-verifier's purpose. For example if an
-          inspector-verifier needs to determine that a subject is older than 21
-          years of age, they may accept claims of specific birthdate or
-          abstract properties such as <code>ageOver</code>.</li>
-          <li>The issuer is trusted by the inspector-verifier to make the claims
-          at hand. For example, Fast Food Resturant A will not be trusted
-          to make a claim that an individual may enjoy a lifetime 10%
-          discount to its competitor Fast Food Restaurant B.</li>
-        </ul>
-      </section>
-    </section>
   </body>
 </html>
 
