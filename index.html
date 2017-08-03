@@ -152,45 +152,11 @@ the use cases and requirements that informed this specification
 
     <section>
       <h3>What is a Verifiable Claim?</h3>
-      <p>
-In order to explore what makes a verifiable claim useful, it is helpful to
-understand the basic terminology used to talk about a verifiable claim:
-      </p>
 
-      <dl>
-        <dt><a>entity</a></dt>
-        <dd>
-A thing with distinct and independent existence such as a person, organization,
-concept, or device.
-        </dd>
-        <dt><a>subject</a></dt>
-        <dd>
-An <a>entity</a> about which <a>claims</a> may be made.
-        </dd>
-        <dt><a>claim</a></dt>
-        <dd>
-A statement made by an <a>entity</a> about a <a>subject</a>. A
-<strong>verifiable claim</strong> is a claim that is effectively tamper-proof
-and whose authorship can be cryptographically verified. Multiple claims may
-be bundled together into a set of claims.
-        </dd>
-      </dl>
-
-      <p>
-The basic components of a set of verifiable claims are shown in the diagram
-below:
-        </p>
-
-      <figure>
-        <img style="margin: auto; display: block;" width="50%" src="diagrams/verifiable-claims.svg">
-        <figcaption style="text-align: center;">
-The basic components of a set of verifiable claims.
-        </figcaption>
-      </figure>
-
-      <p>
-Claim set metadata refers to information about the set of verifiable claims,
-such as the entity that made the claims and an expiration date for the claims.
+      <p class="issue">
+Expand on introductory verifiable claims section that doesn't dive too deeply
+into the details but rather provides an overview of what we're trying to
+achieve.
       </p>
     </section>
 
@@ -249,7 +215,7 @@ government ID databases, and distributed ledgers.
       </dl>
 
       <figure>
-        <img style="margin: auto; display: block;" width="75%" src="diagrams/vc-ecosystem-overview.svg">
+        <img style="margin: auto; display: block;" width="75%" src="diagrams/ecosystem.svg">
         <figcaption style="text-align: center;">
 The roles and information flows that form the basis for this specification.
         </figcaption>
@@ -375,26 +341,142 @@ make grasping the basic concepts more difficult.
 
     <section>
       <h2>Core Data Model</h2>
-      <p>This section describes a data model for <a>entity
-      profiles</a> and <a>entity credentials</a>, the latter covering
+
+      <p>
+This section outlines core data model concepts used throughout this
+specification
+      </p>
+
+      <section>
+        <h3>Claims</h3>
+
+        <p>
+A <a>subject</a> is an <a>entity</a> about which <a>claims</a> may be made.
+A <a>claim</a> is statement made by an <a>entity</a> about a <a>subject</a>.
+<a>Claims</a> are expressed using
+<strong><em>subject</em></strong>-<dfn data-lt="property|properties">property</dfn>-<dfn>value</dfn>
+associations.
+        </p>
+
+      <figure>
+        <img style="margin: auto; display: block;"
+          width="50%" src="diagrams/claim.svg">
+        <figcaption style="text-align: center;">
+The basic structure of a claim.
+        </figcaption>
+      </figure>
+
+      <p>
+The data model for <a>claims</a> described above is powerful and can be used to
+express a large variety of statements. For example, whether or not someone is
+over the age of 21 may be expressed as follows:
+      </p>
+
+      <figure>
+        <img style="margin: auto; display: block;"
+          width="50%" src="diagrams/claim-example.svg">
+        <figcaption style="text-align: center;">
+An example of a basic claim that expresses that Pat is over the age of 21.
+        </figcaption>
+      </figure>
+
+      <p>
+These claims may be merged together to express a mathematical graph of
+information about a particular subject. The example below extends the
+data model above by adding claims that state that Pat knows Sam and that
+Sam is a student.
+      </p>
+
+      <figure>
+        <img style="margin: auto; display: block;"
+          width="75%" src="diagrams/claim-extended.svg">
+        <figcaption style="text-align: center;">
+Multiple claims may be combined to express a more complex mathematical graph.
+        </figcaption>
+      </figure>
+
+      <p>
+At this point, the concept of a <a>claim</a> has been introduced. To make the
+claim verifiable, more information must be added to the graph of information.
+      </p>
+
+    </section>
+    <section>
+      <h2>Credentials</h2>
+
+      <p>
+A <a>credential</a> is set of one or more <a>claims</a> about a <a>subject</a>.
+It typically includes am identifier to uniquely identify the
+credential. Credential metadata may also be included to express things like
+when the credential expries. A digital signature is almost always appended by
+the <a>issuer</a> of the credential to enable verifiability of the credential.
+Therefore, a <strong>verifiable credential</strong> is a set of claims that
+are effectively tamper-proof and whose authorship can be cryptographically
+verified.
+      </p>
+
+      <figure>
+        <img style="margin: auto; display: block;" width="50%" src="diagrams/credential.svg">
+        <figcaption style="text-align: center;">
+The basic components of a verifiable credential.
+        </figcaption>
+      </figure>
+
+      <p>
+Examples of verifiable credentials include digital employee identification
+cards, digital proofs of age, and digital educational certificates.
+      </p>
+
+    </section>
+    <section>
+      <h2>Profiles</h2>
+
+      <p>
+As this specification takes a privacy-first approach, it is important that
+the entities that use this technology are able to express only the portions of
+their persona that are appropriate for the situation. The expression of a
+subset of one's persona is called a <a>verifiable profile</a>.
+      </p>
+
+      <p>
+A <a>verifiable profile</a> is a collection of one or more
+<a>verifiable credentials</a> typically about the same <a>subject</a> that
+have been issued by multiple <a>issuers</a>. The aggregation of this
+information typically expresses an aspect of a person, organization, or entity.
+      </p>
+
+      <figure>
+        <img style="margin: auto; display: block;"
+          width="50%" src="diagrams/profile.svg">
+        <figcaption style="text-align: center;">
+The basic components of a verifiable profile.
+        </figcaption>
+      </figure>
+
+      <p>
+Examples of different profiles include a person's professional persona, online
+gaming persona, or home life persona.
+      </p>
+
+<!--
+      <p>This section describes a data model for <a>verifiable
+      profiles</a> and <a>verifiable credentials</a>, the latter covering
       both claims and verifiable claims, that is compatible with the
       requirements and use cases expected to be addressed by this
       group.</p>
 
-<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="390px" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 390" preserveAspectRatio="xMidYMid meet" ><defs id="svgEditorDefs"><path id="svgEditorClosePathDefs" stroke="black" style="stroke-width: 1px;" fill="khaki"/><marker id="arrow20-16-right" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="-3" refY="0" viewBox="-15 -5 20 20"><path d="M -15 -5 L 0 0 L -15 5 z" fill="black"/></marker><marker id="arrow15-12-left" markerHeight="12" markerUnits="strokeWidth" markerWidth="15" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker><marker id="arrow20-16-left" markerHeight="16" markerUnits="strokeWidth" markerWidth="20" orient="auto" refX="3" refY="0" viewBox="0 -5 20 20"><path d="M 15 -5 L 0 0 L 15 5 z" fill="black"/></marker></defs><rect id="svgEditorBackground" x="0" y="0" width="990" height="490" style="fill: none; stroke: none;"/><rect x="3" y="5" style="stroke-width: 1px;" stroke="black" id="e1_rectangle" width="230" height="94" fill="khaki"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="60" y="25" id="e2_texte">Entity Profile</text><line id="e3_line" x1="3" y1="32" x2="233" y2="32" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="90" y="167" id="e4_texte"></text><text fill="black" style="font-family: Arial; font-size: 12px;" x="20" y="60" id="e5_texte">type: unordered set of URIs<tspan x="20" dy="1.25em" style="font-size: 12px;">signature: Signature [0..1]</tspan></text><rect x="358" y="4" style="stroke-width: 1px;" stroke="black" id="e6_rectangle" width="230" height="77" fill="khaki"/><line id="e8_line" x1="358" y1="31" x2="588" y2="31" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="462" y="167" id="e14_texte"></text><rect x="3" y="150" style="stroke-width: 1px;" stroke="black" id="e16_rectangle" width="230" height="170" fill="khaki"/><line id="e17_line" x1="3" y1="177" x2="233" y2="177" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="49" y="171" id="e18_texte">Entity Credential</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="27" y="206" id="e19_texte">id: URI<tspan x="27" dy="1.25em" id="e20_tspan">type: unordered set of URIs</tspan><tspan x="27" dy="1.25em" id="e21_tspan">issuer: URI</tspan><tspan x="27" dy="1.25em" id="e22_tspan">issued: date in string form</tspan><tspan x="27" dy="1.25em" id="e23_tspan">claim: Claim</tspan></text><text fill="black" style="font-family: Arial; font-size: 20px;" x="445" y="25" id="e24_texte">Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="375" y="58" id="e25_texte">(at least one custom property)</text><rect x="358" y="147" style="stroke-width: 1px;" stroke="black" id="e26_rectangle" width="230" height="77" fill="khaki"/><line id="e27_line" x1="358" y1="174" x2="588" y2="174" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="405" y="169" id="e30_texte">Verifiable Claim</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="377" y="197" id="e31_texte">signature: Signature</text><rect x="357" y="268" style="stroke-width: 1px;" stroke="black" id="e32_rectangle" width="229" height="119" fill="khaki"/><line id="e33_line" x1="357" y1="295" x2="587" y2="295" stroke="black" style="stroke-width: 1px; fill: none;"/><text fill="black" style="font-family: Arial; font-size: 20px;" x="424" y="289" id="e36_texte">Signature</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="374" y="317" id="e38_texte">(varies, but expected to include<tspan x="374" dy="1.25em">at least a signature, a reference</tspan><tspan x="374" dy="1.25em">to the signing entity, and a</tspan><tspan x="374" dy="1.25em">representation of the signing date)</tspan></text><line id="e42_line" x1="233" y1="58" x2="357" y2="58" stroke="black" style="stroke-width: 1px; fill: none;"/><line id="e43_line" x1="470" y1="148" x2="470" y2="81" stroke="black" style="stroke-width: 1px; fill: none; marker-end: url(&quot;#arrow20-16-right&quot;);"/><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="72" id="e44_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="341" y="52" id="e45_texte">id</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="238" y="51" id="e46_texte">1</text><text fill="black" style="font-family: Arial; font-size: 12px;" x="332" y="71" id="e47_texte">0..*</text></svg>
-
       <section>
         <h2>General Characteristics</h2>
-        <p>Both the <a>Entity Profile Model</a> and <a>Entity
+        <p>Both the <a>Verifiable Profile Model</a> and <a>Entity
         Credential Model</a> consist of a collection of name-value
         pairs which will be referred to as
         <dfn data-lt="property">properties</dfn> in this document.
         The following subsections describe the required and optional
         properties for both.  The link between the two is in
-        the <var>id</var> property.  The <a>Entity Profile Model</a>
+        the <var>id</var> property.  The <a>Verifiable Profile Model</a>
         defines a <a>subject</a> identifier in
         the <a href="#entity-id"><var>id</var></a> property, while
-        the claims section of the <a>Entity Credential Model</a> uses
+        the claims section of the <a>Verifiable Credential Model</a> uses
         the <a href="#claim-id"><var>id</var></a> property to refer to
         that <a>subject</a> identifier.</p>
         <p>This document purposely defines the data model without
@@ -406,14 +488,14 @@ make grasping the basic concepts more difficult.
       </section>
 
       <section>
-        <h2><dfn>Entity Profile Model</dfn></h2>
+        <h2><dfn>Verifiable Profile Model</dfn></h2>
         <p>Unlike the <a>properties</a> in
         the <a href="#ec-claim"><var>claim</var></a> section of
-        the <a>Entity Credential Model</a>, the <a>properties</a> in
-        the Entity Profile Model are merely information that,
+        the <a>Verifiable Credential Model</a>, the <a>properties</a> in
+        the Verifiable Profile Model are merely information that,
         together with a <a>subject</a>
         identifier <a href="#entity-id"><var>id</var></a>,
-        constitute an entity profile.  The properties are not claims
+        constitute an verifiable profile.  The properties are not claims
         and are not intended to be verifiable.</p>
         <p>The following properties are required in the Entity
         Profile Model:</p>
@@ -424,7 +506,7 @@ make grasping the basic concepts more difficult.
           <dt><var>type</var></dt>
           <dd>This is an unordered set of URIs representing the types
           or classes of which this data set is a member.  As an
-          <a>entity profile</a>, at a minimum the class "Entity"
+          <a>verifiable profile</a>, at a minimum the class "Entity"
           must be a member of the set.  Additional
           application-specific values are permitted in the set.</dd>
         </dl>
@@ -444,13 +526,13 @@ make grasping the basic concepts more difficult.
       </section>
 
       <section>
-        <h2><dfn>Entity Credential Model</dfn></h2>
-        <p>Unlike the <a>properties</a> in the <a>Entity Profile
+        <h2><dfn>Verifiable Credential Model</dfn></h2>
+        <p>Unlike the <a>properties</a> in the <a>Verifiable Profile
         Model</a>, the <a>properties</a> in
         the <a href="#ec-claim"><var>claim</var></a> section of the
-        Entity Credential Model are claims made by an <a>entity</a>
-        about the <a>subject</a> defined in an <a>entity
-        profile</a>.  The Entity Credential Model includes both
+        Verifiable Credential Model are claims made by an <a>entity</a>
+        about the <a>subject</a> defined in an <a>verifiable
+        profile</a>.  The Verifiable Credential Model includes both
         issuance-related properties and the
         aforementioned <a href="#ec-claim"><var>claim</var></a>
         property that further contains the properties of the claim
@@ -459,11 +541,11 @@ make grasping the basic concepts more difficult.
         Credential Model:</p>
         <dl>
           <dt><var>id</var></dt>
-          <dd>URI representing this specific <a>entity credential</a></dd>
+          <dd>URI representing this specific <a>verifiable credential</a></dd>
           <dt><var>type</var></dt>
           <dd>This is an unordered set of URIs representing the types
           or classes of which this data set is a member.  As an
-          <a>entity credential</a>, at a minimum the class
+          <a>verifiable credential</a>, at a minimum the class
           "Credential" must be a member of the set.  Additional
           application-specific values are permitted in the
           set.</dd>
@@ -476,7 +558,7 @@ make grasping the basic concepts more difficult.
               <dt><span id="claim-id"><var>id</var></span></dt>
               <dd>The <a>subject</a> of the claim, the property value
               is expected to be a valid
-              <a href="#entity-id">Entity Profile <var>id</var></a>.</dd>
+              <a href="#entity-id">Verifiable Profile <var>id</var></a>.</dd>
               <dt>At least one custom <a>property</a></dt>
               <dd>N/A</dd>
             </dl>
@@ -499,9 +581,9 @@ make grasping the basic concepts more difficult.
 
       <section>
         <h2>Verifiable Claims Model</h2>
-        <p>The claims in the <a>Entity Credential Model</a> can be
+        <p>The claims in the <a>Verifiable Credential Model</a> can be
         made verifiable by adding the following <a>property</a> to
-        the <a>Entity Credential Model</a>:</p>
+        the <a>Verifiable Credential Model</a>:</p>
         <dl>
           <dt><var>signature</var></dt>
           <dd>The method used for a signature will vary by
@@ -511,6 +593,9 @@ make grasping the basic concepts more difficult.
           a representation of the signing date.</dd>
         </dl>
       </section>
+!-->
+
+    </section>
     </section>
 
     <section>
@@ -742,7 +827,7 @@ applicable to only some claims.
         <h3>Issuer</h3>
         <ul>
           <li>The <code>issuer</code> id must match expectations. Likely,
-          that means it is the id of a known and trusted <a>entity
+          that means it is the id of a known and trusted <a>verifiable
           profile</a>.</li>
           <li>Recent metadata about the <code>issuer</code> which was published
           by the issuer MUST be available.</li>
@@ -753,7 +838,7 @@ applicable to only some claims.
         <ul>
           <li>The claim subject identifier must match expectations.
           Likely, that means it is the id of a known and trusted
-          <a>entity profile </a> for the subject of the claim. If the
+          <a>verifiable profile </a> for the subject of the claim. If the
           entity that is subject of a claim has transmitted it to the
           inspector-verifier, the subject may be able to prove ownership of key
           identifying properties such as email address(es) and public
@@ -771,7 +856,7 @@ applicable to only some claims.
           </li>
           <li>The public key associated with the signature is available
           and a trustworthy link between this signing key and the
-          issuer's <a>entity profile</a> may be established. The key must
+          issuer's <a>verifiable profile</a> may be established. The key must
           not be revoked or expired.</li>
           <li>The cryptographic signature is valid.</li>
         </ul>
@@ -830,10 +915,10 @@ applicable to only some claims.
       <section>
         <h2>JSON</h2>
         <section>
-          <h2>Expressing an Entity Profile in JSON</h2>
-            <p>In JSON [[!JSON]], an instance of the <a>Entity Profile
-            Model</a> is expressed as a single JSON object whose
-            properties are the entity profile's
+          <h2>Expressing a Verifiable Profile in JSON</h2>
+            <p>In JSON [[!JSON]], an instance of the Verifiable Profile
+            is expressed as a single JSON object whose
+            properties are the verifiable profile's
             <a>properties</a>, with the following value type assignments:</p>
             <ul>
               <li>Any number value MUST be represented as a Number type.</li>
@@ -847,9 +932,9 @@ applicable to only some claims.
               <li>Any other value MUST be represented as a String type.</li>
             </ul>
       <p>The following example demonstrates how to express a
-      simple <a>entity profile</a>.</p>
+      simple <a>verifiable profile</a>.</p>
 
-<pre class="example" title="A simple entity profile">{
+<pre class="example" title="A simple verifiable profile">{
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "type": ["Entity", "Person"],
   "name": "Alice Bobman",
@@ -860,10 +945,10 @@ applicable to only some claims.
         </section>
 
         <section>
-          <h2>Expressing an Entity Credential in JSON</h2>
-            <p>In JSON, an instance of the <a>Entity Credential
-            Model</a> is expressed as a single JSON object whose
-            properties are the entity credential's
+          <h2>Expressing an Verifiable Credential in JSON</h2>
+            <p>In JSON, an instance of the Verifiable Credential
+            is expressed as a single JSON object whose
+            properties are the verifiable credential's
             <a>properties</a>, with the following value type assignments:</p>
             <ul>
               <li>Any number value MUST be represented as a Number type.</li>
@@ -877,11 +962,11 @@ applicable to only some claims.
               <li>Any other value MUST be represented as a String type.</li>
             </ul>
             <p>The following example demonstrates how to express
-            an <a>entity credential</a> containing a simple
+            an <a>verifiable credential</a> containing a simple
             (unverifiable) <a>claim</a> about a particular
             <a>subject</a>. In this case, the claim is that
             the <a>subject</a> with
-            the <a href="#entity-id">Entity Profile <var>id</var></a>
+            the <a href="#entity-id">Verifiable Profile <var>id</var></a>
             of
             <code>did:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
             of age or older. While a human reading the
@@ -1054,22 +1139,22 @@ of verfiable claims about a particular <a>subject</a>.
         that is both simple and extensible.</p>
 
         <section>
-          <h2>Expressing an Entity Profile in JSON-LD</h2>
-            <p>Instances of the <a>Entity Profile Model</a> are
+          <h2>Expressing an Verifiable Profile in JSON-LD</h2>
+            <p>Instances of the <a>Verifiable Profile</a> are
             expressed in JSON-LD in the same way they are expressed in
             JSON
             (Section <a href="#expressing-an-entity-profile-in-json"></a>),
             except that there is an additional
             property <code>@context</code>.  Each property of the
-            entity profile, such as <code>name</code>
+            verifiable profile, such as <code>name</code>
             or <code>email</code>, is given context via
             the <code>@context</code> value. Other contexts can be
             used or combined to express any arbitrary information
-            about an <a>entity profile</a> in idiomatic JSON.  </p>
+            about an <a>verifiable profile</a> in idiomatic JSON.  </p>
       <p>The following example demonstrates how to express a
-      simple <a>entity profile</a>.</p>
+      simple <a>verifiable profile</a>.</p>
 
-<pre class="example" title="A simple entity profile">{
+<pre class="example" title="A simple verifiable profile">{
   "@context": "https://w3id.org/identity/v1",
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "type": ["Entity", "Person"],
@@ -1081,14 +1166,14 @@ of verfiable claims about a particular <a>subject</a>.
         </section>
 
         <section>
-          <h2>Expressing an Entity Credential in JSON-LD</h2>
-            <p>Instances of the <a>Entity Credential Model</a> are
+          <h2>Expressing an Verifiable Credential in JSON-LD</h2>
+            <p>Instances of the <a>Verifiable Credential</a> are
             expressed in JSON-LD in the same way they are expressed in
             JSON
             (Section <a href="#expressing-an-entity-credential-in-json"></a>),
             except that there is an additional
             <a>property</a> <code>@context</code>.  Each property of
-            the <a>entity credential</a> expression, along with each
+            the <a>verifiable credential</a> expression, along with each
             sub-property within the <code>claim</code> property (such
             as the generic <code>issuer</code> property or the
             app-specific <code>ageOver</code>), is given context via
@@ -1206,14 +1291,14 @@ of verifiable claims about a particular <a>subject</a>.
       </section>
 
       <!-- section>
-        <h2>Expressing Entity Profiles, Entity Credentials, and
+        <h2>Expressing Verifiable Profiles, Verifiable Credentials, and
         Verifiable Claims in WebIDL</h2>
 
         <section>
-          <h2>Expressing an Entity Profile in WebIDL</h2>
-            <p>In WebIDL, an instance of the <a>Entity Profile
+          <h2>Expressing an Verifiable Profile in WebIDL</h2>
+            <p>In WebIDL, an instance of the <a>Verifiable Profile
             Model</a> is expressed as an Interface whose attributes
-            are the entity profile's <a>properties</a>, with the
+            are the verifiable profile's <a>properties</a>, with the
             following value type assignments:</p>
             <ul>
               <li>Any number value MUST be represented as an
@@ -1235,7 +1320,7 @@ of verifiable claims about a particular <a>subject</a>.
               either unrestricted or extended in the future.</li>
             </ul>
       <p>The following example demonstrates how to express a
-      simple <a>entity profile</a>.</p>
+      simple <a>verifiable profile</a>.</p>
 
 <pre class="idl">
 [Constructor]
@@ -1249,10 +1334,10 @@ interface EntityProfile {
 };
 </pre>
 
-            <p>This <a>entity profile expression</a> could then be
+            <p>This <a>verifiable profile expression</a> could then be
             used as follows in JavaScript:</p>
 
-<pre class="highlight example" title="Using a simple entity profile">
+<pre class="highlight example" title="Using a simple verifiable profile">
   var entity = new EntityProfile();
   profile.id = "did:example:ebfeb1f712ebc6f1c276e12ec21";
   profile.type = ["Entity", "Person"];
@@ -1264,8 +1349,8 @@ interface EntityProfile {
         </section>
 
         <section>
-          <h2>Expressing Entity Credentials in WebIDL</h2>
-            <p>In WebIDL, an intance of the <a>Entity Credential
+          <h2>Expressing Verifiable Credentials in WebIDL</h2>
+            <p>In WebIDL, an intance of the <a>Verifiable Credential
             Model</a> is expressed as an Interface whose attributes
             are the claim's <a>properties</a>, with the following
             value type assignments:</p>
@@ -1289,7 +1374,7 @@ interface EntityProfile {
               either unrestricted or extended in the future.</li>
             </ul>
             <p>The following example demonstrates how to express
-            an <a>entity credential</a> containing a simple
+            an <a>verifiable credential</a> containing a simple
             (unverifiable) <a>claim</a> about a particular
             <a>subject</a>. In this case, the claim is that
             the <a>subject</a> with
@@ -1323,7 +1408,7 @@ interface EntityProfile {
   };
 </pre>
 
-            <p>This <a>entity credential expression</a> could then be
+            <p>This <a>verifiable credential expression</a> could then be
             used as follows in JavaScript:</p>
 
 <pre class="example" title="Using a simple claim">
@@ -1364,7 +1449,7 @@ interface EntityProfile {
     attribute Claim1 claim;
   };
 </pre>
-            <p>This verifiable <a>entity credential expression</a>
+            <p>This verifiable <a>verifiable credential expression</a>
             could then be used as follows in JavaScript:</p>
 
 <pre class="example" title="Using a simple verifiable claim">
@@ -1437,7 +1522,7 @@ of verfiable claims about a particular <a>subject</a>.
     attribute DOMString expires;
   };
 </pre>
-            <p>This verifiable <a>entity credential expression</a>
+            <p>This verifiable <a>verifiable credential expression</a>
             could then be used as follows in JavaScript:</p>
 
 <pre class="example" title="Using a more complex verifiable claim">{
