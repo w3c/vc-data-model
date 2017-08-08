@@ -90,6 +90,18 @@ pre .highlight {
   font-weight: bold;
   color: green;
 }
+pre .subject {
+  font-weight: bold;
+  color: RoyalBlue;
+}
+pre .property {
+  font-weight: bold;
+  color: DarkGoldenrod;
+}
+pre .comment {
+  font-weight: bold;
+  color: Gray;
+}
 </style>
   </head>
   <body>
@@ -947,15 +959,9 @@ applicable to only some claims.
             itself, such as an identifier for the <a>entity</a> that issued
             it and a date for when it was issued. </p>
 
-<pre class="example" title="A simple claim">{
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  }
+<pre class="example nohighlight" title="A simple claim">{
+  <span class="subject">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>, <span class="comment">// subject identifier</span>
+  <span class="property">"ageOver": 21</span> <span class="comment">// property-value pair</span>
 }</pre>
 
             <p>The following example demonstrates how to express the
@@ -964,8 +970,7 @@ applicable to only some claims.
             a <code>signature</code> that can be used to verify its
             entire contents, including the claim.</p>
 
-<pre class="example" title="A simple verifiable claim">{
-  "@context": "https://w3id.org/security/v1",
+<pre class="example" title="A simple verifiable credential">{
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
@@ -1054,11 +1059,7 @@ The following example demonstrates how to express a more complex set
 of verfiable claims about a particular <a>subject</a>.
         </p>
 
-<pre class="example" title="A more complex verifiable claim">{
-  "@context": [
-    "https://w3id.org/identity/v1",
-    "https://w3id.org/security/v1"
-  ],
+<pre class="example nohighlight" title="A more complex verifiable claim">{
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "PassportCredential"],
   "name": "Passport",
@@ -1198,14 +1199,8 @@ of verfiable claims about a particular <a>subject</a>.
 
 <pre class="example" title="A simple claim">{
   "@context": "https://w3id.org/identity/v1",
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  }
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "ageOver": 21
 }</pre>
 
             <p>The following example demonstrates how to express the
@@ -1214,7 +1209,7 @@ of verfiable claims about a particular <a>subject</a>.
             a <code>signature</code> that can be used to verify its
             entire contents, including the claim.</p>
 
-<pre class="example" title="A simple verifiable claim">{
+<pre class="example" title="A simple verifiable credential">{
   "@context": [
     "https://w3id.org/identity/v1",
     "https://w3id.org/security/v1"
@@ -1242,7 +1237,7 @@ The following example demonstrates how to express a more complex set
 of verifiable claims about a particular <a>subject</a>.
         </p>
 
-<pre class="example" title="A more complex verifiable claim">{
+<pre class="example" title="A more complex verifiable credential">{
   "@context": [
     "https://w3id.org/identity/v1",
     "https://w3id.org/security/v1"
@@ -1305,13 +1300,36 @@ of verifiable claims about a particular <a>subject</a>.
       simple <a>verifiable profile</a>.</p>
 
 <pre class="example" title="A simple verifiable profile">{
-  "@context": "https://w3id.org/identity/v1",
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["Entity", "Person"],
-  "name": "Alice Bobman",
-  "email": "alice@example.com",
-  "birthDate": "1985-12-14",
-  "telephone": "12345678910"
+  "credential": [{
+    "id": "http://dmv.example.gov/credentials/3732",
+    "type": ["Credential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov/issuers/14",
+    "issued": "2010-01-01T19:73:24Z",
+    "claim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    },
+    "signature": {
+    "type": "LinkedDataSignature2017",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "https://dmv.example.gov/issuers/14/keys/234",
+    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+    "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
+    ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
+    zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
+    9Cky6Ed="
+  }],
+  "signature": [{
+    "type": "LinkedDataSignature2017",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/2",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+    +W3JT24="
+  }]
 }</pre>
         </section>
 
