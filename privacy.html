@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Verifiable Claims Data Model 1.0: Privacy Analysis</title>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script src="./common.js" class="remove"></script>
+    <script type="text/javascript" class="remove">
+      var respecConfig = {
+        // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+        specStatus: "ED",
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName: "verifiable-claims-privacy-analysis",
+
+        // subtitle for the spec
+        subtitle: "A privacy analysis of the Verifiable Claims data model",
+
+        // if you wish the publication date to be other than today, set this
+        //publishDate:  "2017-08-03",
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "1977-03-15",
+        // previousMaturity:  "WD",
+
+        // extend the bibliography entries
+        localBiblio: vcwg.localBiblio,
+
+        github: "https://github.com/w3c/vc-data-model",
+        includePermalinks: false,
+
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI: "https://w3c.github.io/vc-data-model/privacy.html",
+
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors:  [
+          { name: "David Chadwick",
+            company: "University of Kent", companyURL: "https://www.kent.ac.uk/"},
+          { name: "Manu Sporny", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/" }
+        ],
+
+        // authors, add as many as you like.
+        // This is optional, uncomment if you have authors as well as editors.
+        // only "name" is required. Same format as editors.
+        authors:
+        [
+          { name: "David Chadwick",
+            company: "University of Kent", companyURL: "https://www.kent.ac.uk/"},
+          { name: "Manu Sporny", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/" }
+        ],
+
+        // name of the WG
+        wg:           "Verifiable Claims Working Group",
+
+        // URI of the public WG page
+        wgURI:        "https://www.w3.org/2017/vc/",
+
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: "public-vc-comments",
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
+        maxTocLevel: 4,
+        inlineCSS: true
+      };
+    </script>
+    <style>
+pre .highlight {
+  font-weight: bold;
+  color: green;
+}
+pre .subject {
+  font-weight: bold;
+  color: RoyalBlue;
+}
+pre .property {
+  font-weight: bold;
+  color: DarkGoldenrod;
+}
+pre .comment {
+  font-weight: bold;
+  color: Gray;
+}
+</style>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+This document is a privacy analysis of the Verifiable Claims Data Model.
+      </p>
+    </section>
+
+    <section id='sotd'>
+      <p>
+Comments regarding this document are welcome. Please file issues
+directly on <a href="https://github.com/w3c/vc-data-model/issues/">GitHub</a>,
+or send them to
+<a href="mailto:public-vc-comments@w3.org">public-vc-comments@w3.org</a>
+(<a href="mailto:public-vc-comments-request@w3.org?subject=subscribe">subscribe</a>,
+<a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
+      </p>
+    </section>
+
+    <section>
+      <h1>Privacy Analysis</h1>
+
+      <section>
+        <h2>Does this specification deal with personally-identifiable information?</h2>
+        <p>
+Yes. The properties inside Verifiable Claims are PII
+        </p>
+        <p>
+Recommendation. None as the specification makes this clear.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification deal with high-value data?</h2>
+        <p>
+Potentially yes. The specification places no restrictions on what data can be placed in a Verifiable Claim, but it could be highly sensitive personal data.
+        </p>
+        <p>
+Recommendation.  Protocols that carry Verifiable Claims should always encrypt the Verifiable Claim payload. In addition, Verifiable Claims that contain highly sensitive personal data should have that data encrypted inside the Verifiable Claim, so that any entity that captures the Verifiable Claim is not able to see the sensitive information.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification introduce new state for an origin that persists across browsing sessions</h2>
+        <p>
+Not of itself no, as the specification only specifies a data structure. However, protocols that use this specification may introduce new state.
+        </p>
+        <p>
+Recommendation. None
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification expose persistent, cross-origin state to the web?</h2>
+        <p>
+Yes. Verifiable Claims contain a random though potentially persistent identifier of the subject. This is passed between the issuer and the inspector. Consequently collusion between them could identify the subject to the inspector, even though the Verifiable Claim itself does not. This is because in many cases the issuer will know the complete identity of the subject, even if the Verifiable Claim only contains a small proportion of it (such as age).
+        </p>
+        <p>
+Recommendation. The subject should limit the distribution of Verifiable Claims containing the same PId to a minimal number of origins. The subject should obtain Verifiable Claims with different PId to send to different origins wherever possible.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification expose any other data to an origin that it doesn’t currently have access to?</h2>
+        <p>
+Yes. It is the purpose of Verifiable Claims to present identity attributes of the subject to the inspector. Note however that this is always with the full consent of the subject, except in the special case where the holder is not the subject. In this latter case the holder must be authorized to present this information to the inspector, otherwise the inspector should reject it.
+        </p>
+        <p>
+Recommendation. Inspectors should only accept Verifiable Claims from subjects or from holders who are authorized to present them to the inspector.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification enable new script execution/loading mechanisms?</h2>
+        <p>
+Not of itself no, as the specification only specifies a data structure. However, protocols that use this specification may enable script loading.
+        </p>
+        <p>
+Recommendation. None
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification allow an origin access to a user’s location?</h2>
+        <p>
+Yes. Verifiable Claims may contain location information such as a subject’s home address, phone number, or current postal address.
+        </p>
+        <p>
+Recommendation. None.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification allow an origin access to sensors on a user’s device?</h2>
+        <p>
+Not of itself no, as the specification only specifies a data structure. However, protocols that use this specification may enable access to sensors on a user’s device.
+        </p>
+        <p>
+Recommendation. None.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification allow an origin access to aspects of a user’s local computing environment?</h2>
+        <p>
+Not of itself no, as the specification only specifies a data structure. However, protocols that use this specification may enable an origin to access aspects of a user’s local computing environment.
+        </p>
+        <p>
+Recommendation. None.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification allow an origin access to other devices?</h2>
+        <p>
+Not of itself no, as the specification only specifies a data structure. However, protocols that use this specification may enable an origin to access other devices e.g. to move a Verifiable Claim from one device to another.
+        </p>
+        <p>
+Recommendation. None.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification allow an origin some measure of control over a user agent’s native UI?</h2>
+        <p>
+Not of itself no, as the specification only specifies a data structure. However, protocols that use this specification may enable an origin some measure of control over a user agent’s native UI.
+        </p>
+        <p>
+Recommendation. None.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification expose temporary identifiers to the web?</h2>
+        <p>
+Potentially yes. The subject’s ID in a Verifiable Claim could be a temporary identifier that is not stored permanently anywhere.
+        </p>
+        <p>
+Recommendation. Verifiable Claims should be encrypted during transfer to avoid their contents being snooped.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification distinguish between behavior in first-party and third-party contexts?</h2>
+        <p>
+???
+        </p>
+      </section>
+
+      <section>
+        <h2>How should this specification work in the context of a user agent’s "incognito" mode?</h2>
+        <p>
+This specification only presents a data model. However protocols that use this specification should be able to work in incognito mode.
+        </p>
+        <p>
+Recommendation. None.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification persist data to a user’s local device?</h2>
+        <p>
+The overall life cycle of Verifiable Claims envisages that they are stored persistently on the user’s local device or on a remote device under the user’s control. However, Verifiable Claims on their own, if captured by a hostile entity, should not be of any value to it, except in so far as the Verifiable Claim may potentially reveal a small amount of PII about the subject.
+        </p>
+        <p>
+Recommendation. Verifiable Claims should be encrypted during storage to prevent them being stolen by an attacker
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification have a "Security Considerations" and "Privacy Considerations" section?</h2>
+        <p>
+Yes.
+        </p>
+        <p>
+Recommendation. Ensure they are good enough.
+        </p>
+      </section>
+
+      <section>
+        <h2>Does this specification allow downgrading default security characteristics?</h2>
+        <p>
+No. The specification simply defines a data structure and a signature field.
+        </p>
+        <p>
+Recommendation. None
+        </p>
+      </section>
+
+    </section>
+
+  </body>
+</html>
+
