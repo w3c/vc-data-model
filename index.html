@@ -132,7 +132,7 @@ or send them to
       <p>
 Granting a benefit requires proof and verification. Some benefits demand
 a formal process that includes three parties. In this process,
-the <strong>holder</strong> asks for the benefit and the <strong>inspector-verifier
+the <strong>holder</strong> asks for the benefit and the <strong>verifier
 </strong> grants or denies the benefit based on verification of the holder’s
 qualification from a trusted <strong>issuer</strong>.
       </p>
@@ -212,10 +212,10 @@ An <a>entity</a> that creates a <a>verifiable claim</a>, associates it
 with a particular <a>subject</a>, and transmits it to a <a>holder</a>.
 Examples of issuers include corporations, governments, and individuals.
         </dd>
-        <dt><a>inspector-verifier</a></dt>
+        <dt><a>verifier</a></dt>
         <dd>
 An <a>entity</a> that receives one or more <a>verifiable claims</a> for
-processing. Examples of inspector-verifiers include employers, security personnel, and
+processing. Examples of verifiers include employers, security personnel, and
 websites.
         </dd>
         <dt><a>identifier registry</a></dt>
@@ -282,12 +282,12 @@ specification, specifically:
 <a>issuers</a> through an agent that the issuer does not need to trust.
         </li>
         <li>
-<a>Holders</a> SHOULD be positioned between <a>issuers</a> and <a>inspector-verifiers</a>
+<a>Holders</a> SHOULD be positioned between <a>issuers</a> and <a>verifiers</a>
 and mediate the transmission of <a>verifiable claims</a>.
         </li>
         <li>
-<a>Holders</a> MUST provide <a>verifiable claims</a> to <a>inspector-verifiers</a>
-through an agent that inspector-verifiers needn't trust; they only need to trust
+<a>Holders</a> MUST provide <a>verifiable claims</a> to <a>verifiers</a>
+through an agent that verifiers needn't trust; they only need to trust
 <a>issuers</a>.
         </li>
         <li>
@@ -307,7 +307,7 @@ to help them manage and share their <a>verifiable claims</a>.
         </li>
         <li>
 <a>Holders</a> that share <a>verifiable claims</a> MUST NOT be required to
-reveal the identity of the <a>inspector-verifier</a> to <a>issuers</a>.
+reveal the identity of the <a>verifier</a> to <a>issuers</a>.
         </li>
         <li>
 A <a>verifiable claim</a> MUST be expressed in one or more standard,
@@ -397,7 +397,7 @@ An example of a basic claim that expresses that Pat is over the age of 21.
 These claims may be merged together to express a graph of
 information about a particular subject. The example below extends the
 data model above by adding claims that state that Pat knows Sam and that
-Sam is a student.
+Sam is employed as a professor.
       </p>
 
       <figure>
@@ -774,7 +774,7 @@ very simple scheme for revocation as a part of this specification.
         <dl>
           <dt><var>evidence</var></dt>
           <dd>The value of this property MUST be one or more evidence schemes
-            that provides enough information to a <a>inspector-verifier</a>
+            that provides enough information to a <a>verifier</a>
             to determine whether or not the evidence gathered meets their
             requirements.
           </dd>
@@ -853,7 +853,7 @@ applicable to only some claims.
           Likely, that means it is the id of a known and trusted
           <a>verifiable profile </a> for the subject of the claim. If the
           entity that is subject of a claim has transmitted it to the
-          inspector-verifier, the subject may be able to prove ownership of key
+          verifier, the subject may be able to prove ownership of key
           identifying properties such as email address(es) and public
           key(s).</li>
         </ul>
@@ -878,7 +878,7 @@ applicable to only some claims.
         <h3>Expiration</h3>
         <ul>
           <li>The <code>issued</code> date must be in the expected range.
-          For example, an inspector-verifier may wish to ensure that the recorded
+          For example, an verifier may wish to ensure that the recorded
           issued date of valid claims is not in the future.</li>
         </ul>
       </section>
@@ -893,21 +893,21 @@ applicable to only some claims.
         <h3>Fitness for Purpose</h3>
         <ul>
           <li>The custom properties in the <a>claim</a> should be
-          appropriate for the inspector-verifier's purpose. For example if an
-          inspector-verifier needs to determine that a subject is older than 21
+          appropriate for the verifier's purpose. For example if an
+          verifier needs to determine that a subject is older than 21
           years of age, they may accept claims of specific birthdate or
           abstract properties such as <code>ageOver</code>.</li>
-          <li>The issuer is trusted by the inspector-verifier to make the claims
+          <li>The issuer is trusted by the verifier to make the claims
           at hand. For example, Fast Food Resturant A will not be trusted
           to make a claim that an individual may enjoy a lifetime 10%
           discount to its competitor Fast Food Restaurant B.</li>
           <li>If the <a>issuer</a> has placed any policy information about
           the use of the <a>credential</a>, e.g. intended
-          <a>inspector-verifiers</a>, expiration date, etc., that this
+          <a>verifiers</a>, expiration date, etc., that this
           policy is adhered to.</li>
           <li>If the <a>holder</a> has placed any policy information about
           the use of the <a>credential</a>, e.g. intended
-          <a>inspector-verifiers</a>, restricted usage rights, etc., that this
+          <a>verifiers</a>, restricted usage rights, etc., that this
           policy is adhered to.</li>
         </ul>
       </section>
@@ -1197,8 +1197,8 @@ of verfiable claims about a particular <a>subject</a>.
             itself, such as an identifier for the <a>entity</a> that
             issued it and a date for when it was issued.</p>
 
-<pre class="example" title="A simple claim">{
-  "@context": "https://w3id.org/identity/v1",
+<pre class="example nohighlight" title="A simple claim in JSON-LD Format">{
+  "@context": "https://w3id.org/credentials/v1",
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "ageOver": 21
 }</pre>
@@ -1209,11 +1209,8 @@ of verfiable claims about a particular <a>subject</a>.
             a <code>signature</code> that can be used to verify its
             entire contents, including the claim.</p>
 
-<pre class="example" title="A simple verifiable credential">{
-  "@context": [
-    "https://w3id.org/identity/v1",
-    "https://w3id.org/security/v1"
-  ],
+<pre class="example nohighlight" title="A simple verifiable credential in JSON-LD Format">{
+  "@context": "https://w3id.org/credentials/v1",
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
@@ -1237,10 +1234,10 @@ The following example demonstrates how to express a more complex set
 of verifiable claims about a particular <a>subject</a>.
         </p>
 
-<pre class="example" title="A more complex verifiable credential">{
+<pre class="example" title="A more complex verifiable credential in JSON-LD Format">{
   "@context": [
-    "https://w3id.org/identity/v1",
-    "https://w3id.org/security/v1"
+    "http://schema.org",
+    "https://w3id.org/credentials/v1"
   ],
   "id": "http://example.gov/credentials/3732",
   "type": ["Credential", "PassportCredential"],
@@ -1299,10 +1296,10 @@ of verifiable claims about a particular <a>subject</a>.
       <p>The following example demonstrates how to express a
       simple <a>verifiable profile</a>.</p>
 
-<pre class="example" title="A simple verifiable profile">{
+<pre class="example" title="A simple verifiable profile in JSON-LD Format">{
   "@context": [
-    "https://w3id.org/identity/v1",
-    "https://w3id.org/security/v1"
+    "http://schema.org",
+    "https://w3id.org/credentials/v1"
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "credential": [{
@@ -1690,7 +1687,7 @@ hostile to privacy.
         <p>
 The data associated with verifiable claims stored in the
 <code>credential.claim</code> field are largely susceptible to privacy
-violations when shared with Inspector-verifiers. Personally identifying data
+violations when shared with Verifiers. Personally identifying data
 such as a government-issued identifier, shipping address, and full name
 can be easily used to determine, track, and correlate an entity. Even
 information that does not seem personally identifiable like the
@@ -1703,7 +1700,7 @@ Implementers are strongly advised to
 warn Holders when they share data with these sorts of characteristics.
 Issuers are strongly advised to provide privacy-protecting credentials
 when possible. For example, issuing ageOver credentials instead of
-birthdate credentials when the Inspector-verifier desires to determine if an
+birthdate credentials when the Verifier desires to determine if an
 entity is over the age of 18.
         </p>
       </section>
@@ -1772,7 +1769,7 @@ transmit verifiable claims on behalf of the Holder.
 
         <p>
 In order to enable recipients of verifiable claims to use them in a variety of circumstances without revealing more personally identifiable information than necessary for the transaction, issuers should consider limiting the information published in a claim to a minimal set needed for the expected purposes.
-One way to avoid placing personally identifiable information in a claim is to use an "abstract" property that meets the needs of inspector-verifiers without providing specific information about the subject.
+One way to avoid placing personally identifiable information in a claim is to use an "abstract" property that meets the needs of verifiers without providing specific information about the subject.
         </p>
         <p>
 An example in this document is the use of the <code>ageOver</code> property as opposed to a specific birthdate that would constitute much stronger personally identifiable information.
@@ -1793,8 +1790,8 @@ jurisdictions, including HIPAA in the US and GDPR in the EU.
         </p>
         <p>
 With verifiable claims, minimal disclosure for issuers means limiting the
-content of a claim to the minimum required by potential inspector-verifiers for
-expected use. For inspector-verifiers, it means limiting the scope of claims
+content of a claim to the minimum required by potential verifiers for
+expected use. For verifiers, it means limiting the scope of claims
 request or required for accessing services.
         </p>
         <p>
@@ -1818,9 +1815,9 @@ promote the pseudonymous usage of claims when it is safe for the issuer to
 issue such claims.
         </p>
         <p>
-Similarly, inspector-verifiers are urged to only request information that is absolutely
+Similarly, verifiers are urged to only request information that is absolutely
 necessary for a particular transaction to occur. This is important for at
-least two reasons: 1) it reduces the liability on the inspector-verifier for
+least two reasons: 1) it reduces the liability on the verifier for
 handling highly sensitive information that it does not need, and 2)
 it enhances the privacy of the individual by only asking for information
 that is required for the particular transaction.
@@ -1840,7 +1837,7 @@ Bearer claims can be tracked based on usage patterns.
         <h3>Validity Checks</h3>
 
         <p class="issue">
-Inspector-verifier (corporation) is required to check revocation via Issuer
+Verifier (corporation) is required to check revocation via Issuer
 (government).
         </p>
       </section>
@@ -1904,30 +1901,30 @@ This correlation can occur:
 
         <ol>
           <li>
-When the same claim is presented to the same inspector-verifier more than once –
-that inspector-verifier could infer that the holder is the same individual.
+When the same claim is presented to the same verifier more than once –
+that verifier could infer that the holder is the same individual.
           </li>
           <li>
-When the same claim is presented to different inspector-verifiers, and either those
-inspector-verifiers collude or a third party has access to transaction records from
-both inspector-verifiers – the observant party could infer that the individual
+When the same claim is presented to different verifiers, and either those
+verifiers collude or a third party has access to transaction records from
+both verifiers – the observant party could infer that the individual
 presenting the claims is the same person at both services, i.e., the
 accounts are controlled by the same person.
           </li>
           <li>
 When the same subject identifier of a claim refers to the same subject across
-presentations or inspector-verifiers. Even when different claims are presented,
-if the subject identifier is the same, inspector-verifiers (and those with access to
-inspector-verifier logs) could infer that the holder of the claims is the same
+presentations or verifiers. Even when different claims are presented,
+if the subject identifier is the same, verifiers (and those with access to
+verifier logs) could infer that the holder of the claims is the same
 person.
           </li>
           <li>
 When the underlying information in a claim can be used to identify an
 individual across services – using information from other sources
-(including information provided directly by the user), inspector-verifiers can use
+(including information provided directly by the user), verifiers can use
 the information inside the claim to correlate the individual with an
 existing profile. For example, if a holder presents claims that include
-zip code, age, and sex, the inspector-verifier can potentially correlate the
+zip code, age, and sex, the verifier can potentially correlate the
 subject of that claim with an established profile [see Sweeney 2000 <a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">Simple
             Demographics Often Identify People Uniquely</a>].
           </li>
@@ -2051,7 +2048,7 @@ properties, then the university would issue four credentials to the person,
 each containing one of the following properties:
 "Staff Member", "Post Graduate Student", "Department of Computing" and
 "Department of Economics". The holder could then transfer
-the "Staff Member" and "Department of Economics" to an inspector-verifier,
+the "Staff Member" and "Department of Economics" to an verifier,
 which together would comprise a false claim.
         </p>
 
