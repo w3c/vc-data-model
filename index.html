@@ -2084,9 +2084,39 @@ correlation arises from the presentation of verifiable claims.
       <section>
         <h3>Sharing Information with the Wrong Party</h3>
 
-        <p class="issue">
-Tokenize identifiers (like bank account numbers) when possible.
-Granting of rights to a service via cryptographic mechanisms.
+        <p>
+When a <a>holder</a> chooses to share information with a <a>verifier</a>, it
+may be the case that the verifier is acting in bad faith and requests
+information that could be used to harm the holder. For example, a
+verifier may ask for a bank account number, which could then be used in
+concert with other information to defraud the holder or the bank.
+        </p>
+
+        <p>
+<a>Issuers</a> should strive to tokenize as much information as possible such
+that if a holder accidentally transmits claims to the wrong
+verifier that the information loss isn't catastrophic.
+        </p>
+
+        <p>
+For example, instead of including a bank account number
+for the purposes of checking a bank balance for an individual, provide a
+token that enables the verifier to use the token to check to see if the
+balance is above a certain amount. In this case, the bank could
+issue a verifiable credential containing a token for checking balance
+to a holder. A holder would then include the verifiable credential in a
+verifiable profile and bind the token to a credit checking agency via a digital
+signature. The verifier would then wrap the verifiable profile in their digital
+signature, and hand it back to the issuer to dynamically check the account
+balance.
+        </p>
+
+        <p>
+This approach ensures that even if the holder shares the account balance token
+with the wrong party that the attacker doesn't discover the bank account
+number, nor the exact value in the account, and given the validity period for
+the counter-signature, doesn't gain access to the token for more than a few
+minutes.
         </p>
       </section>
 
