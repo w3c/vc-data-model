@@ -1839,9 +1839,48 @@ Bearer claims can be tracked based on usage patterns.
       <section>
         <h3>Validity Checks</h3>
 
-        <p class="issue">
-Inspector-verifier (corporation) is required to check revocation via Issuer
-(government).
+        <p>
+When processing verifiable credentials, <a>verifiers</a> typically perform
+many of the checks listed in Section <a href="#verification"></a> as well as
+a variety of business process specific checks. For example, validity checks
+may include any of the following:
+        </p>
+
+        <ul>
+          <li>
+Checking the professional licensure status of the holder.
+          </li>
+          <li>
+Checking a date of license renewal or revocation.
+          </li>
+          <li>
+Checking sub-qualifications of an individual.
+          </li>
+          <li>
+Ensuring that a relationship exists between the holder and the entity
+with whom the holder is attempting to interact.
+          </li>
+          <li>
+Checking the geolocation information associated with the holder.
+          </li>
+        </ul>
+
+        <p>
+The process of performing these checks may result in information leakage that
+leads to a privacy violation of the holder. For example, an operation as
+simple as checking a revocation list can notify the issuer that a very specific
+business is most likely interacting with the holder. This would enable
+issuers to collude and correlate individuals without their knowledge.
+        </p>
+
+        <p>
+<a>Issuers</a> are urged to not use mechanisms, such as credential revocation
+lists that are unique per credential, during the verification process that
+would lead to privacy violations. Organizations providing software to
+<a>holders</a> should warn when credentials include information that could
+lead to privacy violations during the verification process. <a>Verifiers</a>
+should consider rejecting credentials that produce privacy violations or that
+enable bad privacy practices.
         </p>
       </section>
 
