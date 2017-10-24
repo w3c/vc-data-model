@@ -1730,16 +1730,21 @@ are replaced by short-lived, single use bearer tokens.
 
         <p>
 The contents of verifiable claims are secured via the
-<code>credential.signature</code> field. The
-<code>credential.signature.signatureValue</code> field creates a danger
-of correlation when it is used across more than one web domain and the
-value does not change.
+<code>credential.signature</code> field. The properties in this field
+create a danger of correlation when the same values are used across more than
+one session or domain and the value does not change. Examples include the
+<code>creator</code>, <code>created</code>,
+<code>domain</code> (for very specific domains),
+<code>nonce</code>, and <code>signatureValue</code> fields.
         </p>
 
         <p>
 If strong anti-correlation properties are desired,
-it is strongly advised that signature values and metadata are regenerated
-each time using technologies like group signatures.
+it is advised that signature values and metadata are regenerated
+each time using technologies like zero knowledge proofs or group signatures.
+It is also important to note that even when using anti-correlation signatures
+that information may still be contained in the credential that defeats the
+anti-correlation properties of the cryptography.
         </p>
       </section>
 
