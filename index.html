@@ -1813,7 +1813,7 @@ attribute that appears on a driver's license in addition to individual
 claims (a singular claim containing the person's birthday), and individual
 claims that are more abstract (a singular claim containing an
 <code>ageOver</code> attribute). In addition, the issuer is encouraged to
-provide secure HTTP endpoints for retrieving single-use bearer claims to
+provide secure HTTP endpoints for retrieving single-use bearer credentials to
 promote the pseudonymous usage of claims when it is safe for the issuer to
 issue such claims.
         </p>
@@ -1828,18 +1828,18 @@ that is required for the particular transaction.
       </section>
 
       <section>
-        <h3>Bearer Claims</h3>
+        <h3>Bearer Credentials</h3>
 
         <p>
-A <em>bearer claim</em> is a privacy enhancing piece of information,
+A <em>bearer credential</em> is a privacy enhancing piece of information,
 such as a concert ticket, that entitles the <a>holder</a> of the claim to a
 particular resource without divulging sensitive information about the holder.
         </p>
 
         <p>
-Verifiable Claims that are bearer claims are possible by not specifying the
-<a>subject</a> identifier in the <code>claim</code> property. For example, the
-following Verifiable Credential is a bearer claim:
+Verifiable Credentials that are bearer credentials are possible by not
+specifying the <a>subject</a> identifier in the <code>claim</code> property.
+For example, the following Verifiable Credential is a bearer credential:
         </p>
 
         <pre class="example nohighlight" title="Usage of issuer properties">
@@ -1849,7 +1849,7 @@ following Verifiable Credential is a bearer claim:
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2017-10-22T12:23:48Z",
   "claim": {
-    <span class="comment">// note that the 'id' property is not specified for bearer claims</span>
+    <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
     "ageOver": 21
   },
   "signature": { ... }
@@ -1857,33 +1857,33 @@ following Verifiable Credential is a bearer claim:
         </pre>
 
         <p>
-While bearer claims can be privacy enhancing, their use must be carefully
+While bearer credentials can be privacy enhancing, their use must be carefully
 crafted to not accidentally divulge more information than the holder of the
-claim expects. For example, repeated use of the same bearer claim across
-sites enables each site to potentially collude to track or correlate the holder.
-Additionally, information that may seem non-identifying such as a birth date
-and zip code can be used to statistically identify an individual when used
-together in the same claim or session.
+credential expects. For example, repeated use of the same bearer credential
+across sites enables each site to potentially collude to unduly track or
+correlate the holder. Additionally, information that may seem non-identifying
+such as a birth date and zip code can be used to statistically identify an
+individual when used together in the same credential or session.
         </p>
 
         <p>
-<a>Issuers</a> of bearer claims SHOULD ensure that bearer claims that are
-expected to provide privacy enhancing benefits 1) are single use, when possible,
-2) do not contain personally identifying information, and 3) are not
-correlatable.
+<a>Issuers</a> of bearer credentials SHOULD ensure that bearer credentials that
+are expected to provide privacy enhancing benefits 1) are single use, when
+possible, 2) do not contain personally identifying information, and 3) are not
+unduly correlatable.
         </p>
 
         <p>
-<a>Holders</a> SHOULD be warned by their software if bearer claims containing
-sensitive information are issued or requested, or if there is a correlation
-risk when combining two separate bearer claims across one or more sessions.
-While it may be impossible to detect all correlation risks, there are a few
-simple ones that can be detected.
+<a>Holders</a> SHOULD be warned by their software if bearer credentials
+containing sensitive information are issued or requested, or if there is a
+correlation risk when combining two separate bearer credentials across one
+or more sessions. While it may be impossible to detect all correlation risks,
+there are a few simple ones that can be detected.
         </p>
 
         <p>
-<a>Verifiers</a> SHOULD not request bearer claims that can be used to correlate
-the user.
+<a>Verifiers</a> SHOULD not request bearer credentials that can be used to
+unduly correlate the user.
         </p>
       </section>
 
