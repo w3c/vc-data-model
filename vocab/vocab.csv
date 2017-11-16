@@ -1,4 +1,4 @@
-id,type,label,subClassOf,range,range,@type,@container,comment
+id,type,label,subClassOf,domain,range,@type,@container,comment
 cred,prefix,,https://w3id.org/credentials#,,,,,
 dc,prefix,,http://purl.org/dc/terms/,,,,,
 sec,prefix,,https://w3id.org/security#,,,,,
@@ -7,30 +7,35 @@ xsd,prefix,,http://www.w3.org/2001/XMLSchema#,,,,,
 ,owl:imports,,http://purl.org/dc/terms/,,,,,
 ,owl:imports,,https://w3id.org/security,,,,,
 ,rdfs:seeAlso,,https://www.w3.org/TR/verifiable-claims-data-model/,,,,,
-claim,rdf:Property,claim,,Credential,rdfs:Resource,,,A statement made about a `subject`. A **verifiable claim** is a claim that is tamper-resistant and whose authorship can be cryptographically verified.
-credential,rdf:Property,credential,,,Credential,,,A set of one or more claims made by the same `entity` about a `subject`. A **verifiable credential** is a credential that is tamper-resistant and whose authorship can be cryptographically verified.
+claim,rdf:Property,claim,,Credential,,,@graph,A statement made about a `subject`. A **verifiable claim** is a claim that is tamper-resistant and whose authorship can be cryptographically verified.
+credential,rdf:Property,credential,,Profile,Credential,,,A set of one or more claims made by the same `entity` about a `subject`. A **verifiable credential** is a credential that is tamper-resistant and whose authorship can be cryptographically verified.
+evidence,rdf:Property,evidence,,Credential,DocumentationVerifier,,,The value of this property MUST be one or more evidence schemes that provides enough information to a verifier to determine whether or not the evidence gathered meets their requirements.
 issued,rdf:Property,issued,,Credential,xsd:dateTime,,,The value of this property MUST be a string value of an [[ISO8601]] combined date and time string and represents the date and time the `credential` was issued. Note that this date represents the earliest date when the information associated with the _claim property became valid.
 issuer,rdf:Property,issuer,,Credential,,@id,,"An `entit`y that creates a `verifiable claim`, associates it with a particular `subject`, and transmits it to a `holder`."
 recipient,rdf:Property,recipient,,,,@id,,FIXME
 referenceId,rdf:Property,referenceId,,,,,,FIXME
+revocation,rdf:PRoperty,revocation,,Credential,RevocationList2017,@id,,
 Credential,rdfs:Class,Credential,,,,,,FIXME
+CryptographicKeyCredential,rdfs:Class,Cryptographic Key Credential,Credential,,,,,FIXME
+Profile,rdfs:Class,Verifiable Profile,,,,,,A set of one or more `credentials` typically related to the same `subject`. An entity may have multiple `profiles` and each `profile` may contain `verifiable credentials` issued by multiple issuers. A `verifiable profile` is a `profile` that is tamper-resistant and whose contents are typically counter-signed by the `holder` or `subject`.
+RevocationList2017,rdfs:Class,Revocation List 2017,cred:RevocationList2017,,,,,FIXME
 Identity,term,,https://w3id.org/identity#Identity,,,,,FIXME
-created,term,,dc:created,,,xsd:dateTime,,
-creator,term,,dc:creator,,,@id,,
-domain,term,,sec:domain,,,,,
-expires,term,,sec:expiration,,,xsd:dateTime,,
-nonce,term,,sec:nonce,,,,,
-normalizationAlgorithm,term,,sec:normalizationAlgorithm,,,,,
-owner,term,,sec:owner,,,@id,,
-privateKey,term,,sec:privateKey,,,@id,,
-privateKeyPem,term,,sec:privateKeyPem,,,,,
-publicKey,term,,sec:publicKey,,,@id,,
-publicKeyPem,term,,sec:publicKeyPem,,,,,
-publicKeyService,term,,sec:publicKeyService,,,@id,,
-revoked,term,,sec:revoked,,,xsd:dateTime,,
-signature,term,,sec:signature,,,,,
-signatureAlgorithm,term,,sec:signatureAlgorithm,,,,,
-signatureValue,term,,sec:signatureValue,,,,,
-CryptographicKey,term,,sec:Key,,,,,
-GraphSignature2012,term,,sec:GraphSignature2012,,,,,
-LinkedDataSignature2015,term,,sec:LinkedDataSignature2015,,,,,
+created,term,,dc:created,,,xsd:dateTime,,FIXME
+creator,term,,dc:creator,,,@id,,FIXME
+domain,term,,sec:domain,,,,,FIXME
+expires,term,,sec:expiration,,,xsd:dateTime,,FIXME
+nonce,term,,sec:nonce,,,,,FIXME
+normalizationAlgorithm,term,,sec:normalizationAlgorithm,,,,,FIXME
+owner,term,,sec:owner,,,@id,,FIXME
+privateKey,term,,sec:privateKey,,,@id,,FIXME
+privateKeyPem,term,,sec:privateKeyPem,,,,,FIXME
+publicKey,term,,sec:publicKey,,,@id,,FIXME
+publicKeyPem,term,,sec:publicKeyPem,,,,,FIXME
+publicKeyService,term,,sec:publicKeyService,,,@id,,FIXME
+revoked,term,,sec:revoked,,,xsd:dateTime,,FIXME
+signature,term,,sec:signature,,,,,FIXME
+signatureAlgorithm,term,,sec:signatureAlgorithm,,,,,FIXME
+signatureValue,term,,sec:signatureValue,,,,,FIXME
+CryptographicKey,term,,sec:Key,,,,,FIXME
+GraphSignature2012,term,,sec:GraphSignature2012,,,,,FIXME
+LinkedDataSignature2015,term,,sec:LinkedDataSignature2015,,,,,FIXME

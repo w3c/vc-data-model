@@ -56,6 +56,13 @@ class Vocab
     term.include?(":") ? term : "cred:#{term}"
   end
 
+  # The full JSON-LD file without the RDFS parts
+  def to_context
+    ctx = JSON.parse(to_jsonld)
+    ctx.delete('@graph')
+    ctx.to_json(JSON_STATE)
+  end
+
   def to_jsonld
     context = {
       "id" => "@id",
@@ -330,12 +337,13 @@ end
 
 vocab = Vocab.new
 case options[:format]
+when :context then options[:output].puts(vocab.to_context)
 when :jsonld  then options[:output].puts(vocab.to_jsonld)
 when :ttl     then options[:output].puts(vocab.to_ttl)
 when :html    then options[:output].puts(vocab.to_html)
 else
-  [:jsonld, :ttl, :html].each do |format|
-    fn = {jsonld: "credentials.jsonld", ttl: "credentials.ttl", html: "credentials.html"}[format]
+  [:jsonld, :context, :ttl, :html].each do |format|
+    fn = {context: "context.jsonld", jsonld: "credentials.jsonld", ttl: "credentials.ttl", html: "credentials.html"}[format]
     File.open(fn, "w") do |output|
       output.puts(vocab.send("to_#{format}".to_sym))
     end
