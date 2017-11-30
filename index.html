@@ -107,12 +107,12 @@ pre .comment {
   <body>
     <section id='abstract'>
       <p>
-Driver's licenses are used to claim that we are capable of operating a motor
-vehicle, university degrees can be used to claim our education status, and
+Driver's licenses are used to assert that we are capable of operating a motor
+vehicle, university degrees can be used to assert our education status, and
 government-issued passports enable holders to travel between countries.
-This specification provides a standard way to express these sorts of claims
-on the Web in a way that is cryptographically secure, privacy respecting,
-and automatically verifiable.
+This specification provides a standard way to express these sorts of
+credentials on the Web in a way that is cryptographically secure,
+privacy respecting, and automatically verifiable.
       </p>
     </section>
 
@@ -139,10 +139,10 @@ qualification from a trusted <strong>issuer</strong>.
 
       <p>
 For example, we use a
-driver's licenses to prove that we are capable of operating a motor vehicle,
-a university degree to prove our education status, and government-issued
+driver's licenses to assert that we are capable of operating a motor vehicle,
+a university degree to assert our education status, and government-issued
 passports to grant travel between countries. This specification provides a
-standard way to express these claims on the Web in a way that is
+standard way to express these credentials on the Web in a way that is
 cryptographically secure, privacy respecting, and automatically verifiable.
       </p>
       <p>
@@ -177,7 +177,7 @@ achieve.
 
       <p>
 This section outlines a basic set of roles and an ecosystem where verifiable
-claims are expected to be useful. In this section, we distinguish the essential
+credentials are expected to be useful. In this section, we distinguish the essential
 roles of core actors and the relationships between them; how do they interact?
 A role is an abstraction that might be implemented in many different ways. The
 separation of roles suggests likely interfaces and/or protocols for
@@ -291,7 +291,7 @@ through an agent that verifiers needn't trust; they only need to trust
 <a>issuers</a>.
         </li>
         <li>
-<a>Verifiable claims</a> MUST be associated with <a>subjects</a>, not
+<a>Verifiable credentials</a> MUST be associated with <a>subjects</a>, not
 particular services; <a>holders</a> SHOULD decide how to aggregate and manage
 <a>verifiable credentials</a>.
         </li>
@@ -315,7 +315,7 @@ machine-readable data formats for expressing <a>verifiable credentials</a> which
 can also be extended with minimal coordination.
         </li>
         <li>
-<a>Verifiable claims</a> MUST be able to be indepenently issued, stored, and
+<a>Verifiable credentials</a> MUST be able to be indepenently issued, stored, and
 verified.
         </li>
         <li>
@@ -409,8 +409,9 @@ Multiple claims may be combined to express a more complex graph.
       </figure>
 
       <p>
-At this point, the concept of a <a>claim</a> has been introduced. To make the
-claim verifiable, more information must be added to the graph of information.
+At this point, the concept of a <a>claim</a> has been introduced. To enable
+one to trust the claims, more information must be added to the graph
+of information.
       </p>
 
     </section>
@@ -584,7 +585,7 @@ will cease to be valid.
 
       <section>
         <h2>Revocation</h2>
-        <p>Revocation information for the claims in the
+        <p>Revocation information for the credential in the
         Verifiable Credentials Model may be provided by adding the
         following <a>property</a>:
         </p>
@@ -629,7 +630,7 @@ very simple scheme for revocation as a part of this specification.
 
       <section>
         <h2>Evidence</h2>
-        <p>Evidence information for the claims in the
+        <p>Evidence information for the credential in the
         Verifiable Credentials Model may be provided by adding the
         following <a>property</a>:
         </p>
@@ -678,9 +679,9 @@ very simple scheme for evidence as a part of this specification.
       <h1>Verification</h1>
 
       <p>
-This section describes a number of checks required to verify a claim.
+This section describes a number of checks required to verify a credential.
 Some checks are essential for all verifiable credentials, while some are
-applicable to only some claims.
+applicable to only some credentials.
       </p>
       <section>
         <h3>Syntax</h3>
@@ -696,7 +697,7 @@ applicable to only some claims.
           required.</li>
           <li>Property values match expectations described in the
           specification. For example, the document type for a verifiable
-          claim must contain the class "Credential".</li>
+          credential must contain the class "Credential".</li>
         </ul>
       </section>
       <section>
@@ -742,20 +743,20 @@ applicable to only some claims.
         <ul>
           <li>The <code>issued</code> date must be in the expected range.
           For example, a verifier may wish to ensure that the recorded
-          issued date of valid claims is not in the future.</li>
+          issued date of valid credentials is not in the future.</li>
         </ul>
       </section>
       <section>
         <h3>Revocation</h3>
         <ul>
-          <li>If revocation instructions are present, the claim must not
+          <li>If revocation instructions are present, the credential must not
           have been revoked.</li>
         </ul>
       </section>
       <section>
         <h3>Fitness for Purpose</h3>
         <ul>
-          <li>The custom properties in the <a>claim</a> should be
+          <li>The custom properties in the <a>credential</a> should be
           appropriate for the verifier's purpose. For example if an
           verifier needs to determine that a subject is older than 21
           years of age, they may accept claims of specific birthdate or
@@ -828,10 +829,10 @@ applicable to only some claims.
 }</pre>
 
             <p>The following example demonstrates how to express the
-            same <a>claim</a> about the same <a>subject</a>, but in a
-            verifiable form. As such, it contains
-            a <code>signature</code> that can be used to verify its
-            entire contents, including the claim.</p>
+            same <a>claim</a> about the same <a>subject</a>, but as a
+            <a>verifiable credential</a>. As such, it contains
+            a <code>signature</code> that can be used to verify the
+            author of its contents, including the claim.</p>
 
 <pre class="example" title="A simple verifiable credential">{
   "id": "http://example.gov/credentials/3732",
@@ -919,7 +920,8 @@ and Security Considerations section of this document.
 
         <p>
 The following example demonstrates how to express a more complex set
-of verfiable claims about a particular <a>subject</a>.
+of <a>claims</a> about a particular <a>subject</a> as a
+<a>verifiable credential</a>.
         </p>
 
 <pre class="example nohighlight" title="A more complex verifiable credential">{
@@ -1046,7 +1048,7 @@ of verfiable claims about a particular <a>subject</a>.
             about claims in idiomatic JSON.</p>
 
             <p>The following example demonstrates how to express a
-            simple (unverifiable) <a>claim</a> about a particular
+            simple <a>claim</a> about a particular
             <a>subject</a>. In this case, the claim is that
             the <a>subject</a> with
             the <a href="#entity-id">Entity
@@ -1057,7 +1059,8 @@ of verfiable claims about a particular <a>subject</a>.
             meaning by its name, the context maps it to a global
             identifier (URL) where a document could be retrieved that
             provides its semantics in a machine-readable data
-            format. There is also information about the <a>claim</a>
+            format. There is also information about the
+            <a>verifiable credential</a>
             itself, such as an identifier for the <a>entity</a> that
             issued it and a date for when it was issued.</p>
 
@@ -1068,8 +1071,8 @@ of verfiable claims about a particular <a>subject</a>.
 }</pre>
 
             <p>The following example demonstrates how to express the
-            same <a>claim</a> about the same <a>subject</a>, but in a
-            verifiable form. As such, it contains
+            same <a>claim</a> about the same <a>subject</a>, but as a
+            <a>verifiable credential</a>. As such, it contains
             a <code>signature</code> that can be used to verify its
             entire contents, including the claim.</p>
 
@@ -1094,8 +1097,8 @@ of verfiable claims about a particular <a>subject</a>.
 }</pre>
 
         <p>
-The following example demonstrates how to express a more complex set
-of verifiable credentials about a particular <a>subject</a>.
+The following example demonstrates how to express a more complex
+<a>verifiable credential</a> about a particular <a>subject</a>.
         </p>
 
 <pre class="example" title="A more complex verifiable credential in JSON-LD Format">{
@@ -1695,14 +1698,14 @@ is above a certain age.
 It is considered a best practice for issuers to atomize information or
 use a signature scheme that allows for selective disclosure.
 For example, an issuer
-that issues driver's licenses could issue a claim set containing every
-attribute that appears on a driver's license in addition to individual
-claims (a singular claim containing the person's birthday), and individual
-claims that are more abstract (a singular claim containing an
+that issues driver's licenses could issue a set of credentials containing every
+attribute that appears on a driver's license in addition to atomized
+credentials (a credential containing only the person's birthday), and atomized
+credentials that are more abstract (a credential containing only an
 <code>ageOver</code> attribute). In addition, the issuer is encouraged to
 provide secure HTTP endpoints for retrieving single-use bearer credentials to
-promote the pseudonymous usage of claims when it is safe for the issuer to
-issue such claims.
+promote the pseudonymous usage of credentials when it is safe for the issuer to
+issue such credentials.
         </p>
         <p>
 Similarly, verifiers are urged to only request information that is absolutely
@@ -1913,7 +1916,7 @@ consent receipts, terms of usage, or DO_NOT_TRACK / DO_NOT_CORRELATE flags.
 
         <p>
 Despite the best efforts to assure privacy, the actual use of verifiable
-claims can potentially lead to de-anonymization and a loss of privacy.
+credentials can potentially lead to de-anonymization and a loss of privacy.
 This correlation can occur:
         </p>
 
