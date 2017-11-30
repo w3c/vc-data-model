@@ -1706,7 +1706,7 @@ particular resource without divulging sensitive information about the holder.
 
         <p>
 Verifiable Credentials that are bearer credentials are possible by not
-specifying the <a>subject</a> identifier, expressed using the 
+specifying the <a>subject</a> identifier, expressed using the
 <code>id</code>property that is nested in the <code>claim</code> property.
 For example, the following Verifiable Credential is a bearer credential:
         </p>
@@ -2092,9 +2092,44 @@ processing verifiable claims.
       <section>
         <h3>Unsigned Claims</h3>
 
-        <p class="issue">
-Claims that are not digitally signed are not verifiable.
+        <p>
+This specification allows <a>credentials</a> to be produced that do not
+contain signatures or proofs of any kind. These types of credentials are often
+useful for intermediate storage, or self asserted information, which is
+analogous to filling out a form on a web page. Implementers should note that
+these types of credentials are not verifiable because the authorship
+is either not known or cannot be trusted.
         </p>
+      </section>
+
+      <section>
+        <h3>Bundling Dependent Claims</h3>
+        <p>
+It is considered a best practice for issuers to atomize information in a
+credential, or use a signature scheme that allows for selective disclosure.
+In the former case, if the atomization is not done securely by the issuer,
+the holder might bundle together different credentials in a way that was not
+intended by the issuer.
+        </p>
+        <p>
+For example a university might issue two credentials to a person, each
+containing two properties i.e. "Staff Member" in the
+"Department of Computing" and "Post Graduate Student" in the
+"Department of Economics". If these credentials are atomized into separate
+properties, then the university would issue four credentials to the person,
+each containing one of the following properties:
+"Staff Member", "Post Graduate Student", "Department of Computing" and
+"Department of Economics". The holder could then transfer
+the "Staff Member" and "Department of Economics" to an inspector-verifier,
+which together would comprise a false claim.
+        </p>
+
+        <p class="issue" data-number="17" data-title="Dependent claim mitigation strategy">
+The group is actively discussing appropriate strategies when bundling
+dependent claims. When a clear set of suggestions has been identified, they
+will be placed here.
+        </p>
+
       </section>
 
       <section>
