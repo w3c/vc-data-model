@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Verificable Credentials, SAML, and OpenID Connect</title>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script src="./common.js" class="remove"></script>
+    <script type="text/javascript" class="remove">
+      var respecConfig = {
+        // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+        specStatus: "ED",
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName: "verifiable-claims-privacy-analysis",
+
+        // subtitle for the spec
+        subtitle: "A comparison of Verifiable Claims with SAML and OpenID Connect",
+
+        // if you wish the publication date to be other than today, set this
+        //publishDate:  "2017-08-03",
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "1977-03-15",
+        // previousMaturity:  "WD",
+
+        // extend the bibliography entries
+        localBiblio: vcwg.localBiblio,
+
+        github: "https://github.com/w3c/vc-data-model",
+        includePermalinks: false,
+
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI: "https://w3c.github.io/vc-data-model/saml-oidc-comparison.html",
+
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors:  [
+          { name: "David Chadwick", url: "https://www.linkedin.com/in/david-chadwick-36816395/",
+            company: "University of Kent", companyURL: "https://www.kent.ac.uk/"},
+          { name: "Manu Sporny", url: "http://digitalbazaar.com/",
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/" }
+        ],
+
+        // authors, add as many as you like.
+        // This is optional, uncomment if you have authors as well as editors.
+        // only "name" is required. Same format as editors.
+        authors:
+        [
+          { name: "David Chadwick", url: "https://www.linkedin.com/in/david-chadwick-36816395/",
+            company: "University of Kent", companyURL: "https://www.kent.ac.uk/"}
+        ],
+
+        // name of the WG
+        wg:           "Verifiable Claims Working Group",
+
+        // URI of the public WG page
+        wgURI:        "https://www.w3.org/2017/vc/",
+
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: "public-vc-comments",
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
+        maxTocLevel: 4,
+        inlineCSS: true
+      };
+    </script>
+    <style>
+pre .highlight {
+  font-weight: bold;
+  color: green;
+}
+pre .subject {
+  font-weight: bold;
+  color: RoyalBlue;
+}
+pre .property {
+  font-weight: bold;
+  color: DarkGoldenrod;
+}
+pre .comment {
+  font-weight: bold;
+  color: Gray;
+}
+</style>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+This document is a comparison of Verifiable Claims, SAML, and OpenID Connect.
+      </p>
+    </section>
+
+    <section id='sotd'>
+      <p>
+Comments regarding this document are welcome. Please file issues
+directly on <a href="https://github.com/w3c/vc-data-model/issues/">GitHub</a>,
+or send them to
+<a href="mailto:public-vc-comments@w3.org">public-vc-comments@w3.org</a>
+(<a href="mailto:public-vc-comments-request@w3.org?subject=subscribe">subscribe</a>,
+<a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
+      </p>
+    </section>
+
+    <section>
+      <h1>Comparison of Verifiable Credentials with SAML and OIDC</h1>
+
+      <p>
+Existing federated identity management (FIM) systems suffer from a
+number of problems, in particular with regard to their trust model,
+economic models and the privacy of their users.
+      </p>
+
+      <p>
+The FIM trust model requires the Identity Provider (IdP)
+to trust the Service Provider (SP) to preserve the privacy of the user’s
+identity attributes (or credentials) that it is asserting, and the SP to
+trust that the IdP is the authoritative source of all of the user’s
+identity attributes. Both of these trust requirements are problematic.
+No single IdP is the authoritative source of all a user’s identity
+attributes, and users may, for very good reason, want to present their
+identity attributes to SPs that IdPs do not fully trust. Consequently
+IdPs are not willing or able to release the user attributes that SPs
+require in order to provide users with the fine grained authorization
+they need. “Insufficient attribute release by IdPs is considered by user
+communities as the major problem today in the eduGAIN space” [4]. This
+necessitates the pulling of user identity attributes from other
+Attribute Authorities (AAs). In order to solve this 'attribute
+aggregation' problem, the assignment of a persistent globally unique
+identifier to each user is proposed by many [5, 6]. But this has severe
+privacy implications for the user, as it provides a correlating handle
+that can be used to track the user everywhere. Worse still, IdPs do not
+provide their users with any service to most SPs, since the latter are
+not part of the IdP’s federation, and so are considered to be not
+trusted. Finally, the IdPs are the center of the identity eco-system,
+and issue short-lived identity assertions [7] or tokens [8] on demand to
+trusted SPs. Consequently, they know which SPs the user is visiting and
+when, which is privacy invasive and allows them to track the user.
+      </p>
+
+      <p>
+Landau and More [9] document four economic tussles in current FIM
+systems and show why some have been more successful than others. In
+essence every participant: IdP, SP and user, has to gain from the FIM
+system otherwise it will fail to be widely adopted.
+      </p>
+
+      <p>
+By way of comparison, consider the use of plastic cards, passports,
+driving licenses and other such physical credentials in the world today.
+They are ubiquitous and massively successful. In this trust model, only
+the SP has to trust that the IdP is the authoritative source of the
+identity attribute(s) in the credential. Users are in control of their
+identity, and can show their credentials to any SPs they wish, without
+the permission of the IdP. Furthermore an IdP may not be aware that a SP
+has seen its credential and used it for authorisation. The user can
+combine or aggregate credentials as required by a SP. This model does
+not require the separation of IdPs and SPs, since they can be the same
+entity e.g. Tesco and its Clubcard. But if there is economic benefit
+then new SPs may dynamically join the system e.g. Esso petrol stations
+now accept Tesco Clubcards. Economic tussles are minimized.
+      </p>
+
+      <p>
+Verifiable Credentials are the electronic equivalent of today’s physical
+credentials but are more privacy preserving as they do not reveal the
+user’s name, unless consented to. VCs may contain as little as a single
+identity attribute, allowing the user to minimally disclose the
+attributes that he or she wishes.
+      </p>
+    </section>
+
+    <section class="appendix">
+      <h1>References</h1>
+      <p>
+[4] EU AARC Project Deliverable DNA2.4 “Training Material Targeted at
+Identity Providers” 27 July 2016. Available from
+https://aarc-project.eu/wp-content/uploads/2016/07/AARC-DNA2.4.pdf
+      </p>
+
+      <p>
+[5] EC funded AARC project ‘Milestone MJRA1.4: First draft of the
+Blueprint Architecture for Authentication and Authorisation
+Infrastructures’ Google Docs. Available:
+https://docs.google.com/document/d/15-e0hpqWPZefbhcLJodzRMZNt8Qpe1gPpyNz2LX1Wvw/edit?usp=embed_facebook.
+      </p>
+
+      <p>
+[6] Scott Cantor. “NativeSPAttributeResolver ” 7 Apr 2014. Available:
+https://wiki.shibboleth.net/confluence/
+display/SHIB2/NativeSPAttributeResolver.
+      </p>
+
+      <p>
+[7] OASIS. “Assertions and Protocol for the OASIS Security Assertion
+Markup Language (SAML) V2.0”, OASIS Standard, 15 March 2005
+      </p>
+
+      <p>
+[8] N. Sakimura et al. “Final: OpenID Connect Core 1.0 incorporating
+errata set 1.” 8 Nov 2014. Available:
+http://openid.net/specs/openid-connect-core-1_0.html
+      </p>
+
+      <p>
+[9] S. Landau and T. Moore. "Economic Tussles in Federated Identity
+Management." 10th Workshop on the Economics of Information Security
+(WEIS’11). 2011. Available from http://weis2011.econinfosec.org/papers/
+Economic%20Tussles%20in%20Federated%20Identity%20Management.pdf
+      </p>
+
+    </section>
+
+  </body>
+</html>
+
