@@ -618,18 +618,17 @@ will cease to be valid.
       </section>
 
       <section>
-        <h2>Revocation</h2>
-        <p>Revocation information for the credential in the
-        Verifiable Credentials Model may be provided by adding the
-        following <a>property</a>:
+        <h2>Status</h2>
+        <p>Credential status information, such as suspension or revocation,
+        may be provided by adding the following <a>property</a>:
         </p>
 
         <dl>
-          <dt><var>revocation</var></dt>
-          <dd>The value of this property MUST be a revocation scheme that
-            provides enough information to determine whether or not the
-            credential has been revoked. The revocation scheme will vary
-            depending on a variety of factors, such as whether it is
+          <dt><var>status</var></dt>
+          <dd>The value of this property MUST be a status scheme that
+            provides enough information to determine the current status of the
+            credential (e.g. suspended, revoked, etc.). The status scheme will
+            vary depending on a variety of factors, such as whether it is
             simple to implement or privacy-enhancing.
           </dd>
         </dl>
@@ -639,7 +638,7 @@ The group is currently determining whether or not they should publish a
 very simple scheme for revocation as a part of this specification.
         </p>
 
-        <pre class="example nohighlight" title="Usage of revocation property">
+        <pre class="example nohighlight" title="Usage of status property">
 {
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
@@ -649,13 +648,19 @@ very simple scheme for revocation as a part of this specification.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
-  <span class="highlight">"revocation": {
-    "id": "https://dmv.example.gov/revocation/24,
-    "type": "RevocationList2017"
+  <span class="highlight">"status": {
+    "id": "https://dmv.example.gov/status/24,
+    "type": "CredentialStatusList2017"
   }</span>,
   "signature": { ... }
 }
         </pre>
+
+        <p>
+Defining the data model, formats, and protocols for status schemes are out
+of scope for this specification. A status scheme registry [[VC-STATUS-REGISTRY]]
+exists for implementers that would like to implement credential status checking.
+        </p>
       </section>
     </section>
 
