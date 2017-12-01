@@ -27,6 +27,15 @@ var vcwg = {
       status: "FPWD",
       publisher: "Verifiable Claims Working Group"
     },
+    "VC-STATUS-REGISTRY": {
+      title: "Verifiable Credentials Status Scheme Registry",
+      href: "https://w3c-ccg.github.io/vc-status-registry/",
+      authors: [
+        "Manu Sporny"
+      ],
+      status: "CG-DRAFT",
+      publisher: "Credentials Community Group"
+    },
     // aliases to known references
     "HTTP-SIGNATURES": {
       aliasOf: "http-signatures"
