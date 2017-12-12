@@ -668,6 +668,91 @@ exists for implementers that would like to implement credential status checking.
       <h1>Advanced Concepts</h1>
 
       <section>
+        <h2>Terms of Use</h2>
+        <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
+        <a>holder</a> to express limitations on the use of information
+        expressed by the Verifiable Credentials Model. The expression of
+        terms of use are performed via the following <a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>termsOfUse</var></dt>
+          <dd>The value of this property MUST be one or more terms of use
+            descriptions that provide enough information to a <a>verifier</a>
+            to determine how they may utilize the given information.
+          </dd>
+        </dl>
+
+        <p class="issue" data-title="Direct the reader to a Terms of Use vocabulary">
+The group is currently exploring a variety of ways of expressing the terms of
+use associated with a Verifiable Credential, namely, the
+<a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
+        </p>
+
+        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"termsOfUse": [{
+    "type": "Policy",
+    "uid": "http://example.com/policy:8473",
+    "profile": "http://example.com/odrl:profile:40",
+    "prohibition": [{
+      "target": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "action": ["archive"]
+    }]
+  }</span>,
+  "signature": { ... }
+}
+        </pre>
+
+        <p>
+In the example above, the <a>issuer</a> is prohibiting a <a>verifier</a> from
+storing the data in an archive.
+        </p>
+
+        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+{
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "credential": [{
+    "id": "http://dmv.example.gov/credentials/3732",
+    "type": ["Credential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov/issuers/14",
+    "issued": "2010-01-01T19:73:24Z",
+    "claim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    },
+    "signature": { ... }
+  }],
+  <span class="highlight">"termsOfUse": [{
+    "type": "Policy",
+    "uid": "http://example.com/policy:4928",
+    "profile": "http://example.com/odrl:profile:40",
+    "prohibition": [{
+      "target": "https://wineonline.example.org/",
+      "action": ["correlate"]
+    }]
+  }</span>,
+  "signature": [ ... ]
+}
+        </pre>
+
+        <p>
+In the example above, the <a>holder</a> is prohibiting a <a>verifier</a> from
+using the information provided to correlate the <a>holder</a>.
+        </p>
+
+      </section>
+
+
+      <section>
         <h2>Evidence</h2>
         <p>Evidence information for the credential in the
         Verifiable Credentials Model may be provided by adding the
