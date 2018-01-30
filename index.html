@@ -658,6 +658,33 @@ of scope for this specification. A status scheme registry [[VC-STATUS-REGISTRY]]
 exists for implementers that would like to implement credential status checking.
         </p>
       </section>
+
+      <section>
+        <h2>Profiles</h2>
+        <p>
+Credentials MAY be composed by placing them into a data structure called a
+<a>profile</a>. A <a>verifiable profile</a> is a profile that contains
+<a>verifiable credentials</a> and one or more proofs that are appropriate
+for the profile. The basic structure of a <a>verifiable profile</a>
+is provided below:
+        </p>
+
+        <pre class="example nohighlight" title="Basic structure of a profile">
+{
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "type": ["VerifiableProfile"],
+  <span class="highlight">"verifiableCredential": [{ ... }],
+  "proof": [{ ... }]</span>
+}
+        </pre>
+
+        <p>
+The contents of the <code>verifiableCredential</code> property are
+<a>verifiable credentials</a> as described by this specification. The contents
+of the <code>proof</code> property are proofs as described by the
+Linked Data Proofs [[LD-PROOFS]] specification.
+        </p>
+      </section>
     </section>
 
     <section>
@@ -845,11 +872,11 @@ applicable to only some credentials.
       <section>
         <h3>Signatures / Proofs</h3>
         <ul>
-          <li>The document signature is available in the form of a known
-          signature suite.</li>
-          <li>Required signature properties are present. For example, for a
+          <li>The document proof is available in the form of a known
+          proof suite.</li>
+          <li>Required proof properties are present. For example, for a
           Linked Data Signature, <code>type</code>, <code>created</code>,
-          <code>creator></code>, and <code>signatureValue</code> are present.
+          <code>creator></code>, and <code>proofValue</code> are present.
           </li>
           <li>The public key associated with the signature is available
           and a trustworthy link between this signing key and the
@@ -1715,12 +1742,12 @@ are replaced by short-lived, single use bearer tokens.
 
         <p>
 The contents of verifiable credentials are secured via the
-<code>credential.signature</code> field. The properties in this field
+<code>credential.proof</code> field. The properties in this field
 create a danger of correlation when the same values are used across more than
 one session or domain and the value does not change. Examples include the
 <code>creator</code>, <code>created</code>,
 <code>domain</code> (for very specific domains),
-<code>nonce</code>, and <code>signatureValue</code> fields.
+<code>nonce</code>, and <code>proofValue</code> fields.
         </p>
 
         <p>
