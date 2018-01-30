@@ -36,6 +36,16 @@ var vcwg = {
       status: "CG-DRAFT",
       publisher: "Credentials Community Group"
     },
+    "LD-PROOFS": {
+      title: "Linked Data Proofs",
+      href: "https://w3c-ccg.github.io/ld-proofs/",
+      authors: [
+        "Manu Sporny",
+        "Dave Longley"
+      ],
+      status: "CG-DRAFT",
+      publisher: "Credentials Community Group"
+    },
     // aliases to known references
     "HTTP-SIGNATURES": {
       aliasOf: "http-signatures"
