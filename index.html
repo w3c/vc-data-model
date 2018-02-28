@@ -836,7 +836,7 @@ the holder.
      </p>
 
       <figure>
-        <img style="margin: auto; display: block;" width="75%" src="diagrams/SubjectHolder.jpg">
+        <img style="margin: auto; display: block;" width="75%" src="diagrams/subject-ne-holder.jpg">
         <figcaption style="text-align: center;">
 Subject Holder Relationships in Verifiable Credentials.
         </figcaption>
@@ -880,8 +880,91 @@ that uniquely identifies a subject">
    </section>
 
 
+   
    <section>
-        <h2>Subject Delegates to Holder</h2>
+      <h2>Holder Acts on Behalf of Subject</h2>
+
+      <p>
+When the holder wants to act on behalf of the subject, the holder creates 
+a Profile, in which the profile ID is the ID of the holder, and the relationship 
+property states the relationship between the holder and the subject.
+
+     </p>
+     <p>
+If the holder wants to act on behalf of two or more different subjects, then
+each relationship property states the holder's relationship to one the subjects.
+      </p>
+
+     <p>
+Note. The verifier still has to validate that these relationships are true.
+     </p>
+
+   <section>
+      <h3>The Relationships Property</h3>
+
+      <p>
+The Relationships property states the Profile holder's relationship with each of the 
+subjects of the embedded credentials. Each value comprises the relationship property 
+(i.e. a string describing the relationship of the holder to the subject) and 
+the ID of the subject being referred to.
+
+      </p>
+ 
+      <p>
+Note that values of the relationship string will be defined in other standards, but it is 
+likely that typical values might be "parent" (when the subject is a child) and 
+"owner" (when the subject is a pet) etc.
+      </p>
+     
+        <pre class="example nohighlight" title="An example of the relationships 
+property, where a parent asserts that their child is under 16">
+{
+  "id": "did:example:e12ec3ebf12eb1c276cv211f712",
+  "type": ["VerifiableProfile"]
+  "holderid": "did:example:ebfeb1c276e12ec211f712ebc6f"
+  "relationships": [{
+      "subjectid": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "relationship": "parent"
+       }],
+  "verifiableCredential": [{
+    "id": "http://dmv.example.gov/credentials/3732",
+    "type": ["Credential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov/issuers/14",
+    "issued": "2010-01-01T19:73:24Z",
+    "claim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageUnder": 16
+    },
+    "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "https://dmv.example.gov/issuers/14/keys/234",
+    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+    "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
+ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
+zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
+9Cky6Ed="
+    }
+  }],
+  "proof": [{
+  "type": "RsaSignature2018",
+  "created": "2017-06-18T21:19:10Z",
+  "creator": "did:example:ebfeb1c276e12ec211f712ebc6f/keys/2",
+  "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+  "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
++W3JT24="
+  }]
+}
+        </pre>
+
+
+      </section>
+    </section>
+
+    <section>
+       <h2>Subject Delegates to Holder</h2>
 
      <p>
 This is supported in the data model in two different ways: through the use of either recursion or profiles. Both methods involve the subject issuing a new credential to the delegated holder.
@@ -945,14 +1028,14 @@ from a subject to a holder that is valid for 2 days">
   "expires": "2010-01-08T00:00:00Z ",
   "claim": {
     "id": "did:example:ebfeb1f712ebc6f1c2123456789",
-    "credential”: {
+    "credential": {
        "id": "http://example.gov/credentials/3732",
        "type": ["Credential", "Role"],
        "issuer": "https://dmv.example.gov",
        "issued": "2010-01-01",
        "claim": {
          "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-         "role": "Project Manager”
+         "role": "Project Manager"
          },
        "revocation": {
        "id": "http://example.gov/revocations/738",
@@ -966,10 +1049,11 @@ from a subject to a holder that is valid for 2 days">
        "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/
 +MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps 
 PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed +W3JT24="
-    }
-  }
-},
-"proof": { ... } }
+     }
+   }
+ },
+ "proof": { ... } 
+}
 
 
         </pre>
@@ -1055,87 +1139,6 @@ PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
    </section>
   </section>
 
-  <section>
-      <h2>Holder Acts on Behalf of Subject</h2>
-
-      <p>
-When the holder wants to act on behalf of the subject, the holder creates 
-a Profile, in which the profile ID is the ID of the holder, and the relationship 
-property states the relationship between the holder and the subject.
-
-     </p>
-     <p>
-If the holder wants to act on behalf of two or more different subjects, then
-each relationship property states the holder's relationship to one the subjects.
-      </p>
-
-     <p>
-Note. The verifier still has to validate that these relationships are true.
-     </p>
-
-   <section>
-      <h3>The Relationships Property</h3>
-
-      <p>
-The Relationships property states the Profile holder's relationship with each of the 
-subjects of the embedded credentials. Each value comprises the relationship property 
-(i.e. a string describing the relationship of the holder to the subject) and 
-the ID of the subject being referred to.
-
-      </p>
- 
-      <p>
-Note that values of the relationship string will be defined in other standards, but it is 
-likely that typical values might be "parent" (when the subject is a child) and 
-"owner" (when the subject is a pet) etc.
-      </p>
-     
-        <pre class="example nohighlight" title="An example of the relationships 
-property, where a parent asserts that their child is under 16">
-{
-  "id": "did:example:e12ec3ebf12eb1c276cv211f712",
-  "type": ["VerifiableProfile"]
-  "holderid": "did:example:ebfeb1c276e12ec211f712ebc6f"
-  "relationships": [{
-      "subjectid": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "relationship": "parent"
-       }],
-  "verifiableCredential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
-    "issued": "2010-01-01T19:73:24Z",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageUnder": 16
-    },
-    "proof": {
-    "type": "RsaSignature2018",
-    "created": "2017-06-17T10:03:48Z",
-    "creator": "https://dmv.example.gov/issuers/14/keys/234",
-    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-    "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
-ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
-zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
-9Cky6Ed="
-    }
-  }],
-  "proof": [{
-  "type": "RsaSignature2018",
-  "created": "2017-06-18T21:19:10Z",
-  "creator": "did:example:ebfeb1c276e12ec211f712ebc6f/keys/2",
-  "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-  "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-+W3JT24="
-  }]
-}
-        </pre>
-
-
-      </section>
-    </section>
 
   <section>
       <h2>Issuer Authorises Holder</h2>
