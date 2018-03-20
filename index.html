@@ -760,7 +760,7 @@ storing the data in an archive.
     "profile": "http://example.com/odrl:profile:40",
     "prohibition": [{
       "target": "https://wineonline.example.org/",
-      "action": ["correlate"]
+      "action": ["3rdPartyCorrelation"]
     }]
   }</span>,
   "proof": [ ... ]
@@ -769,7 +769,42 @@ storing the data in an archive.
 
         <p>
 In the example above, the <a>holder</a> is prohibiting a <a>verifier</a> from
-using the information provided to correlate the <a>holder</a>.
+using the information provided to use a 3rd party to correlate
+the <a>holder</a>.
+        </p>
+
+        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+{
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "credential": [{
+    "id": "http://dmv.example.gov/credentials/3732",
+    "type": ["Credential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov/issuers/14",
+    "issued": "2010-01-01T19:73:24Z",
+    "claim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    },
+    "proof": { ... }
+  }],
+  <span class="highlight">"termsOfUse": [{
+    "type": "Policy",
+    "uid": "http://example.com/policy:7382",
+    "profile": "http://example.com/odrl:profile:726",
+    "prohibition": [{
+      "target": "https://wineonline.example.org/",
+      "action": ["retention"],
+      "issued": "2018-01-01T12:41:52Z",
+      "expires": "2018-01-08T12:41:52Z"
+    }]
+  }</span>,
+  "proof": [ ... ]
+}
+        </pre>
+
+        <p>
+In the example above, the <a>holder</a> is prohibiting a <a>verifier</a> from
+retaining the information provided for more than one week.
         </p>
 
       </section>
