@@ -823,6 +823,379 @@ very simple scheme for evidence as a part of this specification.
     </section>
 
     <section>
+      <h1>Subject Not Equal To Holder</h1>
+
+      <p>
+This section describes how the data model supports use cases in which the holder
+ of the credential is not the subject of the credential.
+      </p>
+
+      <p>
+The following diagram depicts those instances when the subject is not equal to 
+the holder.
+     </p>
+
+      <figure>
+        <img style="margin: auto; display: block;" width="75%" src="diagrams/subject-ne-holder.jpg">
+        <figcaption style="text-align: center;">
+Subject Holder Relationships in Verifiable Credentials.
+        </figcaption>
+      </figure>
+
+     <p>
+The following sections describe how each of these instances are handled in 
+the data model
+     </p>
+
+
+    <section>
+        <h2>Credential Uniquely Identifies Subject</h2>
+
+     <p>
+In this case, the claim may contain multiple properties that each provide 
+an aspect of the identity of the subject
+   </p>
+
+        <pre class="example nohighlight" title="An example of a credential 
+that uniquely identifies a subject">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Mr John Doe",
+    "address": "10 Some Street, Anytown, ThisLocal, Country X",
+    "dateOfBirth": "2001-01-01",
+    "gender": "male",
+    "placeOfBirth" : "Anytown, ThisLocal, Country X",
+    "nationality" : "X",
+  },
+  "proof": { ... }
+}
+        </pre>
+
+
+   </section>
+
+
+   
+   <section>
+      <h2>Holder Acts on Behalf of Subject</h2>
+
+      <p>
+When the holder wants to act on behalf of the subject, the holder creates 
+a Profile, in which the profile ID is the ID of the holder, and the relationship 
+property states the relationship between the holder and the subject.
+
+     </p>
+     <p>
+If the holder wants to act on behalf of two or more different subjects, then
+each relationship property states the holder's relationship to one the subjects.
+      </p>
+
+     <p>
+Note. The verifier still has to validate that these relationships are true.
+     </p>
+
+   <section>
+      <h3>The Relationships Property</h3>
+
+      <p>
+The Relationships property states the Profile holder's relationship with each of the 
+subjects of the embedded credentials. Each value comprises the relationship property 
+(i.e. a string describing the relationship of the holder to the subject) and 
+the ID of the subject being referred to.
+
+      </p>
+ 
+      <p>
+Note that values of the relationship string will be defined in other standards, but it is 
+likely that typical values might be "parent" (when the subject is a child) and 
+"owner" (when the subject is a pet) etc.
+      </p>
+     
+        <pre class="example nohighlight" title="An example of the relationships 
+property, where a parent asserts that their child is under 16">
+{
+  "id": "did:example:e12ec3ebf12eb1c276cv211f712",
+  "type": ["VerifiableProfile"]
+  "holderid": "did:example:ebfeb1c276e12ec211f712ebc6f"
+  "relationships": [{
+      "subjectid": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "relationship": "parent"
+       }],
+  "verifiableCredential": [{
+    "id": "http://dmv.example.gov/credentials/3732",
+    "type": ["Credential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov/issuers/14",
+    "issued": "2010-01-01T19:73:24Z",
+    "claim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageUnder": 16
+    },
+    "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "https://dmv.example.gov/issuers/14/keys/234",
+    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+    "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
+ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
+zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
+9Cky6Ed="
+    }
+  }],
+  "proof": [{
+  "type": "RsaSignature2018",
+  "created": "2017-06-18T21:19:10Z",
+  "creator": "did:example:ebfeb1c276e12ec211f712ebc6f/keys/2",
+  "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+  "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
++W3JT24="
+  }]
+}
+        </pre>
+
+
+      </section>
+    </section>
+
+    <section>
+       <h2>Subject Delegates to Holder</h2>
+
+     <p>
+This is supported in the data model in two different ways: through the use of either recursion or profiles. Both methods involve the subject issuing a new credential to the delegated holder.
+    </p>
+
+    <p>
+This process of recursion could continue without restriction. Therefore 
+a new property “delegatable”, is added to the data model.
+
+     </p>
+
+   <section>
+
+   <h3> Delegatable Property </h3>
+
+  <p>
+The delegatable property, a Boolean, states whether a credential is 
+delegatable or not. If it is present with the value true, or not present, 
+then the credential is delegatable to a third party. If it is present with 
+the value false then it is not delegatable.
+
+  </p>
+
+        <pre class="example nohighlight" title="An example of a credential that is not 
+delegatable">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01",
+  "delegatable": false,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21,
+  },
+  "proof": { ... }
+}
+        </pre>
+
+       </section>
+       
+       <section>
+
+     <h3> Delegation through Recursion </h3>
+
+    <p>
+With recursion, the subject issues a credential to the delegated holder in which: 
+ the issuer is the subject, the claim contains 
+the id of the delegated holder, and the claim property is the credential that 
+was originally issued to the subject. An example is provided below.
+    </p>
+
+ <pre class="example nohighlight" title="An example of a credential delegated 
+from a subject to a holder that is valid for 2 days">
+
+{ 
+  "id": "1234",
+  "type": ["Credential", "EmbeddedDelegatedCredential"],
+  "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "issued": "2010-01-06T00:00:00Z ",
+  "expires": "2010-01-08T00:00:00Z ",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c2123456789",
+    "credential": {
+       "id": "http://example.gov/credentials/3732",
+       "type": ["Credential", "Role"],
+       "issuer": "https://dmv.example.gov",
+       "issued": "2010-01-01",
+       "claim": {
+         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+         "role": "Project Manager"
+         },
+       "revocation": {
+       "id": "http://example.gov/revocations/738",
+       "type": "SimpleRevocationList2017" },
+       "proof": {
+       "type": "LinkedDataSignature2015",
+       "created": "2016-06-18T21:19:10Z",
+       "creator": "https://example.com/jdoe/keys/1",
+       "domain": "json-ld.org",
+       "nonce": "598c63d6",
+       "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/
++MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps 
+PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed +W3JT24="
+     }
+   }
+ },
+ "proof": { ... } 
+}
+
+
+        </pre>
+
+
+  </section>
+
+  <section>
+   <h3> Delegation through Profiles </h3>
+
+   <p>
+
+Through the use of profiles, the subject delegates a credential to a
+holder, by issuing a new credential in which: the issuer is the subject, 
+the subject is the delegated holder, and the claim contains the property to be delegated. In addition, the delegated holder creates a profile that contains these two credentials, and a relationships property in which one
+relationship refers to the original subject and has the value 'delegate' and the other
+relationship refers to the delegated credential and has the value 'self'.
+
+        <pre class="example nohighlight" title="An example of delegation using a profile">
+{
+  "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+  "type": ["VerifiableProfile"],
+  "holderid": "did:example:76e12ec21ebhyu1f712ebc6f1z2"
+  "relationships": [
+      {
+      "subjectid": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "relationship": "delegate"
+       },
+       {
+      "subjectid": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+      "relationship": "self"
+       }
+    ]
+  "credential": [
+       "id": "http://example.gov/credentials/3732",
+       "type": ["Credential", "Role"],
+       "issuer": "https://dmv.example.gov",
+       "issued": "2010-01-01",
+       "claim": {
+         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+         "role": "Project Manager”
+         },
+       "revocation": {
+       "id": "http://example.gov/revocations/738",
+       "type": "SimpleRevocationList2017" },
+       "proof": {
+.....
+     },
+    {
+    "id": "some other ID",
+    "type": ["Credential", "DelagatedCredential"],
+    "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "issued": "2010-01-03",
+    "claim": {
+      "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+      "role": "Project Manager”
+    },
+    "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+    "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
+ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
+zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
+9Cky6Ed="
+    }
+  }],
+  "proof": [{
+  "type": "RsaSignature2018",
+  "created": "2017-06-18T21:19:10Z",
+  "creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
+  "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+  "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
++W3JT24="
+  }]
+}
+        </pre>
+
+
+   </section>
+  </section>
+
+
+  <section>
+      <h2>Issuer Authorises Holder</h2>
+
+      <p>
+When the issuer wishes to authorise a holder to possess a credential that 
+describes a subject who is not the holder, then the issuer inserts the ID 
+of the holder into the subject's credential, by using the holderid property.
+
+      </p>
+
+    <section>
+      <h3> Holder ID Property</h3>
+
+     <p>
+The holderid property is inserted into a credential by the issuer, when the 
+issuer authorises the holder to possess the credential.
+
+    </p>
+
+        <pre class="example nohighlight" title="An example of a credential 
+issued to a holder who is not the subject of the credential">
+
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01",
+  "holderid": "did:example:ebfeb1276e12ec21f712ebc6f1c",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Mr John Doe",
+    "address": "10 Some Street, Anytown, ThisLocal, Country X",
+  },
+  "proof": { ... }
+}
+        </pre>
+
+
+       </section>
+
+     </section>
+
+  <section>
+      <h2>Holder Acts on Behalf of Verifier or has no Relationship with the 
+Subject, Issuer or Verifier</h1>
+
+      <p>
+
+The data model currently does not support either of these scenarios. It is 
+for further study how they might be supported.
+      </p>
+      </section>
+
+   </section>
+
+   <section>
       <h1>Verification</h1>
 
       <p>
