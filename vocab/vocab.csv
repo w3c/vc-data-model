@@ -7,18 +7,21 @@ xsd,prefix,,http://www.w3.org/2001/XMLSchema#,,,,,
 ,owl:imports,,http://purl.org/dc/terms/,,,,,
 ,owl:imports,,https://w3id.org/security,,,,,
 ,rdfs:seeAlso,,https://www.w3.org/TR/verifiable-claims-data-model/,,,,,
-claim,rdf:Property,claim,,Credential,,,@graph,A statement made about a `subject`. A **verifiable claim** is a claim that is tamper-resistant and whose authorship can be cryptographically verified.
-credential,rdf:Property,credential,,Profile,Credential,,@graph,A set of one or more claims made by the same `entity` about a `subject`. A **verifiable credential** is a credential that is tamper-resistant and whose authorship can be cryptographically verified.
-evidence,rdf:Property,evidence,,Credential,DocumentationVerifier,,,The value of this property MUST be one or more evidence schemes that provides enough information to a verifier to determine whether or not the evidence gathered meets their requirements.
+claim,rdf:Property,claim,,Credential,,,@graph,A statement made about a `subject`.
+credential,rdf:Property,credential,,VerifiableProfile,Credential,,@graph,A set of one or more claims made by the same `entity` about a `subject`. A **verifiable credential** is a credential that is tamper-resistant and whose authorship can be cryptographically verified.
+entity,rdf:Property,entity,,,,,,"A thing with distinct and independent existence such as a person, organization, concept, or device."
 issued,rdf:Property,issued,,Credential,xsd:dateTime,,,The value of this property MUST be a string value of an [[ISO8601]] combined date and time string and represents the date and time the `credential` was issued. Note that this date represents the earliest date when the information associated with the _claim property became valid.
-issuer,rdf:Property,issuer,,Credential,,@id,,"An `entit`y that creates a `verifiable claim`, associates it with a particular `subject`, and transmits it to a `holder`."
-recipient,rdf:Property,recipient,,,,@id,,FIXME
-referenceId,rdf:Property,referenceId,,,,,,FIXME
-revocation,rdf:Property,revocation,,Credential,RevocationList2017,@id,,
+issuer,rdf:Property,issuer,,Credential,,@id,,The value of this property MUST be a URI. It is RECOMMENDED that dereferencing the URI results in a document containing machine-readable information about the issuer that may be used to verify the information expressed in the `credential`.
+proof,rdf:Property,proof,,"Credential,VerifiableProfile",,@id,,"The method used for a mathematical proof will vary by representation language and the technology used. For example, if digital signatures are used for the proof mechanism, this property is expected to have a value that is a set of name-value pairs including at least a signature, a reference to the signing entity, and a representation of the signing date."
+evidence,rdf:Property,evidence,,Credential,DocumentationVerifier,,,The value of this property MUST be one or more evidence schemes that provides enough information to a verifier to determine whether or not the evidence gathered meets their requirements.
+expires,rdf:Property,expires,,Credential,xsd:dateTime,@id,,The value of this property MUST be a string value of an [[ISO8601]] combined date and time string and represents the date and time the `credential` will cease to be valid.
+credentialStatus,rdf:Property,credential status,,Credential,,@id,,"The value of this property MUST be a status scheme that provides enough information to determine the current status of the credential (e.g. suspended, revoked, etc.). The status scheme will vary depending on a variety of factors, such as whether it is simple to implement or privacy-enhancing."
+verifiableCredential,rdf:Property,verifiable credential,,VerifiableProfile,Credential,@id,,The contents of the `verifiableCredential` property are `verifiable credentials` as described by this specification.
+termsOfUse,rdf:Property,terms of use,,Credential,Policy,@id,,The value of this property MUST be one or more terms of use descriptions that provide enough information to a verifier to determine how they may utilize the given information.
+revocation,rdf:Property,revocation,,Credential,,@id,,
 Credential,rdfs:Class,Credential,,,,,,FIXME
-CryptographicKeyCredential,rdfs:Class,Cryptographic Key Credential,Credential,,,,,FIXME
-Profile,rdfs:Class,Verifiable Profile,,,,,,A set of one or more `credentials` typically related to the same `subject`. An entity may have multiple `profiles` and each `profile` may contain `verifiable credentials` issued by multiple issuers. A `verifiable profile` is a `profile` that is tamper-resistant and whose contents are typically counter-signed by the `holder` or `subject`.
-RevocationList2017,rdfs:Class,Revocation List 2017,cred:RevocationList2017,,,,,FIXME
+Policy,rdfs:Class,Policy,,,,,,"Issue: The group is currently exploring a variety of ways of expressing the terms of use associated with a Verifiable Credential, namely, the Open Digital Rights Language."
+VerifiableProfile,rdfs:Class,Verifiable Profile,,,,,,A `verifiable profile` is a profile that is tamper-resistant and whose contents are typically counter-signed by the `holder` or `subject`.
 Identity,term,,https://w3id.org/identity#Identity,,,,,FIXME
 canonicalizationAlgorithm,term,,sec:canonicalizationAlgorithm,,,,,FIXME
 created,term,,dc:created,,,xsd:dateTime,,FIXME
