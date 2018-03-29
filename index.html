@@ -398,8 +398,8 @@ foundation of this specification.
         <h3>Claims</h3>
 
         <p>
-A <a>claim</a> is statement about a <a>subject</a>.
-A <a>subject</a> is an <a>entity</a> about which <a>claims</a> may be made.
+A <a>claim</a> is an assertion about the properties of a <a>subject</a>.
+A <a>subject</a> is an <a>entity</a> described by a claim.
 <a>Claims</a> are expressed using
 <strong><em>subject</em></strong>-<dfn data-lt="property|properties">property</dfn>-<dfn>value</dfn>
 relationships.
@@ -453,14 +453,12 @@ of information.
       <h2>Credentials</h2>
 
       <p>
-A <a>credential</a> is set of one or more <a>claims</a> about a <a>subject</a>.
-It typically includes an identifier to uniquely identify the
-credential. Credential metadata may also be included to express concepts
-such as when the credential expires. A digital signature is almost always
-appended by the <a>issuer</a> of the credential to enable verifiability of
-the credential. Therefore, a <strong>verifiable credential</strong> is a set
-of claims that are tamper-resistant and whose authorship can be
-cryptographically verified.
+A <a>credential</a> is set of one or more <a>claims</a> asserted by the issuer.
+It includes an identifier to uniquely identify the credential, as well as
+metadata that describes properties of the credential such as: the issuer,
+the expiry time etc. A <strong>verifiable credential</strong> is a set of
+claims and meta data
+that are tamper-resistant and that cryptographically prove who issued it.
       </p>
 
       <figure>
@@ -534,17 +532,21 @@ information associated with the <var>claim</var> property became valid.
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
-  <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "proof": { ... }
-}
-        </pre>
+"verifiableCredential": {
+	"id": "< credential id >",
+	"type": ["ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claims": [{
+		"subject": {
+			"id": "< subject id >",
+			"ageOver": 21
+		}
+	}],
+	"proof": {...}
+ }
+} 
+       </pre>
       </section>
 
       <section>
@@ -564,14 +566,17 @@ signing entity, and a representation of the signing date.</dd>
         </dl>
         <pre class="example nohighlight" title="Usage of signature property">
 {
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
+	"verifiableCredential": {
+		"id": "< credential id >",
+		"type": ["ProofOfAgeCredential"],
+		"issuer": "https://dmv.example.gov/issuers/14",
+		"issued": "2010-01-01T19:73:24Z",
+		"claims": [{
+			"subject": {
+				"id": "< subject id >",
+				"ageOver": 21
+			}
+		}],
   <span class="highlight">"proof": {
     "type": "RsaSignature2018",
     "created": "2017-06-18T21:19:10Z",
@@ -604,16 +609,20 @@ will cease to be valid.
 
         <pre class="example nohighlight" title="Usage of expires property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:73:24Z",
-  <span class="highlight">"expires": "2020-01-01T19:73:24Z"</span>,
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "proof": { ... }
+	"verifiableCredential": {
+		"id": "< credential id >",
+		"type": ["ProofOfAgeCredential"],
+		"issuer": "https://dmv.example.gov/issuers/14",
+		"issued": "2010-01-01T19:73:24Z",
+		<span class="highlight">"expires": "2020-01-01T19:73:24Z"</span>,
+		"claims": [{
+			"subject": {
+				"id": "< subject id >",
+				"ageOver": 21
+			}
+		}],
+		"proof": {...}
+	}
 }
         </pre>
       </section>
@@ -628,7 +637,8 @@ will cease to be valid.
           <dt><var>credentialStatus</var></dt>
           <dd>The value of this property MUST be a status scheme that
             provides enough information to determine the current status of the
-            credential (e.g. suspended, revoked, etc.). The status scheme will
+            credential (e.g. suspended, revoked, etc.). The contents of the status scheme
+	 property are determined by the definition of the scheme. This will
             vary depending on a variety of factors, such as whether it is
             simple to implement or privacy-enhancing.
           </dd>
@@ -636,21 +646,25 @@ will cease to be valid.
 
         <pre class="example nohighlight" title="Usage of status property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:73:24Z",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  <span class="highlight">"credentialStatus": {
-    "id": "https://dmv.example.gov/status/24,
-    "type": "CredentialStatusList2017"
-  }</span>,
-  "proof": { ... }
-}
-        </pre>
+	"verifiableCredential": {
+		"id": "< credential id >",
+		"type": ["ProofOfAgeCredential"],
+		"issuer": "https://dmv.example.gov/issuers/14",
+		"issued": "2010-01-01T19:73:24Z",
+		"claims": [{
+			"subject": {
+				"id": "< subject id >",
+				"ageOver": 21
+			}
+		}],
+		 <span class="highlight">"credentialStatus": {
+		    "schemeID": "https://dmv.example.gov/status/24",
+		    "type": "CredentialStatusList2017"
+		  }</span>,
+		"proof": {...}
+	}
+} 
+       </pre>
 
         <p>
 Defining the data model, formats, and protocols for status schemes are out
@@ -670,9 +684,10 @@ is provided below:
         </p>
 
         <pre class="example nohighlight" title="Basic structure of a profile">
-{
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiableProfile"],
+{"verifiableProfile": {
+  "id": "< profile id >",
+  "holder": "< holder id >",
+  "type": ["< type of profile >"],
   <span class="highlight">"verifiableCredential": [{ ... }],
   "proof": [{ ... }]</span>
 }
@@ -701,8 +716,11 @@ Linked Data Proofs [[LD-PROOFS]] specification.
         <dl>
           <dt><var>termsOfUse</var></dt>
           <dd>The value of this property MUST be one or more terms of use
-            descriptions that provide enough information to a <a>verifier</a>
-            to determine how they may utilize the given information.
+            that provide enough information to a <a>verifier</a>
+            to determine how they may utilize the given information. Each term of use
+	    is identified by a unique term of use identifier. 
+	    The precise contents of each term of use is determined by the specific 
+  	 term of use definition.
           </dd>
         </dl>
 
@@ -714,25 +732,30 @@ use associated with a Verifiable Credential, namely, the
 
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:73:24Z",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  <span class="highlight">"termsOfUse": [{
-    "type": "Policy",
-    "uid": "http://example.com/policy:8473",
-    "profile": "http://example.com/odrl:profile:40",
-    "prohibition": [{
-      "target": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "action": ["archive"]
-    }]
-  }</span>,
-  "proof": { ... }
-}
+"verifiableCredential": {
+	"id": "< credential id >",
+	"type": ["ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claims": [{
+		"subject": {
+			"id": "< subject id >",
+			"ageOver": 21
+		}
+	}],
+	 <span class="highlight">"termsOfUse": [{
+	   "type": "< term of use type ID >",
+	    "uid": "http://example.com/policy:8473",
+	    "profile": "http://example.com/odrl:profile:40",
+	    "prohibition": [{
+	      "target": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+	      "action": ["archive"]
+	    }]
+	  }</span>,
+	"proof": {...}
+	}
+} 
+
         </pre>
 
         <p>
@@ -740,32 +763,37 @@ In the example above, the <a>issuer</a> is prohibiting a <a>verifier</a> from
 storing the data in an archive.
         </p>
 
-        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+        <pre class="example nohighlight" title="Usage of termsOfUse property by a holder">
 {
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "credential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
-    "issued": "2010-01-01T19:73:24Z",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
-    },
-    "proof": { ... }
-  }],
-  <span class="highlight">"termsOfUse": [{
-    "type": "Policy",
-    "uid": "http://example.com/policy:4928",
-    "profile": "http://example.com/odrl:profile:40",
-    "prohibition": [{
-      "target": "https://wineonline.example.org/",
-      "action": ["correlate"]
-    }]
-  }</span>,
-  "proof": [ ... ]
-}
-        </pre>
+	"verifiableProfile": {
+		"id": "< profile id >",
+		"holder": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"type": "doNotCorrelateMyAge",
+		"verifiableCredential": {
+			"id": "< credential id >",
+			"type": ["ProofOfAgeCredential"],
+			"issuer": "https://dmv.example.gov/issuers/14",
+			"issued": "2010-01-01T19:73:24Z",
+			"claims": [{
+				"subject": {
+					"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+					"ageOver": 21
+				}
+			}],
+			"proof": {...}
+		},
+		<span class="highlight">"termsOfUse": [{
+			"type": "< some unique terms of use ID >",
+			"policy": "http://example.com/policy:4928",
+			"profile": "http://example.com/odrl:profile:40",
+			"prohibition": [{
+				"target": "https://wineonline.example.org/",
+				"action": ["correlate"]
+			}]</span>
+		}],
+		"proof": {...}
+	}
+}        </pre>
 
         <p>
 In the example above, the <a>holder</a> is prohibiting a <a>verifier</a> from
@@ -787,7 +815,7 @@ using the information provided to correlate the <a>holder</a>.
           <dd>The value of this property MUST be one or more evidence schemes
             that provides enough information to a <a>verifier</a>
             to determine whether or not the evidence gathered meets their
-            requirements.
+            requirements. The contents of each evidence scheme is determined by the particular scheme itself.
           </dd>
         </dl>
 
@@ -798,25 +826,29 @@ very simple scheme for evidence as a part of this specification.
 
         <pre class="example nohighlight" title="Usage of evidence property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:73:24Z",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  <span class="highlight">"evidence": {
-    "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
-    "type": "DocumentVerification",
-    "verifier": "https://dmv.example.gov/issuers/14",
-    "evidenceDocument": "DriversLicense",
-    "subjectPresence": "Physical",
-    "documentPresence": "Physical"
-  }</span>,
-  "proof": { ... }
-}
-        </pre>
+"verifiableCredential": {
+	"id": "< credential id >",
+	"type": ["ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claims": [{
+		"subject": {
+			"id": "< subject id >",
+			"ageOver": 21
+		}
+	}],
+	  <span class="highlight">"evidence": [{
+		"scheme": "< scheme id >",
+		"id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+		"type": ["DocumentVerification"],
+		"verifier": "https://dmv.example.gov/issuers/14",
+		"evidenceDocument": "DriversLicense",
+		"subjectPresence": "Physical",
+		"documentPresence": "Physical"
+	}]</span>,
+	"proof": {...}
+ }
+}         </pre>
 
       </section>
 
@@ -844,7 +876,7 @@ applicable to only some credentials.
           required.</li>
           <li>Property values match expectations described in the
           specification. For example, the document type for a verifiable
-          credential must contain the class "Credential".</li>
+          credential must contain the class "verifiableCredential".</li>
         </ul>
       </section>
       <section>
@@ -955,6 +987,9 @@ applicable to only some credentials.
               <li>Any empty value MUST be represented as a null value.</li>
               <li>Any other value MUST be represented as a String type.</li>
             </ul>
+           <p> Certain properties must be single valued, whilst other properties 
+ 	can be an array of values, or a set of objects. The examples and text make it clear which properties can have which types of value.
+           </p>
             <p>The following example demonstrates how to express
             an <a>verifiable credential</a> containing a simple
             (unverifiable) <a>claim</a> about a particular
@@ -971,9 +1006,17 @@ applicable to only some credentials.
             it and a date for when it was issued. </p>
 
 <pre class="example nohighlight" title="A simple claim">{
-  <span class="subject">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>, <span class="comment">// subject identifier</span>
-  <span class="property">"ageOver": 21</span> <span class="comment">// property-value pair</span>
-}</pre>
+	"claims": [{
+		"subject": {
+			"id": "< subject id >",
+			"ageOver": 21
+		}
+	}],
+
+}
+
+
+</pre>
 
             <p>The following example demonstrates how to express the
             same <a>claim</a> about the same <a>subject</a>, but as a
@@ -981,30 +1024,34 @@ applicable to only some credentials.
             a <code>signature</code> that can be used to verify the
             author of its contents, including the claim.</p>
 
-<pre class="example" title="A simple verifiable credential">{
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "revocation": {
-    "id": "http://example.gov/revocations/738",
-    "type": "SimpleRevocationList2017"
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-18T21:19:10Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "598c63d6",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-    +W3JT24="
+<pre class="example" title="A simple verifiable credential">
+{
+	"verifiableCredential": {
+		"id": "http://example.gov/credentials/3732",
+		"type": ["ProofOfAgeCredential"],
+		"issuer": "https://dmv.example.gov",
+		"issued": "2010-01-01",
+		"claims": [{
+			"subject": {
+				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+				"ageOver": 21
+			}
+		}],
+		"credentialStatus": {
+		    "schemeID": "https://dmv.example.gov/status/24",
+		    "type": "CredentialStatusList2017"
+		  },
+	"proof": {
+	    "type": "RsaSignature2018",
+	    "created": "2017-06-18T21:19:10Z",
+	    "creator": "https://example.com/jdoe/keys/1",
+	    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+	    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+      +W3JT24="
   }
+}
 }</pre>
 
             <p>The following example demonstrates how one could
@@ -1044,7 +1091,7 @@ and Security Considerations section of this document.
   "alg": "RS256",
   "typ": "JWT"
 }
-// JWT Payload
+// JWT Payload   THIS NEEDS TO BE UPDATED
 {
   "iss": "https://dmv.example.gov",
   "iat": 1262304000,
@@ -1054,63 +1101,80 @@ and Security Considerations section of this document.
   "entityCredential": {
     "@context": "https://w3id.org/security/v1",
     "id": "http://example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
+    "type": ["verifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov",
     "issued": "2010-01-01",
-    "claim": {
+      "claims": [ 
+    {
+    "subject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "ageOver": 21
+      }
     }
+   ]
   }
 }
 </pre>
 
         <p>
 The following example demonstrates how to express a more complex set
-of <a>claims</a> about a particular <a>subject</a> as a
+of <a>claims</a> about a two different <a>subjects</a> as a
 <a>verifiable credential</a>.
         </p>
 
-<pre class="example nohighlight" title="A more complex verifiable credential">{
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "PassportCredential"],
-  "name": "Passport",
-  "issuer": "https://example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "name": "Alice Bobman",
-    "birthDate": "1985-12-14",
-    "gender": "female",
-    "nationality": {
-      "name": "United States"
-    },
-    "address": {
-      "type": "PostalAddress",
-      "addressStreet": "372 Sumter Lane",
-      "addressLocality": "Blackrock",
-      "addressRegion": "Nevada",
-      "postalCode": "23784",
-      "addressCountry": "US"
-    },
-    "passport": {
-      "type": "Passport",
-      "name": "United States Passport",
-      "documentId": "123-45-6789",
-      "issuer": "https://example.gov",
-      "issued": "2010-01-07T01:02:03Z",
-      "expires": "2020-01-07T01:02:03Z"
-    }
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-21T03:40:19Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "783b4dfa",
-    "signatureValue": "Rxj7Kb/tDbGHFAs6ddHjVLsHDiNyYzxs2MPmNG8G47oS06N8i0Dis5mUePIzII4+p/ewcOTjvH7aJxnKEePCO9IrlqaHnO1TfmTut2rvXxE5JNzur0qoNq2yXl+TqUWmDXoHZF+jQ7gCsmYqTWhhsG5ufo9oyqDMzPoCb9ibsNk="
-  }
-}</pre>
+<pre class="example nohighlight" title="A more complex verifiable credential">
+{
+	"verifiableCredential": {
+		"id": "http://example.gov/credentials/3732",
+		"issuer": "https://dmv.example.gov",
+		"issued": "2010-01-01",
+		"claims": [{
+			"subject": {
+				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+				"name": "Alice Bobman",
+				"birthDate": "1985-12-14",
+				"gender": "female",
+				"nationality": {
+					"name": "United States"
+				},
+				"address": {
+					"type": "PostalAddress",
+					"addressStreet": "372 Sumter Lane",
+					"addressLocality": "Blackrock",
+					"addressRegion": "Nevada",							"postalCode": "23784",
+				"addressCountry": "US"
+				},
+				"passport": {
+					"type": "Passport",
+					"name": "United States Passport",
+					"documentId": "123-45-6789",
+					"issuer": "https://example.gov",
+					"issued": "2010-01-07T01:02:03Z",						"expires": "2020-01-07T01:02:03Z
+				}
+			}
+		}, {
+			"subject": {
+				"id": "did:example:ebfc6f1c276e12ec21eb1f712eb",
+				"name": "Joe Bloggs",
+				"birthDate": "1987-12-12",
+				"gender": "male",
+				"married": "TRUE"
+			}
+		}],
+		"credentialStatus": {
+			"schemeID": "https://dmv.example.gov/status/24",
+			"type": "CredentialStatusList2017"
+		},
+		"proof": {
+			"type": "RsaSignature2018",
+			"created": "2017-06-18T21:19:10Z",
+			"creator": "https://example.com/jdoe/keys/1",
+			"nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+			"signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8.... "
+		}
+	}
+}
+</pre>
         </section>
 
         <section>
@@ -1133,17 +1197,23 @@ of <a>claims</a> about a particular <a>subject</a> as a
       <p>The following example demonstrates how to express a
       simple <a>verifiable profile</a>.</p>
 
-<pre class="example" title="A simple verifiable profile">{
+<pre class="example" title="A simple verifiable profile">
+"verifiableProfile": {
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "credential": [{
+  "holder": "< holder id >",
+  "verifiableCredential": [{
     "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
+    "type": ["verifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov/issuers/14",
     "issued": "2010-01-01T19:73:24Z",
-    "claim": {
+      "claims": [ 
+    {
+    "subject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "ageOver": 21
-    },
+     }
+    }
+    ],
     "proof": {
       "type": "RsaSignature2018",
       "created": "2017-06-17T10:03:48Z",
@@ -1211,10 +1281,15 @@ of <a>claims</a> about a particular <a>subject</a> as a
             itself, such as an identifier for the <a>entity</a> that
             issued it and a date for when it was issued.</p>
 
-<pre class="example nohighlight" title="A simple claim in JSON-LD Format">{
+<pre class="example nohighlight" title="A simple claim in JSON-LD Format">
+{"claims":
   "@context": "https://w3id.org/credentials/v1",
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "ageOver": 21
+  [ { "subject":
+	{
+	 "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+ 	 "ageOver": 21
+	}
+  } ]
 }</pre>
 
             <p>The following example demonstrates how to express the
@@ -1223,24 +1298,29 @@ of <a>claims</a> about a particular <a>subject</a> as a
             a <code>signature</code> that can be used to verify its
             entire contents, including the claim.</p>
 
-<pre class="example nohighlight" title="A simple verifiable credential in JSON-LD Format">{
-  "@context": "https://w3id.org/credentials/v1",
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-18T21:10:38Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "6165d7e8",
-    "signatureValue": "g4j9UrpHM4/uu32NlTw0HDaSaYF2sykskfuByD7UbuqEcJIKa+IoLJLrLjqDnMz0adwpBCHWaqqpnd47r0NKZbnJarGYrBFcRTwPQSeqGwac8E2SqjylTBbSGwKZkprEXTywyV7gILlC8a+naA7lBRi4y29FtcUJBTFQq4R5XzI="
-  }
+<pre class="example nohighlight" title="A simple verifiable credential in JSON-LD Format">
+{
+	"verifiableCredential": {
+		"@context": "https://w3id.org/credentials/v1",
+		"id": "http://example.gov/credentials/3732",
+		"type": ["ProofOfAgeCredential"],
+		"issuer": "https://dmv.example.gov",
+		"issued": "2010-01-01",
+		"claims": [{
+			"subject": {
+				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+				"ageOver": 21
+			}
+		}],
+		"proof": {
+			"type": "RsaSignature2018",
+			"created": "2016-06-18T21:10:38Z",
+			"creator": "https://example.com/jdoe/keys/1",
+			"domain": "json-ld.org",
+			"nonce": "6165d7e8",
+			"signatureValue": "g4j9UrpHM4/uu32NlTw0HDaSaYF2sykskfuByD7UbuqEcJIKa+IoLJLrLjqDnMz0adwpBCHWaqqpnd47r0NKZbnJarGYrBFcRTwPQSeqGwac8E2SqjylTBbSGwKZkprEXTywyV7gILlC8a+naA7lBRi4y29FtcUJBTFQq4R5XzI="
+		}
+	}
 }</pre>
 
         <p>
@@ -1248,50 +1328,56 @@ The following example demonstrates how to express a more complex
 <a>verifiable credential</a> about a particular <a>subject</a>.
         </p>
 
-<pre class="example" title="A more complex verifiable credential in JSON-LD Format">{
-  "@context": [
-    "http://schema.org",
-    "https://w3id.org/credentials/v1"
-  ],
-  "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "PassportCredential"],
-  "name": "Passport",
-  "issuer": "https://example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "name": "Alice Bobman",
-    "birthDate": "1985-12-14",
-    "gender": "female",
-    "nationality": {
-      "name": "United States"
-    },
-    "address": {
-      "type": "PostalAddress",
-      "addressStreet": "372 Sumter Lane",
-      "addressLocality": "Blackrock",
-      "addressRegion": "Nevada",
-      "postalCode": "23784",
-      "addressCountry": "US"
-    },
-    "passport": {
-      "type": "Passport",
-      "name": "United States Passport",
-      "documentId": "123-45-6789",
-      "issuer": "https://example.gov",
-      "issued": "2010-01-07T01:02:03Z",
-      "expires": "2020-01-07T01:02:03Z"
-    }
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-21T03:43:29Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "c168dfab",
-    "signatureValue": "jz4bEW2FBMDkANyEjiPnrIctucHQCIwxrtzBXt+rVGmYMEflHrOwf7FYLH60E3Oz54VwSSQCi9J4tXQIhv4SofT5opbcIUj7ji6QrC6c+a3YLjg8l/+/uFjhzsLelAO4gh2k0FJxM04ljH0GZGuXTzhRnqTzJTnYSVo72PC92NA="
-  }
-}</pre>
+<pre class="example" title="A more complex verifiable credential in JSON-LD Format">
+{
+	"verifiableCredential": {
+		"@context": [
+			"http://schema.org",
+			"https://w3id.org/credentials/v1"
+		],
+		"id": "http://example.gov/credentials/3732",
+		"type": ["PassportCredential"],
+		"name": "Passport",
+		"issuer": "https://example.gov",
+		"issued": "2010-01-01",
+		"claims": [{
+			"subject": {
+				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+				"name": "Alice Bobman",
+				"birthDate": "1985-12-14",
+				"gender": "female",
+				"nationality": {
+					"name": "United States"
+				},
+				"address": {
+					"type": "PostalAddress",
+					"addressStreet": "372 Sumter Lane",
+					"addressLocality": "Blackrock",
+					"addressRegion": "Nevada",
+					"postalCode": "23784",
+					"addressCountry": "US"
+				},
+				"passport": {
+					"type": "Passport",
+					"name": "United States Passport",
+					"documentId": "123-45-6789",
+					"issuer": "https://example.gov",
+					"issued": "2010-01-07T01:02:03Z",
+					"expires": "2020-01-07T01:02:03Z"
+				}
+			}
+		}],
+		"proof": {
+			"type": "RsaSignature2018",
+			"created": "2016-06-21T03:43:29Z",
+			"creator": "https://example.com/jdoe/keys/1",
+			"domain": "json-ld.org",
+			"nonce": "c168dfab",
+			"signatureValue": "jz4bEW2FBMDkANyEjiPnrIctucHQCIwxrtzBXt+rVGmYMEflHrOwf7FYLH60E3Oz54VwSSQCi9J4tXQIhv4SofT5opbcIUj7ji6QrC6c+a3YLjg8l/+/uFjhzsLelAO4gh2k0FJxM04ljH0GZGuXTzhRnqTzJTnYSVo72PC92NA="
+		}
+	}
+}
+</pre>
         </section>
 
         <section>
@@ -1310,42 +1396,42 @@ The following example demonstrates how to express a more complex
       <p>The following example demonstrates how to express a
       simple <a>verifiable profile</a>.</p>
 
-<pre class="example" title="A simple verifiable profile in JSON-LD Format">{
-  "@context": [
-    "http://schema.org",
-    "https://w3id.org/credentials/v1"
-  ],
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "credential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
-    "issued": "2010-01-01T19:73:24Z",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
-    },
-    "proof": {
-      "type": "RsaSignature2018",
-      "created": "2017-06-17T10:03:48Z",
-      "creator": "https://dmv.example.gov/issuers/14/keys/234",
-      "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-      "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
-      ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
-      zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
-      9Cky6Ed="
-    }
-  }],
-  "proof": [{
-    "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/2",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-    +W3JT24="
-  }]
+<pre class="example" title="A simple verifiable profile in JSON-LD Format">
+{
+	"verifiableProfile": {
+		"@context": [
+			"http://schema.org",
+			"https://w3id.org/credentials/v1"
+		],
+		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"holder": "< holder id >",
+		"verifiableCredential": [{
+			"id": "http://dmv.example.gov/credentials/3732",
+			"type": ["verifiableCredential", "ProofOfAgeCredential"],
+			"issuer": "https://dmv.example.gov/issuers/14",
+			"issued": "2010-01-01T19:73:24Z",
+			"claims": [{
+				"subject": {
+					"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+					"ageOver": 21
+				}
+			}],
+			"proof": {
+				"type": "RsaSignature2018",
+				"created": "2017-06-17T10:03:48Z",
+				"creator": "https://dmv.example.gov/issuers/14/keys/234",
+				"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+				"signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFzvueMWmFPRdW + gGsutPTLhwYmfIFpbBu95t501 + rSLHIEuujM / +PXr + W3JT249 Cky6Ed = "
+			}
+		}],
+		"proof": [{
+			"type": "RsaSignature2018",
+			"created": "2017-06-18T21:19:10Z",
+			"creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/2",
+			"nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+			"signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wpsPRdW + gGsutPTLzvueMWmFhwYmfIFpbBu95t501 + rSLHIEuujM / +PXr9Cky6Ed +W3JT24 = "
+		}]
+	}
 }</pre>
         </section>
 
@@ -1381,7 +1467,7 @@ The following example demonstrates how to express a more complex
               either unrestricted or extended in the future.</li>
             </ul>
       <p>The following example demonstrates how to express a
-      simple <a>verifiable profile</a>.</p>
+      simple <a>verifiable profile</a>. STILL TO DO</p>
 
 <pre class="idl">
 [Constructor]
@@ -1447,7 +1533,7 @@ interface EntityProfile {
             meaning by its name, no machine-readable semantics for the
             name are provided. There is information about the <a>claim</a>
             itself, such as an identifier for the <a>entity</a> that issued
-            it and a date for when it was issued. </p>
+            it and a date for when it was issued. STILL TO DO </p>
 
 <pre class="idl">
   interface CredentialBase {
@@ -1470,7 +1556,7 @@ interface EntityProfile {
 </pre>
 
             <p>This <a>verifiable credential expression</a> could then be
-            used as follows in JavaScript:</p>
+            used as follows in JavaScript: STILL TO DO</p>
 
 <pre class="example" title="Using a simple claim">
   var claim = new Claim1();
@@ -1478,7 +1564,7 @@ interface EntityProfile {
   claim.ageOver = 21;
 
   var credential = new Credential();
-  credential.type = ["Credential", "ProofOfAgeCredential"];
+  credential.type = ["verifiableCredential", "ProofOfAgeCredential"];
   credential.issuer = "https://dmv.example.gov";
   credential.issued = "2010-01-01";
   credential.claim = claim;
@@ -1488,7 +1574,7 @@ interface EntityProfile {
             same <a>claim</a> about the same <a>subject</a>, but in a
             verifiable form. As such, it contains
             a <code>signature</code> that can be used to verify its
-            entire contents, including the claim.</p>
+            entire contents, including the claim. STILL TO DO</p>
 
 <pre class="idl">
   interface VerifiableCredentialBase : CredentialBase {
@@ -1511,7 +1597,7 @@ interface EntityProfile {
   };
 </pre>
             <p>This verifiable <a>verifiable credential expression</a>
-            could then be used as follows in JavaScript:</p>
+            could then be used as follows in JavaScript: STILL TO DO</p>
 
 <pre class="example" title="Using a simple verifiable credential">
   var claim = new Claim1();
@@ -1526,7 +1612,7 @@ interface EntityProfile {
   signature.signatureValue = "g4j9UrpHM4/uu32NlTw0HDaSaYF2sykskfuByD7UbuqEcJIKa+IoLJLrLjqDnMz0adwpBCHWaqqpnd47r0NKZbnJarGYrBFcRTwPQSeqGwac8E2SqjylTBbSGwKZkprEXTywyV7gILlC8a+naA7lBRi4y29FtcUJBTFQq4R5XzI=";
 
   var credential = new VerifiableCredential1();
-  credential.type = ["Credential", "ProofOfAgeCredential"];
+  credential.type = ["verifiableCredential", "ProofOfAgeCredential"];
   credential.issuer = "https://dmv.example.gov";
   credential.issued = "2010-01-01";
   credential.claim = claim;
@@ -1535,7 +1621,7 @@ interface EntityProfile {
 
         <p>
 The following example demonstrates how to express a more complex set
-of verfiable claims about a particular <a>subject</a>.
+of verfiable claims about a particular <a>subject</a>. STILL TO DO
         </p>
 
 <pre class="idl">
@@ -1584,7 +1670,7 @@ of verfiable claims about a particular <a>subject</a>.
   };
 </pre>
             <p>This verifiable <a>verifiable credential expression</a>
-            could then be used as follows in JavaScript:</p>
+            could then be used as follows in JavaScript: STILL TO DO</p>
 
 <pre class="example" title="Using a more complex verifiable credential">{
   var nationality = new Nationality();
@@ -1625,7 +1711,7 @@ of verfiable claims about a particular <a>subject</a>.
 
   var vc = new VC2();
   vc.id = "http://example.gov/credentials/3732";
-  vc.type = ["Credential", "PassportCredential"];
+  vc.type = ["verifiableCredential", "PassportCredential"];
   vc.name = "Passport";
   vc.issuer = "https://example.gov";
   vc.issued = "2010-01-01";
@@ -1883,13 +1969,16 @@ For example, the following Verifiable Credential is a bearer credential:
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
   "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["verifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2017-10-22T12:23:48Z",
-  "claim": {
+    "claims": [ 
+  {
+    "subject": {
     <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
     "ageOver": 21
-  },
+  }
+ }],
   "proof": { ... }
 }
         </pre>
