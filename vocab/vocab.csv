@@ -1,7 +1,7 @@
 id,type,label,subClassOf,domain,range,@type,@container,comment
+,@context,,https://w3id.org/security/v1,,,,,
 cred,prefix,,https://w3id.org/credentials#,,,,,
 dc,prefix,,http://purl.org/dc/terms/,,,,,
-sec,prefix,,https://w3id.org/security#,,,,,
 schema,prefix,,http://schema.org/,,,,,
 xsd,prefix,,http://www.w3.org/2001/XMLSchema#,,,,,
 ,owl:imports,,http://purl.org/dc/terms/,,,,,
@@ -20,23 +20,5 @@ Credential,rdfs:Class,Credential,,,,,,FIXME
 Policy,rdfs:Class,Policy,,,,,,"Issue: The group is currently exploring a variety of ways of expressing the terms of use associated with a Verifiable Credential, namely, the Open Digital Rights Language."
 VerifiableProfile,rdfs:Class,Verifiable Profile,,,,,,A `verifiable profile` is a profile that is tamper-resistant and whose contents are typically counter-signed by the `holder` or `subject`.
 Identity,term,,https://w3id.org/identity#Identity,,,,,FIXME
-canonicalizationAlgorithm,term,,sec:canonicalizationAlgorithm,,,,,The canonicalization algorithm is used to transform the input data into a form that can be passed to a cryptographic digest method. The digest is then digitally signed using a digital signature algorithm. Canonicalization ensures that a piece of software that is generating a digital signature is able to do so on the same set of information in a deterministic manner.
 created,term,,dc:created,,,xsd:dateTime,,Date of creation of the resource.
 creator,term,,dc:creator,,,@id,,An entity primarily responsible for making the resource.
-domain,term,,sec:domain,,,,,FIXME
-expires,term,,sec:expiration,,,xsd:dateTime,,The expiration time is typically associated with a Key and specifies when the validity of the key will expire. It is considered a best practice to only create keys that have very definite expiration periods. This period is typically set to between six months and two years. An digital signature created using an expired key must be marked as invalid by any software attempting to verify the signature.
-nonce,term,,sec:nonce,,,,,"This property is used in conjunction with the input to the signature hashing function in order to protect against replay attacks. Typically, receivers need to track all nonce values used within a certain time period in order to ensure that an attacker cannot merely re-send a compromised packet in order to execute a privileged request."
-owner,term,,sec:owner,,,@id,,"This property is used in conjunction with the input to the signature hashing function in order to protect against replay attacks. Typically, receivers need to track all nonce values used within a certain time period in order to ensure that an attacker cannot merely re-send a compromised packet in order to execute a privileged request."
-privateKey,term,,sec:privateKey,,,@id,,A public key property is used to specify a URL that contains information about a public key.
-privateKeyPem,term,,sec:privateKeyPem,,,,,A private key PEM property is used to specify the PEM-encoded version of the private key. This encoding is compatible with almost every Secure Sockets Layer library implementation and typically plugs directly into functions intializing private keys.
-proof,term,,sec:proof,,,,,"The method used for a mathematical proof will vary by representation language and the technology used. For example, if digital signatures are used for the proof mechanism, this property is expected to have a value that is a set of name-value pairs including at least a signature, a reference to the signing entity, and a representation of the signing date."
-publicKey,term,,sec:publicKey,,,@id,@graph,A public key property is used to specify a URL that contains information about a public key.
-publicKeyPem,term,,sec:publicKeyPem,,,,,A public key PEM property is used to specify the PEM-encoded version of the public key. This encoding is compatible with almost every Secure Sockets Layer library implementation and typically plugs directly into functions intializing public keys.
-publicKeyService,term,,sec:publicKeyService,,,@id,,The publicKeyService property is used to express the REST URL that provides public key management services as defined by the Web Key [SECURE-MESSAGING] specification.
-revoked,term,,sec:revoked,,,xsd:dateTime,,"The revocation time is typically associated with a Key that has been marked as invalid as of the date and time associated with the property. Key revocations are often used when a key is compromised, such as the theft of the private key, or during the course of best-practice key rotation schedules."
-signature,term,,sec:signature,,,,,"The signature property is used to associate a signature with a graph of information. The signature property is typically not included in the canonicalized graph that is then digested, and digitally signed."
-signatureAlgorithm,term,,sec:signatureAlgorithm,,,,,"The signature algorithm is used to specify the cryptographic signature function to use when digitally signing the digest data. Typically, text to be signed goes through three steps: 1) canonicalization, 2) digest, and 3) signature. This property is used to specify the algorithm that should be used for step #3. A signature class typically specifies a default signature algorithm, so this property rarely needs to be used in practice when specifying digital signatures."
-signatureValue,term,,sec:signatureValue,,,,,The signature value is used to express the output of the signature algorithm expressed in base-64 format.
-CryptographicKey,term,,sec:Key,,,,,"This class represents a cryptographic key that may be used for encryption, decryption, or digitally signing data."
-GraphSignature2012,term,,sec:GraphSignature2012,,,,,"A graph signature is used for digital signatures on RDF graphs. The default canonicalization mechanism is specified in the RDF Graph normalization specification, which effectively deterministically names all unnamed nodes. The default signature mechanism uses a SHA-256 digest and RSA to perform the digital signature."
-LinkedDataSignature2015,term,,sec:LinkedDataSignature2015,,,,,"A Linked Data signature is used for digital signatures on RDF Datasets. The default canonicalization mechanism is specified in the RDF Dataset Normalization specification, which effectively deterministically names all unnamed nodes. The default signature mechanism uses a SHA-256 digest and RSA to perform the digital signature. This signature uses a algorithm for producing the data that it signs and verifies that is different from other Linked Data signatures."
