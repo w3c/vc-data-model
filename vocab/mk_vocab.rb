@@ -17,14 +17,14 @@ class Vocab
 
   TITLE = "Verifiable Claims Vocabulary".freeze
   DESCRIPTION = %(This document describes the RDFS vocabulary description used for Verifiable Claims [[verifiable-claims-data-model]] along with the default JSON-LD Context.).freeze
-  attr_accessor :prefixes, :terms, :properties, :classes, :instances, :datatypes,
+  attr_accessor :prefixes, :terms, :properties, :classes, :contexts, :instances, :datatypes,
                 :imports, :date, :commit, :seeAlso
 
   def initialize
     path = File.expand_path("../vocab.csv", __FILE__)
     csv = CSV.new(File.open(path))
     @prefixes, @terms, @properties, @classes, @datatypes, @instances = {}, {}, {}, {}, {}, {}
-    @imports, @seeAlso = [], []
+    @contexts, @imports, @seeAlso = [{"@version": 1.1}], [], []
     #git_info = %x{git log -1 #{path}}.split("\n")
     #@commit = "https://github.com/w3c/vc-vocab/commit/" + (git_info[0] || 'uncommitted').split.last
     date_line = nil #git_info.detect {|l| l.start_with?("Date:")}
@@ -39,6 +39,7 @@ class Vocab
       line.each_with_index {|v, i| entry[columns[i]] = v ? v.gsub("\r", "\n").gsub("\\", "\\\\") : nil}
 
       case entry[:type]
+      when '@context'       then (@contexts ||= []) << entry[:subClassOf]
       when 'prefix'         then @prefixes[entry[:id]] = entry
       when 'term'           then @terms[entry[:id]] = entry
       when 'rdf:Property'   then @properties[entry[:id]] = entry
@@ -213,6 +214,9 @@ class Vocab
       "rdfs_instances" => rdfs_instances
     }.delete_if {|k,v| Array(v).empty?}
 
+    # Imported contexts
+    context = contexts + [context]unless contexts.empty?
+
     {
       "@context" => context,
       "@graph" => ontology
@@ -222,7 +226,7 @@ class Vocab
   def to_html
     json = JSON.parse(to_jsonld)
     eruby = Erubis::Eruby.new(File.read("template.html"))
-    eruby.result(ont: json['@graph'], context: json['@context'])
+    eruby.result(ont: json['@graph'], context: json['@context'].is_a?(Array) ? json['@context'].last : json['@context'])
   end
 
   def to_ttl
