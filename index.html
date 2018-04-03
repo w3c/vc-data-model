@@ -820,6 +820,46 @@ very simple scheme for evidence as a part of this specification.
 
       </section>
 
+      <section>
+        <h2>Disputes</h2>
+        <p>
+An <a>entity</a> may dispute a <a>credential</a> issued by another entity.
+The mechanism for doing this is the same as issuing a regular credential
+except that the <a>subject</a> identifier for the <a>claims</a> are those
+of the disputed credential. For example, if a disputed credential with an
+identifier of <code>https://example.org/credentials/123</code> contains
+disputed statements, an entity may issue the following credential in a
+public venue to make it known that the credential is disputed:
+        </p>
+
+        <pre class="example nohighlight" title="Expressing a disputed credential">
+{
+  "id": "http://example.com/credentials/245",
+  "type": ["Credential", "DisputedCredential"],
+  <span class="highlight">"claim": {
+    "id": "http://con-artist.example.com/credentials/3732",
+    "currentStatus": "Disputed",
+    "statusReason": "Credential contains disputed statements"
+  }</span>,
+  "issuer": "https://example.com/people#me",
+  "issued": "2017-12-05T14:27:42Z",
+  "proof": { ... }
+}
+        </pre>
+
+        <p class="note">
+If a credential does not have an identifier, a content-addressed identifier
+may be used to identify the disputed credential. Similarly, content-addressed
+identifiers may be used to uniquely identify individual claims.
+        </p>
+
+        <p class="issue">
+The group is currently exploring whether the specification of a vocabulary
+term to express content-based identifiers for claims is within scope.
+        </p>
+
+      </section>
+
     </section>
 
     <section>
