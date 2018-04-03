@@ -876,13 +876,22 @@ applicable to only some credentials.
           proof suite.</li>
           <li>Required proof properties are present. For example, for a
           Linked Data Signature, <code>type</code>, <code>created</code>,
-          <code>creator</code>, and <code>signatureValue</code> are present.
+          <code>creator</code>, <code>proofPurpose</code> and
+          <code>signatureValue</code> are present.
           </li>
           <li>The public key associated with the signature is available
           and a trustworthy link between this signing key and the
           issuer's <a>verifiable profile</a> may be established. The key must
           not be revoked or expired.</li>
           <li>The cryptographic signature is valid.</li>
+          <li>If a <code>proofPurpose</code> exists, it MUST be a valid value
+          per the cryptographic suite. For example, for
+          most digital signature mechanisms the value of
+          <code>proofPurpose</code> MUST be
+          <code>verifiableCredentialIssuance</code> and the public key material
+          used to create the signature MUST be available via the
+          <code>verifiableCredentialIssuance</code> property in the
+          <a>verifiable profile</a> of the <a>issuer</a>.</li>
         </ul>
       </section>
       <section>
