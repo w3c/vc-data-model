@@ -871,28 +871,50 @@ applicable to only some credentials.
       </section>
       <section>
         <h3>Signatures / Proofs</h3>
+
+        <p>
+The cryptographic mechanism used to prove that the information in a
+<a>verifiable credential</a> or a <a>verifiable profile</a> has not been
+tampered with is called a proof. There are many types of cryptographic proofs
+including but not limited to, digital signatures, zero knowledge proofs,
+proof of work, and proof of stake. In general, when verifying proofs,
+implementations MUST ensure that:
+        </p>
+
         <ul>
-          <li>The document proof is available in the form of a known
-          proof suite.</li>
-          <li>Required proof properties are present. For example, for a
-          Linked Data Signature, <code>type</code>, <code>created</code>,
-          <code>creator</code>, <code>proofPurpose</code> and
-          <code>signatureValue</code> are present.
-          </li>
-          <li>The public key associated with the signature is available
-          and a trustworthy link between this signing key and the
-          issuer's <a>verifiable profile</a> may be established. The key must
-          not be revoked or expired.</li>
-          <li>The cryptographic signature is valid.</li>
-          <li>If a <code>proofPurpose</code> exists, it MUST be a valid value
-          per the cryptographic suite. For example, for
-          most digital signature mechanisms the value of
-          <code>proofPurpose</code> MUST be
-          <code>verifiableCredentialIssuance</code> and the public key material
-          used to create the signature MUST be available via the
-          <code>verifiableCredentialIssuance</code> property in the
-          <a>verifiable profile</a> of the <a>issuer</a>.</li>
+          <li>The proof is available in the form of a known proof suite.</li>
+          <li>All required proof suite properties are present.</li>
+          <li>The proof suite verification agorithm, when applied to the
+          data, results in an acceptable proof.</li>
         </ul>
+
+        <p>
+Some proofs are digital signatures. In general, when verifying digital
+signatures, implementations MUST ensure that:
+        </p>
+
+        <ul>
+          <li>The public key associated with the signature is available
+          and a trustworthy link between the signing key and the
+          issuer MUST be established.</li>
+          <li>The key MUST NOT not be revoked or expired.</li>
+          <li>The cryptographic signature MUST be valid.</li>
+          <li>If a <code>proofPurpose</code> exists, it MUST be a valid value
+          per the cryptographic suite.</li>
+        </ul>
+
+        <p class="note">
+The digital signature provides a number of protections, other than tamper
+resistance, that are not immediately obvious.
+For example, a Linked Data Signature's <code>created</code> property
+establishes a date and time where the credential SHOULD NOT be considered
+valid before that date and time. The  <code>creator</code> property enables
+the ability to dynamically discover information about the entity that created
+the data to ensure that the public key has not been revoked or expired.
+The <code>proofPurpose</code> property ensures that the reason the entity
+created the signature, such as for the purposes of authentication or creating
+a verifiable credential, are clear and protected in the signature.
+        </p>
       </section>
       <section>
         <h3>Expiration</h3>
