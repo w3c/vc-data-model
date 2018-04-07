@@ -694,6 +694,134 @@ Linked Data Proofs [[LD-PROOFS]] specification.
       <h1>Advanced Concepts</h1>
 
       <section>
+        <h2>Extensibility</h2>
+
+        <p>
+One of the goals of the Verifiable Credentials Data Model is to enable
+permissionless innovation. This requires that the data model is extensible
+in a number of different ways:
+        </p>
+
+        <ul>
+          <li>
+The requirement to model complex multi-entity relationships is provided
+through the use of a graph-based data model.
+          </li>
+          <li>
+The requirement to be able to extend the machine-readable vocabularies
+used to describe information in the data model without the use of a
+centralized system for doing so is accomplished via the use
+of [[LINKED-DATA]].
+          </li>
+          <li>
+The requirement to support multiple types of cryptographic proof formats is
+accomplished via the use of [[LINKED-DATA-PROOFS]], [[LINKED-DATA-SIGNATURES]],
+and a variety of signature suites.
+          </li>
+          <li>
+The requirement to provide all of the extensibility mechanisms outlined above
+in a data format that is popular among software developers and web page authors
+is enabled via the use of [[!JSON-LD]].
+          </li>
+        </ul>
+
+        <p>
+This approach to data modelling is often called an "open world assumption",
+meaning that any entity can say anything about any other entity. This approach
+often feels in conflict with building simple and predictable software systems.
+Balacing extensibility with program correctness is always more challenging
+with an open world assumption than it is with closed software systems.
+        </p>
+
+        <p>
+The rest of this section describes how both extensibility and program
+correctness are achieved through a series of examples.
+        </p>
+
+        <p>
+Let us assume that we start with the following <a>verifiable credential</a>:
+        </p>
+
+        <pre class="example nohighlight" title="A simple credential">
+{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://example.com/credentials/4643",
+  "type": ["Credential"],
+  "issuer": "https://example.com/issuers/14",
+  "issued": "2018-02-24T05:28:04Z",
+  "claim": {
+    "id": "did:example:abcdef1234567",
+    "name": "Jane Doe"
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+The credential above simply states that the entity associated with
+<code>did:example:abcdef1234567</code> has a <code>name</code> with a
+value of <code>Jane Doe</code>. Let's assume that a developer wanted to
+extend the <a>verifiable credential</a> to store two additional pieces of
+information: an internal corporate reference number, and Jane's favorite
+food.
+        </p>
+
+        <p>
+The first thing that a developer would do is create a JSON-LD Context
+containing the two new terms:
+        </p>
+
+        <pre class="example nohighlight" title="An example JSON-LD Context">
+{
+  "@context": {
+    "referenceNumber": "https://example.com/vocab#referenceNumber",
+    "favoriteFood": "https://example.com/vocab#favoriteFood"
+  }
+}
+        </pre>
+
+        <p>
+Now that the JSON-LD Context has been created, the developer must publish it
+somewhere that is accessible to <a>verifiers</a> that will be processing the
+<a>verifiable credential</a>. For this example, let us assume that the
+JSON-LD Context above is published at the following URL:
+<code>https://example.com/contexts/mycontext.jsonld</code>. At this point,
+extending the first example in this section is a simple matter of including the
+context above and adding the new properties to the <a>verifiable credential</a>.
+        </p>
+
+        <pre class="example nohighlight"
+          title="A verifiable credential with a custom extension">
+{
+  "@context": <span class="highlight">[
+    </span>"https://w3id.org/credentials/v1",
+    <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
+  ]</span>,
+  "id": "http://example.com/credentials/4643",
+  "type": ["Credential"],
+  "issuer": "https://example.com/issuers/14",
+  "issued": "2018-02-24T05:28:04Z",
+  <span class="highlight">"referenceNumber": 83294847,</span>
+  "claim": {
+    "id": "did:example:abcdef1234567",
+    "name": "Jane Doe",
+    <span class="highlight">"favoriteFood": "Papaya"</span>
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+The examples so far have shown that it is easy to extend the Verifiable
+Credentials Data Model in a permissionless and decentralized way. The
+mechanism shown also ensures that verifiable credentials that were created
+in this way provide a mechanism to prevent namespace conflicts and
+semantic ambiguity.
+        </p>
+
+      </section>
+
+      <section>
         <h2>Terms of Use</h2>
         <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
         <a>holder</a> to express limitations on the use of information
