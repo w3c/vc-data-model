@@ -830,6 +830,29 @@ decisions are up to the developers of these applications and are specifically
 not the domain of this specification.
         </p>
 
+        <p>
+Implementations MUST produce an error when an extension JSON-LD Context
+overrides the expanded URL for a term specified in the base JSON-LD Context
+(<code>https://w3id.org/credentials/v1</code>). To avoid the possibility of
+accidentally overriding terms, developers are urged to scope their extensions.
+For example, the following extension scopes the new <code>favoriteFood</code>
+term so that it may only be used within the <code>claim</code> property:
+        </p>
+
+        <pre class="example nohighlight" title="Scoping terms in a JSON-LD Context">
+{
+  "@context": {
+    "referenceNumber": "https://example.com/vocab#referenceNumber",
+    <span class="highlight">"claim": {
+      "@id": "https://w3id.org/credentials#claim",
+      "@context": {
+        "favoriteFood": "https://example.com/vocab#favoriteFood",
+      }
+    }</span>
+  }
+}
+        </pre>
+
       </section>
 
       <section>
