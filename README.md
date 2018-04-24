@@ -23,6 +23,7 @@ mailing list as well.
 ### Verifiable Claims github repos
 * [Data Model](https://github.com/w3c/vc-data-model)
 * [Use Cases](https://github.com/w3c/vc-use-cases)
+* [Data Model Test Cases](https://github.com/w3c/vc-test-suite)
 
 ### Other useful links
 * [Public group email archive](https://lists.w3.org/Archives/Public/public-vc-wg/)
