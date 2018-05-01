@@ -924,8 +924,11 @@ with implementations, or enabling aggressive caching of contexts.
         <dl>
           <dt><var>termsOfUse</var></dt>
           <dd>The value of this property MUST be one or more terms of use
-            descriptions that provide enough information to a <a>verifier</a>
+            that provide enough information to a <a>verifier</a>
             to determine how they may utilize the given information.
+            Each terms of use is uniquely identified by a type and id. The precise
+            contents of each terms of use is determined by the specific terms of use
+            definition.
           </dd>
         </dl>
 
@@ -946,8 +949,8 @@ use associated with a Verifiable Credential, namely, the
     "ageOver": 21
   },
   <span class="highlight">"termsOfUse": [{
-    "type": "Policy",
-    "uid": "http://example.com/policies/credential/4",
+    "id": "http://example.com/policies/credential/4",
+    "type": ["TermsOfUse", "Policy"],
     "profile": "http://example.com/profiles/credential",
     "prohibition": [{
       "assigner": "https://dmv.example.gov/issuers/14",
@@ -965,32 +968,33 @@ In the example above, the <a>issuer</a> is prohibiting a <a>verifier</a> from
 storing the data in an archive.
         </p>
 
-        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+        <pre class="example nohighlight" title="Usage of termsOfUse property by a Holder">
 {
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "credential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
-    "issued": "2010-01-01T19:73:24Z",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
-    },
-    "proof": { ... }
-  }],
-  <span class="highlight">"termsOfUse": [{
-    "type": "Policy",
-    "uid": "http://example.com/policies/credential/6",
-    "profile": "http://example.com/profiles/credential",
-    "prohibition": [{
-      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "assignee": "https://wineonline.example.org/",
-      "target": "http://dmv.example.gov/credentials/3732",
-      "action": ["3rdPartyCorrelation"]
-    }]
-  }</span>,
-  "proof": [ ... ]
+	"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+	"type": "VerifiableProfile",
+	"credential": [{
+		"id": "http://dmv.example.gov/credentials/3732",
+		"type": ["Credential", "ProofOfAgeCredential"],
+		"issuer": "https://dmv.example.gov/issuers/14",
+		"issued": "2010-01-01T19:73:24Z",
+		"claim": {
+			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+			"ageOver": 21
+		},
+		"proof": { ...}
+	}],
+	"termsOfUse": [{
+		"id": "http://example.com/policies/credential/6",
+		"type": ["TermsOfUse", "Policy"],
+		"profile": "http://example.com/profiles/credential",
+		"prohibition": [{
+			"assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+			"assignee": "https://wineonline.example.org/",
+			"target": "http://dmv.example.gov/credentials/3732",
+			"action": ["3rdPartyCorrelation"]
+		}]
+	}],
+	"proof": { ...}
 }
         </pre>
 
