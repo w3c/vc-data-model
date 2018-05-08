@@ -385,7 +385,7 @@ single document.
 
       <p>
 The following sections outline core data model concepts, such as
-<a>claims</a>, <a>credentials</a>, and <a>profiles</a>, that form the
+<a>claims</a>, <a>credentials</a>, and <a>presentations</a>, that form the
 foundation of this specification.
       </p>
 
@@ -476,17 +476,17 @@ not required to be related.
 
     </section>
     <section>
-      <h2>Profiles</h2>
+      <h2>Presentations</h2>
 
       <p>
 As this specification takes a privacy-first approach, it is important that
 the entities that use this technology are able to express only the portions of
 their persona that are appropriate for the situation. The expression of a
-subset of one's persona is called a <a>verifiable profile</a>.
+subset of one's persona is called a <a>verifiable presentation</a>.
       </p>
 
       <p>
-A <a>verifiable profile</a> is a collection of one or more
+A <a>verifiable presentation</a> is a collection of one or more
 <a>verifiable credentials</a> that are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
@@ -494,19 +494,19 @@ information typically expresses an aspect of a person, organization, or entity.
 
       <figure>
         <img style="margin: auto; display: block;"
-          width="50%" src="diagrams/profile.svg">
+          width="50%" src="diagrams/presentation.svg">
         <figcaption style="text-align: center;">
-The basic components of a verifiable profile.
+The basic components of a verifiable presentation.
         </figcaption>
       </figure>
 
       <p>
-Examples of different profiles include a person's professional persona, online
+Examples of different presentations include a person's professional persona, online
 gaming persona, or home life persona.
       </p>
 
       <p class="note">
-It is possible to have a <a>profile</a>, such as a business persona,
+It is possible to have a <a>presentation</a>, such as a business persona,
 that contains multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
@@ -722,19 +722,19 @@ exists for implementers that would like to implement credential status checking.
       </section>
 
       <section>
-        <h2>Profiles</h2>
+        <h2>Presentations</h2>
         <p>
 Credentials MAY be composed by placing them into a data structure called a
-<a>profile</a>. A <a>verifiable profile</a> is a profile that contains
+<a>presentation</a>. A <a>verifiable presentation</a> is a presentation that contains
 <a>verifiable credentials</a> and one or more proofs that are appropriate
-for the profile. The basic structure of a <a>verifiable profile</a>
+for the presentation. The basic structure of a <a>verifiable presentation</a>
 is provided below:
         </p>
 
-        <pre class="example nohighlight" title="Basic structure of a profile">
+        <pre class="example nohighlight" title="Basic structure of a presentation">
 {
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiableProfile"],
+  "type": ["VerifiablePresentation"],
   <span class="highlight">"verifiableCredential": [{ ... }],
   "proof": [{ ... }]</span>
 }
@@ -887,7 +887,7 @@ certain extensions while highly secure environments may require that no
 extensions are allowed. These decisions are up to the developers of these
 applications and are specifically not the domain of this specification.
 Applications that do not understand the semantic meaning of all properties
-while processing a verifiable credential or a verifiable profile MUST
+while processing a verifiable credential or a verifiable presentation MUST
 produce an error.
         </p>
 
@@ -1133,7 +1133,7 @@ applicable to only some credentials.
         <ul>
           <li>The <code>issuer</code> id must match expectations. Likely,
           that means it is the id of a known and trusted <a>verifiable
-          profile</a>.</li>
+          presentation</a>.</li>
           <li>Recent metadata about the <code>issuer</code> which was published
           by the issuer MUST be available.</li>
         </ul>
@@ -1143,7 +1143,7 @@ applicable to only some credentials.
         <ul>
           <li>The claim subject identifier must match expectations.
           Likely, that means it is the id of a known and trusted
-          <a>verifiable profile </a> for the subject of the claim. If the
+          <a>verifiable presentation </a> for the subject of the claim. If the
           entity that is subject of a claim has transmitted it to the
           verifier, the subject may be able to prove ownership of key
           identifying properties such as email address(es) and public
@@ -1155,7 +1155,7 @@ applicable to only some credentials.
 
         <p>
 The cryptographic mechanism used to prove that the information in a
-<a>verifiable credential</a> or a <a>verifiable profile</a> has not been
+<a>verifiable credential</a> or a <a>verifiable presentation</a> has not been
 tampered with is called a proof. There are many types of cryptographic proofs
 including but not limited to, digital signatures, zero knowledge proofs,
 proof of work, and proof of stake. In general, when verifying proofs,
@@ -1272,7 +1272,7 @@ a verifiable credential, are clear and protected in the signature.
             (unverifiable) <a>claim</a> about a particular
             <a>subject</a>. In this case, the claim is that
             the <a>subject</a> with
-            the <a href="#entity-id">Verifiable Profile <var>id</var></a>
+            the <a href="#entity-id">Verifiable Presentation <var>id</var></a>
             of
             <code>did:example:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
             of age or older. While a human reading the
@@ -1434,10 +1434,10 @@ of <a>claims</a> about a particular <a>subject</a> as a
         </section>
 
         <section>
-          <h2>Verifiable Profile</h2>
-            <p>In JSON [[!JSON]], an instance of the Verifiable Profile
+          <h2>Verifiable Presentation</h2>
+            <p>In JSON [[!JSON]], an instance of the Verifiable Presentation
             is expressed as a single JSON object whose
-            properties are the verifiable profile's
+            properties are the verifiable presentation's
             <a>properties</a>, with the following value type assignments:</p>
             <ul>
               <li>Any number value MUST be represented as a Number type.</li>
@@ -1451,9 +1451,9 @@ of <a>claims</a> about a particular <a>subject</a> as a
               <li>Any other value MUST be represented as a String type.</li>
             </ul>
       <p>The following example demonstrates how to express a
-      simple <a>verifiable profile</a>.</p>
+      simple <a>verifiable presentation</a>.</p>
 
-<pre class="example" title="A simple verifiable profile">{
+<pre class="example" title="A simple verifiable presentation">{
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "credential": [{
     "id": "http://dmv.example.gov/credentials/3732",
@@ -1518,8 +1518,7 @@ of <a>claims</a> about a particular <a>subject</a> as a
             simple <a>claim</a> about a particular
             <a>subject</a>. In this case, the claim is that
             the <a>subject</a> with
-            the <a href="#entity-id">Entity
-            Profile <var>id</var></a>
+            the <var>id</var>
             of <code>did:example:ebfeb1f712ebc6f1c276e12ec21</code> is 21
             years of age or older. While a human reading the
             property <code>ageOver</code> may be able to guess its
@@ -1615,22 +1614,22 @@ The following example demonstrates how to express a more complex
         </section>
 
         <section>
-          <h2>Verifiable Profile</h2>
-            <p>Instances of the <a>Verifiable Profile</a> are
+          <h2>Verifiable Presentation</h2>
+            <p>Instances of the <a>Verifiable Presentation</a> are
             expressed in JSON-LD in the same way they are expressed in
             JSON
-            (Section <a href="#expressing-an-entity-profile-in-json"></a>),
+            (Section <a href="#expressing-an-entity-presentation-in-json"></a>),
             except that there is an additional
             property <code>@context</code>.  Each property of the
-            verifiable profile, such as <code>name</code>
+            verifiable presentation, such as <code>name</code>
             or <code>email</code>, is given context via
             the <code>@context</code> value. Other contexts can be
             used or combined to express any arbitrary information
-            about an <a>verifiable profile</a> in idiomatic JSON.  </p>
+            about an <a>verifiable presentation</a> in idiomatic JSON.  </p>
       <p>The following example demonstrates how to express a
-      simple <a>verifiable profile</a>.</p>
+      simple <a>verifiable presentation</a>.</p>
 
-<pre class="example" title="A simple verifiable profile in JSON-LD Format">{
+<pre class="example" title="A simple verifiable presentation in JSON-LD Format">{
   "@context": [
     "http://schema.org",
     "https://w3id.org/credentials/v1"
@@ -2080,7 +2079,7 @@ cryptographic techniques.
 The solution to the privacy implications of correlation or aggregation tend
 to not be technological in nature, but policy driven instead. Therefore, if
 a holder does not wish information to be aggregated about them, then they
-must express this in the <a>verifiable profiles</a> that they transmit.
+must express this in the <a>verifiable presentations</a> that they transmit.
         </p>
 
       </section>
@@ -2205,8 +2204,8 @@ token that enables the verifier to use the token to check to see if the
 balance is above a certain amount. In this case, the bank could
 issue a verifiable credential containing a token for checking balance
 to a holder. A holder would then include the verifiable credential in a
-verifiable profile and bind the token to a credit checking agency via a digital
-signature. The verifier would then wrap the verifiable profile in their digital
+verifiable presentation and bind the token to a credit checking agency via a digital
+signature. The verifier would then wrap the verifiable presentation in their digital
 signature, and hand it back to the issuer to dynamically check the account
 balance.
         </p>
@@ -2303,7 +2302,7 @@ use of cryptography. Implementers should be aware of the underlying
 cryptography suites and libraries that are used to implement the
 creation and verification of digital signatures and mathematical proofs
 utilized by their systems when processing <a>credentials</a> and
-<a>profiles</a>. Software developers with extensive experience implementing
+<a>presentations</a>. Software developers with extensive experience implementing
 or auditing systems that use cryptography must be used to ensure that
 systems are properly designed. Proper
 <a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a>
