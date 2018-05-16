@@ -1049,7 +1049,10 @@ very simple scheme for evidence as a part of this specification.
         </pre>
 
       </section>
+ </section>
+
 <section>
+
       <h1>Subject Not Equal To Holder</h1>
 
       <p>
@@ -1080,7 +1083,9 @@ the data model
 
      <p>
 In this case, the claim may contain multiple properties that each provide 
-an aspect of the identity of the subject
+an aspect of the identity of the subject, and which together unambiguously identify
+the subject. In this case, it does not matter who the holder is, since the verifier
+can unambiguously identify the subject of the verifiable credential.
    </p>
 
         <pre class="example nohighlight" title="An example of a credential 
@@ -1114,75 +1119,98 @@ that uniquely identifies a subject">
       <h2>Holder Acts on Behalf of Subject</h2>
 
       <p>
-When the holder wants to act on behalf of the subject, the holder creates 
-a Profile, in which the profile ID is the ID of the holder, and the relationship 
-property states the relationship between the holder and the subject.
+When the holder wants to act on behalf of the subject, the issuer MAY indicate this by
+either including a relationship object in the subject's <a>claim</a>, or by issuing a separate relationship credential to the holder. Either way, the relationship object is used to
+describe the relationship between the holder and the subject of the claim. </p>
 
-     </p>
-     <p>
-If the holder wants to act on behalf of two or more different subjects, then
-each relationship property states the holder's relationship to one the subjects.
-      </p>
+<p>It is outside
+the scope of this standard how the issuer verifies the subject, the holder and the
+relationship between them.
 
-     <p>
-Note. The verifier still has to validate that these relationships are true.
+<p>
+Note: it is for further study which, if any, of the above mechanisms is to be 
+standardised by the working group.
+
      </p>
 
    <section>
-      <h3>The Relationships Property</h3>
+
+      <h3>The Relationship Object</h3>
 
       <p>
-The Relationships property states the Profile holder's relationship with each of the 
-subjects of the embedded credentials. Each value comprises the relationship property 
-(i.e. a string describing the relationship of the holder to the subject) and 
-the ID of the subject being referred to.
+The Relationship object states the relationship between a subject, identified by an ID, and an object, also identified by an ID e.g. a value of "Parent" indicates that the subject is the parent of the object. 
+     </p>
+      <p>
+Note that values of the relationship type will be defined in other standards, 
+but it is 
+likely that typical values might be "Parent" (when the subject is a child) and 
+"Owner" (when the subject is a pet) etc.
+      </p>
+
+<p>
+Note that the following text and the two examples have not yet been finalised
+by the working group.
+</p>
+<p>
+When the relationship object is contained
+within a subject's claim, then the holder is the object of the
+relationship and the claim's subject is the subject of the relationship. When the
+relationship property is contained in the holder's relationship credential, the holder is the subject of both the relationship credential and the relationship, and the 
+relationship object refers to the subject of one or more claims or verifiable credentials that are held by the holder.
 
       </p>
  
-      <p>
-Note that values of the relationship string will be defined in other standards, but it is 
-likely that typical values might be "parent" (when the subject is a child) and 
-"owner" (when the subject is a pet) etc.
-      </p>
      
-        <pre class="example nohighlight" title="An example of the relationships 
-property, where a parent asserts that their child is under 16">
+        <pre class="example nohighlight" title="An example of the relationship 
+property in a child's credential, so that a parent can hold it">
 
 {
-	"id": "did:example:e12ec3ebf12eb1c276cv211f712",
-	"type": ["VerifiableProfile"],
-	"holderid": "did:example:ebfeb1c276e12ec211f712ebc6f",
-	"relationships": [{
-		"subjectid": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-		"relationship": "parent"
-	}],
-	"verifiableCredential": [{
-		"id": "http://dmv.example.gov/credentials/3732",
-		"type": ["Credential", "ProofOfAgeCredential"],
-		"issuer": "https://dmv.example.gov/issuers/14",
-		"issued": "2010-01-01T19:73:24Z",
-		"claim": {
-			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-			"ageUnder": 16
-		},
-		"proof": {
-			"type": "RsaSignature2018",
-			"created": "2017-06-17T10:03:48Z",
-			"creator": "https://dmv.example.gov/issuers/14/keys/234",
-			"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-			"signatureValue": "pY9...Cky6Ed = "
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claim": {
+		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"ageUnder": 16,
+		"relationship": {
+			"type": "Child",
+			"id": "did:example:ebfeb1c276e12ec211f712ebc6f"
 		}
-	}],
-	"proof": [{
+	},
+	"proof": {
 		"type": "RsaSignature2018",
-		"created": "2017-06-18T21:19:10Z",
-		"creator": "did:example:ebfeb1c276e12ec211f712ebc6f/keys/2",
-		"nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-		"signatureValue": "BavEl...W3JT24 = "
-	}]
-}
-        </pre>
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
+	}
+} 
+     </pre>
 
+<pre class="example nohighlight" title="An example of the relationship 
+object in a relationship credential so that a parent can hold their child's
+verifiable credentials">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "RelationshipCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claim": {
+		"id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+		"relationship": {
+			"type": "Parent",
+			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+		}
+	},
+	"proof": {
+		"type": "RsaSignature2018",
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
+	}
+}
 
       </section>
     </section>
@@ -1191,7 +1219,7 @@ property, where a parent asserts that their child is under 16">
        <h2>Subject Delegates to Holder</h2>
 
      <p>
-This is supported in the data model in two different ways: through the use of either recursion or profiles. Both methods involve the subject issuing a new credential to the delegated holder.
+This is supported in the data model in two different ways: through the use of either recursion or profiles. Both methods involve the subject issuing a new verifiable credential to the delegated holder.
     </p>
 
     <p>
@@ -1208,7 +1236,9 @@ a new property “delegatable”, is added to the data model.
 The delegatable property, a Boolean, states whether a credential is 
 delegatable or not. If it is present with the value true, or not present, 
 then the credential is delegatable to a third party. If it is present with 
-the value false then it is not delegatable.
+the value false then it is not delegatable. A verifier that receives a verifiable 
+credential that is not delegatable MUST reject any verifiable credential that has
+been delegated from it.
 
   </p>
 
@@ -1242,7 +1272,9 @@ With recursion, the subject issues a credential to the delegated holder in which
 the id of the delegated holder, and the claim property is the credential that 
 was originally issued to the subject. An example is provided below.
     </p>
-
+<p>
+Note: the exact format of this credential has not yet been agreed by the working group
+</p>
  <pre class="example nohighlight" title="An example of a credential delegated 
 from a subject to a holder that is valid for 2 days">
 
@@ -1292,25 +1324,16 @@ from a subject to a holder that is valid for 2 days">
    <p>
 
 Through the use of profiles, the subject delegates a credential to a
-holder, by issuing a new credential in which: the issuer is the subject, 
-the subject is the delegated holder, and the claim contains the property to be delegated. In addition, the delegated holder creates a profile that contains these two credentials, and a relationships property in which one
-relationship refers to the original subject and has the value 'delegate' and the other
-relationship refers to the delegated credential and has the value 'self'.
+holder, by issuing a new credential to the holder in which: the issuer is the subject, 
+the subject is the delegated holder, and the claim contains the property to be delegated. In addition, the delegated holder creates a profile that contains these two credentials.
+</p>
+
+
 
         <pre class="example nohighlight" title="An example of delegation using a profile">
 {
-	"id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+	"id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
 	"type": ["VerifiableProfile"],
-	"holderid": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-	"relationships": [{
-			"subjectid": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-			"relationship": "delegate"
-		},
-		{
-			"subjectid": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-			"relationship": "self"
-		}
-	],
 	"credential": [{
 			"id": "http://example.gov/credentials/3732",
 			"type": ["Credential", "Role"],
@@ -1327,7 +1350,7 @@ relationship refers to the delegated credential and has the value 'self'.
 			"proof": {....}
 		},
 		{
-			"id": "some other ID",
+			"id": "https://some.dns.com/VC/123456789",
 			"type": ["Credential", "DelagatedCredential"],
 			"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 			"issued": "2010-01-03",
@@ -1364,41 +1387,42 @@ relationship refers to the delegated credential and has the value 'self'.
 
       <p>
 When the issuer wishes to authorise a holder to possess a credential that 
-describes a subject who is not the holder, then the issuer inserts the ID 
-of the holder into the subject's credential, by using the holderid property.
-
+describes a subject who is not the holder, then the issuer inserts the 
+relationship object into the subject's credential, describing the relationship
+of the holder to either itself (the issuer) or the subject, at its own discretion.
+An example of a relationship between the subject and the holder was given above.
       </p>
 
-    <section>
-      <h3> Holder ID Property</h3>
-
-     <p>
-The holderid property is inserted into a credential by the issuer, when the 
-issuer authorises the holder to possess the credential.
-
-    </p>
 
         <pre class="example nohighlight" title="An example of a credential 
-issued to a holder who is not the subject of the credential">
+issued to a holder who is not the subject of the credential, and who has
+a relationship with the issuer">
 
 {
 	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "ProofOfAgeCredential"],
+	"type": ["Credential", "NameAndAddress"],
 	"issuer": "https://dmv.example.gov/issuers/14",
+	"relationship": {
+		"type": "LawEnforcement",
+		"id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
+	},
 	"issued": "2010-01-01",
-	"holderid": "did:example:ebfeb1276e12ec21f712ebc6f1c",
 	"claim": {
 		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 		"name": "Mr John Doe",
 		"address": "10 Some Street, Anytown, ThisLocal, Country X"
 	},
-	"proof": { ...
+	"proof": {
+		"type": "RsaSignature2018",
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
 	}
-}
-        </pre>
+}        </pre>
 
 
-       </section>
+
 
      </section>
 
