@@ -566,6 +566,103 @@ such that market competition and customer choice is increased.
 
     <section>
       <h1>Basic Concepts</h1>
+
+      <section>
+        <h2>Types</h2>
+        <p>
+Type information may be expressed via the <a>type</a> property:
+        </p>
+        <dl>
+          <dt><dfn>type</dfn></dt>
+          <dd>
+The value of this property MUST ultimately be one or more URIs.
+If more than one URI is provided, the array MUST be interpreted as a set of
+values where order is not significant. Note that syntax such as JSON-LD terms
+MAY be used to ease developer usage. It is RECOMMENDED that dereferencing the
+URI results in a document containing machine-readable information about the
+type.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of the type property">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+With respect to this specification, the following <a>type</a>s MUST be
+specified on the following objects:
+        </p>
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+A <a href="#credentials">credential</a> containing a
+<a href="#proofs-aka-signatures">proof</a>
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiableCredential</code>"]</tt>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#credentials">credential</a> NOT containing a
+<a href="#proofs-aka-signatures">proof</a>
+              </td>
+              <td>
+<tt>"type": ["<code>UnverifiableCredential</code>"]</tt>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#presentations">presentation</a> containing a
+<a href="#proofs-aka-signatures">proof</a>
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiablePresentation</code>"]</tt>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#presentations">presentation</a> NOT containing a
+<a href="#proofs-aka-signatures">proof</a>
+              </td>
+              <td>
+<tt>"type": ["<code>UnverifiablePresentation</code>"]</tt>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <p>
+The type system for the Verifiable Credentials Data Model is the same as the
+one for [[JSON-LD]] and is covered in depth in that specification. All
+<a>credentials</a> SHOULD specify additional, more narrow <a>type</a>s
+(e.g. <code>ProofOfAgeCredential</code>) such that software systems can use
+the additional information to more easily process the credential.
+        </p>
+
+      </section>
+
       <section>
         <h2>Issuer</h2>
         <p>
@@ -590,7 +687,7 @@ information associated with the <var>claim</var> property became valid.
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
   <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
   "claim": {
@@ -620,7 +717,7 @@ signing entity, and a representation of the signing date.</dd>
         <pre class="example nohighlight" title="Usage of signature property">
 {
   "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
   "issued": "2010-01-01",
   "claim": {
@@ -660,7 +757,7 @@ will cease to be valid.
         <pre class="example nohighlight" title="Usage of expires property">
 {
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   <span class="highlight">"expires": "2020-01-01T19:73:24Z"</span>,
@@ -675,14 +772,14 @@ will cease to be valid.
 
       <section>
         <h2>Status</h2>
-        <p>Information about the current status of a <a>verifiable credential</a>, 
+        <p>Information about the current status of a <a>verifiable credential</a>,
         such as suspension or revocation,
-        may be provided by adding the <code>credentialStatus<code> <a>property</a>. 
+        may be provided by adding the <code>credentialStatus</code> <a>property</a>.
 This property
        comprises the type of credential status information that is being provided
  (sometimes referred to as the credential status scheme), plus the id of the status
 type instance. The precise contents of the credential status information is
-           determined by the specific <code>credentialStatus<code> type definition, 
+           determined by the specific <code>credentialStatus</code> type definition,
     and will vary
  depending upon a variety of factors, such as whether it is
             simple to implement or privacy-enhancing.
@@ -692,14 +789,14 @@ type instance. The precise contents of the credential status information is
           <dt><var>credentialStatus</var></dt>
           <dd>The value of this property MUST be a credential status scheme that
             provides enough information to determine the current status of the
-            credential (e.g. suspended, revoked, etc.). 
+            credential (e.g. suspended, revoked, etc.).
           </dd>
         </dl>
 
         <pre class="example nohighlight" title="Usage of status property">
 {
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "claim": {
@@ -774,7 +871,7 @@ of [[LINKED-DATA]].
           </li>
           <li>
 The requirement to support multiple types of cryptographic proof formats is
-accomplished via the use of Linked Data Proofs [[LD-PROOFS]], 
+accomplished via the use of Linked Data Proofs [[LD-PROOFS]],
 Linked Data Signatures [[LD-SIGNATURES]], and a variety of signature suites.
           </li>
           <li>
@@ -805,7 +902,7 @@ Let us assume that we start with the following <a>verifiable credential</a>:
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "http://example.com/credentials/4643",
-  "type": ["Credential"],
+  "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
   "issued": "2018-02-24T05:28:04Z",
   "claim": {
@@ -857,7 +954,7 @@ context above and adding the new properties to the <a>verifiable credential</a>.
     <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
   ]</span>,
   "id": "http://example.com/credentials/4643",
-  "type": ["Credential"],
+  "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
   "issued": "2018-02-24T05:28:04Z",
   <span class="highlight">"referenceNumber": 83294847,</span>
@@ -949,7 +1046,7 @@ use associated with a Verifiable Credential, namely, the
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
 {
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "claim": {
@@ -981,7 +1078,7 @@ storing the data in an archive.
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "credential": [{
     "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
+    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov/issuers/14",
     "issued": "2010-01-01T19:73:24Z",
     "claim": {
@@ -1039,7 +1136,7 @@ very simple scheme for evidence as a part of this specification.
         <pre class="example nohighlight" title="Usage of evidence property">
 {
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "claim": {
@@ -1076,7 +1173,7 @@ public venue to make it known that the credential is disputed:
         <pre class="example nohighlight" title="Expressing a disputed credential">
 {
   "id": "http://example.com/credentials/245",
-  "type": ["Credential", "DisputedCredential"],
+  "type": ["VerifiableCredential", "DisputedCredential"],
   <span class="highlight">"claim": {
     "id": "http://con-artist.example.com/credentials/3732",
     "currentStatus": "Disputed",
@@ -1125,7 +1222,7 @@ applicable to only some credentials.
           required.</li>
           <li>Property values match expectations described in the
           specification. For example, the document type for a verifiable
-          credential must contain the class "Credential".</li>
+          credential must contain the class "VerifiableCredential".</li>
         </ul>
       </section>
       <section>
@@ -1295,7 +1392,7 @@ a verifiable credential, are clear and protected in the signature.
 
 <pre class="example" title="A simple verifiable credential">{
   "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
   "issued": "2010-01-01",
   "claim": {
@@ -1366,7 +1463,7 @@ and Security Considerations section of this document.
   "entityCredential": {
     "@context": "https://w3id.org/security/v1",
     "id": "http://example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
+    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov",
     "issued": "2010-01-01",
     "claim": {
@@ -1386,7 +1483,7 @@ of <a>claims</a> about a particular <a>subject</a> as a
 <pre class="example nohighlight" title="A more complex verifiable credential">{
   "@context": "https://example.org/passport/v1",
   "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "PassportCredential"],
+  "type": ["VerifiableCredential", "PassportCredential"],
   "name": "Passport",
   "issuer": "https://example.gov",
   "issued": "2010-01-01",
@@ -1457,7 +1554,7 @@ of <a>claims</a> about a particular <a>subject</a> as a
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "credential": [{
     "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
+    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov/issuers/14",
     "issued": "2010-01-01T19:73:24Z",
     "claim": {
@@ -1545,7 +1642,7 @@ of <a>claims</a> about a particular <a>subject</a> as a
 <pre class="example nohighlight" title="A simple verifiable credential in JSON-LD Format">{
   "@context": "https://w3id.org/credentials/v1",
   "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
   "issued": "2010-01-01",
   "claim": {
@@ -1573,7 +1670,7 @@ The following example demonstrates how to express a more complex
     "https://w3id.org/credentials/v1"
   ],
   "id": "http://example.gov/credentials/3732",
-  "type": ["Credential", "PassportCredential"],
+  "type": ["VerifiableCredential", "PassportCredential"],
   "name": "Passport",
   "issuer": "https://example.gov",
   "issued": "2010-01-01",
@@ -1637,7 +1734,7 @@ The following example demonstrates how to express a more complex
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "credential": [{
     "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
+    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov/issuers/14",
     "issued": "2010-01-01T19:73:24Z",
     "claim": {
@@ -1914,7 +2011,7 @@ For example, the following Verifiable Credential is a bearer credential:
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
   "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2017-10-22T12:23:48Z",
   "claim": {
