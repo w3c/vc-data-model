@@ -1086,7 +1086,7 @@ with implementations, or enabling aggressive caching of contexts.
 
         <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
         <a>holder</a> to express limitations on the use of information
-        expressed by the Verifiable Credentials Model. The expression of
+        expressed by the Verifiable Credentials Data Model. The expression of
         terms of use are performed via the following <a>property</a>:
         </p>
 
@@ -1174,9 +1174,18 @@ using the information provided to correlate the <a>holder</a> using a
       <section>
         <h2>Evidence</h2>
 
-        <p>Evidence information for the credential in the
-        Verifiable Credentials Model may be provided by adding the
-        following <a>property</a>:
+        <p>
+An <a>issuer</a> may want to describe the set of evidence that was used
+when determining whether or not to issue a <a>credential</a>. For example,
+an issuer may check physical documentation provided by the <a>subject</a> or
+may perform a set of background checks before issuing the credential.
+In certain scenarios, this information is useful to the <a>verifier</a> when
+determining the risk associated with accepting the credential.
+        </p>
+
+        <p>
+Evidence information for the credential in the Verifiable Credentials Data Model
+may be provided by adding the following <a>property</a>:
         </p>
 
         <dl>
@@ -1184,8 +1193,8 @@ using the information provided to correlate the <a>holder</a> using a
           <dd>The value of this property MUST be one or more evidence schemes
             that provides enough information to a <a>verifier</a>
             to determine whether or not the evidence gathered meets their
-            requirements. The contents of each evidence scheme is determined by the
-            particular scheme itself.
+            requirements. The contents of each evidence scheme is determined
+            by the particular scheme itself.
           </dd>
         </dl>
 
@@ -1205,7 +1214,6 @@ very simple scheme for evidence as a part of this specification.
     "ageOver": 21
   },
   <span class="highlight">"evidence": [{
-    "scheme": "< scheme id >",
     "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
     "type": ["DocumentVerification"],
     "verifier": "https://dmv.example.gov/issuers/14",
@@ -1216,6 +1224,16 @@ very simple scheme for evidence as a part of this specification.
   "proof": { ... }
 }
         </pre>
+
+        <p class="note">
+For the avoidance of doubt, the <em>evidence</em> <a>property</a> provides
+information that is different from and complementary to the
+<a href="#proofs-aka-signatures">proof</a> property. The <em>evidence</em>
+property is used to express supporting information, such as documentary
+evidence, related to the integrity of the credential. In contrast, the
+<em>proof</em> property is used to express machine-verifiable mathematical
+proofs related to the integrity of the credential.
+        </p>
 
       </section>
 
