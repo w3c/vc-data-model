@@ -1443,255 +1443,103 @@ a verifiable credential, are clear and protected in the signature.
       <h2>Syntaxes</h2>
 
 
-      <p>This section defines how the data model described in
-      Section <a href="data-model"></a> is realized in two
-      different syntaxes: JSON and JSON-LD.  Although
-      syntactic mappings are only provided for these two syntaxes,
-      applications and services may also use any other data
-      representation syntax that can express the data model
-      (e.g. XML, YAML, CBOR, etc.) .
+      <p>
+Many of the data model concepts in this document thus far have been introduced
+by example using the JSON syntax. This section formalizes how the data model
+(described in Sections <a href="#core-data-model"></a>,
+<a href="#basic-concepts"></a>, and <a href="#advanced-concepts"></a>
+) is realized in JSON and JSON-LD. Although syntactic mappings are only provided for these two syntaxes,
+applications and services may also use any other data representation syntax,
+such as XML, YAML, or CBOR, that is capable of expressing the data model.
       </p>
 
       <section>
         <h2>JSON</h2>
 
-        <section>
-          <h2>Verifiable Credential</h2>
-            <p>In JSON, an instance of the Verifiable Credential
-            is expressed as a single JSON object whose
-            properties are the verifiable credential's
-            <a>properties</a>, with the following value type assignments:</p>
-            <ul>
-              <li>Any number value MUST be represented as a Number type.</li>
-              <li>Any boolean value MUST be represented as a Boolean type.</li>
-              <li>Any sequence value MUST be represented as an Array type.</li>
-              <li>Any unordered set of values MUST be represented as
-              an Array type.</li>
-              <li>Any set of <a>properties</a> MUST be represented as
-              an Object type.</li>
-              <li>Any empty value MUST be represented as a null value.</li>
-              <li>Any other value MUST be represented as a String type.</li>
-            </ul>
-            <p>The following example demonstrates how to express
-            an <a>verifiable credential</a> containing a simple
-            (unverifiable) <a>claim</a> about a particular
-            <a>subject</a>. In this case, the claim is that
-            the <a>subject</a> with
-            the <a href="#entity-id">Verifiable Presentation <var>id</var></a>
-            of
-            <code>did:example:ebfeb1f712ebc6f1c276e12ec21</code> is 21 years
-            of age or older. While a human reading the
-            property <code>ageOver</code> may be able to guess its
-            meaning by its name, no machine-readable semantics for the
-            name are provided. There is information about the <a>claim</a>
-            itself, such as an identifier for the <a>entity</a> that issued
-            it and a date for when it was issued. </p>
+          <p>
+The data model as described in Section <a href="#core-data-model"></a> can be
+encoded in Javascript Object Notation (JSON) [[!RFC8259]] by mapping
+property values to the following JSON types:
+          </p>
 
-<pre class="example nohighlight" title="A simple claim">{
-  <span class="subject">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>, <span class="comment">// subject identifier</span>
-  <span class="property">"ageOver": 21</span> <span class="comment">// property-value pair</span>
-}</pre>
-
-            <p>The following example demonstrates how to express the
-            same <a>claim</a> about the same <a>subject</a>, but as a
-            <a>verifiable credential</a>. As such, it contains
-            a <code>signature</code> that can be used to verify the
-            author of its contents, including the claim.</p>
-
-<pre class="example" title="A simple verifiable credential">{
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "revocation": {
-    "id": "http://example.gov/revocations/738",
-    "type": "SimpleRevocationList2017"
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-18T21:19:10Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "598c63d6",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-    +W3JT24="
-  }
-}</pre>
-
-            <p>The following example demonstrates how one could
-            express the same <a>claim</a> about the
-            same <a>subject</a> using a JSON Web Token.</p>
-
-<pre class="example" title="A JOSE JWT verifiable credential">
-eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Rtdi
-5leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL
-CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi
-YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI
-6Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG
-FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI
-iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu
-ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ
-iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj
-F9fX0.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6
-NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1
-fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4
-</pre>
-
-<p>
-The JWT above was produced using the inputs below:
-</p>
-
-<p class="issue">
-A number of the concerns have been raised around security,
-composability, reusability, and extensibility with respect
-to the use of JWTs for Verifiable Credentials. These concerns
-will be documented in time in at least the Verfiable Claims Model
-and Security Considerations section of this document.
-</p>
-
-<pre>
-// JWT Header
-{
-  "alg": "RS256",
-  "typ": "JWT"
-}
-// JWT Payload
-{
-  "iss": "https://dmv.example.gov",
-  "iat": 1262304000,
-  "exp": 1483228800,
-  "aud": "www.example.com",
-  "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "entityCredential": {
-    "@context": "https://w3id.org/security/v1",
-    "id": "http://example.gov/credentials/3732",
-    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov",
-    "issued": "2010-01-01",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
-    }
-  }
-}
-</pre>
-
-        <p>
-The following example demonstrates how to express a more complex set
-of <a>claims</a> about a particular <a>subject</a> as a
-<a>verifiable credential</a>.
-        </p>
-
-<pre class="example nohighlight" title="A more complex verifiable credential">{
-  "@context": "https://example.org/passport/v1",
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "PassportCredential"],
-  "name": "Passport",
-  "issuer": "https://example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "name": "Alice Bobman",
-    "birthDate": "1985-12-14",
-    "gender": "female",
-    "nationality": {
-      "name": "United States"
-    },
-    "address": {
-      "type": "PostalAddress",
-      "addressStreet": "372 Sumter Lane",
-      "addressLocality": "Blackrock",
-      "addressRegion": "Nevada",
-      "postalCode": "23784",
-      "addressCountry": "US"
-    },
-    "passport": {
-      "type": "Passport",
-      "name": "United States Passport",
-      "documentId": "123-45-6789",
-      "photo": {
-        "image": "data:image/png;iVBORw0KGgoAAA...9y4wIAAAAAElFTkSuQmCC"
-      },
-      "thumbnail": {
-        "id": "ni:///sha-256;W0Hzra0Egj5OhhpGKp8KDFkE96JldFV0DSAkFrUn/8M=",
-        "image": "https://travel.state.gov/images/passport.png"
-      },
-      "issuer": "https://example.gov",
-      "issued": "2010-01-07T01:02:03Z",
-      "expires": "2020-01-07T01:02:03Z"
-    }
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-21T03:40:19Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "783b4dfa",
-    "signatureValue": "Rxj7Kb/tDbGHFAs6ddHjVLsHDiNyYzxs2MPmNG8G47oS06N8i0Dis5mUePIzII4+p/ewcOTjvH7aJxnKEePCO9IrlqaHnO1TfmTut2rvXxE5JNzur0qoNq2yXl+TqUWmDXoHZF+jQ7gCsmYqTWhhsG5ufo9oyqDMzPoCb9ibsNk="
-  }
-}</pre>
-        </section>
+          <ul>
+            <li>Numeric values representable as IEEE754 SHOULD be represented
+            as a Number type.</li>
+            <li>Any boolean value SHOULD be represented as a Boolean type.</li>
+            <li>Any sequence value SHOULD be represented as an Array type.</li>
+            <li>Any unordered set of values SHOULD be represented as
+            an Array type.</li>
+            <li>Any set of <a>properties</a> SHOULD be represented as
+            an Object type.</li>
+            <li>Any empty value SHOULD be represented as a null value.</li>
+            <li>Any other value MUST be represented as a String type.</li>
+          </ul>
 
         <section>
-          <h2>Verifiable Presentation</h2>
-            <p>In JSON [[!JSON]], an instance of the Verifiable Presentation
-            is expressed as a single JSON object whose
-            properties are the verifiable presentation's
-            <a>properties</a>, with the following value type assignments:</p>
-            <ul>
-              <li>Any number value MUST be represented as a Number type.</li>
-              <li>Any boolean value MUST be represented as a Boolean type.</li>
-              <li>Any sequence value MUST be represented as an Array type.</li>
-              <li>Any unordered set of values MUST be represented as
-              an Array type.</li>
-              <li>Any set of <a>properties</a> MUST be represented as
-              an Object type.</li>
-              <li>Any empty value MUST be represented as a null value.</li>
-              <li>Any other value MUST be represented as a String type.</li>
-            </ul>
-      <p>The following example demonstrates how to express a
-      simple <a>verifiable presentation</a>.</p>
+          <h3>JSON Web Token</h3>
 
-<pre class="example" title="A simple verifiable presentation">{
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": "VerifiablePresentation",
-  "credential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
-    "issued": "2010-01-01T19:73:24Z",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
-    },
-    "proof": {
-      "type": "RsaSignature2018",
-      "created": "2017-06-17T10:03:48Z",
-      "creator": "https://dmv.example.gov/issuers/14/keys/234",
-      "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-      "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
-      ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
-      zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
-      9Cky6Ed="
+          <p class="issue">
+This section will be moved into its own specification before this document
+enters the Candidate Recommendation stage.
+          </p>
+
+          <p>The following example demonstrates how one could
+          express this data model using a JSON Web Token.</p>
+
+  <pre class="example" title="A JOSE JWT verifiable credential">
+  eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Rtdi
+  5leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL
+  CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi
+  YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI
+  6Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG
+  FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI
+  iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu
+  ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ
+  iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj
+  F9fX0.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6
+  NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1
+  fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4
+  </pre>
+
+  <p>
+  The JWT above was produced using the inputs below:
+  </p>
+
+  <p class="issue">
+  A number of the concerns have been raised around security,
+  composability, reusability, and extensibility with respect
+  to the use of JWTs for Verifiable Credentials. These concerns
+  will be documented in time in at least the Verfiable Claims Model
+  and Security Considerations section of this document.
+  </p>
+
+  <pre>
+  // JWT Header
+  {
+    "alg": "RS256",
+    "typ": "JWT"
+  }
+  // JWT Payload
+  {
+    "iss": "https://dmv.example.gov",
+    "iat": 1262304000,
+    "exp": 1483228800,
+    "aud": "www.example.com",
+    "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "verifiableCredential": {
+      "@context": "https://w3id.org/security/v1",
+      "id": "http://example.gov/credentials/3732",
+      "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+      "issuer": "https://dmv.example.gov",
+      "issued": "2010-01-01",
+      "claim": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "ageOver": 21
+      }
     }
-  }],
-  "proof": [{
-    "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/2",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-    +W3JT24="
-  }]
-}</pre>
+  }
+  </pre>
+
         </section>
 
       </section>
@@ -1699,181 +1547,34 @@ of <a>claims</a> about a particular <a>subject</a> as a
       <section>
         <h2>JSON-LD</h2>
 
-        <p>JSON-LD [[!JSON-LD]] is a data storage and expression
-        approach called
-        <a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked
-        Data</a>. It is a way of expressing information on the Web
-        that is both simple and extensible.</p>
-
-        <section>
-          <h2>Verifiable Credential</h2>
-            <p>Instances of the <a>Verifiable Credential</a> are
-            expressed in JSON-LD in the same way they are expressed in
-            JSON
-            (Section <a href="#expressing-an-entity-credential-in-json"></a>),
-            except that there is an additional
-            <a>property</a> <code>@context</code>.  Each property of
-            the <a>verifiable credential</a> expression, along with each
-            sub-property within the <code>claim</code> property (such
-            as the generic <code>issuer</code> property or the
-            app-specific <code>ageOver</code>), is given context via
-            the <code>@context</code> value. Other contexts can be
-            used or combined to express any arbitrary information
-            about claims in idiomatic JSON.</p>
-
-            <p>The following example demonstrates how to express a
-            simple <a>claim</a> about a particular
-            <a>subject</a>. In this case, the claim is that
-            the <a>subject</a> with
-            the <var>id</var>
-            of <code>did:example:ebfeb1f712ebc6f1c276e12ec21</code> is 21
-            years of age or older. While a human reading the
-            property <code>ageOver</code> may be able to guess its
-            meaning by its name, the context maps it to a global
-            identifier (URL) where a document could be retrieved that
-            provides its semantics in a machine-readable data
-            format. There is also information about the
-            <a>verifiable credential</a>
-            itself, such as an identifier for the <a>entity</a> that
-            issued it and a date for when it was issued.</p>
-
-<pre class="example nohighlight" title="A simple claim in JSON-LD Format">{
-  "@context": "https://w3id.org/credentials/v1",
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "ageOver": 21
-}</pre>
-
-            <p>The following example demonstrates how to express the
-            same <a>claim</a> about the same <a>subject</a>, but as a
-            <a>verifiable credential</a>. As such, it contains
-            a <code>signature</code> that can be used to verify its
-            entire contents, including the claim.</p>
-
-<pre class="example nohighlight" title="A simple verifiable credential in JSON-LD Format">{
-  "@context": "https://w3id.org/credentials/v1",
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-18T21:10:38Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "6165d7e8",
-    "signatureValue": "g4j9UrpHM4/uu32NlTw0HDaSaYF2sykskfuByD7UbuqEcJIKa+IoLJLrLjqDnMz0adwpBCHWaqqpnd47r0NKZbnJarGYrBFcRTwPQSeqGwac8E2SqjylTBbSGwKZkprEXTywyV7gILlC8a+naA7lBRi4y29FtcUJBTFQq4R5XzI="
-  }
-}</pre>
-
         <p>
-The following example demonstrates how to express a more complex
-<a>verifiable credential</a> about a particular <a>subject</a>.
+[[!JSON-LD]] is a JSON-based format that is used to serialize
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>.
+The syntax is designed to easily integrate into deployed systems that
+already use JSON, and provides a smooth upgrade path from JSON to JSON-LD.
+It is primarily intended to be a way to use Linked Data in
+Web-based programming environments, to build interoperable Web services,
+and to store Linked Data in JSON-based storage engines.
         </p>
 
-<pre class="example" title="A more complex verifiable credential in JSON-LD Format">{
-  "@context": [
-    "http://schema.org",
-    "https://w3id.org/credentials/v1"
-  ],
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "PassportCredential"],
-  "name": "Passport",
-  "issuer": "https://example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "name": "Alice Bobman",
-    "birthDate": "1985-12-14",
-    "gender": "female",
-    "nationality": {
-      "name": "United States"
-    },
-    "address": {
-      "type": "PostalAddress",
-      "addressStreet": "372 Sumter Lane",
-      "addressLocality": "Blackrock",
-      "addressRegion": "Nevada",
-      "postalCode": "23784",
-      "addressCountry": "US"
-    },
-    "passport": {
-      "type": "Passport",
-      "name": "United States Passport",
-      "documentId": "123-45-6789",
-      "issuer": "https://example.gov",
-      "issued": "2010-01-07T01:02:03Z",
-      "expires": "2020-01-07T01:02:03Z"
-    }
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2016-06-21T03:43:29Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "domain": "json-ld.org",
-    "nonce": "c168dfab",
-    "signatureValue": "jz4bEW2FBMDkANyEjiPnrIctucHQCIwxrtzBXt+rVGmYMEflHrOwf7FYLH60E3Oz54VwSSQCi9J4tXQIhv4SofT5opbcIUj7ji6QrC6c+a3YLjg8l/+/uFjhzsLelAO4gh2k0FJxM04ljH0GZGuXTzhRnqTzJTnYSVo72PC92NA="
-  }
-}</pre>
-        </section>
+        <p>
+JSON-LD is useful when extending the data model described in this
+specification. Instances of the data model are encoded in JSON-LD in
+the same way that they are encoded in JSON (Section <a href="#json"></a>),
+with the addition of the <code>@context</code> property. The
+<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD Context</a>
+is described in detail in the [[!JSON-LD]] specification and its use
+is elaborated upon in Section <a href="#extensibility"></a>.
+        </p>
 
-        <section>
-          <h2>Verifiable Presentation</h2>
-            <p>Instances of the <a>Verifiable Presentation</a> are
-            expressed in JSON-LD in the same way they are expressed in
-            JSON
-            (Section <a href="#expressing-an-entity-presentation-in-json"></a>),
-            except that there is an additional
-            property <code>@context</code>.  Each property of the
-            verifiable presentation, such as <code>name</code>
-            or <code>email</code>, is given context via
-            the <code>@context</code> value. Other contexts can be
-            used or combined to express any arbitrary information
-            about an <a>verifiable presentation</a> in idiomatic JSON.  </p>
-      <p>The following example demonstrates how to express a
-      simple <a>verifiable presentation</a>.</p>
-
-<pre class="example" title="A simple verifiable presentation in JSON-LD Format">{
-  "@context": [
-    "http://schema.org",
-    "https://w3id.org/credentials/v1"
-  ],
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "credential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
-    "issued": "2010-01-01T19:73:24Z",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
-    },
-    "proof": {
-      "type": "RsaSignature2018",
-      "created": "2017-06-17T10:03:48Z",
-      "creator": "https://dmv.example.gov/issuers/14/keys/234",
-      "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-      "signatureValue": "pYw8XNi1bgVg/sCneO4BavEll0/I1zJugez8RwDg/+
-      ibcC1wpsMCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuF
-      zvueMWmFPRdW+gGsutPTLhwYmfIFpbBu95t501+rSLHIEuujM/+PXr+W3JT24
-      9Cky6Ed="
-    }
-  }],
-  "proof": [{
-    "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/2",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-    MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-    PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-    +W3JT24="
-  }]
-}</pre>
-        </section>
+        <p>
+Multiple contexts MAY be used or combined to express any arbitrary
+information about claims in idiomatic JSON. If an application is processing a
+<a>verifiable credential</a> or <a>verifiable presentation</a>, and a
+<code>@context</code> property is not present at the top-level of the
+JSON-LD document, then a <code>@context</code> property with a value of
+<code>https://w3id.org/credentials/v1</code> MUST be assumed.
+        </p>
 
       </section>
 
