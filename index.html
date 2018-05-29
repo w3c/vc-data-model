@@ -612,8 +612,7 @@ specified on the following objects:
           <tbody>
             <tr>
               <td>
-A <a href="#credentials">credential</a> object containing a
-<a href="#proofs-aka-signatures">proof</a>
+A <a href="#credentials">credential</a> object
               </td>
               <td>
 <tt>"type": ["<code>VerifiableCredential</code>"]</tt>
@@ -622,18 +621,7 @@ A <a href="#credentials">credential</a> object containing a
 
             <tr>
               <td>
-A <a href="#credentials">credential</a> object NOT containing a
-<a href="#proofs-aka-signatures">proof</a>
-              </td>
-              <td>
-<tt>"type": ["<code>UnverifiableCredential</code>"]</tt>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-A <a href="#presentations">presentation</a> object containing a
-<a href="#proofs-aka-signatures">proof</a>
+A <a href="#presentations">presentation</a> object
               </td>
               <td>
 <tt>"type": ["<code>VerifiablePresentation</code>"]</tt>
@@ -642,20 +630,11 @@ A <a href="#presentations">presentation</a> object containing a
 
             <tr>
               <td>
-A <a href="#presentations">presentation</a> object NOT containing a
-<a href="#proofs-aka-signatures">proof</a>
-              </td>
-              <td>
-<tt>"type": ["<code>UnverifiablePresentation</code>"]</tt>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
 A <a href="#status">credentialStatus</a> object
               </td>
               <td>
-A valid credential status type (e.g. <code>CredentialStatusList2017</code>)
+<tt>"type": ["<code>CredentialStatus</code>"]</tt> and
+a valid credential status type (e.g. <code>CredentialStatusList2017</code>)
               </td>
             </tr>
 
@@ -664,7 +643,8 @@ A valid credential status type (e.g. <code>CredentialStatusList2017</code>)
 A <a href="#terms-of-use">termsOfUse</a> object
               </td>
               <td>
-A valid terms of use type (e.g. <code>OdrlPolicy2017</code>)
+<tt>"type": ["<code>TermsOfUse</code>"]</tt> and
+a valid terms of use type (e.g. <code>OdrlPolicy2017</code>)
               </td>
             </tr>
 
@@ -673,12 +653,19 @@ A valid terms of use type (e.g. <code>OdrlPolicy2017</code>)
 An <a href="#terms-of-use">evidence</a> object
               </td>
               <td>
-A valid evidence type (e.g. <code>DocumentVerification2018</code>)
+<tt>"type": ["<code>Evidence</code>"]</tt> and
+a valid evidence type (e.g. <code>DocumentVerification2018</code>)
               </td>
             </tr>
 
           </tbody>
         </table>
+
+        <p class="issue" data-number="182">
+Whether or not <code>CredentialStatus</code>, <code>TermsOfUse</code>,
+or <code>Evidence</code> provide useful type information in addition to
+more specific types is currently a topic of active discussion.
+        </p>
 
         <p>
 The type system for the Verifiable Credentials Data Model is the same as the
@@ -729,8 +716,8 @@ information associated with the <var>claim</var> property became valid.
       <section>
         <h2>Proofs (aka Signatures)</h2>
         <p>
-A <a>credential</a> MAY be made verifiable by adding the following
-<a>property</a>:
+A <a>credential</a> or a <a>presentation </a> MAY be made verifiable by
+adding the following <a>property</a>:
         </p>
         <dl>
           <dt><var>proof</var></dt>
@@ -741,7 +728,8 @@ the proof mechanism, this property is expected to have a value that is a
 set of name-value pairs including at least a signature, a reference to the
 signing entity, and a representation of the signing date.</dd>
         </dl>
-        <pre class="example nohighlight" title="Usage of signature property">
+        <pre class="example nohighlight"
+          title="Usage of proof property on a verifiable credential">
 {
   "id": "http://example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
