@@ -928,15 +928,32 @@ with implementations, or enabling aggressive caching of contexts.
         <h2>Terms of Use</h2>
         <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
         <a>holder</a> to express limitations on the use of information
-        expressed by the Verifiable Credentials Model. The expression of
-        terms of use are performed via the following <a>property</a>:
+        expressed by the Verifiable Credentials Model. The <a>issuer</a> places 
+       the terms of use
+       inside the credential before it is converted into a <a>verifiable credential</a>.
+       The <a>holder</a> places the terms of use inside the <a>profile</a> before it is
+       converted into a <a>verifiable profile</a>.</p>
+	
+       <p class="note"> it is for further study how a subject who is not a 
+       holder places terms of
+       use on his  or her verifiable credentials. One way could be for the subject to
+       request the issuer to place them inside the issued verifiable credentials. Another
+       way could be by the subject delegating a verifiable credential to a holder and
+       placing terms of use restrictions on the delegated verifiable credential.
+</p>
+       <p> The expression of
+        terms of use may be performed via the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
           <dd>The value of this property MUST be one or more terms of use
-            descriptions that provide enough information to a <a>verifier</a>
-            to determine how they may utilize the given information.
+            that provide enough information to a <a>verifier</a>
+            to determine how they MUST utilize the given information.
+            Each <code>termsOfUse</code> comprises its type, 
+            for example, <code>IssuerPolicy</code>, and  
+            optionally its instance id. The precise contents of each term of use is
+            determined by the specific <code>TermsOfUse</code> type definition.
           </dd>
         </dl>
 
@@ -957,8 +974,8 @@ use associated with a Verifiable Credential, namely, the
     "ageOver": 21
   },
   <span class="highlight">"termsOfUse": [{
-    "type": "Policy",
-    "uid": "http://example.com/policies/credential/4",
+    "id": "http://example.com/policies/credential/4",
+    "type": ["TermsOfUse", "IssuerPolicy"],
     "profile": "http://example.com/profiles/credential",
     "prohibition": [{
       "assigner": "https://dmv.example.gov/issuers/14",
@@ -976,38 +993,40 @@ In the example above, the <a>issuer</a> is prohibiting a <a>verifier</a> from
 storing the data in an archive.
         </p>
 
-        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+        <pre class="example nohighlight" title="Usage of termsOfUse property by a Holder">
 {
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "credential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["Credential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
-    "issued": "2010-01-01T19:73:24Z",
-    "claim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
-    },
-    "proof": { ... }
-  }],
-  <span class="highlight">"termsOfUse": [{
-    "type": "Policy",
-    "uid": "http://example.com/policies/credential/6",
-    "profile": "http://example.com/profiles/credential",
-    "prohibition": [{
-      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "assignee": "https://wineonline.example.org/",
-      "target": "http://dmv.example.gov/credentials/3732",
-      "action": ["3rdPartyCorrelation"]
-    }]
-  }</span>,
-  "proof": [ ... ]
+	"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+	"type": "VerifiableProfile",
+	"credential": [{
+		"id": "http://dmv.example.gov/credentials/3732",
+		"type": ["Credential", "ProofOfAgeCredential"],
+		"issuer": "https://dmv.example.gov/issuers/14",
+		"issued": "2010-01-01T19:73:24Z",
+		"claim": {
+			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+			"ageOver": 21
+		},
+		"proof": { ...}
+	}],
+	"termsOfUse": [{
+		"id": "http://example.com/policies/credential/6",
+		"type": ["TermsOfUse", "HolderPolicy"],
+		"profile": "http://example.com/profiles/credential",
+		"prohibition": [{
+			"assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+			"assignee": "https://wineonline.example.org/",
+			"target": "http://dmv.example.gov/credentials/3732",
+			"action": ["3rdPartyCorrelation"]
+		}]
+	}],
+	"proof": { ...}
 }
         </pre>
 
         <p>
-In the example above, the <a>holder</a> is prohibiting a <a>verifier</a> from
-using the information provided to correlate the <a>holder</a> using a
+In the example above, the <a>holder</a>, who is also the <a>subject</a> 
+is prohibiting the <a>verifier</a> (<code>https://wineonline.example.org</code>) from
+using the information provided to correlate the holder/subject by using a
 3rd party service.
         </p>
 
