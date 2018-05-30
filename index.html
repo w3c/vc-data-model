@@ -251,10 +251,11 @@ ensuring the holder possesses the required verifiable credentials.
 Examples of verifiers include employers, security personnel, and 
 websites.
         </dd>
-        <dt><a>identifier registry</a></dt>
+        <dt><a>Verifiable data repository</a></dt>
         <dd>
-Mediates the creation and verification of <a>subject</a> identifiers.
-Examples of identifier registries include corporate employee databases,
+Mediates the creation and verification of <a>issuer</a> identifiers, keys and
+other relevant data required to use verifiable credentials. Examples of
+such data repositories include trusted databases, decentralised databases,
 government ID databases, and distributed ledgers.
         </dd>
       </dl>
@@ -426,10 +427,13 @@ The basic structure of a claim.
 
       <p>
 The data model for <a>claims</a> described above is powerful and can be used to
-express a large variety of statements. For example, whether or not someone is
-over the age of 21 may be expressed as follows:
+express a large variety of statements. For example, a claim specifying the data of birth of a subject
+can be used to prove that its age lies in an interval or is greater or less than a some value which is
+needed in use cases like proving drinking age or teenager discount or elderly discount;
+the holder has the flexibility to use the claim in any way that is applicable to that claim:
       </p>
 
+      <!-- TODO: Update the next picture -->
       <figure>
         <img style="margin: auto; display: block;"
           width="50%" src="diagrams/claim-example.svg">
@@ -445,6 +449,7 @@ data model above by adding claims that state that Pat knows Sam and that
 Sam is employed as a professor.
       </p>
 
+      <!-- TODO: Update the next picture -->
       <figure>
         <img style="margin: auto; display: block;"
           width="75%" src="diagrams/claim-extended.svg">
@@ -466,12 +471,16 @@ of information.
       <p>
 A <a>credential</a> is set of one or more <a>claims</a> made by the
 same <a>entity</a>. It may include an identifier to uniquely identify the
-credential, as well as metadata that describes properties of the credential
-itself such as: the <a>issuer</a>, the expiry time, a representative image,
-etc. A <a>verifiable credential</a> is a set of claims and meta data that are
+credential which helps in revoking the credential, as well as metadata that
+describes properties of the credential itself such as: the <a>issuer</a>, 
+the public key to use, the revocation mechanism to use etc. This metadata can
+either be signed by the issuer or not, more on that later. The credential identifier
+is never revealed to the verifier to prevent the issuer and verifier from
+colluding to correlate the verifier.
+A <a>verifiable credential</a> is a set of claims and meta data that are
 tamper-resistant and that cryptographically prove who issued it.
       </p>
-
+       <!-- TODO: Update the next picture to show the keys, schema, etc-->
       <figure>
         <img style="margin: auto; display: block;" width="50%" src="diagrams/credential.svg">
         <figcaption style="text-align: center;">
@@ -481,7 +490,7 @@ The basic components of a verifiable credential.
 
       <p>
 Examples of verifiable credentials include digital employee identification
-cards, digital proofs of age, and digital educational certificates.
+cards, digital birth certificates, digital educational certificates, etc.
       </p>
 
       <p class="note">
@@ -498,32 +507,32 @@ not required to be related.
 As this specification takes a privacy-first approach, it is important that
 the entities that use this technology are able to express only the portions of
 their persona that are appropriate for the situation. The expression of a
-subset of one's persona is called a <a>verifiable profile</a>.
+subset of one's persona is called a <a>proof</a> (or a derived credential).
       </p>
 
       <p>
-A <a>verifiable profile</a> is a collection of one or more
+A <a>proof</a> is a created from a collection of one or more
 <a>verifiable credentials</a> that are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
       </p>
-
+        <!-- TODO: Update the next picture-->
       <figure>
         <img style="margin: auto; display: block;"
           width="50%" src="diagrams/profile.svg">
         <figcaption style="text-align: center;">
-The basic components of a verifiable profile.
+The basic components of a proof.
         </figcaption>
       </figure>
 
       <p>
-Examples of different profiles include a person's professional persona, online
+Examples of different proofs include a person's professional persona, online
 gaming persona, or home life persona.
       </p>
 
       <p class="note">
-It is possible to have a <a>profile</a>, such as a business persona,
-that contains multiple <a>credentials</a> about different <a>subjects</a>
+It is possible to have a <a>proof</a>, such as of a business persona,
+that is derived from multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
 
@@ -540,38 +549,25 @@ The Verifiable Credentials trust model is as follows:
       <ol>
         <li>
 The <a>verifier</a> trusts the <a>issuer</a> to issue the Verifiable Credential
-that it receives. This trust could be weakened depending upon the risk
-assessment of the verifier.
+that will be used to create proofs only after sufficient scrutiny.
+This trust could be weakened depending upon the risk assessment of the verifier.
         </li>
         <li>
 All entities trust the <a>identifier registry</a> to be un-corruptible and
-to be a correct record of which identifiers belong to which <a>entities</a>.
+to be a correct record of which data is owned (and can be updated) by which
+<a>entities</a>.
         </li>
         <li>
-The <a>subject</a> trusts the <a>issuer</a> to issue true (i.e. not false)
+The <a>subject</a> trusts (since only the holder can verify) the <a>issuer</a> to issue true (i.e. not false)
 <a>credentials</a> about the subject, and to revoke them quickly when
 appropriate.
-        </li>
-        <li>
-The <a>holder</a> trusts the <a>repository</a> to store the
-<a>credentials</a> securely, to not release them to anyone other than the
-<a>holder</a>, and to not corrupt or lose them whilst they are in its care.
         </li>
       </ol>
 
       <p>
-This trust model differentiates itself from other trust models by ensuring that:
+This trust model differentiates itself from other trust models by ensuring that
+the <a>issuer</a> does not need to trust (or even know) the <a>verifier</a>.
       </p>
-
-      <ul>
-        <li>
-The <a>issuer</a> and the <a>verifier</a> do not need to trust the
-repository</a>, and
-        </li>
-        <li>
-the <a>issuer</a> does not need to trust the <a>verifier</a>.
-        </li>
-      </ul>
 
       <p>
 By decoupling the trust between the <a>identity provider</a> and the
@@ -594,13 +590,6 @@ The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
 the URI results in a document containing machine-readable information about
 the issuer that may be used to verify the information expressed in the
 <a>credential</a>.
-          </dd>
-          <dt><var>issued</var></dt>
-          <dd>
-The value of this property MUST be a string value of an [[!ISO8601]] combined
-date and time string and represents the date and time the <a>credential</a>
-was issued. Note that this date represents the earliest date when the
-information associated with the <var>claim</var> property became valid.
           </dd>
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
