@@ -365,6 +365,11 @@ to help them manage their <a>verifiable credentials</a> and generate and share <
 reveal the identity of the <a>verifier</a> to <a>issuers</a>.
         </li>
         <li>
+<a>Holders</a> in <a>proofs</a> can either disclose the attributes or satisfy <a>predicates</a>
+given by the <a>verifier</a>. <a>Predicates</a> are boolean conditions like greater/less than or
+equal to, is in set, etc.
+        </li>
+        <li>
 <a>Verifiable credentials</a> and <a>proofs</a> are expressed in one or more standard,
 machine-readable data formats which can also be extended with minimal
 coordination.
@@ -501,7 +506,7 @@ not required to be related.
 
     </section>
     <section>
-      <h2>Profiles</h2>
+      <h2>Proofs</h2>
 
       <p>
 As this specification takes a privacy-first approach, it is important that
@@ -578,34 +583,112 @@ such that market competition and customer choice is increased.
 
     <section>
       <h1>Basic Concepts</h1>
-      <section>
-        <h2>Issuer</h2>
-        <p>
-Issuer information may be expressed via the following <a>properties</a>:
-        </p>
-        <dl>
-          <dt><var>issuer</var></dt>
-          <dd>
-The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
-the URI results in a document containing machine-readable information about
-the issuer that may be used to verify the information expressed in the
-<a>credential</a>.
-          </dd>
-        </dl>
-        <pre class="example nohighlight" title="Usage of issuer properties">
-{
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
-  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
-  <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "proof": { ... }
-}
-        </pre>
-      </section>
+        <section>
+            <h2>Metadata</h2>
+            <p>
+                Apart from the subject specific claims inside a credential, the credential contains
+                additional data like the issuer's id, public key to use to verify the credential,
+                the schema (structure) of the credential, the issuance date, expiration date, etc.
+                Depending on the metadata (and other metadata included), some elements of metadata
+                may or may not be signed by the issuer.
+            </p>
+            <dl>
+              <dt><var>Issuer</var></dt>
+              <dd>
+                  The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
+                  the URI results in a document containing machine-readable information about
+                  the issuer that may be used to verify the information expressed in the
+                  <a>credential</a>.
+              </dd>
+              <dt><var>Schema</var></dt>
+              <dd>
+                  A Schema describes the attributes of the credential. It specifies the name,
+                  data types and encoding of each attribute. A schema may be embedded or may be
+                  referenced on an immutable storage. The schema should be included in the signature
+                  to prevent the holder from crafting false proofs.
+              </dd>
+              <dt><var>Public key</var></dt>
+              <dd>
+                  The public key is created by the issuer and can be used by anyone to verify the proofs
+                  created from the credential. In certain kinds of credentials, it is strongly advised to
+                  create a new public key per schema. Public key is not included in the signature since it
+                  is a priori to verify the signature.
+              </dd>
+              <dt><var>Issuance date</var></dt>
+              <dd>
+                  This date/time represents the earliest date when the information
+                  associated with the claim property became valid. The date is specified as the number of seconds since epoch.
+                  This needs to included in the signature since it allows the holder to selectively disclose or satisfy predicates on.
+              </dd>
+              <dt><var>Expiration date</var></dt>
+              <dd>
+                  This date/time after which the credential will cease to be valid.
+                  The date is specified as the number of seconds since epoch. Needs to be
+                  included in the signature for the same reasons as issuance date.
+              </dd>
+            </dl>
+
+            <p>
+                Alternatively some of the above data like issuer identifier, schema and public key can be bound together
+                in a single object and the credential then refers the single object. This is how it is done is Sovrin and the
+                binding object is called credential definition and is called "cred_def_id".
+                The issuance date and expiration date can be specified as a part of schema which lets
+                them have custom encodings.
+            </p>
+
+            <pre class="example nohighlight" title="Usage of issuer properties">
+                {
+                  "id": "http://dmv.example.gov/credentials/3732",
+                  "type": ["Credential"],
+                  <span class="highlight">"metadata": {
+                      "issuer": "https://dmv.example.gov/issuers/14",
+                      "schema": "https://dmv.example.gov/schemas/20",
+                      "public_key": "https://dmv.example.gov/keys/35",
+                      "issuance_date": 159908121001,
+                      "expiration_date": 159908154923,
+                  }
+                  </span>,
+                  "claims": [
+                    ....
+                  ]
+                }
+            </pre>
+
+            OR
+
+            <pre class="example nohighlight" title="Usage of issuer properties">
+                {
+                  "id": "http://dmv.example.gov/credentials/3732",
+                  "type": ["Credential"],
+                  <span class="highlight">"metadata": {
+                      "cred_def_id": "sov:CRED_DEF:981f",
+                      "issuance_date": 159908121001,
+                      "expiration_date": 159908154923,
+                  }
+                  </span>,
+                  "claims": [
+                    ....
+                  ]
+                }
+            </pre>
+
+            OR
+
+            <pre class="example nohighlight" title="Usage of issuer properties">
+                {
+                  "id": "http://dmv.example.gov/credentials/3732",
+                  "type": ["Credential"],
+                  <span class="highlight">"metadata": {
+                      "cred_def_id": "sov:CRED_DEF:981f",
+                      // no issuance or expiration date
+                  }
+                  </span>,
+                  "claims": [
+                    ....
+                  ]
+                }
+            </pre>
+        </section>
 
       <section>
         <h2>Proofs (aka Signatures)</h2>
