@@ -165,7 +165,7 @@ the following sections provide an overview of:
 what a verifiable credential is and how it's comprised,
         </li>
         <li>
-what a verifiable presentation is and how it's comprised,
+what a presentation presentation (derived from verifiable credential) is and how it's comprised,
         </li>
         <li>
 an ecosystem where verifiable credentials and presentations are expected to be useful, and
@@ -348,7 +348,8 @@ specification, namely:
 <a>Holders</a> are positioned between <a>issuers</a> and <a>verifiers</a>.
         </li>
         <li>
-<a>Holders</a> generate <a>verifiable presentations</a> from their <a>verifiable credentials</a> as needed and provide these <a>presentations</a> to <a>verifiers</a>.
+<a>Holders</a> generate <a>verifiable presentations</a> from their <a>verifiable credentials</a> as
+needed and provide these <a>verifiable presentations</a> to <a>verifiers</a>.
         </li>
         <li>
 <a>Holders</a> may use an agent that verifiers needn't trust; they only need to trust
@@ -370,7 +371,7 @@ particular services; <a>holders</a> decide how to aggregate and manage
 to help them manage their <a>verifiable credentials</a> and generate and share <a>verifiable presentations</a>.
         </li>
         <li>
-<a>Holders</a> that share <a>verifiable presentations</a> never need to 
+<a>Holders</a> that share <a>verifiable presentations</a> never need to
 reveal the identity of the <a>verifier</a> to <a>issuers</a>.
         </li>
         <li>
@@ -531,11 +532,11 @@ not required to be related.
 As this specification takes a privacy-first approach, it is important that
 the entities that use this technology are able to express only the portions of
 their persona that are appropriate for the situation. The expression of a
-subset of one's persona is called a <a>verifiable presentation</a>.
+subset of one's persona is called a <a>verifiable presentation</a> (or a derived credential).
       </p>
 
       <p>
-A holder generates a <a>verifiable presentation</a> from one or more
+A holder generates a <a>verifiable presentation</a> from a collection of one or more
 <a>verifiable credentials</a> that are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
@@ -662,10 +663,10 @@ such that market competition and customer choice is increased.
                 them have custom encodings.
             </p>
 
-            <pre class="example nohighlight" title="Usage of issuer properties">
+            <pre class="example nohighlight" title="Usage of issuance properties">
                 {
                   "id": "http://dmv.example.gov/credentials/3732",
-                  "type": ["Credential"],
+                  "type": ["VerifiableCredential"],
                   <span class="highlight">"metadata": {
                       "issuer": "https://dmv.example.gov/issuers/14",
                       "schema": "https://dmv.example.gov/schemas/20",
@@ -682,10 +683,10 @@ such that market competition and customer choice is increased.
 
             OR
 
-            <pre class="example nohighlight" title="Usage of issuer properties">
+            <pre class="example nohighlight" title="Usage of issuance properties">
                 {
                   "id": "http://dmv.example.gov/credentials/3732",
-                  "type": ["Credential"],
+                  "type": ["VerifiableCredential"],
                   <span class="highlight">"metadata": {
                       "cred_def_id": "sov:CRED_DEF:981f",
                       "issuance_date": 159908121001,
@@ -700,10 +701,10 @@ such that market competition and customer choice is increased.
 
             OR
 
-            <pre class="example nohighlight" title="Usage of issuer properties">
+            <pre class="example nohighlight" title="Usage of issuance properties">
                 {
                   "id": "http://dmv.example.gov/credentials/3732",
-                  "type": ["Credential"],
+                  "type": ["VerifiableCredential"],
                   <span class="highlight">"metadata": {
                       "cred_def_id": "sov:CRED_DEF:981f",
                       // no issuance or expiration date
@@ -714,7 +715,77 @@ such that market competition and customer choice is increased.
                   ]
                 }
             </pre>
+
+            <p>
+                For differentiating between a <a>verifiable credential</a> and
+                <a>verifiable presentation</a>, a type field needs to be present
+                which specifies what the document is; examples mentioned above
+                describe a <a>verifiable credential</a>, a <a>verifiable presentation</a>
+                looks like this (notice the lack of "id" field)
+                <pre class="example nohighlight" title="a verifiable presentation">
+                    {
+                      "type": ["VerifiablePresentation"],
+                      ....
+                    }
+                </pre>
+            </p>
+
         </section>
+
+      <section>
+        <h2>Claims</h2>
+
+          <p>
+            Claims are the assertions issuer makes about the subject. Examples of claims
+            include date of birth, yearly income, credit score, weight, height, etc. To create
+            <a>verifiable presentations</a> over such claims, it is important to specify how the
+            values in these claims are encoded, eg height is in inches or centimeters, income is in
+            USD or euros and so on. Notice the different ways of specifying the schema.
+              <pre class="example nohighlight" title="claims with schema explicitly referenced">
+                    {
+                      "type": ["VerifiableCredential"],
+                      "metadata": {
+                        <span class="highlight">
+                        "schema": "https://dmv.example.gov/schemas/20",
+                        ....
+                        </span>
+                      },
+                      <span class="highlight">
+                      "claims": {
+                        "name": "Alice Bobman",
+                        "birthDate": "15903201121",
+                        "height": "150",
+                        "income": 50000,
+                      }
+                      </span>
+                    }
+              </pre>
+
+              OR
+
+              <pre class="example nohighlight" title="claims with schema referenced in another binding object">
+                    {
+                      "type": ["VerifiableCredential"],
+                      "metadata": {
+                        <span class="highlight">
+                        "cred_def_id": "sov:CRED_DEF:981f",
+                        // schema reference present in the document that resolves to "sov:CRED_DEF:981f".
+                        </span>
+                      },
+                      <span class="highlight">
+                      "claims": {
+                        "name": "Alice Bobman",
+                        "birthDate": "15903201121",
+                        "height": "150",
+                        "income": 50000,
+                      }
+                      </span>
+                    }
+              </pre>
+
+          </p>
+
+      </section>
 
       <section>
         <h2>Proofs (aka Signatures)</h2>
