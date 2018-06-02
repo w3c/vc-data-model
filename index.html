@@ -207,9 +207,7 @@ A verifiable credential is capable of representing all of the same information
 that a physical credential is intended to represent. The addition of
 digital technologies, such as digital signatures, also make verifiable
 credentials more tamperproof and therefore more trustworthy
-than their physical counterparts. Verifiable credentials and presentations can also be
-rapidly exchanged through the Internet, making them more convenient than
-their physical counterparts when needing to establish trust at a distance.
+than their physical counterparts.
       </p>
 
     </section>
@@ -217,7 +215,9 @@ their physical counterparts when needing to establish trust at a distance.
       <h3>What is a Presentation?</h3>
       <p>
 Holders can generate presentations and share them with a verifier to prove
-they possess verifiable credentials with certain characteristics.
+they possess verifiable credentials with certain characteristics. Exchanging
+presentations over long distances is also possible through the Internet, making them
+more convenient when needing to establish trust over long distances.
       </p>
     </section>
 </section>
@@ -252,14 +252,15 @@ trade associations, governments, and individuals.
         <dt><a>verifier</a></dt>
         <dd>
 A role an <a>entity</a> may perform by requesting and receiving a
-<a>presentation</a> that proves the holder possesses verifiable credentials with certain characteristics. 
+<a>presentation</a> that proves the holder possesses the required verifiable credentials with certain characteristics.
 Examples of verifiers include employers, security personnel, and websites.
         </dd>
         <dt><a>Verifiable data repository</a></dt>
         <dd>
-A role a system may perform by mediating the creation and verification of
-<a>issuer</a> identifiers, keys and other relevant data required to verify presentations. Examples of such data repositories include
-corporate employee databases, government ID databases, and distributed ledgers.
+Mediates the creation and verification of <a>issuer</a> identifiers, keys and
+other relevant data required to use verifiable credentials. Examples of
+such data repositories include trusted databases, decentralised databases,
+government ID databases, and distributed ledgers.
         </dd>
       </dl>
 
@@ -369,6 +370,11 @@ to help them manage their <a>verifiable credentials</a> and generate and share <
         <li>
 <a>Holders</a> that share <a>proofs</a> are not required to
 reveal the identity of the <a>verifier</a> to <a>issuers</a>.
+        </li>
+        <li>
+<a>Holders</a> in <a>presentations</a> can either disclose the attributes or satisfy <a>predicates</a>
+given by the <a>verifier</a>. <a>Predicates</a> are boolean conditions like greater/less than or
+equal to, is in set, etc.
         </li>
         <li>
 <a>Verifiable credentials</a> and <a>proofs</a> are expressed in one or more standard,
@@ -523,11 +529,11 @@ not required to be related.
 As this specification takes a privacy-first approach, it is important that
 the entities that use this technology are able to express only the portions of
 their persona that are appropriate for the situation. The expression of a
-subset of one's persona is called a <a>verifiable presentation</a>.
+subset of one's persona is called a <a>verifiable presentation</a> (or a derived credential).
       </p>
 
       <p>
-A <a>verifiable presentation</a> is generated from one or more
+A <a>verifiable presentation</a> is a created from a collection of one or more
 <a>verifiable credentials</a> that are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
@@ -569,7 +575,7 @@ The Verifiable Credentials trust model is as follows:
 The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
 that it receives. In order to establish this trust, a credential MUST
 either 1) include a <a href="#proofs-aka-signatures">proof</a> that establishes
-that the issuer generated the credential (it is a <a>verifiable credential</a>),
+that the issuer generated the credential only after sufficient scrutiny (it is a <a>verifiable credential</a>),
 or 2) have been transmitted in a way that clearly establishes that the
 issuer generated the credential and that the credential has not been tampered
 with in transit or storage. This trust could be weakened depending upon the
@@ -601,161 +607,112 @@ such that market competition and customer choice is increased.
 
     <section>
       <h1>Basic Concepts</h1>
+        <section>
+            <h2>Metadata</h2>
+            <p>
+                Apart from the subject specific claims inside a credential, the credential contains
+                additional data like the issuer's id, public key to use to verify the credential,
+                the schema (structure) of the credential, the issuance date, expiration date, etc.
+                Depending on the metadata (and other metadata included), some elements of metadata
+                may or may not be signed by the issuer.
+            </p>
+            <dl>
+              <dt><var>Issuer</var></dt>
+              <dd>
+                  The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
+                  the URI results in a document containing machine-readable information about
+                  the issuer that may be used to verify the information expressed in the
+                  <a>credential</a>.
+              </dd>
+              <dt><var>Schema</var></dt>
+              <dd>
+                  A Schema describes the attributes of the credential. It specifies the name,
+                  data types and encoding of each attribute. A schema may be embedded or may be
+                  referenced on an immutable storage. The schema should be included in the signature
+                  to prevent the holder from crafting false proofs.
+              </dd>
+              <dt><var>Public key</var></dt>
+              <dd>
+                  The public key is created by the issuer and can be used by anyone to verify the proofs
+                  created from the credential. In certain kinds of credentials, it is strongly advised to
+                  create a new public key per schema. Public key is not included in the signature since it
+                  is a priori to verify the signature.
+              </dd>
+              <dt><var>Issuance date</var></dt>
+              <dd>
+                  This date/time represents the earliest date when the information
+                  associated with the claim property became valid. The date is specified as the number of seconds since epoch.
+                  This needs to included in the signature since it allows the holder to selectively disclose or satisfy predicates on.
+              </dd>
+              <dt><var>Expiration date</var></dt>
+              <dd>
+                  This date/time after which the credential will cease to be valid.
+                  The date is specified as the number of seconds since epoch. Needs to be
+                  included in the signature for the same reasons as issuance date.
+              </dd>
+            </dl>
 
-      <section>
-        <h2>Types</h2>
+            <p>
+                Alternatively some of the above data like issuer identifier, schema and public key can be bound together
+                in a single object and the credential then refers the single object. This is how it is done is Sovrin and the
+                binding object is called credential definition and is called "cred_def_id".
+                The issuance date and expiration date can be specified as a part of schema which lets
+                them have custom encodings.
+            </p>
 
-        <p>
-Type information may be expressed via the <a>type</a> property:
-        </p>
-        <dl>
-          <dt><dfn>type</dfn></dt>
-          <dd>
-The value of this property MUST be one or more URIs.
-If more than one URI is provided, the URIs MUST be interpreted as an
-unordered set. If a syntax, such as JSON-LD, uses an array to represent
-the set of URIs, the order of the values is not significant. Note that
-syntax such as JSON-LD terms MAY be used to ease developer usage. It is
-RECOMMENDED that dereferencing the URI results in a document containing
-machine-readable information about the type.
-          </dd>
-        </dl>
+            <pre class="example nohighlight" title="Usage of issuer properties">
+                {
+                  "id": "http://dmv.example.gov/credentials/3732",
+                  "type": ["Credential"],
+                  <span class="highlight">"metadata": {
+                      "issuer": "https://dmv.example.gov/issuers/14",
+                      "schema": "https://dmv.example.gov/schemas/20",
+                      "public_key": "https://dmv.example.gov/keys/35",
+                      "issuance_date": 159908121001,
+                      "expiration_date": 159908154923,
+                  }
+                  </span>,
+                  "claims": [
+                    ....
+                  ]
+                }
+            </pre>
 
-        <pre class="example nohighlight" title="Usage of the type property">
-{
-  "id": "http://dmv.example.gov/credentials/3732",
-  <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "proof": { ... }
-}
-        </pre>
+            OR
 
-        <p>
-With respect to this specification, the following <a>type</a>s MUST be
-specified on the following objects:
-        </p>
+            <pre class="example nohighlight" title="Usage of issuer properties">
+                {
+                  "id": "http://dmv.example.gov/credentials/3732",
+                  "type": ["Credential"],
+                  <span class="highlight">"metadata": {
+                      "cred_def_id": "sov:CRED_DEF:981f",
+                      "issuance_date": 159908121001,
+                      "expiration_date": 159908154923,
+                  }
+                  </span>,
+                  "claims": [
+                    ....
+                  ]
+                }
+            </pre>
 
-        <table class="simple">
-          <thead>
-            <tr>
-              <th>Concept</th>
-              <th>Type</th>
-            </tr>
-          </thead>
+            OR
 
-          <tbody>
-            <tr>
-              <td>
-A <a href="#credentials">credential</a> object
-              </td>
-              <td>
-<tt>"type": ["<code>VerifiableCredential</code>"]</tt> and
-a more specific credential type (e.g. <code>ProofOfAgeCredential</code>)
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-A <a href="#presentations">presentation</a> object
-              </td>
-              <td>
-<tt>"type": ["<code>VerifiablePresentation</code>"]</tt>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-A <a href="#status">credentialStatus</a> object
-              </td>
-              <td>
-<tt>"type": ["<code>CredentialStatus</code>"]</tt> and
-a valid credential status type (e.g. <code>CredentialStatusList2017</code>)
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-A <a href="#terms-of-use">termsOfUse</a> object
-              </td>
-              <td>
-<tt>"type": ["<code>TermsOfUse</code>"]</tt> and
-a valid terms of use type (e.g. <code>OdrlPolicy2017</code>)
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-An <a href="#terms-of-use">evidence</a> object
-              </td>
-              <td>
-<tt>"type": ["<code>Evidence</code>"]</tt> and
-a valid evidence type (e.g. <code>DocumentVerification2018</code>)
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-
-        <p class="issue" data-number="182">
-Whether or not <code>CredentialStatus</code>, <code>TermsOfUse</code>,
-or <code>Evidence</code> provide useful type information in addition to
-more specific types is currently a topic of active discussion.
-        </p>
-
-        <p>
-All <a>credentials</a> MUST specify additional, more narrow <a>type</a>s
-(e.g. <code>ProofOfAgeCredential</code>) such that software systems can use
-the additional information to more easily process the credential.
-        </p>
-
-        <p class="note">
-The type system for the Verifiable Credentials Data Model is the same as the
-one for [[JSON-LD]] and is detailed in
-<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4: Specifying the Type</a>
-and
-<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
-When using a JSON-LD Context (see Section <a href="#extensibility"></a>),
-this specification aliases the <code>@type</code>
-keyword to <code>type</code> in order to make the JSON-LD documents more
-idiomatic. While application developers and document authors do not need to
-understand the specifics of JSON-LD's type system, implementers of this
-specification that want to support extensibility in an interoperable fashion do.
-        </p>
-
-      </section>
-
-      <section>
-        <h2>Issuer</h2>
-
-        <p>
-Issuer information may be expressed via the following <a>properties</a>:
-        </p>
-        <dl>
-          <dt><var>issuer</var></dt>
-          <dd>
-The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
-the URI results in a document containing machine-readable information about
-the issuer that may be used to verify the information expressed in the
-<a>credential</a>.
-          </dd>
-        </dl>
-        <pre class="example nohighlight" title="Usage of issuer properties">
-{
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
-  <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  "proof": { ... }
-}
-        </pre>
-      </section>
+            <pre class="example nohighlight" title="Usage of issuer properties">
+                {
+                  "id": "http://dmv.example.gov/credentials/3732",
+                  "type": ["Credential"],
+                  <span class="highlight">"metadata": {
+                      "cred_def_id": "sov:CRED_DEF:981f",
+                      // no issuance or expiration date
+                  }
+                  </span>,
+                  "claims": [
+                    ....
+                  ]
+                }
+            </pre>
+        </section>
 
       <section>
         <h2>Proofs (aka Signatures)</h2>
@@ -834,7 +791,7 @@ will cease to be valid.
       <section>
         <h2>Status</h2>
 
-        <p>Information about the current status of a <a>verifiable credential</a>, 
+        <p>Information about the current status of a <a>verifiable credential</a>,
         such as suspension or revocation,
         may be provided by adding the <code>credentialStatus</code> <a>property</a>.
 This property
