@@ -611,6 +611,170 @@ such that market competition and customer choice is increased.
     <section>
       <h1>Basic Concepts</h1>
         <section>
+        <h2>Types</h2>
+
+        <p>
+Type information may be expressed via the <a>type</a> property:
+        </p>
+        <dl>
+          <dt><dfn>type</dfn></dt>
+          <dd>
+The value of this property MUST be one or more URIs.
+If more than one URI is provided, the URIs MUST be interpreted as an
+unordered set. If a syntax, such as JSON-LD, uses an array to represent
+the set of URIs, the order of the values is not significant. Note that
+syntax such as JSON-LD terms MAY be used to ease developer usage. It is
+RECOMMENDED that dereferencing the URI results in a document containing
+machine-readable information about the type.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of the type property">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+With respect to this specification, the following <a>type</a>s MUST be
+specified on the following objects:
+        </p>
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+A <a href="#credentials">credential</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiableCredential</code>"]</tt> and
+a more specific credential type (e.g. <code>ProofOfAgeCredential</code>)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#presentations">presentation</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiablePresentation</code>"]</tt>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#status">credentialStatus</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>CredentialStatus</code>"]</tt> and
+a valid credential status type (e.g. <code>CredentialStatusList2017</code>)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#terms-of-use">termsOfUse</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>TermsOfUse</code>"]</tt> and
+a valid terms of use type (e.g. <code>OdrlPolicy2017</code>)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+An <a href="#terms-of-use">evidence</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>Evidence</code>"]</tt> and
+a valid evidence type (e.g. <code>DocumentVerification2018</code>)
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <p class="issue" data-number="182">
+Whether or not <code>CredentialStatus</code>, <code>TermsOfUse</code>,
+or <code>Evidence</code> provide useful type information in addition to
+more specific types is currently a topic of active discussion.
+        </p>
+
+        <p>
+All <a>credentials</a> MUST specify additional, more narrow <a>type</a>s
+(e.g. <code>ProofOfAgeCredential</code>) such that software systems can use
+the additional information to more easily process the credential.
+        </p>
+
+        <p class="note">
+The type system for the Verifiable Credentials Data Model is the same as the
+one for [[JSON-LD]] and is detailed in
+<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4: Specifying the Type</a>
+and
+<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
+When using a JSON-LD Context (see Section <a href="#extensibility"></a>),
+this specification aliases the <code>@type</code>
+keyword to <code>type</code> in order to make the JSON-LD documents more
+idiomatic. While application developers and document authors do not need to
+understand the specifics of JSON-LD's type system, implementers of this
+specification that want to support extensibility in an interoperable fashion do.
+        </p>
+
+      </section>
+
+            <section>
+        <h2>Issuer</h2>
+
+        <p>
+Issuer information may be expressed via the following <a>properties</a>:
+        </p>
+        <dl>
+          <dt><var>issuer</var></dt>
+          <dd>
+The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
+the URI results in a document containing machine-readable information about
+the issuer that may be used to verify the information expressed in the
+<a>credential</a>.
+          </dd>
+          <dt><var>issued</var></dt>
+          <dd>
+The value of this property MUST be a string value of an [[!ISO8601]] combined
+date and time string and represents the date and time the <a>credential</a>
+was issued. Note that this date represents the earliest date when the
+information associated with the <var>claim</var> property became valid.
+          </dd>
+        </dl>
+        <pre class="example nohighlight" title="Usage of issuer properties">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
+  <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}
+        </pre>
+      </section>
+
+      <section>
+
+        <section>
             <h2>Metadata</h2>
             <p>
                 Apart from the subject specific claims inside a credential, the credential contains
@@ -641,13 +805,13 @@ such that market competition and customer choice is increased.
                   create a new public key per schema. Public key is not included in the signature since it
                   is a priori to verify the signature.
               </dd>
-              <dt><var>Issuance date</var></dt>
+              <dt><var>Issued</var></dt>
               <dd>
                   This date/time represents the earliest date when the information
                   associated with the claim property became valid. The date is specified as the number of seconds since epoch.
                   This needs to included in the signature since it allows the holder to selectively disclose or satisfy predicates on.
               </dd>
-              <dt><var>Expiration date</var></dt>
+              <dt><var>Expires</var></dt>
               <dd>
                   This date/time after which the credential will cease to be valid.
                   The date is specified as the number of seconds since epoch. Needs to be
@@ -670,9 +834,9 @@ such that market competition and customer choice is increased.
                   <span class="highlight">"metadata": {
                       "issuer": "https://dmv.example.gov/issuers/14",
                       "schema": "https://dmv.example.gov/schemas/20",
-                      "public_key": "https://dmv.example.gov/keys/35",
-                      "issuance_date": 159908121001,
-                      "expiration_date": 159908154923,
+                      "publicKey": "https://dmv.example.gov/keys/35",
+                      "issued": 159908121001,
+                      "expires": 159908154923,
                   }
                   </span>,
                   "claims": [
@@ -688,9 +852,9 @@ such that market competition and customer choice is increased.
                   "id": "http://dmv.example.gov/credentials/3732",
                   "type": ["VerifiableCredential"],
                   <span class="highlight">"metadata": {
-                      "cred_def_id": "sov:CRED_DEF:981f",
-                      "issuance_date": 159908121001,
-                      "expiration_date": 159908154923,
+                      "credDefId": "sov:CRED_DEF:981f",
+                      "issued": 159908121001,
+                      "expires": 159908154923,
                   }
                   </span>,
                   "claims": [
@@ -706,7 +870,7 @@ such that market competition and customer choice is increased.
                   "id": "http://dmv.example.gov/credentials/3732",
                   "type": ["VerifiableCredential"],
                   <span class="highlight">"metadata": {
-                      "cred_def_id": "sov:CRED_DEF:981f",
+                      "credDefId": "sov:CRED_DEF:981f",
                       // no issuance or expiration date
                   }
                   </span>,
