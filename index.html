@@ -788,45 +788,136 @@ such that market competition and customer choice is increased.
       </section>
 
       <section>
-        <h2>Proofs (aka Signatures)</h2>
-
+        <h2>Signatures</h2>
         <p>
-In order for a <a>credential</a> or <a>presentation</a> to be made
-verifiable, the following property MUST be present:
+            In order for a credential or presentation to be made verifiable, the "proof" property MUST be present.
+            There can be a proof over the metadata too.
+            <i>TODO: Add signature section for metadata. Since metadata's signature is RSA, DSA, ECDSA, etc i.e something
+                that does not allow selective disclosure, the signature scheme can be different from the one used in signing the claims.</i>
         </p>
         <dl>
           <dt><var>proof</var></dt>
           <dd>
-The method used for a mathematical proof will vary by representation language
-and the technology used.  For example, if digital signatures are used for
-the proof mechanism, this property is expected to have a value that is a
-set of name-value pairs including at least a signature, a reference to the
-signing entity, and a representation of the signing date.</dd>
+            The method used for a mathematical proof will vary by representation language
+            and the technology used.  For example, if digital signatures are used for
+            the proof mechanism, this property is expected to have a value that is a
+            set of name-value pairs including at least a signature, a reference to the
+            signing entity, and a representation of the signing date.
+          </dd>
         </dl>
         <pre class="example nohighlight"
           title="Usage of proof property on a verifiable credential">
-{
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
-  "issued": "2010-01-01",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  <span class="highlight">"proof": {
-    "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-      +W3JT24="
-  }</span>
-}
+            {
+              "id": "http://example.gov/credentials/3732",
+              "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+              "issuer": "https://dmv.example.gov",
+              "issued": "2010-01-01",
+              "claim": {
+                "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+                "ageOver": 21
+              },
+              <span class="highlight">"proof": {
+                "type": "RsaSignature2018",
+                "created": "2017-06-18T21:19:10Z",
+                "creator": "https://example.com/jdoe/keys/1",
+                "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+                "value": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+                  MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+                  PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+                  +W3JT24="
+              }</span>
+            }
         </pre>
-      </section>
+
+        <p>
+            Credentials that allow for more privacy by selective disclosure and satisfying predicates
+            use different signature schemes. The <em>value</em> is an object rather than a string.
+            In a <a>verifiable presentation</a> created from such <a>verifiable credential</a>(s),
+            the <a>proof</a> in the <a>verifiable presentation</a> is different from the <a>verifiable
+            credential</a>(s) to prevent correlation. Examples below describe <a>proof</a> in both a
+            <a>verifiable credential</a> and a <a>verifiable presentation</a>.
+
+            <pre class="example nohighlight"
+                title="Usage of proof property on a verifiable credential">
+            {
+              "id": "http://example.gov/credentials/3732",
+              "type": ["VerifiableCredential"],
+              "metadata": {
+                "cred_def_id": "sov:CRED_DEF:981f",
+                // contains the public key to verify the proof.
+                ...
+              },
+              "claims": {
+                "name": "Alice Bobman",
+                "birthDate": "15903201121",
+                "height": "150",
+                "income": 50000,
+              },
+              <span class="highlight">"proof": {
+                "type": "CL",
+                "value": {
+                    "m_2": "12190912112",
+                    "a": "90821121...",
+                    ....
+                  }
+                }
+              </span>
+            }
+            </pre>
+
+            <pre class="example nohighlight"
+                title="Usage of proof property on a verifiable presentation">
+            {
+              "id": "http://example.gov/credentials/3732",
+              "type": ["VerifiablePresentation"],
+              "metadata": {
+                "cred_def_id": "sov:CRED_DEF:981f",
+                // contains the public key to verify the proof.
+                ...
+              },
+              "claims": {
+                "name": "Alice Bobman",
+                "birthDate": "15903201121",
+                "height": "150",
+                "income": 50000,
+              },
+              <span class="highlight">"proof": {
+                "type": "CL",
+                "value": {
+                    "proofs": [ // 3 subproofs each created from a different verifiable credential
+                         {
+                         "primaryProof": {
+                            "equalityProof": {
+                                 "revealedAttrs": {
+                                    "name: "...",
+                                    ......
+                                 },
+                                 "a_prime": "212687211119211221"    // big number
+                             },
+                            "predicateProofs": [....]
+                         },
+                         {
+                            ……
+                            …..
+                         },
+                         {
+                            …….
+                            ……..
+                         }
+                    ],
+                    "aggregatedProof": {
+                        "cHash": "912792010211",
+                        "cList": [[21, 23, 9999212, ], [564, 533, 2312]],
+                    },
+                    "proofIdentifiers": [...]  // identifier for each sub proof
+                }
+              }
+              </span>
+            }
+            </pre>
+        </p>
+
+     </section>
 
       <section>
         <h2>Expiration</h2>
@@ -929,13 +1020,18 @@ is provided below:
   "proof": [{ ... }]</span>
 }
         </pre>
-
         <p>
 The contents of the <code>verifiableCredential</code> property are
 <a>verifiable credentials</a> as described by this specification. The contents
 of the <code>proof</code> property are proofs as described by the
 Linked Data Proofs [[LD-PROOFS]] specification.
         </p>
+
+          <p>
+              As mentioned above in the proofs section, presentation that allow for selective
+              disclosure and prevent correlation don't require supplying the complete credentials
+              or their proofs during presentation.
+          </p>
       </section>
     </section>
 
@@ -1441,8 +1537,80 @@ a verifiable credential, are clear and protected in the signature.
       <section>
         <h3>Revocation</h3>
         <ul>
-          <li>If revocation instructions are present, the credential must not
-          have been revoked.</li>
+          <p>If revocation instructions are present, the credential must not
+          have been revoked.</p>
+            <p>
+                As mentioned above the issuer uses the credential identifier
+                to revoke the credential, if the holder provided the credential identifier
+                to the verifier to prove non-revocation, the issuer and verifier can collude to
+                de-anonymize the holder. Therefore the holder needs to prove that any credential
+                used in presentation is not revoked without disclosing any credential's identifier.
+                This is done by adding additional information in the credential (this
+                information might be added by the issuer or a separate revocation authority)
+            </p>
+
+                <pre class="example nohighlight"
+                    title="Usage of proof property on a verifiable credential">
+                    {
+                      "id": "http://example.gov/credentials/3732",
+                      "type": ["VerifiableCredential"],
+                      ....
+                      <span class="highlight">"revocation": {
+                        "type": "CKS",
+                        "signature": {
+                           "value": {
+                             "sigma": "big number",
+                             "c": ...
+                             ...
+                             "g_i": "big number",
+                             "m2": "big number"
+                           },
+                           "witness": {
+                              "value": {
+                                 "omega": "big number"
+                              },
+                              "signature": {
+                                 "sigma_i": "big number",
+                              }
+                           }
+                        }</span>
+                      }
+                </pre>
+            <p>
+                The holder while presenting the <a>presentation token</a> uses the
+                above <a>revocation</a> information in the credential to prepare
+                a zero knowledge proof of non revocation.
+            </p>
+
+                <pre class="example nohighlight"
+                    title="Usage of proof property on a verifiable presentation">
+                    {
+                      "id": "http://example.gov/credentials/3732",
+                      "type": ["VerifiablePresentation"],
+                      "metadata": {
+                        "cred_def_id": "sov:CRED_DEF:981f",
+                      },
+                      .....
+                      // a proof comprising of 3 sub-proofs; i.e 3 verifiable
+                      credentials were used to create that proof.
+                      <span class="highlight">revocation: {
+                          "type": "CKS",
+                           "signature": {
+                               "value": {
+                                   "proofs": [  // for each proof above, a proof of non-revocation
+                                       null,  // the 1st  proof has no non-revocation proof
+                                        {       // the 2nd  proof has a non-revocation proof
+                                           "xList": {.....},
+                                           "cList": {.......}
+                                        },
+                                       null, // the 3rd  proof has no non-revocation proof
+                                  ]
+                               }
+                           }
+                      }
+                      </span>
+                    }
+                </pre>
         </ul>
       </section>
       <section>
