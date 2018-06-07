@@ -629,7 +629,7 @@ machine-readable information about the type.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
 
@@ -747,6 +747,7 @@ The value of this property MUST be a string value of an [[!ISO8601]] combined
 date and time string and represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
 information associated with the <var>claim</var> property became valid.
+This is optional.
           </dd>
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
@@ -759,157 +760,41 @@ information associated with the <var>claim</var> property became valid.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
       </section>
-        
-        <section>
-            <h2>Metadata</h2>
-            <p>
-                Apart from the subject specific claims inside a credential, the credential contains
-                additional data like the issuer's id, public key to use to verify the credential,
-                the schema (structure) of the credential, the issuance date, expiration date, etc.
-                Depending on the metadata (and other metadata included), some elements of metadata
-                may or may not be signed by the issuer.
-            </p>
-            <dl>
-              <dt><var>Issuer</var></dt>
-              <dd>
-                  The value of this property MUST be a URI. It is RECOMMENDED that dereferencing
-                  the URI results in a document containing machine-readable information about
-                  the issuer that may be used to verify the information expressed in the
-                  <a>credential</a>.
-              </dd>
-              <dt><var>Schema</var></dt>
-              <dd>
-                  A Schema describes the attributes of the credential. It specifies the name,
-                  data types and encoding of each attribute. A schema may be embedded or may be
-                  referenced on an immutable storage. The schema should be included in the signature
-                  to prevent the holder from crafting false proofs.
-              </dd>
-              <dt><var>Public key</var></dt>
-              <dd>
-                  The public key is created by the issuer and can be used by anyone to verify the proofs
-                  created from the credential. In certain kinds of credentials, it is strongly advised to
-                  create a new public key per schema. Public key is not included in the signature since it
-                  is a priori to verify the signature.
-              </dd>
-              <dt><var>Issued</var></dt>
-              <dd>
-                  This date/time represents the earliest date when the information
-                  associated with the claim property became valid. The date is specified as the number of seconds since epoch.
-                  This needs to included in the signature since it allows the holder to selectively disclose or satisfy predicates on.
-              </dd>
-              <dt><var>Expires</var></dt>
-              <dd>
-                  This date/time after which the credential will cease to be valid.
-                  The date is specified as the number of seconds since epoch. Needs to be
-                  included in the signature for the same reasons as issuance date.
-              </dd>
-            </dl>
-
-            <p>
-                Alternatively some of the above data like issuer identifier, schema and public key can be bound together
-                in a single object and the credential then refers the single object. This is how it is done is Sovrin and the
-                binding object is called credential definition and is called "cred_def_id".
-                The issuance date and expiration date can be specified as a part of schema which lets
-                them have custom encodings.
-            </p>
-
-            <pre class="example nohighlight" title="Usage of issuance properties">
-                {
-                  "id": "http://dmv.example.gov/credentials/3732",
-                  "type": ["VerifiableCredential"],
-                  <span class="highlight">"metadata": {
-                      "issuer": "https://dmv.example.gov/issuers/14",
-                      "schema": "https://dmv.example.gov/schemas/20",
-                      "publicKey": "https://dmv.example.gov/keys/35",
-                      "issued": 159908121001,
-                      "expires": 159908154923,
-                  }
-                  </span>,
-                  "claims": [
-                    ....
-                  ]
-                }
-            </pre>
-
-            OR
-
-            <pre class="example nohighlight" title="Usage of issuance properties">
-                {
-                  "id": "http://dmv.example.gov/credentials/3732",
-                  "type": ["VerifiableCredential"],
-                  <span class="highlight">"metadata": {
-                      "credDefId": "sov:CRED_DEF:981f",
-                      "issued": 159908121001,
-                      "expires": 159908154923,
-                  }
-                  </span>,
-                  "claims": [
-                    ....
-                  ]
-                }
-            </pre>
-
-            OR
-
-            <pre class="example nohighlight" title="Usage of issuance properties">
-                {
-                  "id": "http://dmv.example.gov/credentials/3732",
-                  "type": ["VerifiableCredential"],
-                  <span class="highlight">"metadata": {
-                      "credDefId": "sov:CRED_DEF:981f",
-                      // no issuance or expiration date
-                  }
-                  </span>,
-                  "claims": [
-                    ....
-                  ]
-                }
-            </pre>
-
-            <p>
-                For differentiating between a <a>verifiable credential</a> and
-                <a>verifiable presentation</a>, a type field needs to be present
-                which specifies what the document is; examples mentioned above
-                describe a <a>verifiable credential</a>, a <a>verifiable presentation</a>
-                looks like this (notice the lack of "id" field)
-                <pre class="example nohighlight" title="a verifiable presentation">
-                    {
-                      "type": ["VerifiablePresentation"],
-                      ....
-                    }
-                </pre>
-            </p>
-
-        </section>
 
       <section>
         <h2>Claims</h2>
 
           <p>
-            Claims are the assertions issuer makes about the subject. Examples of claims
-            include date of birth, yearly income, credit score, weight, height, etc. To create
+            Claims are the assertions issuer makes about a subject.
+            A <a>verifiable credential</a> can be about any number of subjects.
+            Each subject acts as a top-level key in <a>claims</a>. A reserved keyword <em>this</em> refers to the
+            credential and contains attributes about the credential, like issuance date, expiration date.
+            Another reserved keyword is <em>holder</em>, which points to the holder of the credential, <em>holder</em> is optional
+            Examples of claims include date of birth, yearly income, credit score, weight, height, etc. To create
             <a>verifiable presentations</a> over such claims, it is important to specify how the
             values in these claims are encoded, eg height is in inches or centimeters, income is in
             USD or euros and so on. Notice the different ways of specifying the schema.
-              <pre class="example nohighlight" title="claims with schema explicitly referenced">
+              <pre class="example nohighlight" title="claims with 2 subjects">
                     {
                       "type": ["VerifiableCredential"],
-                      "metadata": {
-                        <span class="highlight">
-                        "schema": "https://dmv.example.gov/schemas/20",
-                        ....
-                        </span>
-                      },
+                      "credDefId": "sov:CRED_DEF:981f",
                       <span class="highlight">
                       "claims": {
-                        "name": "Alice Bobman",
-                        "birthDate": "15903201121",
-                        "height": "150",
-                        "income": 50000,
+                        "this": {
+                          "issued": 159908121001,
+                          "expires": 159908154923,
+                          "holder": "person",
+                        },
+                        "person": {
+                          "name": "Alice Bobman",
+                          "birthDate": 15903201121,
+                          "height": "150",
+                          "income": 50000,
+                        }
                       }
                       </span>
                     }
@@ -917,21 +802,29 @@ information associated with the <var>claim</var> property became valid.
 
               OR
 
-              <pre class="example nohighlight" title="claims with schema referenced in another binding object">
+              <pre class="example nohighlight" title="claims with 3 subjects">
                     {
                       "type": ["VerifiableCredential"],
-                      "metadata": {
-                        <span class="highlight">
-                        "cred_def_id": "sov:CRED_DEF:981f",
-                        // schema reference present in the document that resolves to "sov:CRED_DEF:981f".
-                        </span>
-                      },
+                      "credDefId": "sov:CRED_DEF:981f",
                       <span class="highlight">
                       "claims": {
-                        "name": "Alice Bobman",
-                        "birthDate": "15903201121",
-                        "height": "150",
-                        "income": 50000,
+                        "this": {
+                          "issued": 159908121001,
+                          "expires": 159908154923,
+                          "holder": "mother",
+                        },
+                        "mother": {
+                          "name": "Alice Bobman",
+                          "birthDate": 15903201121,
+                          "height": "150",
+                          "income": 50000,
+                        },
+                        "father": {
+                          "name": "John Smith Bobman",
+                          "birthDate": 15903101121,
+                          "height": "180",
+                          "income": 500000,
+                        }
                       }
                       </span>
                     }
@@ -942,19 +835,14 @@ information associated with the <var>claim</var> property became valid.
       </section>
 
       <section>
-        <h2>Signatures</h2>
+        <h2>Signature</h2>
         <p>
-            In order for a credential or presentation to be made verifiable, the "proof" property MUST be present.
-            There can be a proof over the metadata too.
-            <i>TODO: Add signature section for metadata. Since metadata's signature is RSA, DSA, ECDSA, etc i.e something
-                that does not allow selective disclosure, the signature scheme can be different from the one used in signing the claims.</i>
+            In order for a credential or presentation to be made verifiable, the "signature" property MUST be present.
         </p>
         <dl>
-          <dt><var>proof</var></dt>
+          <dt><var>signature</var></dt>
           <dd>
-            The method used for a mathematical proof will vary by representation language
-            and the technology used.  For example, if digital signatures are used for
-            the proof mechanism, this property is expected to have a value that is a
+            This property is expected to have a value that is a
             set of name-value pairs including at least a signature, a reference to the
             signing entity, and a representation of the signing date.
           </dd>
@@ -987,27 +875,28 @@ information associated with the <var>claim</var> property became valid.
             Credentials that allow for more privacy by selective disclosure and satisfying predicates
             use different signature schemes. The <em>value</em> is an object rather than a string.
             In a <a>verifiable presentation</a> created from such <a>verifiable credential</a>(s),
-            the <a>proof</a> in the <a>verifiable presentation</a> is different from the <a>verifiable
-            credential</a>(s) to prevent correlation. Examples below describe <a>proof</a> in both a
-            <a>verifiable credential</a> and a <a>verifiable presentation</a>.
+            the <a>proof</a> in the <a>verifiable presentation</a> assures the verifier that the holder did possess the
+            <a>verifiable credential</a>(s). Example below describe a <a>signature</a> in a
+            <a>verifiable credential</a>.
 
             <pre class="example nohighlight"
                 title="Usage of proof property on a verifiable credential">
             {
               "id": "http://example.gov/credentials/3732",
               "type": ["VerifiableCredential"],
-              "metadata": {
-                "cred_def_id": "sov:CRED_DEF:981f",
-                // contains the public key to verify the proof.
-                ...
-              },
+              "credDefId": "sov:CRED_DEF:981f",
               "claims": {
-                "name": "Alice Bobman",
-                "birthDate": "15903201121",
-                "height": "150",
-                "income": 50000,
-              },
-              <span class="highlight">"proof": {
+                "this": {
+                  "holder": "person",
+                },
+                "person": {
+                  "name": "Alice Bobman",
+                  "birthDate": 15903201121,
+                  "height": "150",
+                  "income": 50000,
+                }
+              }
+              <span class="highlight">"signature": {
                 "type": "CL",
                 "value": {
                     "m_2": "12190912112",
@@ -1015,57 +904,6 @@ information associated with the <var>claim</var> property became valid.
                     ....
                   }
                 }
-              </span>
-            }
-            </pre>
-
-            <pre class="example nohighlight"
-                title="Usage of proof property on a verifiable presentation">
-            {
-              "id": "http://example.gov/credentials/3732",
-              "type": ["VerifiablePresentation"],
-              "metadata": {
-                "cred_def_id": "sov:CRED_DEF:981f",
-                // contains the public key to verify the proof.
-                ...
-              },
-              "claims": {
-                "name": "Alice Bobman",
-                "birthDate": "15903201121",
-                "height": "150",
-                "income": 50000,
-              },
-              <span class="highlight">"proof": {
-                "type": "CL",
-                "value": {
-                    "proofs": [ // 3 subproofs each created from a different verifiable credential
-                         {
-                         "primaryProof": {
-                            "equalityProof": {
-                                 "revealedAttrs": {
-                                    "name: "...",
-                                    ......
-                                 },
-                                 "a_prime": "212687211119211221"    // big number
-                             },
-                            "predicateProofs": [....]
-                         },
-                         {
-                            ……
-                            …..
-                         },
-                         {
-                            …….
-                            ……..
-                         }
-                    ],
-                    "aggregatedProof": {
-                        "cHash": "912792010211",
-                        "cList": [[21, 23, 9999212, ], [564, 533, 2312]],
-                    },
-                    "proofIdentifiers": [...]  // identifier for each sub proof
-                }
-              }
               </span>
             }
             </pre>
@@ -1186,6 +1024,51 @@ Linked Data Proofs [[LD-PROOFS]] specification.
               disclosure and prevent correlation don't require supplying the complete credentials
               or their proofs during presentation.
           </p>
+
+          <p>
+            Presentations created from certain kinds of credentials offering strong privacy allow for
+            selective disclosure hence they do not need the complete credential to be shared. Several presentations
+            can be created from a single such credential.
+            Notice the lack of <em>id</em>
+          </p>
+
+          <pre class="example nohighlight"
+                title="Usage of proof property on a verifiable presentation">
+            {
+              "type": ["VerifiablePresentation"],
+              <span class="highlight">"proof": {
+                "type": "CL",
+                "value": {
+                    "proofs": [ // 3 subproofs each created from a different verifiable credential
+                         {
+                         "primaryProof": {
+                            "equalityProof": {
+                                 "revealedAttrs": {
+                                    "name: "...",
+                                    ......
+                                 },
+                                 ....
+                             },
+                            "predicateProofs": [....]
+                         },
+                         {
+                            ……
+                            …..
+                         },
+                         {
+                            …….
+                            ……..
+                         }
+                    ],
+                    "aggregatedProof": {
+                        ....
+                    },
+                    "proofIdentifiers": [...]  // identifier for each sub proof
+                }
+              }
+              </span>
+            }
+            </pre>
       </section>
     </section>
 
