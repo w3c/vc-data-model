@@ -233,8 +233,8 @@ standardization. The following roles are introduced in this specification:
         <dt><a>holder</a></dt>
         <dd>
 A role an <a>entity</a> may perform by possessing one or more
-<a>verifiable credentials</a> and generating <a>presentations</a> from them. Examples of holders include students,
-employees, and customers.
+<a>verifiable credentials</a> and generating <a>presentations</a> from them.
+Examples of holders include students, employees, and customers.
         </dd>
         <dt><a>issuer</a></dt>
         <dd>
@@ -625,9 +625,11 @@ machine-readable information about the type.
 {
   "id": "http://dmv.example.gov/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+  "claims": {
+    "_": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "ageOver": 21
+    }
   },
   "signature": { ... }
 }
@@ -743,22 +745,26 @@ the issuer that may be used to verify the information expressed in the
           </dd>
           <dt><var>issued</var></dt>
           <dd>
-The value of this property MUST be a string value of an [[!ISO8601]] combined
-date and time string and represents the date and time the <a>credential</a>
+The value of this property represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
-information associated with the <var>claim</var> property became valid.
-This is optional.
+information associated with the <var>claim</var> property became valid. The encoding
+of this is either defined in the schema of the credential or it defaults to seconds since epoch.
+This field is optional.
           </dd>
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
-  <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+  "claims": {
+    "this": {
+        <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
+        <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
+    },
+    "_": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "ageOver": 21
+    }
   },
   "signature": { ... }
 }
@@ -777,7 +783,35 @@ This is optional.
             Examples of claims include date of birth, yearly income, credit score, weight, height, etc. To create
             <a>verifiable presentations</a> over such claims, it is important to specify how the
             values in these claims are encoded, eg height is in inches or centimeters, income is in
-            USD or euros and so on. Notice the different ways of specifying the schema.
+            USD or euros and so on. The credential might not have any attribute about itself, in that case the holder
+            is known by a special keyword, the underscore.<em>_</em>
+          </p>
+          <p>
+            The issuer identifier, schema and public key can be bound together in a single object and the credential then
+            refers the single object. This is how it is done is Sovrin and the binding object is called credential definition
+            and is called <em>credDefId</em>. The issuance date and expiration date can be specified as a part of schema which lets
+            them have custom encodings.
+          </p>
+
+              <pre class="example nohighlight" title="claims with 1 subject">
+                    {
+                      "type": ["VerifiableCredential"],
+                      "credDefId": "sov:CRED_DEF:981f",
+                      <span class="highlight">
+                      "claims": {
+                        "_": {      <!-- Notice the _, it indicates the holder -->
+                          "name": "Alice Bobman",
+                          "birthDate": 15903201121,
+                          "height": "150",
+                          "income": 50000,
+                        }
+                      }
+                      </span>
+                    }
+              </pre>
+
+              OR
+
               <pre class="example nohighlight" title="claims with 2 subjects">
                     {
                       "type": ["VerifiableCredential"],
@@ -830,8 +864,6 @@ This is optional.
                     }
               </pre>
 
-          </p>
-
       </section>
 
       <section>
@@ -853,10 +885,15 @@ This is optional.
               "id": "http://example.gov/credentials/3732",
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
               "issuer": "https://dmv.example.gov",
-              "issued": "2010-01-01",
               "claim": {
-                "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-                "ageOver": 21
+                "this": {
+                    "issued": 15903201121,
+                    "holder": "person"
+                },
+                "person": {
+                    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+                    "ageOver": 21
+                }
               },
               <span class="highlight">"proof": {
                 "type": "RsaSignature2018",
@@ -892,7 +929,7 @@ This is optional.
                 "person": {
                   "name": "Alice Bobman",
                   "birthDate": 15903201121,
-                  "height": "150",
+                  "height": 150,
                   "income": 50000,
                 }
               }
@@ -922,9 +959,9 @@ the following <a>property</a>:
         <dl>
           <dt><var>expires</var></dt>
           <dd>
-The value of this property MUST be a string value of an [[!ISO8601]] combined
-date and time string and represents the date and time the <a>credential</a>
-will cease to be valid.
+The value of this property represents the date and time the <a>credential</a>
+will cease to be valid. The encoding of this is either defined in the schema of the
+credential or it defaults to seconds since epoch. This field is optional.
           </dd>
         </dl>
 
@@ -933,11 +970,16 @@ will cease to be valid.
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:73:24Z",
-  <span class="highlight">"expires": "2020-01-01T19:73:24Z"</span>,
   "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "this": {
+        "issued": 12190912112,
+        <span class="highlight">"expires": 15903201121</span>
+        "holder": "person",
+    },
+    "person": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "ageOver": 21
+     }
   },
   "proof": { ... }
 }
@@ -959,7 +1001,13 @@ type instance. The precise contents of the credential status information is
  depending upon a variety of factors, such as whether it is
             simple to implement or privacy-enhancing.
         </p>
-
+        <p>
+            More privacy preserving credentials allow for proving the status of
+            the credential in a zero knowledge manner, i.e the holder does not
+            have an explicit field mentioning revocation status but embed an identifier in the credential
+            and that identifier can be checked in a revocation/non-revocation list of some sort.
+            More on this under <a href="#revocation">revocation</a>.
+        </p>
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>The value of this property MUST be a credential status scheme that
@@ -1519,7 +1567,7 @@ implementations MUST ensure that:
         <ul>
           <li>The proof is available in the form of a known proof suite.</li>
           <li>All required proof suite properties are present.</li>
-          <li>The proof suite verification agorithm, when applied to the
+          <li>The proof suite verification algorithm, when applied to the
           data, results in an acceptable proof.</li>
         </ul>
 
