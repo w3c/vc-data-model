@@ -569,7 +569,7 @@ The Verifiable Credentials trust model is as follows:
         <li>
 The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
 that it receives. In order to establish this trust, a credential MUST
-either 1) include a <a href="#proofs-aka-signatures">proof</a> that establishes
+either 1) include a <a href="#proofs-aka-signatures">signature</a> that establishes
 that the issuer generated the credential only after sufficient scrutiny (it is a <a>verifiable credential</a>),
 or 2) have been transmitted in a way that clearly establishes that the
 issuer generated the credential and that the credential has not been tampered
@@ -1228,12 +1228,16 @@ Let us assume that we start with the following <a>verifiable credential</a>:
   "id": "http://example.com/credentials/4643",
   "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
-  "issued": "2018-02-24T05:28:04Z",
   "claims": {
-    "id": "did:example:abcdef1234567",
-    "name": "Jane Doe"
+    "this": {
+        "issued": 1500812001
+    },
+    "_": {
+        "id": "did:example:abcdef1234567",
+        "name": "Jane Doe"
+    }
   },
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
 
@@ -1272,25 +1276,33 @@ context above and adding the new properties to the <a>verifiable credential</a>.
 
         <pre class="example nohighlight"
           title="A verifiable credential with a custom extension">
-{
-  "@context": <span class="highlight">[
-    </span>"https://w3id.org/credentials/v1",
-    <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
-  ]</span>,
-  "id": "http://example.com/credentials/4643",
-  "type": ["VerifiableCredential"],
-  "issuer": "https://example.com/issuers/14",
-  "issued": "2018-02-24T05:28:04Z",
-  <span class="highlight">"referenceNumber": 83294847,</span>
-  "claims": {
-    "id": "did:example:abcdef1234567",
-    "name": "Jane Doe",
-    <span class="highlight">"favoriteFood": "Papaya"</span>
-  },
-  "proof": { ... }
-}
+            {
+              "@context": <span class="highlight">[
+                </span>"https://w3id.org/credentials/v1",
+                <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
+              ]</span>,
+              "id": "http://example.com/credentials/4643",
+              "type": ["VerifiableCredential"],
+              "issuer": "https://example.com/issuers/14",
+              "claims": {
+                "this": {
+                    "issued": 1500812001,
+                    <span class="highlight">"referenceNumber": 83294847</span>
+                },
+                "_": {
+                    "id": "did:example:abcdef1234567",
+                    "name": "Jane Doe",
+                    <span class="highlight">"favoriteFood": "Papaya"</span>
+                }
+              },
+              "signature": { ... }
+            }
         </pre>
-
+    <p>
+        If the above requirement had to be satisfied with a more privacy
+        respecting credential schemes like Camenisch-Lysyanskaya (CL), the 2 attributes mentioned
+        above have to be made part of the schema and the issuer will issue a credential corresponding to that schema.
+    </p>
         <p>
 The examples so far have shown that it is easy to extend the Verifiable
 Credentials Data Model in a permissionless and decentralized way. The
@@ -1371,7 +1383,7 @@ use associated with a Verifiable Credential, namely, the
 <a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
         </p>
 
-        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+        <pre class="example nohighlight" title="Usage of termsOfUse property added by an Issuer">
             {
               "id": "http://dmv.example.gov/credentials/3732",
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
@@ -1396,7 +1408,42 @@ use associated with a Verifiable Credential, namely, the
                     "ageOver": 21
                 }
               },
-              "proof": { ... }
+              "signature": { ... }
+            }
+        </pre>
+
+        <p>
+          Another example where a verifier serving alcohol needs a proof of age but requires that
+          credential used to prove the age does allow its use in buying alcohol (the issuer of such a
+          credential might be a religious authority). The holder in such a case will
+          selectively disclose that the credential does or does allow buying alcohol.
+        </p>
+
+        <pre class="example nohighlight" title="Usage of termsOfUse property where the holder is prohibited">
+            {
+              "id": "http://dmv.example.gov/credentials/3732",
+              "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+              "issuer": "https://dmv.example.gov/issuers/14",
+              "claims": {
+                "this": {
+                    "issued": 12190912112,
+                     <span class="highlight">"termsOfUse": [{
+                        "type": "Policy",
+                        "uid": "http://example.com/policies/credential/4",
+                        "profile": "http://example.com/profiles/credential",
+                        "prohibition": [{
+                          "assignee": "AllVerifiers",
+                          "action": ["Buying Alcohol"]
+                        }]
+                    }]</span>,
+                },
+                "_": {
+                    "name": "John Smith",
+                    "birthDate": 1528515478416,
+                    "city": "London"
+                }
+              },
+              "signature": { ... }
             }
         </pre>
 
@@ -1433,9 +1480,8 @@ storing the data in an archive.
                     "ageOver": 21
                   }
                 },
-                "proof": { ... }
+                "signature": { ... }
               }],
-              "proof": [ ... ]
             }
         </pre>
 
@@ -1485,30 +1531,34 @@ very simple scheme for evidence as a part of this specification.
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:73:24Z",
   "claims": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "this": {
+        "issued": 1528516376319,
+        <span class="highlight">"evidence": [{
+            "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+            "type": ["DocumentVerification"],
+            "verifier": "https://dmv.example.gov/issuers/14",
+            "evidenceDocument": "DriversLicense",
+            "subjectPresence": "Physical",
+            "documentPresence": "Physical"
+        }]</span>,
+    },
+    "_": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "ageOver": 21
+    }
   },
-  <span class="highlight">"evidence": [{
-    "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
-    "type": ["DocumentVerification"],
-    "verifier": "https://dmv.example.gov/issuers/14",
-    "evidenceDocument": "DriversLicense",
-    "subjectPresence": "Physical",
-    "documentPresence": "Physical"
-  }]</span>,
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
 
         <p class="note">
 For the avoidance of doubt, the <em>evidence</em> <a>property</a> provides
 information that is different from and complementary to the
-<a href="#proofs-aka-signatures">proof</a> property. The <em>evidence</em>
+<a href="#proofs-aka-signatures">signature</a> property. The <em>evidence</em>
 property is used to express supporting information, such as documentary
 evidence, related to the integrity of the credential. In contrast, the
-<em>proof</em> property is used to express machine-verifiable mathematical
+<em>signature</em> property is used to express machine-verifiable mathematical
 proofs related to the authenticity of the issuer and integrity of the
 credential.
         </p>
@@ -1519,11 +1569,11 @@ credential.
         <h2>Disputes</h2>
 
         <p>
-The time may come when an <a>entity</a> wants dispute a <a>credential</a>
+The time may come when an <a>entity</a> wants to dispute a <a>credential</a>
 issued by another entity. The mechanism for doing this is the same as issuing
 a regular credential except that the <a>subject</a> identifier for the
 <a>claims</a> are those of the disputed credential. For example, if a disputed
-credential with an identifier of <code>https://example.org/credentials/245</code>
+credential with an identifier of <code>http://con-artist.example.com/credentials/3732</code>
 contains disputed statements, an entity would issue the following credential
 in a public venue to make it known that the credential is disputed:
         </p>
@@ -1533,13 +1583,17 @@ in a public venue to make it known that the credential is disputed:
   "id": "http://example.com/credentials/245",
   "type": ["VerifiableCredential", "DisputedCredential"],
   <span class="highlight">"claims": {
-    "id": "http://con-artist.example.com/credentials/3732",
-    "currentStatus": "Disputed",
-    "statusReason": "Credential contains disputed statements"
+    "this": {
+      "issued": 1500901012,
+    },
+    "_": {
+      "id": "http://con-artist.example.com/credentials/3732",
+      "currentStatus": "Disputed",
+      "statusReason": "Credential contains disputed statements"
+    }
   }</span>,
   "issuer": "https://example.com/people#me",
-  "issued": "2017-12-05T14:27:42Z",
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
 
@@ -1619,11 +1673,11 @@ properties in a claim to uniquely identify the <a>subject</a>.
 
         <p>
 The cryptographic mechanism used to prove that the information in a
-<a>verifiable credential</a> or a <a>verifiable presentation</a> has not been
-tampered with is called a <em>proof</em>. There are many types of cryptographic proofs
-including but not limited to, digital signatures, zero knowledge proofs,
-proofs of work, and proofs of stake. In general, when verifying proofs,
-implementations MUST ensure that:
+<a>verifiable credential</a> and a <a>verifiable presentation</a> is valid is
+called a is called a <em>signature</em> and a <em>proof</em>. There are many
+types of cryptographic signatures or proofs including but not limited
+to, digital signatures, zero knowledge proofs, proofs of work, and proofs of stake.
+In general, when verifying proofs, implementations MUST ensure that:
         </p>
 
         <ul>
@@ -1697,7 +1751,11 @@ a verifiable credential, are clear and protected in the signature.
           verifier needs to determine that a <a>subject</a> is older than 21
           years of age, they may accept claims of specific
           <code>birthdate</code> or abstract properties such as
-          <code>ageOver</code>.</li>
+          <code>ageOver</code>. An alternate route that can be taken with more
+          sophisticated signature schemes like CL is for the issuer to issue credentials
+          about generic attributes like birth date, yearly salary, etc and the holder
+          then proves conditions like greater than, less than etc without disclosing the
+          exact attribute itself.</li>
           <li>The <a>issuer</a> is trusted by the <a>verifier</a> to make the
           claims at hand. For example, a franchised Fast Food resturant
           location will trust discount coupon claims made by the
@@ -1707,13 +1765,14 @@ a verifiable credential, are clear and protected in the signature.
           verifiers accept the risk of not enforcing the policy information.
           For example, the issuer may limit the use
           of the claims to specific <a>verifiers</a>, certain <a>holder</a>
-          age ranges, or during certain dates.</li>
+          age ranges, or during certain dates. </li>
           <li>All policy information expressed by the <a>holder</a>
           in the <a>verifiable presentation</a> MUST be enforced unless
           verifiers accept the risk of not enforcing the policy information.
           For example, the holder may limit the use of the claims to
           specific <a>verifiers</a> or for specific purposes
-          (such as authentication, but not data mining).</li>
+          (such as authentication, but not data mining). Or the verifier might decide to trust certain
+          self attested attributes by the holder.</li>
         </ul>
       </section>
     </section>
