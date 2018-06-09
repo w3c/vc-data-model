@@ -777,29 +777,29 @@ This field is optional.
           <p>
             Claims are the assertions issuer makes about a subject.
             A <a>verifiable credential</a> can be about any number of subjects.
-            Each subject acts as a top-level key in <a>claims</a>. A reserved keyword <em>this</em> refers to the
+            Each subject acts as a top-level key in <a>claims</a>. A reserved keyword <b>this</b> refers to the
             credential and contains attributes about the credential, like issuance date, expiration date.
             Another reserved keyword is <em>holder</em>, which points to the holder of the credential, <em>holder</em> is optional
             Examples of claims include date of birth, yearly income, credit score, weight, height, etc. To create
             <a>verifiable presentations</a> over such claims, it is important to specify how the
             values in these claims are encoded, eg height is in inches or centimeters, income is in
             USD or euros and so on. The credential might not have any attribute about itself, in that case the holder
-            is known by a special keyword, the underscore.<em>_</em>
+            is known by a special keyword, the "underscore", <b>_</b>.
           </p>
           <p>
             The issuer identifier, schema and public key can be bound together in a single object and the credential then
             refers the single object. This is how it is done is Sovrin and the binding object is called credential definition
-            and is called <em>credDefId</em>. The issuance date and expiration date can be specified as a part of schema which lets
+            and is called <b>credDef</b>. The issuance date and expiration date can be specified as a part of schema which lets
             them have custom encodings.
           </p>
 
               <pre class="example nohighlight" title="claims with 1 subject">
                     {
                       "type": ["VerifiableCredential"],
-                      "credDefId": "sov:CRED_DEF:981f",
+                      "credDef": "sov:CRED_DEF:981f",
                       <span class="highlight">
                       "claims": {
-                        "_": {      <!-- Notice the _, it indicates the holder -->
+                        "_": {      // Notice the _, it indicates the holder
                           "name": "Alice Bobman",
                           "birthDate": 15903201121,
                           "height": "150",
@@ -812,10 +812,10 @@ This field is optional.
 
               OR
 
-              <pre class="example nohighlight" title="claims with 2 subjects">
+              <pre class="example nohighlight" title="claims with 2 subjects, one subject being the claim itself">
                     {
                       "type": ["VerifiableCredential"],
-                      "credDefId": "sov:CRED_DEF:981f",
+                      "credDef": "sov:CRED_DEF:981f",
                       <span class="highlight">
                       "claims": {
                         "this": {
@@ -836,10 +836,10 @@ This field is optional.
 
               OR
 
-              <pre class="example nohighlight" title="claims with 3 subjects">
+              <pre class="example nohighlight" title="claims with 3 subjects, one subject being the claim itself">
                     {
                       "type": ["VerifiableCredential"],
-                      "credDefId": "sov:CRED_DEF:981f",
+                      "credDef": "sov:CRED_DEF:981f",
                       <span class="highlight">
                       "claims": {
                         "this": {
@@ -880,12 +880,12 @@ This field is optional.
           </dd>
         </dl>
         <pre class="example nohighlight"
-          title="Usage of proof property on a verifiable credential">
+          title="Usage of signature property on a verifiable credential">
             {
               "id": "http://example.gov/credentials/3732",
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
               "issuer": "https://dmv.example.gov",
-              "claim": {
+              "claims": {
                 "this": {
                     "issued": 15903201121,
                     "holder": "person"
@@ -895,7 +895,7 @@ This field is optional.
                     "ageOver": 21
                 }
               },
-              <span class="highlight">"proof": {
+              <span class="highlight">"signature": {
                 "type": "RsaSignature2018",
                 "created": "2017-06-18T21:19:10Z",
                 "creator": "https://example.com/jdoe/keys/1",
@@ -917,11 +917,11 @@ This field is optional.
             <a>verifiable credential</a>.
 
             <pre class="example nohighlight"
-                title="Usage of proof property on a verifiable credential">
+                title="Usage of signature property on a verifiable credential">
             {
               "id": "http://example.gov/credentials/3732",
               "type": ["VerifiableCredential"],
-              "credDefId": "sov:CRED_DEF:981f",
+              "credDef": "sov:CRED_DEF:981f",
               "claims": {
                 "this": {
                   "holder": "person",
@@ -970,7 +970,7 @@ credential or it defaults to seconds since epoch. This field is optional.
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
-  "claim": {
+  "claims": {
     "this": {
         "issued": 12190912112,
         <span class="highlight">"expires": 15903201121</span>
@@ -981,7 +981,7 @@ credential or it defaults to seconds since epoch. This field is optional.
         "ageOver": 21
      }
   },
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
       </section>
@@ -1006,7 +1006,6 @@ type instance. The precise contents of the credential status information is
             the credential in a zero knowledge manner, i.e the holder does not
             have an explicit field mentioning revocation status but embed an identifier in the credential
             and that identifier can be checked in a revocation/non-revocation list of some sort.
-            More on this under <a href="#revocation">revocation</a>.
         </p>
         <dl>
           <dt><var>credentialStatus</var></dt>
@@ -1022,7 +1021,7 @@ type instance. The precise contents of the credential status information is
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
-  "claim": {
+  "claims": {
     "_": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "ageOver": 21
@@ -1032,7 +1031,7 @@ type instance. The precise contents of the credential status information is
     "id": "https://dmv.example.gov/status/24,
     "type": "CredentialStatusList2017"
   }</span>,
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
 
@@ -1054,6 +1053,9 @@ type instance. The precise contents of the credential status information is
             <p>
                 The credential below contains 2 optional parameters, called <em>signature</em> and <em>witness</em>;
                 not all credentials with <em>credentialStatus</em> contain these 2 fields.
+                To understand how such a scheme works, have a look at
+                <a href="https://github.com/hyperledger/indy-sdk/blob/master/doc/cred-revocation.md"> this</a>.
+                It describes how revocation works in <a href="https://sovrin.org/">Sovrin.</a>
             </p>
                 <pre class="example nohighlight"
                     title="Usage of credentialStatus property on a verifiable
@@ -1227,7 +1229,7 @@ Let us assume that we start with the following <a>verifiable credential</a>:
   "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
   "issued": "2018-02-24T05:28:04Z",
-  "claim": {
+  "claims": {
     "id": "did:example:abcdef1234567",
     "name": "Jane Doe"
   },
@@ -1280,7 +1282,7 @@ context above and adding the new properties to the <a>verifiable credential</a>.
   "issuer": "https://example.com/issuers/14",
   "issued": "2018-02-24T05:28:04Z",
   <span class="highlight">"referenceNumber": 83294847,</span>
-  "claim": {
+  "claims": {
     "id": "did:example:abcdef1234567",
     "name": "Jane Doe",
     <span class="highlight">"favoriteFood": "Papaya"</span>
@@ -1323,7 +1325,7 @@ term so that it may only be used within the <code>claim</code> property:
 {
   "@context": {
     "referenceNumber": "https://example.com/vocab#referenceNumber",
-    <span class="highlight">"claim": {
+    <span class="highlight">"claims": {
       "@id": "https://w3id.org/credentials#claim",
       "@context": {
         "favoriteFood": "https://example.com/vocab#favoriteFood"
@@ -1484,7 +1486,7 @@ very simple scheme for evidence as a part of this specification.
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
-  "claim": {
+  "claims": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1530,7 +1532,7 @@ in a public venue to make it known that the credential is disputed:
 {
   "id": "http://example.com/credentials/245",
   "type": ["VerifiableCredential", "DisputedCredential"],
-  <span class="highlight">"claim": {
+  <span class="highlight">"claims": {
     "id": "http://con-artist.example.com/credentials/3732",
     "currentStatus": "Disputed",
     "statusReason": "Credential contains disputed statements"
@@ -1809,7 +1811,7 @@ and Security Considerations section of this document.
       "type": ["VerifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov",
     "issued": "2010-01-01",
-    "claim": {
+    "claims": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "ageOver": 21
     }
@@ -2111,7 +2113,7 @@ For example, the following Verifiable Credential is a bearer credential:
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2017-10-22T12:23:48Z",
-  "claim": {
+  "claims": {
     <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
     "ageOver": 21
   },
