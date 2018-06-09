@@ -777,19 +777,19 @@ This field is optional.
           <p>
             Claims are the assertions issuer makes about a subject.
             A <a>verifiable credential</a> can be about any number of subjects.
-            Each subject acts as a top-level key in <a>claims</a>. A reserved keyword <b>this</b> refers to the
+            Each subject acts as a top-level key in <a>claims</a>. A reserved keyword <code>this</code> refers to the
             credential and contains attributes about the credential, like issuance date, expiration date.
             Another reserved keyword is <em>holder</em>, which points to the holder of the credential, <em>holder</em> is optional
             Examples of claims include date of birth, yearly income, credit score, weight, height, etc. To create
             <a>verifiable presentations</a> over such claims, it is important to specify how the
             values in these claims are encoded, eg height is in inches or centimeters, income is in
             USD or euros and so on. The credential might not have any attribute about itself, in that case the holder
-            is known by a special keyword, the "underscore", <b>_</b>.
+              is known by a special keyword, the "underscore", <code>_</code>.
           </p>
           <p>
             The issuer identifier, schema and public key can be bound together in a single object and the credential then
             refers the single object. This is how it is done is Sovrin and the binding object is called credential definition
-            and is called <b>credDef</b>. The issuance date and expiration date can be specified as a part of schema which lets
+            and is called <code>credDef</code>. The issuance date and expiration date can be specified as a part of schema which lets
             them have custom encodings.
           </p>
 
@@ -910,7 +910,7 @@ This field is optional.
 
         <p>
             Credentials that allow for more privacy by selective disclosure and satisfying predicates
-            use different signature schemes. The <em>value</em> is an object rather than a string.
+            use different signature schemes. The <code>value</code> is an object rather than a string.
             In a <a>verifiable presentation</a> created from such <a>verifiable credential</a>(s),
             the <a>proof</a> in the <a>verifiable presentation</a> assures the verifier that the holder did possess the
             <a>verifiable credential</a>(s). Example below describe a <a>signature</a> in a
@@ -1051,8 +1051,8 @@ type instance. The precise contents of the credential status information is
                 allows for such a set enabling zero knowledge membership/non-membership test.
             </p>
             <p>
-                The credential below contains 2 optional parameters, called <em>signature</em> and <em>witness</em>;
-                not all credentials with <em>credentialStatus</em> contain these 2 fields.
+                The credential below contains 2 optional parameters, called <code>signature</code> and <code>witness</code>;
+                not all credentials with <code>credentialStatus</code> contain these 2 fields.
                 To understand how such a scheme works, have a look at
                 <a href="https://github.com/hyperledger/indy-sdk/blob/master/doc/cred-revocation.md"> this</a>.
                 It describes how revocation works in <a href="https://sovrin.org/">Sovrin.</a>
@@ -1149,7 +1149,7 @@ Linked Data Proofs [[LD-PROOFS]] specification.
             Presentations created from certain kinds of credentials offering strong privacy allow for
             selective disclosure hence they do not need the complete credential to be shared. Several presentations
             can be created from a single such credential.
-            Notice the lack of <em>id</em>
+            Notice the lack of <code>id</code>
           </p>
 
           <pre class="example nohighlight"
@@ -1371,7 +1371,7 @@ with implementations, or enabling aggressive caching of contexts.
           <dd>The value of this property MUST be one or more terms of use
             descriptions that provide enough information to a <a>verifier</a>
             to determine how they may utilize the given information.
-            When the issuer includes <em>termsOfUse</em> (which means the attributes
+            When the issuer includes <code>termsOfUse</code> (which means the attributes
             inside "termsOfUse" are part of the schema) in the signature, the holder can prove
             to the verifier that he is allowed to use the credential in a specific interaction.
           </dd>
@@ -1674,7 +1674,7 @@ properties in a claim to uniquely identify the <a>subject</a>.
         <p>
 The cryptographic mechanism used to prove that the information in a
 <a>verifiable credential</a> and a <a>verifiable presentation</a> is valid is
-called a is called a <em>signature</em> and a <em>proof</em>. There are many
+called a is called a <code>signature</code> and a <code>proof</code>. There are many
 types of cryptographic signatures or proofs including but not limited
 to, digital signatures, zero knowledge proofs, proofs of work, and proofs of stake.
 In general, when verifying proofs, implementations MUST ensure that:
@@ -1980,13 +1980,14 @@ hostile to privacy.
 
         <p>
 The data associated with verifiable credentials stored in the
-<code>credential.claim</code> field are largely susceptible to privacy
+<code>credential.claims</code> field are largely susceptible to privacy
 violations when shared with Verifiers. Personally identifying data
 such as a government-issued identifier, shipping address, and full name
 can be easily used to determine, track, and correlate an entity. Even
 information that does not seem personally identifiable like the
 combination of a birth date and zip code have very powerful correlation
-and de-anonymizing capabilities.
+and de-anonymizing capabilities. Moreover information about the credential itself like
+date of issuance, <code>issued</code> can be corelating.
         </p>
 
         <p>
@@ -2004,9 +2005,11 @@ entity is over the age of 18.
 
         <p>
 Subjects of verifiable credentials are identified via the
-<code>credential.claim.id</code> field. The identifiers that are used
-to identify the subject of a claim create a danger of correlation when
-the identifiers are long-lived or used across more than one web domain.
+<code>credential.claims.holder.id</code> or <code>credential.claims.this.id</code> field.
+The identifiers that are used to identify the subject of a claim create a danger of
+correlation when the identifiers are long-lived or used across more than one web domain.
+Since <code>credential.claims.this.id</code>, refers to the id of the credential, if it is shared with a verifier,
+the verifier can on subsequent usages corelate the holder.
         </p>
         <p>
 If strong anti-correlation properties are a requirement in a system using
@@ -2021,7 +2024,7 @@ are replaced by short-lived, single use bearer tokens.
 
         <p>
 The contents of verifiable credentials are secured via the
-<code>credential.proof</code> field. The properties in this field
+<code>credential.signature</code> field. The properties in this field
 create a danger of correlation when the same values are used across more than
 one session or domain and the value does not change. Examples include the
 <code>creator</code>, <code>created</code>,
@@ -2095,6 +2098,10 @@ An example in this document is the use of the <code>ageOver</code> property as o
 If retailers in a market commonly require purchasers to be older than a specific age, an issuer trusted in that market may choose to offer a credential claiming that subjects have met that requirement as opposed to offering claims of their specific birthdates.
 This enables individual customers to purchase items without revealing specific personally identifiable information.
         </p>
+          <p>
+              But as mentioned in sections above, credentials with generic information can be issued
+              if the issuer used signature schemes like CL or BBS or similar since they allow zero knowledge proofs.
+          </p>
       </section>
 
       <section>
@@ -2171,12 +2178,16 @@ For example, the following Verifiable Credential is a bearer credential:
   "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2017-10-22T12:23:48Z",
   "claims": {
-    <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
-    "ageOver": 21
+    "this": {
+        "issued": 1534271021,
+    }
+    "holder": {
+        <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
+        "ageOver": 21
+    }
   },
-  "proof": { ... }
+  "signature": { ... }
 }
         </pre>
 
