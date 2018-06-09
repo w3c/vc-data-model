@@ -801,7 +801,7 @@ Claims about the credential itself will be part of the <code>this</code> object.
             <dd>
 The value of this property represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
-information associated with the <var>claim</var> property became valid. The encoding
+information associated with the <var>claims</var> property became valid. The encoding
 of this is either defined in the schema of the credential or it defaults to seconds since epoch.
 This field is optional.
             </dd>
@@ -917,9 +917,10 @@ presentations.
           <dt><var>DID-based issuer keys</var></dt>
           <dd>
 In this approach, an issuer reference is included as a property, and issuer keys
-are looked up in the Issuer's DID document. The issuer may have several keys for
-issuing, and so the credential may reference the specific key used to sign that
-credential. The schema associated with the credential is included as a claim.
+              are looked up in the Issuer's <a href="https://w3c-ccg.github.io/did-spec/#did-documents">DID document</a>.
+              The issuer may have several keys for issuing, and so the credential
+              may reference the specific key used to sign that credential. The schema
+              associated with the credential is included as a claim.
           </dd>
         </dl>
         <dl>
@@ -949,14 +950,14 @@ The following is a table that may help clarify the differences.
           </thead>
           <tbody>
             <tr><td>Example</td><td>uPort, VeresOne</td><td>Sovrin, Idemix</td><td>IRMA</td></tr>
-            <tr><td>Issuer Key location</td><td>in DID Doc</td><td>in Cred Def</td><td>looked up</td></tr>
-            <tr><td>Issuer Key selection</td><td>unsigned attribute</td><td>N/A (only one per Cred Def)</td><td>N/A (only one per Issuer)</td></tr>
-            <tr><td>Schema</td><td>attribute in Claims (signed)</td><td>in Cred Def</td><td>attribute in Claims (signed)</td></tr>
-            <tr><td>Cred Def</td><td>empty</td><td>unsigned attribute</td><td>empty</td></tr>
-            <tr><td>Pre-verification</td><td>ensure referenced key is in DID Doc</td><td>ensure cred-def is owned by issuer</td><td>none</td></tr>
+            <tr><td>Issuer Key location</td><td>in DID Doc</td><td>in Credential Definition</td><td>looked up</td></tr>
+            <tr><td>Issuer Key selection</td><td>unsigned attribute</td><td>N/A (only one per Credential Definition)</td><td>N/A (only one per Issuer)</td></tr>
+            <tr><td>Schema</td><td>attribute in Claims (signed)</td><td>in Credential Definition</td><td>attribute in Claims (signed)</td></tr>
+            <tr><td>Credential Definition</td><td>empty</td><td>unsigned attribute</td><td>empty</td></tr>
+            <tr><td>Pre-verification</td><td>ensure referenced key is in DID Doc</td><td>ensure Credential Definition is owned by issuer</td><td>none</td></tr>
             <tr><td>structure in credential</td>
                 <td>issuer and key reference as unsigned property, schema as claim in <code>this</code></td>
-                <td>cred-def as unsigned property</td>
+                <td><code>credDef</code> as unsigned property</td>
                 <td>issuer as unsigned property, schema as claim in <code>this</code></td>
           </tbody>
         </table>
