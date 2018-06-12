@@ -16,7 +16,7 @@
         specStatus: "ED",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
-        shortName: "verifiable-claims-data-model",
+        shortName: "vc-data-model",
 
         // subtitle for the spec
         subtitle: "Expressing verifiable information on the Web",
@@ -1326,7 +1326,7 @@ applicable to only some credentials.
         <h3>Subject</h3>
         <ul>
           <li>The value associated with the <code>id</code> property for each
-          <a>claim</a> MUST identify a <a>subject</a> to the
+          <a>credential</a> MUST identify a <a>subject</a> to the
           <a>verifier</a>. For example, if a subject is identified and the
           verifier has public key metadata related to the subject that is
           used for authentication purposes, then the verifier MAY be able to
@@ -1335,7 +1335,7 @@ applicable to only some credentials.
         </ul>
         <p class="note">
 The <code>id</code> property is optional, and <a>verifiers</a> MAY use other
-properties in a claim to uniquely identify the <a>subject</a>.
+properties in a credential to uniquely identify the <a>subject</a>.
         </p>
       </section>
       <section>
@@ -1430,12 +1430,12 @@ a verifiable credential, are clear and protected in the signature.
           in the <a>verifiable credential</a> MUST be enforced unless
           verifiers accept the risk of not enforcing the policy information.
           For example, the issuer may limit the use
-          of the claims to specific <a>verifiers</a>, certain <a>holder</a>
+          of the credential to specific <a>verifiers</a>, certain <a>holder</a>
           age ranges, or during certain dates.</li>
           <li>All policy information expressed by the <a>holder</a>
           in the <a>verifiable presentation</a> MUST be enforced unless
           verifiers accept the risk of not enforcing the policy information.
-          For example, the holder may limit the use of the claims to
+          For example, the holder may limit the use of the credential to
           specific <a>verifiers</a> or for specific purposes
           (such as authentication, but not data mining).</li>
         </ul>
@@ -1572,9 +1572,9 @@ is elaborated upon in Section <a href="#extensibility"></a>.
 
         <p>
 Multiple contexts MAY be used or combined to express any arbitrary
-information about claims in idiomatic JSON. If an application is processing a
-<a>verifiable credential</a> or <a>verifiable presentation</a>, and a
-<code>@context</code> property is not present at the top-level of the
+information about credentials in idiomatic JSON. If an application is
+processing a <a>verifiable credential</a> or <a>verifiable presentation</a>,
+and a <code>@context</code> property is not present at the top-level of the
 JSON-LD document, then a <code>@context</code> property with a value of
 <code>https://w3id.org/credentials/v1</code> MUST be assumed.
         </p>
@@ -1670,7 +1670,7 @@ entity is over the age of 18.
         <p>
 Subjects of verifiable credentials are identified via the
 <code>credential.claim.id</code> field. The identifiers that are used
-to identify the subject of a claim create a danger of correlation when
+to identify the subject create a danger of correlation when
 the identifiers are long-lived or used across more than one web domain.
         </p>
         <p>
@@ -1752,13 +1752,23 @@ transmit verifiable credentials on behalf of the Holder.
         <h3>Favor Abstract Claims</h3>
 
         <p>
-In order to enable recipients of verifiable credentials to use them in a variety of circumstances without revealing more personally identifiable information than necessary for the transaction, issuers should consider limiting the information published in a claim to a minimal set needed for the expected purposes.
-One way to avoid placing personally identifiable information in a claim is to use an "abstract" property that meets the needs of verifiers without providing specific information about the subject.
+In order to enable recipients of verifiable credentials to use them in a
+variety of circumstances without revealing more personally identifiable
+information than necessary for the transaction, issuers should consider
+limiting the information published in a credential to a minimal set needed for
+the expected purposes. One way to avoid placing personally identifiable
+information in a credential is to use an "abstract" property that meets the
+needs of verifiers without providing specific information about the subject.
         </p>
         <p>
-An example in this document is the use of the <code>ageOver</code> property as opposed to a specific birthdate that would constitute much stronger personally identifiable information.
-If retailers in a market commonly require purchasers to be older than a specific age, an issuer trusted in that market may choose to offer a credential claiming that subjects have met that requirement as opposed to offering claims of their specific birthdates.
-This enables individual customers to purchase items without revealing specific personally identifiable information.
+An example in this document is the use of the <code>ageOver</code> property as
+opposed to a specific birthdate that would constitute much stronger personally
+identifiable information. If retailers in a market commonly require purchasers
+to be older than a specific age, an issuer trusted in that market may choose
+to offer a credential claiming that subjects have met that requirement as
+opposed to offering credentials containing claims of their specific birthdates.
+This enables individual customers to purchase items without revealing specific
+personally identifiable information.
         </p>
       </section>
 
@@ -1774,13 +1784,13 @@ jurisdictions, including HIPAA in the US and GDPR in the EU.
         </p>
         <p>
 With verifiable credentials, minimal disclosure for issuers means limiting the
-content of a claim to the minimum required by potential verifiers for
-expected use. For verifiers, it means limiting the scope of claims
-request or required for accessing services.
+content of a credential to the minimum required by potential verifiers for
+expected use. For verifiers, it means limiting the scope of the information
+requested or required for accessing services.
         </p>
         <p>
 For example, a driver's license containing a driver's ID number,
-height, weight, birthday, and home address is an example of a claim set
+height, weight, birthday, and home address is an example of a credential
 containing more information than is necessary to establish that the person
 is above a certain age.
         </p>
@@ -1928,8 +1938,8 @@ enable bad privacy practices.
         <h3>Storage Providers and Data Mining</h3>
 
         <p>
-When a holder receives a claim from an issuer, the
-claim will need to be stored somewhere (e.g. in a credential repository).
+When a holder receives a credential from an issuer, the
+credential will need to be stored somewhere (e.g. in a credential repository).
 Holders are warned that the information in a verifiable credential may be
 sensitive in nature and highly individualized, making it a high value
 target for data mining. Therefore, there may be services
@@ -1953,7 +1963,7 @@ Use service providers that do not sell your information to third parties.
           </li>
           <li>
 Use software that encrypts verifiable credentials such that a service provider
-cannot view the contents of the claims.
+cannot view the contents of the credential.
           </li>
           <li>
 Use software that stores verifiable credentials locally on a device that you
@@ -2015,38 +2025,38 @@ This correlation can occur:
 
         <ol>
           <li>
-When the same claim is presented to the same verifier more than once –
+When the same credential is presented to the same verifier more than once –
 that verifier could infer that the holder is the same individual.
           </li>
           <li>
-When the same claim is presented to different verifiers, and either those
+When the same credential is presented to different verifiers, and either those
 verifiers collude or a third party has access to transaction records from
 both verifiers – the observant party could infer that the individual
-presenting the claims is the same person at both services, i.e., the
+presenting the credential is the same person at both services, i.e., the
 accounts are controlled by the same person.
           </li>
           <li>
-When the same subject identifier of a claim refers to the same subject across
-presentations or verifiers. Even when different claims are presented,
-if the subject identifier is the same, verifiers (and those with access to
-verifier logs) could infer that the holder of the claims is the same
-person.
+When the same subject identifier of a credential refers to the same subject
+across presentations or verifiers. Even when different credentials are
+presented, if the subject identifier is the same, verifiers (and those with
+access to verifier logs) could infer that the holder of the credential is
+the same person.
           </li>
           <li>
-When the underlying information in a claim can be used to identify an
+When the underlying information in a credential can be used to identify an
 individual across services – using information from other sources
 (including information provided directly by the user), verifiers can use
-the information inside the claim to correlate the individual with an
-existing profile. For example, if a holder presents claims that include
+the information inside the credential to correlate the individual with an
+existing profile. For example, if a holder presents credentials that include
 zip code, age, and sex, the verifier can potentially correlate the
-subject of that claim with an established profile [see Sweeney 2000 <a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">Simple
-            Demographics Often Identify People Uniquely</a>].
+subject of that credential with an established profile [see Sweeney 2000
+<a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">Simple Demographics Often Identify People Uniquely</a>].
           </li>
           <li>
-When passing the identifier of a claim to a centralized revocation server – the
-centralized server can correlate the claim usage across interactions. For
-example, if a verifiable credential is used for proof of age in this manner, the
-centralized service could know everywhere that claim was presented: all
+When passing the identifier of a credential to a centralized revocation server
+– the centralized server can correlate the credential usage across interactions.
+For example, if a verifiable credential is used for proof of age in this manner,
+the centralized service could know everywhere that credential was presented: all
 liquor stores, bars, adult stores, lottery purchases, etc.
           </li>
         </ol>
@@ -2057,15 +2067,16 @@ It’s possible to mitigate this in part:
 
         <ol>
           <li>
-Use a globally unique identifier as the subject for any given claim and never
-re-use that claim.
+Use a globally unique identifier as the subject for any given credential and
+never re-use that credential.
           </li>
           <li>
-If the claim supports revocation, use a globally distributed service for revocation.
+If the credential supports revocation, use a globally distributed service for
+revocation.
           </li>
           <li>
 Design revocation APIs that do not depend on submitting the ID
-of the claim, e.g., use a revocation list rather than a query.
+of the credential, e.g., use a revocation list rather than a query.
           </li>
           <li>
 Avoid associating personally identifiable information with any particular
@@ -2086,7 +2097,7 @@ usage overrides individual privacy concerns.
         </p>
 
         <p>
-Verifiable claims will so be used to intentionally correlate individuals
+Verifiable credentials will so be used to intentionally correlate individuals
 across services, for example, when using a common persona to log in to
 multiple services, so all activity on each of those services is
 intentionally linked to the same individual. This is not a privacy issue
@@ -2095,7 +2106,7 @@ manner.
         </p>
 
         <p>
-Privacy risks of claim usage occur when unintended or unexpected
+Privacy risks of credential usage occur when unintended or unexpected
 correlation arises from the presentation of verifiable credentials.
         </p>
       </section>
@@ -2147,7 +2158,7 @@ As Section <a href="#usage-patterns"></a> details, usage patterns can be
 correlated into certain types of behavior. Part of this correlation is
 mitigated when a <a>holder</a> uses a verifiable credential without the
 knowledge of the <a>issuer</a>. Issuers may defeat this protection by making
-their claims short lived and renewal automatic.
+their credentials short lived and renewal automatic.
         </p>
 
         <p>
@@ -2160,7 +2171,7 @@ the holder's behavior in a way that negatively impacts the holder.
         <p>
 Organizations providing software to holders should warn <a>holders</a> if they
 repeatedly use credentials with short lifespans that could result in
-behavior correlation. Issuers should avoid issuing claims in a way that
+behavior correlation. Issuers should avoid issuing credentials in a way that
 enables them to correlate usage patterns.
         </p>
 
