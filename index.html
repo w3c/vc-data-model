@@ -1243,23 +1243,29 @@ credential.
         <h2>Disputes</h2>
 
         <p>
-The time may come when an <a>entity</a> wants dispute a <a>credential</a>
+The time may come when an <a>entity</a> wants to dispute a <a>credential</a>
 issued by another entity. The mechanism for doing this is the same as issuing
 a regular credential except that the <a>subject</a> identifier for the
 <a>claims</a> are those of the disputed credential. For example, if a disputed
-credential with an identifier of <code>https://example.org/credentials/245</code>
+credential with an identifier of
+<code>http://con-artist.example.com/credentials/3732</code>
 contains disputed statements, an entity would issue the following credential
 in a public venue to make it known that the credential is disputed:
         </p>
 
-        <pre class="example nohighlight" title="Expressing a disputed credential">
+        <pre class="example nohighlight"
+          title="Expressing a disputed credential">
 {
   "id": "http://example.com/credentials/245",
-  "type": ["VerifiableCredential", "DisputedCredential"],
+  "type": ["VerifiableCredential", "DisputeCredential"],
   <span class="highlight">"claim": {
     "id": "http://con-artist.example.com/credentials/3732",
     "currentStatus": "Disputed",
-    "statusReason": "Credential contains disputed statements"
+    "statusReason": "Credential contains disputed statements",
+    "disputedClaim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    }
   }</span>,
   "issuer": "https://example.com/people#me",
   "issued": "2017-12-05T14:27:42Z",
@@ -1275,7 +1281,8 @@ identifiers can be used to uniquely identify individual claims.
 
         <p class="issue">
 The group is currently exploring whether the specification of a vocabulary
-term to express content-based identifiers for claims is within scope.
+term to express content-based identifiers for claims is within scope as well
+as the specific vocabulary terms for disputed claims.
         </p>
 
       </section>
