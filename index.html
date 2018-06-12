@@ -1253,17 +1253,66 @@ Linked Data Proofs [[LD-PROOFS]] specification.
                 title="Usage of proof property on a verifiable presentation">
             {
               "type": ["VerifiablePresentation"],
-              <span class="highlight">"proof": {
-                "type": "CL",
-                "value": {
-                    // Blob of data specific to the proof type, "CL" in this case
-                    ....
-                    ....
+              "claims": [       <i>// Each of the claims is created from a verifiable credential</i>
+                {
+                    "credDef": "sov:CRED_DEF:EID",
+                    "this": {
+                      "issuer": "https://eid.gov/issuers/1",
+                      "not expired": true,
+                      "holder": "person",
+                    },
+                    "person": {
+                      "> 21": "true",
+                    },
+                    "person": {
+                      "subscription type": "premium",
+                    }
+                },
+                {
+                    "credDef": "sov:CRED_DEF:SUBSCRIPTION",
+                    "this": {
+                      "issuer": "https://moviestreaming.com/issuers/1",
+                      "not expired": true,
+                      "holder": "person",
+                    },
+                    "person": {
+                      "subscription type": "premium",
+                    }
                 }
-              }
-              </span>
+              ],
+              <span class="highlight">"proofs": [	<i>// the number of proofs is same as the number of claims</i>
+                {
+                    "type": "z-mix",
+                    "value": {
+                        <i>// meant to be parsed by a library supporting "z-mix"</i>
+                        ...
+                        ....
+                    }
+                },
+                {
+                    "type": "z-mix",
+                    "value": {
+                        <i>// meant to be parsed by a library supporting "z-mix"</i>
+                        ...
+                        ....
+                    }
+                }
+              ]
+            </span>
             }
             </pre>
+
+          <p>
+            A typical interaction between a holder and a verifier will look like this:
+              <ol>
+                <li>Verifier sends a Presentation Request to the holder in exchange of a service.</li>
+                <li>If the holder agrees to the request, it sends a Presentation offer and a Verifiable
+                Presentation (as shown above) to the verifier.</li>
+                <li>If the holder does not agree to the request, it sends a Presentation offer that manifests the information
+                the holder is willing to prove. This serves as a negotiation point and can result in execution of step 2 eventually.</li>
+              </ol>
+          </p>
+
       </section>
     </section>
 
