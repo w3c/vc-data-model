@@ -790,6 +790,8 @@ Examples of claims include date of birth, yearly income, credit score, weight,
 height, etc. To create <a>verifiable presentations</a> over such claims, it is
 important to specify how the values in these claims are encoded, eg height is in
 inches or centimeters, income is in USD or euros and so on.
+To describe the data model of a credential, a credential contains a <code>schema</code> attribute.
+    A schema describes the various attributes contained in a claim, more on this <a href="#schema">here</a>.
           </p>
         <section>
           <h3>Credential Claims</h3>
@@ -803,7 +805,7 @@ Claims about the credential itself will be part of the <code>this</code> object.
 The value of this property represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
 information associated with the <var>claims</var> property became valid. The encoding
-of this is either defined in the schema of the credential or it defaults to seconds since epoch.
+of this is either defined in the <code>schema</code> of the credential.
 This field is optional.
             </dd>
           </dl>
@@ -967,6 +969,90 @@ The following is a table that may help clarify the differences.
                 <td>issuer as unsigned property, schema as claim in <code>this</code></td>
           </tbody>
         </table>
+
+          <section>
+          <h3>Schema</h3>
+              <p>
+                A schema describes the name, data type and encoding of the attributes inside <code>claims</code>.
+                A schema can consist of sub-schemas called schema elements; these schema elements are reusable building
+                blocks of schemas. eg. A birth certificate credential's schema can describe the attributes as
+                name as a string type, birthdate as integer denoting seconds since epoch, birth location as a JSON string, etc.
+                Here the birth location can itself be a reusable schema element describing city, province, country, etc.
+                The schema can describe certain attributes about the credential itself like date of issuance, date of expiration,
+                etc and also describe the encoding of such attributes.
+              </p>
+              <p>
+                  The <code>schema</code> might or might not be signed depending on the <code>signature</code> type
+                  used and how the schema is referenced.
+                  In the following example, the schema belongs to a binding object, i.e the credential definition so
+                  the <code>schema</code> does not need to be signed.
+              </p>
+                  <pre class="example nohighlight" title="credential schema, unsigned">
+                    {
+                      "type": ["VerifiableCredential"],
+                      "issuer": "sov:CRED_DEF:981f#issuer",
+                      "public_key": "sov:CRED_DEF:981f#pubkey",
+                      <span class="highlight">
+                      "schema": "sov:CRED_DEF:981f#schema",
+                      </span>
+                      "claims": {
+                        "this": {
+                          "id": "981712401257890181130121",
+                          "issued": 159908121001,
+                          "expires": 159908154923
+                        },
+                        "holder": {
+                          "name": "Alice Bobman",
+                          "birthDate": 15903201121,
+                          "height": "150",
+                          "income": 50000,
+                        }
+                      }
+                    }
+                  </pre>
+              <p>
+                  In privacy preserving signatures like CL or BBS+, it is required to know the exact encoding of each
+                  attribute in the schema else the holder can prove false claims to the verifier. When a binding object
+                  like credential definition is used, it is known that the entity owning the public key, i.e. the
+                  issuer specified the schema but if that is not the case then the a signature over the schema needs to
+                  be present in the credential, like below. Notice how the <code>schema</code> contains the
+                  signature by the issuer. This signature has to be shared with the verifier.
+              </p>
+                  <pre class="example nohighlight" title="credential schema, signed">
+                    {
+                      "type": ["VerifiableCredential"],
+                      "issuer": "https://dmv.example.gov/issuers/14",
+                      "public_key": "https://example.com/jdoe/keys/1",
+                      <span class="highlight">
+                      "schema": {
+                          "id": "https://w3id.org/schemas/98",
+                          "signature": {
+                            "type": "RsaSignature2018",
+                             "creator": "https://example.com/jdoe/keys/43",
+                             "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+                             "value": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+                                MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+                                PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+                                +W3JT24="
+                          }
+                      }
+                      </span>
+                      "claims": {
+                        "this": {
+                          "id": "981712401257890181130121",
+                          "issued": 159908121001,
+                          "expires": 159908154923
+                        },
+                        "holder": {
+                          "name": "Alice Bobman",
+                          "birthDate": 15903201121,
+                          "height": "150",
+                          "income": 50000,
+                        }
+                      }
+                    }
+                  </pre>
+          </section>
       </section>
 
       <section>
