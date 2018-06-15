@@ -772,7 +772,10 @@ the issuer that may be used to verify the information expressed in the
         "ageOver": 21
     }
   },
-  "signature": { ... }
+  "signature": {
+        "type": "RsaSignature2018",
+        .....
+  }
 }
         </pre>
       </section>
@@ -805,7 +808,7 @@ Claims about the credential itself will be part of the <code>this</code> object.
 The value of this property represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
 information associated with the <var>claims</var> property became valid. The encoding
-of this is either defined in the <code>schema</code> of the credential.
+of this is defined in the <code>schema</code> of the credential.
 This field is optional.
             </dd>
           </dl>
@@ -813,6 +816,8 @@ This field is optional.
 {
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
+  "public_key": "https://example.com/jdoe/keys/1",
+  "schema": "https://w3id.org/schemas/98",
   "claims": {
     "this": {
         "id": "http://dmv.example.gov/credentials/3732",
@@ -826,6 +831,11 @@ This field is optional.
   "signature": { ... }
 }
           </pre>
+            <p>
+                In the credential above, the schema has defined the <code>issued</code> to be in ISO format.
+                Note that such a format does not allow flexibility in creating presentations as the issued
+                date has to be revealed.
+            </p>
         </section>
 
         <section>
@@ -992,9 +1002,7 @@ The following is a table that may help clarify the differences.
                       "type": ["VerifiableCredential"],
                       "issuer": "sov:CRED_DEF:981f#issuer",
                       "public_key": "sov:CRED_DEF:981f#pubkey",
-                      <span class="highlight">
-                      "schema": "sov:CRED_DEF:981f#schema",
-                      </span>
+                      <span class="highlight">"schema": "sov:CRED_DEF:981f#schema"</span>,
                       "claims": {
                         "this": {
                           "id": "981712401257890181130121",
@@ -1016,15 +1024,17 @@ The following is a table that may help clarify the differences.
                   like credential definition is used, it is known that the entity owning the public key, i.e. the
                   issuer specified the schema but if that is not the case then the a signature over the schema needs to
                   be present in the credential, like below. Notice how the <code>schema</code> contains the
-                  signature by the issuer. This signature has to be shared with the verifier.
+                  signature by the issuer. The <code>id</code> refers to the schema object, it is a URI,
+                  <code>creator</code> refers to the public key that needs to be used to verify the signature.
+                  The verifier needs to make sure that public key does belong to the issuer.
+                  This signature has to be shared with the verifier.
               </p>
                   <pre class="example nohighlight" title="credential schema, signed">
                     {
                       "type": ["VerifiableCredential"],
                       "issuer": "https://dmv.example.gov/issuers/14",
                       "public_key": "https://example.com/jdoe/keys/1",
-                      <span class="highlight">
-                      "schema": {
+                      <span class="highlight">"schema": {
                           "id": "https://w3id.org/schemas/98",
                           "signature": {
                             "type": "RsaSignature2018",
@@ -1035,8 +1045,7 @@ The following is a table that may help clarify the differences.
                                 PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
                                 +W3JT24="
                           }
-                      }
-                      </span>
+                      }</span>,
                       "claims": {
                         "this": {
                           "id": "981712401257890181130121",
