@@ -38,13 +38,23 @@ var vcwg = {
     },
     "LD-PROOFS": {
       title: "Linked Data Proofs",
-      href: "https://w3c-ccg.github.io/ld-proofs/",
+      href: "https://w3c-dvcg.github.io/ld-proofs/",
       authors: [
         "Manu Sporny",
         "Dave Longley"
       ],
       status: "CG-DRAFT",
-      publisher: "Credentials Community Group"
+      publisher: "Digital Verification Community Group"
+    },
+    "LD-SIGNATURES": {
+      title: "Linked Data Signatures",
+      href: "https://w3c-dvcg.github.io/ld-signatures/",
+      authors: [
+        "Manu Sporny",
+        "Dave Longley"
+      ],
+      status: "CG-DRAFT",
+      publisher: "Digital Verification Community Group"
     },
     // aliases to known references
     "HTTP-SIGNATURES": {
