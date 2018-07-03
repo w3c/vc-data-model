@@ -695,15 +695,20 @@ the additional information to more easily process the credential.
         </p>
 
         <p>
-Encapsulating objects, such as <a>credential</a>, MAY convey the types
-of associated objects so that the <a>verifier</a> can quickly determine
-the contents of the associated object based on the type of the encapsulating
-object. For example, a <a>credential</a> with the additional <code>type</code>
-of <code>ProofOfAgeCredential</code> would signal to the <a>verifier</a> that
-the object associated with the <a>claim</a> property will contain the
-identifier for the <a>subject</a> in the <code>id</code> property and the age
-assertion in the <code>ageOver</code> property. This enables implementers to
-rely on the <code>type</code> field for verification purposes.
+When processing encapsulated objects in this specification, (e.g. objects
+associated with the <code>claim</code> property or deeply nested therein),
+a software system SHOULD use type information specified in encapsulating
+objects higher in the hierarchy. For the avoidance of doubt, an
+encapsulating object such as <a>credential</a>, SHOULD convey the types of
+associated objects so that the <a>verifier</a> can quickly determine the
+contents of the associated object based on the type of the encapsulating object.
+To provide a concrete example, a <a>credential</a> with the additional
+<code>type</code> of <code>ProofOfAgeCredential</code> would signal to the
+<a>verifier</a> that the object associated with the <a>claim</a> property will
+contain the identifier for the <a>subject</a> in the <code>id</code> property
+and the age assertion in the <code>ageOver</code> property. This enables
+implementers to rely on values associated with the <code>type</code> property
+for verification purposes.
         </p>
 
         <p class="note">
