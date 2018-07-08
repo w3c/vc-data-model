@@ -592,22 +592,30 @@ such that market competition and customer choice is increased.
     <section>
       <h1>Basic Concepts</h1>
 
+      <p>
+This section outlines some of the basic concepts introduced in this
+specification and lays the groundwork for the more advanced concepts
+toward the end of the document.
+      </p>
+
       <section>
         <h2>Types</h2>
 
         <p>
-Type information may be expressed via the <a>type</a> property:
+Software systems that process the objects specified in this document
+use type information to make determinations about whether or not the provided
+<a>credential</a> or <a>presentation</a> is appropriate.
+Type information MUST be expressed via the <a>type</a> property:
         </p>
         <dl>
           <dt><dfn>type</dfn></dt>
           <dd>
-The value of this property MUST be one or more URIs.
+The value of this property MUST be or map to one or more URIs.
 If more than one URI is provided, the URIs MUST be interpreted as an
-unordered set. If a syntax, such as JSON-LD, uses an array to represent
-the set of URIs, the order of the values is not significant. Note that
-syntax such as JSON-LD terms MAY be used to ease developer usage. It is
-RECOMMENDED that dereferencing the URI results in a document containing
-machine-readable information about the type.
+unordered set. Note that syntactic conveniences, such as JSON-LD terms, 
+SHOULD be used to ease developer usage. It is RECOMMENDED that dereferencing 
+the URI results in a document containing machine-readable information about 
+the type.
           </dd>
         </dl>
 
@@ -660,7 +668,7 @@ more specific presentation type
 
             <tr>
               <td>
-A <a href="#status">credentialStatus</a> object
+A&nbsp;<a href="#status">credentialStatus</a>&nbsp;object
               </td>
               <td>
 A valid credential status type (e.g. <code>CredentialStatusList2017</code>)
@@ -689,9 +697,10 @@ A valid evidence type (e.g. <code>DocumentVerification2018</code>)
         </table>
 
         <p>
-All <a>credentials</a> MUST specify additional, more narrow <a>type</a>s
+All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
+specify or be associated with additional, more narrow <a>type</a>s
 (e.g. <code>ProofOfAgeCredential</code>) such that software systems can use
-the additional information to more easily process the credential.
+the additional information to more easily process the data.
         </p>
 
         <p>
@@ -708,7 +717,9 @@ To provide a concrete example, a <a>credential</a> with the additional
 contain the identifier for the <a>subject</a> in the <code>id</code> property
 and the age assertion in the <code>ageOver</code> property. This enables
 implementers to rely on values associated with the <code>type</code> property
-for verification purposes.
+for verification purposes. The expectation of types and their associated
+properties SHOULD be documented in at least a human-readable specification,
+and preferably in an additional machine-readable representation.
         </p>
 
         <p class="note">
