@@ -1430,6 +1430,369 @@ any media associated with them.
         </p>
 
       </section>
+<section>
+
+      <h1>Subject Not Equal To Holder</h1>
+
+      <p>
+This section describes how the data model supports use cases in which the holder
+ of the credential is not the subject of the credential.
+      </p>
+
+      <p>
+The following diagram depicts those instances when the subject is not equal to 
+the holder.
+     </p>
+
+      <figure>
+        <img style="margin: auto; display: block;" width="75%" src="diagrams/subject-ne-holder.svg">
+        <figcaption style="text-align: center;">
+Subject Holder Relationships in Verifiable Credentials.
+        </figcaption>
+      </figure>
+
+     <p>
+The following sections describe how each of these instances are handled in 
+the data model
+     </p>
+
+
+    <section>
+        <h2>Credential Uniquely Identifies Subject</h2>
+
+     <p>
+In this case, the claim may contain multiple properties that each provide 
+an aspect of the identity of the subject, and which together unambiguously identify
+the subject. In this case, it does not matter who the holder is, since the verifier
+can unambiguously identify the subject of the verifiable credential.
+   </p>
+
+        <pre class="example nohighlight" title="An example of a credential 
+that uniquely identifies a subject">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01",
+	"claim": {
+		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"name": "Mr John Doe",
+		"address": "10 Some Street, Anytown, ThisLocal, Country X",
+		"dateOfBirth": "2001-01-01",
+		"gender": "male",
+		"placeOfBirth": "Anytown, ThisLocal, Country X",
+		"nationality": "X",
+	},
+	"proof": { ...
+	}
+}
+        </pre>
+
+
+   </section>
+
+    <section>
+       <h2>Subject Delegates to Holder</h2>
+
+     <p>
+This is supported in the data model in two different ways: through the use of either recursion or verifiable presentations. Both methods involve the subject issuing a new verifiable credential to the delegated holder.
+    </p>
+
+    <p>
+This process of recursion could continue without restriction. Therefore 
+a new property “delegatable”, is added to the data model.
+
+     </p>
+
+   <section>
+
+   <h3> Delegatable Property </h3>
+
+  <p>
+The delegatable property, a Boolean, states whether a credential is 
+delegatable or not. If it is present with the value true, or not present, 
+then the credential is delegatable to a third party. If it is present with 
+the value false then it is not delegatable. A verifier that receives a verifiable 
+credential that is not delegatable MUST reject any verifiable credential that has
+been delegated from it.
+
+  </p>
+
+        <pre class="example nohighlight" title="An example of a credential that is not 
+delegatable">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01",
+	"delegatable": false,
+	"claim": {
+		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"ageOver": 21,
+	},
+	"proof": { ...
+	}
+}
+        </pre>
+
+       </section>
+       
+       <section>
+
+     <h3> Delegation through Recursion </h3>
+
+    <p>
+With recursion, the subject issues a credential to the delegated holder in which: 
+ the issuer is the subject, the claim contains 
+the id of the delegated holder, and the claim property is the credential that 
+was originally issued to the subject. An example is provided below.
+    </p>
+<p>
+Note: the exact format of this credential has not yet been agreed by the working group
+</p>
+ <pre class="example nohighlight" title="An example of a credential delegated 
+from a subject to a holder that is valid for 2 days">
+
+{
+	"id": "1234",
+	"type": ["Credential", "EmbeddedDelegatedCredential"],
+	"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+	"issued": "2010-01-06T00:00:00Z ",
+	"expires": "2010-01-08T00:00:00Z ",
+	"claim": {
+		"id": "did:example:ebfeb1f712ebc6f1c2123456789",
+		"credential": {
+			"id": "http://example.gov/credentials/3732",
+			"type": ["Credential", "Role"],
+			"issuer": "https://dmv.example.gov",
+			"issued": "2010-01-01",
+			"claim": {
+				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+				"role": "Project Manager"
+			},
+			"revocation": {
+				"id": "http://example.gov/revocations/738",
+				"type": "SimpleRevocationList2017"
+			},
+			"proof": {
+				"type": "LinkedDataSignature2015",
+				"created": "2016-06-18T21:19:10Z",
+				"creator": "https://example.com/jdoe/keys/1",
+				"domain": "json-ld.org",
+				"nonce": "598c63d6",
+				"signatureValue": "BavEll0...W3JT24 = "
+			}
+		}
+	},
+	"proof": { ...
+	}
+}
+
+        </pre>
+
+
+  </section>
+
+  <section>
+   <h3> Delegation through Verifiable Presentations </h3>
+
+   <p>
+
+Through the use of verifiable presentations, the subject delegates a credential to a
+holder, by issuing a new credential to the holder in which: the issuer is the subject, 
+the subject is the delegated holder, and the claim contains the property to be delegated. In addition, the delegated holder creates a verifiable presentation that contains these two credentials.
+</p>
+
+
+
+        <pre class="example nohighlight" title="An example of delegation using a 
+verifiable presentation">
+{
+	"id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+	"type": ["VerifiablePresentation"],
+	"credential": [{
+			"id": "http://example.gov/credentials/3732",
+			"type": ["Credential", "Role"],
+			"issuer": "https://dmv.example.gov",
+			"issued": "2010-01-01",
+			"claim": {
+				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+				"role": "Project Manager"
+			},
+			"revocation": {
+				"id": "http://example.gov/revocations/738",
+				"type": "SimpleRevocationList2017"
+			},
+			"proof": {....}
+		},
+		{
+			"id": "https://some.dns.com/VC/123456789",
+			"type": ["Credential", "DelagatedCredential"],
+			"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+			"issued": "2010-01-03",
+			"claim": {
+				"id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+				"role": "Project Manager"
+			},
+			"proof": {
+				"type": "RsaSignature2018",
+				"created": "2017-06-17T10:03:48Z",
+				"creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+				"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+				"signatureValue": "pYw8XNi1..Cky6Ed = "
+			}
+		}
+	],
+	"proof": [{
+		"type": "RsaSignature2018",
+		"created": "2017-06-18T21:19:10Z",
+		"creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
+		"nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+		"signatureValue": "BavEll0/I1..W3JT24 = "
+	}]
+}
+        </pre>
+
+
+   </section>
+  </section>
+
+
+
+   
+   <section>
+      <h2>Holder Acts on Behalf of Subject</h2>
+
+      <p>
+When the holder wants to act on behalf of the subject, the issuer MAY indicate this by
+either including the relationship of the holder in the subject's <a>claim</a>, 
+or by issuing a separate relationship credential to the holder. 
+Either way, the relationship describes the relationship between the holder and the subject of the claim. </p>
+
+<p>It is outside
+the scope of this standard how the issuer verifies the subject, the holder and the
+relationship between them.
+
+<p>
+Note: it is for further study which, if any, of the above mechanisms is to be 
+standardised by the working group.
+
+     </p>
+
+     
+        <pre class="example nohighlight" title="An example of the relationship 
+property in a child's credential, so that a parent can hold it">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claim": {
+		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"ageUnder": 16,
+		"parent": {
+			"type": "Mother",
+			"id": "did:example:ebfeb1c276e12ec211f712ebc6f"
+		}
+	},
+	"proof": {
+		"type": "RsaSignature2018",
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
+	}
+} 
+     </pre>
+
+<pre class="example nohighlight" title="An example of a relationship credential issued to
+a parent so that the parent can hold their child's verifiable credentials">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "RelationshipCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claim": {
+		"id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+		"child": {
+			"type": ["Person", "Child"],
+			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+		}
+	},
+	"proof": {
+		"type": "RsaSignature2018",
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
+	}
+}
+
+</pre>
+     
+<p> It can easily be seen from the above example how an authoritative issuer could indicate that a person is the owner of a pet dog </p>
+
+    </section>
+
+  <section>
+      <h2>Issuer Authorises Holder</h2>
+
+      <p>
+When the issuer wishes to authorise a holder to possess a credential that 
+describes a subject who is not the holder, and the holder has no known relationship
+ with the subject, then the issuer inserts the 
+relationship of the holder to itself into the subject's credential.
+      </p>
+
+
+        <pre class="example nohighlight" title="An example of a credential 
+issued to a holder who is not the subject of the credential, who has no relationship
+with the subject of the credential, but who has a relationship with the issuer">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "NameAndAddress"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"holder": {
+		"type": "LawEnforcement",
+		"id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
+	},
+	"issued": "2010-01-01",
+	"claim": {
+		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"name": "Mr John Doe",
+		"address": "10 Some Street, Anytown, ThisLocal, Country X"
+	},
+	"proof": {
+		"type": "RsaSignature2018",
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
+	}
+}        </pre>
+
+
+
+
+     </section>
+
+  <section>
+      <h2>Holder Acts on Behalf of Verifier or has no Relationship with the 
+Subject, Issuer or Verifier</h1>
+
+      <p>
+
+The data model currently does not support either of these scenarios. It is 
+for further study how they might be supported.
+      </p>
+      </section>
+
+   </section>
 
       <section>
         <h2>Disputes</h2>
