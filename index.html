@@ -1113,113 +1113,6 @@ that uniquely identifies a subject">
 
    </section>
 
-
-   
-   <section>
-      <h2>Holder Acts on Behalf of Subject</h2>
-
-      <p>
-When the holder wants to act on behalf of the subject, the issuer MAY indicate this by
-either including a relationship object in the subject's <a>claim</a>, 
-or by issuing a separate relationship credential to the holder. 
-Either way, the relationship object is used to
-describe the relationship between the holder and the subject of the claim. </p>
-
-<p>It is outside
-the scope of this standard how the issuer verifies the subject, the holder and the
-relationship between them.
-
-<p>
-Note: it is for further study which, if any, of the above mechanisms is to be 
-standardised by the working group.
-
-     </p>
-
-   <section>
-
-      <h3>The Relationship Object</h3>
-
-      <p>
-
-The Relationship object states the type of relationship between the subject of the claim, identified by an ID, 
-and this object, also identified by an ID e.g. a type of "Parent" indicates that the claim
-subject is the parent of the relationship object. 
-     </p>
-      <p>
-Note that values of the relationship type will be defined in other standards, 
-but it is 
-likely that typical values might be "Parent" (when the subject is a child) and 
-"Owner" (when the subject is a pet) etc.
-      </p>
-
-<p>
-Note that the following text and the two examples have not yet been finalised
-by the working group.
-</p>
-<p>
-When the relationship object is contained
-within a subject's claim, then the holder is the object of the
-relationship and the claim's subject is the subject of the relationship. When the
-relationship property is contained in the holder's relationship credential, the holder is the subject of both the relationship credential and the relationship, and the 
-relationship object refers to the subject of one or more claims or verifiable credentials that are held by the holder.
-
-      </p>
- 
-     
-        <pre class="example nohighlight" title="An example of the relationship 
-property in a child's credential, so that a parent can hold it">
-
-{
-	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "ProofOfAgeCredential"],
-	"issuer": "https://dmv.example.gov/issuers/14",
-	"issued": "2010-01-01T19:73:24Z",
-	"claim": {
-		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-		"ageUnder": 16,
-		"relationship": {
-			"type": "Child",
-			"id": "did:example:ebfeb1c276e12ec211f712ebc6f"
-		}
-	},
-	"proof": {
-		"type": "RsaSignature2018",
-		"created": "2017-06-17T10:03:48Z",
-		"creator": "https://dmv.example.gov/issuers/14/keys/234",
-		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-		"signatureValue": "pY9...Cky6Ed = "
-	}
-} 
-     </pre>
-
-<pre class="example nohighlight" title="An example of the relationship 
-object in a relationship credential so that a parent can hold their child's
-verifiable credentials">
-
-{
-	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "RelationshipCredential"],
-	"issuer": "https://dmv.example.gov/issuers/14",
-	"issued": "2010-01-01T19:73:24Z",
-	"claim": {
-		"id": "did:example:ebfeb1c276e12ec211f712ebc6f",
-		"relationship": {
-			"type": "Parent",
-			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
-		}
-	},
-	"proof": {
-		"type": "RsaSignature2018",
-		"created": "2017-06-17T10:03:48Z",
-		"creator": "https://dmv.example.gov/issuers/14/keys/234",
-		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-		"signatureValue": "pY9...Cky6Ed = "
-	}
-}
-
-      </section>
-    </section>
-
     <section>
        <h2>Subject Delegates to Holder</h2>
 
@@ -1387,27 +1280,104 @@ the subject is the delegated holder, and the claim contains the property to be d
   </section>
 
 
+
+   
+   <section>
+      <h2>Holder Acts on Behalf of Subject</h2>
+
+      <p>
+When the holder wants to act on behalf of the subject, the issuer MAY indicate this by
+either including the relationship of the holder in the subject's <a>claim</a>, 
+or by issuing a separate relationship credential to the holder. 
+Either way, the relationship describes the relationship between the holder and the subject of the claim. </p>
+
+<p>It is outside
+the scope of this standard how the issuer verifies the subject, the holder and the
+relationship between them.
+
+<p>
+Note: it is for further study which, if any, of the above mechanisms is to be 
+standardised by the working group.
+
+     </p>
+
+     
+        <pre class="example nohighlight" title="An example of the relationship 
+property in a child's credential, so that a parent can hold it">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "ProofOfAgeCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claim": {
+		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+		"ageUnder": 16,
+		"parent": {
+			"type": "Mother",
+			"id": "did:example:ebfeb1c276e12ec211f712ebc6f"
+		}
+	},
+	"proof": {
+		"type": "RsaSignature2018",
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
+	}
+} 
+     </pre>
+
+<pre class="example nohighlight" title="An example of a relationship credential issued to
+a parent so that the parent can hold their child's verifiable credentials">
+
+{
+	"id": "http://dmv.example.gov/credentials/3732",
+	"type": ["Credential", "RelationshipCredential"],
+	"issuer": "https://dmv.example.gov/issuers/14",
+	"issued": "2010-01-01T19:73:24Z",
+	"claim": {
+		"id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+		"child": {
+			"type": ["Person", "Child"],
+			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+		}
+	},
+	"proof": {
+		"type": "RsaSignature2018",
+		"created": "2017-06-17T10:03:48Z",
+		"creator": "https://dmv.example.gov/issuers/14/keys/234",
+		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+		"signatureValue": "pY9...Cky6Ed = "
+	}
+}
+
+</pre>
+     
+<p> It can easily be seen from the above example how an authoritative issuer could indicate that a person is the owner of a pet dog </p>
+
+    </section>
+
   <section>
       <h2>Issuer Authorises Holder</h2>
 
       <p>
 When the issuer wishes to authorise a holder to possess a credential that 
-describes a subject who is not the holder, then the issuer inserts the 
-relationship object into the subject's credential, describing the relationship
-of the holder to either itself (the issuer) or the subject, at its own discretion.
-An example of a relationship between the subject and the holder was given above.
+describes a subject who is not the holder, and the holder has no known relationship
+ with the subject, then the issuer inserts the 
+relationship of the holder to itself into the subject's credential.
       </p>
 
 
         <pre class="example nohighlight" title="An example of a credential 
-issued to a holder who is not the subject of the credential, and who has
-a relationship with the issuer">
+issued to a holder who is not the subject of the credential, who has no relationship
+with the subject of the credential, but who has a relationship with the issuer">
 
 {
 	"id": "http://dmv.example.gov/credentials/3732",
 	"type": ["Credential", "NameAndAddress"],
 	"issuer": "https://dmv.example.gov/issuers/14",
-	"relationship": {
+	"holder": {
 		"type": "LawEnforcement",
 		"id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
 	},
