@@ -1218,6 +1218,70 @@ new <code>favoriteFood</code> term so that it may only be used within the
 
       </section>
 
+
+      <section>
+        <h2>Caching</h2>
+
+        <p>
+<a>Issuers</a> may wish to signal information related to caching a
+<a>credential</a> to <a>holders</a> and <a>verifiers</a>. Some issuers may
+assert that they do not want a credential to be cached, while others may
+specify certain caching rules and refresh time periods that are acceptable.
+        </p>
+
+        <p>
+Caching information for the credential in the Verifiable Credentials Data
+Model is provided by adding the following <a>properties</a>:
+        </p>
+
+        <dl>
+          <dt><var>cacheControl</var></dt>
+          <dd>
+The value of this property MUST be one or more of the acceptable values for
+the Cache-Control header in HTTP [[RFC7234]] Section
+<a href="https://tools.ietf.org/html/rfc7234#section-5.2">5.2. Cache-Control</a>.
+          </dd>
+          <dt><var>cacheRefreshService</var></dt>
+          <dd>
+The value of this property MUST be a URL. The URL MUST be constructed such that
+an HTTP GET with a query parameter of <code>id</code> and the value of the
+credential `id` property appended will result in an updated credential or an
+error.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="A simple credential with caching information">
+{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://example.com/credentials/4643",
+  "type": ["VerifiableCredential"],
+  "issuer": "https://example.com/issuers/14",
+  "issuanceDate": "2018-02-24T05:28:04Z",
+  <span class="highlight">"cacheControl": "public, must-revalidate, max-age=5184000"</span>,
+  <span class="highlight">"cacheRefreshService": "https://example.org/credentials"</span>,
+  "claim": {
+    "id": "did:example:abcdef1234567",
+    "name": "Jane Doe"
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+It is strongly RECOMMENDED that the `cacheRefreshService` URL authenticates
+the caller and SHOULD only allow the holder of the original credential to
+retrieve a refreshed credential in order to mitigate privacy violations.
+        </p>
+
+        <p>
+If a <code>cacheControl</code> value is not present, then a <a>verifier</a>
+MAY cache the data up to the <code>expirationDate</code>, while ensuring to
+process the credential <a href="#status">status</a> at an interval that meets
+their operational needs.
+        </p>
+
+      </section>
+
       <section>
         <h2>Terms of Use</h2>
 
