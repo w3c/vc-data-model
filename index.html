@@ -1244,9 +1244,7 @@ the Cache-Control header in HTTP [[RFC7234]] Section
           <dt><var>cacheRefreshService</var></dt>
           <dd>
 The value of this property MUST be a URL. The URL MUST be constructed such that
-an HTTP GET with a query parameter of <code>id</code> and the value of the
-credential `id` property appended will result in an updated credential or an
-error.
+an HTTP GET on it will result in an updated credential or an error.
           </dd>
         </dl>
 
@@ -1258,7 +1256,7 @@ error.
   "issuer": "https://example.com/issuers/14",
   "issuanceDate": "2018-02-24T05:28:04Z",
   <span class="highlight">"cacheControl": "public, must-revalidate, max-age=5184000"</span>,
-  <span class="highlight">"cacheRefreshService": "https://example.org/credentials"</span>,
+  <span class="highlight">"cacheRefreshService": "https://example.org/credentials?id=3fgJ3k"</span>,
   "claim": {
     "id": "did:example:abcdef1234567",
     "name": "Jane Doe"
@@ -1268,7 +1266,7 @@ error.
         </pre>
 
         <p>
-It is strongly RECOMMENDED that the `cacheRefreshService` URL authenticates
+It is RECOMMENDED that the `cacheRefreshService` URL authenticates
 the caller and SHOULD only allow the holder of the original credential to
 retrieve a refreshed credential in order to mitigate privacy violations.
         </p>
