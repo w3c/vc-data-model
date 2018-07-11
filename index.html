@@ -848,8 +848,8 @@ Examples of claims include date of birth, yearly income, credit score, weight,
 height, etc. To create <a>verifiable presentations</a> over such claims, it is
 important to specify how the values in these claims are encoded, eg height is in
 inches or centimeters, income is in USD or euros and so on.
-To describe the data model of a credential, a credential contains a <code>schema</code> attribute.
-    A schema describes the various attributes contained in a claim, more on this <a href="#schema">here</a>.
+To describe the data model of a credential, a credential contains a <code>@context</code> attribute.
+    A context, also called a schema describes the various attributes contained in a claim, more on this <a href="#schema">here</a>.
           </p>
         <section>
           <h3>Credential Claims</h3>
@@ -863,7 +863,7 @@ Claims about the credential itself will be part of the <code>this</code> object.
 The value of this property represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
 information associated with the <var>claims</var> property became valid. The encoding
-of this is defined in the <code>schema</code> of the credential.
+of this is defined in the <code>@context</code> of the credential.
 This field is optional.
             </dd>
           </dl>
@@ -871,8 +871,8 @@ This field is optional.
 {
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
-  "public_key": "https://example.com/jdoe/keys/1",
-  "schema": "https://w3id.org/schemas/98",
+  "publicKey": "https://example.com/jdoe/keys/1",
+  "@context": "https://w3id.org/schemas/98",
   "claims": {
     "this": {
         "id": "http://dmv.example.gov/credentials/3732",
@@ -887,7 +887,7 @@ This field is optional.
 }
           </pre>
             <p>
-                In the credential above, the schema has defined the <code>issued</code> to be in ISO format.
+                In the credential above, the context has defined the <code>issuanceDate</code> to be in ISO format.
                 Note that such a format does not allow flexibility in creating presentations as the issued
                 date has to be revealed.
             </p>
@@ -906,14 +906,14 @@ This field is optional.
                     {
                       "type": ["VerifiableCredential"],
                       "issuer": "sov:CRED_DEF:981f#issuer",
-                      "public_key": "sov:CRED_DEF:981f#pubkey",
-                      "schema": "sov:CRED_DEF:981f#schema",
+                      "publicKey": "sov:CRED_DEF:981f#pubkey",
+                      "@context": "sov:CRED_DEF:981f#schema",
                       <span class="highlight">
                       "claims": {
                         "this": {
                           "id": "urn:credId:981712401257890181130121",
                           "issuanceDate": 159908121001,
-                          "expires": 159908154923,
+                          "expirationDate": 159908154923,
                           "holder": "person",
                         },
                         "person": {
@@ -933,14 +933,14 @@ This field is optional.
                     {
                       "type": ["VerifiableCredential"],
                       "issuer": "sov:CRED_DEF:981f#issuer",
-                      "public_key": "sov:CRED_DEF:981f#pubkey",
-                      "schema": "sov:CRED_DEF:981f#schema",
+                      "publicKey": "sov:CRED_DEF:981f#pubkey",
+                      "@context": "sov:CRED_DEF:981f#schema",
                       <span class="highlight">
                       "claims": {
                         "this": {
                           "id": "urn:credId:981712401257890181130121",
                           "issuanceDate": 159908121001,
-                          "expires": 159908154923,
+                          "expirationDate": 159908154923,
                           "holder": "mother",
                         },
                         "mother": {
@@ -985,7 +985,7 @@ associated with the credential is included as a claim.
           <dd>
 In this approach, a single reference to the Credential Definition is included in
 the credential. A Credential Definition contains a reference to the issuer,
-the issuer keys for that credential type, and a reference to the schema. The
+the issuer keys for that credential type, and a reference to the schema (<code>@context</code>). The
 credential definition can be looked up like a DID can, in a public key registry.
 Because this Credential Definition is signed by the issuer, the components are
 bound together. A Credential Definition is referenced using the
@@ -995,7 +995,10 @@ bound together. A Credential Definition is referenced using the
         <dl>
           <dt><var>one issuer key per issuer</var></dt>
           <dd>
-In this approach, TODO...
+              The public keys and the schemas can be independently stored in a centralized or a decentralized database.
+              The database should be highly available and tamper-evident. The credential should contain the signature
+              over the schema too. An example of this is IRMA, where the schema is called a <i>credential type</i> and the
+              database that stores the keys and schemas is called <i>scheme manager</i>
           </dd>
         </dl>
         <p>
@@ -1007,15 +1010,15 @@ The following is a table that may help clarify the differences.
           </thead>
           <tbody>
             <tr><td>Example</td><td>uPort, VeresOne</td><td>Sovrin, Idemix</td><td>IRMA</td></tr>
-            <tr><td>Issuer Key location</td><td>in DID Doc</td><td>in Credential Definition</td><td>looked up</td></tr>
+            <tr><td>Issuer Key location</td><td>in DID Doc</td><td>in Credential Definition</td><td>looked up on (de)cetralized data repositories.</td></tr>
             <tr><td>Issuer Key selection</td><td>unsigned attribute</td><td>N/A (only one per Credential Definition)</td><td>N/A (only one per Issuer)</td></tr>
-            <tr><td>Schema</td><td>attribute in Claims (signed)</td><td>in Credential Definition</td><td>attribute in Claims (signed)</td></tr>
+            <tr><td>Schema</td><td>attribute in <code>this</code>, under <code>claims</code> (signed)</td><td>in Credential Definition</td><td>attribute in <code>this</code>, under <code>claims</code> (signed)</td></tr>
             <tr><td>Credential Definition</td><td>empty</td><td>unsigned attribute</td><td>empty</td></tr>
             <tr><td>Pre-verification</td><td>ensure referenced key is in DID Doc</td><td>ensure Credential Definition is owned by issuer</td><td>none</td></tr>
             <tr><td>structure in credential</td>
-                <td>issuer and key reference as unsigned property, schema as claim in <code>this</code></td>
+                <td>issuer and key reference as unsigned property, schema as a claim under <code>this</code>, in <code>@context</code></td>
                 <td><code>credDef</code> as unsigned property</td>
-                <td>issuer as unsigned property, schema as claim in <code>this</code></td>
+                <td>issuer as unsigned property, schema as a claim under <code>this</code>, in <code>@context</code></td>
           </tbody>
         </table>
 
@@ -1023,6 +1026,7 @@ The following is a table that may help clarify the differences.
           <h3>Schema</h3>
               <p>
                 A schema describes the name, data type and encoding of the attributes inside <code>claims</code>.
+                It is specified by the <code>@context</code> key in the credential.
                 A schema can consist of sub-schemas called schema elements; these schema elements are reusable building
                 blocks of schemas. eg. A birth certificate credential's schema can describe the attributes as
                 name as a string type, birthdate as integer denoting seconds since epoch, birth location as a JSON string, etc.
@@ -1031,22 +1035,22 @@ The following is a table that may help clarify the differences.
                 etc and also describe the encoding of such attributes.
               </p>
               <p>
-                  The <code>schema</code> might or might not be signed depending on the <code>signature</code> type
+                  The <code>@context</code> might or might not be signed depending on the <code>signature</code> type
                   used and how the schema is referenced.
                   In the following example, the schema belongs to a binding object, i.e the credential definition so
-                  the <code>schema</code> does not need to be signed.
+                  the <code>@context</code> does not need to be signed.
               </p>
                   <pre class="example nohighlight" title="credential schema, unsigned">
                     {
                       "type": ["VerifiableCredential"],
                       "issuer": "sov:CRED_DEF:981f#issuer",
                       "public_key": "sov:CRED_DEF:981f#pubkey",
-                      <span class="highlight">"schema": "sov:CRED_DEF:981f#schema"</span>,
+                      <span class="highlight">"@context": "sov:CRED_DEF:981f#schema"</span>,
                       "claims": {
                         "this": {
                           "id": "urn:credId:981712401257890181130121",
                           "issuanceDate": 159908121001,
-                          "expires": 159908154923
+                          "expirationDate": 159908154923
                         },
                         "holder": {
                           "name": "Alice Bobman",
@@ -1062,34 +1066,20 @@ The following is a table that may help clarify the differences.
                   attribute in the schema else the holder can prove false claims to the verifier. When a binding object
                   like credential definition is used, it is known that the entity owning the public key, i.e. the
                   issuer specified the schema but if that is not the case then the a signature over the schema needs to
-                  be present in the credential, like below. Notice how the <code>schema</code> contains the
-                  signature by the issuer. The <code>id</code> refers to the schema object, it is a URI,
-                  <code>creator</code> refers to the public key that needs to be used to verify the signature.
-                  The verifier needs to make sure that public key does belong to the issuer.
-                  This signature has to be shared with the verifier.
+                  be present in the credential, under <code>signature</code>. Notice that the schema, identified by the
+                  <code>@context</code> is present under <code>claims</code>, inside <code>this</code>.
               </p>
                   <pre class="example nohighlight" title="credential schema, signed">
                     {
                       "type": ["VerifiableCredential"],
                       "issuer": "https://dmv.example.gov/issuers/14",
                       "public_key": "https://example.com/jdoe/keys/1",
-                      <span class="highlight">"schema": {
-                          "id": "https://w3id.org/schemas/98",
-                          "signature": {
-                            "type": "RsaSignature2018",
-                             "creator": "https://example.com/jdoe/keys/43",
-                             "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-                             "value": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-                                MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-                                PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-                                +W3JT24="
-                          }
-                      }</span>,
                       "claims": {
                         "this": {
                           "id": "urn:credId:981712401257890181130121",
                           "issuanceDate": 159908121001,
-                          "expires": 159908154923
+                          "expirationDate": 159908154923,
+                          <span class="highlight">"@context": "https://w3id.org/schemas/98"</span>
                         },
                         "holder": {
                           "name": "Alice Bobman",
@@ -1097,6 +1087,14 @@ The following is a table that may help clarify the differences.
                           "height": "150",
                           "income": 50000,
                         }
+                      },
+                      "signature": {
+                        "type": "CL",
+                        "value": {
+                            // The signature here contains the signature over the schema (@context) too
+                            ....
+                            ....
+                          }
                       }
                     }
                   </pre>
@@ -1176,7 +1174,7 @@ specifically JWS and JWK.
                   "height": 150,
                   "income": 50000,
                 }
-              }
+              },
               <span class="highlight">"signature": {
                 "type": "CL",
                 "value": {
@@ -1217,7 +1215,7 @@ credential or it defaults to seconds since epoch. This field is optional.
     "this": {
         "id": "http://dmv.example.gov/credentials/3732",
         "issuanceDate": 12190912112,
-        <span class="highlight">"expires": 15903201121</span>
+        <span class="highlight">"expirationDate": 15903201121</span>
         "holder": "person",
     },
     "person": {
