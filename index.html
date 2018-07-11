@@ -485,13 +485,12 @@ of information.
 
       <p>
 A <a>credential</a> is set of one or more <a>claims</a> made by the
-same <a>entity</a>. It may include an identifier to uniquely identify the
-credential which helps in revoking the credential, as well as metadata that
-describes properties of the credential itself such as: the <a>issuer</a>, 
+same <a>entity</a>. It includes a holder generated almost-always unique identifier
+as well as metadata that describes properties of the credential itself such as: the <a>issuer</a>,
 the public key to use, the revocation mechanism to use etc. This metadata can
 either be signed by the issuer or not, more on that later. The credential identifier
 is never revealed to the verifier to prevent the issuer and verifier from
-colluding to correlate the verifier.
+colluding to correlate the holder.
 A <a>verifiable credential</a> is a set of claims and meta data that are
 tamper-resistant and that cryptographically prove who issued it.
       </p>
@@ -623,10 +622,12 @@ machine-readable information about the type.
 
         <pre class="example nohighlight" title="Usage of the type property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
   "claims": {
-    "_": {
+    "this": {
+        "id": "http://dmv.example.gov/credentials/3732"
+    }
+    "holder": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "ageOver": 21
     }
@@ -729,11 +730,24 @@ specification that want to support extensibility in an interoperable fashion do.
 
       </section>
 
-            <section>
-        <h2>Issuer</h2>
+      <section>
+        <h2>Credential Properties (Unsigned)</h2>
 
         <p>
-Issuer information may be expressed via the following <a>properties</a>:
+There are two types of <a>properties</a> in a credential, Signed and Unsigned.
+Signed properties are called "claims". Because they are signed, Claims allow a
+holder to present these properties to a Verifier in a way that the Verifier
+knows they came from a credential issued from a certain issuer.
+        </p>
+        <p>
+Some properties about a credential do not need to be signed. For example, the
+Issuer property does not need to be signed because a substitution of an invalid
+Issuer reference by a malicious Issuer or Prover would simply fail verification.
+These <a>properties</a> should exist outside of the Claims property of the
+credential.
+        </p>
+        <p>
+Credential properties may be expressed via the following properties:
         </p>
         <dl>
           <dt><var>issuer</var></dt>
@@ -743,63 +757,106 @@ the URI results in a document containing machine-readable information about
 the issuer that may be used to verify the information expressed in the
 <a>credential</a>.
           </dd>
-          <dt><var>issued</var></dt>
-          <dd>
-The value of this property represents the date and time the <a>credential</a>
-was issued. Note that this date represents the earliest date when the
-information associated with the <var>claim</var> property became valid. The encoding
-of this is either defined in the schema of the credential or it defaults to seconds since epoch.
-This field is optional.
-          </dd>
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
   "claims": {
     "this": {
-        <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
-        <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
+        "id": "http://dmv.example.gov/credentials/3732",
+        "issued": "2010-01-01T19:73:24Z",
     },
-    "_": {
+    "holder": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "ageOver": 21
     }
   },
-  "signature": { ... }
+  "signature": {
+        "type": "RsaSignature2018",
+        .....
+  }
 }
         </pre>
       </section>
 
       <section>
         <h2>Claims</h2>
+          <p>
+Claims are the assertions issuer makes about a subject. A
+<a>verifiable credential</a> can be about any number of subjects. Each subject
+acts as a top-level key in <a>claims</a>. A reserved keyword <code>this</code>
+refers to the credential and contains attributes about the credential, like
+issuance date, expiration date. Another reserved keyword is <em>holder</em>,
+which points to the holder of the credential, <em>holder</em> is optional.
+Examples of claims include date of birth, yearly income, credit score, weight,
+height, etc. To create <a>verifiable presentations</a> over such claims, it is
+important to specify how the values in these claims are encoded, eg height is in
+inches or centimeters, income is in USD or euros and so on.
+To describe the data model of a credential, a credential contains a <code>schema</code> attribute.
+    A schema describes the various attributes contained in a claim, more on this <a href="#schema">here</a>.
+          </p>
+        <section>
+          <h3>Credential Claims</h3>
 
           <p>
-            Claims are the assertions issuer makes about a subject.
-            A <a>verifiable credential</a> can be about any number of subjects.
-            Each subject acts as a top-level key in <a>claims</a>. A reserved keyword <code>this</code> refers to the
-            credential and contains attributes about the credential, like issuance date, expiration date.
-            Another reserved keyword is <em>holder</em>, which points to the holder of the credential, <em>holder</em> is optional
-            Examples of claims include date of birth, yearly income, credit score, weight, height, etc. To create
-            <a>verifiable presentations</a> over such claims, it is important to specify how the
-            values in these claims are encoded, eg height is in inches or centimeters, income is in
-            USD or euros and so on. The credential might not have any attribute about itself, in that case the holder
-              is known by a special keyword, the "underscore", <code>_</code>.
+Claims about the credential itself will be part of the <code>this</code> object.
           </p>
+          <dl>
+            <dt><var>issued</var></dt>
+            <dd>
+The value of this property represents the date and time the <a>credential</a>
+was issued. Note that this date represents the earliest date when the
+information associated with the <var>claims</var> property became valid. The encoding
+of this is defined in the <code>schema</code> of the credential.
+This field is optional.
+            </dd>
+          </dl>
+          <pre class="example nohighlight" title="Usage of credential claims">
+{
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "public_key": "https://example.com/jdoe/keys/1",
+  "schema": "https://w3id.org/schemas/98",
+  "claims": {
+    "this": {
+        "id": "http://dmv.example.gov/credentials/3732",
+        <span class="highlight">"issued": "2010-01-01T19:73:24Z"</span>,
+    },
+    "holder": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "ageOver": 21
+    }
+  },
+  "signature": { ... }
+}
+          </pre>
+            <p>
+                In the credential above, the schema has defined the <code>issued</code> to be in ISO format.
+                Note that such a format does not allow flexibility in creating presentations as the issued
+                date has to be revealed.
+            </p>
+        </section>
+
+        <section>
+          <h3>Subject Claims</h3>
+
           <p>
-            The issuer identifier, schema and public key can be bound together in a single object and the credential then
-            refers the single object. This is how it is done is Sovrin and the binding object is called credential definition
-            and is called <code>credDef</code>. The issuance date and expiration date can be specified as a part of schema which lets
-            them have custom encodings.
+              todo
           </p>
 
               <pre class="example nohighlight" title="claims with 1 subject">
                     {
                       "type": ["VerifiableCredential"],
-                      "credDef": "sov:CRED_DEF:981f",
+                      "issuer": "sov:CRED_DEF:981f#issuer",
+                      "public_key": "sov:CRED_DEF:981f#pubkey",
+                      <span class="highlight">"schema": "sov:CRED_DEF:981f#schema"</span>,
                       <span class="highlight">
                       "claims": {
-                        "_": {      // Notice the _, it indicates the holder
+                        "this": {
+                          "id": "981712401257890181130121",
+                        },
+                        "holder": {
                           "name": "Alice Bobman",
                           "birthDate": 15903201121,
                           "height": "150",
@@ -815,10 +872,13 @@ This field is optional.
               <pre class="example nohighlight" title="claims with 2 subjects, one subject being the claim itself">
                     {
                       "type": ["VerifiableCredential"],
-                      "credDef": "sov:CRED_DEF:981f",
+                      "issuer": "sov:CRED_DEF:981f#issuer",
+                      "public_key": "sov:CRED_DEF:981f#pubkey",
+                      "schema": "sov:CRED_DEF:981f#schema",
                       <span class="highlight">
                       "claims": {
                         "this": {
+                          "id": "981712401257890181130121",
                           "issued": 159908121001,
                           "expires": 159908154923,
                           "holder": "person",
@@ -839,10 +899,13 @@ This field is optional.
               <pre class="example nohighlight" title="claims with 3 subjects, one subject being the claim itself">
                     {
                       "type": ["VerifiableCredential"],
-                      "credDef": "sov:CRED_DEF:981f",
+                      "issuer": "sov:CRED_DEF:981f#issuer",
+                      "public_key": "sov:CRED_DEF:981f#pubkey",
+                      "schema": "sov:CRED_DEF:981f#schema",
                       <span class="highlight">
                       "claims": {
                         "this": {
+                          "id": "981712401257890181130121",
                           "issued": 159908121001,
                           "expires": 159908154923,
                           "holder": "mother",
@@ -864,6 +927,147 @@ This field is optional.
                     }
               </pre>
 
+        </section>
+      </section>
+
+      <section>
+        <h2>Issuer Keys and Schemas</h2>
+        <p>
+There are several ways to establish information about the issuer, the keys used
+for verification, and the schemas used to interpret the credentials and
+presentations.
+        </p>
+        <dl>
+          <dt><var>DID-based issuer keys</var></dt>
+          <dd>
+In this approach, an issuer reference is included as a property, and issuer keys
+are looked up in the Issuer's <a href="https://w3c-ccg.github.io/did-spec/#did-documents">DID document</a>.
+The issuer may have several keys for issuing, and so the credential
+may reference the specific key used to sign that credential. The schema
+associated with the credential is included as a claim.
+          </dd>
+        </dl>
+        <dl>
+          <dt><var>Credential Definition based issuer keys</var></dt>
+          <dd>
+In this approach, a single reference to the Credential Definition is included in
+the credential. A Credential Definition contains a reference to the issuer,
+the issuer keys for that credential type, and a reference to the schema. The
+credential definition can be looked up like a DID can, in a public key registry.
+Because this Credential Definition is signed by the issuer, the components are
+bound together. A Credential Definition is referenced using the
+<code>credDef</code> property.
+          </dd>
+        </dl>
+        <dl>
+          <dt><var>one issuer key per issuer</var></dt>
+          <dd>
+In this approach, TODO...
+          </dd>
+        </dl>
+        <p>
+The following is a table that may help clarify the differences.
+        </p>
+        <table  border="1">
+          <thead>
+            <tr><th></th><th>DID-based issuer keys</th><th>one issuer key per credential type</th><th>one issuer key per issuer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Example</td><td>uPort, VeresOne</td><td>Sovrin, Idemix</td><td>IRMA</td></tr>
+            <tr><td>Issuer Key location</td><td>in DID Doc</td><td>in Credential Definition</td><td>looked up</td></tr>
+            <tr><td>Issuer Key selection</td><td>unsigned attribute</td><td>N/A (only one per Credential Definition)</td><td>N/A (only one per Issuer)</td></tr>
+            <tr><td>Schema</td><td>attribute in Claims (signed)</td><td>in Credential Definition</td><td>attribute in Claims (signed)</td></tr>
+            <tr><td>Credential Definition</td><td>empty</td><td>unsigned attribute</td><td>empty</td></tr>
+            <tr><td>Pre-verification</td><td>ensure referenced key is in DID Doc</td><td>ensure Credential Definition is owned by issuer</td><td>none</td></tr>
+            <tr><td>structure in credential</td>
+                <td>issuer and key reference as unsigned property, schema as claim in <code>this</code></td>
+                <td><code>credDef</code> as unsigned property</td>
+                <td>issuer as unsigned property, schema as claim in <code>this</code></td>
+          </tbody>
+        </table>
+
+          <section>
+          <h3>Schema</h3>
+              <p>
+                A schema describes the name, data type and encoding of the attributes inside <code>claims</code>.
+                A schema can consist of sub-schemas called schema elements; these schema elements are reusable building
+                blocks of schemas. eg. A birth certificate credential's schema can describe the attributes as
+                name as a string type, birthdate as integer denoting seconds since epoch, birth location as a JSON string, etc.
+                Here the birth location can itself be a reusable schema element describing city, province, country, etc.
+                The schema can describe certain attributes about the credential itself like date of issuance, date of expiration,
+                etc and also describe the encoding of such attributes.
+              </p>
+              <p>
+                  The <code>schema</code> might or might not be signed depending on the <code>signature</code> type
+                  used and how the schema is referenced.
+                  In the following example, the schema belongs to a binding object, i.e the credential definition so
+                  the <code>schema</code> does not need to be signed.
+              </p>
+                  <pre class="example nohighlight" title="credential schema, unsigned">
+                    {
+                      "type": ["VerifiableCredential"],
+                      "issuer": "sov:CRED_DEF:981f#issuer",
+                      "public_key": "sov:CRED_DEF:981f#pubkey",
+                      <span class="highlight">"schema": "sov:CRED_DEF:981f#schema"</span>,
+                      "claims": {
+                        "this": {
+                          "id": "981712401257890181130121",
+                          "issued": 159908121001,
+                          "expires": 159908154923
+                        },
+                        "holder": {
+                          "name": "Alice Bobman",
+                          "birthDate": 15903201121,
+                          "height": "150",
+                          "income": 50000,
+                        }
+                      }
+                    }
+                  </pre>
+              <p>
+                  In privacy preserving signatures like CL or BBS+, it is required to know the exact encoding of each
+                  attribute in the schema else the holder can prove false claims to the verifier. When a binding object
+                  like credential definition is used, it is known that the entity owning the public key, i.e. the
+                  issuer specified the schema but if that is not the case then the a signature over the schema needs to
+                  be present in the credential, like below. Notice how the <code>schema</code> contains the
+                  signature by the issuer. The <code>id</code> refers to the schema object, it is a URI,
+                  <code>creator</code> refers to the public key that needs to be used to verify the signature.
+                  The verifier needs to make sure that public key does belong to the issuer.
+                  This signature has to be shared with the verifier.
+              </p>
+                  <pre class="example nohighlight" title="credential schema, signed">
+                    {
+                      "type": ["VerifiableCredential"],
+                      "issuer": "https://dmv.example.gov/issuers/14",
+                      "public_key": "https://example.com/jdoe/keys/1",
+                      <span class="highlight">"schema": {
+                          "id": "https://w3id.org/schemas/98",
+                          "signature": {
+                            "type": "RsaSignature2018",
+                             "creator": "https://example.com/jdoe/keys/43",
+                             "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+                             "value": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+                                MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+                                PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+                                +W3JT24="
+                          }
+                      }</span>,
+                      "claims": {
+                        "this": {
+                          "id": "981712401257890181130121",
+                          "issued": 159908121001,
+                          "expires": 159908154923
+                        },
+                        "holder": {
+                          "name": "Alice Bobman",
+                          "birthDate": 15903201121,
+                          "height": "150",
+                          "income": 50000,
+                        }
+                      }
+                    }
+                  </pre>
+          </section>
       </section>
 
       <section>
@@ -882,11 +1086,11 @@ This field is optional.
         <pre class="example nohighlight"
           title="Usage of signature property on a verifiable credential">
             {
-              "id": "http://example.gov/credentials/3732",
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
               "issuer": "https://dmv.example.gov",
               "claims": {
                 "this": {
+                    "id": "http://example.gov/credentials/3732",
                     "issued": 15903201121,
                     "holder": "person"
                 },
@@ -919,11 +1123,11 @@ This field is optional.
             <pre class="example nohighlight"
                 title="Usage of signature property on a verifiable credential">
             {
-              "id": "http://example.gov/credentials/3732",
               "type": ["VerifiableCredential"],
               "credDef": "sov:CRED_DEF:981f",
               "claims": {
                 "this": {
+                  "id": "http://example.gov/credentials/3732",
                   "holder": "person",
                 },
                 "person": {
@@ -967,11 +1171,11 @@ credential or it defaults to seconds since epoch. This field is optional.
 
         <pre class="example nohighlight" title="Usage of expires property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "claims": {
     "this": {
+        "id": "http://dmv.example.gov/credentials/3732",
         "issued": 12190912112,
         <span class="highlight">"expires": 15903201121</span>
         "holder": "person",
@@ -1003,9 +1207,11 @@ type instance. The precise contents of the credential status information is
         </p>
         <p>
             More privacy preserving credentials allow for proving the status of
-            the credential in a zero knowledge manner, i.e the holder does not
-            have an explicit field mentioning revocation status but embed an identifier in the credential
-            and that identifier can be checked in a revocation/non-revocation list of some sort.
+            the credential in a zero knowledge manner, i.e the credential does not
+            have an explicit field mentioning revocation status but the issuer embeds a unique id
+            in the credential and that the holder then proves that he possesses a credential with a unique id
+            and that id is not part of some revocation list or part of some non-revoked list. Holder does this
+            in zero knowledge which means he does not reveal that id to the verifier.
         </p>
         <dl>
           <dt><var>credentialStatus</var></dt>
@@ -1017,12 +1223,14 @@ type instance. The precise contents of the credential status information is
 
         <pre class="example nohighlight" title="Usage of credentialStatus property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "claims": {
-    "_": {
+    "this": {
+        "id": "http://dmv.example.gov/credentials/3732",
+    },
+    "holder": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "ageOver": 21
     }
@@ -1061,7 +1269,6 @@ type instance. The precise contents of the credential status information is
                     title="Usage of credentialStatus property on a verifiable
                     credential with optional signature and witness property">
                     {
-                      "id": "http://example.gov/credentials/3732",
                       "type": ["VerifiableCredential"],
                       ....
                       "credentialStatus": {
@@ -1087,15 +1294,10 @@ type instance. The precise contents of the credential status information is
                 <pre class="example nohighlight"
                     title="Usage of proof property on a verifiable presentation">
                     {
-                      "id": "http://example.gov/credentials/3732",
                       "type": ["VerifiablePresentation"],
-                      "metadata": {
-                        "cred_def_id": "sov:CRED_DEF:981f",
-                      },
                       .....
-                      // a proof comprising of 3 sub-proofs; i.e 3 verifiable
-                      credentials were used to create that proof.
                       <span class="highlight">credentialStatus: {
+                          "id": "sov:REVOC_REG:8195"
                           "type": "CKS",
                            "proof": {
                                // Blob of data specific to the proof type, "CKS" in this case
@@ -1156,17 +1358,63 @@ Linked Data Proofs [[LD-PROOFS]] specification.
                 title="Usage of proof property on a verifiable presentation">
             {
               "type": ["VerifiablePresentation"],
-              <span class="highlight">"proof": {
-                "type": "CL",
-                "value": {
-                    // Blob of data specific to the proof type, "CL" in this case
-                    ....
-                    ....
+              "claims": [       <i>// Each of the claims is created from a verifiable credential</i>
+                {
+                    "credDef": "sov:CRED_DEF:EID",
+                    "this": {
+                      "issuer": "https://eid.gov/issuers/1",
+                      "not expired": true,
+                      "holder": "person",
+                    },
+                    "person": {
+                      "> 21": "true",
+                    }
+                },
+                {
+                    "credDef": "sov:CRED_DEF:SUBSCRIPTION",
+                    "this": {
+                      "issuer": "https://moviestreaming.com/issuers/1",
+                      "not expired": true,
+                      "holder": "person",
+                    },
+                    "person": {
+                      "subscription type": "premium",
+                    }
                 }
-              }
-              </span>
+              ],
+              <span class="highlight">"proofs": [	<i>// the number of proofs is same as the number of claims</i>
+                {
+                    "type": "z-mix",
+                    "value": {
+                        <i>// meant to be parsed by a library supporting "z-mix"</i>
+                        ...
+                        ....
+                    }
+                },
+                {
+                    "type": "z-mix",
+                    "value": {
+                        <i>// meant to be parsed by a library supporting "z-mix"</i>
+                        ...
+                        ....
+                    }
+                }
+              ]
+            </span>
             }
             </pre>
+
+          <p>
+            A typical interaction between a holder and a verifier will look like this:
+              <ol>
+                <li>Verifier sends a Presentation Request to the holder in exchange of a service.</li>
+                <li>If the holder agrees to the request, it sends a Presentation offer and a Verifiable
+                Presentation (as shown above) to the verifier.</li>
+                <li>If the holder does not agree to the request, it sends a Presentation offer that manifests the information
+                the holder is willing to prove. This serves as a negotiation point and can result in execution of step 2 eventually.</li>
+              </ol>
+          </p>
+
       </section>
     </section>
 
@@ -1225,16 +1473,16 @@ Let us assume that we start with the following <a>verifiable credential</a>:
         <pre class="example nohighlight" title="A simple credential">
 {
   "@context": "https://w3id.org/credentials/v1",
-  "id": "http://example.com/credentials/4643",
   "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
   "claims": {
     "this": {
+        "id": "http://example.com/credentials/4643",
         "issued": 1500812001
     },
-    "_": {
-        "id": "did:example:abcdef1234567",
-        "name": "Jane Doe"
+    "holder": {
+    "id": "did:example:abcdef1234567",
+    "name": "Jane Doe"
     }
   },
   "signature": { ... }
@@ -1276,27 +1524,27 @@ context above and adding the new properties to the <a>verifiable credential</a>.
 
         <pre class="example nohighlight"
           title="A verifiable credential with a custom extension">
-            {
-              "@context": <span class="highlight">[
-                </span>"https://w3id.org/credentials/v1",
-                <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
-              ]</span>,
-              "id": "http://example.com/credentials/4643",
-              "type": ["VerifiableCredential"],
-              "issuer": "https://example.com/issuers/14",
+{
+  "@context": <span class="highlight">[
+    </span>"https://w3id.org/credentials/v1",
+    <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
+  ]</span>,
+  "type": ["VerifiableCredential"],
+  "issuer": "https://example.com/issuers/14",
               "claims": {
                 "this": {
+                    "id": "http://example.com/credentials/4643",
                     "issued": 1500812001,
                     <span class="highlight">"referenceNumber": 83294847</span>
                 },
-                "_": {
-                    "id": "did:example:abcdef1234567",
-                    "name": "Jane Doe",
-                    <span class="highlight">"favoriteFood": "Papaya"</span>
+                "holder": {
+    "id": "did:example:abcdef1234567",
+    "name": "Jane Doe",
+    <span class="highlight">"favoriteFood": "Papaya"</span>
                 }
-              },
+  },
               "signature": { ... }
-            }
+}
         </pre>
     <p>
         If the above requirement had to be satisfied with a more privacy
@@ -1385,11 +1633,11 @@ use associated with a Verifiable Credential, namely, the
 
         <pre class="example nohighlight" title="Usage of termsOfUse property added by an Issuer">
             {
-              "id": "http://dmv.example.gov/credentials/3732",
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
               "issuer": "https://dmv.example.gov/issuers/14",
               "claims": {
                 "this": {
+                    "id": "http://dmv.example.gov/credentials/3732",
                     "issued": 12190912112,
                      <span class="highlight">"termsOfUse": [{
                         "type": "Policy",
@@ -1403,7 +1651,7 @@ use associated with a Verifiable Credential, namely, the
                         }]
                     }]</span>,
                 },
-                "_": {
+                "holder": {
                     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
                     "ageOver": 21
                 }
@@ -1421,11 +1669,11 @@ use associated with a Verifiable Credential, namely, the
 
         <pre class="example nohighlight" title="Usage of termsOfUse property where the holder is prohibited">
             {
-              "id": "http://dmv.example.gov/credentials/3732",
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
               "issuer": "https://dmv.example.gov/issuers/14",
               "claims": {
                 "this": {
+                    "id": "http://dmv.example.gov/credentials/3732",
                     "issued": 12190912112,
                      <span class="highlight">"termsOfUse": [{
                         "type": "Policy",
@@ -1437,7 +1685,7 @@ use associated with a Verifiable Credential, namely, the
                         }]
                     }]</span>,
                 },
-                "_": {
+                "holder": {
                     "name": "John Smith",
                     "birthDate": 1528515478416,
                     "city": "London"
@@ -1475,7 +1723,7 @@ storing the data in an archive.
                     }]
                     }</span>,
                   },
-                  "_": {
+                  "holder": {
                     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
                     "ageOver": 21
                   }
@@ -1528,22 +1776,22 @@ very simple scheme for evidence as a part of this specification.
 
         <pre class="example nohighlight" title="Usage of evidence property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "claims": {
     "this": {
+        "id": "http://dmv.example.gov/credentials/3732",
         "issued": 1528516376319,
-        <span class="highlight">"evidence": [{
-            "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
-            "type": ["DocumentVerification"],
-            "verifier": "https://dmv.example.gov/issuers/14",
-            "evidenceDocument": "DriversLicense",
-            "subjectPresence": "Physical",
-            "documentPresence": "Physical"
-        }]</span>,
+  <span class="highlight">"evidence": [{
+    "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+    "type": ["DocumentVerification"],
+    "verifier": "https://dmv.example.gov/issuers/14",
+    "evidenceDocument": "DriversLicense",
+    "subjectPresence": "Physical",
+    "documentPresence": "Physical"
+  }]</span>,
     },
-    "_": {
+    "holder": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "ageOver": 21
     }
@@ -1580,19 +1828,19 @@ in a public venue to make it known that the credential is disputed:
 
         <pre class="example nohighlight" title="Expressing a disputed credential">
 {
-  "id": "http://example.com/credentials/245",
   "type": ["VerifiableCredential", "DisputedCredential"],
+  "issuer": "https://example.com/people#me",
   <span class="highlight">"claims": {
     "this": {
+      "id": "http://example.com/credentials/245",
       "issued": 1500901012,
     },
-    "_": {
+    "holder": {
       "id": "http://con-artist.example.com/credentials/3732",
       "currentStatus": "Disputed",
       "statusReason": "Credential contains disputed statements"
     }
   }</span>,
-  "issuer": "https://example.com/people#me",
   "signature": { ... }
 }
         </pre>
@@ -1608,6 +1856,12 @@ The group is currently exploring whether the specification of a vocabulary
 term to express content-based identifiers for claims is within scope.
         </p>
 
+        <p class="issue">
+            It should be noted that disputing a credential requires uniquely identifying
+            the credential in some way. So a verifier disputing the credential has to know this identifier and
+            thus this is not privacy respecting. There can be some ways to prove that a credential is among a set of
+            disputed credentials in a zero knowledge manner but that has other non-technical challenges.
+        </p>
       </section>
 
     </section>
@@ -1764,8 +2018,8 @@ a verifiable credential, are clear and protected in the signature.
           in the <a>verifiable credential</a> MUST be enforced unless
           verifiers accept the risk of not enforcing the policy information.
           For example, the issuer may limit the use
-          of the credential to specific <a>verifiers</a>, certain <a>holder</a>
-          age ranges, or during certain dates. </li>
+          of the claims to specific <a>verifiers</a>, certain <a>holder</a>
+          age ranges, or during certain dates.</li>
           <li>All policy information expressed by the <a>holder</a>
           in the <a>verifiable presentation</a> MUST be enforced unless
           verifiers accept the risk of not enforcing the policy information.
@@ -2185,16 +2439,16 @@ For example, the following Verifiable Credential is a bearer credential:
 
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
-  "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "claims": {
     "this": {
+        "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
         "issued": 1534271021,
     }
     "holder": {
-        <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
-        "ageOver": 21
+    <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
+    "ageOver": 21
     }
   },
   "signature": { ... }
