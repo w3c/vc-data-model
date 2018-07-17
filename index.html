@@ -1266,8 +1266,8 @@ an HTTP GET on it will result in an updated credential or an error.
         </pre>
 
         <p>
-It is RECOMMENDED that the `refreshService` URL authenticates the caller and 
-SHOULD only allow the holder of the original credential to retrieve a 
+It is RECOMMENDED that the `refreshService` URL authenticates the caller and
+SHOULD only allow the holder of the original credential to retrieve a
 refreshed credential in order to mitigate privacy violations.
         </p>
 
@@ -1276,6 +1276,17 @@ If a <code>cacheControl</code> value is not present, then a <a>verifier</a>
 MAY cache the data up to the <code>expirationDate</code>, while ensuring to
 process the credential <a href="#status">status</a> at an interval that meets
 their operational needs.
+        </p>
+
+        <p>
+If used, HTTP Cache-Control Header values MUST be at least as restrictive
+(i.e. cause the cached value to invalidate) as <code>cacheControl</code> values
+specified in an HTTP message (e.g. <a>presentation</a>). For example, the value
+for <code>max-age</code> specified in an HTTP Cache-Control Header MUST be
+equal to or less than the <code>max-age</code> value specified in the
+<a>credential</a>. In the event that there is a conflict between the
+<code>cacheControl</code> value and the HTTP Cache-Control Header, the value
+that causes the cache to invalidate the soonest MUST be used.
         </p>
 
       </section>
