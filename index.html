@@ -1240,7 +1240,7 @@ credential.
       </section>
 <section>
 
-      <h1>Subject Not Equal To Holder</h1>
+      <h1>The Subject Is Not The Holder</h1>
 
       <p>
 This section describes how the data model supports use cases in which the holder
@@ -1280,17 +1280,28 @@ that uniquely identifies a subject">
 
 {
 	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "ProofOfAgeCredential"],
+        "@context": ["https://w3id.org/credentials/v1", "https://schema.org/"]
+	"type": ["Credential", "IdentityCredential"],
 	"issuer": "https://dmv.example.gov/issuers/14",
 	"issued": "2010-01-01",
 	"claim": {
 		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 		"name": "Mr John Doe",
-		"address": "10 Some Street, Anytown, ThisLocal, Country X",
-		"dateOfBirth": "2001-01-01",
-		"gender": "male",
-		"placeOfBirth": "Anytown, ThisLocal, Country X",
-		"nationality": "X",
+		"address": {
+                   "streetAddress": "10 Rue de Chose",
+                   "postalCode": "98052",
+                   "addressLocality": "Paris, France"
+                },
+		"birthDate": "2001-01-01",
+		"gender": "http://schema.org/Male",
+		"birthPlace": {
+                   "streetAddress": "36 Rue de Different",
+                   "postalCode": "102435",
+                   "addressLocality": "Paris"
+                   "addressCountry": "FR"
+                },
+
+		"nationality": "FR",
 	},
 	"proof": { ...
 	}
@@ -1304,46 +1315,32 @@ that uniquely identifies a subject">
        <h2>Subject Delegates to Holder</h2>
 
      <p>
-This is supported in the data model in two different ways: through the use of either recursion or verifiable presentations. Both methods involve the subject issuing a new verifiable credential to the delegated holder.
+Usually verifiable credentials will not be delegatable, for example, a subject should not
+delegate an 'age over 18' credential to another person. Consequently delegation of a verifiable
+credential is normally forbidden. However, delegation may be supported by the issuer adding the
+delegatable property to any verifiable credential that it issues. </p>
+
+<p> A verifier that receives a verifiable credential that has been delegated, and whose delegating verifiable credential does not contain the delegatable property, MUST reject the delegated verifiable credential.</p>
+
+<p> Delegation may be supported in two different ways: through the use of either recursion or verifiable presentations. Both methods involve the subject issuing a new verifiable credential to the delegated holder.
     </p>
-
-    <p>
-This process of recursion could continue without restriction. Therefore 
-a new property “delegatable”, is added to the data model.
-
-     </p>
 
    <section>
 
    <h3> Delegatable Property </h3>
 
   <p>
-The delegatable property, a Boolean, states whether a credential is 
-delegatable or not. If it is present with the value true, or not present, 
-then the credential is delegatable to a third party. If it is present with 
-the value false then it is not delegatable. A verifier that receives a verifiable 
+The delegatable property states that a credential is delegatable. The value of this property SHOULD be null, and MUST be ignored.</p>
+
+<p>
+
+If the delectable property is present,
+then the verifiable credential is delegatable to a third party.
+If it is not present, then it is not delegatable. A verifier that receives a verifiable 
 credential that is not delegatable MUST reject any verifiable credential that has
 been delegated from it.
 
   </p>
-
-        <pre class="example nohighlight" title="An example of a credential that is not 
-delegatable">
-
-{
-	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "ProofOfAgeCredential"],
-	"issuer": "https://dmv.example.gov/issuers/14",
-	"issued": "2010-01-01",
-	"delegatable": false,
-	"claim": {
-		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-		"ageOver": 21,
-	},
-	"proof": { ...
-	}
-}
-        </pre>
 
        </section>
        
@@ -1361,21 +1358,22 @@ was originally issued to the subject. An example is provided below.
 Note: the exact format of this credential has not yet been agreed by the working group
 </p>
  <pre class="example nohighlight" title="An example of a credential delegated 
-from a subject to a holder that is valid for 2 days">
+from a subject to a holder that is valid for 2 days, and is not delegatable">
 
 {
 	"id": "1234",
-	"type": ["Credential", "EmbeddedDelegatedCredential"],
+	"type": ["Credential", "DelegatedRoleCredential"],
 	"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 	"issued": "2010-01-06T00:00:00Z ",
 	"expires": "2010-01-08T00:00:00Z ",
 	"claim": {
 		"id": "did:example:ebfeb1f712ebc6f1c2123456789",
-		"credential": {
+		"verifiableCredential": {
 			"id": "http://example.gov/credentials/3732",
-			"type": ["Credential", "Role"],
+			"type": ["Credential", "RoleCredential"],
 			"issuer": "https://dmv.example.gov",
 			"issued": "2010-01-01",
+                        "delegatable": null,
 			"claim": {
 				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 				"role": "Project Manager"
@@ -1408,9 +1406,10 @@ from a subject to a holder that is valid for 2 days">
 
    <p>
 
-Through the use of verifiable presentations, the subject delegates a credential to a
-holder, by issuing a new credential to the holder in which: the issuer is the subject, 
-the subject is the delegated holder, and the claim contains the property to be delegated. In addition, the delegated holder creates a verifiable presentation that contains these two credentials.
+The subject delegates a verifiable credential to a
+holder, by issuing a new verifiable credential to the holder in which: the issuer is the subject, 
+the subject is the delegated holder, and the claim contains the property to be delegated. In addition, the delegated holder creates a verifiable presentation that contains these two
+verifiable credentials.
 </p>
 
 
@@ -1422,9 +1421,10 @@ verifiable presentation">
 	"type": ["VerifiablePresentation"],
 	"credential": [{
 			"id": "http://example.gov/credentials/3732",
-			"type": ["Credential", "Role"],
+			"type": ["Credential", "RoleCredential"],
 			"issuer": "https://dmv.example.gov",
 			"issued": "2010-01-01",
+                        "delegatable": null,
 			"claim": {
 				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 				"role": "Project Manager"
@@ -1436,8 +1436,8 @@ verifiable presentation">
 			"proof": {....}
 		},
 		{
-			"id": "https://some.dns.com/VC/123456789",
-			"type": ["Credential", "DelagatedCredential"],
+			"id": "https://example.com/VC/123456789",
+			"type": ["Credential", "RoleCredential"],
 			"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 			"issued": "2010-01-03",
 			"claim": {
@@ -1468,23 +1468,22 @@ verifiable presentation">
   </section>
 
 
-
    
    <section>
       <h2>Holder Acts on Behalf of Subject</h2>
 
       <p>
-When the holder wants to act on behalf of the subject, the issuer MAY indicate this by
+When the holder wants to act on behalf of the subject, the issuer SHOULD indicate this by
 either including the relationship of the holder in the subject's <a>claim</a>, 
 or by issuing a separate relationship credential to the holder. 
-Either way, the relationship describes the relationship between the holder and the subject of the claim. </p>
+Either way, the relationship describes the relationship between the holder and the subject of the claim, and helps the verifier to decide whether to accept the verifiable credential or not. </p>
 
-<p>It is outside
+<p class="issue"> It is outside
 the scope of this standard how the issuer verifies the subject, the holder and the
 relationship between them.
 
 <p>
-Note: it is for further study which, if any, of the above mechanisms is to be 
+Note: it is for further study which, if any, of these mechanisms is to be 
 standardised by the working group.
 
      </p>
