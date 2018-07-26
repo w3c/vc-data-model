@@ -33,7 +33,7 @@
         localBiblio: vcwg.localBiblio,
         doJsonLd: true,
 
-        github: "https://github.com/w3c/vc-data-model",
+        github: "https://github.com/w3c/vc-data-model/",
         includePermalinks: false,
 
         // if there a publicly available Editor's Draft, this is the link
@@ -127,6 +127,17 @@ or send them to
 (<a href="mailto:public-vc-comments-request@w3.org?subject=subscribe">subscribe</a>,
 <a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
       </p>
+
+        <p class="issue" data-number=200>
+There remain a list of terminology-related editorial issues that need to be
+processed in this document.
+        </p>
+
+        <p class="issue" data-number=201>
+There remain a list of editorial issues that need to be processed in this
+document.
+        </p>
+
     </section>
 
     <section>
@@ -634,10 +645,6 @@ use type information to make determinations about whether or not the provided
 Type information MUST be expressed via the <a>type</a> property:
         </p>
 
-        <p class="issue" data-number=183>
-The group is currently debating the contents of the type property.
-        </p>
-
         <dl>
           <dt><dfn>type</dfn></dt>
           <dd>
@@ -652,6 +659,8 @@ the type.
 
         <pre class="example nohighlight" title="Usage of the type property">
 {
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
   "claims": {
     "this": {
@@ -753,8 +762,8 @@ contain the identifier for the <a>subject</a> in the <code>id</code> property
 and the age assertion in the <code>ageOver</code> property. This enables
 implementers to rely on values associated with the <code>type</code> property
 for verification purposes. The expectation of types and their associated
-properties SHOULD be documented in at least a human-readable specification,
-and preferably in an additional machine-readable representation.
+properties SHOULD be documented in at least a human-readable specification
+and, preferably, in an additional machine-readable representation.
         </p>
 
         <p class="note">
@@ -770,7 +779,6 @@ idiomatic. While application developers and document authors do not need to
 understand the specifics of JSON-LD's type system, implementers of this
 specification that want to support extensibility in an interoperable fashion do.
         </p>
-
         <p class="issue" data-number=123>
 The group is currently discussing whether or not JSON Object Types should be
 explicitly stated.
@@ -815,6 +823,7 @@ information associated with the <var>claim</var> property became valid.
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
+  "@context": "https://w3id.org/credentials/v1",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
   "claims": {
@@ -1126,6 +1135,7 @@ The following is a table that may help clarify the differences.
         <pre class="example nohighlight"
           title="Usage of signature property on a verifiable credential">
             {
+              "@context": "https://w3id.org/credentials/v1",
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
               "issuer": "https://dmv.example.gov",
               "claims": {
@@ -1218,6 +1228,8 @@ credential or it defaults to seconds since epoch. This field is optional.
 
         <pre class="example nohighlight" title="Usage of expirationDate property">
 {
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "claims": {
@@ -1284,6 +1296,7 @@ type instance. The precise contents of the credential status information is
 
         <pre class="example nohighlight" title="Usage of credentialStatus property">
 {
+  "@context": "https://w3id.org/credentials/v1",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "claims": {
@@ -1389,6 +1402,7 @@ is provided below:
 
         <pre class="example nohighlight" title="Basic structure of a presentation">
 {
+  "@context": "https://w3id.org/credentials/v1",
   "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
   "type": ["VerifiablePresentation"],
   <span class="highlight">"verifiableCredential": [{ ... }],
@@ -1554,10 +1568,6 @@ correctness are achieved through a series of examples.
 The group is currently discussing enhancements to this section.
         </p>
 
-        <p class="issue" data-number=157>
-The group is currently discussing if extensibility leads to vulnerabilities.
-        </p>
-
         <p class="issue" data-number=187>
 The group is currently discussing how a travel use case could be covered as
 an extension.
@@ -1597,7 +1607,7 @@ food.
 
         <p>
 The first thing that a developer would do is create a JSON-LD Context
-containing the two new terms:
+containing two new terms:
         </p>
 
         <pre class="example nohighlight" title="An example JSON-LD Context">
@@ -1675,15 +1685,46 @@ JSON-based and JSON-LD-based processors.
         </p>
 
         <p>
-Implementations MUST produce an error when an extension JSON-LD Context
-overrides the expanded URL for a term specified in the base JSON-LD Context
-(<code>https://w3id.org/credentials/v1</code>). To avoid the possibility of
-accidentally overriding terms, developers are urged to scope their extensions.
-For example, the following extension scopes the new <code>favoriteFood</code>
-term so that it may only be used within the <code>claim</code> property:
+Developers are urged to ensure that extension JSON-LD Contexts are highly
+available. Implementations that cannot fetch a context will produce an error.
+Strategies for ensuring that extension JSON-LD Contexts are always available
+include using content-addressed URLs for contexts, bundling context documents
+with implementations, or enabling aggressive caching of contexts.
         </p>
 
-        <pre class="example nohighlight" title="Scoping terms in a JSON-LD Context">
+        <section>
+          <h3>Semantic Interoperability</h3>
+
+          <p>
+This specification endeavors to enable both the JSON and JSON-LD syntaxes
+to be semantically compatible with one another without the JSON implementations
+needing to process the documents as JSON-LD. In order to achieve this, the
+specification creates the following additional restrictions on both syntaxes:
+          </p>
+
+          <ul>
+            <li>
+JSON-based processors MUST process the <code>@context</code> property, ensuring
+the expected values exist in the expected order for the <code>type</code> of
+<a>credential</a> that they are processing. The expected order MUST be defined
+by at least a human-readable extension specification and, preferably, a
+machine-readable specification.
+            </li>
+            <li>
+In addition to the rule above, JSON-LD-based processors MUST produce an error
+when a JSON-LD Context redefines any term in the
+<a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>.
+            </li>
+          </ul>
+
+          <p>
+To avoid the possibility of accidentally overriding terms, developers are urged
+to scope their extensions. For example, the following extension scopes the
+new <code>favoriteFood</code> term so that it may only be used within the
+<code>claim</code> property:
+          </p>
+
+          <pre class="example nohighlight" title="Scoping terms in a JSON-LD Context">
 {
   "@context": {
     "referenceNumber": "https://example.com/vocab#referenceNumber",
@@ -1695,15 +1736,9 @@ term so that it may only be used within the <code>claim</code> property:
     }</span>
   }
 }
-        </pre>
+          </pre>
 
-        <p>
-Developers are urged to ensure that extension JSON-LD Contexts are highly
-available. Implementations that cannot fetch a context will produce an error.
-Strategies for ensuring that extension JSON-LD Contexts are always available
-include using content-addressed URLs for contexts, bundling context documents
-with implementations, or enabling aggressive caching of contexts.
-        </p>
+        </section>
 
       </section>
 
@@ -1712,18 +1747,34 @@ with implementations, or enabling aggressive caching of contexts.
 
         <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
         <a>holder</a> to express limitations on the use of information
-        expressed by the Verifiable Credentials Data Model. The expression of
-        terms of use are performed via the following <a>property</a>:
+        expressed by the Verifiable Credentials Data Model. The <a>issuer</a> places
+        the terms of use inside the <a>credential</a> before it is converted into a
+        <a>verifiable credential</a>. The <a>holder</a> places the terms of use inside
+        the <a>presentation</a> before it is converted into a
+        <a>verifiable presentation</a>.</p>
+
+       <p class="note"> it is for further study how a subject who is not a
+       holder places terms of
+       use on his or her verifiable credentials. One way could be for the subject to
+       request the issuer to place them inside the issued verifiable credentials. Another
+       way could be by the subject delegating a verifiable credential to a holder and
+       placing terms of use restrictions on the delegated verifiable credential.
+       </p>
+       <p> The expression of
+        terms of use may be performed via the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
           <dd>The value of this property MUST be one or more terms of use
-            descriptions that provide enough information to a <a>verifier</a>
-            to determine how they may utilize the given information.
-            When the issuer includes <code>termsOfUse</code> (which means the attributes
-            inside "termsOfUse" are part of the schema) in the signature, the holder can prove
-            to the verifier that he is allowed to use the credential in a specific interaction.
+            that tell the <a>verifier</a> what actions it MUST perform if it is to
+           accept the verifiable credential or verifiable presentation.
+          If the verifier is not willing to accept these terms of use then it MUST reject
+          the verifiable credential or verifiable presentation.
+          Each <code>termsOfUse</code> comprises its type,
+            for example, <code>IssuerPolicy</code>, and
+            optionally its instance id. The precise contents of each term of use is
+            determined by the specific <code>TermsOfUse</code> type definition.
           </dd>
         </dl>
 
@@ -1735,6 +1786,10 @@ use associated with a Verifiable Credential, namely, the
 
         <pre class="example nohighlight" title="Usage of termsOfUse property added by an Issuer">
             {
+              "@context": [
+                    "https://w3id.org/credentials/v1",
+                    "https://example.org/motorlicense/v1"
+              ],
               "type": ["VerifiableCredential", "ProofOfAgeCredential"],
               "issuer": "https://dmv.example.gov/issuers/14",
               "claims": {
@@ -1742,8 +1797,8 @@ use associated with a Verifiable Credential, namely, the
                     "id": "http://dmv.example.gov/credentials/3732",
                     "issuanceDate": 12190912112,
                      <span class="highlight">"termsOfUse": [{
-                        "type": "Policy",
-                        "uid": "http://example.com/policies/credential/4",
+                        "type": "IssuerPolicy",
+                        "id": "http://example.com/policies/credential/4",
                         "profile": "http://example.com/profiles/credential",
                         "prohibition": [{
                           "assigner": "https://dmv.example.gov/issuers/14",
@@ -1802,41 +1857,44 @@ In the example above, the <a>issuer</a> is prohibiting a <a>verifier</a> from
 storing the data in an archive.
         </p>
 
-        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
-            {
-              "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-              "credential": [{
-                "id": "http://dmv.example.gov/credentials/3732",
-                "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-                "issuer": "https://dmv.example.gov/issuers/14",
-                "claims": {
-                  "this": {
-                    "issuanceDate": 12190912112,
-                    <span class="highlight">"termsOfUse": [{
-                    "type": "Policy",
-                    "uid": "http://example.com/policies/credential/6",
-                    "profile": "http://example.com/profiles/credential",
-                    "prohibition": [{
-                      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-                      "assignee": "https://wineonline.example.org/",
-                      "target": "http://dmv.example.gov/credentials/3732",
-                      "action": ["3rdPartyCorrelation"]
-                    }]
-                    }</span>,
-                  },
-                  "holder": {
-                    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-                    "ageOver": 21
-                  }
-                },
-                "signature": { ... }
-              }],
-            }
+        <pre class="example nohighlight" title="Usage of termsOfUse property by a Holder">
+{
+  "@context": [
+    "https://w3id.org/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "type": "VerifiablePresentation",
+  "credential": [{
+    "id": "http://dmv.example.gov/credentials/3732",
+    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov/issuers/14",
+    "issuanceDate": "2010-01-01T19:73:24Z",
+    "claim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    },
+    "proof": { ... }
+  }],
+  <span class="highlight">"termsOfUse": [{
+    "type": "HolderPolicy",
+    "id": "http://example.com/policies/credential/6",
+    "profile": "http://example.com/profiles/credential",
+    "prohibition": [{
+      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "assignee": "https://wineonline.example.org/",
+      "target": "http://dmv.example.gov/credentials/3732",
+      "action": ["3rdPartyCorrelation"]
+    }]
+  }</span>,
+  "proof": [ ... ]
+}
         </pre>
 
         <p>
-In the example above, the <a>holder</a> is prohibiting a <a>verifier</a> from
-using the information provided to correlate the <a>holder</a> using a
+In the example above, the <a>holder</a>, who is also the <a>subject</a>,
+ is prohibiting the <a>verifier</a> (<code>https://wineonline.example.org</code>)
+ from using the information provided to correlate the <a>holder/subject</a> by using a
 3rd party service.
         </p>
 
@@ -1891,6 +1949,10 @@ credentials are supported by the specification.
 
         <pre class="example nohighlight" title="Usage of evidence property">
 {
+  "@context": [
+    "https://w3id.org/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "claims": {
@@ -1950,6 +2012,7 @@ in a public venue to make it known that the credential is disputed:
         <pre class="example nohighlight"
           title="Expressing a disputed credential">
 {
+  "@context": "https://w3id.org/credentials/v1",
   "id": "http://example.com/credentials/245",
   "type": ["VerifiableCredential", "DisputeCredential"],
   <span class="highlight">"claim": {
@@ -2154,6 +2217,11 @@ JSON-LD document, then a <code>@context</code> property with a value of
 <code>https://w3id.org/credentials/v1</code> MUST be assumed.
         </p>
 
+        <p class="issue" data-number=202>
+The Verifiable Credentials JSON-LD Context needs to be updated to reflect
+the latest specification.
+        </p>
+
         <p class="issue">
             It should be noted that disputing a credential requires uniquely identifying
             the credential in some way. So a verifier disputing the credential has to know this identifier and
@@ -2173,14 +2241,10 @@ Some checks are essential for all verifiable credentials, while some are
 applicable to only some credentials.
       </p>
 
-      <p class="issue" data-number=195>
-There is an existing PR to add a conformance section to the specification.
-      </p>
-
-        <p class="issue" data-number=128>
+      <p class="issue" data-number=128>
 The group is currently discussing whether a mechanism should be provided
 that enables linkages to JSON Schema or other optional validation mechanisms.
-        </p>
+      </p>
 
       <section>
         <h3>Syntax</h3>
@@ -2761,6 +2825,7 @@ For example, the following Verifiable Credential is a bearer credential:
 
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
+  "@context": "https://w3id.org/credentials/v1",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "claims": {

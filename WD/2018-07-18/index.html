@@ -1,0 +1,3544 @@
+<!DOCTYPE html><html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html;charset=utf-8"><meta name="generator" content="ReSpec 22.3.1"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style>/* --- EXAMPLES --- */
+div.example-title {
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.example-title span {
+    text-transform: uppercase;
+}
+aside.example, div.example, div.illegal-example {
+    padding: 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+div.illegal-example { color: red }
+div.illegal-example p { color: black }
+aside.example, div.example {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+    border-color: #e0cb52;
+    background: #fcfaee;
+}
+
+aside.example div.example {
+    border-left-width: .1em;
+    border-color: #999;
+    background: #fff;
+}
+aside.example div.example div.example-title {
+    color: #999;
+}
+</style><style>/* --- ISSUES/NOTES --- */
+div.issue-title, div.note-title , div.ednote-title, div.warning-title {
+    padding-right:  1em;
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.issue-title { color: #e05252; }
+div.note-title, div.ednote-title { color: #2b2; }
+div.warning-title { color: #f22; }
+div.issue-title span, div.note-title span, div.ednote-title span, div.warning-title span {
+    text-transform: uppercase;
+}
+div.note, div.issue, div.ednote, div.warning {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.note > p:first-child, .ednote > p:first-child, .issue > p:first-child, .warning > p:first-child { margin-top: 0 }
+.issue, .note, .ednote, .warning {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+}
+div.issue, div.note , div.ednote,  div.warning {
+    padding: 1em 1.2em 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+span.note, span.ednote, span.issue, span.warning { padding: .1em .5em .15em; }
+
+.issue {
+    border-color: #e05252;
+    background: #fbe9e9;
+}
+.note, .ednote {
+    border-color: #52e052;
+    background: #e9fbe9;
+}
+
+.warning {
+    border-color: #f11;
+    border-width: .2em;
+    border-style: solid;
+    background: #fbe9e9;
+}
+
+.warning-title:before{
+    content: "⚠"; /*U+26A0 WARNING SIGN*/
+    font-size: 3em;
+    float: left;
+    height: 100%;
+    padding-right: .3em;
+    vertical-align: top;
+    margin-top: -0.5em;
+}
+
+li.task-list-item {
+    list-style: none;
+}
+
+input.task-list-item-checkbox {
+    margin: 0 0.35em 0.25em -1.6em;
+    vertical-align: middle;
+}
+
+.issue a.respec-gh-label {
+  padding: 5px;
+  margin: 0 2px 0 2px;
+  font-size: 10px;
+  text-transform: none;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  position: relative;
+  bottom: 2px;
+}
+
+.issue a.respec-label-dark {
+  color: #fff;
+  background-color: #000;
+}
+
+.issue a.respec-label-light {
+  color: #000;
+  background-color: #fff;
+}
+</style>
+    <title>Verifiable Credentials Data Model 1.0</title>
+    
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    
+    
+    
+    <style>
+pre .highlight {
+  font-weight: bold;
+  color: green;
+}
+pre .subject {
+  font-weight: bold;
+  color: RoyalBlue;
+}
+pre .property {
+  font-weight: bold;
+  color: DarkGoldenrod;
+}
+pre .comment {
+  font-weight: bold;
+  color: Gray;
+}
+</style>
+  <style id="respec-mainstyle">/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* Override code highlighter background */
+.hljs {
+  background: transparent !important;
+}
+
+/* --- INLINES --- */
+h1 abbr,
+h2 abbr,
+h3 abbr,
+h4 abbr,
+h5 abbr,
+h6 abbr,
+a abbr {
+  border: none;
+}
+
+dfn {
+  font-weight: bold;
+}
+
+a.internalDFN {
+  color: inherit;
+  border-bottom: 1px solid #99c;
+  text-decoration: none;
+}
+
+a.externalDFN {
+  color: inherit;
+  border-bottom: 1px dotted #ccc;
+  text-decoration: none;
+}
+
+a.bibref {
+  text-decoration: none;
+}
+
+#references :target {
+  background: #eaf3ff;
+}
+
+cite .bibref {
+  font-style: normal;
+}
+
+code {
+  color: #c83500;
+}
+
+th code {
+  color: inherit;
+}
+
+/* --- TOC --- */
+
+.toc a,
+.tof a {
+  text-decoration: none;
+}
+
+a .secno,
+a .figno {
+  color: #000;
+}
+
+ul.tof,
+ol.tof {
+  list-style: none outside none;
+}
+
+.caption {
+  margin-top: 0.5em;
+  font-style: italic;
+}
+
+/* --- TABLE --- */
+
+table.simple {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-bottom: 3px solid #005a9c;
+}
+
+.simple th {
+  background: #005a9c;
+  color: #fff;
+  padding: 3px 5px;
+  text-align: left;
+}
+
+.simple th[scope="row"] {
+  background: inherit;
+  color: inherit;
+  border-top: 1px solid #ddd;
+}
+
+.simple td {
+  padding: 3px 10px;
+  border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+  background: #f0f6ff;
+}
+
+/* --- DL --- */
+
+.section dd > p:first-child {
+  margin-top: 0;
+}
+
+.section dd > p:last-child {
+  margin-bottom: 0;
+}
+
+.section dd {
+  margin-bottom: 1em;
+}
+
+.section dl.attrs dd,
+.section dl.eldef dd {
+  margin-bottom: 0;
+}
+
+#issue-summary > ul,
+.respec-dfn-list {
+  column-count: 2;
+}
+
+#issue-summary li,
+.respec-dfn-list li {
+  list-style: none;
+}
+
+details.respec-tests-details {
+  margin-left: 1em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+details.respec-tests-details > * {
+  padding-right: 2em;
+}
+
+details.respec-tests-details[open] {
+  z-index: 999999;
+  position: absolute;
+  border: thin solid #cad3e2;
+  border-radius: 0.3em;
+  background-color: white;
+  padding-bottom: 0.5em;
+}
+
+details.respec-tests-details[open] > summary {
+  border-bottom: thin solid #cad3e2;
+  padding-left: 1em;
+  margin-bottom: 1em;
+  line-height: 2em;
+}
+
+details.respec-tests-details > ul {
+  width: 100%;
+  margin-top: -0.3em;
+}
+
+details.respec-tests-details > li {
+  padding-left: 1em;
+}
+
+@media print {
+  .removeOnSave {
+    display: none;
+  }
+}
+</style><style>/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+</style><link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED"><link rel="canonical" href="https://www.w3.org/TR/vc-data-model/"><script id="initialUserConfig" type="application/json">{
+  "specStatus": "ED",
+  "shortName": "vc-data-model",
+  "subtitle": "Expressing verifiable information on the Web",
+  "localBiblio": {
+    "REST": {
+      "title": "Architectural Styles and the Design of Network-based Software Architectures",
+      "date": "2000",
+      "href": "http://www.ics.uci.edu/~fielding/pubs/dissertation/",
+      "authors": [
+        "Fielding, Roy Thomas"
+      ],
+      "publisher": "University of California, Irvine."
+    },
+    "VC-USECASES": {
+      "title": "Verifiable Claims Use Cases",
+      "href": "https://www.w3.org/TR/verifiable-claims-use-cases/",
+      "authors": [
+        "Shane McCarron",
+        "Daniel Burnett",
+        "Gregg Kellogg",
+        "Brian Sletten",
+        "Manu Sporny"
+      ],
+      "status": "FPWD",
+      "publisher": "Verifiable Claims Working Group",
+      "id": "vc-usecases"
+    },
+    "VC-STATUS-REGISTRY": {
+      "title": "Verifiable Credentials Status Scheme Registry",
+      "href": "https://w3c-ccg.github.io/vc-status-registry/",
+      "authors": [
+        "Manu Sporny"
+      ],
+      "status": "CG-DRAFT",
+      "publisher": "Credentials Community Group",
+      "id": "vc-status-registry"
+    },
+    "LD-PROOFS": {
+      "title": "Linked Data Proofs",
+      "href": "https://w3c-dvcg.github.io/ld-proofs/",
+      "authors": [
+        "Manu Sporny",
+        "Dave Longley"
+      ],
+      "status": "CG-DRAFT",
+      "publisher": "Digital Verification Community Group",
+      "id": "ld-proofs"
+    },
+    "LD-SIGNATURES": {
+      "title": "Linked Data Signatures",
+      "href": "https://w3c-dvcg.github.io/ld-signatures/",
+      "authors": [
+        "Manu Sporny",
+        "Dave Longley"
+      ],
+      "status": "CG-DRAFT",
+      "publisher": "Digital Verification Community Group",
+      "id": "ld-signatures"
+    },
+    "HTTP-SIGNATURES": {
+      "aliasOf": "http-signatures"
+    },
+    "MACAROONS": {
+      "title": "Macaroons",
+      "href": "http://macaroons.io/",
+      "authors": [
+        "Arnar Birgisson",
+        "Joe Gibbs Politz",
+        "Úlfar Erlingsson",
+        "Ankur Taly",
+        "Michael Vrable",
+        "Mark Lentczner"
+      ],
+      "status": "unofficial",
+      "publisher": "Credentials Community Group"
+    },
+    "OPEN-BADGES": {
+      "title": "Open Badges",
+      "href": "https://github.com/openbadges/openbadges-specification",
+      "authors": [
+        "Brian Brennan",
+        "Mike Larsson",
+        "Chris McAvoy",
+        "Nate Otto",
+        "Kerri Lemoie"
+      ],
+      "status": "BA-DRAFT",
+      "publisher": "Badge Alliance Standard Working Group"
+    },
+    "RDF-NORMALIZATION": {
+      "title": "RDF Dataset Normalization",
+      "href": "http://json-ld.github.io/normalization/spec/",
+      "authors": [
+        "Dave Longley",
+        "Manu Sporny"
+      ],
+      "status": "CG-DRAFT",
+      "publisher": "Credentials W3C Community Group"
+    }
+  },
+  "doJsonLd": true,
+  "github": "https://github.com/w3c/vc-data-model",
+  "includePermalinks": false,
+  "edDraftURI": "https://w3c.github.io/vc-data-model/",
+  "editors": [
+    {
+      "name": "Manu Sporny",
+      "url": "http://manu.sporny.org/",
+      "company": "Digital Bazaar",
+      "companyURL": "http://digitalbazaar.com/"
+    },
+    {
+      "name": "Daniel C. Burnett",
+      "url": "https://www.linkedin.com/in/daburnett/",
+      "company": "Invited Expert",
+      "companyURL": "https://www.linkedin.com/in/daburnett/"
+    },
+    {
+      "name": "Dave Longley",
+      "url": "https://github.com/dlongley",
+      "company": "Digital Bazaar",
+      "companyURL": "http://digitalbazaar.com/"
+    },
+    {
+      "name": "Gregg Kellogg",
+      "url": "http://greggkellogg.net/",
+      "company": "Spec-Ops",
+      "companyURL": "https://spec-ops.io/",
+      "w3cid": "44770"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Manu Sporny",
+      "url": "http://digitalbazaar.com/",
+      "company": "Digital Bazaar",
+      "companyURL": "http://digitalbazaar.com/"
+    },
+    {
+      "name": "Dave Longley",
+      "url": "http://digitalbazaar.com/",
+      "company": "Digital Bazaar",
+      "companyURL": "http://digitalbazaar.com/"
+    }
+  ],
+  "wg": "Verifiable Claims Working Group",
+  "wgURI": "https://www.w3.org/2017/vc/",
+  "wgPublicList": "public-vc-comments",
+  "wgPatentURI": "https://www.w3.org/2004/01/pp-impl/98922/status",
+  "maxTocLevel": 4,
+  "inlineCSS": true,
+  "publishISODate": "2018-07-19T00:00:00.000Z",
+  "generatedSubtitle": "Editor's Draft 19 July 2018"
+}</script><meta name="description" content="Credentials are a part of our daily lives;
+driver's licenses are used to assert that we are capable of operating a motor
+vehicle, university degrees can be used to assert our level of education, and
+government-issued passports enable holders to travel between countries.
+This specification provides a mechanism to express these sorts of
+credentials on the Web in a way that is cryptographically secure,
+privacy respecting, and machine-verifiable."><script type="application/ld+json">{
+  "@context": [
+    "http://schema.org",
+    {
+      "@vocab": "http://schema.org/",
+      "@language": "en",
+      "w3p": "http://www.w3.org/2001/02pd/rec54#",
+      "foaf": "http://xmlns.com/foaf/0.1/",
+      "datePublished": {
+        "@type": "http://www.w3.org/2001/XMLSchema#date"
+      },
+      "inLanguage": {
+        "@language": null
+      },
+      "isBasedOn": {
+        "@type": "@id"
+      },
+      "license": {
+        "@type": "@id"
+      }
+    }
+  ],
+  "id": "https://www.w3.org/TR/vc-data-model/",
+  "type": [
+    "TechArticle"
+  ],
+  "name": "Verifiable Credentials Data Model 1.0",
+  "inLanguage": "en",
+  "license": "https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document",
+  "datePublished": "2018-07-19",
+  "copyrightHolder": {
+    "name": "World Wide Web Consortium",
+    "url": "https://www.w3.org/"
+  },
+  "discussionUrl": "https://github.com/w3c/issues/",
+  "alternativeHeadline": "Expressing verifiable information on the Web",
+  "isBasedOn": "",
+  "description": "Credentials are a part of our daily lives;\ndriver's licenses are used to assert that we are capable of operating a motor\nvehicle, university degrees can be used to assert our level of education, and\ngovernment-issued passports enable holders to travel between countries.\nThis specification provides a mechanism to express these sorts of\ncredentials on the Web in a way that is cryptographically secure,\nprivacy respecting, and machine-verifiable.",
+  "editor": [
+    {
+      "type": "Person",
+      "name": "Manu Sporny",
+      "url": "http://manu.sporny.org/",
+      "worksFor": {
+        "name": "Digital Bazaar",
+        "url": "http://digitalbazaar.com/"
+      }
+    },
+    {
+      "type": "Person",
+      "name": "Daniel C. Burnett",
+      "url": "https://www.linkedin.com/in/daburnett/",
+      "worksFor": {
+        "name": "Invited Expert",
+        "url": "https://www.linkedin.com/in/daburnett/"
+      }
+    },
+    {
+      "type": "Person",
+      "name": "Dave Longley",
+      "url": "https://github.com/dlongley",
+      "worksFor": {
+        "name": "Digital Bazaar",
+        "url": "http://digitalbazaar.com/"
+      }
+    },
+    {
+      "type": "Person",
+      "name": "Gregg Kellogg",
+      "url": "http://greggkellogg.net/",
+      "worksFor": {
+        "name": "Spec-Ops",
+        "url": "https://spec-ops.io/"
+      }
+    }
+  ],
+  "contributor": [
+    {
+      "type": "Person",
+      "name": "Manu Sporny",
+      "url": "http://digitalbazaar.com/",
+      "worksFor": {
+        "name": "Digital Bazaar",
+        "url": "http://digitalbazaar.com/"
+      }
+    },
+    {
+      "type": "Person",
+      "name": "Dave Longley",
+      "url": "http://digitalbazaar.com/",
+      "worksFor": {
+        "name": "Digital Bazaar",
+        "url": "http://digitalbazaar.com/"
+      }
+    }
+  ],
+  "citation": [
+    {
+      "id": "http://www.iso.org/iso/catalogue_detail?csnumber=40874",
+      "type": "TechArticle",
+      "name": "Representation of dates and times. ISO 8601:2004.",
+      "url": "http://www.iso.org/iso/catalogue_detail?csnumber=40874"
+    },
+    {
+      "id": "https://www.w3.org/TR/json-ld/",
+      "type": "TechArticle",
+      "name": "JSON-LD 1.0",
+      "url": "https://www.w3.org/TR/json-ld/"
+    },
+    {
+      "id": "https://tools.ietf.org/html/rfc8259",
+      "type": "TechArticle",
+      "name": "The JavaScript Object Notation (JSON) Data Interchange Format",
+      "url": "https://tools.ietf.org/html/rfc8259"
+    },
+    {
+      "id": "https://www.w3.org/TR/verifiable-claims-use-cases/",
+      "type": "TechArticle",
+      "name": "Verifiable Claims Use Cases",
+      "url": "https://www.w3.org/TR/verifiable-claims-use-cases/"
+    },
+    {
+      "id": "https://w3c-ccg.github.io/vc-status-registry/",
+      "type": "TechArticle",
+      "name": "Verifiable Credentials Status Scheme Registry",
+      "url": "https://w3c-ccg.github.io/vc-status-registry/"
+    },
+    {
+      "id": "https://w3c-dvcg.github.io/ld-proofs/",
+      "type": "TechArticle",
+      "name": "Linked Data Proofs",
+      "url": "https://w3c-dvcg.github.io/ld-proofs/"
+    },
+    {
+      "id": "https://www.w3.org/DesignIssues/LinkedData.html",
+      "type": "TechArticle",
+      "name": "Linked Data Design Issues",
+      "url": "https://www.w3.org/DesignIssues/LinkedData.html"
+    },
+    {
+      "id": "https://w3c-dvcg.github.io/ld-signatures/",
+      "type": "TechArticle",
+      "name": "Linked Data Signatures",
+      "url": "https://w3c-dvcg.github.io/ld-signatures/"
+    }
+  ]
+}</script></head>
+  <body class="h-entry"><div class="head">
+  <a href="https://www.w3.org/" class="logo">
+      <img alt="W3C" width="72" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C">
+  </a>
+  <h1 id="title" class="title p-name">Verifiable Credentials Data Model 1.0</h1>
+  <h2 id="subtitle" class="subtitle">Expressing verifiable information on the Web</h2>
+  <h2 id="w3c-editor-s-draft-19-july-2018"><abbr title="World Wide Web Consortium">W3C</abbr> Editor's Draft <time class="dt-published" datetime="2018-07-19">19 July 2018</time></h2>
+  <dl>
+    <dt>This version:</dt><dd><a class="u-url" href="https://w3c.github.io/vc-data-model/">https://w3c.github.io/vc-data-model/</a></dd><dt>Latest published version:</dt><dd><a href="https://www.w3.org/TR/vc-data-model/">https://www.w3.org/TR/vc-data-model/</a></dd>
+    <dt>Latest editor's draft:</dt><dd><a href="https://w3c.github.io/vc-data-model/">https://w3c.github.io/vc-data-model/</a></dd>
+    
+    
+    
+    
+    
+    
+    <dt>Editors:</dt>
+    <dd class="p-author h-card vcard"><a class="u-url url p-name fn" href="http://manu.sporny.org/">Manu Sporny</a> (<a class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a>)</dd><dd class="p-author h-card vcard"><a class="u-url url p-name fn" href="https://www.linkedin.com/in/daburnett/">Daniel C. Burnett</a> (<a class="p-org org h-org h-card" href="https://www.linkedin.com/in/daburnett/">Invited Expert</a>)</dd><dd class="p-author h-card vcard"><a class="u-url url p-name fn" href="https://github.com/dlongley">Dave Longley</a> (<a class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a>)</dd><dd class="p-author h-card vcard" data-editor-id="44770"><a class="u-url url p-name fn" href="http://greggkellogg.net/">Gregg Kellogg</a> (<a class="p-org org h-org h-card" href="https://spec-ops.io/">Spec-Ops</a>)</dd>
+    
+    <dt>Authors:</dt><dd class="p-author h-card vcard"><a class="u-url url p-name fn" href="http://digitalbazaar.com/">Manu Sporny</a> (<a class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a>)</dd><dd class="p-author h-card vcard"><a class="u-url url p-name fn" href="http://digitalbazaar.com/">Dave Longley</a> (<a class="p-org org h-org h-card" href="http://digitalbazaar.com/">Digital Bazaar</a>)</dd>
+    <dt>Participate:</dt><dd>
+      <a href="https://github.com/w3c/vc-data-model">GitHub w3c/vc-data-model</a>
+    </dd><dd>
+      <a href="https://github.com/w3c/issues/">File a bug</a>
+    </dd><dd>
+      <a href="https://github.com/w3c/commits/gh-pages">Commit history</a>
+    </dd><dd>
+      <a href="https://github.com/w3c/pulls/">Pull requests</a>
+    </dd>
+  </dl>
+  
+  
+  
+  <p class="copyright">
+        <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> ©
+        2018
+        
+        <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup>
+        (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+        <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+        <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>).
+        
+        <abbr title="World Wide Web Consortium">W3C</abbr> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+        <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
+        <a rel="license" href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">permissive document license</a>
+        rules apply.
+      </p>
+  <hr title="Separator for header">
+</div>
+    <section id="abstract" class="introductory"><h2 id="abstract-0">Abstract</h2>
+      <p>
+Credentials are a part of our daily lives;
+driver's licenses are used to assert that we are capable of operating a motor
+vehicle, university degrees can be used to assert our level of education, and
+government-issued passports enable holders to travel between countries.
+This specification provides a mechanism to express these sorts of
+credentials on the Web in a way that is cryptographically secure,
+privacy respecting, and machine-verifiable.
+      </p>
+    </section>
+
+    <section id="sotd" class="introductory"><h2 id="status-of-this-document">Status of This Document</h2><p>
+        <em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications and the latest revision of this technical report can be found in the <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports index</a> at https://www.w3.org/TR/.</em>
+      </p><p>
+Comments regarding this document are welcome. Please file issues
+directly on <a href="https://github.com/w3c/vc-data-model/issues/">GitHub</a>,
+or send them to
+<a href="mailto:public-vc-comments@w3.org">public-vc-comments@w3.org</a>
+(<a href="mailto:public-vc-comments-request@w3.org?subject=subscribe">subscribe</a>,
+<a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
+      </p><div class="issue" id="issue-container-number-200"><div role="heading" class="issue-title marker" id="h-issue" aria-level="3"><a href="https://github.com/w3c/issues/200"><span>Issue 200</span></a><span style="text-transform: none">: Terminology in the two documents</span></div><p class="">
+There remain a list of terminology-related editorial issues that need to be
+processed in this document.
+        </p></div><div class="issue" id="issue-container-number-201"><div role="heading" class="issue-title marker" id="h-issue-0" aria-level="3"><a href="https://github.com/w3c/issues/201"><span>Issue 201</span></a><span style="text-transform: none">: Typos</span></div><p class="">
+There remain a list of editorial issues that need to be processed in this
+document.
+        </p></div><p>
+          This document was published by the <a href="https://www.w3.org/2017/vc/">Verifiable Claims Working Group</a> as an Editor's Draft.
+          
+          
+            Comments regarding this document are welcome. Please send them to
+            <a href="mailto:public-vc-comments@w3.org">public-vc-comments@w3.org</a>
+            (<a href="mailto:public-vc-comments-request@w3.org?subject=subscribe">subscribe</a>,
+            <a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
+          
+          
+          
+          
+        </p><p>
+            Publication as an Editor's Draft does not imply endorsement by the <abbr title="World Wide Web Consortium">W3C</abbr>
+            Membership. This is a draft document and may be updated, replaced or obsoleted by other
+            documents at any time. It is inappropriate to cite this document as other than work in
+            progress.
+          </p><p>
+          
+            This document was produced by
+            a group
+            operating under the
+            <a href="https://www.w3.org/Consortium/Patent-Policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+          
+          
+          
+              <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a rel="disclosure" href="https://www.w3.org/2004/01/pp-impl/98922/status">public list of any patent
+              disclosures</a>
+            made in connection with the deliverables of
+            the group; that page also includes
+            instructions for disclosing a patent. An individual who has actual knowledge of a patent
+            which the individual believes contains
+            <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential
+            Claim(s)</a> must disclose the information in accordance with
+            <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section
+            6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+          
+          
+        </p><p>This document is governed by the <a id="w3c_process_revision" href="https://www.w3.org/2018/Process-20180201/">1 February 2018 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+        </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a><ol class="toc"><li class="tocline"><a href="#what-is-a-verifiable-credential" class="tocxref"><span class="secno">1.1 </span>What is a Verifiable Credential?</a></li><li class="tocline"><a href="#ecosystem-overview" class="tocxref"><span class="secno">1.2 </span>Ecosystem Overview</a></li><li class="tocline"><a href="#use-cases-and-requirements" class="tocxref"><span class="secno">1.3 </span>Use Cases and Requirements</a></li></ol></li><li class="tocline"><a href="#terminology" class="tocxref"><span class="secno">2. </span>Terminology</a></li><li class="tocline"><a href="#core-data-model" class="tocxref"><span class="secno">3. </span>Core Data Model</a><ol class="toc"><li class="tocline"><a href="#claims" class="tocxref"><span class="secno">3.1 </span>Claims</a></li><li class="tocline"><a href="#credentials" class="tocxref"><span class="secno">3.2 </span>Credentials</a></li><li class="tocline"><a href="#presentations" class="tocxref"><span class="secno">3.3 </span>Presentations</a></li></ol></li><li class="tocline"><a href="#trust-model" class="tocxref"><span class="secno">4. </span>Trust Model</a></li><li class="tocline"><a href="#basic-concepts" class="tocxref"><span class="secno">5. </span>Basic Concepts</a><ol class="toc"><li class="tocline"><a href="#types" class="tocxref"><span class="secno">5.1 </span>Types</a></li><li class="tocline"><a href="#issuer" class="tocxref"><span class="secno">5.2 </span>Issuer</a></li><li class="tocline"><a href="#proofs-aka-signatures" class="tocxref"><span class="secno">5.3 </span>Proofs (aka Signatures)</a></li><li class="tocline"><a href="#expiration" class="tocxref"><span class="secno">5.4 </span>Expiration</a></li><li class="tocline"><a href="#status" class="tocxref"><span class="secno">5.5 </span>Status</a></li><li class="tocline"><a href="#presentations-0" class="tocxref"><span class="secno">5.6 </span>Presentations</a></li></ol></li><li class="tocline"><a href="#advanced-concepts" class="tocxref"><span class="secno">6. </span>Advanced Concepts</a><ol class="toc"><li class="tocline"><a href="#extensibility" class="tocxref"><span class="secno">6.1 </span>Extensibility</a><ol class="toc"><li class="tocline"><a href="#semantic-interoperability" class="tocxref"><span class="secno">6.1.1 </span>Semantic Interoperability</a></li></ol></li><li class="tocline"><a href="#terms-of-use" class="tocxref"><span class="secno">6.2 </span>Terms of Use</a></li><li class="tocline"><a href="#evidence" class="tocxref"><span class="secno">6.3 </span>Evidence</a></li><li class="tocline"><a href="#disputes" class="tocxref"><span class="secno">6.4 </span>Disputes</a></li><li class="tocline"><a href="#conformance" class="tocxref"><span class="secno">6.5 </span>Conformance</a></li></ol></li><li class="tocline"><a href="#syntaxes" class="tocxref"><span class="secno">7. </span>Syntaxes</a><ol class="toc"><li class="tocline"><a href="#json" class="tocxref"><span class="secno">7.1 </span>JSON</a><ol class="toc"><li class="tocline"><a href="#json-web-token" class="tocxref"><span class="secno">7.1.1 </span>JSON Web Token</a></li></ol></li><li class="tocline"><a href="#json-ld" class="tocxref"><span class="secno">7.2 </span>JSON-LD</a></li></ol></li><li class="tocline"><a href="#verification" class="tocxref"><span class="secno">8. </span>Verification</a><ol class="toc"><li class="tocline"><a href="#syntax" class="tocxref"><span class="secno">8.1 </span>Syntax</a></li><li class="tocline"><a href="#credential" class="tocxref"><span class="secno">8.2 </span>Credential</a></li><li class="tocline"><a href="#issuer-0" class="tocxref"><span class="secno">8.3 </span>Issuer</a></li><li class="tocline"><a href="#subject" class="tocxref"><span class="secno">8.4 </span>Subject</a></li><li class="tocline"><a href="#signatures-proofs" class="tocxref"><span class="secno">8.5 </span>Signatures / Proofs</a></li><li class="tocline"><a href="#issued" class="tocxref"><span class="secno">8.6 </span>Issued</a></li><li class="tocline"><a href="#expiration-0" class="tocxref"><span class="secno">8.7 </span>Expiration</a></li><li class="tocline"><a href="#revocation" class="tocxref"><span class="secno">8.8 </span>Revocation</a></li><li class="tocline"><a href="#fitness-for-purpose" class="tocxref"><span class="secno">8.9 </span>Fitness for Purpose</a></li></ol></li><li class="tocline"><a href="#syntaxes-0" class="tocxref"><span class="secno">9. </span>Syntaxes</a><ol class="toc"><li class="tocline"><a href="#json-0" class="tocxref"><span class="secno">9.1 </span>JSON</a><ol class="toc"><li class="tocline"><a href="#json-web-token-0" class="tocxref"><span class="secno">9.1.1 </span>JSON Web Token</a></li></ol></li><li class="tocline"><a href="#json-ld-0" class="tocxref"><span class="secno">9.2 </span>JSON-LD</a></li></ol></li><li class="tocline"><a href="#privacy-considerations" class="tocxref"><span class="secno">10. </span>Privacy Considerations</a><ol class="toc"><li class="tocline"><a href="#spectrum-of-privacy" class="tocxref"><span class="secno">10.1 </span>Spectrum of Privacy</a></li><li class="tocline"><a href="#personally-identifiable-information" class="tocxref"><span class="secno">10.2 </span>Personally Identifiable Information</a></li><li class="tocline"><a href="#identifier-based-correlation" class="tocxref"><span class="secno">10.3 </span>Identifier-based Correlation</a></li><li class="tocline"><a href="#signature-based-correlation" class="tocxref"><span class="secno">10.4 </span>Signature-based Correlation</a></li><li class="tocline"><a href="#long-lived-identifier-based-correlation" class="tocxref"><span class="secno">10.5 </span>Long Lived Identifier-based Correlation</a></li><li class="tocline"><a href="#device-fingerprinting" class="tocxref"><span class="secno">10.6 </span>Device Fingerprinting</a></li><li class="tocline"><a href="#favor-abstract-claims" class="tocxref"><span class="secno">10.7 </span>Favor Abstract Claims</a></li><li class="tocline"><a href="#the-principle-of-minimum-disclosure" class="tocxref"><span class="secno">10.8 </span>The Principle of Minimum Disclosure</a></li><li class="tocline"><a href="#bearer-credentials" class="tocxref"><span class="secno">10.9 </span>Bearer Credentials</a></li><li class="tocline"><a href="#validity-checks" class="tocxref"><span class="secno">10.10 </span>Validity Checks</a></li><li class="tocline"><a href="#storage-providers-and-data-mining" class="tocxref"><span class="secno">10.11 </span>Storage Providers and Data Mining</a></li><li class="tocline"><a href="#aggregation-of-credentials" class="tocxref"><span class="secno">10.12 </span>Aggregation of Credentials</a></li><li class="tocline"><a href="#usage-patterns" class="tocxref"><span class="secno">10.13 </span>Usage Patterns</a></li><li class="tocline"><a href="#sharing-information-with-the-wrong-party" class="tocxref"><span class="secno">10.14 </span>Sharing Information with the Wrong Party</a></li><li class="tocline"><a href="#frequency-of-claim-issuance" class="tocxref"><span class="secno">10.15 </span>Frequency of Claim Issuance</a></li><li class="tocline"><a href="#prefer-single-use-credentials" class="tocxref"><span class="secno">10.16 </span>Prefer Single Use Credentials</a></li></ol></li><li class="tocline"><a href="#security-considerations" class="tocxref"><span class="secno">11. </span>Security Considerations</a><ol class="toc"><li class="tocline"><a href="#cryptography-suites-and-libraries" class="tocxref"><span class="secno">11.1 </span>Cryptography Suites and Libraries</a></li><li class="tocline"><a href="#unsigned-claims" class="tocxref"><span class="secno">11.2 </span>Unsigned Claims</a></li><li class="tocline"><a href="#bundling-dependent-claims" class="tocxref"><span class="secno">11.3 </span>Bundling Dependent Claims</a></li><li class="tocline"><a href="#token-binding" class="tocxref"><span class="secno">11.4 </span>Token Binding</a></li><li class="tocline"><a href="#bundling-dependent-claims-0" class="tocxref"><span class="secno">11.5 </span>Bundling Dependent Claims</a></li><li class="tocline"><a href="#highly-dynamic-information" class="tocxref"><span class="secno">11.6 </span>Highly Dynamic Information</a></li><li class="tocline"><a href="#device-theft-and-impersonation" class="tocxref"><span class="secno">11.7 </span>Device Theft and Impersonation</a></li></ol></li><li class="tocline"><a href="#references" class="tocxref"><span class="secno">A. </span>References</a><ol class="toc"><li class="tocline"><a href="#normative-references" class="tocxref"><span class="secno">A.1 </span>Normative references</a></li><li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">A.2 </span>Informative references</a></li></ol></li></ol></nav>
+
+    <section id="introduction">
+      <!--OddPage--><h2 id="x1-introduction"><span class="secno">1. </span>Introduction</h2>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+Credentials are a part of our daily lives; driver's licenses are used to
+assert that we are capable of operating a motor vehicle, university degrees
+can be used to assert our level of education, and government-issued passports
+enable us to travel between countries. These credentials provide benefits
+to us when used in the physical world, but their use on the Web continues to
+be elusive.
+      </p>
+
+      <p>
+It is currently difficult to express banking account information,
+education qualifications, healthcare data, and other sorts of machine-readable
+personal information that has been verified by a 3rd party on the Web and this
+makes it difficult to receive the same benefits from the Web that physical
+credentials provide us in the physical world.
+      </p>
+
+      <p>
+This specification provides a
+standard way to express credentials on the Web in a way that is
+cryptographically secure, privacy respecting, and machine-verifiable.
+      </p>
+      <p>
+For those that are unfamiliar with the concepts related to verifiable credentials,
+the following sections provide an overview of:
+      </p>
+      <ol>
+        <li>
+what a verifiable credential contains,
+        </li>
+        <li>
+an ecosystem where verifiable credentials are expected to be useful, and
+        </li>
+        <li>
+the use cases and requirements that informed this specification
+        </li>
+      </ol>
+      <p></p>
+
+    <section id="what-is-a-verifiable-credential">
+      <h3 id="x1-1-what-is-a-verifiable-credential"><span class="secno">1.1 </span>What is a Verifiable Credential?</h3>
+
+      <p>
+In the physical world, a credential may consist of:
+      </p>
+
+      <ul>
+        <li>
+information related to the subject of the credential (e.g. photo, name, and
+identification number),
+        </li>
+        <li>
+information related to the issuing authority (e.g. city government,
+national agency, or certification body),
+        </li>
+        <li>
+evidence related to how the credential was derived, and
+        </li>
+        <li>
+information related to expiration dates.
+        </li>
+      </ul>
+
+      <p>
+A verifiable credential is capable of representing all of the same information
+that a physical credential is intended to represent. The addition of
+digital technologies, such as digital signatures, also make verifiable
+credentials more tamperproof and therefore more trustworthy
+than their physical counterparts. Verifiable credentials can also be
+rapidly exchanged through the Internet, making them more convenient than
+their physical counterparts when needing to establish trust at a distance.
+      </p>
+
+    </section>
+
+    <section id="ecosystem-overview">
+      <h3 id="x1-2-ecosystem-overview"><span class="secno">1.2 </span>Ecosystem Overview</h3>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+This section outlines a basic set of roles and an ecosystem where verifiable
+credentials are expected to be useful. In this section, we distinguish the essential
+roles of core actors and the relationships between them; how do they interact?
+A role is an abstraction that might be implemented in many different ways. The
+separation of roles suggests likely interfaces and/or protocols for
+standardization. The following roles are introduced in this specification:
+      </p>
+
+      <dl>
+        <dt><a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a></dt>
+        <dd>
+A role an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> may perform by possessing one or more
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>. Examples of holders include students,
+employees, and customers.
+        </dd>
+        <dt><a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a></dt>
+        <dd>
+A role an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> may perform by creating a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>,
+associating it with a particular <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a>, and transmitting it to
+a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>. Examples of issuers include corporations, non-profits,
+trade associations, governments, and individuals.
+        </dd>
+        <dt><a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a></dt>
+        <dd>
+A role an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> may perform by receiving one or more
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> for processing.
+Examples of verifiers include employers, security personnel, and websites.
+        </dd>
+        <dt><a href="#dfn-identifier-registries" class="internalDFN" data-link-type="dfn">identifier registry</a></dt>
+        <dd>
+A role a system may perform by mediating the creation and verification of
+<a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> identifiers. Examples of identifier registries include
+corporate employee databases, government ID databases, and distributed ledgers.
+        </dd>
+      </dl>
+
+      <figure id="fig-the-roles-and-information-flows-that-form-the-basis-for-this-specification">
+        <img style="margin: auto; display: block;" width="75%" src="diagrams/ecosystem.svg">
+        <figcaption style="text-align: center;">Figure <span class="figno">1</span> <span class="fig-title">
+The roles and information flows that form the basis for this specification.
+        </span></figcaption>
+      </figure>
+
+      <div class="note" id="issue-container-generatedID"><div role="heading" class="note-title marker" id="h-note" aria-level="4"><span>Note</span></div><p class="">
+The ecosystem above is provided as an example to the reader in order to ground
+the rest of the concepts in this specification. Other ecosystems exist, such as
+protected environments or proprietary systems, where verifiable credentials also
+provide benefit.
+      </p></div>
+
+      <div class="issue" id="issue-container-number-57"><div role="heading" class="issue-title marker" id="h-issue-1" aria-level="4"><a href="https://github.com/w3c/issues/57"><span>Issue 57</span></a><span style="text-transform: none">: Ideas for roles to add to the data model for next draft<a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Icebox%22" style="background-color: rgb(42, 87, 249);">Icebox</a></span></div><p class="">
+The VCWG is actively discussing the number of roles and terminology used
+in this specification.
+The group expects terminology and role identification to be an ongoing
+discussion and will be influenced by
+public feedback on the specification. At present, the following incomplete
+list of roles and terminology have been considered: Subject, Issuer, Authority,
+Author, Signatory, Holder, Presenter, Asserter, Claimant, Sharer,
+Subject's Agent, Prover, Mediator, Inspector, Evaluator, Verifier, Consumer, and
+Relying Party. Some of these are aliases for the same concept, others are
+possibly new roles in the ecosystem. Reviewers should be aware that the
+terminology used in this document is not necessarily final and the group is
+actively soliciting feedback on the roles and terminology used in this
+specification.
+      </p></div>
+
+        <div class="issue" id="issue-container-number-80"><div role="heading" class="issue-title marker" id="h-issue-2" aria-level="4"><a href="https://github.com/w3c/issues/80"><span>Issue 80</span></a><span style="text-transform: none">: On the Ecosystem Overview<a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22defer%22" style="background-color: rgb(30, 137, 13);">defer</a></span></div><p class="">
+The group is currently discussing how the ecosystem overview could be improved
+with the intent to defer future improvements as the current section seems to
+be working well so far.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-32"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="4"><a href="https://github.com/w3c/issues/32"><span>Issue 32</span></a><span style="text-transform: none">: Bootstrapping Simple WoT Verifiable Claims</span></div><p class="">
+The group is currently discussing how to bootstrap simple Web of Trust
+credentials in this ecosystem.
+        </p></div>
+
+    </section>
+
+    <section id="use-cases-and-requirements">
+      <h3 id="x1-3-use-cases-and-requirements"><span class="secno">1.3 </span>Use Cases and Requirements</h3>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+The Verifiable Credentials Use Cases[<cite><a class="bibref" href="#bib-vc-usecases">VC-USECASES</a></cite>] document outlines a number of
+key topics that readers may find useful, including:
+      </p>
+      <ul>
+        <li>
+a more thorough explanation of the
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-roles">roles</a>
+introduced above,
+        </li>
+        <li>
+the
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-needs">needs</a>
+identified in market verticals like education, finance, healthcare, retail,
+professional licensing, and government,
+        </li>
+        <li>
+common
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-tasks">tasks</a>
+performed by the roles in the ecosystem, as well as their associated
+requirements, and
+        </li>
+        <li>
+common
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-sequences">sequences and flows</a>
+identified by the Working Group.
+        </li>
+      </ul>
+      <p>
+As a result of documenting and analyzing the use cases document, a number of
+desirable ecosystem characteristics have been identified for this
+specification, namely:
+      </p>
+      <ul>
+        <li>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> receive and store <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> from
+<a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a> through an agent that the issuer does not need to trust.
+        </li>
+        <li>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> are positioned between <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a> and <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a>
+and mediate the transmission of <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>.
+        </li>
+        <li>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> provide <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> to <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a>
+through an agent that verifiers needn't trust; they only need to trust
+<a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a>.
+        </li>
+        <li>
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">Verifiable credentials</a> are associated with <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subjects</a>, not
+particular services; <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a> decide how to aggregate and manage
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>.
+        </li>
+        <li>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> are able to easily control and own their own identifiers.
+        </li>
+        <li>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> control which <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> to use and when.
+        </li>
+        <li>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> are be able to freely choose and change the agents they employ
+to help them manage and share their <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>.
+        </li>
+        <li>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> that share <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> are not required to
+reveal the identity of the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> to <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a>.
+        </li>
+        <li>
+A <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> is expressed in one or more standard,
+machine-readable data formats which can also be extended with minimal
+coordination.
+        </li>
+        <li>
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">Verifiable credentials</a> are independently issued, stored,
+and verified.
+        </li>
+        <li>
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">Verifiable Credentials</a> can be revoked by the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a>.
+        </li>
+      </ul>
+      <div class="issue" id="issue-container-generatedID-0"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="4"><span>Issue</span></div><p class="">
+There are
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-tasks">other requirements</a>
+listed in the Verifiable Credentials Use Cases
+document that may or may not be aligned with the requirements listed above.
+The VCWG will be ensuring alignment of the list of requirements from both
+documents over time and will most likely move the list of requirements to a
+single document.
+      </p></div>
+    </section>
+
+  </section>
+
+    <section id="terminology">
+      <!--OddPage--><h2 id="x2-terminology"><span class="secno">2. </span>Terminology</h2>
+
+      <em>This section is non-normative.</em>
+
+      <div data-oninclude="restrictReferences"><p>
+  This document attempts to communicate the concepts outlined in the
+  Verifiable Credentials space by using specific terms to discuss particular
+  concepts. This terminology is included below and linked to throughout the
+  document to aid the reader:
+</p>
+
+<dl class="termlist" id="terms">
+  <dt><dfn data-lt="claims|claim" id="dfn-claims" data-dfn-type="dfn">claim</dfn></dt>
+  <dd>
+An assertion made about a <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a>.
+  </dd>
+  <dt><dfn data-lt="credential|credentials" id="dfn-credential" data-dfn-type="dfn">credential</dfn></dt>
+  <dd>
+A set of one or more <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> made by the issuer.
+A <dfn data-lt="verifiable credentials|verifiable credential" id="dfn-verifiable-credentials" data-dfn-type="dfn">verifiable credential</dfn>
+is a credential that is tamper-resistant and whose authorship can be
+cryptographically verified.
+  </dd>
+  <dd>
+Note: The claims in a credential may be about different subjects.
+  </dd>
+  
+  
+  <dt><dfn data-lt="credential verification|verification" id="dfn-credential-verification" data-dfn-type="dfn">verification</dfn></dt>
+  <dd>
+The process that cryptographically demonstrates the authenticity of a
+<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>.
+  </dd>
+  
+  
+  
+  
+  
+  
+  <dt><dfn data-lt="entities|entity's|entity" id="dfn-entities" data-dfn-type="dfn">entity</dfn></dt>
+  <dd>
+A thing with distinct and independent existence such as a person, organization,
+concept, or device. An entity may perform one or more roles in the ecosystem.
+  </dd>
+  <dt><dfn data-lt="holders|holder's|holder" id="dfn-holders" data-dfn-type="dfn">holder</dfn></dt>
+  <dd>
+A role an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> may perform by possessing one or more
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>. A holder is usually, but not always,
+the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> of the
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> that they are holding. Holders store their
+<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> in <a href="#dfn-credential-repository" class="internalDFN" data-link-type="dfn">credential repositories</a>.
+  </dd>
+  
+  
+  <dt><dfn data-lt="identifier registries|identifier registry" id="dfn-identifier-registries" data-dfn-type="dfn">identifier registry</dfn></dt>
+  <dd>
+A role a system may perform by mediating the creation and verification of
+<a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> identifiers. Some registries, such as ones for UUIDs and
+public keys, act merely as namespaces for identifiers.
+  </dd>
+  <dt><dfn data-lt="identity providers|idp|identity provider" id="dfn-identity-providers" data-dfn-type="dfn">identity provider</dfn></dt>
+  <dd>
+An identity provider, sometimes abbreviated as <em>IdP</em> is a system
+that creates, maintains, and manages identity information for <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a>
+while providing authentication services to <a href="#dfn-relying-parties" class="internalDFN" data-link-type="dfn">relying party</a> applications
+within a federation or distributed network. In this case the
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> is always the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a>. Even if the credentials are bearer
+credentials the assumption is that they will remain with the subject,
+and if they are not, then they have been stolen by an attacker. This
+specification does not use this term unless comparing or mapping the concepts
+in this document to other specifications. This specification decouples the
+identity provider concept into two distinct concepts: the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a>,
+and the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>.
+  </dd>
+  <dt><dfn data-lt="issuers|issuer's|issuer" id="dfn-issuers" data-dfn-type="dfn">issuer</dfn></dt>
+  <dd>
+A role an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> may perform by asserting <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> about one or more
+<a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subjects</a>, creating a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> from these claims,
+and transmitting the verifiable credential to a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>.
+  </dd>
+  <dt><dfn data-lt="presentations|presentation" id="dfn-presentations" data-dfn-type="dfn">presentation</dfn></dt>
+  <dd>
+A set of one or more <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> transmitted by a holder.
+A <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> may create multiple presentations and each presentation
+may contain <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> issued by multiple <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a>. A
+<dfn data-lt="verifiable presentations|verifiable presentation" id="dfn-verifiable-presentations" data-dfn-type="dfn">verifiable presentation</dfn> is
+a presentation that is made tamper-resistant by the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>.
+  </dd>
+  <dt><dfn data-lt="credential repository|credential repositories|repositories|repository" id="dfn-credential-repository" data-dfn-type="dfn">repository</dfn></dt>
+  <dd>
+A program, such as a storage vault or personal
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> wallet, that stores and protects access to
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> credentials.</dd>
+  <dt><dfn data-lt="subjects|subject's|subject" id="dfn-subjects" data-dfn-type="dfn">subject</dfn></dt>
+  <dd>
+An <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> about which <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> are made.
+  </dd>
+  
+  
+  <dt><dfn data-lt="verifier|verifiers|verifier's|credential verifiers|credential verifier's" id="dfn-verifier" data-dfn-type="dfn">verifier</dfn></dt>
+  <dd>
+A role an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> may perform by receiving one or more
+<a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentations</a> for processing. Other specifications may refer
+to this concept as a <dfn data-lt="relying parties|relying party" id="dfn-relying-parties" data-dfn-type="dfn">relying party</dfn>.
+  </dd>
+</dl>
+</div>
+    </section>
+
+    <section id="core-data-model">
+      <!--OddPage--><h2 id="x3-core-data-model"><span class="secno">3. </span>Core Data Model</h2>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+The following sections outline core data model concepts, such as
+<a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a>, <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a>, and <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentations</a>, that form the
+foundation of this specification.
+      </p>
+
+      <section id="claims">
+        <h3 id="x3-1-claims"><span class="secno">3.1 </span>Claims</h3>
+
+        <em>This section is non-normative.</em>
+
+        <p>
+A <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claim</a> is statement about a <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a>.
+A <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> is an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> about which <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> may be made.
+<a href="#dfn-claims" class="internalDFN" data-link-type="dfn">Claims</a> are expressed using
+<strong><em>subject</em></strong>-<dfn data-lt="property|properties" data-dfn-type="dfn" id="dfn-property">property</dfn>-<dfn data-dfn-type="dfn" id="dfn-value">value</dfn>
+relationships.
+        </p>
+
+      <figure id="fig-the-basic-structure-of-a-claim">
+        <img style="margin: auto; display: block;" width="50%" src="diagrams/claim.svg">
+        <figcaption style="text-align: center;">Figure <span class="figno">2</span> <span class="fig-title">
+The basic structure of a claim.
+        </span></figcaption>
+      </figure>
+
+      <p>
+The data model for <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> described above is powerful and can be used to
+express a large variety of statements. For example, whether or not someone is
+over the age of 21 may be expressed as follows:
+      </p>
+
+      <figure id="fig-an-example-of-a-basic-claim-that-expresses-that-pat-is-over-the-age-of-21">
+        <img style="margin: auto; display: block;" width="50%" src="diagrams/claim-example.svg">
+        <figcaption style="text-align: center;">Figure <span class="figno">3</span> <span class="fig-title">
+An example of a basic claim that expresses that Pat is over the age of 21.
+        </span></figcaption>
+      </figure>
+
+      <p>
+These claims may be merged together to express a graph of
+information about a particular subject. The example below extends the
+data model above by adding claims that state that Pat knows Sam and that
+Sam is employed as a professor.
+      </p>
+
+      <figure id="fig-multiple-claims-may-be-combined-to-express-a-more-complex-graph">
+        <img style="margin: auto; display: block;" width="75%" src="diagrams/claim-extended.svg">
+        <figcaption style="text-align: center;">Figure <span class="figno">4</span> <span class="fig-title">
+Multiple claims may be combined to express a more complex graph.
+        </span></figcaption>
+      </figure>
+
+      <p>
+At this point, the concept of a <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claim</a> has been introduced. To enable
+one to trust the claims, more information must be added to the graph
+of information.
+      </p>
+
+    </section>
+    <section id="credentials">
+      <h3 id="x3-2-credentials"><span class="secno">3.2 </span>Credentials</h3>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+A <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> is set of one or more <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> made by the
+same <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a>. It may include an identifier to uniquely identify the
+credential, as well as metadata that describes properties of the credential
+itself such as: the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a>, the expiry time, a representative image,
+etc. A <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> is a set of claims and meta data that are
+tamper-resistant and that cryptographically prove who issued it.
+      </p>
+
+      <figure id="fig-the-basic-components-of-a-verifiable-credential">
+        <img style="margin: auto; display: block;" width="50%" src="diagrams/credential.svg">
+        <figcaption style="text-align: center;">Figure <span class="figno">5</span> <span class="fig-title">
+The basic components of a verifiable credential.
+        </span></figcaption>
+      </figure>
+
+      <p>
+Examples of verifiable credentials include digital employee identification
+cards, digital proofs of age, and digital educational certificates.
+      </p>
+
+      <div class="note" id="issue-container-generatedID-1"><div role="heading" class="note-title marker" id="h-note-0" aria-level="4"><span>Note</span></div><p class="">
+It is possible to have a <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>, such as a marriage certificate,
+that contains multiple <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> about different <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subjects</a> that are
+not required to be related.
+      </p></div>
+
+      <div class="issue" id="issue-container-number-47"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="4"><a href="https://github.com/w3c/issues/47"><span>Issue 47</span></a><span style="text-transform: none">: 3 Types of Claims</span></div><p class="">
+The group is currently discussing whether or not they support all the types
+of claims that can be made.
+      </p></div>
+
+    </section>
+    <section id="presentations">
+      <h3 id="x3-3-presentations"><span class="secno">3.3 </span>Presentations</h3>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+As this specification takes a privacy-first approach, it is important that
+the entities that use this technology are able to express only the portions of
+their persona that are appropriate for the situation. The expression of a
+subset of one's persona is called a <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>.
+      </p>
+
+      <p>
+A <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a> is a collection of one or more
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> that are often about the same <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> that
+have been issued by multiple <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a>. The aggregation of this
+information typically expresses an aspect of a person, organization, or entity.
+      </p>
+
+      <figure id="fig-the-basic-components-of-a-verifiable-presentation">
+        <img style="margin: auto; display: block;" width="50%" src="diagrams/presentation.svg">
+        <figcaption style="text-align: center;">Figure <span class="figno">6</span> <span class="fig-title">
+The basic components of a verifiable presentation.
+        </span></figcaption>
+      </figure>
+
+      <p>
+Examples of different presentations include a person's professional persona, online
+gaming persona, or home life persona.
+      </p>
+
+      <div class="note" id="issue-container-generatedID-2"><div role="heading" class="note-title marker" id="h-note-1" aria-level="4"><span>Note</span></div><p class="">
+It is possible to have a <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentation</a>, such as a business persona,
+that contains multiple <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> about different <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subjects</a>
+that are often, but not required to be, related.
+      </p></div>
+
+    </section>
+    </section>
+
+    <section id="trust-model">
+      <!--OddPage--><h2 id="x4-trust-model"><span class="secno">4. </span>Trust Model</h2>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+The Verifiable Credentials trust model is as follows:
+      </p>
+
+      <ol>
+        <li>
+The <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> trusts the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> to issue the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>
+that it receives. In order to establish this trust, a credential <em class="rfc2119" title="MUST">MUST</em>
+either 1) include a <a href="#proofs-aka-signatures">proof</a> that establishes
+that the issuer generated the credential (it is a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>),
+or 2) have been transmitted in a way that clearly establishes that the
+issuer generated the credential and that the credential has not been tampered
+with in transit or storage. This trust could be weakened depending upon the
+risk assessment of the verifier.
+        </li>
+        <li>
+All entities trust the <a href="#dfn-identifier-registries" class="internalDFN" data-link-type="dfn">identifier registry</a> to be un-corruptible and
+to be a correct record of which identifiers belong to which <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entities</a>.
+        </li>
+        <li>
+The <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> trusts the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> to issue true (i.e. not false)
+<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> about the subject, and to revoke them quickly when
+appropriate.
+        </li>
+        <li>
+The <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> trusts the <a href="#dfn-credential-repository" class="internalDFN" data-link-type="dfn">repository</a> to store the
+<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> securely, to not release them to anyone other than the
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>, and to not corrupt or lose them whilst they are in its care.
+        </li>
+      </ol>
+
+      <p>
+This trust model differentiates itself from other trust models by ensuring that:
+      </p>
+
+      <ul>
+        <li>
+The <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> and the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> do not need to trust the
+repository, and
+        </li>
+        <li>
+the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> does not need to trust the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>.
+        </li>
+      </ul>
+
+      <p>
+By decoupling the trust between the <a href="#dfn-identity-providers" class="internalDFN" data-link-type="dfn">identity provider</a> and the
+<a href="#dfn-relying-parties" class="internalDFN" data-link-type="dfn">relying party</a>, a more flexible and dynamic trust model is created
+such that market competition and customer choice is increased.
+      </p>
+    </section>
+
+    <section id="basic-concepts">
+      <!--OddPage--><h2 id="x5-basic-concepts"><span class="secno">5. </span>Basic Concepts</h2>
+
+      <p>
+This section outlines some of the basic concepts introduced in this
+specification and lays the groundwork for the more advanced concepts
+toward the end of the document.
+      </p>
+
+      <section id="types">
+        <h3 id="x5-1-types"><span class="secno">5.1 </span>Types</h3>
+
+        <p>
+Software systems that process the objects specified in this document
+use type information to make determinations about whether or not the provided
+<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> or <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentation</a> is appropriate.
+Type information <em class="rfc2119" title="MUST">MUST</em> be expressed via the <a href="#dfn-type" class="internalDFN" data-link-type="dfn">type</a> property:
+        </p>
+
+        <dl>
+          <dt><dfn data-dfn-type="dfn" id="dfn-type">type</dfn></dt>
+          <dd>
+The value of this property <em class="rfc2119" title="MUST">MUST</em> be or map to one or more URIs.
+If more than one URI is provided, the URIs <em class="rfc2119" title="MUST">MUST</em> be interpreted as an
+unordered set. Note that syntactic conveniences, such as JSON-LD terms,
+<em class="rfc2119" title="SHOULD">SHOULD</em> be used to ease developer usage. It is <em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em> that dereferencing
+the URI results in a document containing machine-readable information about
+the type.
+          </dd>
+        </dl>
+
+        <div class="example"><div class="example-title marker"><span>Example 1</span><span style="text-transform: none">: Usage of the type property</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}</pre></div>
+
+        <p>
+With respect to this specification, the following <a href="#dfn-type" class="internalDFN" data-link-type="dfn">type</a>s <em class="rfc2119" title="MUST">MUST</em> be
+specified on the following objects:
+        </p>
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+A <a href="#credentials">credential</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiableCredential</code>"]</tt> and
+a more specific credential type (e.g. <code>ProofOfAgeCredential</code>)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#presentations">presentation</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiablePresentation</code>"]</tt> and optionally a
+more specific presentation type
+(e.g. <code>CredentialManagerPresentation</code>).
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A&nbsp;<a href="#status">credentialStatus</a>&nbsp;object
+              </td>
+              <td>
+A valid credential status type (e.g. <code>CredentialStatusList2017</code>)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+A <a href="#terms-of-use">termsOfUse</a> object
+              </td>
+              <td>
+A valid terms of use type (e.g. <code>OdrlPolicy2017</code>)
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+An <a href="#terms-of-use">evidence</a> object
+              </td>
+              <td>
+A valid evidence type (e.g. <code>DocumentVerification2018</code>)
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <p>
+All <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a>, <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentations</a>, and encapsulated objects <em class="rfc2119" title="MUST">MUST</em>
+specify or be associated with additional, more narrow <a href="#dfn-type" class="internalDFN" data-link-type="dfn">type</a>s
+(e.g. <code>ProofOfAgeCredential</code>) such that software systems can use
+the additional information to more easily process the data.
+        </p>
+
+        <p>
+When processing encapsulated objects in this specification, (e.g. objects
+associated with the <code>claim</code> property or deeply nested therein),
+a software system <em class="rfc2119" title="SHOULD">SHOULD</em> use type information specified in encapsulating
+objects higher in the hierarchy. For the avoidance of doubt, an
+encapsulating object such as <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>, <em class="rfc2119" title="SHOULD">SHOULD</em> convey the types of
+associated objects so that the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> can quickly determine the
+contents of the associated object based on the type of the encapsulating object.
+To provide a concrete example, a <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> with the additional
+<code>type</code> of <code>ProofOfAgeCredential</code> would signal to the
+<a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> that the object associated with the <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claim</a> property will
+contain the identifier for the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> in the <code>id</code> property
+and the age assertion in the <code>ageOver</code> property. This enables
+implementers to rely on values associated with the <code>type</code> property
+for verification purposes. The expectation of types and their associated
+properties <em class="rfc2119" title="SHOULD">SHOULD</em> be documented in at least a human-readable specification
+and, preferably, in an additional machine-readable representation.
+        </p>
+
+        <div class="note" id="issue-container-generatedID-3"><div role="heading" class="note-title marker" id="h-note-2" aria-level="4"><span>Note</span></div><p class="">
+The type system for the Verifiable Credentials Data Model is the same as the
+one for [<cite><a class="bibref" href="#bib-json-ld">JSON-LD</a></cite>] and is detailed in
+<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4: Specifying the Type</a>
+and
+<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
+When using a JSON-LD Context (see Section <a href="#extensibility" class="sec-ref"><span class="secno">6.1</span> <span class="sec-title">Extensibility</span></a>),
+this specification aliases the <code>@type</code>
+keyword to <code>type</code> in order to make the JSON-LD documents more
+idiomatic. While application developers and document authors do not need to
+understand the specifics of JSON-LD's type system, implementers of this
+specification that want to support extensibility in an interoperable fashion do.
+        </p></div>
+        <div class="issue" id="issue-container-number-123"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="4"><a href="https://github.com/w3c/issues/123"><span>Issue 123</span></a><span style="text-transform: none">: Explicitly state JSON Object Types<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Type-Discussion%22" style="background-color: rgb(232, 150, 183);">Type-Discussion</a></span></div><p class="">
+The group is currently discussing whether or not JSON Object Types should be
+explicitly stated.
+        </p></div>
+
+      </section>
+
+      <section id="issuer">
+        <h3 id="x5-2-issuer"><span class="secno">5.2 </span>Issuer</h3>
+
+        <p>
+Issuer information may be expressed via the following <a href="#dfn-property" class="internalDFN" data-link-type="dfn">properties</a>:
+        </p>
+        <dl>
+          <dt><var>issuer</var></dt>
+          <dd>
+The value of this property <em class="rfc2119" title="MUST">MUST</em> be a URI. It is <em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em> that dereferencing
+the URI results in a document containing machine-readable information about
+the issuer that may be used to verify the information expressed in the
+<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>.
+          </dd>
+          <dt><var>issuanceDate</var></dt>
+          <dd>
+The value of this property <em class="rfc2119" title="MUST">MUST</em> be a string value of an [<cite><a class="bibref" href="#bib-iso8601">ISO8601</a></cite>] combined
+date and time string and represents the date and time the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>
+was issued. Note that this date represents the earliest date when the
+information associated with the <var>claim</var> property became valid.
+          </dd>
+        </dl>
+        <div class="example"><div class="example-title marker"><span>Example 2</span><span style="text-transform: none">: Usage of issuer properties</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
+  <span class="highlight">"issuanceDate": "2010-01-01T19:73:24Z"</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}</pre></div>
+      </section>
+
+      <section id="proofs-aka-signatures">
+        <h3 id="x5-3-proofs-aka-signatures"><span class="secno">5.3 </span>Proofs (aka Signatures)</h3>
+
+        <p>
+In order for a <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> or <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentation</a> to be made
+verifiable, the following property <em class="rfc2119" title="MUST">MUST</em> be present:
+        </p>
+        <dl>
+          <dt><var>proof</var></dt>
+          <dd>
+The method used for a mathematical proof will vary by representation language
+and the technology used.  For example, if digital signatures are used for
+the proof mechanism, this property is expected to have a value that is a
+set of name-value pairs including at least a signature, a reference to the
+signing entity, and a representation of the signing date.</dd>
+        </dl>
+        <div class="example"><div class="example-title marker"><span>Example 3</span><span style="text-transform: none">: Usage of proof property on a verifiable credential</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov",
+  "issuanceDate": "2010-01-01",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "https://example.com/jdoe/keys/1",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+      +W3JT24="
+  }</span>
+}</pre></div>
+
+        <div class="issue" id="issue-container-number-93"><div role="heading" class="issue-title marker" id="h-issue-7" aria-level="4"><a href="https://github.com/w3c/issues/93"><span>Issue 93</span></a><span style="text-transform: none">: Proposed resolution to issue about JOSE/JWT Verifiable Claims<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22CharterMention%22" style="background-color: rgb(194, 224, 198);">CharterMention</a></span></div><p class="">
+The group is currently discussing various alignments with the JOSE stack,
+specifically JWS and JWK.
+        </p></div>
+
+      </section>
+
+      <section id="expiration">
+        <h3 id="x5-4-expiration"><span class="secno">5.4 </span>Expiration</h3>
+
+        <p>
+Expiration information for the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> <em class="rfc2119" title="MAY">MAY</em> be provided by adding
+the following <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a>:
+        </p>
+
+        <dl>
+          <dt><var>expirationDate</var></dt>
+          <dd>
+The value of this property <em class="rfc2119" title="MUST">MUST</em> be a string value of an [<cite><a class="bibref" href="#bib-iso8601">ISO8601</a></cite>] combined
+date and time string and represents the date and time the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>
+will cease to be valid.
+          </dd>
+        </dl>
+
+        <div class="example"><div class="example-title marker"><span>Example 4</span><span style="text-transform: none">: Usage of expirationDate property</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  <span class="highlight">"expirationDate": "2020-01-01T19:73:24Z"</span>,
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}</pre></div>
+
+        <div class="issue" id="issue-container-number-164"><div role="heading" class="issue-title marker" id="h-issue-8" aria-level="4"><a href="https://github.com/w3c/issues/164"><span>Issue 164</span></a><span style="text-transform: none">: Issuers may express a Time to Live on the credential</span></div><p class="">
+The group is currently discussing expiration and caching.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-19"><div role="heading" class="issue-title marker" id="h-issue-9" aria-level="4"><a href="https://github.com/w3c/issues/19"><span>Issue 19</span></a><span style="text-transform: none">: Add renewalService URL to standard data model<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22feature+request%22" style="background-color: rgb(212, 197, 249);">feature request</a><a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22substantive+change%22" style="background-color: rgb(0, 82, 204);">substantive change</a></span></div><p class="">
+The group is currently discussing how to automatically renew credentials.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-139"><div role="heading" class="issue-title marker" id="h-issue-10" aria-level="4"><a href="https://github.com/w3c/issues/139"><span>Issue 139</span></a><span style="text-transform: none">: How are verifiable credentials updated<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22PR+exists%22" style="background-color: rgb(17, 224, 162);">PR exists</a></span></div><p class="">
+The group is currently discussing how verifiable credentials may be
+automatically updated.
+        </p></div>
+
+      </section>
+
+      <section id="status">
+        <h3 id="x5-5-status"><span class="secno">5.5 </span>Status</h3>
+
+        <p>Information about the current status of a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>,
+        such as suspension or revocation,
+        may be provided by adding the <code>credentialStatus</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a>.
+This property
+       comprises the type of credential status information that is being provided
+ (sometimes referred to as the credential status scheme), plus the id of the status
+type instance. The precise contents of the credential status information is
+           determined by the specific <code>credentialStatus</code> type definition,
+    and will vary
+ depending upon a variety of factors, such as whether it is
+            simple to implement or privacy-enhancing.
+        </p>
+
+        <dl>
+          <dt><var>credentialStatus</var></dt>
+          <dd>The value of this property <em class="rfc2119" title="MUST">MUST</em> be a credential status scheme that
+            provides enough information to determine the current status of the
+            credential (e.g. suspended, revoked, etc.).
+          </dd>
+        </dl>
+
+        <div class="example"><div class="example-title marker"><span>Example 5</span><span style="text-transform: none">: Usage of status property</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"credentialStatus": {
+    "id": "https://dmv.example.gov/status/24,
+    "type": "CredentialStatusList2017"
+  }</span>,
+  "proof": { ... }
+}</pre></div>
+
+        <p>
+Defining the data model, formats, and protocols for status schemes are out
+of scope for this specification. A status scheme registry [<cite><a class="bibref" href="#bib-vc-status-registry">VC-STATUS-REGISTRY</a></cite>]
+exists for implementers that would like to implement credential status checking.
+        </p>
+      </section>
+
+      <section id="presentations-0">
+        <h3 id="x5-6-presentations"><span class="secno">5.6 </span>Presentations</h3>
+
+        <p>
+Credentials <em class="rfc2119" title="MAY">MAY</em> be composed by placing them into a data structure called a
+<a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentation</a>. A <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a> is a presentation that contains
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> and one or more proofs that are appropriate
+for the presentation. The basic structure of a <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>
+is provided below:
+        </p>
+
+        <div class="example"><div class="example-title marker"><span>Example 6</span><span style="text-transform: none">: Basic structure of a presentation</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
+  "type": ["VerifiablePresentation"],
+  <span class="highlight">"verifiableCredential": [{ ... }],
+  "proof": [{ ... }]</span>
+}</pre></div>
+
+        <div class="issue" id="issue-container-number-133"><div role="heading" class="issue-title marker" id="h-issue-11" aria-level="4"><a href="https://github.com/w3c/issues/133"><span>Issue 133</span></a><span style="text-transform: none">: Profile ID is ambiguous and potentially improper<a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Discuss%22" style="background-color: rgb(37, 70, 132);">Discuss</a><a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Profile%22" style="background-color: rgb(141, 126, 229);">Profile</a></span></div><p class="">
+The group is currently discussing whether the "id" field is appropriately
+defined for Presentations.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-120"><div role="heading" class="issue-title marker" id="h-issue-12" aria-level="4"><a href="https://github.com/w3c/issues/120"><span>Issue 120</span></a><span style="text-transform: none">: IDs Not Differentiated Sufficiently<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22PR+exists%22" style="background-color: rgb(17, 224, 162);">PR exists</a></span></div><p class="">
+The group is currently discussing whether the "id" field is appropriately
+defined across all objects.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-106"><div role="heading" class="issue-title marker" id="h-issue-13" aria-level="4"><a href="https://github.com/w3c/issues/106"><span>Issue 106</span></a><span style="text-transform: none">: Subject NE Holder<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22PR+exists%22" style="background-color: rgb(17, 224, 162);">PR exists</a></span></div><p class="">
+The group is currently discussing how the data model expresses when the
+subject is not the holder of the credential/presentation.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-105"><div role="heading" class="issue-title marker" id="h-issue-14" aria-level="4"><a href="https://github.com/w3c/issues/105"><span>Issue 105</span></a><span style="text-transform: none">: Holders and Identifiers</span></div><p class="">
+The group is currently discussing holders, subjects, and identifier
+control.
+        </p></div>
+
+        <p>
+The contents of the <code>verifiableCredential</code> property are
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> as described by this specification. The contents
+of the <code>proof</code> property are proofs as described by the
+Linked Data Proofs [<cite><a class="bibref" href="#bib-ld-proofs">LD-PROOFS</a></cite>] specification. The <code>id</code> property
+is optional and <em class="rfc2119" title="MAY">MAY</em> be used to provide a unique identifier for the presentation.
+The value associated with the <code>id</code> property <em class="rfc2119" title="MUST">MUST</em> be a URI.
+        </p>
+      </section>
+    </section>
+
+    <section id="advanced-concepts">
+      <!--OddPage--><h2 id="x6-advanced-concepts"><span class="secno">6. </span>Advanced Concepts</h2>
+
+      <section id="extensibility">
+        <h3 id="x6-1-extensibility"><span class="secno">6.1 </span>Extensibility</h3>
+
+        <p>
+One of the goals of the Verifiable Credentials Data Model is to enable
+permissionless innovation. This requires that the data model is extensible
+in a number of different ways:
+        </p>
+
+        <ul>
+          <li>
+The requirement to model complex multi-entity relationships is provided
+through the use of a graph-based data model.
+          </li>
+          <li>
+The requirement to be able to extend the machine-readable vocabularies
+used to describe information in the data model without the use of a
+centralized system for doing so is accomplished via the use
+of [<cite><a class="bibref" href="#bib-linked-data">LINKED-DATA</a></cite>].
+          </li>
+          <li>
+The requirement to support multiple types of cryptographic proof formats is
+accomplished via the use of Linked Data Proofs [<cite><a class="bibref" href="#bib-ld-proofs">LD-PROOFS</a></cite>],
+Linked Data Signatures [<cite><a class="bibref" href="#bib-ld-signatures">LD-SIGNATURES</a></cite>], and a variety of signature suites.
+          </li>
+          <li>
+The requirement to provide all of the extensibility mechanisms outlined above
+in a data format that is popular among software developers and web page authors
+is enabled via the use of [<cite><a class="bibref" href="#bib-json-ld">JSON-LD</a></cite>].
+          </li>
+        </ul>
+
+        <p>
+This approach to data modelling is often called an "open world assumption",
+meaning that any entity can say anything about any other entity. This approach
+often feels in conflict with building simple and predictable software systems.
+Balancing extensibility with program correctness is always more challenging
+with an open world assumption than it is with closed software systems.
+        </p>
+
+        <p>
+The rest of this section describes how both extensibility and program
+correctness are achieved through a series of examples.
+        </p>
+
+        <div class="issue" id="issue-container-number-190"><div role="heading" class="issue-title marker" id="h-issue-15" aria-level="4"><a href="https://github.com/w3c/issues/190"><span>Issue 190</span></a><span style="text-transform: none">: Problems with the Extensibility Section<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Type-Discussion%22" style="background-color: rgb(232, 150, 183);">Type-Discussion</a></span></div><p class="">
+The group is currently discussing enhancements to this section.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-187"><div role="heading" class="issue-title marker" id="h-issue-16" aria-level="4"><a href="https://github.com/w3c/issues/187"><span>Issue 187</span></a><span style="text-transform: none">: Modeling Travel Use Case as an extension example</span></div><p class="">
+The group is currently discussing how a travel use case could be covered as
+an extension.
+        </p></div>
+
+        <p>
+Let us assume that we start with the following <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>:
+        </p>
+
+        <div class="example"><div class="example-title marker"><span>Example 7</span><span style="text-transform: none">: A simple credential</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://example.com/credentials/4643",
+  "type": ["VerifiableCredential"],
+  "issuer": "https://example.com/issuers/14",
+  "issuanceDate": "2018-02-24T05:28:04Z",
+  "claim": {
+    "id": "did:example:abcdef1234567",
+    "name": "Jane Doe"
+  },
+  "proof": { ... }
+}</pre></div>
+
+        <p>
+The credential above simply states that the entity associated with
+<code>did:example:abcdef1234567</code> has a <code>name</code> with a
+value of <code>Jane Doe</code>. Let's assume that a developer wanted to
+extend the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> to store two additional pieces of
+information: an internal corporate reference number, and Jane's favorite
+food.
+        </p>
+
+        <p>
+The first thing that a developer would do is create a JSON-LD Context
+containing two new terms:
+        </p>
+
+        <div class="example"><div class="example-title marker"><span>Example 8</span><span style="text-transform: none">: An example JSON-LD Context</span></div><pre class="nohighlight">{
+  "@context": {
+    "referenceNumber": "https://example.com/vocab#referenceNumber",
+    "favoriteFood": "https://example.com/vocab#favoriteFood"
+  }
+}</pre></div>
+
+        <p>
+Now that the JSON-LD Context has been created, the developer must publish it
+somewhere that is accessible to <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a> that will be processing the
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>. For this example, let us assume that the
+JSON-LD Context above is published at the following URL:
+<code>https://example.com/contexts/mycontext.jsonld</code>. At this point,
+extending the first example in this section is a simple matter of including the
+context above and adding the new properties to the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>.
+        </p>
+
+        <div class="example"><div class="example-title marker"><span>Example 9</span><span style="text-transform: none">: A verifiable credential with a custom extension</span></div><pre class="nohighlight">{
+  "@context": <span class="highlight">[
+    </span>"https://w3id.org/credentials/v1",
+    <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
+  ]</span>,
+  "id": "http://example.com/credentials/4643",
+  "type": ["VerifiableCredential"],
+  "issuer": "https://example.com/issuers/14",
+  "issuanceDate": "2018-02-24T05:28:04Z",
+  <span class="highlight">"referenceNumber": 83294847,</span>
+  "claim": {
+    "id": "did:example:abcdef1234567",
+    "name": "Jane Doe",
+    <span class="highlight">"favoriteFood": "Papaya"</span>
+  },
+  "proof": { ... }
+}</pre></div>
+
+        <p>
+The examples so far have shown that it is easy to extend the Verifiable
+Credentials Data Model in a permissionless and decentralized way. The
+mechanism shown also ensures that verifiable credentials that were created
+in this way provide a mechanism to prevent namespace conflicts and
+semantic ambiguity.
+        </p>
+
+        <p>
+An extensibility model that is this dynamic does increase implementation burden.
+Software written for such a system will have to determine if accepting
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> with extensions is acceptable based on the
+risk profile of the application. Some applications may choose to only accept
+certain extensions while highly secure environments may require that no
+extensions are allowed. These decisions are up to the developers of these
+applications and are specifically not the domain of this specification.
+Applications that do not understand the semantic meaning of all properties
+while processing a verifiable credential or a verifiable presentation <em class="rfc2119" title="MUST">MUST</em>
+produce an error.
+        </p>
+
+        <div class="issue" id="issue-container-number-193"><div role="heading" class="issue-title marker" id="h-issue-17" aria-level="4"><a href="https://github.com/w3c/issues/193"><span>Issue 193</span></a><span style="text-transform: none">: Enforce strict context ordering<a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Type-Discussion%22" style="background-color: rgb(232, 150, 183);">Type-Discussion</a></span></div><p class="">
+The group is currently debating how to streamline interoperability between
+JSON-based and JSON-LD-based processors.
+        </p></div>
+
+        <p>
+Developers are urged to ensure that extension JSON-LD Contexts are highly
+available. Implementations that cannot fetch a context will produce an error.
+Strategies for ensuring that extension JSON-LD Contexts are always available
+include using content-addressed URLs for contexts, bundling context documents
+with implementations, or enabling aggressive caching of contexts.
+        </p>
+
+        <section id="semantic-interoperability">
+          <h4 id="x6-1-1-semantic-interoperability"><span class="secno">6.1.1 </span>Semantic Interoperability</h4>
+
+          <p>
+This specification endeavors to enable both the JSON and JSON-LD syntaxes
+to be semantically compatible with one another without the JSON implementations
+needing to process the documents as JSON-LD. In order to achieve this, the
+specification creates the following additional restrictions on both syntaxes:
+          </p>
+
+          <ul>
+            <li>
+JSON-based processors <em class="rfc2119" title="MUST">MUST</em> process the <code>@context</code> property, ensuring
+the expected values exist in the expected order for the <code>type</code> of
+<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> that they are processing. The expected order <em class="rfc2119" title="MUST">MUST</em> be defined
+by at least a human-readable extension specification and, preferably, a
+machine-readable specification.
+            </li>
+            <li>
+In addition to the rule above, JSON-LD-based processors <em class="rfc2119" title="MUST">MUST</em> produce an error
+when a JSON-LD Context redefines any term in the
+<a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>.
+            </li>
+          </ul>
+
+          <p>
+To avoid the possibility of accidentally overriding terms, developers are urged
+to scope their extensions. For example, the following extension scopes the
+new <code>favoriteFood</code> term so that it may only be used within the
+<code>claim</code> property:
+          </p>
+
+          <div class="example"><div class="example-title marker"><span>Example 10</span><span style="text-transform: none">: Scoping terms in a JSON-LD Context</span></div><pre class="nohighlight">{
+  "@context": {
+    "referenceNumber": "https://example.com/vocab#referenceNumber",
+    <span class="highlight">"claim": {
+      "@id": "https://w3id.org/credentials#claim",
+      "@context": {
+        "favoriteFood": "https://example.com/vocab#favoriteFood"
+      }
+    }</span>
+  }
+}</pre></div>
+
+        </section>
+
+      </section>
+
+      <section id="terms-of-use">
+        <h3 id="x6-2-terms-of-use"><span class="secno">6.2 </span>Terms of Use</h3>
+
+        <p>Terms of use can be utilized by an <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a>, <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> or a
+        <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> to express limitations on the use of information
+        expressed by the Verifiable Credentials Data Model. The expression of
+        terms of use are performed via the following <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a>:
+        </p>
+
+        <dl>
+          <dt><var>termsOfUse</var></dt>
+          <dd>The value of this property <em class="rfc2119" title="MUST">MUST</em> be one or more terms of use
+            descriptions that provide enough information to a <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>
+            to determine how they may utilize the given information.
+          </dd>
+        </dl>
+
+        <div class="issue" id="issue-container-generatedID-4"><div role="heading" class="issue-title marker" id="h-issue-18" aria-level="4"><span>Issue</span></div><p class="" data-title="Direct the reader to a Terms of Use vocabulary">
+The group is currently exploring a variety of ways of expressing the terms of
+use associated with a Verifiable Credential, namely, the
+<a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
+        </p></div>
+
+        <div class="example"><div class="example-title marker"><span>Example 11</span><span style="text-transform: none">: Usage of termsOfUse property by an Issuer</span></div><pre class="nohighlight">{
+  "@context": [
+    "https://w3id.org/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"termsOfUse": [{
+    "type": "Policy",
+    "uid": "http://example.com/policies/credential/4",
+    "profile": "http://example.com/profiles/credential",
+    "prohibition": [{
+      "assigner": "https://dmv.example.gov/issuers/14",
+      "assignee": "AllVerifiers",
+      "target": "http://dmv.example.gov/credentials/3732",
+      "action": ["Archival"]
+    }]
+  }</span>,
+  "proof": { ... }
+}</pre></div>
+
+        <p>
+In the example above, the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> is prohibiting a <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> from
+storing the data in an archive.
+        </p>
+
+        <div class="example"><div class="example-title marker"><span>Example 12</span><span style="text-transform: none">: Usage of termsOfUse property by an Issuer</span></div><pre class="nohighlight">{
+  "@context": [
+    "https://w3id.org/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "credential": [{
+    "id": "http://dmv.example.gov/credentials/3732",
+    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+    "issuer": "https://dmv.example.gov/issuers/14",
+    "issuanceDate": "2010-01-01T19:73:24Z",
+    "claim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    },
+    "proof": { ... }
+  }],
+  <span class="highlight">"termsOfUse": [{
+    "type": "Policy",
+    "uid": "http://example.com/policies/credential/6",
+    "profile": "http://example.com/profiles/credential",
+    "prohibition": [{
+      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "assignee": "https://wineonline.example.org/",
+      "target": "http://dmv.example.gov/credentials/3732",
+      "action": ["3rdPartyCorrelation"]
+    }]
+  }</span>,
+  "proof": [ ... ]
+}</pre></div>
+
+        <p>
+In the example above, the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> is prohibiting a <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> from
+using the information provided to correlate the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> using a
+3rd party service.
+        </p>
+
+        <div class="issue" id="issue-container-number-133-0"><div role="heading" class="issue-title marker" id="h-issue-19" aria-level="4"><a href="https://github.com/w3c/issues/133"><span>Issue 133</span></a><span style="text-transform: none">: Profile ID is ambiguous and potentially improper<a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Discuss%22" style="background-color: rgb(37, 70, 132);">Discuss</a><a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Profile%22" style="background-color: rgb(141, 126, 229);">Profile</a></span></div><p class="">
+The group is currently discussing how one knows who specified the Terms of Use.
+        </p></div>
+
+      </section>
+
+      <section id="evidence">
+        <h3 id="x6-3-evidence"><span class="secno">6.3 </span>Evidence</h3>
+
+        <p>
+The <em>evidence</em> property is used by an <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> to represent the
+set of evidence that was used to determine whether or not to issue
+a <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>. For example, an issuer might check physical documentation
+provided by the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> or might perform a set of background checks
+before issuing the credential. In certain scenarios, this information is useful
+to the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> when determining the risk associated with accepting
+the credential.
+        </p>
+
+        <p>
+Evidence information for the credential in the Verifiable Credentials Data
+Model is provided by adding the following <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a>:
+        </p>
+
+        <dl>
+          <dt><var>evidence</var></dt>
+          <dd>The value of this property <em class="rfc2119" title="MUST">MUST</em> be one or more evidence schemes
+            that provides enough information to a <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>
+            to determine whether or not the evidence gathered meets their
+            requirements. The contents of each evidence scheme is determined
+            by the particular scheme itself.
+          </dd>
+        </dl>
+
+        <div class="issue" id="issue-container-generatedID-5"><div role="heading" class="issue-title marker" id="h-issue-20" aria-level="4"><span>Issue</span></div><p class="" data-title="Define ONE concrete format for the evidence parameter ">
+The group is currently determining whether or not they should publish a
+very simple scheme for evidence as a part of this specification.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-136"><div role="heading" class="issue-title marker" id="h-issue-21" aria-level="4"><a href="https://github.com/w3c/issues/136"><span>Issue 136</span></a><span style="text-transform: none">: Reference or attach generic (not-credential) data in credential<a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Discuss%22" style="background-color: rgb(37, 70, 132);">Discuss</a><a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22RelatedContent%22" style="background-color: rgb(90, 226, 217);">RelatedContent</a></span></div><p class="">
+The group is currently discussing how attachments and references to
+non-credential data are supported by the specification.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-135"><div role="heading" class="issue-title marker" id="h-issue-22" aria-level="4"><a href="https://github.com/w3c/issues/135"><span>Issue 135</span></a><span style="text-transform: none">: Reference or attach credential in another credentials<a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Discuss%22" style="background-color: rgb(37, 70, 132);">Discuss</a><a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22RelatedContent%22" style="background-color: rgb(90, 226, 217);">RelatedContent</a></span></div><p class="">
+The group is currently discussing how attachments and references to
+credentials are supported by the specification.
+        </p></div>
+
+        <div class="example"><div class="example-title marker"><span>Example 13</span><span style="text-transform: none">: Usage of evidence property</span></div><pre class="nohighlight">{
+  "@context": [
+    "https://w3id.org/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"evidence": [{
+    "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+    "type": ["DocumentVerification"],
+    "verifier": "https://dmv.example.gov/issuers/14",
+    "evidenceDocument": "DriversLicense",
+    "subjectPresence": "Physical",
+    "documentPresence": "Physical"
+  }]</span>,
+  "proof": { ... }
+}</pre></div>
+
+        <div class="note" id="issue-container-generatedID-6"><div role="heading" class="note-title marker" id="h-note-3" aria-level="4"><span>Note</span></div><p class="">
+For the avoidance of doubt, the <em>evidence</em> <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a> provides
+information that is different from and complementary to the
+<a href="#proofs-aka-signatures">proof</a> property. The <em>evidence</em>
+property is used to express supporting information, such as documentary
+evidence, related to the integrity of the credential. In contrast, the
+<em>proof</em> property is used to express machine-verifiable mathematical
+proofs related to the authenticity of the issuer and integrity of the
+credential.
+        </p></div>
+
+        <div class="issue" id="issue-container-number-42"><div role="heading" class="issue-title marker" id="h-issue-23" aria-level="4"><a href="https://github.com/w3c/issues/42"><span>Issue 42</span></a><span style="text-transform: none">: Add display hints to data model, for example: information to use a Web Component<a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22Icebox%22" style="background-color: rgb(42, 87, 249);">Icebox</a><a class="respec-gh-label respec-label-light" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22privacy%22" style="background-color: rgb(251, 202, 4);">privacy</a><a class="respec-gh-label respec-label-dark" href="https://github.com/w3c/vc-data-model/issues/?q=is%3Aissue+is%3Aopen+label%3A%22security%22" style="background-color: rgb(217, 63, 11);">security</a></span></div><p class="">
+The group is currently discussing how to visualize verifiable credentials and
+any media associated with them.
+        </p></div>
+
+      </section>
+
+      <section id="disputes">
+        <h3 id="x6-4-disputes"><span class="secno">6.4 </span>Disputes</h3>
+
+        <p>
+The time may come when an <a href="#dfn-entities" class="internalDFN" data-link-type="dfn">entity</a> wants to dispute a <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>
+issued by another entity. The mechanism for doing this is the same as issuing
+a regular credential except that the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> identifier for the
+<a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claims</a> are those of the disputed credential. For example, if a disputed
+credential with an identifier of
+<code>http://con-artist.example.com/credentials/3732</code>
+contains disputed statements, an entity would issue the following credential
+in a public venue to make it known that the credential is disputed:
+        </p>
+
+        <div class="example"><div class="example-title marker"><span>Example 14</span><span style="text-transform: none">: Expressing a disputed credential</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://example.com/credentials/245",
+  "type": ["VerifiableCredential", "DisputeCredential"],
+  <span class="highlight">"claim": {
+    "id": "http://con-artist.example.com/credentials/3732",
+    "currentStatus": "Disputed",
+    "statusReason": "Credential contains disputed statements",
+    "disputedClaim": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "ageOver": 21
+    }
+  }</span>,
+  "issuer": "https://example.com/people#me",
+  "issuanceDate": "2017-12-05T14:27:42Z",
+  "proof": { ... }
+}</pre></div>
+
+        <p>
+A <code>DisputeCredential</code> issued by anyone other than the
+<a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a>, or its authorised agent, <em class="rfc2119" title="SHOULD">SHOULD</em> be disregarded by a
+<a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>, unless the verifier has some out of band means of
+ascertaining the truth of the dispute.
+        </p>
+
+        <div class="note" id="issue-container-generatedID-7"><div role="heading" class="note-title marker" id="h-note-4" aria-level="4"><span>Note</span></div><p class="">
+If a credential does not have an identifier, a content-addressed identifier
+can be used to identify the disputed credential. Similarly, content-addressed
+identifiers can be used to uniquely identify individual claims.
+        </p></div>
+
+        <div class="issue" id="issue-container-generatedID-8"><div role="heading" class="issue-title marker" id="h-issue-24" aria-level="4"><span>Issue</span></div><p class="">
+The group is currently exploring whether the specification of a vocabulary
+term to express content-based identifiers for claims is within scope as well
+as the specific vocabulary terms for disputed claims.
+        </p></div>
+
+      </section>
+
+      <section id="conformance">
+        <h3 id="x6-5-conformance"><span class="secno">6.5 </span>Conformance</h3>
+
+        <p>
+A concrete expression of the data model in this specification is a
+<em>conforming document</em> if it complies with the normative statements in
+this specification regarding syntax (e.g. the content in
+<a href="#basic-concepts">Basic Concepts</a>,
+<a href="#advanced-concepts">Advanced Concepts</a>, and
+<a href="#syntaxes">Syntaxes</a>).
+For convenience, normative statements for <em>conforming documents</em> are
+often phrased as statements on the syntax used in properties and their
+associated values in the document (e.g. <em class="rfc2119" title="MUST">MUST</em> be a URI,
+<em class="rfc2119" title="MUST">MUST</em> be a string value of an ISO8601 combined date and time string).
+        </p>
+
+        <p>
+A <em>conforming processor</em> is a software or hardware-based implementation
+of the normative statements in this specification regarding the expected
+contents of property-value pairs (e.g. the content in <a href="#dfn-credential-verification" class="internalDFN" data-link-type="dfn">Verification</a>).
+For convenience, normative statements for <em>conforming processors</em> are
+often phrased as behavioral statements regarding the contents of
+property-value pairs (e.g. <em class="rfc2119" title="MUST NOT">MUST NOT</em> be revoked, <em class="rfc2119" title="MUST">MUST</em> be in the expected range).
+        </p>
+
+      </section>
+
+    </section>
+
+    <section id="syntaxes">
+      <!--OddPage--><h2 id="x7-syntaxes"><span class="secno">7. </span>Syntaxes</h2>
+
+
+      <p>
+Many of the data model concepts in this document thus far have been introduced
+by example using the JSON syntax. This section formalizes how the data model
+(described in Sections <a href="#core-data-model" class="sec-ref"><span class="secno">3.</span> <span class="sec-title">Core Data Model</span></a>,
+<a href="#basic-concepts" class="sec-ref"><span class="secno">5.</span> <span class="sec-title">Basic Concepts</span></a>, and <a href="#advanced-concepts" class="sec-ref"><span class="secno">6.</span> <span class="sec-title">Advanced Concepts</span></a>
+) is realized in JSON and JSON-LD. Although syntactic mappings are only provided for these two syntaxes,
+applications and services may also use any other data representation syntax,
+such as XML, YAML, or CBOR, that is capable of expressing the data model.
+      </p>
+
+      <section id="json">
+        <h3 id="x7-1-json"><span class="secno">7.1 </span>JSON</h3>
+
+          <p>
+The data model as described in Section <a href="#core-data-model" class="sec-ref"><span class="secno">3.</span> <span class="sec-title">Core Data Model</span></a> can be
+encoded in Javascript Object Notation (JSON) [<cite><a class="bibref" href="#bib-rfc8259">RFC8259</a></cite>] by mapping
+property values to the following JSON types:
+          </p>
+
+          <ul>
+            <li>Numeric values representable as IEEE754 <em class="rfc2119" title="SHOULD">SHOULD</em> be represented
+            as a Number type.</li>
+            <li>Any boolean value <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as a Boolean type.</li>
+            <li>Any sequence value <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as an Array type.</li>
+            <li>Any unordered set of values <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as
+            an Array type.</li>
+            <li>Any set of <a href="#dfn-property" class="internalDFN" data-link-type="dfn">properties</a> <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as
+            an Object type.</li>
+            <li>Any empty value <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as a null value.</li>
+            <li>Any other value <em class="rfc2119" title="MUST">MUST</em> be represented as a String type.</li>
+          </ul>
+
+        <section id="json-web-token">
+          <h4 id="x7-1-1-json-web-token"><span class="secno">7.1.1 </span>JSON Web Token</h4>
+
+          <div class="issue" id="issue-container-generatedID-9"><div role="heading" class="issue-title marker" id="h-issue-25" aria-level="5"><span>Issue</span></div><p class="">
+This section will be moved into its own specification before this document
+enters the Candidate Recommendation stage.
+          </p></div>
+
+          <p>The following example demonstrates how one could
+          express this data model using a JSON Web Token.</p>
+
+  <div class="example"><div class="example-title marker"><span>Example 15</span><span style="text-transform: none">: A JOSE JWT verifiable credential</span></div><pre class="hljs css" aria-busy="false"><span class="hljs-selector-tag">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9</span><span class="hljs-selector-class">.eyJpc3MiOiJodHRwczovL2Rtdi</span>
+5<span class="hljs-selector-tag">leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL</span>
+<span class="hljs-selector-tag">CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi</span>
+<span class="hljs-selector-tag">YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI</span>
+6<span class="hljs-selector-tag">Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG</span>
+<span class="hljs-selector-tag">FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI</span>
+<span class="hljs-selector-tag">iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu</span>
+<span class="hljs-selector-tag">ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ</span>
+<span class="hljs-selector-tag">iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj</span>
+<span class="hljs-selector-tag">F9fX0</span><span class="hljs-selector-class">.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6</span>
+<span class="hljs-selector-tag">NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1</span>
+<span class="hljs-selector-tag">fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4</span></pre></div>
+
+  <p>
+  The JWT above was produced using the inputs below:
+  </p>
+
+  <div class="issue" id="issue-container-generatedID-10"><div role="heading" class="issue-title marker" id="h-issue-26" aria-level="5"><span>Issue</span></div><p class="">
+  A number of the concerns have been raised around security,
+  composability, reusability, and extensibility with respect
+  to the use of JWTs for Verifiable Credentials. These concerns
+  will be documented in time in at least the Verfiable Claims Model
+  and Security Considerations section of this document.
+  </p></div>
+
+  <pre aria-busy="false" class="hljs javascript">  <span class="hljs-comment">// JWT Header</span>
+  {
+    <span class="hljs-string">"alg"</span>: <span class="hljs-string">"RS256"</span>,
+    <span class="hljs-string">"typ"</span>: <span class="hljs-string">"JWT"</span>
+  }
+  <span class="hljs-comment">// JWT Payload</span>
+  {
+    <span class="hljs-string">"iss"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+    <span class="hljs-string">"iat"</span>: <span class="hljs-number">1262304000</span>,
+    <span class="hljs-string">"exp"</span>: <span class="hljs-number">1483228800</span>,
+    <span class="hljs-string">"aud"</span>: <span class="hljs-string">"www.example.com"</span>,
+    <span class="hljs-string">"sub"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    <span class="hljs-string">"verifiableCredential"</span>: {
+      <span class="hljs-string">"@context"</span>: <span class="hljs-string">"https://w3id.org/security/v1"</span>,
+      <span class="hljs-string">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+      <span class="hljs-string">"type"</span>: [<span class="hljs-string">"VerifiableCredential"</span>, <span class="hljs-string">"ProofOfAgeCredential"</span>],
+      <span class="hljs-string">"issuer"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+      <span class="hljs-string">"issuanceDate"</span>: <span class="hljs-string">"2010-01-01"</span>,
+      <span class="hljs-string">"claim"</span>: {
+        <span class="hljs-string">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+        <span class="hljs-string">"ageOver"</span>: <span class="hljs-number">21</span>
+      }
+    }
+  }
+  </pre>
+
+        </section>
+
+      </section>
+
+      <section id="json-ld">
+        <h3 id="x7-2-json-ld"><span class="secno">7.2 </span>JSON-LD</h3>
+
+        <p>
+[<cite><a class="bibref" href="#bib-json-ld">JSON-LD</a></cite>] is a JSON-based format that is used to serialize
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>.
+The syntax is designed to easily integrate into deployed systems that
+already use JSON, and provides a smooth upgrade path from JSON to JSON-LD.
+It is primarily intended to be a way to use Linked Data in
+Web-based programming environments, to build interoperable Web services,
+and to store Linked Data in JSON-based storage engines.
+        </p>
+
+        <p>
+JSON-LD is useful when extending the data model described in this
+specification. Instances of the data model are encoded in JSON-LD in
+the same way that they are encoded in JSON (Section <a href="#json" class="sec-ref"><span class="secno">7.1</span> <span class="sec-title">JSON</span></a>),
+with the addition of the <code>@context</code> property. The
+<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD Context</a>
+is described in detail in the [<cite><a class="bibref" href="#bib-json-ld">JSON-LD</a></cite>] specification and its use
+is elaborated upon in Section <a href="#extensibility" class="sec-ref"><span class="secno">6.1</span> <span class="sec-title">Extensibility</span></a>.
+        </p>
+
+        <p>
+Multiple contexts <em class="rfc2119" title="MAY">MAY</em> be used or combined to express any arbitrary
+information about credentials in idiomatic JSON. If an application is
+processing a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> or <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>,
+and a <code>@context</code> property is not present at the top-level of the
+JSON-LD document, then a <code>@context</code> property with a value of
+<code>https://w3id.org/credentials/v1</code> <em class="rfc2119" title="MUST">MUST</em> be assumed.
+        </p>
+
+        <div class="issue" id="issue-container-number-202"><div role="heading" class="issue-title marker" id="h-issue-27" aria-level="4"><a href="https://github.com/w3c/issues/202"><span>Issue 202</span></a><span style="text-transform: none">: Align JSON-LD Context with latest Verifiable Credentials specification</span></div><p class="">
+The Verifiable Credentials JSON-LD Context needs to be updated to reflect
+the latest specification.
+        </p></div>
+
+      </section>
+
+    </section>
+
+    <section id="verification">
+      <!--OddPage--><h2 id="x8-verification"><span class="secno">8. </span>Verification</h2>
+
+      <p>
+This section describes a number of checks required to verify a credential.
+Some checks are essential for all verifiable credentials, while some are
+applicable to only some credentials.
+      </p>
+
+      <div class="issue" id="issue-container-number-128"><div role="heading" class="issue-title marker" id="h-issue-28" aria-level="3"><a href="https://github.com/w3c/issues/128"><span>Issue 128</span></a><span style="text-transform: none">: Add standard JSON Schema for implementors to validate their verifiable credentials.</span></div><p class="">
+The group is currently discussing whether a mechanism should be provided
+that enables linkages to JSON Schema or other optional validation mechanisms.
+      </p></div>
+
+      <section id="syntax">
+        <h3 id="x8-1-syntax"><span class="secno">8.1 </span>Syntax</h3>
+        <ul>
+          <li>The document is syntactically valid (e.g. JSON, JSON-LD).</li>
+        </ul>
+      </section>
+      <section id="credential">
+        <h3 id="x8-2-credential"><span class="secno">8.2 </span>Credential</h3>
+        <ul>
+          <li>Required properties <em class="rfc2119" title="MUST">MUST</em> be present. For example, for a
+          <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>, <code>type</code>
+          and <code>proof</code> properties are required.</li>
+          <li>Property values <em class="rfc2119" title="MUST">MUST</em> match expectations described in this
+          specification. For example, the document <code>type</code> property
+          for a verifiable credential <em class="rfc2119" title="MUST">MUST</em> contain the class
+          <code>VerifiableCredential</code>.</li>
+        </ul>
+      </section>
+      <section id="issuer-0">
+        <h3 id="x8-3-issuer"><span class="secno">8.3 </span>Issuer</h3>
+        <ul>
+          <li>The value associated with the <code>issuer</code>
+          property <em class="rfc2119" title="MUST">MUST</em> identify an <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> that is known to and trusted
+          by the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>.</li>
+          <li>Pertinent metadata about the <code>issuer</code> <em class="rfc2119" title="MUST">MUST</em> be
+          available to the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>. For example, an issuer may publish
+          information that contains the public keys they use to digitally
+          sign <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> that they have issued. This
+          metadata is pertinent when checking the proofs on the
+          <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>.</li>
+        </ul>
+      </section>
+      <section id="subject">
+        <h3 id="x8-4-subject"><span class="secno">8.4 </span>Subject</h3>
+        <ul>
+          <li>The value associated with the <code>id</code> property for each
+          <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> <em class="rfc2119" title="MUST">MUST</em> identify a <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> to the
+          <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>. For example, if a subject is identified and the
+          verifier has public key metadata related to the subject that is
+          used for authentication purposes, then the verifier <em class="rfc2119" title="MAY">MAY</em> be able to
+          authenticate the subject via a signature generated by the subject
+          that is contained in the <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>.</li>
+        </ul>
+
+        <div class="issue" id="issue-container-number-162"><div role="heading" class="issue-title marker" id="h-issue-29" aria-level="4"><a href="https://github.com/w3c/issues/162"><span>Issue 162</span></a><span style="text-transform: none">: Determine how/if WebAuthn will work with VCs</span></div><p class="">
+The group is currently discussing how authentication and WebAuthn may work.
+        </p></div>
+
+        <div class="note" id="issue-container-generatedID-11"><div role="heading" class="note-title marker" id="h-note-5" aria-level="4"><span>Note</span></div><p class="">
+The <code>id</code> property is optional, and <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a> <em class="rfc2119" title="MAY">MAY</em> use other
+properties in a credential to uniquely identify the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a>.
+        </p></div>
+      </section>
+      <section id="signatures-proofs">
+        <h3 id="x8-5-signatures-proofs"><span class="secno">8.5 </span>Signatures / Proofs</h3>
+
+        <p>
+The cryptographic mechanism used to prove that the information in a
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> or a <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a> has not been
+tampered with is called a <em>proof</em>. There are many types of cryptographic proofs
+including but not limited to, digital signatures, zero knowledge proofs,
+proofs of work, and proofs of stake. In general, when verifying proofs,
+implementations <em class="rfc2119" title="MUST">MUST</em> ensure that:
+        </p>
+
+        <ul>
+          <li>The proof is available in the form of a known proof suite.</li>
+          <li>All required proof suite properties are present.</li>
+          <li>The proof suite verification agorithm, when applied to the
+          data, results in an acceptable proof.</li>
+        </ul>
+
+        <p>
+Some proofs are digital signatures. In general, when verifying digital
+signatures, implementations <em class="rfc2119" title="MUST">MUST</em> ensure that:
+        </p>
+
+        <ul>
+          <li>Acceptably recent metadata regarding the public key
+          associated with the signature is available. For example, the
+          metadata may include properties related to expiration, key owner,
+          or key purpose.</li>
+          <li>The key <em class="rfc2119" title="MUST NOT">MUST NOT</em> be revoked or expired.</li>
+          <li>The cryptographic signature <em class="rfc2119" title="MUST">MUST</em> be valid.</li>
+          <li>If a <code>proofPurpose</code> exists, it <em class="rfc2119" title="MUST">MUST</em> be a valid value
+          per the cryptographic suite.</li>
+        </ul>
+
+        <div class="note" id="issue-container-generatedID-12"><div role="heading" class="note-title marker" id="h-note-6" aria-level="4"><span>Note</span></div><p class="">
+The digital signature provides a number of protections, other than tamper
+resistance, that are not immediately obvious.
+For example, a Linked Data Signature's <code>created</code> property
+establishes a date and time where the credential <em class="rfc2119" title="SHOULD NOT">SHOULD NOT</em> be considered
+valid before that date and time. The  <code>creator</code> property enables
+the ability to dynamically discover information about the entity that created
+the data to ensure that the public key has not been revoked or expired.
+The <code>proofPurpose</code> property ensures that the reason the entity
+created the signature, such as for the purposes of authentication or creating
+a verifiable credential, are clear and protected in the signature.
+        </p></div>
+      </section>
+      <section id="issued">
+        <h3 id="x8-6-issued"><span class="secno">8.6 </span>Issued</h3>
+
+        <ul>
+          <li>The <code>issuanceDate</code> <em class="rfc2119" title="MUST">MUST</em> be in an expected range for
+          the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>. For example, a verifier may ensure that the
+          issuance date of a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> is not in the
+          future.</li>
+        </ul>
+      </section>
+      <section id="expiration-0">
+        <h3 id="x8-7-expiration"><span class="secno">8.7 </span>Expiration</h3>
+
+        <ul>
+          <li>The <code>expirationDate</code> <em class="rfc2119" title="MUST">MUST</em> be in an expected range for
+          the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>. For example, a verifier may ensure that the
+          expiration date is not in the past.</li>
+        </ul>
+      </section>
+      <section id="revocation">
+        <h3 id="x8-8-revocation"><span class="secno">8.8 </span>Revocation</h3>
+        <ul>
+          <li>If revocation instructions are present, the credential must not
+          have been revoked.</li>
+        </ul>
+      </section>
+      <section id="fitness-for-purpose">
+        <h3 id="x8-9-fitness-for-purpose"><span class="secno">8.9 </span>Fitness for Purpose</h3>
+
+        <ul>
+          <li>The custom properties in the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> are
+          appropriate for the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>'s purpose. For example if a
+          verifier needs to determine that a <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> is older than 21
+          years of age, they may accept claims of specific
+          <code>birthdate</code> or abstract properties such as
+          <code>ageOver</code>.</li>
+          <li>The <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> is trusted by the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> to make the
+          claims at hand. For example, a franchised Fast Food resturant
+          location will trust discount coupon claims made by the
+          corporate headquarters of the franchise.</li>
+          <li>All policy information expressed by the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a>
+          in the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> <em class="rfc2119" title="MUST">MUST</em> be enforced unless
+          verifiers accept the risk of not enforcing the policy information.
+          For example, the issuer may limit the use
+          of the credential to specific <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a>, certain <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>
+          age ranges, or during certain dates.</li>
+          <li>All policy information expressed by the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>
+          in the <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a> <em class="rfc2119" title="MUST">MUST</em> be enforced unless
+          verifiers accept the risk of not enforcing the policy information.
+          For example, the holder may limit the use of the credential to
+          specific <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a> or for specific purposes
+          (such as authentication, but not data mining).</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="syntaxes-0">
+      <!--OddPage--><h2 id="x9-syntaxes"><span class="secno">9. </span>Syntaxes</h2>
+
+
+      <p>
+Many of the data model concepts in this document thus far have been introduced
+by example using the JSON syntax. This section formalizes how the data model
+(described in Sections <a href="#core-data-model" class="sec-ref"><span class="secno">3.</span> <span class="sec-title">Core Data Model</span></a>,
+<a href="#basic-concepts" class="sec-ref"><span class="secno">5.</span> <span class="sec-title">Basic Concepts</span></a>, and <a href="#advanced-concepts" class="sec-ref"><span class="secno">6.</span> <span class="sec-title">Advanced Concepts</span></a>
+) is realized in JSON and JSON-LD. Although syntactic mappings are only provided for these two syntaxes,
+applications and services may also use any other data representation syntax,
+such as XML, YAML, or CBOR, that is capable of expressing the data model.
+      </p>
+
+      <section id="json-0">
+        <h3 id="x9-1-json"><span class="secno">9.1 </span>JSON</h3>
+
+          <p>
+The data model as described in Section <a href="#core-data-model" class="sec-ref"><span class="secno">3.</span> <span class="sec-title">Core Data Model</span></a> can be
+encoded in Javascript Object Notation (JSON) [<cite><a class="bibref" href="#bib-rfc8259">RFC8259</a></cite>] by mapping
+property values to the following JSON types:
+          </p>
+
+          <ul>
+            <li>Numeric values representable as IEEE754 <em class="rfc2119" title="SHOULD">SHOULD</em> be represented
+            as a Number type.</li>
+            <li>Any boolean value <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as a Boolean type.</li>
+            <li>Any sequence value <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as an Array type.</li>
+            <li>Any unordered set of values <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as
+            an Array type.</li>
+            <li>Any set of <a href="#dfn-property" class="internalDFN" data-link-type="dfn">properties</a> <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as
+            an Object type.</li>
+            <li>Any empty value <em class="rfc2119" title="SHOULD">SHOULD</em> be represented as a null value.</li>
+            <li>Any other value <em class="rfc2119" title="MUST">MUST</em> be represented as a String type.</li>
+          </ul>
+
+        <section id="json-web-token-0">
+          <h4 id="x9-1-1-json-web-token"><span class="secno">9.1.1 </span>JSON Web Token</h4>
+
+          <div class="issue" id="issue-container-generatedID-13"><div role="heading" class="issue-title marker" id="h-issue-30" aria-level="5"><span>Issue</span></div><p class="">
+This section will be moved into its own specification before this document
+enters the Candidate Recommendation stage.
+          </p></div>
+
+          <p>The following example demonstrates how one could
+          express this data model using a JSON Web Token.</p>
+
+  <div class="example"><div class="example-title marker"><span>Example 16</span><span style="text-transform: none">: A JOSE JWT verifiable credential</span></div><pre class="hljs css" aria-busy="false"><span class="hljs-selector-tag">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9</span><span class="hljs-selector-class">.eyJpc3MiOiJodHRwczovL2Rtdi</span>
+5<span class="hljs-selector-tag">leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL</span>
+<span class="hljs-selector-tag">CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi</span>
+<span class="hljs-selector-tag">YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI</span>
+6<span class="hljs-selector-tag">Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG</span>
+<span class="hljs-selector-tag">FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI</span>
+<span class="hljs-selector-tag">iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu</span>
+<span class="hljs-selector-tag">ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ</span>
+<span class="hljs-selector-tag">iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj</span>
+<span class="hljs-selector-tag">F9fX0</span><span class="hljs-selector-class">.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6</span>
+<span class="hljs-selector-tag">NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1</span>
+<span class="hljs-selector-tag">fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4</span></pre></div>
+
+  <p>
+  The JWT above was produced using the inputs below:
+  </p>
+
+  <div class="issue" id="issue-container-generatedID-14"><div role="heading" class="issue-title marker" id="h-issue-31" aria-level="5"><span>Issue</span></div><p class="">
+  A number of the concerns have been raised around security,
+  composability, reusability, and extensibility with respect
+  to the use of JWTs for Verifiable Credentials. These concerns
+  will be documented in time in at least the Verfiable Claims Model
+  and Security Considerations section of this document.
+  </p></div>
+
+  <pre aria-busy="false" class="hljs javascript">  <span class="hljs-comment">// JWT Header</span>
+  {
+    <span class="hljs-string">"alg"</span>: <span class="hljs-string">"RS256"</span>,
+    <span class="hljs-string">"typ"</span>: <span class="hljs-string">"JWT"</span>
+  }
+  <span class="hljs-comment">// JWT Payload</span>
+  {
+    <span class="hljs-string">"iss"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+    <span class="hljs-string">"iat"</span>: <span class="hljs-number">1262304000</span>,
+    <span class="hljs-string">"exp"</span>: <span class="hljs-number">1483228800</span>,
+    <span class="hljs-string">"aud"</span>: <span class="hljs-string">"www.example.com"</span>,
+    <span class="hljs-string">"sub"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    <span class="hljs-string">"verifiableCredential"</span>: {
+      <span class="hljs-string">"@context"</span>: <span class="hljs-string">"https://w3id.org/security/v1"</span>,
+      <span class="hljs-string">"id"</span>: <span class="hljs-string">"http://example.gov/credentials/3732"</span>,
+      <span class="hljs-string">"type"</span>: [<span class="hljs-string">"VerifiableCredential"</span>, <span class="hljs-string">"ProofOfAgeCredential"</span>],
+      <span class="hljs-string">"issuer"</span>: <span class="hljs-string">"https://dmv.example.gov"</span>,
+      <span class="hljs-string">"issuanceDate"</span>: <span class="hljs-string">"2010-01-01"</span>,
+      <span class="hljs-string">"claim"</span>: {
+        <span class="hljs-string">"id"</span>: <span class="hljs-string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+        <span class="hljs-string">"ageOver"</span>: <span class="hljs-number">21</span>
+      }
+    }
+  }
+  </pre>
+
+        </section>
+
+      </section>
+
+      <section id="json-ld-0">
+        <h3 id="x9-2-json-ld"><span class="secno">9.2 </span>JSON-LD</h3>
+
+        <p>
+[<cite><a class="bibref" href="#bib-json-ld">JSON-LD</a></cite>] is a JSON-based format that is used to serialize
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>.
+The syntax is designed to easily integrate into deployed systems that
+already use JSON, and provides a smooth upgrade path from JSON to JSON-LD.
+It is primarily intended to be a way to use Linked Data in
+Web-based programming environments, to build interoperable Web services,
+and to store Linked Data in JSON-based storage engines.
+        </p>
+
+        <p>
+JSON-LD is useful when extending the data model described in this
+specification. Instances of the data model are encoded in JSON-LD in
+the same way that they are encoded in JSON (Section <a href="#json" class="sec-ref"><span class="secno">7.1</span> <span class="sec-title">JSON</span></a>),
+with the addition of the <code>@context</code> property. The
+<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD Context</a>
+is described in detail in the [<cite><a class="bibref" href="#bib-json-ld">JSON-LD</a></cite>] specification and its use
+is elaborated upon in Section <a href="#extensibility" class="sec-ref"><span class="secno">6.1</span> <span class="sec-title">Extensibility</span></a>.
+        </p>
+
+        <p>
+Multiple contexts <em class="rfc2119" title="MAY">MAY</em> be used or combined to express any arbitrary
+information about credentials in idiomatic JSON. If an application is
+processing a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> or <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>,
+and a <code>@context</code> property is not present at the top-level of the
+JSON-LD document, then a <code>@context</code> property with a value of
+<code>https://w3id.org/credentials/v1</code> <em class="rfc2119" title="MUST">MUST</em> be assumed.
+        </p>
+
+        <div class="issue" id="issue-container-number-194"><div role="heading" class="issue-title marker" id="h-issue-32" aria-level="4"><a href="https://github.com/w3c/issues/194"><span>Issue 194</span></a><span style="text-transform: none">: Use schema.org as the base schema?</span></div><p class="">
+The group is currently debating how schema.org fits in as a default context.
+        </p></div>
+
+      </section>
+
+    </section>
+
+    <section id="privacy-considerations">
+      <!--OddPage--><h2 id="x10-privacy-considerations"><span class="secno">10. </span>Privacy Considerations</h2>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+This section details the general privacy considerations and specific privacy
+implications of deploying the verifiable credentials data model into production
+environments.
+      </p>
+
+      <section id="spectrum-of-privacy">
+        <h3 id="x10-1-spectrum-of-privacy"><span class="secno">10.1 </span>Spectrum of Privacy</h3>
+        <p>
+It is important to recognize that there is a spectrum of privacy that ranges
+from pseudo-anonymous to strongly identified. Depending on the use case,
+people have different appetites when it comes to what information they
+are willing to provide and what information may be derived from what
+is provided.
+        </p>
+
+        <figure id="fig-privacy-is-a-spectrum-that-ranges-from-pseudo-anonymous-to-fully-identified">
+          <img style="margin: auto; display: block;" width="80%" src="diagrams/privacy-spectrum.svg">
+          <figcaption style="text-align: center;">Figure <span class="figno">7</span> <span class="fig-title">
+- Privacy is a spectrum that ranges from pseudo-anonymous to fully identified.
+          </span></figcaption>
+        </figure>
+
+        <p>
+For example, one would most likely desire to remain anonymous when purchasing
+alcohol because the regulatory check that’s required is solely whether or
+not the person is above a particular age. However, when a doctor is writing a
+prescription for a patient, the pharmacy fulfilling the prescription is
+required to more strongly identify the medical professional. Therefore it
+is important to recognize that there is not one approach to privacy that
+works for all use cases; privacy solutions tend to be use case specific.
+        </p>
+
+        <div class="note" id="issue-container-generatedID-15"><div role="heading" class="note-title marker" id="h-note-7" aria-level="4"><span>Note</span></div><p class="">
+Even if one may desire to remain anonymous when purchasing
+alcohol, a photo ID may still be required to provide appropriate
+assurance to the merchant. The merchant may not need to know your
+name or other details (other than that you are over a certain age),
+but in many cases a mere proof of age may still be insufficient to
+meet regulations.
+        </p></div>
+
+        <p>
+The Verifiable Credentials data model strives to support the full spectrum of
+privacy and does not take philosophical positions on the right level of
+anonymity for any particular transaction. The following sections provide
+guidance for implementers that want to avoid specific scenarios that are
+hostile to privacy.
+        </p>
+
+        <div class="issue" id="issue-container-number-125"><div role="heading" class="issue-title marker" id="h-issue-33" aria-level="4"><a href="https://github.com/w3c/issues/125"><span>Issue 125</span></a><span style="text-transform: none">: Privacy: Anonymous credentials</span></div><p class="">
+The group is currently discussing how the specification should be modified to
+support ZKPs and other forms of anonymous credentials.
+        </p></div>
+      </section>
+
+      <section id="personally-identifiable-information">
+        <h3 id="x10-2-personally-identifiable-information"><span class="secno">10.2 </span>Personally Identifiable Information</h3>
+
+        <p>
+The data associated with verifiable credentials stored in the
+<code>credential.claim</code> field are largely susceptible to privacy
+violations when shared with Verifiers. Personally identifying data
+such as a government-issued identifier, shipping address, and full name
+can be easily used to determine, track, and correlate an entity. Even
+information that does not seem personally identifiable like the
+combination of a birth date and zip code have very powerful correlation
+and de-anonymizing capabilities.
+        </p>
+
+        <p>
+Implementers are strongly advised to
+warn Holders when they share data with these sorts of characteristics.
+Issuers are strongly advised to provide privacy-protecting credentials
+when possible. For example, issuing ageOver credentials instead of
+birthdate credentials when the Verifier desires to determine if an
+entity is over the age of 18.
+        </p>
+      </section>
+
+      <section id="identifier-based-correlation">
+        <h3 id="x10-3-identifier-based-correlation"><span class="secno">10.3 </span>Identifier-based Correlation</h3>
+
+        <p>
+Subjects of verifiable credentials are identified via the
+<code>credential.claim.id</code> field. The identifiers that are used
+to identify the subject create a danger of correlation when
+the identifiers are long-lived or used across more than one web domain.
+        </p>
+        <p>
+If strong anti-correlation properties are a requirement in a system using
+verifiable credentials, it is strongly advised that identifiers are bound to a
+single origin or that identifiers are single-use or not used at all and
+are replaced by short-lived, single use bearer tokens.
+        </p>
+      </section>
+
+      <section id="signature-based-correlation">
+        <h3 id="x10-4-signature-based-correlation"><span class="secno">10.4 </span>Signature-based Correlation</h3>
+
+        <p>
+The contents of verifiable credentials are secured via the
+<code>credential.proof</code> field. The properties in this field
+create a danger of correlation when the same values are used across more than
+one session or domain and the value does not change. Examples include the
+<code>creator</code>, <code>created</code>,
+<code>domain</code> (for very specific domains),
+<code>nonce</code>, and <code>signatureValue</code> fields.
+        </p>
+
+        <p>
+If strong anti-correlation properties are desired,
+it is advised that signature values and metadata are regenerated
+each time using technologies like third party pairwise signatures,
+zero knowledge proofs, or group signatures. It is also important to note
+that even when using anti-correlation signatures that information may still
+be contained in the credential that defeats the anti-correlation properties
+of the cryptography.
+        </p>
+      </section>
+
+      <section id="long-lived-identifier-based-correlation">
+        <h3 id="x10-5-long-lived-identifier-based-correlation"><span class="secno">10.5 </span>Long Lived Identifier-based Correlation</h3>
+
+        <p>
+Verifiable <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> may contain long lived identifiers that could
+be used to correlate individuals. These types of identifiers include:
+subject identifiers, email addresses, government issued identifiers,
+organization issued identifiers, addresses, healthcare vitals,
+credential-specific JSON-LD Contexts, and many other sorts of long-lived
+identifiers.
+        </p>
+
+        <p>
+Organizations providing software to <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a> should strive to identify
+fields in credentials containing information that could be used to correlate
+them and warn the holder when this information is shared.
+        </p>
+      </section>
+
+      <section id="device-fingerprinting">
+        <h3 id="x10-6-device-fingerprinting"><span class="secno">10.6 </span>Device Fingerprinting</h3>
+
+        <p>
+There are mechanisms external to Verifiable Credentials that are used to track and
+correlate individuals on the Internet and the Web. Some of these mechanisms
+include Internet Protocol address tracking, Web Browser fingerprinting,
+Evercookies, Advertising Network trackers, mobile network position information,
+and in-application Global Positioning System APIs. The use of Verifiable
+Claims cannot prevent the use of these other tracking technologies. In addition,
+when these technologies are used in concert with Verifiable Credentials, new
+correlatable information may be discovered. For example, a birthday coupled
+with a GPS position can be used to strongly correlate an individual across
+multiple websites.
+        </p>
+
+        <p>
+It is advised that privacy preserving systems prevent the use of these other
+tracking technologies when verifiable credentials are being utilized. In some cases,
+these tracking technologies may need to be disabled entirely on devices that
+transmit verifiable credentials on behalf of the Holder.
+        </p>
+      </section>
+
+      <section id="favor-abstract-claims">
+        <h3 id="x10-7-favor-abstract-claims"><span class="secno">10.7 </span>Favor Abstract Claims</h3>
+
+        <p>
+In order to enable recipients of verifiable credentials to use them in a
+variety of circumstances without revealing more personally identifiable
+information than necessary for the transaction, issuers should consider
+limiting the information published in a credential to a minimal set needed for
+the expected purposes. One way to avoid placing personally identifiable
+information in a credential is to use an "abstract" property that meets the
+needs of verifiers without providing specific information about the subject.
+        </p>
+        <p>
+An example in this document is the use of the <code>ageOver</code> property as
+opposed to a specific birthdate that would constitute much stronger personally
+identifiable information. If retailers in a market commonly require purchasers
+to be older than a specific age, an issuer trusted in that market may choose
+to offer a credential claiming that subjects have met that requirement as
+opposed to offering credentials containing claims of their specific birthdates.
+This enables individual customers to purchase items without revealing specific
+personally identifiable information.
+        </p>
+      </section>
+
+      <section id="the-principle-of-minimum-disclosure">
+        <h3 id="x10-8-the-principle-of-minimum-disclosure"><span class="secno">10.8 </span>The Principle of Minimum Disclosure</h3>
+
+        <p>
+Privacy violations occur when information divulged in one context leaks into
+another. Accepted best practice for preventing such violations is to limit
+the information requested, and received, to the absolute minimum necessary.
+This minimal disclosure approach is required by regulation in multiple
+jurisdictions, including HIPAA in the US and GDPR in the EU.
+        </p>
+        <p>
+With verifiable credentials, minimal disclosure for issuers means limiting the
+content of a credential to the minimum required by potential verifiers for
+expected use. For verifiers, it means limiting the scope of the information
+requested or required for accessing services.
+        </p>
+        <p>
+For example, a driver's license containing a driver's ID number,
+height, weight, birthday, and home address is an example of a credential
+containing more information than is necessary to establish that the person
+is above a certain age.
+        </p>
+
+        <p>
+It is considered a best practice for issuers to atomize information or
+use a signature scheme that allows for selective disclosure.
+For example, an issuer
+that issues driver's licenses could issue a set of credentials containing every
+attribute that appears on a driver's license in addition to atomized
+credentials (a credential containing only the person's birthday), and atomized
+credentials that are more abstract (a credential containing only an
+<code>ageOver</code> attribute). In addition, the issuer is encouraged to
+provide secure HTTP endpoints for retrieving single-use bearer credentials to
+promote the pseudonymous usage of credentials when it is safe for the issuer to
+issue such credentials.
+        </p>
+        <p>
+Similarly, verifiers are urged to only request information that is absolutely
+necessary for a particular transaction to occur. This is important for at
+least two reasons: 1) it reduces the liability on the verifier for
+handling highly sensitive information that it does not need, and 2)
+it enhances the privacy of the individual by only asking for information
+that is required for the particular transaction.
+        </p>
+        <div class="note" id="issue-container-generatedID-16"><div role="heading" class="note-title marker" id="h-note-8" aria-level="4"><span>Note</span></div><p class="">
+While it is possible to practice the Principle of Minimum Disclosure, it may
+be impossible to avoid the strong identification of an individual for
+specific use cases during a single session or over multiple sessions. The
+authors of this document cannot stress how difficult it is to meet this
+principle in real world scenarios.
+        </p></div>
+      </section>
+
+      <section id="bearer-credentials">
+        <h3 id="x10-9-bearer-credentials"><span class="secno">10.9 </span>Bearer Credentials</h3>
+
+        <p>
+A <em>bearer credential</em> is a privacy enhancing piece of information,
+such as a concert ticket, that entitles the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> of the credential to a
+particular resource without divulging sensitive information about the holder.
+        </p>
+
+        <p>
+Verifiable Credentials that are bearer credentials are possible by not
+specifying the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> identifier, expressed using the
+<code>id</code>property that is nested in the <code>claim</code> property.
+For example, the following Verifiable Credential is a bearer credential:
+        </p>
+
+        <div class="example"><div class="example-title marker"><span>Example 17</span><span style="text-transform: none">: Usage of issuer properties</span></div><pre class="nohighlight">{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2017-10-22T12:23:48Z",
+  "claim": {
+    <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
+    "ageOver": 21
+  },
+  "proof": { ... }
+}</pre></div>
+
+        <p>
+While bearer credentials can be privacy enhancing, their use must be carefully
+crafted to not accidentally divulge more information than the holder of the
+credential expects. For example, repeated use of the same bearer credential
+across sites enables each site to potentially collude to unduly track or
+correlate the holder. Additionally, information that may seem non-identifying
+such as a birth date and zip code can be used to statistically identify an
+individual when used together in the same credential or session.
+        </p>
+
+        <p>
+<a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">Issuers</a> of bearer credentials <em class="rfc2119" title="SHOULD">SHOULD</em> ensure that bearer credentials that
+are expected to provide privacy enhancing benefits 1) are single use, when
+possible, 2) do not contain personally identifying information, and 3) are not
+unduly correlatable.
+        </p>
+
+        <p>
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> <em class="rfc2119" title="SHOULD">SHOULD</em> be warned by their software if bearer credentials
+containing sensitive information are issued or requested, or if there is a
+correlation risk when combining two or more bearer credentials across one
+or more sessions. While it may be impossible to detect all correlation risks,
+some may be detectable.
+        </p>
+
+        <p>
+<a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">Verifiers</a> <em class="rfc2119" title="SHOULD NOT">SHOULD NOT</em> request bearer credentials that can be used to
+unduly correlate the user.
+        </p>
+      </section>
+
+      <section id="validity-checks">
+        <h3 id="x10-10-validity-checks"><span class="secno">10.10 </span>Validity Checks</h3>
+
+        <p>
+When processing verifiable credentials, <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a> typically perform
+many of the checks listed in Section <a href="#verification" class="sec-ref"><span class="secno">8.</span> <span class="sec-title">Verification</span></a> as well as
+a variety of business process specific checks. For example, validity checks
+may include any of the following:
+        </p>
+
+        <ul>
+          <li>
+Checking the professional licensure status of the holder.
+          </li>
+          <li>
+Checking a date of license renewal or revocation.
+          </li>
+          <li>
+Checking sub-qualifications of an individual.
+          </li>
+          <li>
+Ensuring that a relationship exists between the holder and the entity
+with whom the holder is attempting to interact.
+          </li>
+          <li>
+Checking the geolocation information associated with the holder.
+          </li>
+        </ul>
+
+        <p>
+The process of performing these checks may result in information leakage that
+leads to a privacy violation of the holder. For example, an operation as
+simple as checking a revocation list can notify the issuer that a very specific
+business is most likely interacting with the holder. This would enable
+issuers to collude and correlate individuals without their knowledge.
+        </p>
+
+        <p>
+<a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">Issuers</a> are urged to not use mechanisms, such as credential revocation
+lists that are unique per credential, during the verification process that
+would lead to privacy violations. Organizations providing software to
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a> should warn when credentials include information that could
+lead to privacy violations during the verification process. <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">Verifiers</a>
+should consider rejecting credentials that produce privacy violations or that
+enable bad privacy practices.
+        </p>
+      </section>
+
+      <section id="storage-providers-and-data-mining">
+        <h3 id="x10-11-storage-providers-and-data-mining"><span class="secno">10.11 </span>Storage Providers and Data Mining</h3>
+
+        <p>
+When a holder receives a credential from an issuer, the
+credential will need to be stored somewhere (e.g. in a credential repository).
+Holders are warned that the information in a verifiable credential may be
+sensitive in nature and highly individualized, making it a high value
+target for data mining. Therefore, there may be services
+that store verifiable credentials for free and mine personal data and sell it
+to organizations that desire individualized profiles on people and
+organizations (i.e. if the service is free, you are the product).
+        </p>
+        <p>
+It is suggested that holders be aware of the terms of service for their
+credential repository, specifically the correlation and data mining
+protections that are in place for those who store their verifiable credentials
+at the service provider.
+        </p>
+        <p>
+There are a number of effective mitigations for data mining and profiling:
+        </p>
+
+        <ul>
+          <li>
+Use service providers that do not sell your information to third parties.
+          </li>
+          <li>
+Use software that encrypts verifiable credentials such that a service provider
+cannot view the contents of the credential.
+          </li>
+          <li>
+Use software that stores verifiable credentials locally on a device that you
+control and that does not upload or analyze your information beyond
+your expectations.
+          </li>
+        </ul>
+      </section>
+
+      <section id="aggregation-of-credentials">
+        <h3 id="x10-12-aggregation-of-credentials"><span class="secno">10.12 </span>Aggregation of Credentials</h3>
+
+        <p>
+Two pieces of information about the same <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> almost always reveals
+more information than just a single piece of information, even when delivered
+through different channels. The aggregation of credentials is a privacy risk and
+all participants in the ecosystem need to be aware of the risks of data
+aggregation.
+        </p>
+
+        <p>
+For example, if a bearer credential for an email address and then a bearer
+credential
+stating that the holder is over the age of 21 are provided across multiple
+sessions, the verifier of the information has 1) a unique identifier to
+associate with the individual, and 2) age related information for that
+individual. It then becomes trivial to
+create a profile for the holder such that more and more information is leaked
+over time. Aggregation of credentials can be performed across multiple sites that
+are colluding as well, leading to privacy violations.
+        </p>
+
+        <p>
+Preventing the aggregation of information is a very difficult privacy problem
+to address from a technological perspective. While new cryptographic techniques,
+such as zero knowledge proofs, have been proposed as solutions to the problem
+of aggregation and correlation, the existence of long-lived identifiers
+and browser tracking techniques easily defeat even the most modern
+cryptographic techniques.
+        </p>
+
+        <p>
+The solution to the privacy implications of correlation or aggregation tend
+to not be technological in nature, but policy driven instead. Therefore, if
+a holder does not wish information to be aggregated about them, then they
+must express this in the <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentations</a> that they transmit.
+        </p>
+
+      </section>
+
+      <section id="usage-patterns">
+        <h3 id="x10-13-usage-patterns"><span class="secno">10.13 </span>Usage Patterns</h3>
+
+        <p>
+Despite the best efforts to assure privacy, the actual use of verifiable
+credentials can potentially lead to de-anonymization and a loss of privacy.
+This correlation can occur:
+        </p>
+
+        <ol>
+          <li>
+When the same credential is presented to the same verifier more than once –
+that verifier could infer that the holder is the same individual.
+          </li>
+          <li>
+When the same credential is presented to different verifiers, and either those
+verifiers collude or a third party has access to transaction records from
+both verifiers – the observant party could infer that the individual
+presenting the credential is the same person at both services, i.e., the
+accounts are controlled by the same person.
+          </li>
+          <li>
+When the same subject identifier of a credential refers to the same subject
+across presentations or verifiers. Even when different credentials are
+presented, if the subject identifier is the same, verifiers (and those with
+access to verifier logs) could infer that the holder of the credential is
+the same person.
+          </li>
+          <li>
+When the underlying information in a credential can be used to identify an
+individual across services – using information from other sources
+(including information provided directly by the user), verifiers can use
+the information inside the credential to correlate the individual with an
+existing profile. For example, if a holder presents credentials that include
+zip code, age, and sex, the verifier can potentially correlate the
+subject of that credential with an established profile [see Sweeney 2000
+<a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">Simple Demographics Often Identify People Uniquely</a>].
+          </li>
+          <li>
+When passing the identifier of a credential to a centralized revocation server
+– the centralized server can correlate the credential usage across interactions.
+For example, if a verifiable credential is used for proof of age in this manner,
+the centralized service could know everywhere that credential was presented: all
+liquor stores, bars, adult stores, lottery purchases, etc.
+          </li>
+        </ol>
+
+        <p>
+It’s possible to mitigate this in part:
+        </p>
+
+        <ol>
+          <li>
+Use a globally unique identifier as the subject for any given credential and
+never re-use that credential.
+          </li>
+          <li>
+If the credential supports revocation, use a globally distributed service for
+revocation.
+          </li>
+          <li>
+Design revocation APIs that do not depend on submitting the ID
+of the credential, e.g., use a revocation list rather than a query.
+          </li>
+          <li>
+Avoid associating personally identifiable information with any particular
+long-lived subject identifier.
+          </li>
+        </ol>
+
+        <p>
+It is understood that these mitigation techniques are not always practical
+or even compatible with necessary usage. Sometimes correlation is the point.
+        </p>
+        <p>
+In state prescription monitoring programs, usage monitoring is a
+requirement: enforcement entities need to be able to confirm that
+individuals are not cheating the system to get multiple prescriptions
+for controlled substances. This statutory or regulatory need to correlate
+usage overrides individual privacy concerns.
+        </p>
+
+        <p>
+Verifiable credentials will so be used to intentionally correlate individuals
+across services, for example, when using a common persona to log in to
+multiple services, so all activity on each of those services is
+intentionally linked to the same individual. This is not a privacy issue
+as long as each of those services uses the correlation in the expected
+manner.
+        </p>
+
+        <p>
+Privacy risks of credential usage occur when unintended or unexpected
+correlation arises from the presentation of verifiable credentials.
+        </p>
+      </section>
+
+      <section id="sharing-information-with-the-wrong-party">
+        <h3 id="x10-14-sharing-information-with-the-wrong-party"><span class="secno">10.14 </span>Sharing Information with the Wrong Party</h3>
+
+        <p>
+When a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> chooses to share information with a <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>, it
+may be the case that the verifier is acting in bad faith and requests
+information that could be used to harm the holder. For example, a
+verifier may ask for a bank account number, which could then be used in
+concert with other information to defraud the holder or the bank.
+        </p>
+
+        <p>
+<a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">Issuers</a> should strive to tokenize as much information as possible such
+that if a holder accidentally transmits credentials to the wrong
+verifier that the information loss isn't catastrophic.
+        </p>
+
+        <p>
+For example, instead of including a bank account number
+for the purposes of checking a bank balance for an individual, provide a
+token that enables the verifier to use the token to check to see if the
+balance is above a certain amount. In this case, the bank could
+issue a verifiable credential containing a token for checking balance
+to a holder. A holder would then include the verifiable credential in a
+verifiable presentation and bind the token to a credit checking agency via a digital
+signature. The verifier would then wrap the verifiable presentation in their digital
+signature, and hand it back to the issuer to dynamically check the account
+balance.
+        </p>
+
+        <p>
+This approach ensures that even if the holder shares the account balance token
+with the wrong party that the attacker doesn't discover the bank account
+number, nor the exact value in the account, and given the validity period for
+the counter-signature, doesn't gain access to the token for more than a few
+minutes.
+        </p>
+      </section>
+
+      <section id="frequency-of-claim-issuance">
+        <h3 id="x10-15-frequency-of-claim-issuance"><span class="secno">10.15 </span>Frequency of Claim Issuance</h3>
+
+        <p>
+As Section <a href="#usage-patterns" class="sec-ref"><span class="secno">10.13</span> <span class="sec-title">Usage Patterns</span></a> details, usage patterns can be
+correlated into certain types of behavior. Part of this correlation is
+mitigated when a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> uses a verifiable credential without the
+knowledge of the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a>. Issuers may defeat this protection by making
+their credentials short lived and renewal automatic.
+        </p>
+
+        <p>
+For example, an "over the age of 21" credential may be useful when gaining
+access to a bar. If an issuer makes the credential have a very short expiration
+date and an automatic renewal mechanism, then they could possibly correlate
+the holder's behavior in a way that negatively impacts the holder.
+        </p>
+
+        <p>
+Organizations providing software to holders should warn <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a> if they
+repeatedly use credentials with short lifespans that could result in
+behavior correlation. Issuers should avoid issuing credentials in a way that
+enables them to correlate usage patterns.
+        </p>
+
+      </section>
+
+      <section id="prefer-single-use-credentials">
+        <h3 id="x10-16-prefer-single-use-credentials"><span class="secno">10.16 </span>Prefer Single Use Credentials</h3>
+
+        <p>
+An ideal privacy respecting system would only require information to be
+disclosed by the holder that is necessary for the interaction with the verifier.
+The verifier would then record that the disclosure requirement was met and
+forget any sensitive information that was disclosed. In many cases,
+competing priorities, such as regulatory burden, prevent this ideal system
+from being employed.
+In other cases, long-lived identifiers prevent single use.
+The design of any verifiable credentials ecosystem, however, should strive to
+be as privacy respecting as possible by preferring single use credentials
+when possible.
+        </p>
+
+        <p>
+The usage of these type of credentials provides several benefits. The first
+benefit is to verifiers who can be sure that the data in the credential is
+fresh. The second benefit is to holders, who know that if there are no long
+lived identifiers in the credential that the credential itself cannot be used
+to track or correlate them online. Finally, the third benefit ensures that
+there is nothing for attackers to steal, making the entire ecosystem safer
+to operate within.
+        </p>
+      </section>
+
+    </section>
+
+    <section id="security-considerations">
+      <!--OddPage--><h2 id="x11-security-considerations"><span class="secno">11. </span>Security Considerations</h2>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+There are a number of security considerations that <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a>,
+<a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a>, and <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a> should be aware of when processing
+data described by this specification. Ignoring or not understanding the
+implications of this section can result in security vulnerabilities.
+      </p>
+
+      <p>
+While this section attempts to highlight a broad set of security
+considerations, it should not be interpreted as a complete list of all
+security considerations. Implementers are urged to seek the advice of security
+and cryptography professionals when implementing mission critical systems
+using the technology outlined in this specification.
+      </p>
+
+      <section id="cryptography-suites-and-libraries">
+        <h3 id="x11-1-cryptography-suites-and-libraries"><span class="secno">11.1 </span>Cryptography Suites and Libraries</h3>
+
+        <p>
+Some aspects of the data model described in this specification can be
+protected through the use of cryptography.
+Implementers should be aware of the underlying
+cryptography suites and libraries that are used to implement the
+creation and verification of digital signatures and mathematical proofs
+utilized by their systems when processing <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> and
+<a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentations</a>. Software developers with extensive experience implementing
+or auditing systems that use cryptography must be used to ensure that
+systems are properly designed. Proper
+<a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a>
+is also suggested to remove bias from security reviews.
+        </p>
+
+        <p>
+Cryptography suites and libraries have a shelf life and eventually fall to
+new attacks and technology advances. Any production quality system must take
+this reality into account and ensure that mechanisms exist to easily upgrade
+old or broken cryptographic suites and libraries in a proactive manner.
+Mechanisms should also exist to invalidate and replace existing credentials
+in the event of a cryptography suite or library failure.
+Regular monitoring of systems to ensure proper upgrades are made in a timely
+manner are also important to ensure the long term viability of systems
+processing verifiable credentials.
+        </p>
+
+      </section>
+
+      <section id="unsigned-claims">
+        <h3 id="x11-2-unsigned-claims"><span class="secno">11.2 </span>Unsigned Claims</h3>
+
+        <p>
+This specification allows <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> to be produced that do not
+contain signatures or proofs of any kind. These types of credentials are often
+useful for intermediate storage, or self asserted information, which is
+analogous to filling out a form on a web page. Implementers should note that
+these types of credentials are not verifiable because the authorship
+is either not known or cannot be trusted.
+        </p>
+      </section>
+
+      <section id="bundling-dependent-claims">
+        <h3 id="x11-3-bundling-dependent-claims"><span class="secno">11.3 </span>Bundling Dependent Claims</h3>
+        <p>
+It is considered a best practice for issuers to atomize information in a
+credential, or use a signature scheme that allows for selective disclosure.
+In the former case, if the atomization is not done securely by the issuer,
+the holder might bundle together different credentials in a way that was not
+intended by the issuer.
+        </p>
+        <p>
+For example a university might issue two credentials to a person, each
+containing two properties i.e. "Staff Member" in the
+"Department of Computing" and "Post Graduate Student" in the
+"Department of Economics". If these credentials are atomized into separate
+properties, then the university would issue four credentials to the person,
+each containing one of the following properties:
+"Staff Member", "Post Graduate Student", "Department of Computing" and
+"Department of Economics". The holder could then transfer
+the "Staff Member" and "Department of Economics" to an inspector-verifier,
+which together would comprise a false claim.
+        </p>
+
+      </section>
+
+      <section id="token-binding">
+        <h3 id="x11-4-token-binding"><span class="secno">11.4 </span>Token Binding</h3>
+        <p>
+A <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> may need to ensure that they are the intended recipient
+of a <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a> and are not the target of a
+<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">
+man in the middle attack</a>. Any protocol that utilizes the
+Verifiable Credentials Data Model and requires protection against these
+sorts of attacks needs to perform some sort of token binding, such
+as using <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol-18">
+The Token Binding Protocol v1.0</a>, that ties
+the request for a <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a> with the response. Any
+protocol that does not perform token binding is susceptible to
+man in the middle attacks.
+        </p>
+
+      </section>
+
+      <section id="bundling-dependent-claims-0">
+        <h3 id="x11-5-bundling-dependent-claims"><span class="secno">11.5 </span>Bundling Dependent Claims</h3>
+        <p>
+It is considered a best practice for issuers to atomize information in a
+credential, or use a signature scheme that allows for selective disclosure.
+In the former case, if the atomization is not done securely by the issuer,
+the holder might bundle together different credentials in a way that was not
+intended by the issuer.
+        </p>
+        <p>
+For example a university might issue two credentials to a person, each
+containing two properties i.e. "Staff Member" in the
+"Department of Computing" and "Post Graduate Student" in the
+"Department of Economics". If these credentials are atomized into separate
+properties, then the university would issue four credentials to the person,
+each containing one of the following properties:
+"Staff Member", "Post Graduate Student", "Department of Computing" and
+"Department of Economics". The holder could then transfer
+the "Staff Member" and "Department of Economics" to a verifier,
+which together would comprise a false claim.
+        </p>
+
+      </section>
+
+      <section id="highly-dynamic-information">
+        <h3 id="x11-6-highly-dynamic-information"><span class="secno">11.6 </span>Highly Dynamic Information</h3>
+
+        <p>
+When verifiable <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> are issued for highly dynamic information,
+implementers should ensure that the expiration times for the credential are
+set appropriately. Expiration periods that are longer than the timeframe
+where the credential is valid may create exploitable security vulnerabilities.
+Expiration periods that are shorter than the timeframe where the information
+expressed by the credential is valid create a burden on <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a> and
+<a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a>. It is therefore important to set validity periods for
+credentials that are appropriate to the use case and the expected lifetime
+for the information contained in the credential.
+        </p>
+
+      </section>
+
+      <section id="device-theft-and-impersonation">
+        <h3 id="x11-7-device-theft-and-impersonation"><span class="secno">11.7 </span>Device Theft and Impersonation</h3>
+
+        <p>
+When <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> are stored on a device and that
+device is stolen by an attacker, it may be possible for the attacker to then
+gain access to systems using the victim's verifiable credentials. Mitigations
+for this attack include:
+        </p>
+
+        <ul>
+          <li>
+Enabling password, pin, pattern, or biometric screen unlock protection.
+          </li>
+          <li>
+Enabling password, biometric, or multi-factor authentication for the
+credential repository.
+          </li>
+          <li>
+Enabling password, biometric, or multi-factor authentication when
+accessing cryptographic keys.
+          </li>
+          <li>
+Utilizing a separate hardware-based signature device.
+          </li>
+          <li>
+All or any combination of the above.
+          </li>
+        </ul>
+
+    </section>
+
+  
+
+
+</section><section id="references" class="appendix">
+      <!--OddPage--><h2 id="a-references"><span class="secno">A. </span>References</h2>
+      
+    <section id="normative-references">
+        <h3 id="a-1-normative-references"><span class="secno">A.1 </span>Normative references</h3>
+      <dl class="bibliography">
+        <dt id="bib-iso8601">[ISO8601]</dt><dd><a href="http://www.iso.org/iso/catalogue_detail?csnumber=40874"><cite>Representation of dates and times. ISO 8601:2004.</cite></a>.  International Organization for Standardization (ISO). 2004. ISO 8601:2004. URL: <a href="http://www.iso.org/iso/catalogue_detail?csnumber=40874">http://www.iso.org/iso/catalogue_detail?csnumber=40874</a></dd><dt id="bib-json-ld">[JSON-LD]</dt><dd><a href="https://www.w3.org/TR/json-ld/"><cite>JSON-LD 1.0</cite></a>. Manu Sporny; Gregg Kellogg; Markus Lanthaler. W3C. 16 January 2014. W3C Recommendation. URL: <a href="https://www.w3.org/TR/json-ld/">https://www.w3.org/TR/json-ld/</a></dd><dt id="bib-rfc8259">[RFC8259]</dt><dd><a href="https://tools.ietf.org/html/rfc8259"><cite>The JavaScript Object Notation (JSON) Data Interchange Format</cite></a>. T. Bray, Ed.. IETF. December 2017. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc8259">https://tools.ietf.org/html/rfc8259</a></dd>
+      </dl></section><section id="informative-references">
+        <h3 id="a-2-informative-references"><span class="secno">A.2 </span>Informative references</h3>
+      <dl class="bibliography">
+        <dt id="bib-ld-proofs">[LD-PROOFS]</dt><dd><a href="https://w3c-dvcg.github.io/ld-proofs/"><cite>Linked Data Proofs</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-proofs/">https://w3c-dvcg.github.io/ld-proofs/</a></dd><dt id="bib-ld-signatures">[LD-SIGNATURES]</dt><dd><a href="https://w3c-dvcg.github.io/ld-signatures/"><cite>Linked Data Signatures</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-signatures/">https://w3c-dvcg.github.io/ld-signatures/</a></dd><dt id="bib-linked-data">[LINKED-DATA]</dt><dd><a href="https://www.w3.org/DesignIssues/LinkedData.html"><cite>Linked Data Design Issues</cite></a>. Tim Berners-Lee. W3C. 27 July 2006. W3C-Internal Document. URL: <a href="https://www.w3.org/DesignIssues/LinkedData.html">https://www.w3.org/DesignIssues/LinkedData.html</a></dd><dt id="bib-vc-status-registry">[VC-STATUS-REGISTRY]</dt><dd><a href="https://w3c-ccg.github.io/vc-status-registry/"><cite>Verifiable Credentials Status Scheme Registry</cite></a>. Manu Sporny. Credentials Community Group. CG-DRAFT. URL: <a href="https://w3c-ccg.github.io/vc-status-registry/">https://w3c-ccg.github.io/vc-status-registry/</a></dd><dt id="bib-vc-usecases">[VC-USECASES]</dt><dd><a href="https://www.w3.org/TR/verifiable-claims-use-cases/"><cite>Verifiable Claims Use Cases</cite></a>. Shane McCarron; Daniel Burnett; Gregg Kellogg; Brian Sletten; Manu Sporny. Verifiable Claims Working Group. W3C First Public Working Draft. URL: <a href="https://www.w3.org/TR/verifiable-claims-use-cases/">https://www.w3.org/TR/verifiable-claims-use-cases/</a></dd>
+      </dl></section></section><p role="navigation" id="back-to-top"><a href="#title"><abbr title="Back to Top">↑</abbr></a></p><script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script></body></html>
