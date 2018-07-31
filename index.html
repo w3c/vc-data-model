@@ -1222,17 +1222,75 @@ new <code>favoriteFood</code> term so that it may only be used within the
       </section>
 
       <section>
+        <h2>Refreshing</h2>
+
+        <p>
+It is often useful for systems to enable the manual or automatic refresh of a
+<a>verifiable credential</a> that has <a href="#expiration">expired</a>.
+This specification enables an <a>issuer</a> to include a link to a refresh
+service.
+        </p>
+
+       <p>
+The expression of a refresh service may be performed via the following
+<a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>refreshService</var></dt>
+          <dd>The value of this property MUST be one or more refresh services
+            that provides enough information to the <a>holder</a>'s software
+            such that it may refresh the credential.
+            Each <code>refreshService</code> comprises at least its
+            <code>type</code> (e.g. <code>ManualRefreshService2018</code>),
+            and the serviceEndpoint URL. The precise contents of each
+            refresh service is determined by the specific type definition.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+{
+  "@context": [
+    "https://w3id.org/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"refreshService": {
+    "type": "ManualRefreshService2018",
+    "serviceEndpoint": "https://dmv.example.gov/refresh/283947"
+  }</span>,
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+In the example above, the <a>issuer</a> is specifying a
+manual <code>refreshService</code> that can be used by directing the
+<a>holder</a> to the following URL:
+<code>https://dmv.example.gov/refresh/283947</code>.
+        </p>
+
+      </section>
+
+      <section>
         <h2>Terms of Use</h2>
 
         <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
         <a>holder</a> to express limitations on the use of information
         expressed by the Verifiable Credentials Data Model. The <a>issuer</a> places
-        the terms of use inside the <a>credential</a> before it is converted into a 
+        the terms of use inside the <a>credential</a> before it is converted into a
         <a>verifiable credential</a>. The <a>holder</a> places the terms of use inside
-        the <a>presentation</a> before it is converted into a 
+        the <a>presentation</a> before it is converted into a
         <a>verifiable presentation</a>.</p>
 
-       <p class="note"> it is for further study how a subject who is not a 
+       <p class="note"> it is for further study how a subject who is not a
        holder places terms of
        use on his or her verifiable credentials. One way could be for the subject to
        request the issuer to place them inside the issued verifiable credentials. Another
@@ -1247,11 +1305,11 @@ new <code>favoriteFood</code> term so that it may only be used within the
           <dt><var>termsOfUse</var></dt>
           <dd>The value of this property MUST be one or more terms of use
             that tell the <a>verifier</a> what actions it MUST perform if it is to
-           accept the verifiable credential or verifiable presentation. 
+           accept the verifiable credential or verifiable presentation.
           If the verifier is not willing to accept these terms of use then it MUST reject
           the verifiable credential or verifiable presentation.
-          Each <code>termsOfUse</code> comprises its type, 
-            for example, <code>IssuerPolicy</code>, and  
+          Each <code>termsOfUse</code> comprises its type,
+            for example, <code>IssuerPolicy</code>, and
             optionally its instance id. The precise contents of each term of use is
             determined by the specific <code>TermsOfUse</code> type definition.
           </dd>
