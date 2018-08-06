@@ -1312,122 +1312,72 @@ that uniquely identifies a subject">
    </section>
 
     <section>
-       <h2>Subject Delegates to Holder</h2>
+       <h2>Subject Passes the Verifiable Credential to a Holder</h2>
 
      <p>
-Usually verifiable credentials will not be delegatable, for example, a subject should not
-delegate an 'age over 18' credential to another person. Consequently delegation of a verifiable
-credential is normally forbidden. However, delegation may be supported by the issuer adding the
-delegatable property to any verifiable credential that it issues. </p>
+Normally verifiable credentials will be presented to verifiers by the subject. However in some cases, the subject may need to pass the whole or part of a verifiable credential to a holder. The data model allows for both cases as follows. </p>
 
-<p> A verifier that receives a verifiable credential that has been delegated, and whose delegating verifiable credential does not contain the delegatable property, MUST reject the delegated verifiable credential.</p>
+<p>
+If only the subject is allowed to present the verifiable credential to a verifier, the issuer MUST insert the "subject only" Terms of Use into the verifiable credential, as defined below.  </p>
 
-<p> Delegation may be supported in two different ways: through the use of either recursion or verifiable presentations. Both methods involve the subject issuing a new verifiable credential to the delegated holder.
-    </p>
+<p>
+If the subject is not forbidden by the issuer to pass the whole or part of a verifiable credential to a holder, for example, a patient may pass a prescription verifiable credential to a relative for the relative to present it to a pharmacist for dispensing, then the subject MUST issue a verifiable credential to the holder containing the claim properties that are being passed on, as described below. </p>
 
    <section>
 
-   <h3> Delegatable Property </h3>
+   <h3> 'Subject Only' Terms of Use </h3>
 
   <p>
-The delegatable property states that a credential is delegatable. The value of this property SHOULD be null, and MUST be ignored.</p>
+The Subject Only Terms of Use states that a verifiable credential MUST only be presented to a verifier by the subject. If a verifier is presented with a verifiable credential containing the Subject Only Terms of Use, by anyone other than the subject, it MUST refuse to accept it.</p>
 
-<p>
-
-If the delectable property is present,
-then the verifiable credential is delegatable to a third party.
-If it is not present, then it is not delegatable. A verifier that receives a verifiable 
-credential that is not delegatable MUST reject any verifiable credential that has
-been delegated from it.
-
-  </p>
+        <pre class="example nohighlight" title="Subject Only termsOfUse property by an Issuer">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"termsOfUse": [{
+    "type": "SubjectOnly",
+    }]
+  }</span>,
+  "proof": { ... }
+}
+        </pre>
 
        </section>
        
-       <section>
-
-     <h3> Delegation through Recursion </h3>
-
-    <p>
-With recursion, the subject issues a credential to the delegated holder in which: 
- the issuer is the subject, the claim contains 
-the id of the delegated holder, and the claim property is the credential that 
-was originally issued to the subject. An example is provided below.
-    </p>
-<p>
-Note: the exact format of this credential has not yet been agreed by the working group
-</p>
- <pre class="example nohighlight" title="An example of a credential delegated 
-from a subject to a holder that is valid for 2 days, and is not delegatable">
-
-{
-	"id": "1234",
-	"type": ["Credential", "DelegatedRoleCredential"],
-	"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-	"issued": "2010-01-06T00:00:00Z ",
-	"expires": "2010-01-08T00:00:00Z ",
-	"claim": {
-		"id": "did:example:ebfeb1f712ebc6f1c2123456789",
-		"verifiableCredential": {
-			"id": "http://example.gov/credentials/3732",
-			"type": ["Credential", "RoleCredential"],
-			"issuer": "https://dmv.example.gov",
-			"issued": "2010-01-01",
-                        "delegatable": null,
-			"claim": {
-				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-				"role": "Project Manager"
-			},
-			"revocation": {
-				"id": "http://example.gov/revocations/738",
-				"type": "SimpleRevocationList2017"
-			},
-			"proof": {
-				"type": "LinkedDataSignature2015",
-				"created": "2016-06-18T21:19:10Z",
-				"creator": "https://example.com/jdoe/keys/1",
-				"domain": "json-ld.org",
-				"nonce": "598c63d6",
-				"signatureValue": "BavEll0...W3JT24 = "
-			}
-		}
-	},
-	"proof": { ...
-	}
-}
-
-        </pre>
-
-
-  </section>
-
   <section>
-   <h3> Delegation through Verifiable Presentations </h3>
+   <h3> Passing on a Verifiable Credential </h3>
 
    <p>
 
-The subject delegates a verifiable credential to a
-holder, by issuing a new verifiable credential to the holder in which: the issuer is the subject, 
-the subject is the delegated holder, and the claim contains the property to be delegated. In addition, the delegated holder creates a verifiable presentation that contains these two
+When the subject passes a verifiable credential to a
+holder, the subject SHOULD issue a new verifiable credential to the holder in which: 
+the issuer is the subject, 
+the subject is the holder to whom the verifiable credential is being passed, 
+and the claim contains the properties that are being passed on. In addition, the holder creates a verifiable presentation that contains these two
 verifiable credentials.
 </p>
 
 
 
-        <pre class="example nohighlight" title="An example of delegation using a 
-verifiable presentation">
+        <pre class="example nohighlight" title="An example of a holder presenting verifiable
+credential properties that have been passed to it by the subject">
 {
 	"id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
 	"type": ["VerifiablePresentation"],
 	"credential": [{
 			"id": "http://example.gov/credentials/3732",
-			"type": ["Credential", "RoleCredential"],
+			"type": ["Credential", "PrescriptionCredential"],
 			"issuer": "https://dmv.example.gov",
 			"issued": "2010-01-01",
-                        "delegatable": null,
 			"claim": {
 				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-				"role": "Project Manager"
+				"prescription": {....}
 			},
 			"revocation": {
 				"id": "http://example.gov/revocations/738",
@@ -1437,12 +1387,12 @@ verifiable presentation">
 		},
 		{
 			"id": "https://example.com/VC/123456789",
-			"type": ["Credential", "RoleCredential"],
+			"type": ["Credential", "PrescriptionCredential"],
 			"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 			"issued": "2010-01-03",
 			"claim": {
 				"id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-				"role": "Project Manager"
+				"prescription": {....}
 			},
 			"proof": {
 				"type": "RsaSignature2018",
