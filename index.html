@@ -173,13 +173,16 @@ the following sections provide an overview of:
       </p>
       <ol>
         <li>
-what a verifiable credential contains,
+what a verifiable credential is and how it's comprised,
         </li>
         <li>
-an ecosystem where verifiable credentials are expected to be useful, and
+what a presentation presentation (derived from verifiable credential) is and how it's comprised,
         </li>
         <li>
-the use cases and requirements that informed this specification
+an ecosystem where verifiable credentials and presentations are expected to be useful, and
+        </li>
+        <li>
+the use cases and requirements that informed this specification.
         </li>
       </ol>
       </p>
@@ -213,13 +216,16 @@ A verifiable credential is capable of representing all of the same information
 that a physical credential is intended to represent. The addition of
 digital technologies, such as digital signatures, also make verifiable
 credentials more tamperproof and therefore more trustworthy
-than their physical counterparts. Verifiable credentials can also be
-rapidly exchanged through the Internet, making them more convenient than
-their physical counterparts when needing to establish trust at a distance.
+than their physical counterparts.
       </p>
-
+      <p>
+Holders can generate presentations and share them with verifiers to prove
+they possess verifiable credentials with certain characteristics. Verifiable
+credentials can also be issued and and presented over the Internet, making them
+more convenient than their physical counterparts when needing to establish trust
+at a distance.
+      </p>
     </section>
-
     <section>
       <h3>Ecosystem Overview</h3>
 
@@ -238,8 +244,8 @@ standardization. The following roles are introduced in this specification:
         <dt><a>holder</a></dt>
         <dd>
 A role an <a>entity</a> may perform by possessing one or more
-<a>verifiable credentials</a>. Examples of holders include students,
-employees, and customers.
+<a>verifiable credentials</a> and generating <a>presentations</a> from them.
+Examples of holders include students, employees, and customers.
         </dd>
         <dt><a>issuer</a></dt>
         <dd>
@@ -250,15 +256,16 @@ trade associations, governments, and individuals.
         </dd>
         <dt><a>verifier</a></dt>
         <dd>
-A role an <a>entity</a> may perform by receiving one or more
-<a>verifiable credentials</a> for processing.
+A role an <a>entity</a> may perform by requesting and receiving a
+<a>verifiable presentation</a> that proves the holder possesses the required verifiable credentials with certain characteristics.
 Examples of verifiers include employers, security personnel, and websites.
         </dd>
         <dt><a>identifier registry</a></dt>
         <dd>
-A role a system may perform by mediating the creation and verification of
-<a>subject</a> identifiers. Examples of identifier registries include
-corporate employee databases, government ID databases, and distributed ledgers.
+Mediates the creation and verification of <a>issuer</a> identifiers, keys and
+other relevant data required to use verifiable credentials. Examples of
+such data repositories include trusted databases, decentralised databases,
+government ID databases, and distributed ledgers.
         </dd>
       </dl>
 
@@ -346,15 +353,20 @@ specification, namely:
       <ul>
         <li>
 <a>Holders</a> receive and store <a>verifiable credentials</a> from
-<a>issuers</a> through an agent that the issuer does not need to trust.
+<a>issuers</a>.
         </li>
         <li>
-<a>Holders</a> are positioned between <a>issuers</a> and <a>verifiers</a>
-and mediate the transmission of <a>verifiable credentials</a>.
+<a>Holders</a> may use an agent that the issuer does not need to trust.
         </li>
         <li>
-<a>Holders</a> provide <a>verifiable credentials</a> to <a>verifiers</a>
-through an agent that verifiers needn't trust; they only need to trust
+<a>Holders</a> are positioned between <a>issuers</a> and <a>verifiers</a>.
+        </li>
+        <li>
+<a>Holders</a> generate <a>verifiable presentations</a> from their <a>verifiable credentials</a> as
+needed and provide these <a>verifiable presentations</a> to <a>verifiers</a>.
+        </li>
+        <li>
+<a>Holders</a> may use an agent that verifiers needn't trust; they only need to trust
 <a>issuers</a>.
         </li>
         <li>
@@ -370,20 +382,24 @@ particular services; <a>holders</a> decide how to aggregate and manage
         </li>
         <li>
 <a>Holders</a> are be able to freely choose and change the agents they employ
-to help them manage and share their <a>verifiable credentials</a>.
+to help them manage their <a>verifiable credentials</a> and generate and share <a>verifiable presentations</a>.
         </li>
         <li>
-<a>Holders</a> that share <a>verifiable credentials</a> are not required to
+<a>Holders</a> that share <a>verifiable presentations</a> never need to
 reveal the identity of the <a>verifier</a> to <a>issuers</a>.
         </li>
         <li>
-A <a>verifiable credential</a> is expressed in one or more standard,
+<a>Holders</a> in <a>presentations</a> can either disclose the attributes or satisfy <a>predicates</a>
+requested by the <a>verifier</a>. <a>Predicates</a> are boolean conditions like greater/less than or
+equal to, is in set, etc.
+        </li>
+        <li>
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> are expressed in one or more standard,
 machine-readable data formats which can also be extended with minimal
 coordination.
         </li>
         <li>
-<a>Verifiable credentials</a> are independently issued, stored,
-and verified.
+Issuers independently issue <a>verifiable credentials</a>, and holders store them. When requested, Holders generate <a>verifiable presentations</a>, and verifiers independently verify them.
         </li>
         <li>
 <a>Verifiable Credentials</a> can be revoked by the <a>issuer</a>.
@@ -446,8 +462,10 @@ The basic structure of a claim.
 
       <p>
 The data model for <a>claims</a> described above is powerful and can be used to
-express a large variety of statements. For example, whether or not someone is
-over the age of 21 may be expressed as follows:
+express a large variety of statements. For example, a claim specifying the data of birth of a subject
+can be used to prove that its age lies in an interval or is greater or less than a some value which is
+needed in use cases like proving drinking age or teenager discount or elderly discount;
+the holder has the flexibility to use the claim in any way that is applicable to that claim:
       </p>
 
       <figure>
@@ -487,10 +505,13 @@ of information.
 
       <p>
 A <a>credential</a> is set of one or more <a>claims</a> made by the
-same <a>entity</a>. It may include an identifier to uniquely identify the
-credential, as well as metadata that describes properties of the credential
-itself such as: the <a>issuer</a>, the expiry time, a representative image,
-etc. A <a>verifiable credential</a> is a set of claims and meta data that are
+same <a>entity</a>. It includes a holder generated almost-always unique identifier
+as well as metadata that describes properties of the credential itself such as: the <a>issuer</a>,
+the public key to use, the revocation mechanism to use etc. This metadata can
+either be signed by the issuer or not, more on that later. The credential identifier
+is never revealed to the verifier to prevent the issuer and verifier from
+colluding to correlate the holder.
+A <a>verifiable credential</a> is a set of claims and meta data that are
 tamper-resistant and that cryptographically prove who issued it.
       </p>
 
@@ -503,7 +524,7 @@ The basic components of a verifiable credential.
 
       <p>
 Examples of verifiable credentials include digital employee identification
-cards, digital proofs of age, and digital educational certificates.
+cards, digital birth certificates, digital educational certificates, etc.
       </p>
 
       <p class="note">
@@ -527,11 +548,11 @@ of claims that can be made.
 As this specification takes a privacy-first approach, it is important that
 the entities that use this technology are able to express only the portions of
 their persona that are appropriate for the situation. The expression of a
-subset of one's persona is called a <a>verifiable presentation</a>.
+subset of one's persona is called a <a>verifiable presentation</a> (or a derived credential).
       </p>
 
       <p>
-A <a>verifiable presentation</a> is a collection of one or more
+A holder generates a <a>verifiable presentation</a> from a collection of one or more
 <a>verifiable credentials</a> that are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
@@ -551,8 +572,8 @@ gaming persona, or home life persona.
       </p>
 
       <p class="note">
-It is possible to have a <a>presentation</a>, such as a business persona,
-that contains multiple <a>credentials</a> about different <a>subjects</a>
+It is possible to generate a <a>presentation</a>, such as in the context of a business persona,
+that is derived from multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
 
@@ -584,7 +605,7 @@ All entities trust the <a>identifier registry</a> to be un-corruptible and
 to be a correct record of which identifiers belong to which <a>entities</a>.
         </li>
         <li>
-The <a>subject</a> trusts the <a>issuer</a> to issue true (i.e. not false)
+The <a>subject</a> trusts (since only the holder can verify) the <a>issuer</a> to issue true (i.e. not false)
 <a>credentials</a> about the subject, and to revoke them quickly when
 appropriate.
         </li>
@@ -596,18 +617,9 @@ The <a>holder</a> trusts the <a>repository</a> to store the
       </ol>
 
       <p>
-This trust model differentiates itself from other trust models by ensuring that:
+This trust model differentiates itself from other trust models by ensuring that
+the <a>issuer</a> does not need to trust (or even know) the <a>verifier</a>.
       </p>
-
-      <ul>
-        <li>
-The <a>issuer</a> and the <a>verifier</a> do not need to trust the
-repository</a>, and
-        </li>
-        <li>
-the <a>issuer</a> does not need to trust the <a>verifier</a>.
-        </li>
-      </ul>
 
       <p>
 By decoupling the trust between the <a>identity provider</a> and the
