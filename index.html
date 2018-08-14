@@ -82,7 +82,7 @@
         // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
         // Team Contact.
         wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
-        maxTocLevel: 4,
+        maxTocLevel: 2,
         inlineCSS: true
       };
     </script>
@@ -1471,47 +1471,43 @@ that can be identified to be the same as the holder.
     <section>
       <h2>Credential Uniquely Identifies Subject</h2>
 
-     <p>
+      <p>
 In this case, the <a>claim</a> may contain multiple properties that each
 provide an aspect of the identity of the subject, and which together
-unambiguously identify the subject. In this case, it does not matter who the
-<a>holder</a> is, since the verifier can unambiguously identify the subject of
-the <a>verifiable credential</a> and determine what to do based on its
-knowledge of the relationship between the subject and the holder including
-whether or not they are the same entity.
-   </p>
+unambiguously identify the subject. Some use cases may not require the
+holder to be identified at all, such as checking to see if a doctor (the
+subject) is board certified. Other use cases may require the verifier to
+use out of band knowledge to determine the relationship between the
+subject and the holder.
+      </p>
 
-  <pre class="example nohighlight" title="An example of a credential
+      <pre class="example nohighlight" title="An example of a credential
 that uniquely identifies a subject">
 {
   "@context": ["https://w3id.org/credentials/v1", "https://schema.org/"]
-  "id": "http://dmv.example.gov/credentials/3732",
+  "id": "http://dmv.example.gov/credentials/332",
   "type": ["Credential", "IdentityCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01",
+  "issuer": "https://dmv.example.gov/issuers/4",
+  "issued": "2017-02-24",
   "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "name": "Mr. John Doe",
+    "name": "J. Doe",
     "address": {
       "streetAddress": "10 Rue de Chose",
       "postalCode": "98052",
       "addressLocality": "Paris",
       "addressCountry": "FR"
     },
-    "birthDate": "2001-01-01",
-    "gender": "http://schema.org/Male",
-    "birthPlace": {
-      "streetAddress": "36 Rue de Different",
-      "postalCode": "102435",
-      "addressLocality": "Paris",
-      "addressCountry": "FR"
-    },
-    "nationality": "FR",
+    "birthDate": "1989-03-15"
     ...
   },
   "proof": { ... }
 }
-        </pre>
+      </pre>
+
+      <p>
+The example above uniquely identifies the subject through the use of the
+name, address, and birth date of the individual.
+      </p>
 
    </section>
 
