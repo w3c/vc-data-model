@@ -1227,12 +1227,12 @@ new <code>favoriteFood</code> term so that it may only be used within the
         <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
         <a>holder</a> to express limitations on the use of information
         expressed by the Verifiable Credentials Data Model. The <a>issuer</a> places
-        the terms of use inside the <a>credential</a> before it is converted into a 
+        the terms of use inside the <a>credential</a> before it is converted into a
         <a>verifiable credential</a>. The <a>holder</a> places the terms of use inside
-        the <a>presentation</a> before it is converted into a 
+        the <a>presentation</a> before it is converted into a
         <a>verifiable presentation</a>.</p>
 
-       <p class="note"> it is for further study how a subject who is not a 
+       <p class="note"> it is for further study how a subject who is not a
        holder places terms of
        use on his or her verifiable credentials. One way could be for the subject to
        request the issuer to place them inside the issued verifiable credentials. Another
@@ -1247,11 +1247,11 @@ new <code>favoriteFood</code> term so that it may only be used within the
           <dt><var>termsOfUse</var></dt>
           <dd>The value of this property MUST be one or more terms of use
             that tell the <a>verifier</a> what actions it MUST perform if it is to
-           accept the verifiable credential or verifiable presentation. 
+           accept the verifiable credential or verifiable presentation.
           If the verifier is not willing to accept these terms of use then it MUST reject
           the verifiable credential or verifiable presentation.
-          Each <code>termsOfUse</code> comprises its type, 
-            for example, <code>IssuerPolicy</code>, and  
+          Each <code>termsOfUse</code> comprises its type,
+            for example, <code>IssuerPolicy</code>, and
             optionally its instance id. The precise contents of each term of use is
             determined by the specific <code>TermsOfUse</code> type definition.
           </dd>
@@ -1429,91 +1429,112 @@ The group is currently discussing how to visualize verifiable credentials and
 any media associated with them.
         </p>
 
-      </section>
-<section>
+    </section>
 
-      <h1>The Subject Is Not The Holder</h1>
+    <section>
+
+      <h1>Subject-Holder Relationships</h1>
 
       <p>
-This section describes how the data model supports use cases in which the holder
- of the credential is not the subject of the credential.
+This section describes how the data model supports use cases in which the
+<a>holder</a> of the <a>credential</a> is not the
+<a>subject</a> of the credential.
       </p>
 
       <p>
-The following diagram depicts those instances when the subject is not equal to 
-the holder.
+The following diagram depicts those instances when the holder is not
+the subject of the credential being presented:
      </p>
 
       <figure>
-        <img style="margin: auto; display: block;" width="75%" src="diagrams/subject-ne-holder.svg">
+        <img style="margin: auto; display: block;" width="75%"
+          src="diagrams/subject-ne-holder.svg">
         <figcaption style="text-align: center;">
-Subject Holder Relationships in Verifiable Credentials.
+Subject-Holder Relationships in Verifiable Credentials.
         </figcaption>
       </figure>
 
      <p>
-The following sections describe how each of these instances are handled in 
-the data model
+The following sections describe how each of these instances are handled in
+the data model.
      </p>
 
-
     <section>
-        <h2>Credential Uniquely Identifies Subject</h2>
+      <h2>Credential Uniquely Identifies Subject</h2>
 
      <p>
-In this case, the claim may contain multiple properties that each provide 
-an aspect of the identity of the subject, and which together unambiguously identify
-the subject. In this case, it does not matter who the holder is, since the verifier
-can unambiguously identify the subject of the verifiable credential.
+In this case, the <a>claim</a> may contain multiple properties that each
+provide an aspect of the identity of the subject, and which together
+unambiguously identify the subject. In this case, it does not matter who the
+<a>holder</a> is, since the verifier can unambiguously identify the subject of
+the <a>verifiable credential</a> and determine what to do based on its
+knowledge of the relationship between the subject and the holder including
+whether or not they are the same entity.
    </p>
 
-        <pre class="example nohighlight" title="An example of a credential 
+  <pre class="example nohighlight" title="An example of a credential
 that uniquely identifies a subject">
-
 {
-	"id": "http://dmv.example.gov/credentials/3732",
-        "@context": ["https://w3id.org/credentials/v1", "https://schema.org/"]
-	"type": ["Credential", "IdentityCredential"],
-	"issuer": "https://dmv.example.gov/issuers/14",
-	"issued": "2010-01-01",
-	"claim": {
-		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-		"name": "Mr John Doe",
-		"address": {
-                   "streetAddress": "10 Rue de Chose",
-                   "postalCode": "98052",
-                   "addressLocality": "Paris, France"
-                },
-		"birthDate": "2001-01-01",
-		"gender": "http://schema.org/Male",
-		"birthPlace": {
-                   "streetAddress": "36 Rue de Different",
-                   "postalCode": "102435",
-                   "addressLocality": "Paris"
-                   "addressCountry": "FR"
-                },
-
-		"nationality": "FR",
-	},
-	"proof": { ...
-	}
+  "@context": ["https://w3id.org/credentials/v1", "https://schema.org/"]
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "IdentityCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Mr. John Doe",
+    "address": {
+      "streetAddress": "10 Rue de Chose",
+      "postalCode": "98052",
+      "addressLocality": "Paris",
+      "addressCountry": "FR"
+    },
+    "birthDate": "2001-01-01",
+    "gender": "http://schema.org/Male",
+    "birthPlace": {
+      "streetAddress": "36 Rue de Different",
+      "postalCode": "102435",
+      "addressLocality": "Paris",
+      "addressCountry": "FR"
+    },
+    "nationality": "FR",
+    ...
+  },
+  "proof": { ... }
 }
         </pre>
-
 
    </section>
 
     <section>
-       <h2>Subject Passes the Verifiable Credential to a Holder</h2>
+      <h2>Subject Passes the Verifiable Credential to a Holder</h2>
 
-     <p>
-Normally verifiable credentials will be presented to verifiers by the subject. However in some cases, the subject may need to pass the whole or part of a verifiable credential to a holder. The data model allows for both cases as follows. </p>
+      <p class="issue" data-number=204>
+The group is currently debating the best security model for delegation. Readers
+should treat this entire section as at-risk and currently under debate.
+      <p>
 
-<p>
-If only the subject is allowed to present the verifiable credential to a verifier, the issuer MUST insert the "subject only" Terms of Use into the verifiable credential, as defined below.  </p>
+      <p>
+Normally verifiable credentials will be presented to verifiers by the
+subject. However in some cases, the subject may need to pass the whole or
+part of a verifiable credential to a holder. The data model allows for both
+cases as follows.
+      </p>
 
-<p>
-If the subject is not forbidden by the issuer to pass the whole or part of a verifiable credential to a holder, for example, a patient may pass a prescription verifiable credential to a relative for the relative to present it to a pharmacist for dispensing, then the subject MUST issue a verifiable credential to the holder containing the claim properties that are being passed on, as described below. </p>
+      <p>
+If only the subject is allowed to present the verifiable credential to a
+verifier, the issuer MUST insert the "subject only" Terms of Use into the
+verifiable credential, as defined below.
+      </p>
+
+      <p>
+If the subject is not forbidden by the issuer to pass the whole or part of a
+verifiable credential to a holder, for example, a patient may pass a
+prescription verifiable credential to a relative for the relative to present
+it to a pharmacist for dispensing, then the subject MUST issue a verifiable
+credential to the holder containing the claim properties that are being
+passed on, as described below.
+      </p>
 
    <section>
 
@@ -1541,16 +1562,16 @@ The Subject Only Terms of Use states that a verifiable credential MUST only be p
         </pre>
 
        </section>
-       
+
   <section>
    <h3> Passing on a Verifiable Credential </h3>
 
    <p>
 
 When the subject passes a verifiable credential to a
-holder, the subject SHOULD issue a new verifiable credential to the holder in which: 
-the issuer is the subject, 
-the subject is the holder to whom the verifiable credential is being passed, 
+holder, the subject SHOULD issue a new verifiable credential to the holder in which:
+the issuer is the subject,
+the subject is the holder to whom the verifiable credential is being passed,
 and the claim contains the properties that are being passed on. In addition, the holder creates a verifiable presentation that contains these two
 verifiable credentials.
 </p>
@@ -1560,48 +1581,48 @@ verifiable credentials.
         <pre class="example nohighlight" title="An example of a holder presenting verifiable
 credential properties that have been passed to it by the subject">
 {
-	"id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-	"type": ["VerifiablePresentation"],
-	"credential": [{
-			"id": "http://example.gov/credentials/3732",
-			"type": ["Credential", "PrescriptionCredential"],
-			"issuer": "https://dmv.example.gov",
-			"issued": "2010-01-01",
-			"claim": {
-				"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-				"prescription": {....}
-			},
-			"revocation": {
-				"id": "http://example.gov/revocations/738",
-				"type": "SimpleRevocationList2017"
-			},
-			"proof": {....}
-		},
-		{
-			"id": "https://example.com/VC/123456789",
-			"type": ["Credential", "PrescriptionCredential"],
-			"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-			"issued": "2010-01-03",
-			"claim": {
-				"id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-				"prescription": {....}
-			},
-			"proof": {
-				"type": "RsaSignature2018",
-				"created": "2017-06-17T10:03:48Z",
-				"creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
-				"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-				"signatureValue": "pYw8XNi1..Cky6Ed = "
-			}
-		}
-	],
-	"proof": [{
-		"type": "RsaSignature2018",
-		"created": "2017-06-18T21:19:10Z",
-		"creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
-		"nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-		"signatureValue": "BavEll0/I1..W3JT24 = "
-	}]
+  "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+  "type": ["VerifiablePresentation"],
+  "credential": [{
+      "id": "http://example.gov/credentials/3732",
+      "type": ["Credential", "PrescriptionCredential"],
+      "issuer": "https://dmv.example.gov",
+      "issued": "2010-01-01",
+      "claim": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "prescription": {....}
+      },
+      "revocation": {
+        "id": "http://example.gov/revocations/738",
+        "type": "SimpleRevocationList2017"
+      },
+      "proof": {....}
+    },
+    {
+      "id": "https://example.com/VC/123456789",
+      "type": ["Credential", "PrescriptionCredential"],
+      "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "issued": "2010-01-03",
+      "claim": {
+        "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+        "prescription": {....}
+      },
+      "proof": {
+        "type": "RsaSignature2018",
+        "created": "2017-06-17T10:03:48Z",
+        "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+        "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+        "signatureValue": "pYw8XNi1..Cky6Ed = "
+      }
+    }
+  ],
+  "proof": [{
+    "type": "RsaSignature2018",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1..W3JT24 = "
+  }]
 }
         </pre>
 
@@ -1610,14 +1631,14 @@ credential properties that have been passed to it by the subject">
   </section>
 
 
-   
+
    <section>
       <h2>Holder Acts on Behalf of Subject</h2>
 
       <p>
 When the holder wants to act on behalf of the subject, the issuer SHOULD indicate this by
-either including the relationship of the holder in the subject's <a>claim</a>, 
-or by issuing a separate relationship credential to the holder. 
+either including the relationship of the holder in the subject's <a>claim</a>,
+or by issuing a separate relationship credential to the holder.
 Either way, the relationship describes the relationship between the holder and the subject of the claim, and helps the verifier to decide whether to accept the verifiable credential or not. </p>
 
 <p class="issue"> It is outside
@@ -1625,64 +1646,64 @@ the scope of this standard how the issuer verifies the subject, the holder and t
 relationship between them.
 
 <p>
-Note: it is for further study which, if any, of these mechanisms is to be 
+Note: it is for further study which, if any, of these mechanisms is to be
 standardised by the working group.
 
      </p>
 
-     
-        <pre class="example nohighlight" title="An example of the relationship 
+
+        <pre class="example nohighlight" title="An example of the relationship
 property in a child's credential, so that a parent can hold it">
 
 {
-	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "ProofOfAgeCredential"],
-	"issuer": "https://dmv.example.gov/issuers/14",
-	"issued": "2010-01-01T19:73:24Z",
-	"claim": {
-		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-		"ageUnder": 16,
-		"parent": {
-			"type": "Mother",
-			"id": "did:example:ebfeb1c276e12ec211f712ebc6f"
-		}
-	},
-	"proof": {
-		"type": "RsaSignature2018",
-		"created": "2017-06-17T10:03:48Z",
-		"creator": "https://dmv.example.gov/issuers/14/keys/234",
-		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-		"signatureValue": "pY9...Cky6Ed = "
-	}
-} 
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageUnder": 16,
+    "parent": {
+      "type": "Mother",
+      "id": "did:example:ebfeb1c276e12ec211f712ebc6f"
+    }
+  },
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "https://dmv.example.gov/issuers/14/keys/234",
+    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+    "signatureValue": "pY9...Cky6Ed = "
+  }
+}
      </pre>
 
 <pre class="example nohighlight" title="An example of a relationship credential issued to
 a parent so that the parent can hold their child's verifiable credentials">
 
 {
-	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "RelationshipCredential"],
-	"issuer": "https://dmv.example.gov/issuers/14",
-	"issued": "2010-01-01T19:73:24Z",
-	"claim": {
-		"id": "did:example:ebfeb1c276e12ec211f712ebc6f",
-		"child": {
-			"type": ["Person", "Child"],
-			"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
-		}
-	},
-	"proof": {
-		"type": "RsaSignature2018",
-		"created": "2017-06-17T10:03:48Z",
-		"creator": "https://dmv.example.gov/issuers/14/keys/234",
-		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-		"signatureValue": "pY9...Cky6Ed = "
-	}
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "RelationshipCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+    "child": {
+      "type": ["Person", "Child"],
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+    }
+  },
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "https://dmv.example.gov/issuers/14/keys/234",
+    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+    "signatureValue": "pY9...Cky6Ed = "
+  }
 }
 
 </pre>
-     
+
 <p> It can easily be seen from the above example how an authoritative issuer could indicate that a person is the owner of a pet dog </p>
 
     </section>
@@ -1691,38 +1712,38 @@ a parent so that the parent can hold their child's verifiable credentials">
       <h2>Issuer Authorises Holder</h2>
 
       <p>
-When the issuer wishes to authorise a holder to possess a credential that 
+When the issuer wishes to authorise a holder to possess a credential that
 describes a subject who is not the holder, and the holder has no known relationship
- with the subject, then the issuer inserts the 
+ with the subject, then the issuer inserts the
 relationship of the holder to itself into the subject's credential.
       </p>
 
 
-        <pre class="example nohighlight" title="An example of a credential 
+        <pre class="example nohighlight" title="An example of a credential
 issued to a holder who is not the subject of the credential, who has no relationship
 with the subject of the credential, but who has a relationship with the issuer">
 
 {
-	"id": "http://dmv.example.gov/credentials/3732",
-	"type": ["Credential", "NameAndAddress"],
-	"issuer": "https://dmv.example.gov/issuers/14",
-	"holder": {
-		"type": "LawEnforcement",
-		"id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
-	},
-	"issued": "2010-01-01",
-	"claim": {
-		"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-		"name": "Mr John Doe",
-		"address": "10 Some Street, Anytown, ThisLocal, Country X"
-	},
-	"proof": {
-		"type": "RsaSignature2018",
-		"created": "2017-06-17T10:03:48Z",
-		"creator": "https://dmv.example.gov/issuers/14/keys/234",
-		"nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-		"signatureValue": "pY9...Cky6Ed = "
-	}
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["Credential", "NameAndAddress"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "holder": {
+    "type": "LawEnforcement",
+    "id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
+  },
+  "issued": "2010-01-01",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Mr John Doe",
+    "address": "10 Some Street, Anytown, ThisLocal, Country X"
+  },
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "https://dmv.example.gov/issuers/14/keys/234",
+    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+    "signatureValue": "pY9...Cky6Ed = "
+  }
 }        </pre>
 
 
@@ -1731,12 +1752,12 @@ with the subject of the credential, but who has a relationship with the issuer">
      </section>
 
   <section>
-      <h2>Holder Acts on Behalf of Verifier or has no Relationship with the 
+      <h2>Holder Acts on Behalf of Verifier or has no Relationship with the
 Subject, Issuer or Verifier</h1>
 
       <p>
 
-The data model currently does not support either of these scenarios. It is 
+The data model currently does not support either of these scenarios. It is
 for further study how they might be supported.
       </p>
       </section>
