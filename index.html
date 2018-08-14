@@ -1522,14 +1522,16 @@ should treat this entire section as at-risk and currently under debate.
       <p>
 Normally verifiable credentials will be presented to verifiers by the
 subject. However in some cases, the subject may need to pass the whole or
-part of a verifiable credential to a holder. The data model allows for both
-cases as follows.
+part of a verifiable credential to another holder. The data model allows for
+both cases as follows.
       </p>
 
       <p>
 If only the subject is allowed to present the verifiable credential to a
 verifier, the issuer MUST insert the "subject only" Terms of Use into the
-verifiable credential, as defined below.
+verifiable credential, as defined below. <span class="issue">
+This feature is at risk and is likely to be removed due to lack of consensus.
+</span>
       </p>
 
       <p>
@@ -1538,12 +1540,21 @@ verifiable credential to a holder, for example, a patient may pass a
 prescription verifiable credential to a relative for the relative to present
 it to a pharmacist for dispensing, then the subject MUST issue a verifiable
 credential to the holder containing the claim properties that are being
-passed on, as described below.
+passed on, as described below. <span class="issue">
+This feature is at risk and is likely to be removed and replaced with
+another solution, possibly created by another Working Group, that focuses on
+delegation of authority instead of delegation of attributes.
+</span>
       </p>
 
    <section>
 
    <h3> 'Subject Only' Terms of Use </h3>
+
+      <p class="issue" data-number=204>
+The group is currently debating the best security model for delegation. Readers
+should treat this entire section as at-risk and currently under debate.
+      <p>
 
   <p>
 The Subject Only Terms of Use states that a verifiable credential MUST only be presented to a verifier by the subject. If a verifier is presented with a verifiable credential containing the Subject Only Terms of Use, by anyone other than the subject, it MUST refuse to accept it.</p>
@@ -1571,6 +1582,11 @@ The Subject Only Terms of Use states that a verifiable credential MUST only be p
   <section>
    <h3> Passing on a Verifiable Credential </h3>
 
+      <p class="issue" data-number=204>
+The group is currently debating the best security model for delegation. Readers
+should treat this entire section as at-risk and currently under debate.
+      <p>
+
    <p>
 
 When the subject passes a verifiable credential to a
@@ -1580,8 +1596,6 @@ the subject is the holder to whom the verifiable credential is being passed,
 and the claim contains the properties that are being passed on. In addition, the holder creates a verifiable presentation that contains these two
 verifiable credentials.
 </p>
-
-
 
         <pre class="example nohighlight" title="An example of a holder presenting verifiable
 credential properties that have been passed to it by the subject">
@@ -1635,32 +1649,48 @@ credential properties that have been passed to it by the subject">
    </section>
   </section>
 
-
-
    <section>
-      <h2>Holder Acts on Behalf of Subject</h2>
+      <h2>Holder Acts on Behalf of the Subject</h2>
 
       <p>
-When the holder wants to act on behalf of the subject, the issuer SHOULD indicate this by
-either including the relationship of the holder in the subject's <a>claim</a>,
-or by issuing a separate relationship credential to the holder.
-Either way, the relationship describes the relationship between the holder and the subject of the claim, and helps the verifier to decide whether to accept the verifiable credential or not. </p>
+The data model supports the <a>holder</a> acting on behalf of the
+<a>subject</a> in at least the following ways:
+      </p>
 
-<p class="issue"> It is outside
-the scope of this standard how the issuer verifies the subject, the holder and the
-relationship between them.
+      <ul>
+        <li>
+The issuer may include the relationship between the holder and the subject
+in the <code>claim</code> data.
+        </li>
+        <li>
+The issuer may express the relationship between the holder and the subject
+by issuing a new <a>verifiable credential</a> which the holder utilizes.
+        </li>
+        <li>
+The subject may express their relationship with the holder by issuing a
+new <a>verifiable credential</a> which the holder utilizes.
+        </li>
+      </ul>
 
-<p>
-Note: it is for further study which, if any, of these mechanisms is to be
+      <p>
+The mechanisms above describe the relationship between the holder and the
+subject and helps the verifier to decide whether the relationship is
+sufficiently expressed for the given use case.
+      </p>
+
+      <p class="note">
+The additional mechanisms that the issuer or the verifier uses to verify the
+relationship between the subject and the holder are outside of the scope of
+this specification.
+      </p>
+
+      <p class="issue">
+It is for further study which, if any, of these mechanisms is to be
 standardised by the working group.
+      </p>
 
-     </p>
-
-
-        <pre class="example nohighlight" title="An example of the relationship
-property in a child's credential, so that a parent can hold it">
-
-{
+      <pre class="example nohighlight" title="An example of the relationship
+property in a child's credential">{
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["Credential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
@@ -1669,24 +1699,22 @@ property in a child's credential, so that a parent can hold it">
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageUnder": 16,
     "parent": {
-      "type": "Mother",
-      "id": "did:example:ebfeb1c276e12ec211f712ebc6f"
+      "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+      "type": "Mother"
     }
   },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2017-06-17T10:03:48Z",
-    "creator": "https://dmv.example.gov/issuers/14/keys/234",
-    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-    "signatureValue": "pY9...Cky6Ed = "
-  }
+  "proof": { ... } // the proof is generated by the DMV
 }
-     </pre>
+      </pre>
 
-<pre class="example nohighlight" title="An example of a relationship credential issued to
-a parent so that the parent can hold their child's verifiable credentials">
+      <p>
+In the example above, the issuer has expressed the relationship between the
+child and the parent such that a verifier would most likely accept the
+credential if it is provided by the child or the parent.
+      </p>
 
-{
+      <pre class="example nohighlight" title="An example of a relationship
+credential issued to a parent">{
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["Credential", "RelationshipCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
@@ -1694,22 +1722,49 @@ a parent so that the parent can hold their child's verifiable credentials">
   "claim": {
     "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
     "child": {
-      "type": ["Person", "Child"],
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "type": ["Person", "Child"]
     }
   },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2017-06-17T10:03:48Z",
-    "creator": "https://dmv.example.gov/issuers/14/keys/234",
-    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-    "signatureValue": "pY9...Cky6Ed = "
-  }
+  "proof": { ... } // the proof is generated by the DMV
 }
-
 </pre>
 
-<p> It can easily be seen from the above example how an authoritative issuer could indicate that a person is the owner of a pet dog </p>
+     <p>
+In the example above, the issuer has expressed the relationship between the
+child and the parent in a separate credential such that a verifier would most
+likely accept any of the child's credentials if it is provided by the child or
+if the credential above is provided with any of the child's credentials.
+     </p>
+
+     <pre class="example nohighlight" title="An example of a relationship
+credential issued by a child">{
+  "id": "http://example.org/credentials/23894",
+  "type": ["Credential", "RelationshipCredential"],
+  "issuer": "http://example.org/credentials/23894",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "parent": {
+      "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
+      "type": "Mother"
+    }
+  },
+  "proof": { ... } // the proof is generated by the child
+}
+</pre>
+
+      <p>
+In the example above, the child has expressed the relationship between the
+child and the parent in a separate credential such that a verifier would most
+likely accept any of the child's credentials if the credential above is
+provided.
+      </p>
+
+      <p>
+Similarly, these same strategies can be used for many other types of use cases
+such as power of attorney, pet ownership, and patient prescription pick up.
+      </p>
 
     </section>
 
