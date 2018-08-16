@@ -980,51 +980,11 @@ exists for implementers that would like to implement credential status checking.
         <h2>Presentations</h2>
 
         <p>
-Credentials MAY be composed by placing them into a data structure called a
-<a>presentation</a>. A <a>verifiable presentation</a> is a presentation that contains
-<a>verifiable credentials</a> and one or more proofs that are appropriate
-for the presentation. The basic structure of a <a>verifiable presentation</a>
-is provided below:
+Credentials MAY be used to make a <a>verifiable presentation</a>. The presentation
+may be of a credential itself, or of a profile, or of data derived from credentials
+in a format that is cryptographically verifiable.
         </p>
 
-        <pre class="example nohighlight" title="Basic structure of a presentation">
-{
-  "@context": "https://w3id.org/credentials/v1",
-  "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
-  "type": ["VerifiablePresentation"],
-  <span class="highlight">"verifiableCredential": [{ ... }],
-  "proof": [{ ... }]</span>
-}
-        </pre>
-
-        <p class="issue" data-number=133>
-The group is currently discussing whether the "id" field is appropriately
-defined for Presentations.
-        </p>
-
-        <p class="issue" data-number=120>
-The group is currently discussing whether the "id" field is appropriately
-defined across all objects.
-        </p>
-
-        <p class="issue" data-number=106>
-The group is currently discussing how the data model expresses when the
-subject is not the holder of the credential/presentation.
-        </p>
-
-        <p class="issue" data-number=105>
-The group is currently discussing holders, subjects, and identifier
-control.
-        </p>
-
-        <p>
-The contents of the <code>verifiableCredential</code> property are
-<a>verifiable credentials</a> as described by this specification. The contents
-of the <code>proof</code> property are proofs as described by the
-Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
-is optional and MAY be used to provide a unique identifier for the presentation.
-The value associated with the <code>id</code> property MUST be a URI.
-        </p>
       </section>
     </section>
 
@@ -1248,10 +1208,9 @@ new <code>favoriteFood</code> term so that it may only be used within the
         <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
         <a>holder</a> to express limitations on the use of information
         expressed by the Verifiable Credentials Data Model. The <a>issuer</a> places
-        the terms of use inside the <a>credential</a> before it is converted into a
-        <a>verifiable credential</a>. The <a>holder</a> places the terms of use inside
-        the <a>presentation</a> before it is converted into a
-        <a>verifiable presentation</a>.</p>
+        their terms of use inside the <a>credential</a> before it is converted into a
+        <a>verifiable credential</a>. The <a>holder</a> places issuer terms
+        of use, if applicable, plus holder terms of use, inside a <a>presentation</a>.</p>
 
        <p class="note"> it is for further study how a subject who is not a
        holder places terms of
@@ -1282,6 +1241,7 @@ new <code>favoriteFood</code> term so that it may only be used within the
 The group is currently exploring a variety of ways of expressing the terms of
 use associated with a Verifiable Credential, namely, the
 <a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
+A related initiative is the one at customercommons.org.
         </p>
 
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
