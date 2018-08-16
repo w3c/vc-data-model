@@ -209,15 +209,15 @@ information related to expiration dates.
       </ul>
 
       <p>
-A verifiable credential is capable of representing all of the same information
-that a physical credential is intended to represent. The addition of
-digital technologies, such as digital signatures, also make verifiable
-credentials more tamperproof and therefore more trustworthy
-than their physical counterparts. Verifiable credentials can also be
-rapidly exchanged through the Internet, making them more convenient than
-their physical counterparts when needing to establish trust at a distance.
+A verifiable credential can represent all of the same information that a
+physical credential represents. The addition of technologies such as
+digital signatures makes verifiable credentials more tamper-evident and
+therefore more trustworthy than their physical counterparts. Holders can
+generate presentations and share them with verifiers to prove they possess
+verifiable credentials with certain characteristics. Both credentials and
+presentations can be rapidly exchanged, making them more convenient than
+their physical counterparts when establishing trust at a distance.
       </p>
-
     </section>
 
     <section>
@@ -238,8 +238,8 @@ standardization. The following roles are introduced in this specification:
         <dt><a>holder</a></dt>
         <dd>
 A role an <a>entity</a> may perform by possessing one or more
-<a>verifiable credentials</a>. Examples of holders include students,
-employees, and customers.
+<a>verifiable credentials</a> and generationg <a>presentations</a> from them
+Examples of holders include students, employees, and customers.
         </dd>
         <dt><a>issuer</a></dt>
         <dd>
@@ -251,7 +251,7 @@ trade associations, governments, and individuals.
         <dt><a>verifier</a></dt>
         <dd>
 A role an <a>entity</a> may perform by receiving one or more
-<a>verifiable credentials</a> for processing.
+<a>verifiable presentations</a> for processing.
 Examples of verifiers include employers, security personnel, and websites.
         </dd>
         <dt><a>identifier registry</a></dt>
@@ -346,21 +346,24 @@ specification, namely:
       <ul>
         <li>
 <a>Holders</a> receive and store <a>verifiable credentials</a> from
-<a>issuers</a> through an agent that the issuer does not need to trust.
+<a>issuers</a>. <a>Holders</a> may interact with an issuer through an
+agent that the issuer needn't trust.
         </li>
         <li>
 <a>Holders</a> are positioned between <a>issuers</a> and <a>verifiers</a>
-and mediate the transmission of <a>verifiable credentials</a>.
+and use <a>verifiable credentials</a> to make <a>verifiable presentations</a>
+to <a>verifiers</a>.
         </li>
         <li>
-<a>Holders</a> provide <a>verifiable credentials</a> to <a>verifiers</a>
-through an agent that verifiers needn't trust; they only need to trust
+<a>Holders</a> may interact with <a>verifiers</a> through an agent that
+verifiers needn't trust; verifiers only need to trust
 <a>issuers</a>.
         </li>
         <li>
 <a>Verifiable credentials</a> are associated with <a>subjects</a>, not
 particular services; <a>holders</a> decide how to aggregate and manage
-<a>verifiable credentials</a>.
+<a>verifiable credentials</a> and the <a>verifiable presentations</a>
+associated with them.
         </li>
         <li>
 <a>Holders</a> are able to easily control and own their own identifiers.
@@ -373,17 +376,22 @@ particular services; <a>holders</a> decide how to aggregate and manage
 to help them manage and share their <a>verifiable credentials</a>.
         </li>
         <li>
-<a>Holders</a> that share <a>verifiable credentials</a> are not required to
+<a>Holders</a> that share <a>verifiable presentations</a> are not required to
 reveal the identity of the <a>verifier</a> to <a>issuers</a>.
         </li>
         <li>
-A <a>verifiable credential</a> is expressed in one or more standard,
-machine-readable data formats which can also be extended with minimal
-coordination.
+<a>Holders</a> in <a>presentations</a> can either disclose the attributes or satisfy <a>predicates</a>
+requested by the <a>verifier</a>. <a>Predicates</a> are boolean conditions like greater/less than or
+equal to, is in set, etc.
         </li>
         <li>
-<a>Verifiable credentials</a> are independently issued, stored,
-and verified.
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> are expressed in one or more standard,
+machine-readable data formats which can also be extended with minimal coordination.
+        </li>
+        <li>
+Issuers independently issue <a>verifiable credentials</a>, and holders store them.
+Holders independently offer <a>verifiable presentations</a>, and verifiers
+independently verify them.
         </li>
         <li>
 <a>Verifiable Credentials</a> can be revoked by the <a>issuer</a>.
@@ -459,6 +467,12 @@ An example of a basic claim that expresses that Pat is over the age of 21.
       </figure>
 
       <p>
+If a presentation supports predicates, a claim about birthdate (not true or false, but tied to
+a specific date value) can become the basis of proof that at an arbitrary point in time, the
+age of a subject did or will lie within an arbitrary interval.
+      </p>
+
+      <p>
 These claims may be merged together to express a graph of
 information about a particular subject. The example below extends the
 data model above by adding claims that state that Pat knows Sam and that
@@ -531,8 +545,15 @@ subset of one's persona is called a <a>verifiable presentation</a>.
       </p>
 
       <p>
-A <a>verifiable presentation</a> is a collection of one or more
-<a>verifiable credentials</a> that are often about the same <a>subject</a> that
+A <a>verifiable presentation</a> is data from one or more <a>verifiable
+credentials</a>, packaged in such a way that the authorship of the data
+is verifiable. If credentials are directly presented, they become a
+presentation. Profiles are presentations. Data formats derived from
+credentials that are cryptographically verifiable but that do not, of
+themselves, contain credentials, may also be presentations.
+      </p>
+      <p>
+      The data in a presentation are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
       </p>
@@ -552,7 +573,7 @@ gaming persona, or home life persona.
 
       <p class="note">
 It is possible to have a <a>presentation</a>, such as a business persona,
-that contains multiple <a>credentials</a> about different <a>subjects</a>
+that draws upon multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
 
@@ -584,7 +605,7 @@ All entities trust the <a>identifier registry</a> to be un-corruptible and
 to be a correct record of which identifiers belong to which <a>entities</a>.
         </li>
         <li>
-The <a>subject</a> trusts the <a>issuer</a> to issue true (i.e. not false)
+The <a>subject</a> trusts the <a>issuer</a> to issue true
 <a>credentials</a> about the subject, and to revoke them quickly when
 appropriate.
         </li>
@@ -605,7 +626,7 @@ The <a>issuer</a> and the <a>verifier</a> do not need to trust the
 repository</a>, and
         </li>
         <li>
-the <a>issuer</a> does not need to trust the <a>verifier</a>.
+the <a>issuer</a> does not need to trust (or even know) the <a>verifier</a>.
         </li>
       </ul>
 
