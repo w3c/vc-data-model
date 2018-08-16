@@ -457,15 +457,17 @@ The basic structure of a claim.
 
       <p>
 The data model for <a>claims</a> described above is powerful and can be used to
-express a large variety of statements. For example, whether or not someone is over
-the age of 21 may be expressed as follows:
+express a large variety of statements. For example, a claim specifying the date of birth of a subject
+can be used to prove that the subject's age falls within a specified range. This is
+used in cases like proving drinking age or elderly discount;
+the holder has the flexibility to use a single claim in a variety of ways:
       </p>
 
       <figure>
         <img style="margin: auto; display: block;"
           width="50%" src="diagrams/claim-example.svg">
         <figcaption style="text-align: center;">
-An example of a basic claim that expresses that Pat is over the age of 21.
+An example of a basic claim that expresses that Pat's date of birth is 1534417926548 milliseconds from epoch.
         </figcaption>
       </figure>
 
@@ -504,6 +506,7 @@ of information.
 
       <p>
 A <a>credential</a> is set of one or more <a>claims</a> made by the
+<<<<<<< 40dd0916cfdfa2e57a131a71e45ac143d3fd74b3
 same <a>entity</a>. It may include an identifier as well as metadata that
 describes properties of the credential itself such as: the <a>issuer</a>,
 the expiry time, a representative image, a public key to use for the purposes
@@ -511,6 +514,16 @@ of verification, the revocation mechanism to use etc.
 This metadata may be signed by the issuer. A <a>verifiable credential</a> is a
 set of claims and meta data that are tamper-evident and that cryptographically
 prove who issued it.
+=======
+same <a>entity</a>. It includes a holder generated almost-always unique identifier
+as well as metadata that describes properties of the credential itself such as: the <a>issuer</a>,
+the public key to use, the revocation mechanism to use etc. This metadata can
+either be signed by the issuer or not, more on that later. The credential identifier
+is never revealed to the verifier to prevent the issuer and verifier from
+colluding to correlate the holder.
+A <a>verifiable credential</a> is a set of claims and meta data that are
+tamper-resistant and that cryptographically prove who issued it.
+>>>>>>> core data model
       </p>
 
       <figure>
@@ -550,6 +563,7 @@ subset of one's persona is called a <a>verifiable presentation</a>.
       </p>
 
       <p>
+<<<<<<< 40dd0916cfdfa2e57a131a71e45ac143d3fd74b3
 A <a>verifiable presentation</a> expresses data from one or more <a>verifiable
 credentials</a>, and is packaged in such a way that the authorship of the data
 is verifiable. If credentials are directly presented, they become a
@@ -559,6 +573,10 @@ presentations.
       </p>
       <p>
       The data in a presentation are often about the same <a>subject</a> that
+=======
+A holder generates a <a>verifiable presentation</a> from a collection of one or more
+<a>verifiable credentials</a> that are often about the same <a>subject</a> that
+>>>>>>> core data model
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
       </p>
@@ -577,8 +595,13 @@ gaming persona, or home-life persona.
       </p>
 
       <p class="note">
+<<<<<<< 40dd0916cfdfa2e57a131a71e45ac143d3fd74b3
 It is possible to have a <a>presentation</a>, such as a business persona,
 that draws upon multiple <a>credentials</a> about different <a>subjects</a>
+=======
+It is possible to generate a <a>presentation</a>, such as in the context of a business persona,
+that is derived from multiple <a>credentials</a> about different <a>subjects</a>
+>>>>>>> core data model
 that are often, but not required to be, related.
       </p>
 
@@ -598,14 +621,20 @@ The Verifiable Credentials trust model is as follows:
         <li>
 The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
 that it receives. In order to establish this trust, a credential MUST
+<<<<<<< 40dd0916cfdfa2e57a131a71e45ac143d3fd74b3
 either 1) include a <a href="#proofs-e-g-signatures">proof</a> that establishes
 that the issuer generated the credential (it is a <a>verifiable credential</a>),
+=======
+either 1) include a <a href="#proofs-aka-signatures">signature</a> that establishes
+that the issuer generated the credential only after sufficient scrutiny (it is a <a>verifiable credential</a>),
+>>>>>>> core data model
 or 2) have been transmitted in a way that clearly establishes that the
 issuer generated the credential and that the credential has not been tampered
 with in transit or storage. This trust could be weakened depending upon the
 risk assessment of the verifier.
         </li>
         <li>
+<<<<<<< 40dd0916cfdfa2e57a131a71e45ac143d3fd74b3
 All entities trust the <a>identifier registry</a> to be incorruptible and
 to be a correct record of which identifiers belong to which <a>entities</a>.
         </li>
@@ -613,18 +642,25 @@ to be a correct record of which identifiers belong to which <a>entities</a>.
 The <a>subject</a> trusts the <a>issuer</a> to issue true (i.e., not false)
 <a>credentials</a> about the subject, and to revoke them quickly
 when appropriate.
+=======
+All entities trust the <a>Verifiable data repository</a> to be un-corruptible and
+to be a correct record of which data is owned (and can be updated) by which
+<a>entities</a>.
         </li>
         <li>
-The <a>holder</a> trusts the <a>repository</a> to store the
-<a>credentials</a> securely, to not release them to anyone other than the
-<a>holder</a>, and to not corrupt or lose them whilst they are in its care.
+The <a>subject</a> trusts (since only the holder can verify) the <a>issuer</a> to issue true (i.e. not false)
+<a>credentials</a> about the subject, and to revoke them quickly when
+appropriate.
+>>>>>>> core data model
         </li>
       </ol>
 
       <p>
-This trust model differentiates itself from other trust models by ensuring that:
+This trust model differentiates itself from other trust models by ensuring that
+the <a>issuer</a> does not need to trust (or even know) the <a>verifier</a>.
       </p>
 
+<<<<<<< 40dd0916cfdfa2e57a131a71e45ac143d3fd74b3
       <ul>
         <li>
 The <a>issuer</a> and the <a>verifier</a> do not need to trust the
@@ -635,6 +671,8 @@ the <a>issuer</a> does not need to know or trust the <a>verifier</a>.
         </li>
       </ul>
 
+=======
+>>>>>>> core data model
       <p>
 By decoupling the trust between the <a>identity provider</a> and the
 <a>relying party</a>, a more flexible and dynamic trust model is created
