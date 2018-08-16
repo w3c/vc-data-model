@@ -446,15 +446,17 @@ The basic structure of a claim.
 
       <p>
 The data model for <a>claims</a> described above is powerful and can be used to
-express a large variety of statements. For example, whether or not someone is
-over the age of 21 may be expressed as follows:
+express a large variety of statements. For example, a claim specifying the data of birth of a subject
+can be used to prove that its age lies in an interval or is greater or less than a some value which is
+needed in use cases like proving drinking age or teenager discount or elderly discount;
+the holder has the flexibility to use the claim in any way that is applicable to that claim:
       </p>
 
       <figure>
         <img style="margin: auto; display: block;"
           width="50%" src="diagrams/claim-example.svg">
         <figcaption style="text-align: center;">
-An example of a basic claim that expresses that Pat is over the age of 21.
+An example of a basic claim that expresses that Pat's date of birth is 1534417926548 milliseconds from epoch.
         </figcaption>
       </figure>
 
@@ -487,10 +489,13 @@ of information.
 
       <p>
 A <a>credential</a> is set of one or more <a>claims</a> made by the
-same <a>entity</a>. It may include an identifier to uniquely identify the
-credential, as well as metadata that describes properties of the credential
-itself such as: the <a>issuer</a>, the expiry time, a representative image,
-etc. A <a>verifiable credential</a> is a set of claims and meta data that are
+same <a>entity</a>. It includes a holder generated almost-always unique identifier
+as well as metadata that describes properties of the credential itself such as: the <a>issuer</a>,
+the public key to use, the revocation mechanism to use etc. This metadata can
+either be signed by the issuer or not, more on that later. The credential identifier
+is never revealed to the verifier to prevent the issuer and verifier from
+colluding to correlate the holder.
+A <a>verifiable credential</a> is a set of claims and meta data that are
 tamper-resistant and that cryptographically prove who issued it.
       </p>
 
@@ -531,7 +536,7 @@ subset of one's persona is called a <a>verifiable presentation</a>.
       </p>
 
       <p>
-A <a>verifiable presentation</a> is a collection of one or more
+A holder generates a <a>verifiable presentation</a> from a collection of one or more
 <a>verifiable credentials</a> that are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
@@ -551,8 +556,8 @@ gaming persona, or home life persona.
       </p>
 
       <p class="note">
-It is possible to have a <a>presentation</a>, such as a business persona,
-that contains multiple <a>credentials</a> about different <a>subjects</a>
+It is possible to generate a <a>presentation</a>, such as in the context of a business persona,
+that is derived from multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
 
@@ -572,42 +577,29 @@ The Verifiable Credentials trust model is as follows:
         <li>
 The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
 that it receives. In order to establish this trust, a credential MUST
-either 1) include a <a href="#proofs-aka-signatures">proof</a> that establishes
-that the issuer generated the credential (it is a <a>verifiable credential</a>),
+either 1) include a <a href="#proofs-aka-signatures">signature</a> that establishes
+that the issuer generated the credential only after sufficient scrutiny (it is a <a>verifiable credential</a>),
 or 2) have been transmitted in a way that clearly establishes that the
 issuer generated the credential and that the credential has not been tampered
 with in transit or storage. This trust could be weakened depending upon the
 risk assessment of the verifier.
         </li>
         <li>
-All entities trust the <a>identifier registry</a> to be un-corruptible and
-to be a correct record of which identifiers belong to which <a>entities</a>.
+All entities trust the <a>Verifiable data repository</a> to be un-corruptible and
+to be a correct record of which data is owned (and can be updated) by which
+<a>entities</a>.
         </li>
         <li>
-The <a>subject</a> trusts the <a>issuer</a> to issue true (i.e. not false)
+The <a>subject</a> trusts (since only the holder can verify) the <a>issuer</a> to issue true (i.e. not false)
 <a>credentials</a> about the subject, and to revoke them quickly when
 appropriate.
-        </li>
-        <li>
-The <a>holder</a> trusts the <a>repository</a> to store the
-<a>credentials</a> securely, to not release them to anyone other than the
-<a>holder</a>, and to not corrupt or lose them whilst they are in its care.
         </li>
       </ol>
 
       <p>
-This trust model differentiates itself from other trust models by ensuring that:
+This trust model differentiates itself from other trust models by ensuring that
+the <a>issuer</a> does not need to trust (or even know) the <a>verifier</a>.
       </p>
-
-      <ul>
-        <li>
-The <a>issuer</a> and the <a>verifier</a> do not need to trust the
-repository</a>, and
-        </li>
-        <li>
-the <a>issuer</a> does not need to trust the <a>verifier</a>.
-        </li>
-      </ul>
 
       <p>
 By decoupling the trust between the <a>identity provider</a> and the
