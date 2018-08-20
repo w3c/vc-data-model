@@ -238,7 +238,7 @@ standardization. The following roles are introduced in this specification:
         <dt><a>holder</a></dt>
         <dd>
 A role an <a>entity</a> may perform by possessing one or more
-<a>verifiable credentials</a> and generationg <a>presentations</a> from them
+<a>verifiable credentials</a> and generating <a>presentations</a> from them.
 Examples of holders include students, employees, and customers.
         </dd>
         <dt><a>issuer</a></dt>
@@ -389,9 +389,10 @@ equal to, is in set, etc.
 machine-readable data formats which can also be extended with minimal coordination.
         </li>
         <li>
-Issuers independently issue <a>verifiable credentials</a>, and holders store them.
-Holders independently offer <a>verifiable presentations</a>, and verifiers
-independently verify them.
+Issuers issue <a>verifiable credentials</a>, and holders store them.
+Holders offer <a>verifiable presentations</a>, and verifiers verify them.
+Issuance of credentials, storage of credentials, the generation and sharing
+of presentations, and the verification of them are each independent processes.
         </li>
         <li>
 <a>Verifiable Credentials</a> can be revoked by the <a>issuer</a>.
@@ -467,9 +468,9 @@ An example of a basic claim that expresses that Pat is over the age of 21.
       </figure>
 
       <p>
-If a presentation supports predicates, a claim about birthdate (not true or false, but tied to
-a specific date value) can become the basis of proof that at an arbitrary point in time, the
-age of a subject did or will lie within an arbitrary interval.
+If a presentation supports <a>derived predicates<a>, a claim about birthdate in a
+credential can become the basis of proof that at an arbitrary point in time, the
+age of a subject did or will fall within an arbitrary interval.
       </p>
 
       <p>
@@ -545,12 +546,12 @@ subset of one's persona is called a <a>verifiable presentation</a>.
       </p>
 
       <p>
-A <a>verifiable presentation</a> is data from one or more <a>verifiable
-credentials</a>, packaged in such a way that the authorship of the data
+A <a>verifiable presentation</a> expresses data from one or more <a>verifiable
+credentials</a>, and is packaged in such a way that the authorship of the data
 is verifiable. If credentials are directly presented, they become a
-presentation. Profiles are presentations. Data formats derived from
-credentials that are cryptographically verifiable but that do not, of
-themselves, contain credentials, may also be presentations.
+presentation. Data formats derived from credentials that are cryptographically
+verifiable but that do not, of themselves, contain credentials, may also be
+presentations.
       </p>
       <p>
       The data in a presentation are often about the same <a>subject</a> that
@@ -626,7 +627,7 @@ The <a>issuer</a> and the <a>verifier</a> do not need to trust the
 repository</a>, and
         </li>
         <li>
-the <a>issuer</a> does not need to trust (or even know) the <a>verifier</a>.
+the <a>issuer</a> does not need to know or trust the <a>verifier</a>.
         </li>
       </ul>
 
@@ -980,11 +981,108 @@ exists for implementers that would like to implement credential status checking.
         <h2>Presentations</h2>
 
         <p>
-Credentials MAY be used to make a <a>verifiable presentation</a>. The presentation
-may be of a credential itself, or of a profile, or of data derived from credentials
-in a format that is cryptographically verifiable.
+Credentials MAY be used to make a <a>verifiable presentation</a>. A
+verifiable presentation may be of a verifiable credential itself, or
+of data derived from verifiable credentials in a format that is
+cryptographically verifiable. In the first example below, we show a
+verifiable presentation that embeds verifiable credentials:
         </p>
 
+          <pre class="example nohighlight" title="Basic structure of a presentation">
+          {
+          "@context": "https://w3id.org/credentials/v1",
+          "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
+          "type": ["VerifiablePresentation"],
+          <span class="highlight">"verifiableCredential": [{ ... }],
+  "proof": [{ ... }]</span>
+          }
+          </pre>
+          <p class="issue" data-number=133>
+              The group is currently discussing whether the "id" field is appropriately
+              defined for Presentations.
+          </p>
+
+          <p class="issue" data-number=120>
+              The group is currently discussing whether the "id" field is appropriately
+              defined across all objects.
+          </p>
+
+          <p class="issue" data-number=106>
+              The group is currently discussing how the data model expresses when the
+              subject is not the holder of the credential/presentation.
+          </p>
+
+          <p class="issue" data-number=105>
+              The group is currently discussing holders, subjects, and identifier
+              control.
+          </p>
+
+          <p>
+              The contents of the <code>verifiableCredential</code> property shown above are
+              <a>verifiable credentials</a> as described by this specification. The contents
+              of the <code>proof</code> property are proofs as described by the
+              Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
+              is optional and MAY be used to provide a unique identifier for the presentation.
+              The value associated with the <code>id</code> property MUST be a URI.
+          </p>
+
+          <p>
+          The next example shows a ZKP-style verifiable presentation that contains
+          derived data instead. Here, the original credential contained a birthdate;
+          the presentation references that birthdate to assert an "over 65" <a>derived
+          predicate</a>, plus a "not expired" <a>derived predicate</a>. Notice that
+          claims are clustered by subject, with some claims about "this" (the credential
+          itself), and others about a subject named "person."
+      </p>
+          <pre class="example nohighlight"
+               title="Usage of proof property on a verifiable presentation">
+            {
+              "type": ["VerifiablePresentation"],
+              "claims": [       <i>// Each of the claims is created from a verifiable credential</i>
+                {
+                    "credDef": "sov:CRED_DEF:EID",
+                    "this": {
+                      "issuer": "https://eid.gov/issuers/1",
+                      "not expired": true,
+                      "holder": "person",
+                    },
+                    "person": {
+                      "> 65": "true",
+                    }
+                },
+                {
+                    "credDef": "sov:CRED_DEF:SUBSCRIPTION",
+                    "this": {
+                      "issuer": "https://moviestreaming.com/issuers/1",
+                      "not expired": true,
+                      "holder": "person",
+                    },
+                    "person": {
+                      "subscription type": "premium",
+                    }
+                }
+              ],
+              <span class="highlight">"proofs": [	<i>// the number of proofs is same as the number of claims</i>
+                {
+                    "type": "z-mix",
+                    "value": {
+                        <i>// meant to be parsed by a library supporting "z-mix"</i>
+                        ...
+                        ....
+                    }
+                },
+                {
+                    "type": "z-mix",
+                    "value": {
+                        <i>// meant to be parsed by a library supporting "z-mix"</i>
+                        ...
+                        ....
+                    }
+                }
+              ]
+            </span>
+            }
+            </pre>
       </section>
     </section>
 
@@ -1205,12 +1303,12 @@ new <code>favoriteFood</code> term so that it may only be used within the
       <section>
         <h2>Terms of Use</h2>
 
-        <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
-        <a>holder</a> to express limitations on the use of information
-        expressed by the Verifiable Credentials Data Model. The <a>issuer</a> places
-        their terms of use inside the <a>credential</a> before it is converted into a
-        <a>verifiable credential</a>. The <a>holder</a> places issuer terms
-        of use, if applicable, plus holder terms of use, inside a <a>presentation</a>.</p>
+        <p>Terms of use can be utilized by an <a>issuer</a>, a <a>subject</a>, or a
+        <a>holder</a> to constrain the use of information expressed by the Verifiable
+        Credentials Data Model. The <a>issuer</a> places their terms of use inside
+        the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
+        The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
+        </p>
 
        <p class="note"> it is for further study how a subject who is not a
        holder places terms of
@@ -1241,7 +1339,7 @@ new <code>favoriteFood</code> term so that it may only be used within the
 The group is currently exploring a variety of ways of expressing the terms of
 use associated with a Verifiable Credential, namely, the
 <a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
-A related initiative is the one at customercommons.org.
+A related initiative is the one at <a href="https://customercommons.org">Customer Commons</a>.
         </p>
 
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
