@@ -209,14 +209,15 @@ information related to expiration dates.
       </ul>
 
       <p>
-A verifiable credential is capable of representing all of the same information that a physical
-credential is intended to represent. The addition of digital technologies, such as digital
-signatures, supports the goal to make verifiable credentials more tamperproof and more trustworthy
-than their physical counterparts. Verifiable credentials can also be rapidly exchanged through the
-Internet, making them more convenient than their physical counterparts when needing to establish
-trust at a distance.
+A verifiable credential can represent all of the same information that a
+physical credential represents. The addition of technologies such as
+digital signatures makes verifiable credentials more tamper-evident and
+therefore more trustworthy than their physical counterparts. Holders can
+generate presentations and share them with verifiers to prove they possess
+verifiable credentials with certain characteristics. Both credentials and
+presentations can be rapidly exchanged, making them more convenient than
+their physical counterparts when establishing trust at a distance.
       </p>
-
     </section>
 
     <section>
@@ -237,8 +238,8 @@ standardization. The following roles are introduced in this specification:
         <dt><a>holder</a></dt>
         <dd>
 A role an <a>entity</a> may perform by possessing one or more
-<a>verifiable credentials</a>. Examples of holders include students,
-employees, and customers.
+<a>verifiable credentials</a> and generating <a>presentations</a> from them.
+Examples of holders include students, employees, and customers.
         </dd>
         <dt><a>issuer</a></dt>
         <dd>
@@ -250,7 +251,7 @@ trade associations, governments, and individuals.
         <dt><a>verifier</a></dt>
         <dd>
 A role an <a>entity</a> may perform by receiving one or more
-<a>verifiable credentials</a> for processing.
+<a>verifiable presentations</a> for processing.
 Examples of verifiers include employers, security personnel, and websites.
         </dd>
         <dt><a>identifier registry</a></dt>
@@ -345,21 +346,24 @@ specification, namely:
       <ul>
         <li>
 <a>Holders</a> receive and store <a>verifiable credentials</a> from
-<a>issuers</a> through an agent that the issuer does not need to trust.
+<a>issuers</a>. <a>Holders</a> may interact with an issuer through an
+agent that the issuer needn't trust.
         </li>
         <li>
 <a>Holders</a> are positioned between <a>issuers</a> and <a>verifiers</a>
-and mediate the transmission of <a>verifiable credentials</a>.
+and use <a>verifiable credentials</a> to make <a>verifiable presentations</a>
+to <a>verifiers</a>.
         </li>
         <li>
-<a>Holders</a> provide <a>verifiable credentials</a> to <a>verifiers</a>
-through an agent that verifiers needn't trust; they only need to trust
+<a>Holders</a> may interact with <a>verifiers</a> through an agent that
+verifiers needn't trust; verifiers only need to trust
 <a>issuers</a>.
         </li>
         <li>
 <a>Verifiable credentials</a> are associated with <a>subjects</a>, not
 particular services; <a>holders</a> decide how to aggregate and manage
-<a>verifiable credentials</a>.
+<a>verifiable credentials</a> and the <a>verifiable presentations</a>
+associated with them.
         </li>
         <li>
 <a>Holders</a> are able to easily control and own their own identifiers.
@@ -372,17 +376,23 @@ particular services; <a>holders</a> decide how to aggregate and manage
 to help them manage and share their <a>verifiable credentials</a>.
         </li>
         <li>
-<a>Holders</a> that share <a>verifiable credentials</a> are not required to
+<a>Holders</a> that share <a>verifiable presentations</a> are not required to
 reveal the identity of the <a>verifier</a> to <a>issuers</a>.
         </li>
         <li>
-A <a>verifiable credential</a> is expressed in one or more standard,
-machine-readable data formats which can also be extended with minimal
-coordination.
+<a>Holders</a> in <a>presentations</a> can either disclose the attributes or satisfy <a>predicates</a>
+requested by the <a>verifier</a>. <a>Predicates</a> are boolean conditions like greater/less than or
+equal to, is in set, etc.
         </li>
         <li>
-<a>Verifiable credentials</a> are independently issued, stored,
-and verified.
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> are expressed in one or more standard,
+machine-readable data formats which can also be extended with minimal coordination.
+        </li>
+        <li>
+Issuers issue <a>verifiable credentials</a>, and holders store them.
+Holders offer <a>verifiable presentations</a>, and verifiers verify them.
+Issuance of credentials, storage of credentials, the generation and sharing
+of presentations, and the verification of them are each independent processes.
         </li>
         <li>
 <a>Verifiable Credentials</a> can be revoked by the <a>issuer</a>.
@@ -458,6 +468,12 @@ An example of a basic claim that expresses that Pat is over the age of 21.
       </figure>
 
       <p>
+If a presentation supports <a>derived predicates<a>, a claim about birthdate in a
+credential can become the basis of proof that at an arbitrary point in time, the
+age of a subject did or will fall within an arbitrary interval.
+      </p>
+
+      <p>
 These claims may be merged together to express a graph of
 information about a particular subject. The example below extends the
 data model above by adding claims that state that Pat knows Sam and that
@@ -530,8 +546,15 @@ subset of one's persona is called a <a>verifiable presentation</a>.
       </p>
 
       <p>
-A <a>verifiable presentation</a> is a collection of one or more
-<a>verifiable credentials</a> that are often about the same <a>subject</a> that
+A <a>verifiable presentation</a> expresses data from one or more <a>verifiable
+credentials</a>, and is packaged in such a way that the authorship of the data
+is verifiable. If credentials are directly presented, they become a
+presentation. Data formats derived from credentials that are cryptographically
+verifiable but that do not, of themselves, contain credentials, may also be
+presentations.
+      </p>
+      <p>
+      The data in a presentation are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
       </p>
@@ -551,7 +574,7 @@ gaming persona, or home-life persona.
 
       <p class="note">
 It is possible to have a <a>presentation</a>, such as a business persona,
-that contains multiple <a>credentials</a> about different <a>subjects</a>
+that draws upon multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
 
@@ -583,7 +606,7 @@ All entities trust the <a>identifier registry</a> to be incorruptible and
 to be a correct record of which identifiers belong to which <a>entities</a>.
         </li>
         <li>
-The <a>subject</a> trusts the <a>issuer</a> to issue true (i.e., not false)
+The <a>subject</a> trusts the <a>issuer</a> to issue true
 <a>credentials</a> about the subject, and to revoke them quickly when
 appropriate.
         </li>
@@ -604,7 +627,7 @@ The <a>issuer</a> and the <a>verifier</a> do not need to trust the
 repository</a>, and
         </li>
         <li>
-the <a>issuer</a> does not need to trust the <a>verifier</a>.
+the <a>issuer</a> does not need to know or trust the <a>verifier</a>.
         </li>
       </ul>
 
@@ -958,51 +981,55 @@ exists for implementers that would like to implement credential status checking.
         <h2>Presentations</h2>
 
         <p>
-Credentials MAY be composed by placing them into a data structure called a
-<a>presentation</a>. A <a>verifiable presentation</a> is a presentation that contains
-<a>verifiable credentials</a> and one or more proofs that are appropriate
-for the presentation. The basic structure of a <a>verifiable presentation</a>
-is provided below:
+Credentials MAY be used to make a <a>verifiable presentation</a>. A
+verifiable presentation may be of a verifiable credential itself, or
+of data derived from verifiable credentials in a format that is
+cryptographically verifiable. In the example below, we show a
+verifiable presentation that embeds verifiable credentials:
         </p>
 
-        <pre class="example nohighlight" title="Basic structure of a presentation">
-{
-  "@context": "https://w3id.org/credentials/v1",
-  "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
-  "type": ["VerifiablePresentation"],
-  <span class="highlight">"verifiableCredential": [{ ... }],
+          <pre class="example nohighlight" title="Basic structure of a presentation">
+          {
+          "@context": "https://w3id.org/credentials/v1",
+          "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
+          "type": ["VerifiablePresentation"],
+          <span class="highlight">"verifiableCredential": [{ ... }],
   "proof": [{ ... }]</span>
-}
-        </pre>
+          }
+          </pre>
+          <p class="issue" data-number=133>
+              The group is currently discussing whether the "id" field is appropriately
+              defined for Presentations.
+          </p>
 
-        <p class="issue" data-number=133>
-The group is currently discussing whether the "id" field is appropriately
-defined for Presentations.
-        </p>
+          <p class="issue" data-number=120>
+              The group is currently discussing whether the "id" field is appropriately
+              defined across all objects.
+          </p>
 
-        <p class="issue" data-number=120>
-The group is currently discussing whether the "id" field is appropriately
-defined across all objects.
-        </p>
+          <p class="issue" data-number=106>
+              The group is currently discussing how the data model expresses when the
+              subject is not the holder of the credential/presentation.
+          </p>
 
-        <p class="issue" data-number=106>
-The group is currently discussing how the data model expresses when the
-subject is not the holder of the credential/presentation.
-        </p>
+          <p class="issue" data-number=105>
+              The group is currently discussing holders, subjects, and identifier
+              control.
+          </p>
 
-        <p class="issue" data-number=105>
-The group is currently discussing holders, subjects, and identifier
-control.
-        </p>
+          <p>
+              The contents of the <code>verifiableCredential</code> property shown above are
+              <a>verifiable credentials</a> as described by this specification. The contents
+              of the <code>proof</code> property are proofs as described by the
+              Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
+              is optional and MAY be used to provide a unique identifier for the presentation.
+              The value associated with the <code>id</code> property MUST be a URI.
+          </p>
 
-        <p>
-The contents of the <code>verifiableCredential</code> property are
-<a>verifiable credentials</a> as described by this specification. The contents
-of the <code>proof</code> property are proofs as described by the
-Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
-is optional and MAY be used to provide a unique identifier for the presentation.
-The value associated with the <code>id</code> property MUST be a URI.
-        </p>
+          <p>
+          We are currently working on an example of a ZKP-style verifiable presentation that contains
+          derived data instead of directly embedded verifiable credentials.
+          </p>
       </section>
     </section>
 
@@ -1223,13 +1250,12 @@ new <code>favoriteFood</code> term so that it may only be used within the
       <section>
         <h2>Terms of Use</h2>
 
-        <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
-        <a>holder</a> to express limitations on the use of information
-        expressed by the Verifiable Credentials Data Model. The <a>issuer</a> places
-        the terms of use inside the <a>credential</a> before it is converted into a
-        <a>verifiable credential</a>. The <a>holder</a> places the terms of use inside
-        the <a>presentation</a> before it is converted into a
-        <a>verifiable presentation</a>.</p>
+        <p>Terms of use can be utilized by an <a>issuer</a>, a <a>subject</a>, or a
+        <a>holder</a> to constrain the use of information expressed by the Verifiable
+        Credentials Data Model. The <a>issuer</a> places their terms of use inside
+        the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
+        The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
+        </p>
 
        <p class="note"> it is for further study how a subject who is not a
        holder places terms of
@@ -1260,6 +1286,7 @@ new <code>favoriteFood</code> term so that it may only be used within the
 The group is currently exploring a variety of ways of expressing the terms of
 use associated with a Verifiable Credential, namely, the
 <a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
+A related initiative is the one at <a href="https://customercommons.org">Customer Commons</a>.
         </p>
 
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
