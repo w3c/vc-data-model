@@ -984,7 +984,7 @@ exists for implementers that would like to implement credential status checking.
 Credentials MAY be used to make a <a>verifiable presentation</a>. A
 verifiable presentation may be of a verifiable credential itself, or
 of data derived from verifiable credentials in a format that is
-cryptographically verifiable. In the first example below, we show a
+cryptographically verifiable. In the example below, we show a
 verifiable presentation that embeds verifiable credentials:
         </p>
 
@@ -1027,62 +1027,9 @@ verifiable presentation that embeds verifiable credentials:
           </p>
 
           <p>
-          The next example shows a ZKP-style verifiable presentation that contains
-          derived data instead. Here, the original credential contained a birthdate;
-          the presentation references that birthdate to assert an "over 65" <a>derived
-          predicate</a>, plus a "not expired" <a>derived predicate</a>. Notice that
-          claims are clustered by subject, with some claims about "this" (the credential
-          itself), and others about a subject named "person."
-      </p>
-          <pre class="example nohighlight"
-               title="Usage of proof property on a verifiable presentation">
-            {
-              "type": ["VerifiablePresentation"],
-              "claims": [       <i>// Each of the claims is created from a verifiable credential</i>
-                {
-                    "credDef": "sov:CRED_DEF:EID",
-                    "this": {
-                      "issuer": "https://eid.gov/issuers/1",
-                      "not expired": true,
-                      "holder": "person",
-                    },
-                    "person": {
-                      "> 65": "true",
-                    }
-                },
-                {
-                    "credDef": "sov:CRED_DEF:SUBSCRIPTION",
-                    "this": {
-                      "issuer": "https://moviestreaming.com/issuers/1",
-                      "not expired": true,
-                      "holder": "person",
-                    },
-                    "person": {
-                      "subscription type": "premium",
-                    }
-                }
-              ],
-              <span class="highlight">"proofs": [	<i>// the number of proofs is same as the number of claims</i>
-                {
-                    "type": "z-mix",
-                    "value": {
-                        <i>// meant to be parsed by a library supporting "z-mix"</i>
-                        ...
-                        ....
-                    }
-                },
-                {
-                    "type": "z-mix",
-                    "value": {
-                        <i>// meant to be parsed by a library supporting "z-mix"</i>
-                        ...
-                        ....
-                    }
-                }
-              ]
-            </span>
-            }
-            </pre>
+          We are currently working on an example of a ZKP-style verifiable presentation that contains
+          derived data instead of directly embedded verifiable credentials.
+          </p>
       </section>
     </section>
 
