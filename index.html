@@ -212,19 +212,14 @@ information related to expiration dates.
       </ul>
 
       <p>
-A verifiable credential is capable of representing all of the same information
-that a physical credential is intended to represent. The addition of
-digital technologies, such as digital signatures, supports the goal to make verifiable
-credentials more tamperproof and therefore more trustworthy than their physical counterparts.
-Verifiable credentials can also be rapidly transmitted, making them more convenient than their
-physical counterparts when needing to establish trust at a distance.
-      </p>
-      <p>
-Holders can generate presentations and share them with verifiers to prove
-they possess verifiable credentials with certain characteristics. Verifiable
-credentials can also be issued and presented over the Internet, making them
-more convenient than their physical counterparts when needing to establish trust
-at a distance.
+A verifiable credential can represent all of the same information that a
+physical credential represents. The addition of technologies such as
+digital signatures makes verifiable credentials more tamper-evident and
+therefore more trustworthy than their physical counterparts. Holders can
+generate presentations and share them with verifiers to prove they possess
+verifiable credentials with certain characteristics. Both credentials and
+presentations can be rapidly transmitted, making them more convenient than
+their physical counterparts when establishing trust at a distance.
       </p>
     </section>
     <section>
@@ -354,26 +349,24 @@ specification, namely:
       <ul>
         <li>
 <a>Holders</a> receive and store <a>verifiable credentials</a> from
-<a>issuers</a>.
+<a>issuers</a>. <a>Holders</a> may interact with an issuer through an
+agent that the issuer needn't trust.
         </li>
         <li>
-<a>Holders</a> may use an agent that the issuer does not need to trust.
+<a>Holders</a> are positioned between <a>issuers</a> and <a>verifiers</a>
+and use <a>verifiable credentials</a> to make <a>verifiable presentations</a>
+to <a>verifiers</a>.
         </li>
         <li>
-<a>Holders</a> are positioned between <a>issuers</a> and <a>verifiers</a>.
-        </li>
-        <li>
-<a>Holders</a> generate <a>verifiable presentations</a> from their <a>verifiable credentials</a> as
-needed and provide these <a>verifiable presentations</a> to <a>verifiers</a>.
-        </li>
-        <li>
-<a>Holders</a> may use an agent that verifiers needn't trust; they only need to trust
+<a>Holders</a> may interact with <a>verifiers</a> through an agent that
+verifiers needn't trust; verifiers only need to trust
 <a>issuers</a>.
         </li>
         <li>
 <a>Verifiable credentials</a> are associated with <a>subjects</a>, not
 particular services; <a>holders</a> decide how to aggregate and manage
-<a>verifiable credentials</a>.
+<a>verifiable credentials</a> and the <a>verifiable presentations</a>
+associated with them.
         </li>
         <li>
 <a>Holders</a> are able to easily control and own their own identifiers.
@@ -391,18 +384,26 @@ the identity of the <a>verifier</a> to the <a>issuer</a>. Even though this speci
 disallow such behavior, it strongly discourages for the holder to preserve its privacy.
         </li>
         <li>
-<a>Holders</a> using <a>presentations</a> can either disclose the attributes or satisfy <a>predicates</a>
-requested by the <a>verifier</a>. <a>Predicates</a> are boolean conditions like greater/less than or
+<a>Holders</a> that share <a>verifiable presentations</a> are not required to
+reveal the identity of the <a>verifier</a> to <a>issuers</a>.
+<a>Predicates</a> are boolean conditions like greater/less than or
 equal to, is in set, etc. Though some schemes may require holders to share the complete credential.
 Such schemes should be used sparingly as they severely limit the privacy of the holder.
         </li>
         <li>
-<a>Verifiable credentials</a> and <a>verifiable presentations</a> are expressed in one or more standard,
-machine-readable data formats which can also be extended with minimal
-coordination.
+<a>Holders</a> in <a>presentations</a> can either disclose the attributes or satisfy <a>predicates</a>
+requested by the <a>verifier</a>. <a>Predicates</a> are boolean conditions like greater/less than or
+equal to, is in set, etc.
         </li>
         <li>
-Issuers independently issue <a>verifiable credentials</a> and holders store them. When requested, Holders generate <a>verifiable presentations</a>, and verifiers independently verify them.
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> are expressed in one or more standard,
+machine-readable data formats which can also be extended with minimal coordination.
+        </li>
+        <li>
+Issuers issue <a>verifiable credentials</a>, and holders store them.
+Holders offer <a>verifiable presentations</a>, and verifiers verify them.
+Issuance of credentials, storage of credentials, the generation and sharing
+of presentations, and the verification of them are each independent processes.
         </li>
         <li>
 <a>Verifiable Credentials</a> can be revoked by the <a>issuer</a>.
@@ -478,6 +479,12 @@ The holder has the flexibility to use the claim in any way that is applicable to
 An example of a basic claim that expresses that Pat is over the age of 21.
         </figcaption>
       </figure>
+
+      <p>
+If a presentation supports <a>derived predicates</a>, a claim about birthdate in a
+credential can become the basis of proof that at an arbitrary point in time, the
+age of a subject did or will fall within an arbitrary interval.
+      </p>
 
       <p>
 These claims may be merged together to express a graph of
@@ -556,8 +563,15 @@ subset of one's persona is called a <a>verifiable presentation</a>.
       </p>
 
       <p>
-A holder generates a <a>verifiable presentation</a> from a collection of one or more
-<a>verifiable credentials</a> that are often about the same <a>subject</a> that
+A <a>verifiable presentation</a> expresses data from one or more <a>verifiable
+credentials</a>, and is packaged in such a way that the authorship of the data
+is verifiable. If credentials are directly presented, they become a
+presentation. Data formats derived from credentials that are cryptographically
+verifiable but that do not, of themselves, contain credentials, may also be
+presentations.
+      </p>
+      <p>
+      The data in a presentation are often about the same <a>subject</a> that
 have been issued by multiple <a>issuers</a>. The aggregation of this
 information typically expresses an aspect of a person, organization, or entity.
       </p>
@@ -576,8 +590,8 @@ gaming persona, or home-life persona.
       </p>
 
       <p class="note">
-It is possible to generate a <a>presentation</a>, such as in the context of a business persona,
-that is derived from multiple <a>credentials</a> about different <a>subjects</a>
+It is possible to have a <a>presentation</a>, such as a business persona,
+that draws upon multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
 
@@ -597,7 +611,7 @@ The Verifiable Credentials trust model is as follows:
         <li>
 The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
 that it receives. In order to establish this trust, a credential MUST
-either 1) include a <a href="#proofs-aka-signatures">proof</a> that establishes
+either 1) include a <a href="#proofs-e-g-signatures">proof</a> that establishes
 that the issuer generated the credential (it is a <a>verifiable credential</a>),
 or 2) have been transmitted in a way that clearly establishes that the
 issuer generated the credential and that the credential has not been tampered
@@ -624,6 +638,16 @@ The <a>holder</a> trusts the <a>repository</a> to store the
 This trust model differentiates itself from other trust models by ensuring that
 the <a>issuer</a> does not need to trust (or even know) the <a>verifier</a>.
       </p>
+
+      <ul>
+        <li>
+The <a>issuer</a> and the <a>verifier</a> do not need to trust the
+repository</a>, and
+        </li>
+        <li>
+the <a>issuer</a> does not need to know or trust the <a>verifier</a>.
+        </li>
+      </ul>
 
       <p>
 By decoupling the trust between the <a>identity provider</a> and the
@@ -779,10 +803,6 @@ keyword to <code>type</code> in order to make the JSON-LD documents more
 idiomatic. While application developers and document authors do not need to
 understand the specifics of JSON-LD's type system, implementers of this
 specification that want to support extensibility in an interoperable fashion do.
-        </p>
-        <p class="issue" data-number=123>
-The group is currently discussing whether or not JSON Object Types should be
-explicitly stated.
         </p>
 
       </section>
@@ -975,14 +995,14 @@ exists for implementers that would like to implement credential status checking.
         <h2>Presentations</h2>
 
         <p>
-Credentials MAY be composed by placing them into a data structure called a
-<a>presentation</a>. A <a>verifiable presentation</a> is a presentation that contains
-<a>verifiable credentials</a> and one or more proofs that are appropriate
-for the presentation. The basic structure of a <a>verifiable presentation</a>
-is provided below:
+Credentials MAY be used to make a <a>verifiable presentation</a>. A
+verifiable presentation may be of a verifiable credential itself, or
+of data derived from verifiable credentials in a format that is
+cryptographically verifiable. In the example below, we show a
+verifiable presentation that embeds verifiable credentials:
         </p>
 
-        <pre class="example nohighlight" title="Basic structure of a presentation">
+          <pre class="example nohighlight" title="Basic structure of a presentation">
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
@@ -990,36 +1010,35 @@ is provided below:
   <span class="highlight">"verifiableCredential": [{ ... }],
   "proof": [{ ... }]</span>
 }
-        </pre>
-
-        <p class="issue" data-number=133>
+          </pre>
+          <p class="issue" data-number=133>
 The group is currently discussing whether the "id" field is appropriately
 defined for Presentations.
-        </p>
+          </p>
 
-        <p class="issue" data-number=120>
-The group is currently discussing whether the "id" field is appropriately
-defined across all objects.
-        </p>
-
-        <p class="issue" data-number=106>
+          <p class="issue" data-number=106>
 The group is currently discussing how the data model expresses when the
 subject is not the holder of the credential/presentation.
-        </p>
+          </p>
 
-        <p class="issue" data-number=105>
+          <p class="issue" data-number=105>
 The group is currently discussing holders, subjects, and identifier
 control.
-        </p>
+          </p>
 
-        <p>
-The contents of the <code>verifiableCredential</code> property are
+          <p>
+The contents of the <code>verifiableCredential</code> property shown above are
 <a>verifiable credentials</a> as described by this specification. The contents
 of the <code>proof</code> property are proofs as described by the
 Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
 is optional and MAY be used to provide a unique identifier for the presentation.
 The value associated with the <code>id</code> property MUST be a URI.
-        </p>
+          </p>
+
+          <p class="issue" title="ZKP-style verifiable presentation">
+We are currently working on an example of a ZKP-style verifiable presentation that contains
+derived data instead of directly embedded verifiable credentials.
+          </p>
       </section>
     </section>
 
@@ -1069,10 +1088,6 @@ with an open world assumption than it is with closed software systems.
         <p>
 The rest of this section describes how both extensibility and program
 correctness are achieved through a series of examples.
-        </p>
-
-        <p class="issue" data-number=190>
-The group is currently discussing enhancements to this section.
         </p>
 
         <p class="issue" data-number=187>
@@ -1174,11 +1189,6 @@ while processing a verifiable credential or a verifiable presentation MUST
 produce an error.
         </p>
 
-        <p class="issue" data-number=193>
-The group is currently debating how to streamline interoperability between
-JSON-based and JSON-LD-based processors.
-        </p>
-
         <p>
 Developers are urged to ensure that extension JSON-LD Contexts are highly
 available. Implementations that cannot fetch a context will produce an error.
@@ -1240,13 +1250,12 @@ new <code>favoriteFood</code> term so that it may only be used within the
       <section>
         <h2>Terms of Use</h2>
 
-        <p>Terms of use can be utilized by an <a>issuer</a>, <a>subject</a> or a
-        <a>holder</a> to express limitations on the use of information
-        expressed by the Verifiable Credentials Data Model. The <a>issuer</a> places
-        the terms of use inside the <a>credential</a> before it is converted into a
-        <a>verifiable credential</a>. The <a>holder</a> places the terms of use inside
-        the <a>presentation</a> before it is converted into a
-        <a>verifiable presentation</a>.</p>
+        <p>Terms of use can be utilized by an <a>issuer</a>, a <a>subject</a>, or a
+        <a>holder</a> to constrain the use of information expressed by the Verifiable
+        Credentials Data Model. The <a>issuer</a> places their terms of use inside
+        the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
+        The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
+        </p>
 
        <p class="note"> it is for further study how a subject who is not a
        holder places terms of
@@ -1277,6 +1286,7 @@ new <code>favoriteFood</code> term so that it may only be used within the
 The group is currently exploring a variety of ways of expressing the terms of
 use associated with a Verifiable Credential, namely, the
 <a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
+A related initiative is the one at <a href="https://customercommons.org">Customer Commons</a>.
         </p>
 
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
@@ -1432,7 +1442,7 @@ credentials are supported by the specification.
         <p class="note">
 For the avoidance of doubt, the <em>evidence</em> <a>property</a> provides
 information that is different from and complementary to the
-<a href="#proofs-aka-signatures">proof</a> property. The <em>evidence</em>
+<a href="#proofs-e-g-signatures">proof</a> property. The <em>evidence</em>
 property is used to express supporting information, such as documentary
 evidence, related to the integrity of the credential. In contrast, the
 <em>proof</em> property is used to express machine-verifiable mathematical
@@ -2067,11 +2077,6 @@ JSON-LD document, then a <code>@context</code> property with a value of
 <code>https://w3id.org/credentials/v1</code> MUST be assumed.
         </p>
 
-        <p class="issue" data-number=202>
-The Verifiable Credentials JSON-LD Context needs to be updated to reflect
-the latest specification.
-        </p>
-
       </section>
 
     </section>
@@ -2245,151 +2250,6 @@ a verifiable credential, is clear and protected in the signature.
           (such as authentication, but not data mining).</li>
         </ul>
       </section>
-    </section>
-
-    <section>
-      <h2>Syntaxes</h2>
-
-
-      <p>
-Many of the data model concepts in this document thus far have been introduced
-by example using the JSON syntax. This section formalizes how the data model
-(described in Sections <a href="#core-data-model"></a>,
-<a href="#basic-concepts"></a>, and <a href="#advanced-concepts"></a>
-) is realized in JSON and JSON-LD. Although syntactic mappings are only provided for these two syntaxes,
-applications and services may also use any other data representation syntax,
-such as XML, YAML, or CBOR, that is capable of expressing the data model.
-      </p>
-
-      <section>
-        <h2>JSON</h2>
-
-          <p>
-The data model as described in Section <a href="#core-data-model"></a> can be
-encoded in Javascript Object Notation (JSON) [[!RFC8259]] by mapping
-property values to the following JSON types:
-          </p>
-
-          <ul>
-            <li>Numeric values representable as IEEE754 SHOULD be represented
-            as a Number type.</li>
-            <li>Any boolean value SHOULD be represented as a Boolean type.</li>
-            <li>Any sequence value SHOULD be represented as an Array type.</li>
-            <li>Any unordered set of values SHOULD be represented as
-            an Array type.</li>
-            <li>Any set of <a>properties</a> SHOULD be represented as
-            an Object type.</li>
-            <li>Any empty value SHOULD be represented as a null value.</li>
-            <li>Any other value MUST be represented as a String type.</li>
-          </ul>
-
-        <section>
-          <h3>JSON Web Token</h3>
-
-          <p class="issue">
-This section will be moved into its own specification before this document
-enters the Candidate Recommendation stage.
-          </p>
-
-          <p>The following example demonstrates how one could
-          express this data model using a JSON Web Token.</p>
-
-  <pre class="example" title="A JOSE JWT verifiable credential">
-  eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Rtdi
-  5leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL
-  CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi
-  YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI
-  6Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG
-  FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI
-  iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu
-  ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ
-  iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj
-  F9fX0.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6
-  NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1
-  fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4
-  </pre>
-
-  <p>
-  The JWT above was produced using the inputs below:
-  </p>
-
-  <p class="issue">
-  A number of the concerns have been raised around security,
-  composability, reusability, and extensibility with respect
-  to the use of JWTs for Verifiable Credentials. These concerns
-  will be documented in time in at least the Verfiable Claims Model
-  and Security Considerations section of this document.
-  </p>
-
-  <pre>
-  // JWT Header
-  {
-    "alg": "RS256",
-    "typ": "JWT"
-  }
-  // JWT Payload
-  {
-    "iss": "https://dmv.example.gov",
-    "iat": 1262304000,
-    "exp": 1483228800,
-    "aud": "www.example.com",
-    "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "verifiableCredential": {
-      "@context": "https://w3id.org/security/v1",
-      "id": "http://example.gov/credentials/3732",
-      "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-      "issuer": "https://dmv.example.gov",
-      "issuanceDate": "2010-01-01",
-      "claim": {
-        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "ageOver": 21
-      }
-    }
-  }
-  </pre>
-
-        </section>
-
-      </section>
-
-      <section>
-        <h2>JSON-LD</h2>
-
-        <p>
-[[!JSON-LD]] is a JSON-based format that is used to serialize
-<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>.
-The syntax is designed to easily integrate into deployed systems that
-already use JSON, and provides a smooth upgrade path from JSON to JSON-LD.
-It is primarily intended to be a way to use Linked Data in
-Web-based programming environments, to build interoperable Web services,
-and to store Linked Data in JSON-based storage engines.
-        </p>
-
-        <p>
-JSON-LD is useful when extending the data model described in this
-specification. Instances of the data model are encoded in JSON-LD in
-the same way that they are encoded in JSON (Section <a href="#json"></a>),
-with the addition of the <code>@context</code> property. The
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD Context</a>
-is described in detail in the [[!JSON-LD]] specification and its use
-is elaborated upon in Section <a href="#extensibility"></a>.
-        </p>
-
-        <p>
-Multiple contexts MAY be used or combined to express any arbitrary
-information about credentials in idiomatic JSON. If an application is
-processing a <a>verifiable credential</a> or <a>verifiable presentation</a>,
-and a <code>@context</code> property is not present at the top-level of the
-JSON-LD document, then a <code>@context</code> property with a value of
-<code>https://w3id.org/credentials/v1</code> MUST be assumed.
-        </p>
-
-        <p class="issue" data-number=194>
-The group is currently debating how schema.org fits in as a default context.
-        </p>
-
-      </section>
-
     </section>
 
     <section>
@@ -3082,30 +2942,6 @@ analogous to filling out a form on a web page. Implementers should note that
 these types of credentials are not verifiable because the authorship
 is either not known or cannot be trusted.
         </p>
-      </section>
-
-      <section>
-        <h3>Bundling Dependent Claims</h3>
-        <p>
-It is considered a best practice for issuers to atomize information in a
-credential, or use a signature scheme that allows for selective disclosure.
-In the former case, if the atomization is not done securely by the issuer,
-the holder might bundle together different credentials in a way that was not
-intended by the issuer.
-        </p>
-        <p>
-For example a university might issue two credentials to a person, each
-containing two properties, i.e., "Staff Member" in the
-"Department of Computing" and "Post Graduate Student" in the
-"Department of Economics". If these credentials are atomized into separate
-properties, then the university would issue four credentials to the person,
-each containing one of the following properties:
-"Staff Member", "Post Graduate Student", "Department of Computing" and
-"Department of Economics". The holder could then transfer
-the "Staff Member" and "Department of Economics" to a verifier,
-which together would comprise a false claim.
-        </p>
-
       </section>
 
       <section>
