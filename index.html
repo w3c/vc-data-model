@@ -2092,26 +2092,55 @@ for further study how they might be supported.
 
         <p>
 The time may come when an <a>entity</a> wants to dispute a <a>credential</a>
-issued by another entity. The mechanism for doing this is the same as issuing
-a regular credential except that the <a>subject</a> identifier for the
-<a>claims</a> are those of the disputed credential. For example, if a disputed
-credential with an identifier of
-<code>http://con-artist.example.com/credentials/3732</code>
-contains disputed statements, an entity would issue the following credential
-in a public venue to make it known that the credential is disputed:
+issued by the issuer. There are at least two different cases to consider:
+a subject disputes a claim made by the issuer, e.g. the address property is out
+of date, or an entity disputes a (false) claim made by the issuer about a
+different subject, e.g. an imposter is claiming the entity's social security
+number. Only the subject of a verifiable credential is entitled to issue a
+"DisputeCredential". A "DisputeCredential" issued by anyone other than the
+subject SHOULD be disregarded by the verifier, unless the verifier has some out
+of band means of ascertaining the truth of the dispute. This is to prevent
+denial of service attacks whereby an attacker falsely disputes a true claim.
+
+The mechanism for issuing a "DisputeCredential"
+is the same as issuing a regular credential except that the <a>subject</a>
+identifier for the <a>claim</a> in the "DisputeCredential" is the identifier of
+the disputed credential.  For example, if a credential with an identifier of
+<code>https://example.org/credentials/245</code>
+is disputed, an entity may issue one of the following credentials. In the
+former case, the subject might present this to the verifier along with the
+disputed credential. In the latter case, the entity might publish the
+"DisputeCredential" in a public venue to make it known that the credential
+is disputed.
         </p>
 
-        <pre class="example nohighlight"
-          title="Expressing a disputed credential">
+        <pre class="example nohighlight" title="Subject disputes a credential">
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  "id": "http://example.com/credentials/245",
+  "id": "http://example.com/credentials/123",
   "type": ["VerifiableCredential", "DisputeCredential"],
   <span class="highlight">"claim": {
-    "id": "http://con-artist.example.com/credentials/3732",
+    "id": "http://example.com/credentials/245",
+    "currentStatus": "Disputed",
+    "statusReason": "Address is out of date"
+  }</span>,
+  "issuer": "https://example.com/people#me",
+  "issuanceDate": "2017-12-05T14:27:42Z",
+  "proof": { ... }
+}
+        </pre>
+
+
+        <pre class="example nohighlight" title="Another entity disputes a credential">
+{
+  "@context": "https://w3id.org/credentials/v1",
+  "id": "http://example.com/credentials/321",
+  "type": ["VerifiableCredential", "DisputeCredential"],
+  <span class="highlight">"claim": {
+    "id": "http://example.com/credentials/245",
     "currentStatus": "Disputed",
     "statusReason": "Credential contains disputed statements",
     "disputedClaim": {
