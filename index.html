@@ -173,13 +173,16 @@ the following sections provide an overview of:
       </p>
       <ol>
         <li>
-what a verifiable credential contains,
+what a verifiable credential is and how it's comprised,
         </li>
         <li>
-an ecosystem where verifiable credentials are expected to be useful, and
+            what a <a>presentation</a> is and how it's comprised,
         </li>
         <li>
-the use cases and requirements that informed this specification
+an ecosystem where verifiable credentials and presentations are expected to be useful, and
+        </li>
+        <li>
+the use cases and requirements that informed this specification.
         </li>
       </ol>
       </p>
@@ -215,11 +218,10 @@ digital signatures makes verifiable credentials more tamper-evident and
 therefore more trustworthy than their physical counterparts. Holders can
 generate presentations and share them with verifiers to prove they possess
 verifiable credentials with certain characteristics. Both credentials and
-presentations can be rapidly exchanged, making them more convenient than
+presentations can be rapidly transmitted, making them more convenient than
 their physical counterparts when establishing trust at a distance.
       </p>
     </section>
-
     <section>
       <h3>Ecosystem Overview</h3>
 
@@ -250,16 +252,16 @@ trade associations, governments, and individuals.
         </dd>
         <dt><a>verifier</a></dt>
         <dd>
-A role an <a>entity</a> may perform by receiving one or more
-<a>verifiable presentations</a> for processing.
+A role an <a>entity</a> may perform by requesting and receiving a
+<a>verifiable presentation</a> that proves the holder possesses the required verifiable credentials with certain characteristics.
 Examples of verifiers include employers, security personnel, and websites.
         </dd>
         <dt><a>Public data repository</a></dt>
         <dd>
-Mediates the creation and verification of <a>subject</a>&#47;<a>issuer</a> identifiers, <a>issuer</a> keys and
-other relevant data (schemas, revocation registries) required to use verifiable credentials
-and verify presentations. Examples of such data repositories include trusted databases,
-decentralised databases, government ID databases, and distributed ledgers.
+A role a system may perform by mediating the creation and verification of <a>issuer</a> identifiers,
+keys and other relevant data like schemas, revocation registries, etc. required to use verifiable credentials. Some configurations may require correlatable
+identifiers for subjects. Examples of such data repositories include trusted databases,
+decentralized databases, government ID databases, and distributed ledgers.
         </dd>
       </dl>
 
@@ -374,11 +376,11 @@ associated with them.
         </li>
         <li>
 <a>Holders</a> are able to freely choose and change the agents they employ
-to help them manage and share their <a>verifiable credentials</a>.
+to help them manage their <a>verifiable credentials</a> and generate and share <a>verifiable presentations</a>.
         </li>
         <li>
-<a>Holders</a> that share <a>verifiable presentations</a> are not required to
-reveal the identity of the <a>verifier</a> to <a>issuers</a>.
+<a>Holders</a> can share <a>verifiable presentations</a> that can be verified without revealing
+the identity of the <a>verifier</a> to the <a>issuer</a>.
         </li>
         <li>
 <a>Holders</a> in <a>presentations</a> can either disclose the attributes or satisfy <a>predicates</a>
@@ -456,8 +458,8 @@ The basic structure of a claim.
 
       <p>
 The data model for <a>claims</a> described above is powerful and can be used to
-express a large variety of statements. For example, whether or not someone is
-over the age of 21 may be expressed as follows:
+express a large variety of statements. For example, whether or not someone is over
+the age of 21 may be expressed as follows:
       </p>
 
       <figure>
@@ -503,10 +505,11 @@ of information.
 
       <p>
 A <a>credential</a> is set of one or more <a>claims</a> made by the
-same <a>entity</a>. It may include an identifier to uniquely identify the
-credential, as well as metadata that describes properties of the credential
-itself such as: the <a>issuer</a>, the expiry time, a representative image,
-etc. A <a>verifiable credential</a> is a set of claims and metadata that are
+same <a>entity</a>. It includes an almost-always unique identifier
+as well as metadata that describes properties of the credential itself such as: the <a>issuer</a>,
+the expiry time, a representative image, the public key to use, the revocation mechanism to use etc.
+This metadata can either be signed by the issuer or not.
+A <a>verifiable credential</a> is a set of claims and meta data that are
 tamper-evident and that cryptographically prove who issued it.
       </p>
 
@@ -519,7 +522,7 @@ The basic components of a verifiable credential.
 
       <p>
 Examples of verifiable credentials include digital employee identification
-cards, digital proofs of age, and digital educational certificates.
+cards, digital birth certificates, digital educational certificates, etc.
       </p>
 
       <p class="note">
@@ -608,9 +611,9 @@ to be a correct record of which data is owned (and can be updated) by which
 <a>entities</a>.
         </li>
         <li>
-The <a>subject</a> trusts the <a>issuer</a> to issue true
-<a>credentials</a> about the subject, and to revoke them quickly when
-appropriate.
+The <a>subject</a> trusts, since only the holder can verify, the <a>issuer</a> to issue
+true (i.e., not false) <a>credentials</a> about the subject, and to revoke them quickly
+when appropriate.
         </li>
         <li>
 The <a>holder</a> trusts the <a>repository</a> to store the
@@ -982,8 +985,15 @@ exists for implementers that would like to implement credential status checking.
 Credentials MAY be used to make a <a>verifiable presentation</a>. A
 verifiable presentation may be of a verifiable credential itself, or
 of data derived from verifiable credentials in a format that is
-cryptographically verifiable. In the example below, we show a
-verifiable presentation that embeds verifiable credentials:
+cryptographically verifiable. Some schemes may enable holders to prove mathematical
+statements about a claim in a credential without revealing the claim itself, such as
+proving that the date of birth of a subject lies in an interval or is greater or less
+than some value. This provides a more privacy enhanced mechanism for use cases such as
+proving drinking age or teenager discount or elderly discount when other personally
+identifiable information such as email address or photo ID is not also required. Other
+schemes might be more simple and require the holder to share the credential and its claims directly.
+The holder has the flexibility to use the claim in any way that is applicable to that
+claim. In the example below, we show a verifiable presentation that embeds verifiable credentials:
         </p>
 
           <pre class="example nohighlight" title="Basic structure of a presentation">
@@ -2861,7 +2871,16 @@ there is nothing for attackers to steal, making the entire ecosystem safer
 to operate within.
         </p>
       </section>
-
+        <section>
+            <h3>Avoid Disclosing Credential Identifier</h3>
+            <p>
+                Disclosing the credential identifier leads to situations where multiple
+verifiers or an issuer and a verifier can collude to correlate the holder. The holder should
+use credential schemes which allow hiding the identifier during presentation. Such schemes
+expect the holder to generate the identifier and may even allow hiding the identifier from
+the issuer, whilst still keeping the identifier embedded (and signed) in the credential.
+            </p>
+        </section>
     </section>
 
     <section>
