@@ -1251,35 +1251,48 @@ new <code>favoriteFood</code> term so that it may only be used within the
       <section>
         <h2>Terms of Use</h2>
 
-        <p>Terms of use can be utilized by an <a>issuer</a>, a <a>subject</a>, or a
-        <a>holder</a> to constrain the use of information expressed by the Verifiable
-        Credentials Data Model. The <a>issuer</a> places their terms of use inside
-        the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
-        The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
+        <p>
+          Terms of use describe policy describing how a
+          <a>verifiable credential</a> should be used or distributed.
+          For example, terms of use can be added to declare that a credential
+          should not be stored to a database or shared by a holder to another
+          entity.
         </p>
 
-       <p class="note"> it is for further study how a subject who is not a
-       holder places terms of
-       use on his or her verifiable credentials. One way could be for the subject to
-       request the issuer to place them inside the issued verifiable credentials. Another
-       way could be by the subject delegating a verifiable credential to a holder and
-       placing terms of use restrictions on the delegated verifiable credential.
-       </p>
-       <p> The expression of
-        terms of use may be performed via the following <a>property</a>:
+        <p class="note">
+          From an information copying perspective, once information is shared
+          with a holder in an unconfined environment, it will always be
+          technically possible for that entity to share information, even
+          contrary to the intent expressed in the terms of use policy.
+          However, terms of use are still useful as an expression of what
+          policy participating parties are consenting to.
+          Well-behaving entities can use terms of use information to inform
+          their own behavior in regard to the information found in the
+          verifiable credential.
+          Enforcement can happen externally to an entity found in violation
+          of the terms of use: relationships or contracts could be severed,
+          trust could be lost, and in some cases legal action could be taken.
+        </p>
+
+        <p>
+          The expression of terms of use may be performed via the following
+          <a>property</a>:
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
-          <dd>The value of this property MUST be one or more terms of use
-            that tell the <a>verifier</a> what actions it MUST perform if it is to
-           accept the verifiable credential or verifiable presentation.
-          If the verifier is not willing to accept these terms of use then it MUST reject
-          the verifiable credential or verifiable presentation.
-          Each <code>termsOfUse</code> comprises its type,
-            for example, <code>IssuerPolicy</code>, and
-            optionally its instance id. The precise contents of each term of use is
-            determined by the specific <code>TermsOfUse</code> type definition.
+          <dd>
+            The value of this property is one or more terms of use that tell
+            the <a>holder</a> or <a>verifier</a> what policy it should comply
+            with if it is to accept the verifiable credential or verifiable
+            presentation.
+            If the verifier is not willing to accept or does not understand
+            these terms of use or then it SHOULD reject the verifiable
+            credential or verifiable presentation.
+            Each <code>termsOfUse</code> value MUST have a type (for example,
+            <code>IssuerPolicy</code>).
+            The precise contents of each term of use is determined by the
+            specific <code>type</code> definition.
           </dd>
         </dl>
 
