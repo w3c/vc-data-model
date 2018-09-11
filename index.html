@@ -163,23 +163,24 @@ credentials provide us in the physical world.
       </p>
 
       <p>
-This specification provides a
-standard way to express credentials on the Web in a way that is
-cryptographically secure, privacy respecting, and machine-verifiable.
+This specification provides a standard way to express credentials on the
+Web in a way that is cryptographically secure, privacy-respecting,
+and machine-verifiable.
       </p>
       <p>
-For those that are unfamiliar with the concepts related to verifiable credentials,
-the following sections provide an overview of:
+For those that are unfamiliar with the concepts related to verifiable
+credentials, the following sections provide an overview of:
       </p>
       <ol>
         <li>
-what a verifiable credential is and how it's comprised,
+the components that constitute a <a>verifiable credential</a>,
         </li>
         <li>
-            what a <a>presentation</a> is and how it's comprised,
+the components that constitutes a <a>verifiable presentation</a>,
         </li>
         <li>
-an ecosystem where verifiable credentials and presentations are expected to be useful, and
+an ecosystem where verifiable credentials and verifiable presentations are
+expected to be useful, and
         </li>
         <li>
 the use cases and requirements that informed this specification.
@@ -505,12 +506,13 @@ of information.
 
       <p>
 A <a>credential</a> is set of one or more <a>claims</a> made by the
-same <a>entity</a>. It includes an almost-always unique identifier
-as well as metadata that describes properties of the credential itself such as: the <a>issuer</a>,
-the expiry time, a representative image, the public key to use, the revocation mechanism to use etc.
-This metadata can either be signed by the issuer or not.
-A <a>verifiable credential</a> is a set of claims and meta data that are
-tamper-evident and that cryptographically prove who issued it.
+same <a>entity</a>. It may include an identifier as well as metadata that
+describes properties of the credential itself such as: the <a>issuer</a>,
+the expiry time, a representative image, a public key to use for the purposes
+of verification, the revocation mechanism to use etc.
+This metadata may be signed by the issuer. A <a>verifiable credential</a> is a
+set of claims and meta data that are tamper-evident and that cryptographically
+prove who issued it.
       </p>
 
       <figure>
@@ -611,8 +613,8 @@ to be a correct record of which data is owned (and can be updated) by which
 <a>entities</a>.
         </li>
         <li>
-The <a>subject</a> trusts, since only the holder can verify, the <a>issuer</a> to issue
-true (i.e., not false) <a>credentials</a> about the subject, and to revoke them quickly
+The <a>subject</a> trusts the <a>issuer</a> to issue true (i.e., not false)
+<a>credentials</a> about the subject, and to revoke them quickly
 when appropriate.
         </li>
         <li>
@@ -982,21 +984,18 @@ exists for implementers that would like to implement credential status checking.
         <h2>Presentations</h2>
 
         <p>
-Credentials MAY be used to make a <a>verifiable presentation</a>. A
+Credentials MAY be used to construct a <a>verifiable presentation</a>. A
 verifiable presentation may be of a verifiable credential itself, or
 of data derived from verifiable credentials in a format that is
-cryptographically verifiable. Some schemes may enable holders to prove mathematical
-statements about a claim in a credential without revealing the claim itself, such as
-proving that the date of birth of a subject lies in an interval or is greater or less
-than some value. This provides a more privacy enhanced mechanism for use cases such as
-proving drinking age or teenager discount or elderly discount when other personally
-identifiable information such as email address or photo ID is not also required. Other
-schemes might be more simple and require the holder to share the credential and its claims directly.
-The holder has the flexibility to use the claim in any way that is applicable to that
-claim. In the example below, we show a verifiable presentation that embeds verifiable credentials:
+cryptographically verifiable.
         </p>
 
-          <pre class="example nohighlight" title="Basic structure of a presentation">
+        <p>
+In the example below, we show a verifiable presentation that embeds
+verifiable credentials:
+        </p>
+
+        <pre class="example nohighlight" title="Basic structure of a presentation">
 {
   "@context": "https://w3id.org/credentials/v1",
   "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
@@ -1004,35 +1003,44 @@ claim. In the example below, we show a verifiable presentation that embeds verif
   <span class="highlight">"verifiableCredential": [{ ... }],
   "proof": [{ ... }]</span>
 }
-          </pre>
-          <p class="issue" data-number=133>
+        </pre>
+        <p class="issue" data-number=133>
 The group is currently discussing whether the "id" field is appropriately
 defined for Presentations.
-          </p>
+        </p>
 
-          <p class="issue" data-number=106>
+        <p class="issue" data-number=106>
 The group is currently discussing how the data model expresses when the
 subject is not the holder of the credential/presentation.
-          </p>
+        </p>
 
-          <p class="issue" data-number=105>
+        <p class="issue" data-number=105>
 The group is currently discussing holders, subjects, and identifier
 control.
-          </p>
+        </p>
 
-          <p>
+        <p>
 The contents of the <code>verifiableCredential</code> property shown above are
 <a>verifiable credentials</a> as described by this specification. The contents
 of the <code>proof</code> property are proofs as described by the
 Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
 is optional and MAY be used to provide a unique identifier for the presentation.
 The value associated with the <code>id</code> property MUST be a URI.
-          </p>
+        </p>
 
-          <p class="issue" title="ZKP-style verifiable presentation">
-We are currently working on an example of a ZKP-style verifiable presentation that contains
-derived data instead of directly embedded verifiable credentials.
-          </p>
+        <p>
+Some zero-knowledge cryptography schemes may enable holders to indirectly
+prove that they hold a credential without revealing the credential itself. In
+these schemes, the original attribute, such as a date of birth, may be
+translated into another value, such as "over the age of 15", that is
+cryptographically asserted such that a <a>verifier</a> can trust the value if
+they trust the <a>issuer</a>.
+        </p>
+
+        <p class="issue" title="ZKP-style verifiable presentation">
+We are currently working on an example of a ZKP-style verifiable presentation
+that contains derived data instead of directly embedded verifiable credentials.
+        </p>
       </section>
     </section>
 
@@ -2409,7 +2417,7 @@ multiple websites.
         </p>
 
         <p>
-It is advised that privacy-preserving systems prevent the use of these other
+It is advised that privacy-respecting systems prevent the use of these other
 tracking technologies when verifiable credentials are being utilized. In some cases,
 these tracking technologies may need to be disabled entirely on devices that
 transmit verifiable credentials on behalf of the Holder.
@@ -2874,11 +2882,13 @@ to operate within.
         <section>
             <h3>Avoid Disclosing Credential Identifier</h3>
             <p>
-                Disclosing the credential identifier leads to situations where multiple
-verifiers or an issuer and a verifier can collude to correlate the holder. The holder should
-use credential schemes which allow hiding the identifier during presentation. Such schemes
-expect the holder to generate the identifier and may even allow hiding the identifier from
-the issuer, whilst still keeping the identifier embedded (and signed) in the credential.
+Disclosing the credential identifier leads to situations where multiple
+verifiers or an issuer and a verifier can collude to correlate the holder.
+If the holder desires to reduce correlation, they should use credential
+schemes which allow hiding the identifier during presentation. Such schemes
+expect the holder to generate the identifier and may even allow hiding the
+identifier from the issuer, whilst still keeping the identifier embedded
+and signed in the credential.
             </p>
         </section>
     </section>
