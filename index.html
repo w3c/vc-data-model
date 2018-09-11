@@ -1273,10 +1273,11 @@ new <code>favoriteFood</code> term so that it may only be used within the
 
         <p>
           Terms of use describe policy describing how a
-          <a>verifiable credential</a> should be used or distributed.
+          <a>verifiable credential</a> or <a>presentation</a>
+          should be used or distributed.
           For example, terms of use can be added to declare that a credential
-          should not be stored to a database or shared by a holder to another
-          entity.
+          or profile should not be stored to a database or shared by a holder
+          to another entity.
         </p>
 
         <p class="note">
@@ -1293,6 +1294,50 @@ new <code>favoriteFood</code> term so that it may only be used within the
           of the terms of use: relationships or contracts could be severed,
           trust could be lost, and in some cases legal action could be taken.
         </p>
+
+        <p>
+          A profile which wraps credentials must be interpreted of having
+          its terms of use through aggregation of the respective credential
+          plus the wrapping profile.
+        </p>
+
+        <div class="note">
+          <p>
+            As an example, consider if a patient named Alice is enrolling with
+            a new primary care provider, Carol.
+            She provides a presentation that aggregates proof of her insurance,
+            proof of her state identity, and her prior patient records from
+            her former primary care provider Bob.
+            On the presentation she sets the terms of use prohibiting third party
+            correlation for any of the data provided, and on her state identity
+            she prohibits archival of that information, since it is only needed
+            during initial enrollment.
+            This is useful, because the issuers of the respective claims do not
+            personally require that this information not be correlated by a
+            third party, but this requirement is important to Alice.
+            Thus the terms of use require that Carol not correlate any of the
+            information provided with third parties for any of the information
+            provided in the presentation, but the state identity information must
+            not be correlated and additionally must not be archived.
+          </p>
+          <p>
+            This example also provides a clear demonstration of why terms of
+            use are policy that an issuer must rely on external means for
+            enforcement.
+            Furthermore, if Carol were a malicious entity, she could always
+            unwrap the individual credentials from the presentation and distribute
+            them independently and receiving holders and verifiers of those
+            claims might never kwow that Alice did not want Carol to distribute
+            them further.
+            Nothing about the transmission of this information with these terms
+            of use guarantees to Alice that their restrictions will be carried
+            out, but if Carol were found to not be in compliance, there may
+            still be consequences.
+            For example, if Alice presented evidence to the medical board that
+            Carol violated these terms, Carol's medical license might be
+            revoked.
+          </p>
+        </div>
 
         <p>
           The expression of terms of use may be performed via the following
