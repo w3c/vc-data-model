@@ -16,8 +16,7 @@ mailing list as well.
 * Group page: [https://www.w3.org/2017/vc/WG/](https://www.w3.org/2017/vc/WG/)
 * charter: [https://www.w3.org/2017/vc/WG/charter.html](https://www.w3.org/2017/vc/WG/charter.html)
 * Chairs
-  * Matt Stone, Pearson @stonematt
-  * Richard Varn, ETS @rvanr
+  * Matt Stone, @stonematt
   * Dan Burnet @burnburn
 
 ### Verifiable Claims github repos
