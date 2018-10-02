@@ -14,21 +14,22 @@ An assertion made about a <a>subject</a>.
   <dd>
 A set of one or more <a>claims</a> made by the issuer.
 A <dfn data-lt="verifiable credentials">verifiable credential</dfn>
-is a credential that is tamper-resistant and whose authorship can be
-cryptographically verified.
+is a credential that is tamper-evident and that has authorship that can be
+cryptographically verified. Verifiable credentials can be used to build
+<a>verifiable presentations</a>, which can also be cryptographically verified.
   </dd>
   <dd>
 Note: The claims in a credential may be about different subjects.
   </dd>
   <dt><dfn data-lt="credential validation">validation</dfn></dt>
   <dd>
-The process that demonstrates the information in a <a>credential</a> is
-well-formed.
+The process that demonstrates the information in a <a>verifiable credential</a>
+or <a>verifiable presentation</a> is well-formed.
   </dd>
-  <dt><dfn data-lt="credential verification">verification</dfn></dt>
+  <dt><dfn data-lt="verification">verification</dfn></dt>
   <dd>
 The process that cryptographically demonstrates the authenticity of a
-<a>credential</a>.
+<a>verifiable credential</a> or a <a>verifiable presentation</a>.
   </dd>
   <dt><dfn data-lt="decentralized identifiers|DID|DIDs">decentralized identifier</dfn></dt>
   <dd>
@@ -49,6 +50,17 @@ associated <a>repository</a> and public key information.
   <dt><dfn>digital signature</dfn></dt>
   <dd>
 A mathematical scheme for demonstrating the authenticity of a digital message.
+  </dd>
+  <dt><dfn data-lt="predicates|derived predicates">derived predicate</dfn></dt>
+  <dd>
+    A verifiable, boolean assertion about the value of another attribute in a
+    <a>verifiable credential</a>. These are useful in zero-knowledge-proof-style
+    presentations, because they can limit information disclosure. For example, if a
+    verifiable credential contains an attribute named "height_in_cm", a derived
+    predicate such as "height_over_150cm" might reference the height attribute in
+    the credential and demonstrate that the issuer attests to a height value that
+    meets a minimum height requirement, without actually disclosing the specific
+    height value.
   </dd>
   <dt><dfn data-lt="entities|entity's">entity</dfn></dt>
   <dd>
@@ -99,11 +111,14 @@ and transmitting the verifiable credential to a <a>holder</a>.
   </dd>
   <dt><dfn data-lt="presentations">presentation</dfn></dt>
   <dd>
-A set of one or more <a>verifiable credentials</a> transmitted by a holder.
-A <a>holder</a> may create multiple presentations and each presentation
-may contain <a>verifiable credentials</a> issued by multiple <a>issuers</a>. A
-<dfn data-lt="verifiable presentations">verifiable presentation</dfn> is
-a presentation that is made tamper-resistant by the <a>holder</a>.
+Data derived from one or more <a>credentials</a>, issued by one or more
+<a>issuers</a>, that is shared with a particular entity. A
+<dfn data-lt="verifiable presentations">verifiable presentation</dfn>
+is a tamper-evident presentation that is
+encoded such that authorship of the data may be trusted after a
+process of cryptographic verification. Certain types of verifiable
+presentations may contain data that is synthesized from, but do
+not contain, the original verifiable credentials (e.g., zero-knowledge proofs).
   </dd>
   <dt><dfn data-lt="credential repository|credential repositories|repositories">repository</dfn></dt>
   <dd>
