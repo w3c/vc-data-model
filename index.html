@@ -1270,6 +1270,74 @@ new <code>favoriteFood</code> term so that it may only be used within the
       </section>
 
       <section>
+        <h2>Refreshing</h2>
+
+        <p>
+It is often useful for systems to enable the manual or automatic refresh of a
+<a>verifiable credential</a> that has <a href="#expiration">expired</a>.
+This specification enables an <a>issuer</a> to include a link to a refresh
+service.
+        </p>
+        <p>
+The issuer may include the refresh service as an element inside the <a>verifiable
+credential</a> if it is intended for either the verifier or the holder or both, or
+inside the <a>verifiable presentation</a> if it is intended for the holder only.
+        </p>
+        <p>
+Including the refresh reference in the presentation enables the holder to refresh the
+credential details before creating a presentation to share with a verifier, while including
+the refresh reference in the <a>verifiable credential</a> enables the both the holder and
+the verifier to perform future updates of the credential.
+        </p>
+       <p>
+The expression of a refresh service may be performed via the following
+<a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>refreshService</var></dt>
+          <dd>The value of this property MUST be one or more refresh services
+            that provides enough information to the <a>holder</a>'s software
+            such that it may refresh the credential.
+            Each <code>refreshService</code> comprises at least its
+            <code>type</code> (e.g. <code>ManualRefreshService2018</code>),
+            and the serviceEndpoint URL. The precise contents of each
+            refresh service is determined by the specific type definition.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
+{
+  "@context": [
+    "https://w3id.org/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"refreshService": {
+    "type": "ManualRefreshService2018",
+    "serviceEndpoint": "https://dmv.example.gov/refresh/283947"
+  }</span>,
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+In the example above, the <a>issuer</a> is specifying a
+manual <code>refreshService</code> that can be used by directing the
+<a>holder</a> to the following URL:
+<code>https://dmv.example.gov/refresh/283947</code>.
+        </p>
+
+      </section>
+
+      <section>
         <h2>Terms of Use</h2>
 
         <p>Terms of use can be utilized by an <a>issuer</a>, a <a>subject</a>, or a
@@ -1534,7 +1602,7 @@ that uniquely identifies a subject">
 {
   "@context": ["https://w3id.org/credentials/v1", "https://schema.org/"]
   "id": "http://dmv.example.gov/credentials/332",
-  "type": ["Credential", "IdentityCredential"],
+  "type": ["VerifiableCredential", "IdentityCredential"],
   "issuer": "https://dmv.example.gov/issuers/4",
   "issued": "2017-02-24",
   "claim": {
@@ -1657,7 +1725,7 @@ credential properties that have been passed to it by the subject">
   "type": ["VerifiablePresentation"],
   "credential": [{
       "id": "http://example.gov/credentials/3732",
-      "type": ["Credential", "PrescriptionCredential"],
+      "type": ["VerifiableCredential", "PrescriptionCredential"],
       "issuer": "https://dmv.example.gov",
       "issued": "2010-01-01",
       "claim": {
@@ -1672,7 +1740,7 @@ credential properties that have been passed to it by the subject">
     },
     {
       "id": "https://example.com/VC/123456789",
-      "type": ["Credential", "PrescriptionCredential"],
+      "type": ["VerifiableCredential", "PrescriptionCredential"],
       "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "issued": "2010-01-03",
       "claim": {
@@ -1745,7 +1813,7 @@ standardised by the working group.
       <pre class="example nohighlight" title="An example of the relationship
 property in a child's credential">{
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "ProofOfAgeCredential"],
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "claim": {
@@ -1769,7 +1837,7 @@ credential if it is provided by the child or the parent.
       <pre class="example nohighlight" title="An example of a relationship
 credential issued to a parent">{
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "RelationshipCredential"],
+  "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "claim": {
@@ -1793,7 +1861,7 @@ if the credential above is provided with any of the child's credentials.
      <pre class="example nohighlight" title="An example of a relationship
 credential issued by a child">{
   "id": "http://example.org/credentials/23894",
-  "type": ["Credential", "RelationshipCredential"],
+  "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "http://example.org/credentials/23894",
   "issued": "2010-01-01T19:73:24Z",
   "claim": {
@@ -1838,7 +1906,7 @@ with the subject of the credential, but who has a relationship with the issuer">
 
 {
   "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["Credential", "NameAndAddress"],
+  "type": ["VerifiableCredential", "NameAndAddress"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "holder": {
     "type": "LawEnforcement",
@@ -2201,8 +2269,11 @@ signatures, implementations MUST ensure that:
           or key purpose.</li>
           <li>The key MUST NOT be revoked or expired.</li>
           <li>The cryptographic signature MUST be valid.</li>
-          <li>If a <code>proofPurpose</code> exists, it MUST be a valid value
-          per the cryptographic suite.</li>
+          <li>
+            If the cryptographic suite expects a <code>proofPurpose</code>,
+            it MUST exist and be a valid value (such as
+            <code>credentialIssuance</code>) per the cryptographic suite.
+          </li>
         </ul>
 
         <p class="note">
@@ -2271,6 +2342,39 @@ a verifiable credential, is clear and protected in the signature.
           specific <a>verifiers</a> or for specific purposes
           (such as authentication, but not data mining).</li>
         </ul>
+      </section>
+    </section>
+
+    <section>
+      <h2>Accessibility Considerations</h2>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+This section details the general accessibility considerations that should be
+taken into account when utilizing this data model.
+      </p>
+
+      <section>
+        <h3>Data First Approaches</h3>
+        <p>
+Many physical credentials in use today, such as government identification
+cards, have poor accessibility characteristics. Some of these poor
+characteristics include, but are not limited to, small print,
+reliance on small, high resolution images, and no affordances for people with
+vision disabilities.
+        </p>
+        <p>
+When utilizing this data model to create verifiable credentials, it is
+suggested that data model designers use a "data first" approach. For example,
+given the choice of using data or a graphical image to depict a credential,
+a designer should choose to express every element of the image,
+such as the name of an institution or the professional credential, in a
+machine readable way rather than solely relying on the image to convey this
+information. This approach is preferred because a "data first" approach
+provides the foundational elements of building different interfaces for
+people with disabilities.
+        </p>
       </section>
     </section>
 
@@ -2499,13 +2603,14 @@ that issues driver's licenses could issue a set of credentials containing every
 attribute that appears on a driver's license in addition to atomized
 credentials (a credential containing only the person's birthday), and atomized
 credentials that are more abstract (a credential containing only an
-<code>ageOver</code> attribute). In addition, the issuer is encouraged to
+<code>ageOver</code> attribute). One possible simple adaptation is for the issuer to
 provide secure HTTP endpoints for retrieving single-use bearer credentials to
-promote the pseudonymous usage of credentials when it is safe for the issuer to
-issue such credentials.
-        </p>
+promote the pseudonymous usage of credentials. Implementers that find this
+impractical or unsafe should consider the use of selective disclosure schemes
+that eliminate dependence on issuers at proving time and reduce temporal
+correlation risk from the issuer.
         <p>
-Similarly, verifiers are urged to only request information that is absolutely
+Verifiers are urged to only request information that is absolutely
 necessary for a particular transaction to occur. This is important for at
 least two reasons: 1) it reduces the liability on the verifier for
 handling highly sensitive information that it does not need, and 2)
@@ -3067,7 +3172,10 @@ All or any combination of the above.
         </ul>
 
     </section>
-
+      <section>
+        <h2>Accessibility Impact</h2>
+        <p>There are a number of accessibility considerations of which implementors should be aware when processing data described in this specification. As with any implementation of web standards or protocols, ignoring accessibility issues will make this information unusable to a large subset of the population. It is important to follow accessiblity guidelines and standards such as [WCAG21] to ensure that all people, regardless of ability can make use of this data. This is especially important when establishing cryptography and encryption which historically have created problems for assistive technologies. 
+      
   </body>
 </html>
 
