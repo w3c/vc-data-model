@@ -654,6 +654,58 @@ toward the end of the document.
       </p>
 
       <section>
+        <h2>Identifiers</h2>
+
+        <p>
+When expressing statements about a particular thing, such as a person, product,
+or organization, it is often useful to use an identifier so that others
+may express statements about the same thing. Identifiers that others are
+expected to use when expressing statements about a particular thing MUST be
+expressed using the <code>id</code> property.
+        </p>
+
+        <dl>
+          <dt><dfn>id</dfn></dt>
+          <dd>
+The value of this property MUST be a single URI. It is RECOMMENDED that
+dereferencing the URI results in a document containing machine-readable
+information about the identifier.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of the 'id' property">
+{
+  "@context": "https://w3id.org/credentials/v1",
+  <span class="highlight">"id": "http://dmv.example.gov/credentials/3732"</span>,
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "claim": {
+    <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+The example above uses two types of identifiers. The first identifier is an
+identifier for the credential and uses an HTTP-based URL. The second
+identifier is an identifier for the subject of the credential, that is, the
+thing that the claims are about, which uses a Decentralized Identifier.
+        </p>
+
+        <p class="note">
+Note that, as of this publication, Decentralized Identifiers are a new type
+of identifier that are not necessary for Verifiable Credentials to be useful.
+However, it is expected that many verifiable credentials will use
+Decentralized Identifiers and software libraries that implement this
+specification will most likely need to be able to resolve them as DID-based
+URLs are used for expressing identifiers for cryptographic keys and other
+machine-readable information that is vital for the proper operation of
+the Verifiable Credentials Ecosystem.
+        </p>
+      </section>
+
+      <section>
         <h2>Types</h2>
 
         <p>
@@ -3153,8 +3205,8 @@ All or any combination of the above.
     </section>
       <section>
         <h2>Accessibility Impact</h2>
-        <p>There are a number of accessibility considerations of which implementors should be aware when processing data described in this specification. As with any implementation of web standards or protocols, ignoring accessibility issues will make this information unusable to a large subset of the population. It is important to follow accessiblity guidelines and standards such as [WCAG21] to ensure that all people, regardless of ability can make use of this data. This is especially important when establishing cryptography and encryption which historically have created problems for assistive technologies. 
-      
+        <p>There are a number of accessibility considerations of which implementors should be aware when processing data described in this specification. As with any implementation of web standards or protocols, ignoring accessibility issues will make this information unusable to a large subset of the population. It is important to follow accessiblity guidelines and standards such as [WCAG21] to ensure that all people, regardless of ability can make use of this data. This is especially important when establishing cryptography and encryption which historically have created problems for assistive technologies.
+
   </body>
 </html>
 
