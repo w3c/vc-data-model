@@ -2148,6 +2148,51 @@ JSON-LD document, then a <code>@context</code> property with a value of
 
       </section>
 
+  <section>
+        <h2>IPLD</h2>
+        
+        <p>
+Content addressing through hashes has become a widely-used means of connecting 
+data in distributed systems. <a href="https://ipld.io">IPLD</a> is a way of representing 
+hash-linked data to be used in content-addressed data retrieval systems such as 
+<a href="https://ipfs.io">IPFS</a>. Other content that can be resolved using IPLD include 
+blockchains such as Bitcoin, Ethereum, ZCash and Git repositories. IPLD enables 
+creation of decentralized data-structures that are universally addressable facilitating 
+resolving content accross different protocols. It achieves this through an interoperable 
+data model that represents various protocol formats. IPLD relies on self-describing 
+<a href="https://github.com/ipld/cid">Content Identifiers (CIDs)]</a> for content addressing. 
+CIDs are a self-describing, flexible, and interoperable way of expressing cryptographic hashes. 
+It uses several multiformats to achieve flexible self-description, namely 
+<a href="https://github.com/multiformats/multihash"> multihash </a> for hashes, 
+<a href="https://github.com/multiformats/multicodec"> multicodec </a> for data content types, and 
+<a href="https://github.com/multiformats/multibase">multibase </a> to represent the base encoding 
+of the CID itself. This interoperability makes IPLD a valuable structure for the DID document 
+that can be used across a variety of DID methods or distributed ledgers and 
+ensures cryptographic validity of the DID document.  Since both IPLD and JSON-LD 
+are 100% compatible with JSON, the large number of JSON parsers and libraries are already available. 
+      </p>
+      <p>
+The key symbol <code>"/"</code> (foward slash) SHOULD be reserved to represent a self describing 
+content indentifier (CID) for content addressing resolved using 
+<a href="https://github.com/ipld/specs">Interplanetary Linked Data (IPLD)</a>.  
+      </p>
+
+ <p>The following example demonstrates how one could
+          express this data model using IPLD.</p>
+
+  <pre class="example" title="A verifiable claim with @context and previous linked data using IPLD">
+{ "@context" : 
+    { "/" : "zdpuAmoZixxJjvosviGeYcqduzDhSwGV2bL6ZTTXo1hbEJHfq" }, 
+    ... 
+    "previous" : 
+    { "/" : "zdpuAvqt1YTeAdcyyncBDdJLVgKyZNbHm17rBEJNqFzVbg24B" }
+    ... 
+}
+  </pre>
+
+      </section>
+
+
     </section>
 
     <section>
