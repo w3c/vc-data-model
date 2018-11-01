@@ -652,6 +652,54 @@ toward the end of the document.
       </p>
 
       <section>
+        <h2>Contexts</h2>
+
+        <p>
+When two software systems need to exchange data, they must use terminology
+that both systems understand. A useful analogy is to think about how two
+people communicate; both people must use the same language and the words
+that each of them use must mean the same thing to the other party. This
+specification uses the <code>@context</code> property to express the context
+of the conversation.
+        </p>
+
+        <dl>
+          <dt><dfn>@context</dfn></dt>
+          <dd>
+The value of this property MUST be one or more URIs where first URI is the
+value <code>https://w3.org/2018/credentials/v1</code>.
+If more than one URI is provided, the URIs MUST be interpreted as an
+ordered set. It is RECOMMENDED that dereferencing the URI results in a
+document containing machine-readable information about the context.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of the @context property">
+{
+  <span class="highlight">"@context": [
+    "https://w3.org/2018/credentials/v1",
+    ...
+  ]</span>,
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+The data available at <code>https://w3.org/2018/credentials/v1</code>
+is a static document that is never updated and may thus be downloaded and
+cached client side. The associated vocabulary document for the
+Verifiable Credentials Data Model can be found at the following URL:
+<code>https://w3.org/2018/credentials</code>.
+        </p>
+      </section>
+
+      <section>
         <h2>Identifiers</h2>
 
         <p>
