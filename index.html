@@ -694,26 +694,6 @@ ordered set. It is RECOMMENDED that dereferencing the URI results in a
 document containing machine-readable information about the context.
           </dd>
         </dl>
-          <pre class="example nohighlight" title="Usage of the @context property">
-{
-  <span class="highlight">"@context": [
-    "https://w3.org/2018/credentials/v1",
-    "sch:example:ebfeb1f712ebc6f1c276e12ec21"
-  ]</span>,
-  "type": ["VerifiableCredential", "crd:example:b0b4fa8a61095c47aa7232e0aec"],
-  "claim": {
-    "linkSecret": "d02f1544a249743a11b07cd1dbb73b13fd...",
-    "birthDate": "2010-01-01T19:43:24Z"
-  },
-  "proof": { ... }
-}
-        </pre>
-          <p>
-              The example above uses the base context (<code>https://w3.org/2018/credentials/v1</code>)
-              to establish that the conversation is about a Verifiable Credential. It then adds a
-              verifiable credential schema identifier that references the schema object in the
-              verifiable data registry.
-          </p>
         <pre class="example nohighlight" title="Usage of the @context property">
 {
   <span class="highlight">"@context": [
@@ -956,8 +936,9 @@ associated objects so that the <a>verifier</a> can quickly determine the
 contents of the associated object based on the type of the encapsulating object.
 To provide a concrete example, a <a>credential</a> with the additional
 <code>type</code> of <code>crd:example:b0b4fa8a61095c47aa7232e0aec</code>
-would signal to the verifier that the object associated with the <a>claim</a>
-property will contain the birth date assertion in the <code>birthDate</code> property.
+would provides to the verifier information that the object associated with the <a>claim</a>
+property will contain the birth date assertion in the <code>birthDate</code> property and
+the cryptographic material necessary for the verification of the values stored.
 Or, alternatively, a <a>credential</a> with the additional
 <code>type</code> of <code>ProofOfAgeCredential</code> would signal to the
 <a>verifier</a> that the object associated with the <a>claim</a> property will
