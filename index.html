@@ -694,7 +694,26 @@ ordered set. It is RECOMMENDED that dereferencing the URI results in a
 document containing machine-readable information about the context.
           </dd>
         </dl>
-
+          <pre class="example nohighlight" title="Usage of the @context property">
+{
+  <span class="highlight">"@context": [
+    "https://w3.org/2018/credentials/v1",
+    "sch:example:ebfeb1f712ebc6f1c276e12ec21"
+  ]</span>,
+  "type": ["VerifiableCredential", "crd:example:b0b4fa8a61095c47aa7232e0aec"],
+  "claim": {
+    "linkSecret": "d02f1544a249743a11b07cd1dbb73b13fd...",
+    "birthDate": "2010-01-01T19:43:24Z"
+  },
+  "proof": { ... }
+}
+        </pre>
+          <p>
+              The example above uses the base context (<code>https://w3.org/2018/credentials/v1</code>)
+              to establish that the conversation is about a Verifiable Credential. It then adds a
+              verifiable credential schema identifier that references the schema object in the
+              verifiable data registry.
+          </p>
         <pre class="example nohighlight" title="Usage of the @context property">
 {
   <span class="highlight">"@context": [
@@ -751,7 +770,7 @@ expressed using the <code>id</code> property.
 Developers should keep in mind that identifiers may be harmful in scenarios
 where pseudonymity is required and are encourged to read
 Section <a href="#privacy-considerations"></a> carefully when considering
-such scenarios.
+such scenarios. Where privacy is a strong consideration, the 'id' property may be omitted.
         </p>
 
         <dl>
@@ -820,6 +839,24 @@ the URI results in a document containing machine-readable information about
 the type.
           </dd>
         </dl>
+          <pre class="example nohighlight" title="Usage of the type property">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "sch:example:ebfeb1f712ebc6f1c276e12ec21"
+  ],
+  <span class="highlight">"type": ["VerifiableCredential", "crd:example:b0b4fa8a61095c47aa7232e0aec"]</span>,
+  "claim": {
+    "linkSecret": "d02f1544a249743a11b07cd1dbb73b13fd...",
+    "birthDate": "2010-01-01T19:43:24Z"
+  },
+  "proof": { ... }
+}
+          </pre>
+<p>
+    The example above uses a verifiable credential definition identifier that references
+    the credential definition object in the verifiable data registry.
+</p>
 
         <pre class="example nohighlight" title="Usage of the type property">
 {
@@ -905,8 +942,8 @@ A valid evidence type (e.g., <code>DocumentVerification2018</code>)
         <p>
 All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
 specify or be associated with additional, more narrow <a>type</a>s
-(e.g., <code>ProofOfAgeCredential</code>) such that software systems can use
-the additional information to more easily process the data.
+(e.g. <code>crd:example:b0b4fa8a61095c47aa7232e0aec</code> or <code>ProofOfAgeCredential</code>)
+such that software systems can use the additional information to more easily process the data.
         </p>
 
         <p>
@@ -918,6 +955,10 @@ encapsulating object such as <a>credential</a>, SHOULD convey the types of
 associated objects so that the <a>verifier</a> can quickly determine the
 contents of the associated object based on the type of the encapsulating object.
 To provide a concrete example, a <a>credential</a> with the additional
+<code>type</code> of <code>crd:example:b0b4fa8a61095c47aa7232e0aec</code>
+would signal to the verifier that the object associated with the <a>claim</a>
+property will contain the birth date assertion in the <code>birthDate</code> property.
+Or, alternatively, a <a>credential</a> with the additional
 <code>type</code> of <code>ProofOfAgeCredential</code> would signal to the
 <a>verifier</a> that the object associated with the <a>claim</a> property will
 contain the identifier for the <a>subject</a> in the <code>id</code> property
@@ -927,10 +968,8 @@ for verification purposes. The expectation of types and their associated
 properties SHOULD be documented in at least a human-readable specification
 and, preferably, in an additional machine-readable representation.
         </p>
-
         <p class="note">
-The type system for the Verifiable Credentials Data Model is the same as the
-one for [[JSON-LD]] and is detailed in
+The type system for [[JSON-LD]] is detailed in
 <a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4: Specifying the Type</a>
 and
 <a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
@@ -966,6 +1005,25 @@ was issued. Note that this date represents the earliest date when the
 information associated with the <var>claim</var> property became valid.
           </dd>
         </dl>
+          <pre class="example nohighlight" title="Usage of issuer properties">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "sch:example:ebfeb1f712ebc6f1c276e12ec21"
+  ],
+  "type": ["VerifiableCredential", "crd:example:b0b4fa8a61095c47aa7232e0aec"],
+  <span class="highlight">"issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+  <span class="highlight">"issuanceDate": "2010-01-12T09:17:15Z"</span>,
+   "claim": {
+    "linkSecret": "d02f1544a249743a11b07cd1dbb73b13fd...",
+    "birthDate": "2010-01-01T19:43:24Z"
+  },
+  "proof": { ... }
+}
+        </pre>
+          <p>
+The example above uses a decentralized identifier (DID) that references the identifer object in the verifiable data registry.
+          </p>
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
   "@context": [
