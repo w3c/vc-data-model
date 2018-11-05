@@ -789,17 +789,17 @@ Type information MUST be expressed via the <a>type</a> property:
         </p>
 
         <dl>
-           <dt><dfn>type</dfn></dt>
-           <dd>
+          <dt><dfn>type</dfn></dt>
+          <dd>
 The value of this property MUST be or map to one or more URIs.
 If more than one URI is provided, the URIs MUST be interpreted as an
 unordered set. Note that syntactic conveniences, such as JSON-LD terms,
 SHOULD be used to ease developer usage. It is RECOMMENDED that dereferencing
 the URI results in a document containing machine-readable information about
 the type.
-           </dd>
-       </dl>
-            <pre class="example nohighlight" title="Usage of the type property">
+          </dd>
+        </dl>
+        <pre class="example nohighlight" title="Usage of the type property">
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
@@ -812,13 +812,13 @@ the type.
   },
   "proof": { ... }
 }
-          </pre>
-            <p>
-                The example above uses a verifiable credential definition identifier that references
-                the credential definition object in the verifiable data registry.
-            </p>
+        </pre>
+        <p>
+The example above uses a verifiable credential definition identifier that references
+the credential definition object in the verifiable data registry.
+        </p>
 
-            <pre class="example nohighlight" title="Usage of the type property">
+        <pre class="example nohighlight" title="Usage of the type property">
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
@@ -834,113 +834,113 @@ the type.
 }
         </pre>
 
-            <p>
-                With respect to this specification, the following <a>type</a>s MUST be
-                specified on the following objects:
-            </p>
+        <p>
+With respect to this specification, the following <a>type</a>s MUST be
+specified on the following objects:
+        </p>
 
-            <table class="simple">
-                <thead>
-                <tr>
-                    <th>Concept</th>
-                    <th>Type</th>
-                </tr>
-                </thead>
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Type</th>
+            </tr>
+          </thead>
 
-                <tbody>
-                <tr>
-                    <td>
-                        A <a href="#credentials">credential</a> object
-                    </td>
-                    <td>
-                        <tt>"type": ["<code>VerifiableCredential</code>"]</tt> and
-                        a more specific credential type (e.g., <code>ProofOfAgeCredential</code>)
-                    </td>
-                </tr>
+          <tbody>
+            <tr>
+              <td>
+A <a href="#credentials">credential</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiableCredential</code>"]</tt> and
+a more specific credential type (e.g., <code>ProofOfAgeCredential</code>)
+              </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        A <a href="#presentations">presentation</a> object
-                    </td>
-                    <td>
-                        <tt>"type": ["<code>VerifiablePresentation</code>"]</tt> and optionally a
-                        more specific presentation type
-                        (e.g., <code>CredentialManagerPresentation</code>).
-                    </td>
-                </tr>
+            <tr>
+              <td>
+A <a href="#presentations">presentation</a> object
+              </td>
+              <td>
+<tt>"type": ["<code>VerifiablePresentation</code>"]</tt> and optionally a
+more specific presentation type
+(e.g., <code>CredentialManagerPresentation</code>).
+              </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        A&nbsp;<a href="#status">credentialStatus</a>&nbsp;object
-                    </td>
-                    <td>
-                        A valid credential status type (e.g., <code>CredentialStatusList2017</code>)
-                    </td>
-                </tr>
+            <tr>
+              <td>
+A&nbsp;<a href="#status">credentialStatus</a>&nbsp;object
+              </td>
+              <td>
+A valid credential status type (e.g., <code>CredentialStatusList2017</code>)
+              </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        A <a href="#terms-of-use">termsOfUse</a> object
-                    </td>
-                    <td>
-                        A valid terms of use type (e.g., <code>OdrlPolicy2017</code>)
-                    </td>
-                </tr>
+            <tr>
+              <td>
+A <a href="#terms-of-use">termsOfUse</a> object
+              </td>
+              <td>
+A valid terms of use type (e.g., <code>OdrlPolicy2017</code>)
+              </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        An <a href="#terms-of-use">evidence</a> object
-                    </td>
-                    <td>
-                        A valid evidence type (e.g., <code>DocumentVerification2018</code>)
-                    </td>
-                </tr>
+            <tr>
+              <td>
+An <a href="#terms-of-use">evidence</a> object
+              </td>
+              <td>
+A valid evidence type (e.g., <code>DocumentVerification2018</code>)
+              </td>
+            </tr>
 
-                </tbody>
-            </table>
+          </tbody>
+        </table>
 
-            <p>
-                All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
-                specify or be associated with additional, more narrow <a>type</a>s
-                (e.g. <code>crd:example:b0b4fa8a61095c47aa7232e0aec</code> or <code>ProofOfAgeCredential</code>)
-                such that software systems can use the additional information to more easily process the data.
-            </p>
+        <p>
+All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
+specify or be associated with additional, more narrow <a>type</a>s
+(e.g. <code>crd:example:b0b4fa8a61095c47aa7232e0aec</code> or <code>ProofOfAgeCredential</code>)
+such that software systems can use the additional information to more easily process the data.
+        </p>
 
-            <p>
-                When processing encapsulated objects in this specification, (e.g., objects
-                associated with the <code>claim</code> property or deeply nested therein),
-                a software system SHOULD use type information specified in encapsulating
-                objects higher in the hierarchy. For the avoidance of doubt, an
-                encapsulating object such as <a>credential</a>, SHOULD convey the types of
-                associated objects so that the <a>verifier</a> can quickly determine the
-                contents of the associated object based on the type of the encapsulating object.
-                To provide a concrete example, a <a>credential</a> with the additional
-                <code>type</code> of <code>crd:example:b0b4fa8a61095c47aa7232e0aec</code>
-                would provides to the verifier information that the object associated with the <a>claim</a>
-                property will contain the birth date assertion in the <code>birthDate</code> property and
-                the cryptographic material necessary for the verification of the values stored.
-                Or, alternatively, a <a>credential</a> with the additional
-                <code>type</code> of <code>ProofOfAgeCredential</code> would signal to the
-                <a>verifier</a> that the object associated with the <a>claim</a> property will
-                contain the identifier for the <a>subject</a> in the <code>id</code> property
-                and the age assertion in the <code>ageOver</code> property. This enables
-                implementers to rely on values associated with the <code>type</code> property
-                for verification purposes. The expectation of types and their associated
-                properties SHOULD be documented in at least a human-readable specification
-                and, preferably, in an additional machine-readable representation.
-            </p>
-            <p class="note">
-                The type system for [[JSON-LD]] is detailed in
-                <a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4: Specifying the Type</a>
-                and
-                <a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
-                When using a JSON-LD Context (see Section <a href="#extensibility"></a>),
-                this specification aliases the <code>@type</code>
-                keyword to <code>type</code> in order to make the JSON-LD documents more
-                idiomatic. While application developers and document authors do not need to
-                understand the specifics of JSON-LD's type system, implementers of this
-                specification that want to support extensibility in an interoperable fashion do.
-            </p>
+        <p>
+When processing encapsulated objects in this specification, (e.g., objects
+associated with the <code>claim</code> property or deeply nested therein),
+a software system SHOULD use type information specified in encapsulating
+objects higher in the hierarchy. For the avoidance of doubt, an
+encapsulating object such as <a>credential</a>, SHOULD convey the types of
+associated objects so that the <a>verifier</a> can quickly determine the
+contents of the associated object based on the type of the encapsulating object.
+To provide a concrete example, a <a>credential</a> with the additional
+<code>type</code> of <code>crd:example:b0b4fa8a61095c47aa7232e0aec</code>
+would provides to the verifier information that the object associated with the <a>claim</a>
+property will contain the birth date assertion in the <code>birthDate</code> property and
+the cryptographic material necessary for the verification of the values stored.
+Or, alternatively, a <a>credential</a> with the additional
+<code>type</code> of <code>ProofOfAgeCredential</code> would signal to the
+<a>verifier</a> that the object associated with the <a>claim</a> property will
+contain the identifier for the <a>subject</a> in the <code>id</code> property
+and the age assertion in the <code>ageOver</code> property. This enables
+implementers to rely on values associated with the <code>type</code> property
+for verification purposes. The expectation of types and their associated
+properties SHOULD be documented in at least a human-readable specification
+and, preferably, in an additional machine-readable representation.
+        </p>
+        <p class="note">
+The type system for [[JSON-LD]] is detailed in
+<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4: Specifying the Type</a>
+and
+<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
+When using a JSON-LD Context (see Section <a href="#extensibility"></a>),
+this specification aliases the <code>@type</code>
+keyword to <code>type</code> in order to make the JSON-LD documents more
+idiomatic. While application developers and document authors do not need to
+understand the specifics of JSON-LD's type system, implementers of this
+specification that want to support extensibility in an interoperable fashion do.
+        </p>
 
         </section>
 
