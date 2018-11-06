@@ -1221,6 +1221,10 @@ is enabled via the use of [[!JSON-LD]].
           </li>
         </ul>
 
+        <p class="issue" data-number=xxx>
+The requirement to support multiple types of machine-readable data formats e.g., JWT is currently not supported.
+        </p>
+
         <p>
 This approach to data modelling is often called an "open world assumption,"
 meaning that any entity can say anything about any other entity. This approach
@@ -2187,7 +2191,7 @@ Many of the data model concepts in this document thus far have been introduced
 by example using the JSON syntax. This section formalizes how the data model
 (described in Sections <a href="#core-data-model"></a>,
 <a href="#basic-concepts"></a>, and <a href="#advanced-concepts"></a>
-) is realized in JSON and JSON-LD. Although syntactic mappings are only provided for these two syntaxes,
+) is realized in JSON, JSON-LD and JWT. Although syntactic mappings are only provided for these three syntaxes,
 applications and services may also use any other data representation syntax,
 such as XML, YAML, or CBOR, that is capable of expressing the data model.
       </p>
@@ -2213,74 +2217,6 @@ property values to the following JSON types:
             <li>Any empty value SHOULD be represented as a null value.</li>
             <li>Any other value MUST be represented as a String type.</li>
           </ul>
-
-        <section>
-          <h3>JSON Web Token</h3>
-
-          <p class="issue">
-This section will be moved into its own specification before this document
-enters the Candidate Recommendation stage.
-          </p>
-
-          <p>The following example demonstrates how one could
-          express this data model using a JSON Web Token.</p>
-
-  <pre class="example" title="A JOSE JWT verifiable credential">
-  eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Rtdi
-  5leGFtcGxlLmdvdiIsImlhdCI6MTI2MjMwNDAwMCwiZXhwIjoxNDgzMjI4ODAwL
-  CJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJkaWQ6ZWJmZWIxZjcxMmVi
-  YzZmMWMyNzZlMTJlYzIxIiwiZW50aXR5Q3JlZGVudGlhbCI6eyJAY29udGV4dCI
-  6Imh0dHBzOi8vdzNpZC5vcmcvc2VjdXJpdHkvdjEiLCJpZCI6Imh0dHA6Ly9leG
-  FtcGxlLmdvdi9jcmVkZW50aWFscy8zNzMyIiwidHlwZSI6WyJDcmVkZW50aWFsI
-  iwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiaXNzdWVyIjoiaHR0cHM6Ly9kbXYu
-  ZXhhbXBsZS5nb3YiLCJpc3N1ZWQiOiIyMDEwLTAxLTAxIiwiY2xhaW0iOnsiaWQ
-  iOiJkaWQ6ZWJmZWIxZjcxMmViYzZmMWMyNzZlMTJlYzIxIiwiYWdlT3ZlciI6Mj
-  F9fX0.LwqH58NasGPeqtTxT632YznKDuxEeC59gMAe9uueb4pX_lDQd2_UyUcc6
-  NW1E3qxvYlps4hH_YzzTuXB_R1A9UHXq4zyiz2sMtZWyJkUL1FERclT2CypX5e1
-  fO4zVES_8uaNoinim6VtS76x_2VmOMQ_GcqXG3iaLGVJHCNlCu4
-  </pre>
-
-  <p>
-  The JWT above was produced using the inputs below:
-  </p>
-
-  <p class="issue">
-  A number of the concerns have been raised around security,
-  composability, reusability, and extensibility with respect
-  to the use of JWTs for Verifiable Credentials. These concerns
-  will be documented in time in at least the Verfiable Claims Model
-  and Security Considerations section of this document.
-  </p>
-
-  <pre>
-  // JWT Header
-  {
-    "alg": "RS256",
-    "typ": "JWT"
-  }
-  // JWT Payload
-  {
-    "iss": "https://dmv.example.gov",
-    "iat": 1262304000,
-    "exp": 1483228800,
-    "aud": "www.example.com",
-    "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "verifiableCredential": {
-      "@context": "https://w3.org/2018/security/v1",
-      "id": "http://example.gov/credentials/3732",
-      "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-      "issuer": "https://dmv.example.gov",
-      "issuanceDate": "2010-01-01",
-      "claim": {
-        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "ageOver": 21
-      }
-    }
-  }
-  </pre>
-
-        </section>
-
       </section>
 
       <section>
@@ -2321,6 +2257,169 @@ Verifiable Credentials Data Model can be found at the following URL:
         </p>
 
       </section>
+
+        <section>
+            <h2>JSON Web Token</h2>
+
+            <p>
+                The verifiable credential data model as described in Section <a href="#core-data-model"></a> can be
+                encoded as a JSON Web Token (JWT) [[!RFC7519]] by doing the following:
+            </p>
+
+            <ul>
+                <li>The signature of the JWT is produced by the issuer of the verifiable credential.</li>
+                <li>Because JWS implicitly provides a verifiable proof of the contained verifiable credentials, the "proof" is no longer needed. Please note that
+                    the "jti" claim represents a nonce value.</li>
+                <li>The IANA JWT claims registry should be enforced whenever possible:</li>
+                <ul>
+                    <li>The "expirationDate" becomes the JWT "exp" claim (epoch time).</li>
+                    <li>The "id" of the verifiable credential becomes the JWT "jti" claim.</li>
+                    <li>The "id" contained in the "claim" object becomes the JWT "sub".</li>
+                    <li>If "created" and "creator" are required, these claims could be added to the JWT payload.</li>
+                    <li>The "issuer" becomes the JWT "iss" claim.</li>
+                    <li>The "issuanceDate" becomes the JWT "iat" claim.</li>
+                </ul>
+            </ul>
+
+            <p>The following is a verifiable credential encoded as a JWT.</p>
+
+            <pre class="example nohighlight" title="Expressing a verifiable credential as a JWT (base64url-encoded)">
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJAY29udGV4dCI6WyJodHRwczovL3czLm9yZy8yMDE
+4L2NyZWRlbnRpYWxzL3YxIiwiaHR0cHM6Ly9leGFtcGxlLmNvbS9leGFtcGxlcy92MSJdLCJzdWIiOiJ
+kaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJqdGkiOiJodHRwOi8vZG12LmV
+4YW1wbGUuZ292L2NyZWRlbnRpYWxzLzM3MzIiLCJpc3MiOiJodHRwczovL2Rtdi5leGFtcGxlLmdvdi9
+pc3N1ZXJzLzE0IiwiaWF0IjoiMTU0MTQ5MzcyNCIsImV4cCI6IjE1NzMwMjk3MjMiLCJ0eXBlIjpbIlZ
+lcmlmaWFibGVDcmVkZW50aWFsIiwiUHJvb2ZPZkFnZUNyZWRlbnRpYWwiXSwiY2xhaW0iOnsiYWdlT3Z
+lciI6MjF9fQ.TQymZk6gB2zDaReE6UTa9KBp61Te_mto9wWRCd1CqcdAjN0SY12-UhOlsxzn-XhZDNtG
+dTwzY_VURIOGbbBDNgnGbTstrwn8-Soh_qig2lsy7fS5rAzBgmdafJLbaKSCElHbyDIl1Vx4Qfc94-WN
+UbiCTShJwtCI7m82lLZ9mJg
+          </pre>
+
+            <p>The example above contains the following JWT header and payload.</p>
+            <pre class="example nohighlight" title="Verifiable credential JWT header">
+{
+  "alg": "RS256",
+  "typ": "JWT"
+}
+          </pre>
+
+            <pre class="example nohighlight" title="Verifiable credential JWT payload">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "jti": "http://dmv.example.gov/credentials/3732",
+  "iss": "https://dmv.example.gov/issuers/14",
+  "iat": "1541493724",
+  "exp": "1573029723",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+    "claim": {
+    "ageOver": 21
+  }
+}
+          </pre>
+
+            <p>
+                The presentations data model as described in Section <a href="#core-data-model"></a> can be
+                encoded as a JSON Web Token (JWT) [[!RFC7519]] by doing the following:
+            </p>
+
+            <ul>
+                <li>The signature of the JWT is typically produced by the holder of the enclosed verifiable credentials.</li>
+                <li>Because JWS implicitly provides a verifiable proof of the contained verifiable credentials, the "proof" is no longer needed.</li>
+                <li>The presentation keeps the JWS of the verifiable credentials intact by including the base64 encoded verifiable credentials in the "verifiableCredentials" array.</li>
+                <li>The IANA JWT claims registry should be enforced whenever possible:</li>
+                <ul>
+                    <li>The "id" of the presentation becomes the JWT "jti" claim.</li>
+                    <li>A "nonce" claim MUST be included to mitigate the risk of replay attacks.</li>
+                    <li>A "aud" claim may be included and contains the subject of the verifier. The "aud" claim MUST be one or more URIs.</li>
+                    <li>A "exp" claim may be included which contains expiration information of the presentation similar to a <a>credential</a>.</li>
+                    <li>A "iat" claim may be included which contains information when the presentation was produced.</li>
+                    <li>A "iss" claim may be included which contains information on the presenter of the verifiable credentials. The "iss" claim MUST be one URI.</li>
+                </ul>
+            </ul>
+
+            <p>The following is a verifiable credential encoded as a JWT.</p>
+
+            <pre class="example nohighlight" title="Expressing a verifiable credential as a JWT (base64url-encoded)">
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJAY29udGV4dCI6WyJodHRwczovL3czLm9yZy8yMDE
+4L2NyZWRlbnRpYWxzL3YxIiwiaHR0cHM6Ly9leGFtcGxlLmNvbS9leGFtcGxlcy92MSJdLCJqdGkiOiJ
+1cm46dXVpZDozOTc4MzQ0Zi04NTk2LTRjM2EtYTk3OC04ZmNhYmEzOTAzYzUiLCJpc3MiOiJkaWQ6ZXh
+hbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJhdWQiOiJodHRwczovL2Rtdi5leGFtcGx
+lLmdvdi9pc3N1ZXJzLzE0Iiwibm9uY2UiOiIzNDPCpyRGU0ZEYS0iLCJpYXQiOiIxNTQxNDkzNzI0Iiw
+iZXhwIjoiMTU3MzAyOTcyMyIsInR5cGUiOlsiVmVyaWZpYWJsZVByZXNlbnRhdGlvbiJdLCJ2ZXJpZml
+hYmxlQ3JlZGVudGlhbCI6WyJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKQVk
+yOXVkR1Y0ZENJNld5Sm9kSFJ3Y3pvdkwzY3pMbTl5Wnk4eU1ERTRMMk55WldSbGJuUnBZV3h6TDNZeEl
+pd2lhSFIwY0hNNkx5OWxlR0Z0Y0d4bExtTnZiUzlsZUdGdGNHeGxjeTkyTVNKZExDSnpkV0lpT2lKa2F
+XUTZaWGhoYlhCc1pUcGxZbVpsWWpGbU56RXlaV0pqTm1ZeFl6STNObVV4TW1Wak1qRWlMQ0pxZEdraU9
+pSm9kSFJ3T2k4dlpHMTJMbVY0WVcxd2JHVXVaMjkyTDJOeVpXUmxiblJwWVd4ekx6TTNNeklpTENKcGM
+zTWlPaUpvZEhSd2N6b3ZMMlJ0ZGk1bGVHRnRjR3hsTG1kdmRpOXBjM04xWlhKekx6RTBJaXdpYVdGMEl
+qb2lNVFUwTVRRNU16Y3lOQ0lzSW1WNGNDSTZJakUxTnpNd01qazNNak1pTENKMGVYQmxJanBiSWxabGN
+tbG1hV0ZpYkdWRGNtVmtaVzUwYVdGc0lpd2lVSEp2YjJaUFprRm5aVU55WldSbGJuUnBZV3dpWFN3aVk
+yeGhhVzBpT25zaVlXZGxUM1psY2lJNk1qRjlmUS5UUXltWms2Z0IyekRhUmVFNlVUYTlLQnA2MVRlX21
+0bzl3V1JDZDFDcWNkQWpOMFNZMTItVWhPbHN4em4tWGhaRE50R2RUd3pZX1ZVUklPR2JiQkROZ25HYlR
+zdHJ3bjgtU29oX3FpZzJsc3k3ZlM1ckF6QmdtZGFmSkxiYUtTQ0VsSGJ5RElsMVZ4NFFmYzk0LVdOVWJ
+pQ1RTaEp3dENJN204MmxMWjltSmdmIl19.SR-zmsg-i8n9WNj43zYX0LERb8UWfgYyHFLG3R2HmbhAS5
+mLFsy3xA1D8f6ksoT5UxOwr5T7uuj1UkC8v3aX1Z6yZus1HhhdhuhPnsMvkbBLJl7G6u4z8Fq7AJxT6e
+BhndD4Q6TfhcWXisrZaR1Al1921L_CfOqq5ZD1C1EdaoM
+          </pre>
+
+            <p>The example above contains the following JWT header and payload.</p>
+            <pre class="example nohighlight" title="Presentation JWT header">
+{
+  "alg": "RS256",
+  "typ": "JWT"
+}
+          </pre>
+
+            <pre class="example nohighlight" title="Presentation JWT payload">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "jti": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
+  "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "aud": "https://dmv.example.gov/issuers/14",
+  "nonce": "343§$FSFDa-",
+  "iat": "1541493724",
+  "exp": "1573029723",
+  "type": ["VerifiablePresentation"],
+  "verifiableCredential": ["
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJAY29udGV4dCI6WyJodHRwczovL3czLm9yZy8yMDE
+4L2NyZWRlbnRpYWxzL3YxIiwiaHR0cHM6Ly9leGFtcGxlLmNvbS9leGFtcGxlcy92MSJdLCJqdGkiOiJ
+1cm46dXVpZDozOTc4MzQ0Zi04NTk2LTRjM2EtYTk3OC04ZmNhYmEzOTAzYzUiLCJzdWIiOiJkaWQ6ZXh
+hbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJhdWQiOiJodHRwczovL2Rtdi5leGFtcGx
+lLmdvdi9pc3N1ZXJzLzE0Iiwibm9uY2UiOiIzNDPCpyRGU0ZEYS0iLCJpYXQiOiIxNTQxNDkzNzI0Iiw
+iZXhwIjoiMTU3MzAyOTcyMyIsInR5cGUiOlsiVmVyaWZpYWJsZVByZXNlbnRhdGlvbiJdLCJ2ZXJpZml
+hYmxlQ3JlZGVudGlhbCI6WyJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKQVk
+yOXVkR1Y0ZENJNld5Sm9kSFJ3Y3pvdkwzY3pMbTl5Wnk4eU1ERTRMMk55WldSbGJuUnBZV3h6TDNZeEl
+pd2lhSFIwY0hNNkx5OWxlR0Z0Y0d4bExtTnZiUzlsZUdGdGNHeGxjeTkyTVNKZExDSnpkV0lpT2lKa2F
+XUTZaWGhoYlhCc1pUcGxZbVpsWWpGbU56RXlaV0pqTm1ZeFl6STNObVV4TW1Wak1qRWlMQ0pxZEdraU9
+pSm9kSFJ3T2k4dlpHMTJMbVY0WVcxd2JHVXVaMjkyTDJOeVpXUmxiblJwWVd4ekx6TTNNeklpTENKcGM
+zTWlPaUpvZEhSd2N6b3ZMMlJ0ZGk1bGVHRnRjR3hsTG1kdmRpOXBjM04xWlhKekx6RTBJaXdpYVdGMEl
+qb2lNVFUwTVRRNU16Y3lOQ0lzSW1WNGNDSTZJakUxTnpNd01qazNNak1pTENKMGVYQmxJanBiSWxabGN
+tbG1hV0ZpYkdWRGNtVmtaVzUwYVdGc0lpd2lVSEp2YjJaUFprRm5aVU55WldSbGJuUnBZV3dpWFN3aVk
+yeGhhVzBpT25zaVlXZGxUM1psY2lJNk1qRjlmUS5UUXltWms2Z0IyekRhUmVFNlVUYTlLQnA2MVRlX21
+0bzl3V1JDZDFDcWNkQWpOMFNZMTItVWhPbHN4em4tWGhaRE50R2RUd3pZX1ZVUklPR2JiQkROZ25HYlR
+zdHJ3bjgtU29oX3FpZzJsc3k3ZlM1ckF6QmdtZGFmSkxiYUtTQ0VsSGJ5RElsMVZ4NFFmYzk0LVdOVWJ
+pQ1RTaEp3dENJN204MmxMWjltSmdmIl19.EjTFSFneWu2duLhy8DE1to943Shl_u70sSy8BSLBLlr10K
+Q1dzyb-L8P14luAd9Jk-8bNkqI5XuqJiFF2mgZuEwYugh98U0I5d7g2jlOqeXWHMAYaKEELfUsiNn5Bj
+AqEp58JEN7e-pSWYHCX49BsQmQumDsnDFBDzIHoTQe3no" ]
+}
+          </pre>
+
+            <p class="issue">
+                A number of the concerns have been raised around security,
+                composability, reusability, and extensibility with respect
+                to the use of JWTs for Verifiable Credentials. These concerns
+                will be documented in time in at least the Verfiable Claims Model
+                and Security Considerations section of this document.
+            </p>
+
+        </section>
 
     </section>
 
