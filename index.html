@@ -55,7 +55,6 @@
             company: "Spec-Ops", companyURL: "https://spec-ops.io/",
             w3cid: "44770" }
         ],
-
         // authors, add as many as you like.
         // This is optional, uncomment if you have authors as well as editors.
         // only "name" is required. Same format as editors.
@@ -66,7 +65,6 @@
           { name: "Dave Longley", url: "http://digitalbazaar.com/",
             company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"}
         ],
-
         // name of the WG
         wg:           "Verifiable Claims Working Group",
 
@@ -655,6 +653,133 @@ toward the end of the document.
       </p>
 
       <section>
+        <h2>Contexts</h2>
+
+        <p>
+When two software systems need to exchange data, they must use terminology
+that both systems understand. A useful analogy is to think about how two
+people communicate; both people must use the same language and the words
+that each of them use must mean the same thing to the other party. This
+specification uses the <code>@context</code> property to express the context
+of the conversation.
+        </p>
+
+        <dl>
+          <dt><dfn>@context</dfn></dt>
+          <dd>
+The value of this property MUST be one or more URIs where first URI is the
+value <code>https://w3.org/2018/credentials/v1</code>.
+If more than one URI is provided, the URIs MUST be interpreted as an
+ordered set. It is RECOMMENDED that dereferencing the URI results in a
+document containing machine-readable information about the context.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of the @context property">
+{
+  <span class="highlight">"@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ]</span>,
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+The example above uses the base context
+(<code>https://w3.org/2018/credentials/v1</code>) to establish that the
+conversation is about a Verififiable Credential. It then adds an additional
+context (<code>https://example.com/examples/v1</code>) to establish that the
+conversation will also be about examples.
+        </p>
+
+        <p class="note">
+This document uses the Example Context
+(<code>https://example.com/examples/v1</code>) for the purposes of
+demonstrating examples. The Example Context MUST NOT be used for any other
+purpose such as in pilot or production systems.
+        </p>
+
+        <p>
+The data available at <code>https://w3.org/2018/credentials/v1</code>
+is a static document that is never updated and MAY be downloaded and
+cached. The associated human-readable vocabulary document for the
+Verifiable Credentials Data Model can be found at the following URL:
+<a href="https://w3.org/2018/credentials">https://w3.org/2018/credentials</a>.
+This concept is expanded upon in Section <a href="#extensibility"></a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Identifiers</h2>
+
+        <p>
+When expressing statements about a particular thing, such as a person, product,
+or organization, it is often useful to use an identifier so that others
+may express statements about the same thing. Identifiers that others are
+expected to use when expressing statements about a particular thing MUST be
+expressed using the <code>id</code> property.
+        </p>
+
+        <p>
+Developers should keep in mind that identifiers may be harmful in scenarios
+where pseudonymity is required and are encourged to read
+Section <a href="#privacy-considerations"></a> carefully when considering
+such scenarios.
+        </p>
+
+        <dl>
+          <dt><dfn>id</dfn></dt>
+          <dd>
+The value of this property MUST be a single URI. It is RECOMMENDED that
+dereferencing the URI results in a document containing machine-readable
+information about the identifier.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of the 'id' property">
+{
+  "@context": "https://w3.org/2018/credentials/v1",
+  <span class="highlight">"id": "http://dmv.example.gov/credentials/3732"</span>,
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "claim": {
+    <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
+    "ageOver": 21
+  },
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+The example above uses two types of identifiers. The first identifier is an
+identifier for the credential and uses an HTTP-based URL. The second
+identifier is an identifier for the subject of the credential, that is, the
+thing that the claims are about, which uses a Decentralized Identifier, also
+known as a DID.
+        </p>
+
+        <p class="note">
+Note that, as of this publication, DIDs are a new type
+of identifier that are not necessary for Verifiable Credentials to be useful.
+For the avoidance of doubt, Verifiable Credentials do not depend on
+Decentralized Identifiers and Decentralized Identifiers do not depend on
+Verifiable Credentials.
+However, it is expected that many Verifiable Credentials will use
+Decentralized Identifiers and software libraries that implement this
+specification will most likely need to be able to resolve DIDs. DID-based
+URLs are used for expressing identifiers associated with cryptographic keys
+and other machine-readable information that is useful when used in
+the Verifiable Credentials Ecosystem.
+        </p>
+      </section>
+
+      <section>
         <h2>Types</h2>
 
         <p>
@@ -678,7 +803,10 @@ the type.
 
         <pre class="example nohighlight" title="Usage of the type property">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://dmv.example.gov/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
   "claim": {
@@ -820,7 +948,10 @@ information associated with the <var>claim</var> property became valid.
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
@@ -853,7 +984,10 @@ signing entity, and a representation of the signing date.</dd>
         <pre class="example nohighlight"
           title="Usage of proof property on a verifiable credential">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
@@ -901,7 +1035,10 @@ will cease to be valid.
 
         <pre class="example nohighlight" title="Usage of expirationDate property">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
@@ -956,7 +1093,10 @@ type instance. The precise contents of the credential status information is
 
         <pre class="example nohighlight" title="Usage of status property">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
@@ -997,7 +1137,10 @@ verifiable credentials:
 
         <pre class="example nohighlight" title="Basic structure of a presentation">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
   "type": ["VerifiablePresentation"],
   <span class="highlight">"verifiableCredential": [{ ... }],
@@ -1103,7 +1246,10 @@ Let us assume that we start with the following <a>verifiable credential</a>:
 
         <pre class="example nohighlight" title="A simple credential">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://example.com/credentials/4643",
   "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
@@ -1153,7 +1299,7 @@ context above and adding the new properties to the <a>verifiable credential</a>.
           title="A verifiable credential with a custom extension">
 {
   "@context": <span class="highlight">[
-    </span>"https://w3id.org/credentials/v1",
+    </span>"https://w3.org/2018/credentials/v1",
     <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
   ]</span>,
   "id": "http://example.com/credentials/4643",
@@ -1236,7 +1382,7 @@ new <code>favoriteFood</code> term so that it may only be used within the
   "@context": {
     "referenceNumber": "https://example.com/vocab#referenceNumber",
     <span class="highlight">"claim": {
-      "@id": "https://w3id.org/credentials#claim",
+      "@id": "https://w3.org/2018/credentials#claim",
       "@context": {
         "favoriteFood": "https://example.com/vocab#favoriteFood"
       }
@@ -1289,7 +1435,7 @@ The expression of a refresh service may be performed via the following
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
 {
   "@context": [
-    "https://w3id.org/credentials/v1",
+    "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
   "id": "http://dmv.example.gov/credentials/3732",
@@ -1362,7 +1508,7 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
         <pre class="example nohighlight" title="Usage of termsOfUse property by an Issuer">
 {
   "@context": [
-    "https://w3id.org/credentials/v1",
+    "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
   "id": "http://dmv.example.gov/credentials/3732",
@@ -1396,7 +1542,7 @@ storing the data in an archive.
         <pre class="example nohighlight" title="Usage of termsOfUse property by a Holder">
 {
   "@context": [
-    "https://w3id.org/credentials/v1",
+    "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -1486,7 +1632,7 @@ credentials are supported by the specification.
         <pre class="example nohighlight" title="Usage of evidence property">
 {
   "@context": [
-    "https://w3id.org/credentials/v1",
+    "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
   "id": "http://dmv.example.gov/credentials/3732",
@@ -1580,7 +1726,7 @@ subject and the holder.
       <pre class="example nohighlight" title="An example of a credential
 that uniquely identifies a subject">
 {
-  "@context": ["https://w3id.org/credentials/v1", "https://schema.org/"]
+  "@context": ["https://w3.org/2018/credentials/v1", "https://schema.org/"]
   "id": "http://dmv.example.gov/credentials/332",
   "type": ["VerifiableCredential", "IdentityCredential"],
   "issuer": "https://dmv.example.gov/issuers/4",
@@ -1942,7 +2088,10 @@ in a public venue to make it known that the credential is disputed:
         <pre class="example nohighlight"
           title="Expressing a disputed credential">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://example.com/credentials/245",
   "type": ["VerifiableCredential", "DisputeCredential"],
   <span class="highlight">"claim": {
@@ -1977,6 +2126,26 @@ identifiers can be used to uniquely identify individual claims.
 The group is currently exploring whether the specification of a vocabulary
 term to express content-based identifiers for claims is within scope as well
 as the specific vocabulary terms for disputed claims.
+        </p>
+
+      </section>
+
+      <section>
+        <h2>Authorization</h2>
+
+        <p>
+<a>Verifiable credentials</a> are intended as a means of reliably identifying
+subjects. Whilst it is recognized that Role Based Access Controls (RBAC) and
+Attribute Based Access Controls (ABAC) rely on this identification as a means
+of authorizing subjects to access resources, this specification
+MUST NOT be used for authorization purposes without an accompanying
+authorization framework.
+        </p>
+
+        <p>
+The Working Group did consider authorization use cases during the creation of
+this specification and is pursuing that work as an architectural layer that is
+built on top of this specification.
         </p>
 
       </section>
@@ -2098,7 +2267,7 @@ enters the Candidate Recommendation stage.
     "aud": "www.example.com",
     "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "verifiableCredential": {
-      "@context": "https://w3id.org/security/v1",
+      "@context": "https://w3.org/2018/security/v1",
       "id": "http://example.gov/credentials/3732",
       "type": ["VerifiableCredential", "ProofOfAgeCredential"],
       "issuer": "https://dmv.example.gov",
@@ -2144,7 +2313,12 @@ information about credentials in idiomatic JSON. If an application is
 processing a <a>verifiable credential</a> or <a>verifiable presentation</a>,
 and a <code>@context</code> property is not present at the top-level of the
 JSON-LD document, then a <code>@context</code> property with a value of
-<code>https://w3id.org/credentials/v1</code> MUST be assumed.
+<code>https://w3.org/2018/credentials/v1</code> MUST be assumed. The
+JSON-LD Context available at <code>https://w3.org/2018/credentials/v1</code>
+is a static document that is never updated and may thus be downloaded and
+cached client side. The associated vocabulary document for the
+Verifiable Credentials Data Model can be found at the following URL:
+<code>https://w3.org/2018/credentials</code>.
         </p>
 
       </section>
@@ -2624,7 +2798,10 @@ For example, the following Verifiable Credential is a bearer credential:
 
         <pre class="example nohighlight" title="Usage of issuer properties">
 {
-  "@context": "https://w3id.org/credentials/v1",
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
   "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
@@ -3154,8 +3331,8 @@ All or any combination of the above.
     </section>
       <section>
         <h2>Accessibility Impact</h2>
-        <p>There are a number of accessibility considerations of which implementors should be aware when processing data described in this specification. As with any implementation of web standards or protocols, ignoring accessibility issues will make this information unusable to a large subset of the population. It is important to follow accessiblity guidelines and standards such as [WCAG21] to ensure that all people, regardless of ability can make use of this data. This is especially important when establishing cryptography and encryption which historically have created problems for assistive technologies. 
-      
+        <p>There are a number of accessibility considerations of which implementors should be aware when processing data described in this specification. As with any implementation of web standards or protocols, ignoring accessibility issues will make this information unusable to a large subset of the population. It is important to follow accessiblity guidelines and standards such as [WCAG21] to ensure that all people, regardless of ability can make use of this data. This is especially important when establishing cryptography and encryption which historically have created problems for assistive technologies.
+
   </body>
 </html>
 
