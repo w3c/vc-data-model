@@ -472,9 +472,22 @@ An example of a basic claim that expresses that Pat is over the age of 21.
       <p>
 If a presentation supports <a>derived predicates</a>, a claim about birthdate in a
 credential can become the basis of proof that at an arbitrary point in time, the
-age of a subject did or will fall within an arbitrary interval.
+age of a subject did or will fall within an arbitrary interval. Selective disclosure
+schemes that use zero-knowledge proofs may use claims expressed in this model to prove
+additional statements about those claims. For example, a claim specifying the date of
+birth of a subject can be used as a predicate to prove that the subject's age is
+within a given range, such as to prove drinking age or qualification for age-related
+discounts, without actually revealing the birthdate. The holder has the flexibility
+to use the claim in any way that is applicable to the desired presentation.
       </p>
-
+          <figure>
+              <img style="margin: auto; display: block;"
+                   width="50%" src="diagrams/claim-example-2.svg">
+              <figcaption style="text-align: center;">
+                  An example of a basic claim that expresses that Pat's date of birth is 2010-01-01T19:73:24Z,
+                  the encoding of date would be determined by the schema.
+              </figcaption>
+          </figure>
       <p>
 These claims may be merged together to express a graph of
 information about a particular subject. The example below extends the
@@ -507,10 +520,14 @@ A <a>credential</a> is set of one or more <a>claims</a> made by the
 same <a>entity</a>. It may include an identifier as well as metadata that
 describes properties of the credential itself such as: the <a>issuer</a>,
 the expiry time, a representative image, a public key to use for the purposes
-of verification, the revocation mechanism to use etc.
-This metadata may be signed by the issuer. A <a>verifiable credential</a> is a
-set of claims and meta data that are tamper-evident and that cryptographically
-prove who issued it.
+of verification, the revocation mechanism to use etc. This metadata may be signed by the issuer.
+A <a>verifiable credential</a> is a set of claims and meta data that are tamper-evident
+and that cryptographically prove who issued it.
+      </p>
+      <p>
+It is important to note that credential identifiers can be used for correlation.
+A holder that wants to minimize correlation MUST use a selective disclosure scheme that
+does not reveal the credential identifier.
       </p>
 
       <figure>
