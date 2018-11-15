@@ -717,7 +717,7 @@ document containing machine-readable information about the context.
   ]</span>,
   "id": "http://dmv.example.gov/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -782,7 +782,7 @@ information about the identifier.
   "@context": "https://w3.org/2018/credentials/v1",
   <span class="highlight">"id": "http://dmv.example.gov/credentials/3732"</span>,
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "claim": {
+  "credentialSubject": {
     <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
     "ageOver": 21
   },
@@ -843,7 +843,7 @@ the type.
   ],
   "id": "http://dmv.example.gov/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -925,7 +925,7 @@ the additional information to more easily process the data.
 
         <p>
 When processing encapsulated objects in this specification, (e.g., objects
-associated with the <code>claim</code> property or deeply nested therein),
+associated with the <code>credentialSubject</code> property or deeply nested therein),
 a software system SHOULD use type information specified in encapsulating
 objects higher in the hierarchy. For the avoidance of doubt, an
 encapsulating object such as <a>credential</a>, SHOULD convey the types of
@@ -933,7 +933,7 @@ associated objects so that the <a>verifier</a> can quickly determine the
 contents of the associated object based on the type of the encapsulating object.
 To provide a concrete example, a <a>credential</a> with the additional
 <code>type</code> of <code>ProofOfAgeCredential</code> would signal to the
-<a>verifier</a> that the object associated with the <a>claim</a> property will
+<a>verifier</a> that the object associated with the <a>credentialSubject</a> property will
 contain the identifier for the <a>subject</a> in the <code>id</code> property
 and the age assertion in the <code>ageOver</code> property. This enables
 implementers to rely on values associated with the <code>type</code> property
@@ -977,7 +977,7 @@ the issuer that may be used to verify the information expressed in the
 The value of this property MUST be a string value of an [[!ISO8601]] combined
 date and time string and represents the date and time the <a>credential</a>
 was issued. Note that this date represents the earliest date when the
-information associated with the <var>claim</var> property became valid.
+information associated with the <var>credentialSubject</var> property became valid.
           </dd>
         </dl>
         <pre class="example nohighlight" title="Usage of issuer properties">
@@ -990,7 +990,7 @@ information associated with the <var>claim</var> property became valid.
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
   <span class="highlight">"issuanceDate": "2010-01-01T19:73:24Z"</span>,
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1026,7 +1026,7 @@ signing entity, and a representation of the signing date.</dd>
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov",
   "issuanceDate": "2010-01-01",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1078,7 +1078,7 @@ will cease to be valid.
   "issuer": "https://dmv.example.gov/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   <span class="highlight">"expirationDate": "2020-01-01T19:73:24Z"</span>,
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1135,7 +1135,7 @@ type instance. The precise contents of the credential status information is
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1288,7 +1288,7 @@ Let us assume that we start with the following <a>verifiable credential</a>:
   "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
   "issuanceDate": "2018-02-24T05:28:04Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:abcdef1234567",
     "name": "Jane Doe"
   },
@@ -1341,7 +1341,7 @@ context above and adding the new properties to the <a>verifiable credential</a>.
   "issuer": "https://example.com/issuers/14",
   "issuanceDate": "2018-02-24T05:28:04Z",
   <span class="highlight">"referenceNumber": 83294847,</span>
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:abcdef1234567",
     "name": "Jane Doe",
     <span class="highlight">"favoriteFood": "Papaya"</span>
@@ -1408,15 +1408,15 @@ when a JSON-LD Context redefines any term in the
 To avoid the possibility of accidentally overriding terms, developers are urged
 to scope their extensions. For example, the following extension scopes the
 new <code>favoriteFood</code> term so that it may only be used within the
-<code>claim</code> property:
+<code>credentialSubject</code> property:
           </p>
 
           <pre class="example nohighlight" title="Scoping terms in a JSON-LD Context">
 {
   "@context": {
     "referenceNumber": "https://example.com/vocab#referenceNumber",
-    <span class="highlight">"claim": {
-      "@id": "https://w3.org/2018/credentials#claim",
+    <span class="highlight">"credentialSubject": {
+      "@id": "https://w3.org/2018/credentials#credentialSubject",
       "@context": {
         "favoriteFood": "https://example.com/vocab#favoriteFood"
       }
@@ -1476,7 +1476,7 @@ The expression of a refresh service may be performed via the following
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1549,7 +1549,7 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1586,7 +1586,7 @@ storing the data in an archive.
     "type": ["VerifiableCredential", "ProofOfAgeCredential"],
     "issuer": "https://dmv.example.gov/issuers/14",
     "issuanceDate": "2010-01-01T19:73:24Z",
-    "claim": {
+    "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "ageOver": 21
     },
@@ -1673,7 +1673,7 @@ credentials are supported by the specification.
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1748,7 +1748,7 @@ that can be identified to be the same as the holder.
       <h2>Credential Uniquely Identifies Subject</h2>
 
       <p>.
-In this case, the <a>claim</a> may contain multiple properties that each
+In this case, the <a>credentialSubject</a> may contain multiple properties that each
 provide an aspect of the identity of the subject, and which together
 unambiguously identify the subject. Some use cases may not require the
 holder to be identified at all, such as checking to see if a doctor (the
@@ -1765,7 +1765,7 @@ that uniquely identifies a subject">
   "type": ["VerifiableCredential", "IdentityCredential"],
   "issuer": "https://dmv.example.gov/issuers/4",
   "issued": "2017-02-24",
-  "claim": {
+  "credentialSubject": {
     "name": "J. Doe",
     "address": {
       "streetAddress": "10 Rue de Chose",
@@ -1815,7 +1815,7 @@ If the subject is not forbidden by the issuer to pass the whole or part of a
 verifiable credential to a holder, for example, a patient may pass a
 prescription verifiable credential to a relative for the relative to present
 it to a pharmacist for dispensing, then the subject MUST issue a verifiable
-credential to the holder containing the claim properties that are being
+credential to the holder containing the credentialSubject properties that are being
 passed on, as described below. <span class="issue">
 This feature is at risk and is likely to be removed and replaced with
 another solution, possibly created by another Working Group, that focuses on
@@ -1845,7 +1845,7 @@ verifiable credential containing the Subject Only Terms of Use, by anyone other
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
   },
@@ -1873,7 +1873,7 @@ When the subject passes a verifiable credential to a
 holder, the subject SHOULD issue a new verifiable credential to the holder in which:
 the issuer is the subject,
 the subject is the holder to whom the verifiable credential is being passed,
-and the claim contains the properties that are being passed on. In addition, the
+and the credentialSubject contains the properties that are being passed on. In addition, the
 holder creates a verifiable presentation that contains these two
 verifiable credentials.
 </p>
@@ -1888,7 +1888,7 @@ credential properties that have been passed to it by the subject">
       "type": ["VerifiableCredential", "PrescriptionCredential"],
       "issuer": "https://dmv.example.gov",
       "issued": "2010-01-01",
-      "claim": {
+      "credentialSubject": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "prescription": {....}
       },
@@ -1903,7 +1903,7 @@ credential properties that have been passed to it by the subject">
       "type": ["VerifiableCredential", "PrescriptionCredential"],
       "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "issued": "2010-01-03",
-      "claim": {
+      "credentialSubject": {
         "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
         "prescription": {....}
       },
@@ -1941,7 +1941,7 @@ The data model supports the <a>holder</a> acting on behalf of the
       <ul>
         <li>
 The issuer may include the relationship between the holder and the subject
-in the <code>claim</code> data.
+in the <code>credentialSubject</code> data.
         </li>
         <li>
 The issuer may express the relationship between the holder and the subject
@@ -1976,7 +1976,7 @@ property in a child's credential">{
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageUnder": 16,
     "parent": {
@@ -2000,7 +2000,7 @@ credential issued to a parent">{
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
     "child": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -2024,7 +2024,7 @@ credential issued by a child">{
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "http://example.org/credentials/23894",
   "issued": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "parent": {
       "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
@@ -2073,7 +2073,7 @@ with the subject of the credential, but who has a relationship with the issuer">
     "id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
   },
   "issued": "2010-01-01",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "name": "Mr John Doe",
     "address": "10 Some Street, Anytown, ThisLocal, Country X"
@@ -2121,10 +2121,10 @@ of band means of ascertaining the truth of the dispute. This is to prevent
 denial of service attacks whereby an attacker falsely disputes a true claim.
 
 The mechanism for issuing a "DisputeCredential"
-is the same as issuing a regular credential except that the <a>subject</a>
-identifier for the <a>claim</a> in the "DisputeCredential" is the identifier of
-the disputed credential.  For example, if a credential with an identifier of
-<code>https://example.org/credentials/245</code>
+is the same as issuing a regular credential except that the
+<code>credentialSubject</code> identifier in the "DisputeCredential" is the
+identifier of the disputed credential.  For example, if a credential with an
+identifier of <code>https://example.org/credentials/245</code>
 is disputed, an entity may issue one of the following credentials. In the
 former case, the subject might present this to the verifier along with the
 disputed credential. In the latter case, the entity might publish the
@@ -2140,7 +2140,7 @@ is disputed.
   ],
   "id": "http://example.com/credentials/123",
   "type": ["VerifiableCredential", "DisputeCredential"],
-  <span class="highlight">"claim": {
+  <span class="highlight">"credentialSubject": {
     "id": "http://example.com/credentials/245",
     "currentStatus": "Disputed",
     "statusReason": "Address is out of date"
@@ -2157,7 +2157,7 @@ is disputed.
   "@context": "https://w3id.org/credentials/v1",
   "id": "http://example.com/credentials/321",
   "type": ["VerifiableCredential", "DisputeCredential"],
-  <span class="highlight">"claim": {
+  <span class="highlight">"credentialSubject": {
     "id": "http://example.com/credentials/245",
     "currentStatus": "Disputed",
     "statusReason": "Credential contains disputed statements",
@@ -2335,7 +2335,7 @@ enters the Candidate Recommendation stage.
       "type": ["VerifiableCredential", "ProofOfAgeCredential"],
       "issuer": "https://dmv.example.gov",
       "issuanceDate": "2010-01-01",
-      "claim": {
+      "credentialSubject": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "ageOver": 21
       }
@@ -2438,7 +2438,7 @@ that enables linkages to JSON Schema or other optional validation mechanisms.
         <h3>Subject</h3>
         <ul>
           <li>The value associated with the <code>id</code> property for each
-          <a>claim</a> MUST identify a <a>subject</a> to the
+          <code>credentialSubject</code> MUST identify a <a>subject</a> to the
           <a>verifier</a>. For example, if a subject is identified and the
           verifier has public key metadata related to the subject that is
           used for authentication purposes, then the verifier MAY be able to
@@ -2675,8 +2675,8 @@ support ZKPs and other forms of anonymous credentials.
 
         <p>
 The data associated with verifiable credentials stored in the
-<code>credential.claim</code> field are largely susceptible to privacy
-violations when shared with verifiers. Personally identifying data
+<code>credential.credentialSubject</code> field are largely susceptible to
+privacy violations when shared with verifiers. Personally identifying data
 such as a government-issued identifier, shipping address, and full name
 can be easily used to determine, track, and correlate an entity. Even
 information that does not seem personally identifiable like the
@@ -2699,8 +2699,8 @@ entity is over the age of 18.
 
         <p>
 Subjects of verifiable credentials are identified via the
-<code>credential.claim.id</code> field. The identifiers that are used
-to identify the subject create a danger of correlation when
+<code>credential.credentialSubject.id</code> field. The identifiers that are
+used to identify the subject create a danger of correlation when
 the identifiers are long-lived or used across more than one web domain.
         </p>
         <p>
@@ -2868,7 +2868,7 @@ particular resource without divulging sensitive information about the holder.
         <p>
 Verifiable Credentials that are bearer credentials are possible by not
 specifying the <a>subject</a> identifier, expressed using the
-<code>id</code> property that is nested in the <code>claim</code> property.
+<code>id</code> property that is nested in the <code>credentialSubject</code> property.
 For example, the following Verifiable Credential is a bearer credential:
         </p>
 
@@ -2882,7 +2882,7 @@ For example, the following Verifiable Credential is a bearer credential:
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
   "issuer": "https://dmv.example.gov/issuers/14",
   "issuanceDate": "2017-10-22T12:23:48Z",
-  "claim": {
+  "credentialSubject": {
     <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
     "ageOver": 21
   },
