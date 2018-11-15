@@ -1462,6 +1462,104 @@ new <code>favoriteFood</code> term so that it may only be used within the
       </section>
 
       <section>
+        <h2>Data Schemas</h2>
+
+        <p>
+Data schemas are often useful when enforcing a particular structure on a given
+collection of data. There are at least two types of data schemas that this
+specification contemplates. The first are data validation schemas, which are
+used to verify that the structure and contents of a
+<a>verifiable credential</a> are conformant to a published schema. The second
+are data encoding schemas, which are used to map the contents of a
+verifiable credential to an alternative representation format such as a
+binary format used in a zero-knowledge proof.
+        </p>
+
+ <p>
+The expression of a data schema may be performed via the following
+<a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>credentialSchema</var></dt>
+          <dd>The value of this property MUST be one or more data schemas
+            that provide <a>verifiers</a> with enough information to
+            determine if the provided data is conformant to the provided schema.
+            Each <code>credentialSchema</code> comprises at least its
+            <code>type</code> (e.g. <code>JsonSchemaValidator2018</code>),
+            and a <code>id</code> property that MUST be a URI identifying
+            the schema file. The precise contents of each
+            data schema is determined by the specific type definition.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of credentialSchema property to do JSON Schema validation">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"credentialSchema": {
+    "id": "https://example.org/motorlicense/proof-of-age.json",
+    "type": "JsonSchemaValidator2018"
+  }</span>,
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+In the example above, the <a>issuer</a> is specifying a
+<code>credentialSchema</code> that points to a JSON Schema file that can be
+used by <a>verifier</a> to determine if the <a>verifiable credential</a> is
+well-formed.
+        </p>
+
+        <p>
+Data schemas can also be used to specify mappings to other binary formats,
+such as those used to perform zero-knowledge proofs.
+        </p>
+
+        <pre class="example nohighlight" title="Usage of credentialSchema property to do zero-knowledge validation">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.org/motorlicense/v1"
+  ],
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"credentialSchema": {
+    "id": "https://example.org/motorlicense/proof-of-age.zkp",
+    "type": "ZkpExampleSchema2018"
+  }</span>,
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+In the example above, the <a>issuer</a> is specifying a
+<code>credentialSchema</code> that points to a zero-knowledge packed binary
+data format that is capable of transforming the input data into a format
+that can then be used by a <a>verifier</a> to determine if the
+proof provided with the <a>verifiable credential</a> is valid.
+        </p>
+
+      </section>
+
+      <section>
         <h2>Refreshing</h2>
 
         <p>
