@@ -1733,59 +1733,18 @@ holder if the <a>verifiable presentation</a> is digitally signed by the
 holder and all contained <a>verifiable credentials</a> are about a subject
 that can be identified to be the same as the holder.
       </p>
-     <p>
-If only the subject is allowed to present the verifiable credential to a
-verifier, the issuer MUST insert the "subject only" Terms of Use into the
-verifiable credential, as defined below. 
-
-<span class="issue">
-This feature is at risk and is likely to be removed due to lack of consensus.
-</span>
-      </p>
-
-   <section>
-
-   <h3> 'Subject Only' Terms of Use </h3>
-
-  <p>
-The Subject Only Terms of Use states that a verifiable credential MUST only be
-presented to a verifier by the subject. If a verifier is presented with a
-verifiable credential containing the Subject Only Terms of Use, by anyone other
-    than the subject, it MUST refuse to accept it.
-     </p>
-
-        <pre class="example nohighlight" title="Subject Only termsOfUse property by an Issuer">
-{
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:73:24Z",
-  "claim": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-  },
-  <span class="highlight">"termsOfUse": [{
-    "type": "SubjectOnly",
-    }]
-  }</span>,
-  "proof": { ... }
-}
-        </pre>
-
-       </section>
-
 
     </section>
 
     <section>
       <h2>Credential Uniquely Identifies Subject</h2>
 
-      <p>
+      <p>.
 In this case, the <a>claim</a> may contain multiple properties that each
 provide an aspect of the identity of the subject, and which together
 unambiguously identify the subject. Some use cases may not require the
 holder to be identified at all, such as checking to see if a doctor (the
-subject) is medically certified. Other use cases may require the verifier to
+subject) is board certified. Other use cases may require the verifier to
 use out-of-band knowledge to determine the relationship between the
 subject and the holder.
       </p>
@@ -1818,30 +1777,150 @@ The example above uniquely identifies the subject through the use of the
 name, address, and birth date of the individual.
       </p>
 
- 
    </section>
 
     <section>
       <h2>Subject Passes the Verifiable Credential to a Holder</h2>
 
+      <p class="issue" data-number=204>
+The group is currently debating the best security model for delegation. Readers
+should treat this entire section as at-risk and currently under debate.
+      <p>
+
       <p>
 Normally verifiable credentials will be presented to verifiers by the
 subject. However in some cases, the subject may need to pass the whole or
-part of a verifiable credential to another holder. For example, a patient
-(the subject) may be too ill to take a prescription (the verifiable credential)
-to the pharmacist (the verifier), and so may ask a friend to take the
-prescription for him/her in order to pick up the medication.
+part of a verifiable credential to another holder. The data model allows for
+both cases as follows.
+      </p>
+
+      <p>
+If only the subject is allowed to present the verifiable credential to a
+verifier, the issuer MUST insert the "subject only" Terms of Use into the
+verifiable credential, as defined below. <span class="issue">
+This feature is at risk and is likely to be removed due to lack of consensus.
+</span>
+      </p>
+
+      <p>
+If the subject is not forbidden by the issuer to pass the whole or part of a
+verifiable credential to a holder, for example, a patient may pass a
+prescription verifiable credential to a relative for the relative to present
+it to a pharmacist for dispensing, then the subject MUST issue a verifiable
+credential to the holder containing the claim properties that are being
+passed on, as described below. <span class="issue">
+This feature is at risk and is likely to be removed and replaced with
+another solution, possibly created by another Working Group, that focuses on
+delegation of authority instead of delegation of attributes.
+</span>
+      </p>
+
+   <section>
+
+   <h3> 'Subject Only' Terms of Use </h3>
+
+      <p class="issue" data-number=204>
+The group is currently debating the best security model for delegation. Readers
+should treat this entire section as at-risk and currently under debate.
+      </p>
+
+  <p>
+The Subject Only Terms of Use states that a verifiable credential MUST only be
+presented to a verifier by the subject. If a verifier is presented with a
+verifiable credential containing the Subject Only Terms of Use, by anyone other
+    than the subject, it MUST refuse to accept it.
+     </p>
+
+        <pre class="example nohighlight" title="Subject Only termsOfUse property by an Issuer">
+{
+  "id": "http://dmv.example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "issuer": "https://dmv.example.gov/issuers/14",
+  "issued": "2010-01-01T19:73:24Z",
+  "claim": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "ageOver": 21
+  },
+  <span class="highlight">"termsOfUse": [{
+    "type": "SubjectOnly",
+    }]
+  }</span>,
+  "proof": { ... }
+}
+        </pre>
+
+       </section>
+
+  <section>
+   <h3> Passing on a Verifiable Credential </h3>
+
+      <p class="issue" data-number=204>
+The group is currently debating the best security model for delegation. Readers
+should treat this entire section as at-risk and currently under debate.
+      <p>
+
+   <p>
+
+When the subject passes a verifiable credential to a
+holder, the subject SHOULD issue a new verifiable credential to the holder in which:
+the issuer is the subject,
+the subject is the holder to whom the verifiable credential is being passed,
+and the claim contains the properties that are being passed on. In addition, the
+holder creates a verifiable presentation that contains these two
+verifiable credentials.
 </p>
 
-<p>
-The data model allows for this, by the subject issuing a new verifiable
-credential and giving it to the new holder, so that the holder can present
-both verifiable credentials to the verifier. However, the content of this
-second verifiable credential is likely to be application specific, and therefore
-this specification does not standardise the contents of this second verifiable
-credential. Nevertheless a non-normative example is given in Appendix A.2
-      </p>
+        <pre class="example nohighlight" title="An example of a holder presenting verifiable
+credential properties that have been passed to it by the subject">
+{
+  "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+  "type": ["VerifiablePresentation"],
+  "credential": [{
+      "id": "http://example.gov/credentials/3732",
+      "type": ["VerifiableCredential", "PrescriptionCredential"],
+      "issuer": "https://dmv.example.gov",
+      "issued": "2010-01-01",
+      "claim": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "prescription": {....}
+      },
+      "revocation": {
+        "id": "http://example.gov/revocations/738",
+        "type": "SimpleRevocationList2017"
+      },
+      "proof": {....}
+    },
+    {
+      "id": "https://example.com/VC/123456789",
+      "type": ["VerifiableCredential", "PrescriptionCredential"],
+      "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "issued": "2010-01-03",
+      "claim": {
+        "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+        "prescription": {....}
+      },
+      "proof": {
+        "type": "RsaSignature2018",
+        "created": "2017-06-17T10:03:48Z",
+        "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+        "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
+        "signatureValue": "pYw8XNi1..Cky6Ed = "
+      }
+    }
+  ],
+  "proof": [{
+    "type": "RsaSignature2018",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1..W3JT24 = "
+  }]
+}
+        </pre>
+
+
    </section>
+  </section>
 
    <section>
       <h2>Holder Acts on Behalf of the Subject</h2>
@@ -3318,75 +3397,7 @@ All or any combination of the above.
         </ul>
 
     </section>
-<section>
-<h2> Appendix A.2 Subject passes a verifiable credential to someone else</h2>
 
-      <em>This section is non-normative.</em>
-
-<p>
-When the subject passes a verifiable credential to another
-holder, the subject may issue a new verifiable credential to the holder in which:
-the issuer is the subject,
-the subject is the holder to whom the verifiable credential is being passed,
-and the claim contains the properties that are being passed on. 
-The holder may now create a verifiable presentation that contains these two
-verifiable credentials, so that the verifier can verify that the subject gave
-the original verifiable credential to the holder.
-
-      <pre class="example nohighlight" title="An example of a holder presenting 
-a verifiable credential that has been passed to it by the subject">
-{
-  "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-  "type": ["VerifiablePresentation"],
-  "credential": [{
-      "id": "http://example.gov/credentials/3732",
-      "type": ["VerifiableCredential", "PrescriptionCredential"],
-      "issuer": "https://dmv.example.gov",
-      "issued": "2010-01-01",
-      "claim": {
-        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "prescription": {....}
-      },
-      "revocation": {
-        "id": "http://example.gov/revocations/738",
-        "type": "SimpleRevocationList2017"
-      },
-      "proof": {....}
-    },
-    {
-      "id": "https://example.com/VC/123456789",
-      "type": ["VerifiableCredential", "PrescriptionCredential"],
-      "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "issued": "2010-01-03",
-      "claim": {
-        "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-        "prescription": {....}
-      },
-      "proof": {
-        "type": "RsaSignature2018",
-        "created": "2017-06-17T10:03:48Z",
-        "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
-        "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
-        "signatureValue": "pYw8XNi1..Cky6Ed = "
-      }
-    }
-  ],
-  "proof": [{
-    "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1..W3JT24 = "
-  }]
-}
-        </pre>
-
-<p>
-In the above example, a patient (the original subject) has passed a prescription 
-(the original verifiable credential) to a friend, and has issued a new verifiable
-credential to the friend, in which the friend is the subject, the original subject is
-the issuer, and the credential is a copy of the original prescription.
-</p>
   </body>
 </html>
 
