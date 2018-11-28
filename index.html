@@ -1392,9 +1392,9 @@ semantic ambiguity.
 
         <p>
 An extensibility model that is this dynamic does increase implementation burden.
-Software written for such a system will have to determine if accepting
+Software written for such a system will have to determine if relying on
 <a>verifiable credentials</a> with extensions is acceptable based on the
-risk profile of the application. Some applications may choose to only accept
+risk profile of the application. Some applications may choose to only process
 certain extensions while highly secure environments may require that no
 extensions are allowed. These decisions are up to the developers of these
 applications and are specifically not the domain of this specification.
@@ -1532,33 +1532,23 @@ manual <code>refreshService</code> that can be used by directing the
       <section>
         <h2>Terms of Use</h2>
 
-        <p>Terms of use can be utilized by an <a>issuer</a>, a <a>subject</a>, or a
-        <a>holder</a> to constrain the use of information expressed by the Verifiable
-        Credentials Data Model. The <a>issuer</a> places their terms of use inside
+        <p>Terms of use can be utilized by an <a>issuer</a> or a
+        <a>holder</a> to communicate the terms under which a verifiable credential
+			or verifiable presentation was issued. The <a>issuer</a> places their terms of use inside
         the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
         The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
         </p>
 
-       <p class="note"> it is for further study how a subject who is not a
-       holder places terms of
-       use on his or her verifiable credentials. One way could be for the subject to
-       request the issuer to place them inside the issued verifiable credentials. Another
-       way could be by the subject delegating a verifiable credential to a holder and
-       placing terms of use restrictions on the delegated verifiable credential.
-       </p>
        <p> The expression of
         terms of use may be performed via the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
-          <dd>The value of this property MUST be one or more terms of use that tell the 
-verifier what actions it either MUST perform (i.e. an Obligation) or MUST NOT perform
-(i.e. a Prohibition) or MAY perform (i.e. a Permission) if it is to accept the 
-verifiable credential or verifiable presentation. 
-          If the verifier is not willing to accept these terms of use then it MUST reject
-          the verifiable credential or verifiable presentation.
-          Each <code>termsOfUse</code> comprises its type,
+          <dd>The value of this property MAY specify one or more terms of use policies under which
+the creator issued the credential or presentation. If the recipient (holder or verifier) is not willing to adhere to the specified terms of use then they do so on their own responsibility and may incur legal liability if they violate the stated Terms of Use.
+
+			Each <code>termsOfUse</code> comprises its type,
             for example, <code>IssuerPolicy</code>, and
             optionally its instance id. The precise contents of each term of use is
             determined by the specific <code>TermsOfUse</code> type definition.
@@ -1602,7 +1592,7 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
         </pre>
 
         <p>
-In the example above, the <a>issuer</a> is prohibiting a <a>verifier</a> from
+In the example above, the <a>issuer</a>'s Terms of Use prohibits a <a>verifier</a> from
 storing the data in an archive.
         </p>
 
@@ -1641,14 +1631,9 @@ storing the data in an archive.
         </pre>
 
         <p>
-In the example above, the <a>holder</a>, who is also the <a>subject</a>,
-is prohibiting the <a>verifier</a> (<code>https://wineonline.example.org</code>)
-from using the information provided to correlate the
-<a>holder</a>/<a>subject</a> by using a 3rd party service.
-        </p>
-
-        <p class="issue" data-number=133>
-The group is currently discussing how one knows who specified the Terms of Use.
+In the example above, the <a>holder</a>, who is also the <a>subject</a>, 
+has expressed a Term of Use which prohibits the <a>verifier</a> (<code>https://wineonline.example.org</code>)
+from using the information provided to correlate the <a>holder</a>/<a>subject</a> by using a 3rd party service. If the verifier were to use such a 3rd party service for correlation, they would violate the terms under which the holder created the presentation.
         </p>
 
       </section>
@@ -1662,8 +1647,8 @@ set of evidence that was used to determine whether or not to issue
 a <a>credential</a>. For example, an issuer might check physical documentation
 provided by the <a>subject</a> or might perform a set of background checks
 before issuing the credential. In certain scenarios, this information is useful
-to the <a>verifier</a> when determining the risk associated with accepting
-the credential.
+to the <a>verifier</a> when determining the risk associated with relying on a
+given credential.
         </p>
 
         <p>
@@ -1866,11 +1851,14 @@ should treat this entire section as at-risk and currently under debate.
       </p>
 
   <p>
-The Subject Only Terms of Use states that a verifiable credential MUST only be
-presented to a verifier by the subject. If a verifier is presented with a
-verifiable credential containing the Subject Only Terms of Use, by anyone other
-    than the subject, it MUST refuse to accept it.
+The Subject Only Terms of Use states that a verifiable credential is only to be presented by the subject. If a verifier is presented with a verifiable presentation containing a verifiable credential with a Subject Only Terms of Use, by anyone other
+    than the subject, it relies on that presentation on its own responsibility. Similarly, if a holder other than the subject presents such a presentation, they do so on their own responsibility.
      </p>
+
+	   <p class="note">
+There is an open question about whether or not the issuer can bind the verifier to an agreement embodied in a Terms of Use. This is especially problematic because the verifier is unable to view or commit to the terms before receiving the information covered by those terms. Necessarily, they receive the information before they can agree to the terms. In contrast, the holder is well aware of the Terms of Use prior to creating the presentation and therefore may be more likely to be held liable. However, this specification is not legal advice. Anyone relying on the legal foundation of a Terms of Use policy should seek the advice of competent counsel in the relevant jurisdictions.
+      </p>
+
 
         <pre class="example nohighlight" title="Subject Only termsOfUse property by an Issuer">
 {
@@ -1896,14 +1884,13 @@ verifiable credential containing the Subject Only Terms of Use, by anyone other
    <h3> Passing on a Verifiable Credential </h3>
 
       <p class="issue" data-number=204>
-The group is currently debating the best security model for delegation. Readers
-should treat this entire section as at-risk and currently under debate.
+Verifiable credentials are not an authorization framework and therefore delegation is out of scope for this specification. However, it is understood that Verifiable Credentials are likely to be used to build authorization and delegation systems. The following is one approach that may be appropriate for some use cases.
       <p>
 
    <p>
 
 When the subject passes a verifiable credential to a
-holder, the subject SHOULD issue a new verifiable credential to the holder in which:
+holder, the subject issues a new verifiable credential to the holder in which:
 the issuer is the subject,
 the subject is the holder to whom the verifiable credential is being passed,
 and the credentialSubject contains the properties that are being passed on. In addition, the
@@ -2023,8 +2010,7 @@ property in a child's credential">{
 
       <p>
 In the example above, the issuer has expressed the relationship between the
-child and the parent such that a verifier would most likely accept the
-credential if it is provided by the child or the parent.
+child and the parent, enabling a verifier to decide whether or not they want to rely on that assertion from that issuer. 
       </p>
 
       <pre class="example nohighlight" title="An example of a relationship
@@ -2046,9 +2032,8 @@ credential issued to a parent">{
 
      <p>
 In the example above, the issuer has expressed the relationship between the
-child and the parent in a separate credential such that a verifier would most
-likely accept any of the child's credentials if it is provided by the child or
-if the credential above is provided with any of the child's credentials.
+child and the parent in a separate credential such that a verifier can consider
+the asserted relationship in evaluating whether or not to rely on the credential.
      </p>
 
      <pre class="example nohighlight" title="An example of a relationship
@@ -2070,9 +2055,8 @@ credential issued by a child">{
 
       <p>
 In the example above, the child has expressed the relationship between the
-child and the parent in a separate credential such that a verifier would most
-likely accept any of the child's credentials if the credential above is
-provided.
+child and the parent in a separate credential such that a verifier can
+consider the assertion in their evaluation about relying on the credential.
       </p>
 
       <p>
@@ -2088,7 +2072,7 @@ such as power of attorney, pet ownership, and patient prescription pick up.
       <p>
 When the issuer wishes to authorise a holder to possess a credential that
 describes a subject who is not the holder, and the holder has no known relationship
- with the subject, then the issuer inserts the
+ with the subject, then the issuer may insert the
 relationship of the holder to itself into the subject's credential.
       </p>
 
@@ -2130,7 +2114,6 @@ with the subject of the credential, but who has a relationship with the issuer">
 Subject, Issuer or Verifier</h1>
 
       <p>
-
 The data model currently does not support either of these scenarios. It is
 for further study how they might be supported.
       </p>
@@ -2572,22 +2555,23 @@ a verifiable credential, is clear and protected in the signature.
           <li>The custom properties in the <a>credential</a> are
           appropriate for the <a>verifier</a>'s purpose. For example if a
           verifier needs to determine that a <a>subject</a> is older than 21
-          years of age, they may accept claims of specific
+          years of age, they may relyin on claims of specific
           <code>birthdate</code> or abstract properties such as
           <code>ageOver</code>.</li>
           <li>The <a>issuer</a> is trusted by the <a>verifier</a> to make the
           claims at hand. For example, a franchised Fast Food restaurant
           location will trust discount coupon claims made by the
           corporate headquarters of the franchise.</li>
-          <li>All policy information expressed by the <a>issuer</a>
-          in the <a>verifiable credential</a> MUST be enforced unless
-          verifiers accept the risk of not enforcing the policy information.
-          For example, the issuer may limit the use
+          <li>Policy information expressed by the <a>issuer</a>
+          in the <a>verifiable credential</a> SHOULD be respected by holders 
+		  and verifiers unless they accept the liability of ignoring the policy.
+
+		  For example, the issuer may wish to limit the use
           of the credential to specific <a>verifiers</a>, certain <a>holder</a>
           age ranges, or during certain dates.</li>
           <li>All policy information expressed by the <a>holder</a>
-          in the <a>verifiable presentation</a> MUST be enforced unless
-          verifiers accept the risk of not enforcing the policy information.
+          in the <a>verifiable presentation</a> SHOULD be respected by verifiers
+		  unless they accept the liability of ignoring the policy.
           For example, the holder may limit the use of the credential to
           specific <a>verifiers</a> or for specific purposes
           (such as authentication, but not data mining).</li>
