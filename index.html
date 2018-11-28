@@ -2260,7 +2260,77 @@ Verifiable Credentials Data Model can be found at the following URL:
 
         <section>
             <h2>JSON Web Token</h2>
+            <p>
+                JSON Web Token (JWT) [[!RFC7519]] is still a widely used means to express claims to be transferred
+                between two parties. Providing a representation of the verifiable credentials data
+                model for JWT will allow existing systems and libraries to participate in the
+                ecosystem as described in Section <a href="#ecosystem-overview"></a>.
+                A JWT encodes a set of claims as a JSON object that is contained in a JSON Web Signature
+                (JWS) [[!RFC7515]] and/or JWE [[!RFC7516]]. For this specification, the use of JWE is out of scope.
+            </p>
 
+            <h3>Relation to the VC Data Model</h3>
+            <p>
+                This specification defines encoding rules of the verifiable credential and presentation data
+                model onto JWT and JWS. It further defines processing rules how and when to make use of specific
+                JWT registered claim names and specific JWS registered header parameter names to allow systems based
+                on JWT to comply with this specification. If these specific claim names and header parameters are
+                present, their respective counterpart in the verifiable credential and presentation can be omitted
+                to avoid duplication.
+            </p>
+
+            <h3>IANA Considerations</h3>
+            <p>
+                This specification introduces two new registered claim names which contain the JSON or JSON-LD
+                verifiable credentials and presentation object enclosed in the JWT payload:
+                <ul>
+                    <li><code>vc</code>: JSON object, and MUST be present in a JWT verifiable credential.
+                    <li><code>vcp</code>: JSON object, and MUST be present in a JWT verifiable presentation.
+                        To allow JWT verifiable credentials to be included in the verifiable presentation,
+                        a new property <code>vc_jwt</code> is introduced that can contain an array of
+                        JWT verifiable credentials.
+                    </li>
+                </ul>
+            </p>
+
+            <h3>JWT and JWS Considerations</h3>
+            <p>
+                If the JWS is present, the digital signature either refers to the issuer of the verifiable credential,
+                or the holder of the credential in case of a presentation. The JWS will prove that the contained
+                JWT payload was signed by the issuer of the JWT and therefore, the <code>proof</code> property can be
+                omitted. If no JWS is present, then a proof attribute MUST be provided. The <code>proof</code> property
+                can be used to represent more complex proofs e.g., if the creator is different from the issuer, or a
+                <code>proof</code> which is not based on digital signatures such as proof of work. The issuer MAY
+                include both, a JWS and a <code>proof</code> property. For backwards compatibility reasons, the issuer
+                MUST use JWS to represent proofs based on a digital signature.
+            </p>
+            <p>
+                In addition, the following JOSE headers MUST be present in the JWS:
+                <ul>
+                    <li><code>alg</code> MUST be used for RSA and ECDSA based digital signatures.</li>
+                    <li><code>kid</code> MUST be used if there are multiple keys associated with the issuer of the JWT.
+                        Key discovery is out of scope of this specification. For example, the <code>kid</code> can
+                        refer to a key in a DID Document, or can be the identifier of a key inside a JWKS.</li>
+                    <li><code>typ</code> MUST be set to JWT.</li>
+                </ul>
+            </p>
+            <p>
+                For backwards compatibility with JWT processors the following JWT registered claim names MUST be used
+                instead or in addition of their respective verifiable credential counterparts:
+                <ul>
+                    <li><code>exp</code> SHOULD represent expirationDate.</li>
+                    <li><code>iss</code> SHOULD represent the issuer property.</li>
+                    <li><code>iat</code> SHOULD represent issuanceDate.</li>
+                    <li><code>jti</code> SHOULD represent the id property of the verifiable credential.</li>
+                    <li><code>sub</code> SHOULD represent the id property contained in the credential subject.</li>
+                    <li><code>aud</code> SHOULD represent the subject of the consumer of the presentation.</li>
+                </ul>
+            </p>
+            <p>
+                Other JOSE header parameters and claim names not specified herein can be used in addition if their
+                use is not explicitly discouraged.
+            </p>
+            <!--
             <p>
                 The verifiable credential data model as described in Section <a href="#core-data-model"></a> can be
                 encoded as a JSON Web Token (JWT) [[!RFC7519]] by doing the following:
@@ -2278,6 +2348,7 @@ Verifiable Credentials Data Model can be found at the following URL:
                     <li>If "created" and "creator" are required, these claims could be added to the JWT payload.</li>
                     <li>The "issuer" becomes the JWT "iss" claim.</li>
                     <li>The "issuanceDate" becomes the JWT "iat" claim.</li>
+                    <li>The "kid" becomes the key that was used by the issuer to sign the verifiable credential.</li>
                 </ul>
             </ul>
 
@@ -2296,120 +2367,86 @@ UbiCTShJwtCI7m82lLZ9mJg
           </pre>
 
             <p>The example above contains the following JWT header and payload.</p>
-            <pre class="example nohighlight" title="Verifiable credential JWT header">
-{
-  "alg": "RS256",
-  "typ": "JWT"
-}
-          </pre>
+            -->
 
-            <pre class="example nohighlight" title="Verifiable credential JWT payload">
-{
-  "@context": [
-    "https://w3.org/2018/credentials/v1",
-    "https://example.com/examples/v1"
-  ],
-  "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "jti": "http://dmv.example.gov/credentials/3732",
-  "iss": "https://dmv.example.gov/issuers/14",
-  "iat": "1541493724",
-  "exp": "1573029723",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-    "claim": {
-    "ageOver": 21
-  }
-}
-          </pre>
+            <pre class="example nohighlight" title="JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            {
+                "alg": "RS256",
+                "typ": "JWT",
+                "kid": "did:example:abfe13f712120431c276e12ecab#keys-1"
+            }
+            </pre>
 
-            <p>
-                The presentations data model as described in Section <a href="#core-data-model"></a> can be
-                encoded as a JSON Web Token (JWT) [[!RFC7519]] by doing the following:
+            <p class="issue">
+                Add a short description explaining the example above.
             </p>
 
-            <ul>
-                <li>The signature of the JWT is typically produced by the holder of the enclosed verifiable credentials.</li>
-                <li>Because JWS implicitly provides a verifiable proof of the contained verifiable credentials, the "proof" is no longer needed.</li>
-                <li>The presentation keeps the JWS of the verifiable credentials intact by including the base64 encoded verifiable credentials in the "verifiableCredentials" array.</li>
-                <li>The IANA JWT claims registry should be enforced whenever possible:</li>
-                <ul>
-                    <li>The "id" of the presentation becomes the JWT "jti" claim.</li>
-                    <li>A "nonce" claim MUST be included to mitigate the risk of replay attacks.</li>
-                    <li>A "aud" claim may be included and contains the subject of the verifier. The "aud" claim MUST be one or more URIs.</li>
-                    <li>A "exp" claim may be included which contains expiration information of the presentation similar to a <a>credential</a>.</li>
-                    <li>A "iat" claim may be included which contains information when the presentation was produced.</li>
-                    <li>A "iss" claim may be included which contains information on the presenter of the verifiable credentials. The "iss" claim MUST be one URI.</li>
-                </ul>
-            </ul>
+            <pre class="example nohighlight" title="JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            {
+              "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+              "jti": "http://dmv.example.gov/credentials/3732",
+              "iss": "did:example:abfe13f712120431c276e12ecab",
+              "iat": "1541493724",
+              "exp": "1573029723",
+              "vc": {
+                "@context": [
+                  "https://w3.org/2018/credentials/v1",
+                  "https://example.com/examples/v1"
+                ],
+                "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+                "credential_subject": {
+                  "age_over": 21
+                }
+              }
+            }
+            </pre>
 
-            <p>The following is a verifiable credential encoded as a JWT.</p>
+            <p class="issue">
+                Add a short description explaining the example above. Also mention that @context might be omitted.
+            </p>
 
-            <pre class="example nohighlight" title="Expressing a verifiable credential as a JWT (base64url-encoded)">
-eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJAY29udGV4dCI6WyJodHRwczovL3czLm9yZy8yMDE
-4L2NyZWRlbnRpYWxzL3YxIiwiaHR0cHM6Ly9leGFtcGxlLmNvbS9leGFtcGxlcy92MSJdLCJqdGkiOiJ
-1cm46dXVpZDozOTc4MzQ0Zi04NTk2LTRjM2EtYTk3OC04ZmNhYmEzOTAzYzUiLCJpc3MiOiJkaWQ6ZXh
-hbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJhdWQiOiJodHRwczovL2Rtdi5leGFtcGx
-lLmdvdi9pc3N1ZXJzLzE0Iiwibm9uY2UiOiIzNDPCpyRGU0ZEYS0iLCJpYXQiOiIxNTQxNDkzNzI0Iiw
-iZXhwIjoiMTU3MzAyOTcyMyIsInR5cGUiOlsiVmVyaWZpYWJsZVByZXNlbnRhdGlvbiJdLCJ2ZXJpZml
-hYmxlQ3JlZGVudGlhbCI6WyJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKQVk
-yOXVkR1Y0ZENJNld5Sm9kSFJ3Y3pvdkwzY3pMbTl5Wnk4eU1ERTRMMk55WldSbGJuUnBZV3h6TDNZeEl
-pd2lhSFIwY0hNNkx5OWxlR0Z0Y0d4bExtTnZiUzlsZUdGdGNHeGxjeTkyTVNKZExDSnpkV0lpT2lKa2F
-XUTZaWGhoYlhCc1pUcGxZbVpsWWpGbU56RXlaV0pqTm1ZeFl6STNObVV4TW1Wak1qRWlMQ0pxZEdraU9
-pSm9kSFJ3T2k4dlpHMTJMbVY0WVcxd2JHVXVaMjkyTDJOeVpXUmxiblJwWVd4ekx6TTNNeklpTENKcGM
-zTWlPaUpvZEhSd2N6b3ZMMlJ0ZGk1bGVHRnRjR3hsTG1kdmRpOXBjM04xWlhKekx6RTBJaXdpYVdGMEl
-qb2lNVFUwTVRRNU16Y3lOQ0lzSW1WNGNDSTZJakUxTnpNd01qazNNak1pTENKMGVYQmxJanBiSWxabGN
-tbG1hV0ZpYkdWRGNtVmtaVzUwYVdGc0lpd2lVSEp2YjJaUFprRm5aVU55WldSbGJuUnBZV3dpWFN3aVk
-yeGhhVzBpT25zaVlXZGxUM1psY2lJNk1qRjlmUS5UUXltWms2Z0IyekRhUmVFNlVUYTlLQnA2MVRlX21
-0bzl3V1JDZDFDcWNkQWpOMFNZMTItVWhPbHN4em4tWGhaRE50R2RUd3pZX1ZVUklPR2JiQkROZ25HYlR
-zdHJ3bjgtU29oX3FpZzJsc3k3ZlM1ckF6QmdtZGFmSkxiYUtTQ0VsSGJ5RElsMVZ4NFFmYzk0LVdOVWJ
-pQ1RTaEp3dENJN204MmxMWjltSmdmIl19.SR-zmsg-i8n9WNj43zYX0LERb8UWfgYyHFLG3R2HmbhAS5
-mLFsy3xA1D8f6ksoT5UxOwr5T7uuj1UkC8v3aX1Z6yZus1HhhdhuhPnsMvkbBLJl7G6u4z8Fq7AJxT6e
-BhndD4Q6TfhcWXisrZaR1Al1921L_CfOqq5ZD1C1EdaoM
-          </pre>
+            <p class="issue">
+                Add an example of how a base64 JWT encoded verifiable credential looks like.
+            </p>
 
-            <p>The example above contains the following JWT header and payload.</p>
-            <pre class="example nohighlight" title="Presentation JWT header">
-{
-  "alg": "RS256",
-  "typ": "JWT"
-}
-          </pre>
+            <pre class="example nohighlight" title="JWT header of a JWT based verifiable presentation (non-normative)">
+            {
+              "alg": "RS256",
+              "typ": "JWT",
+              "kid": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1"
+            }
+            </pre>
 
-            <pre class="example nohighlight" title="Presentation JWT payload">
-{
-  "@context": [
-    "https://w3.org/2018/credentials/v1",
-    "https://example.com/examples/v1"
-  ],
-  "jti": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
-  "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "aud": "https://dmv.example.gov/issuers/14",
-  "nonce": "343§$FSFDa-",
-  "iat": "1541493724",
-  "exp": "1573029723",
-  "type": ["VerifiablePresentation"],
-  "verifiableCredential": ["
-eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJAY29udGV4dCI6WyJodHRwczovL3czLm9yZy8yMDE
-4L2NyZWRlbnRpYWxzL3YxIiwiaHR0cHM6Ly9leGFtcGxlLmNvbS9leGFtcGxlcy92MSJdLCJqdGkiOiJ
-1cm46dXVpZDozOTc4MzQ0Zi04NTk2LTRjM2EtYTk3OC04ZmNhYmEzOTAzYzUiLCJzdWIiOiJkaWQ6ZXh
-hbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJhdWQiOiJodHRwczovL2Rtdi5leGFtcGx
-lLmdvdi9pc3N1ZXJzLzE0Iiwibm9uY2UiOiIzNDPCpyRGU0ZEYS0iLCJpYXQiOiIxNTQxNDkzNzI0Iiw
-iZXhwIjoiMTU3MzAyOTcyMyIsInR5cGUiOlsiVmVyaWZpYWJsZVByZXNlbnRhdGlvbiJdLCJ2ZXJpZml
-hYmxlQ3JlZGVudGlhbCI6WyJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKQVk
-yOXVkR1Y0ZENJNld5Sm9kSFJ3Y3pvdkwzY3pMbTl5Wnk4eU1ERTRMMk55WldSbGJuUnBZV3h6TDNZeEl
-pd2lhSFIwY0hNNkx5OWxlR0Z0Y0d4bExtTnZiUzlsZUdGdGNHeGxjeTkyTVNKZExDSnpkV0lpT2lKa2F
-XUTZaWGhoYlhCc1pUcGxZbVpsWWpGbU56RXlaV0pqTm1ZeFl6STNObVV4TW1Wak1qRWlMQ0pxZEdraU9
-pSm9kSFJ3T2k4dlpHMTJMbVY0WVcxd2JHVXVaMjkyTDJOeVpXUmxiblJwWVd4ekx6TTNNeklpTENKcGM
-zTWlPaUpvZEhSd2N6b3ZMMlJ0ZGk1bGVHRnRjR3hsTG1kdmRpOXBjM04xWlhKekx6RTBJaXdpYVdGMEl
-qb2lNVFUwTVRRNU16Y3lOQ0lzSW1WNGNDSTZJakUxTnpNd01qazNNak1pTENKMGVYQmxJanBiSWxabGN
-tbG1hV0ZpYkdWRGNtVmtaVzUwYVdGc0lpd2lVSEp2YjJaUFprRm5aVU55WldSbGJuUnBZV3dpWFN3aVk
-yeGhhVzBpT25zaVlXZGxUM1psY2lJNk1qRjlmUS5UUXltWms2Z0IyekRhUmVFNlVUYTlLQnA2MVRlX21
-0bzl3V1JDZDFDcWNkQWpOMFNZMTItVWhPbHN4em4tWGhaRE50R2RUd3pZX1ZVUklPR2JiQkROZ25HYlR
-zdHJ3bjgtU29oX3FpZzJsc3k3ZlM1ckF6QmdtZGFmSkxiYUtTQ0VsSGJ5RElsMVZ4NFFmYzk0LVdOVWJ
-pQ1RTaEp3dENJN204MmxMWjltSmdmIl19.EjTFSFneWu2duLhy8DE1to943Shl_u70sSy8BSLBLlr10K
-Q1dzyb-L8P14luAd9Jk-8bNkqI5XuqJiFF2mgZuEwYugh98U0I5d7g2jlOqeXWHMAYaKEELfUsiNn5Bj
-AqEp58JEN7e-pSWYHCX49BsQmQumDsnDFBDzIHoTQe3no"]
-}
-          </pre>
+            <p class="issue">
+                Add a short description explaining the example above.
+            </p>
+
+            <pre class="example nohighlight" title="JWT payload of a JWT based verifiable presentation (non-normative)">
+            {
+              "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+              "jti": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
+              "aud": "did:example:4a57546973436f6f6c4a4a57573",
+              "iat": "1541493724",
+              "exp": "1573029723",
+              "nonce": "343§$FSFDa-",
+              "vcp": {
+                "@context": [
+                  "https://w3.org/2018/credentials/v1",
+                  "https://example.com/examples/v1"
+                ],
+                "type": ["VerifiablePresentation"],
+                "vc_jwt": ["..."]
+              }
+            }
+            </pre>
+
+            <p class="issue">
+                Add a short description explaining the example above. Also mention that @context might be omitted.
+            </p>
+
+            <p class="issue">
+                Add an example of how a base64 JWT encoded verifiable presentation looks like.
+            </p>
 
             <p class="issue">
                 A number of the concerns have been raised around security,
