@@ -1143,23 +1143,33 @@ automatically updated.
 
         <p>
 Information about the current status of a <a>verifiable credential</a>, such 
-as whether it is suspended or revoked, can be provided by adding the 
-<code>credentialStatus</code> <a>property</a>. This property comprises the 
-type of <a>credential</a> status information being provided (sometimes 
-referred to as the credential status scheme), and the <a>id</a> of the status
-type instance. The precise contents of the credential status information is
-determined by the specific <code>credentialStatus</code> type definition,
-and varies depending on factors like whether it is simple to implement or 
-if it is privacy-enhancing.
-        </p>
+as whether it is suspended or revoked, MAY be provided using the 
+<code>credentialStatus</code> <a>property</a>. 
+	</p>
 
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>
-The value of the <code>credentialStatus</code> property MUST be a credential 
-status scheme that provides enough information to determine the current status 
-of the credential. For example, suspended or revoked.
-          </dd>
+If specified, the value of the <code>credentialStatus</code> property MUST 
+include the:
+
+	<ul>
+	  <li>
+<a>Credential</a> status type (also referred to as the <a>credential</a>
+status scheme), which MUST provide enough information to determine the 
+current status of the <a>credential</a> (for example, suspended or 
+revoked).
+	  </li>
+	  <li>
+<a>id</a> of the status type instance. 
+	  </li>
+	</ul>
+
+The precise contents of the credential status information is determined by 
+the specific <code>credentialStatus</code> type definition, and varies 
+depending on factors such as whether it is simple to implement or if it is 
+privacy-enhancing.
+	  </dd>
         </dl>
 
         <pre class="example nohighlight" title="Usage of status property">
@@ -1195,10 +1205,14 @@ exists for implementers who want to implement credential status checking.
         <h3>Presentations</h3>
 
         <p>
-<a>Credentials</a> MAY be used to construct a <a>verifiable presentation</a>. 
-A <a>verifiable presentation</a> can be of a <a>verifiable credential</a> 
-itself, or of data derived from <a>verifiable credentials</a>, in a 
-cryptographically verifiable format.
+<a>Verifiable presentations</a> MAY be used to combine and present 
+<a>verifiable credentials</a>. 
+	</p>
+
+	<p>
+If <a>verifiable presentations</a> are used, they MUST be constructed from 
+<a>verifiable credentials</a> themselves, or of data derived from 
+<a>verifiable credentials</a> in a cryptographically verifiable format.
         </p>
 
         <p>
