@@ -1545,8 +1545,12 @@ manual <code>refreshService</code> that can be used by directing the
 
         <dl>
           <dt><var>termsOfUse</var></dt>
-          <dd>The value of this property MAY specify one or more terms of use policies under which
-the creator issued the credential or presentation. If the recipient (holder or verifier) is not willing to adhere to the specified terms of use then they do so on their own responsibility and may incur legal liability if they violate the stated Terms of Use.
+          <dd>If present, the value of this property MUST specify one or more 
+			  terms of use policies under which the creator issued the credential 
+			  or presentation. If the recipient (holder or verifier) is not willing 
+			  to adhere to the specified terms of use then they do so on their own 
+			  responsibility and may incur legal liability if they violate the 
+			  stated Terms of Use.
 
 			Each <code>termsOfUse</code> comprises its type,
             for example, <code>IssuerPolicy</code>, and
@@ -1630,10 +1634,12 @@ storing the data in an archive.
 }
         </pre>
 
-        <p>
-In the example above, the <a>holder</a>, who is also the <a>subject</a>, 
-has expressed a Term of Use which prohibits the <a>verifier</a> (<code>https://wineonline.example.org</code>)
-from using the information provided to correlate the <a>holder</a>/<a>subject</a> by using a 3rd party service. If the verifier were to use such a 3rd party service for correlation, they would violate the terms under which the holder created the presentation.
+        <p>In the example above, the <a>holder</a>, who is also the <a>subject</a>, 
+			has expressed a Term of Use which prohibits the <a>verifier</a> (<code>https://wineonline.example.org</code>)
+			from using the information provided to correlate the <a>holder</a>/<a>subject</a> 
+			by using a 3rd party service. If the verifier were to use such a 3rd party 
+			service for correlation, they would violate the terms under which the holder 
+			created the presentation.
         </p>
 
       </section>
@@ -1851,12 +1857,24 @@ should treat this entire section as at-risk and currently under debate.
       </p>
 
   <p>
-The Subject Only Terms of Use states that a verifiable credential is only to be presented by the subject. If a verifier is presented with a verifiable presentation containing a verifiable credential with a Subject Only Terms of Use, by anyone other
-    than the subject, it relies on that presentation on its own responsibility. Similarly, if a holder other than the subject presents such a presentation, they do so on their own responsibility.
+The Subject Only Terms of Use states that a verifiable credential is only to be 
+presented by the subject. If a verifier is presented with a verifiable presentation
+containing a verifiable credential with a Subject Only Terms of Use, by anyone other
+than the subject, it relies on that presentation on its own responsibility. 
+Similarly, if a holder other than the subject presents such a presentation, they do 
+so on their own responsibility.
      </p>
 
 	   <p class="note">
-There is an open question about whether or not the issuer can bind the verifier to an agreement embodied in a Terms of Use. This is especially problematic because the verifier is unable to view or commit to the terms before receiving the information covered by those terms. Necessarily, they receive the information before they can agree to the terms. In contrast, the holder is well aware of the Terms of Use prior to creating the presentation and therefore may be more likely to be held liable. However, this specification is not legal advice. Anyone relying on the legal foundation of a Terms of Use policy should seek the advice of competent counsel in the relevant jurisdictions.
+There is an open question about whether or not the issuer can bind the verifier to 
+an agreement embodied in a Terms of Use. This is especially problematic because the
+verifier is unable to view or commit to the terms before receiving the information 
+covered by those terms. Necessarily, they receive the information before they can 
+agree to the terms. In contrast, the holder is well aware of the Terms of Use prior
+to creating the presentation and therefore may be more likely to be held liable. 
+However, this specification is not legal advice. Anyone relying on the legal
+interpertation of a Terms of Use policy should seek the advice of competent counsel
+in the relevant jurisdictions.
       </p>
 
 
@@ -1884,7 +1902,10 @@ There is an open question about whether or not the issuer can bind the verifier 
    <h3> Passing on a Verifiable Credential </h3>
 
       <p class="issue" data-number=204>
-Verifiable credentials are not an authorization framework and therefore delegation is out of scope for this specification. However, it is understood that Verifiable Credentials are likely to be used to build authorization and delegation systems. The following is one approach that may be appropriate for some use cases.
+Verifiable credentials are not an authorization framework and therefore delegation
+is out of scope for this specification. However, it is understood that Verifiable 
+Credentials are likely to be used to build authorization and delegation systems. 
+The following is one approach that may be appropriate for some use cases.
       <p>
 
    <p>
@@ -1952,6 +1973,13 @@ credential properties that have been passed to it by the subject">
 
    <section>
       <h2>Holder Acts on Behalf of the Subject</h2>
+	   
+      <p class="issue" data-number=204>
+Verifiable credentials are not an authorization framework and therefore delegation
+is out of scope for this specification. However, it is understood that Verifiable
+Credentials are likely to be used to build authorization and delegation systems.
+The following is one approach that may be appropriate for some use cases.
+      <p>
 
       <p>
 The data model supports the <a>holder</a> acting on behalf of the
@@ -2010,7 +2038,8 @@ property in a child's credential">{
 
       <p>
 In the example above, the issuer has expressed the relationship between the
-child and the parent, enabling a verifier to decide whether or not they want to rely on that assertion from that issuer. 
+child and the parent, enabling a verifier to decide whether or not they want 
+to rely on that assertion from that issuer. 
       </p>
 
       <pre class="example nohighlight" title="An example of a relationship
@@ -2068,6 +2097,13 @@ such as power of attorney, pet ownership, and patient prescription pick up.
 
   <section>
       <h2>Issuer Authorises Holder</h2>
+	  
+      <p class="issue" data-number=204>
+Verifiable credentials are not an authorization framework and therefore delegation 
+is out of scope for this specification. However, it is understood that Verifiable 
+Credentials are likely to be used to build authorization and delegation systems. 
+The following is one approach that may be appropriate for some use cases.
+      <p>
 
       <p>
 When the issuer wishes to authorise a holder to possess a credential that
@@ -2075,7 +2111,6 @@ describes a subject who is not the holder, and the holder has no known relations
  with the subject, then the issuer may insert the
 relationship of the holder to itself into the subject's credential.
       </p>
-
 
         <pre class="example nohighlight" title="An example of a credential
 issued to a holder who is not the subject of the credential, who has no relationship
@@ -2267,9 +2302,10 @@ Many of the data model concepts in this document thus far have been introduced
 by example using the JSON syntax. This section formalizes how the data model
 (described in Sections <a href="#core-data-model"></a>,
 <a href="#basic-concepts"></a>, and <a href="#advanced-concepts"></a>
-) is realized in JSON and JSON-LD. Although syntactic mappings are only provided for these two syntaxes,
-applications and services may also use any other data representation syntax,
-such as XML, YAML, or CBOR, that is capable of expressing the data model.
+) is realized in JSON and JSON-LD. Although syntactic mappings are only provided 
+for these two syntaxes, applications and services may also use any other data <br>
+representation syntax, such as XML, YAML, or CBOR, that is capable of expressing
+the data model.
       </p>
 
       <section>
@@ -2555,7 +2591,7 @@ a verifiable credential, is clear and protected in the signature.
           <li>The custom properties in the <a>credential</a> are
           appropriate for the <a>verifier</a>'s purpose. For example if a
           verifier needs to determine that a <a>subject</a> is older than 21
-          years of age, they may relyin on claims of specific
+          years of age, they may rely on claims of a specific
           <code>birthdate</code> or abstract properties such as
           <code>ageOver</code>.</li>
           <li>The <a>issuer</a> is trusted by the <a>verifier</a> to make the
@@ -3088,9 +3124,10 @@ presenting the credential is the same person at both services, i.e., the
 accounts are controlled by the same person.
           </li>
           <li>
-When the same subject identifier of a credential refers to the same subject across presentations or
-verifiers, then loss of privacy is possible. Even when different credentials are presented, if the
-subject identifier is the same, verifiers (and those with access to verifier logs) could infer that
+When the same subject identifier of a credential refers to the same subject 
+across presentations or verifiers, then loss of privacy is possible. Even 
+when different credentials are presented, if the subject identifier is the 
+same, verifiers (and those with access to verifier logs) could infer that
 the holder of the credential is the same person.
           </li>
           <li>
