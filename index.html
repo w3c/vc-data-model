@@ -2459,6 +2459,46 @@ built on top of this specification.
       </section>
 
       <section>
+        <h2>Syntactic Sugar</h2>
+
+        <p>
+In general, the data model and syntaxes described in this document are
+designed around a "cargo cult programming" mentality, where developers copy and
+paste examples to add verifiable credentials into their software systems.
+The design goal of this approach is to provide a low barrier to entry while
+still ensuring global interoperability between a heterogenous set of software
+systems. This section describes some of these approaches, which will most
+likely go unnoticed by most developers, but whose details will be of
+interest to implementers. The most noteworthy syntactic sugars used throughout
+the ecosystem are as follows:
+        </p>
+
+        <ul>
+          <li>
+If processed using a JSON-LD processor, the <code>@id</code> and
+<code>@type</code> keywords are aliased to <code>id</code> and
+<code>type</code>, respectively, to enable the developer to use this
+specification as idiomatic JSON.
+          </li>
+          <li>
+If processed using a JSON-LD processor, data types, such as integers,
+dates, units of measure, and URLs are automatically typed to provide
+stronger type guarantees for use cases that require them.
+          </li>
+          <li>
+If processed using a JSON-LD processor, the <code>verifiableCredential</code>
+and <code>claim</code> properties are treated as "graph containers", which
+are mechanisms that are used to isolate what one entity claims from
+another entity. This ensures proper cryptographic separation between the data
+graph provided by each <a>issuer</a> and the one provided by the
+<a>presenter</a> to ensure the provenance of the information for each graph
+is preserved.
+          </li>
+        </ul>
+
+      </section>
+
+      <section>
         <h2>Conformance</h2>
 
         <p>
@@ -3708,7 +3748,7 @@ All or any combination of the above.
         </ul>
 
     </section>
-
+     
   </body>
 </html>
 
