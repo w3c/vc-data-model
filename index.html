@@ -3678,10 +3678,10 @@ implications of this section can result in security vulnerabilities.
 
       <p>
 While this section attempts to highlight a broad set of security
-considerations, it should not be interpreted as a complete list of all
-security considerations. Implementers are urged to seek the advice of security
-and cryptography professionals when implementing mission critical systems
-using the technology outlined in this specification.
+considerations, it should not be interpreted as a complete list. Implementers
+are urged to seek the advice of security and cryptography professionals when
+implementing mission critical systems using the technology outlined in this
+specification.
       </p>
 
       <section>
@@ -3689,28 +3689,25 @@ using the technology outlined in this specification.
 
         <p>
 Some aspects of the data model described in this specification can be
-protected through the use of cryptography.
-Implementers should be aware of the underlying
-cryptography suites and libraries that are used to implement the
-creation and verification of digital signatures and mathematical proofs
-utilized by their systems when processing <a>credentials</a> and
-<a>presentations</a>. Software developers with extensive experience implementing
-or auditing systems that use cryptography must be used to ensure that
-systems are properly designed. Proper
-<a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a>
-is also suggested to remove bias from security reviews.
+protected through the use of cryptography. Implementers should be aware of the
+underlying cryptography suites and libraries used to implement the creation and
+verification of digital signatures and mathematical proofs used by their
+systems when processing <a>credentials</a> and <a>presentations</a>. Software
+developers with extensive experience implementing or auditing systems that use
+cryptography must be employed to ensure that systems are properly designed. 
+Proper <a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a> is also
+suggested to remove bias from security reviews.
         </p>
 
         <p>
 Cryptography suites and libraries have a shelf life and eventually fall to
-new attacks and technology advances. Any production quality system must take
-this reality into account and ensure that mechanisms exist to easily upgrade
-old or broken cryptographic suites and libraries in a proactive manner.
-Mechanisms should also exist to invalidate and replace existing credentials
-in the event of a cryptography suite or library failure.
-Regular monitoring of systems to ensure proper upgrades are made in a timely
-manner are also important to ensure the long term viability of systems
-processing verifiable credentials.
+new attacks and technology advances. Production quality systems must take
+this into account and ensure mechanisms exist to easily and proactively upgrade
+expired or broken cryptographic suites and libraries. Procedures should also
+exist to invalidate and replace existing <a>credentials</a> in the event of a
+cryptography suite or library failure. Regular monitoring of systems to ensure
+proper upgrades are made in a timely manner are also important to ensure the
+long term viability of systems processing <a>verifiable credentials</a>.
         </p>
 
       </section>
@@ -3719,11 +3716,11 @@ processing verifiable credentials.
         <h3>Unsigned Claims</h3>
 
         <p>
-This specification allows <a>credentials</a> to be produced that do not
-contain signatures or proofs of any kind. These types of credentials are often
+This specification allows <a>credentials</a> to be produced that do not contain
+signatures or proofs of any kind. These types of <a>credentials</a> are often
 useful for intermediate storage, or self-asserted information, which is
 analogous to filling out a form on a web page. Implementers should note that
-these types of credentials are not verifiable because the authorship
+these types of <a>credentials</a> are not verifiable because the authorship
 is either not known or cannot be trusted.
         </p>
       </section>
@@ -3731,17 +3728,16 @@ is either not known or cannot be trusted.
       <section>
         <h2>Token Binding</h2>
         <p>
-A <a>verifier</a> may need to ensure that it is the intended recipient
-of a <a>verifiable presentation</a> and is not the target of a
+A <a>verifier</a> might need to ensure it is the intended recipient of a
+<a>verifiable presentation</a> and not the target of a
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">
-man-in-the-middle attack</a>. Any protocol that utilizes the
-Verifiable Credentials Data Model and requires protection against these
-sorts of attacks needs to perform some sort of token binding, such
-as using <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol-18">
-The Token Binding Protocol v1.0</a>, that ties
-the request for a <a>verifiable presentation</a> with the response. Any
-protocol that does not perform token binding is susceptible to
-man-in-the-middle attacks.
+man-in-the-middle attack</a>. Any protocol that is using the Verifiable
+Credentials Data Model and requires protection against these kinds of attacks
+needs to perform some sort of token binding, such as
+<a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol-18">
+The Token Binding Protocol v1.0</a>, which ties the request for a
+<a>verifiable presentation</a> with the response. Any protocol that does not
+perform token binding is susceptible to man-in-the-middle attacks.
         </p>
 
       </section>
@@ -3749,23 +3745,23 @@ man-in-the-middle attacks.
       <section>
         <h3>Bundling Dependent Claims</h3>
         <p>
-It is considered a best practice for issuers to atomize information in a
-credential, or use a signature scheme that allows for selective disclosure.
-In the former case, if the atomization is not done securely by the issuer,
-the holder might bundle together different credentials in a way that was not
-intended by the issuer.
+It is considered best practice for <a>issuers</a> to atomize information in a
+<a>credential</a>, or use a signature scheme that allows for selective
+disclosure. In the case of atomization, if it is not done securely by the
+<a>issuer</a>, the <a>holder</a> might bundle together different
+<a>credentials</a> in a way that was not intended by the <a>issuer</a>.
         </p>
+
         <p>
-For example a university might issue two credentials to a person, each
-containing two properties, i.e., "Staff Member" in the
-"Department of Computing" and "Post Graduate Student" in the
-"Department of Economics". If these credentials are atomized into separate
-properties, then the university would issue four credentials to the person,
-each containing one of the following properties:
-"Staff Member", "Post Graduate Student", "Department of Computing", and
-"Department of Economics". The holder could then transfer
-the "Staff Member" and "Department of Economics" to a verifier,
-which together would comprise a false claim.
+For example a university might issue two <a>credentials</a> to a person, each
+containing two properties, for example, "Staff Member" in the "Department of
+Computing" and "Post Graduate Student" in the "Department of Economics". If
+these <a>credentials</a> are atomized into separate properties, then the
+university would issue four credentials to the person, each containing one of
+the following properties, "Staff Member", "Post Graduate Student", "Department
+of Computing", and "Department of Economics". The <a>holder</a> could then
+transfer the "Staff Member" and "Department of Economics" <a>credentials</a> to
+a <a>verifier</a>, which together would comprise a false claim.
         </p>
 
       </section>
@@ -3774,15 +3770,15 @@ which together would comprise a false claim.
         <h3>Highly Dynamic Information</h3>
 
         <p>
-When verifiable <a>credentials</a> are issued for highly dynamic information,
-implementers should ensure that the expiration times for the credential are
-set appropriately. Expiration periods that are longer than the timeframe
-where the credential is valid may create exploitable security vulnerabilities.
-Expiration periods that are shorter than the timeframe where the information
-expressed by the credential is valid create a burden on <a>holders</a> and
+When <a>verifiable credentials</a> are issued for highly dynamic information,
+implementers should ensure the expiration times are set appropriately.
+Expiration periods longer than the timeframe where the <a>credential</a> is
+valid might create exploitable security vulnerabilities. Expiration periods
+shorter than the timeframe where the information expressed by the
+<a>credential</a> is valid creates a burden on <a>holders</a> and
 <a>verifiers</a>. It is therefore important to set validity periods for
-credentials that are appropriate to the use case and the expected lifetime
-for the information contained in the credential.
+<a>credentials</a> that are appropriate to the use case and the expected
+lifetime for the information contained in the <a>credential</a>.
         </p>
 
       </section>
@@ -3792,9 +3788,9 @@ for the information contained in the credential.
 
         <p>
 When <a>verifiable credentials</a> are stored on a device and that
-device is stolen by an attacker, it may be possible for the attacker to then
-gain access to systems using the victim's verifiable credentials. Mitigations
-for this attack include:
+device is lost or stolen, it might be possible for an attacker to gain access
+to systems using the victim's <a>verifiable credentials</a>. Ways to mitigate
+this type of attack include:
         </p>
 
         <ul>
@@ -3803,14 +3799,14 @@ Enabling password, pin, pattern, or biometric screen unlock protection.
           </li>
           <li>
 Enabling password, biometric, or multi-factor authentication for the
-credential repository.
+<a>credential</a> repository.
           </li>
           <li>
-Enabling password, biometric, or multi-factor authentication when
-accessing cryptographic keys.
+Enabling password, biometric, or multi-factor authentication when accessing
+cryptographic keys.
           </li>
           <li>
-Utilizing a separate hardware-based signature device.
+Using a separate hardware-based signature device.
           </li>
           <li>
 All or any combination of the above.
