@@ -476,45 +476,23 @@ The basic structure of a claim.
       <p>
 The data model for <a>claims</a> described above is powerful and can be used
 to express a large variety of statements. For example, whether or not someone
-is over the age of 21 can be expressed as shown below.
+graduated from a particular university can be expressed as shown below.
       </p>
 
       <figure>
         <img style="margin: auto; display: block;"
-          width="50%" src="diagrams/claim-example.svg">
+          width="60%" src="diagrams/claim-example.svg">
         <figcaption style="text-align: center;">
-An example of a basic claim expressing that Pat is over the age of 21.
+An example of a basic claim expressing that Pat is an alumni of
+"Example University".
         </figcaption>
       </figure>
 
       <p>
-If a <a>presentation</a> supports <a>derived predicates</a>, a <a>claim</a>
-about birthdate in a <a>credential</a> can become the basis of proof that at a
-given point in time, the age of a <a>subject</a> did or will fall within a
-specified interval. Selective disclosure schemes using zero-knowledge proofs
-can use <a>claims</a> expressed in this model to prove additional statements
-about those <a>claims</a>. For example, a <a>claim</a> specifying a
-<a>subject</a>'s date of birth can be used as a predicate to prove that the
-<a>subject</a>'s age is within a given range, and therefore prove the
-<a>subject</a> is of legal drinking age or qualifies for age-related
-discounts, without actually revealing the <a>subject</a>'s birthdate. The
-<a>holder</a> has the flexibility to use the <a>claim</a> in any way that is
-applicable to the desired <a>presentation</a>.
-      </p>
-          <figure>
-              <img style="margin: auto; display: block;"
-                   width="50%" src="diagrams/claim-example-2.svg">
-              <figcaption style="text-align: center;">
-                  An example of a basic claim expressing that Pat's date of
-				  birth is 2010-01-01T19:73:24Z.
-                  Date encoding would be determined by the schema.
-              </figcaption>
-          </figure>
-      <p>
-These <a>claims</a> could be merged together to express a graph of information
-about a <a>subject</a>. The example below extends the previous data model by
-adding <a>claims</a> stating that Pat knows Sam and that Sam is employed as a
-professor.
+These <a>claims</a> could be merged together to express a <dfn>graph</dfn> of
+information about a <a>subject</a>. The example below extends the previous data
+model by adding <a>claims</a> stating that Pat knows Sam and that Sam is
+employed as a professor.
       </p>
 
       <figure>
@@ -526,8 +504,8 @@ Multiple claims can be combined to express a more complex graph.
       </figure>
 
       <p>
-To this point, the concept of a <a>claim</a> is introduced. To be able to
-trust <a>claims</a>, more information must be added.
+To this point, the concept of a <a>claim</a> and a <a>graph</a> of information
+is introduced. To be able to trust <a>claims</a>, more information must be added.
       </p>
 
     </section>
@@ -620,6 +598,30 @@ It is possible to have a <a>presentation</a>, such as a business persona,
 that draws upon multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
       </p>
+
+      <p>
+If a <a>presentation</a> supports <a>derived predicates</a>, a <a>claim</a>
+about birthdate in a <a>credential</a> can become the basis of proof that at a
+given point in time, the age of a <a>subject</a> did or will fall within a
+specified interval. Selective disclosure schemes using zero-knowledge proofs
+can use <a>claims</a> expressed in this model to prove additional statements
+about those <a>claims</a>. For example, a <a>claim</a> specifying a
+<a>subject</a>'s date of birth can be used as a predicate to prove that the
+<a>subject</a>'s age is within a given range, and therefore prove the
+<a>subject</a> qualifies for age-related discounts, without actually revealing
+the <a>subject</a>'s birthdate. The <a>holder</a> has the flexibility to use
+the <a>claim</a> in any way that is applicable to the desired
+<a>presentation</a>.
+      </p>
+          <figure>
+              <img style="margin: auto; display: block;"
+                   width="50%" src="diagrams/claim-example-2.svg">
+              <figcaption style="text-align: center;">
+                  An example of a basic claim expressing that Pat's date of
+				  birth is 2010-01-01T19:73:24Z.
+                  Date encoding would be determined by the schema.
+              </figcaption>
+          </figure>
 
     </section>
     </section>
@@ -746,11 +748,11 @@ information about the context.
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ]</span>,
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  "id": "http://example.edu/credentials/58473",
+  "type": ["VerifiableCredential", "AlumniCredential"],
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "alumniOf": "Example University"
   },
   "proof": { ... }
 }
@@ -814,11 +816,14 @@ machine-readable information about the identifier.
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  <span class="highlight">"id": "http://dmv.example.gov/credentials/3732"</span>,
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
+  <span class="highlight">"id": "http://example.edu/credentials/3732"</span>,
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "credentialSubject": {
     <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   "proof": { ... }
 }
@@ -872,11 +877,14 @@ the type.
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  <span class="highlight">"type": ["VerifiableCredential", "ProofOfAgeCredential"]</span>,
+  "id": "http://example.edu/credentials/3732",
+  <span class="highlight">"type": ["VerifiableCredential", "UniversityDegreeCredential"]</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   "proof": { ... }
 }
@@ -1023,13 +1031,16 @@ earliest date when the information associated with the
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  <span class="highlight">"issuer": "https://dmv.example.gov/issuers/14"</span>,
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  <span class="highlight">"issuer": "https://example.edu/issuers/14"</span>,
   <span class="highlight">"issuanceDate": "2010-01-01T19:73:24Z"</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   "proof": { ... }
 }
@@ -1060,12 +1071,15 @@ to the signing entity, and a representation of the signing date.</dd>
     "https://example.com/examples/v1"
   ],
   "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu",
   "issuanceDate": "2010-01-01",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"proof": {
     "type": "RsaSignature2018",
@@ -1110,14 +1124,17 @@ time the <a>credential</a> ceases to be valid.
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   <span class="highlight">"expirationDate": "2020-01-01T19:73:24Z"</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   "proof": { ... }
 }
@@ -1177,16 +1194,19 @@ privacy-enhancing.
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"credentialStatus": {
-    "id": "https://dmv.example.gov/status/24,
+    "id": "https://example.edu/status/24,
     "type": "CredentialStatusList2017"
   }</span>,
   "proof": { ... }
@@ -1526,13 +1546,16 @@ The expression of a data schema may be performed via the following
     "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   "claim": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"credentialSchema": {
     "id": "https://example.org/motorlicense/proof-of-age.json",
@@ -1565,13 +1588,16 @@ such as those used to perform zero-knowledge proofs.
     "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   "claim": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"credentialSchema": {
     "id": "https://example.org/motorlicense/proof-of-age.zkp",
@@ -1637,17 +1663,20 @@ definition.
     "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"refreshService": {
     "type": "ManualRefreshService2018",
-    "serviceEndpoint": "https://dmv.example.gov/refresh/283947"
+    "serviceEndpoint": "https://example.edu/refresh/283947"
   }</span>,
   "proof": { ... }
 }
@@ -1804,22 +1833,25 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
     "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"termsOfUse": [{
     "type": "IssuerPolicy",
     "id": "http://example.com/policies/credential/4",
     "profile": "http://example.com/profiles/credential",
     "prohibition": [{
-      "assigner": "https://dmv.example.gov/issuers/14",
+      "assigner": "https://example.edu/issuers/14",
       "assignee": "AllVerifiers",
-      "target": "http://dmv.example.gov/credentials/3732",
+      "target": "http://example.edu/credentials/3732",
       "action": ["Archival"]
     }]
   }</span>,
@@ -1841,13 +1873,16 @@ storing the data in an archive.
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "type": "VerifiablePresentation",
   "verifiableCredential": [{
-    "id": "http://dmv.example.gov/credentials/3732",
-    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov/issuers/14",
+    "id": "http://example.edu/credentials/3732",
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "issuer": "https://example.edu/issuers/14",
     "issuanceDate": "2010-01-01T19:73:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
+      "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
     },
     "proof": { ... }
   }],
@@ -1858,7 +1893,7 @@ storing the data in an archive.
     "prohibition": [{
       "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "assignee": "https://wineonline.example.org/",
-      "target": "http://dmv.example.gov/credentials/3732",
+      "target": "http://example.edu/credentials/3732",
       "action": ["3rdPartyCorrelation"]
     }]
   }</span>,
@@ -1928,18 +1963,21 @@ credentials are supported by the specification.
     "https://w3.org/2018/credentials/v1",
     "https://example.org/motorlicense/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"evidence": [{
-    "id": "https://dmv.example.gov/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+    "id": "https://example.edu/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
     "type": ["DocumentVerification"],
-    "verifier": "https://dmv.example.gov/issuers/14",
+    "verifier": "https://example.edu/issuers/14",
     "evidenceDocument": "DriversLicense",
     "subjectPresence": "Physical",
     "documentPresence": "Physical"
@@ -2019,9 +2057,9 @@ determine the relationship between the <a>subject</a> and the <a>holder</a>.
 that uniquely identifies a subject">
 {
   "@context": ["https://w3.org/2018/credentials/v1", "https://schema.org/"]
-  "id": "http://dmv.example.gov/credentials/332",
+  "id": "http://example.edu/credentials/332",
   "type": ["VerifiableCredential", "IdentityCredential"],
-  "issuer": "https://dmv.example.gov/issuers/4",
+  "issuer": "https://example.edu/issuers/4",
   "issued": "2017-02-24",
   "credentialSubject": {
     "name": "J. Doe",
@@ -2102,13 +2140,16 @@ The <code>SubjectOnly</code> <code>termsOfUse</code> property states that a
 
         <pre class="example nohighlight" title="Subject Only termsOfUse property by an Issuer">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   <span class="highlight">"termsOfUse": [{
     "type": "SubjectOnly",
@@ -2158,7 +2199,7 @@ credential properties that have been passed to it by the subject">
   "verifiableCredential": [{
       "id": "http://example.gov/credentials/3732",
       "type": ["VerifiableCredential", "PrescriptionCredential"],
-      "issuer": "https://dmv.example.gov",
+      "issuer": "https://example.edu",
       "issued": "2010-01-01",
       "credentialSubject": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -2245,9 +2286,9 @@ standardised by the working group.
 
       <pre class="example nohighlight" title="An example of the relationship
 property in a child's credential">{
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential", "RelationshipCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential", "RelationshipCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -2269,9 +2310,9 @@ child and the parent such that a <a>verifier</a> would most likely accept the
 
       <pre class="example nohighlight" title="An example of a relationship
 credential issued to a parent">{
-  "id": "http://dmv.example.gov/credentials/3732",
+  "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuer": "https://example.edu/issuers/14",
   "issued": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
@@ -2340,9 +2381,9 @@ issued to a holder who is not the subject of the credential, who has no relation
 with the subject of the credential, but who has a relationship with the issuer">
 
 {
-  "id": "http://dmv.example.gov/credentials/3732",
+  "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "NameAndAddress"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "issuer": "https://example.edu/issuers/14",
   "holder": {
     "type": "LawEnforcement",
     "id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
@@ -2356,7 +2397,7 @@ with the subject of the credential, but who has a relationship with the issuer">
   "proof": {
     "type": "RsaSignature2018",
     "created": "2017-06-17T10:03:48Z",
-    "creator": "https://dmv.example.gov/issuers/14/keys/234",
+    "creator": "https://example.edu/issuers/14/keys/234",
     "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
     "signatureValue": "pY9...Cky6Ed = "
   }
@@ -2450,7 +2491,10 @@ that the <a>credential</a> is disputed.
     "statusReason": "Credential contains disputed statements",
     "disputedClaim": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
+      "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
     }
   }</span>,
   "issuer": "https://example.com/people#me",
@@ -2659,7 +2703,7 @@ and Security Considerations section of this document.
 }
 // JWT Payload
 {
-  "iss": "https://dmv.example.gov",
+  "iss": "https://example.edu",
   "iat": 1262304000,
   "exp": 1483228800,
   "aud": "www.example.com",
@@ -2667,12 +2711,15 @@ and Security Considerations section of this document.
   "verifiableCredential": {
     "@context": "https://w3.org/2018/security/v1",
     "id": "http://example.gov/credentials/3732",
-    "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-    "issuer": "https://dmv.example.gov",
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "issuer": "https://example.edu",
     "issuanceDate": "2010-01-01",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "ageOver": 21
+      "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
     }
   }
 }
@@ -3257,13 +3304,16 @@ For example, the following Verifiable Credential is a bearer credential:
     "https://w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/temporary/28934792387492384",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/temporary/28934792387492384",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2017-10-22T12:23:48Z",
   "credentialSubject": {
     <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
-    "ageOver": 21
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
   },
   "proof": { ... }
 }
