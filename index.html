@@ -126,11 +126,6 @@ or send them to
 <a href="https://lists.w3.org/Archives/Public/public-vc-comments/">archives</a>).
       </p>
 
-        <p class="issue" data-number=200>
-There remain a list of terminology-related editorial issues that need to be
-processed in this document.
-        </p>
-
         <p class="issue" data-number=201>
 There remain a list of editorial issues that need to be processed in this
 document.
@@ -153,11 +148,12 @@ be elusive.
       </p>
 
       <p>
-It is currently difficult to express banking account information,
-education qualifications, healthcare data, and other sorts of machine-readable
-personal information that was verified by a third-party on the Web and this
-makes it difficult to receive the same benefits from the Web that physical
-credentials provide us in the physical world.
+It is currently difficult to express education qualifications, healthcare
+data, financial account details, and other sorts of machine-readable
+personal information that was verified by a third-party on the Web. The
+difficulty of expressing digital credentials on the Web makes it challenging
+to receive the same benefits via the Web that physical credentials provide
+us in the physical world.
       </p>
 
       <p>
@@ -221,14 +217,17 @@ presentations can be rapidly transmitted, making them more convenient than
 their physical counterparts when establishing trust at a distance.
       </p>
       <p>
-The persistence of digital information, and the ease with which disparate
-sources of digital data can be collected and correlated, comprise a privacy
-concern that the use of verifiable and easily machine-readable credentials
-threatens to make worse. A <a href="#privacy-considerations">Privacy Considerations</a>
-section addresses these issues. Items of particular concern in this
-specification are noted in the text. Examples of how to use this data model
-using privacy-enhancing technologies, such as zero-knowledge proofs, are also
-provided.
+While this specification attempts to improve upon the ease of expressing
+digital credentials, it also attempts to balance this goal with a number of
+privacy-preserving goals. The persistence of digital information, and the ease
+with which disparate sources of digital data can be collected and correlated,
+comprise a privacy concern that the use of verifiable and easily
+machine-readable credentials threatens to make worse.
+The <a href="#privacy-considerations">Privacy Considerations</a>
+section in this document outlines and attempts to address a number of these
+issues. Examples of how to use this data model using privacy-enhancing
+technologies, such as zero-knowledge proofs, are also provided throughout this
+document.
       </p>
     </section>
     <section>
@@ -382,7 +381,7 @@ specific services; <a>holders</a> decide how to aggregate and manage
 associated with them.
         </li>
         <li>
-<a>Holders</a> can easily control and own their own identifiers.
+<a>Holders</a> can easily acquire and control their identifiers.
         </li>
         <li>
 <a>Holders</a> control which <a>verifiable credentials</a> to use and when.
@@ -398,9 +397,9 @@ without revealing the identity of the <a>verifier</a> to the <a>issuer</a>.
         </li>
         <li>
 <a>Holders</a> in <a>presentations</a> can either disclose the attributes or
-satisfy <a>predicates</a> requested by the <a>verifier</a>. <a>Predicates</a>
-are boolean conditions like greater/less than or equal to, is in set, and so
-on.
+satisfy <a>derived predicates</a> requested by the <a>verifier</a>.
+<a>Derived predicates</a> are boolean conditions like greater/less than or
+equal to, is in set, and so on.
         </li>
         <li>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> are
@@ -489,10 +488,10 @@ An example of a basic claim expressing that Pat is an alumni of
       </figure>
 
       <p>
-These <a>claims</a> could be merged together to express a <dfn>graph</dfn> of
-information about a <a>subject</a>. The example below extends the previous data
-model by adding <a>claims</a> stating that Pat knows Sam and that Sam is
-employed as a professor.
+These <a>claims</a> can be merged together to express a <a>graph</a> of
+information about a <a>subject</a>. The example below extends the previous
+graph of information by adding <a>claims</a> stating that Pat knows Sam and
+that Sam is employed as a professor.
       </p>
 
       <figure>
@@ -524,11 +523,6 @@ might be signed by the <a>issuer</a>. A <a>verifiable credential</a> is a set
 of tamper-evident <a>claims</a> and metadata that cryptographically prove who
 issued it.
       </p>
-      <p class="note">
-<a>Credential</a> identifiers can be used for correlation. A <a>holder</a>
-wanting to minimize correlation MUST use a selective disclosure scheme that
-does not reveal the <a>credential</a> identifier.
-      </p>
 
       <figure>
         <img style="margin: auto; display: block;" width="50%" src="diagrams/credential.svg">
@@ -543,14 +537,39 @@ cards, digital birth certificates, and digital educational certificates.
       </p>
 
       <p class="note">
+<a>Credential</a> identifiers are often used to identify specific instances
+of a credential. These identifiers can also be used for correlation. A
+<a>holder</a> wanting to minimize correlation MUST use a selective disclosure
+scheme that does not reveal the <a>credential</a> identifier.
+      </p>
+
+      <p>
+The example above provides a simple visual describing the components of a
+<a>verifiable credential</a>, but abstracts some of the details of how
+<a>claims</a> are organized into <a>graph</a>s, which are then organized into
+<a>verifiable credentials</a>. The example below attempts to provide a
+complete visual depiction of a <a>verifiable credential</a>, which is
+normally composed of at least two graphs of information.
+The first information graph expresses the credential itself, which contains
+<span style="color:#d5a6bdff;font-weight:bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">credential metadata</span> and
+<span style="color:#ffe599ff;font-weight:bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">claims</span>.
+The second information graph expresses the
+<span style="color:#b6d7a8ff;font-weight:bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">digital proof</span>,
+which is typically a digital signature.
+      </p>
+
+      <figure>
+        <img style="margin: auto; display: block;" width="100%" src="diagrams/credential-graph.svg">
+        <figcaption style="text-align: center;">
+A visual depiction of the information graphs associated with a basic
+<a>verifiable credential</a>.
+        </figcaption>
+      </figure>
+
+      <p class="note">
 It is possible to have a <a>credential</a>, such as a marriage certificate,
 containing multiple <a>claims</a> about different <a>subjects</a> that are
 not required to be related.
-      </p>
-
-      <p class="issue" data-number=47>
-The group is currently discussing whether or not they support all the types
-of claims that can be made.
       </p>
 
     </section>
@@ -1139,19 +1158,6 @@ time the <a>credential</a> ceases to be valid.
 }
         </pre>
 
-        <p class="issue" data-number=164>
-The group is currently discussing expiration and caching.
-        </p>
-
-        <p class="issue" data-number=19>
-The group is currently discussing how to automatically renew credentials.
-        </p>
-
-        <p class="issue" data-number=139>
-The group is currently discussing how verifiable credentials may be
-automatically updated.
-        </p>
-
       </section>
 
       <section>
@@ -1251,15 +1257,6 @@ The example below shows a <a>verifiable presentation</a> that embeds
   "proof": [{ ... }]</span>
 }
         </pre>
-        <p class="issue" data-number=133>
-The group is currently discussing whether the "id" field is appropriately
-defined for Presentations.
-        </p>
-
-        <p class="issue" data-number=106>
-The group is currently discussing how the data model expresses when the
-subject is not the holder of the credential/presentation.
-        </p>
 
         <p class="issue" data-number=105>
 The group is currently discussing holders, subjects, and identifier
@@ -1338,11 +1335,6 @@ with an open world assumption than it is with closed software systems.
         <p>
 The rest of this section describes how both extensibility and program
 correctness are achieved through a series of examples.
-        </p>
-
-        <p class="issue" data-number=187>
-The group is currently discussing how a travel use case could be covered as
-an extension.
         </p>
 
         <p>
@@ -1893,10 +1885,6 @@ from using the information provided to correlate the
 <a>holder</a>/<a>subject</a> by using a 3rd party service.
         </p>
 
-        <p class="issue" data-number=133>
-The group is currently discussing how one knows who specified the Terms of Use.
-        </p>
-
       </section>
 
       <section>
@@ -1980,11 +1968,6 @@ evidence, related to the integrity of the credential. In contrast, the
 <em>proof</em> property is used to express machine-verifiable mathematical
 proofs related to the authenticity of the issuer and integrity of the
 credential.
-        </p>
-
-        <p class="issue" data-number=42>
-The group is currently discussing how to visualize verifiable credentials and
-any media associated with them.
         </p>
 
     </section>
@@ -2071,11 +2054,6 @@ name, address, and birth date of the individual.
 
     <section>
       <h2>Subject Passes the Verifiable Credential to a Holder</h2>
-
-      <p class="issue" data-number=204>
-The group is currently debating the best security model for delegation. Readers
-should treat this entire section as at-risk and currently under debate.
-      <p>
 
       <p>
 Normally verifiable credentials will be presented to verifiers by the
@@ -3053,10 +3031,6 @@ guidance for implementers that want to avoid specific scenarios that are
 hostile to privacy.
         </p>
 
-        <p class="issue" data-number=125>
-The group is currently discussing how the specification should be modified to
-support ZKPs and other forms of anonymous credentials.
-        </p>
       </section>
 
       <section>
