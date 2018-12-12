@@ -629,7 +629,95 @@ that draws on multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
         </p>
 
-      </section>
+    </section>
+    <section>
+      <h3>Lifecycle</h3>
+
+      <em>This section is non-normative.</em>
+
+      <p>
+        After outlining the core data model concepts, it is now possible to
+        reach the culmination of this section, the Lifecycle. Claims allow one
+        to make statements about a subject. Credentials provide the composition
+        mechanism for tamper-evident claims that provide cryptographic
+        guarantees on the provenance of those claims. Presentations enable the
+        ability for holders to use one or more credentials to satisfy requests
+        from a verifier and proof of control of those credentials.
+      </p>
+
+      <p>
+        The lifecycle of credentials will take the same general path: issuance
+        of claims to a credential subject and then the presentation to a
+        verifer. In <a href="#ex-1-example-verifiable-credential">Example 1</a> we can envision Pat receiving an
+        "AlumniCredential" from "Example University".
+      </p>
+
+      <pre class="example nohighlight" title="Example Verifiable Credential">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/1872",
+  "type": ["VerifiableCredential", "AlumniCredential"],
+  "issuer": "https://example.edu/issuers/565049",,
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "alumniOf": "Example University"
+  },
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "https://example.com/jdoe/keys/1",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+      +W3JT24="
+  }
+}
+      </pre>
+
+      <p>
+        In the next chapter of Pat's "AlumniCredential" lifecycle, is
+        presenting the credential for a discount. The verifier states that any
+        alumni of "Example University" will receive the best discount in the
+        world, 100% of. Pat will generate a Verifiable Presentation to achieve
+        this discount, this can be found in <a href="#ex-2-example-verifiable-presentation">Example 2</a>.
+      </p>
+      <pre class="example nohighlight" title="Example Verifiable Presentation">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "type": "VerifiablePresentation",
+  "verifiableCredential": [{
+    "id": "http://example.edu/credentials/1872",
+    "type": ["VerifiableCredential", "AlumniCredential"],
+    "issuer": "https://example.edu/issuers/565049",,
+    "issuanceDate": "2010-01-01T19:73:24Z",
+    "credentialSubject": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "alumniOf": "Example University"
+    },
+    "proof": {
+      "type": "RsaSignature2018",
+      "created": "2017-06-18T21:19:10Z",
+      "creator": "https://example.com/jdoe/keys/1",
+      "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+      "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+      +W3JT24="
+    }
+  }],
+  "proof": { ... }
+}
+      </pre>
+    </section>
     </section>
 
     <section class="informative">
@@ -4406,4 +4494,3 @@ these scenarios. It is for further study how they might be supported.
   </section>
   </body>
 </html>
-
