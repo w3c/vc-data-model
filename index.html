@@ -733,7 +733,7 @@ in the manner adopted by Certificate Authority systems.
       <h2>Basic Concepts</h2>
 
       <p>
-This section introduces some basic concepts for the specification, in
+This section introduces some basic concepts for the specification, in 
 preparation for advanced concepts later in the document.
       </p>
 
@@ -741,21 +741,21 @@ preparation for advanced concepts later in the document.
         <h3>Contexts</h3>
 
         <p>
-When two software systems need to exchange data, they must use terminology and
-a protocol that both systems understand. As an analogy, consider how two
-people communicate. Both people must use the same language and the words they
-use must mean the same thing to each other. This specification uses the
+When two software systems need to exchange data, they must use terminology and 
+a protocol that both systems understand. As an analogy, consider how two 
+people communicate. Both people must use the same language and the words they 
+use must mean the same thing to each other. This specification uses the 
 <code>@context</code> property to express the context of a conversation.
         </p>
 
         <dl>
           <dt><dfn>@context</dfn></dt>
           <dd>
-The value of the <code>@context</code> property MUST be one or more URIs,
-where the value of the first URI is
-<code>https://w3.org/2018/credentials/v1</code>. If more than one URI is
-provided, the URIs MUST be interpreted as an ordered set. It is RECOMMENDED
-that dereferencing the URIs results in a document containing machine-readable
+The value of the <code>@context</code> property MUST be one or more URIs, 
+where the value of the first URI is 
+<code>https://w3.org/2018/credentials/v1</code>. If more than one URI is 
+provided, the URIs MUST be interpreted as an ordered set. It is RECOMMENDED 
+that dereferencing the URIs results in a document containing machine-readable 
 information about the context.
           </dd>
         </dl>
@@ -777,9 +777,9 @@ information about the context.
         </pre>
 
         <p>
-The example above uses the base context URI
+The example above uses the base context URI 
 (<code>https://w3.org/2018/credentials/v1</code>) to establish that the
-conversation is about a <a>verifiable credential</a>. The second
+conversation is about a <a>verififiable credential</a>. The second
 URI (<code>https://example.com/examples/v1</code>) establishes that the
 conversation is about examples.
         </p>
@@ -787,14 +787,14 @@ conversation is about examples.
         <p class="note">
 This document uses the examples context URI
 (<code>https://example.com/examples/v1</code>) for the purposes of
-demonstrating examples. The examples context URI MUST NOT be used for any
+demonstrating examples. The examples context URI MUST NOT be used for any 
 other purpose, such as in pilot or production systems.
         </p>
 
         <p>
-The data available at <code>https://w3.org/2018/credentials/v1</code> is a
-static document that is never updated and MAY be downloaded and cached. The
-associated human-readable vocabulary document for the Verifiable Credentials
+The data available at <code>https://w3.org/2018/credentials/v1</code> is a 
+static document that is never updated and MAY be downloaded and cached. The 
+associated human-readable vocabulary document for the Verifiable Credentials 
 Data Model is available at:
 <a href="https://w3.org/2018/credentials">https://w3.org/2018/credentials</a>.
 This concept is further expanded on in Section <a href="#extensibility"></a>.
@@ -806,9 +806,9 @@ This concept is further expanded on in Section <a href="#extensibility"></a>.
 
         <p>
 When expressing statements about a specific thing, such as a person, product,
-or organization, it is often useful to use some kind of identifier so that
-others can express statements about the same thing. Identifiers that others
-are expected to use when expressing statements about a specific thing MUST be
+or organization, it is often useful to use some kind of identifier so that 
+others can express statements about the same thing. Identifiers that others 
+are expected to use when expressing statements about a specific thing MUST be 
 expressed using the <code>id</code> property.
         </p>
 
@@ -822,8 +822,8 @@ such scenarios.
         <dl>
           <dt><dfn>id</dfn></dt>
           <dd>
-The value of the <code>id</code> property MUST be a single URI. It is
-RECOMMENDED that dereferencing the URI results in a document containing
+The value of the <code>id</code> property MUST be a single URI. It is 
+RECOMMENDED that dereferencing the URI results in a document containing 
 machine-readable information about the identifier.
           </dd>
         </dl>
@@ -848,18 +848,18 @@ machine-readable information about the identifier.
         </pre>
 
         <p>
-The example above uses two types of identifiers. The first identifier is for
-the <a>credential</a> and uses an HTTP-based URL. The second identifier is for
-the <a>subject</a> of the <a>credential</a> (the thing the <a>claims</a> are
+The example above uses two types of identifiers. The first identifier is for 
+the <a>credential</a> and uses an HTTP-based URL. The second identifier is for 
+the <a>subject</a> of the <a>credential</a> (the thing the <a>claims</a> are 
 about) and uses a Decentralized Identifier, also known as a DID.
         </p>
 
         <p class="note">
-As of this publication, DIDs are a new type of identifier that are not
-necessary for <a>verifiable credentials</a> to be useful. Specifically,
-<a>verifiable credentials</a> do not depend on DIDs and DIDs do not depend on
-<a>verifiable credentials</a>. However, it is expected that many
-<a>verifiable credentials</a> will use DIDs and software libraries
+As of this publication, DIDs are a new type of identifier that are not 
+necessary for <a>verifiable credentials</a> to be useful. Specifically, 
+<a>verifiable credentials</a> do not depend on DIDs and DIDs do not depend on 
+<a>verifiable credentials</a>. However, it is expected that many 
+<a>verifiable credentials</a> will use DIDs and software libraries 
 implementing this specification will probably need to resolve DIDs. DID-based
 URLs are used for expressing identifiers associated with cryptographic keys
 and other machine-readable information that is useful when used in
@@ -872,17 +872,17 @@ the <a>verifiable credentials</a> ecosystem.
 
         <p>
 Software systems that process the kinds of objects specified in this document
-use type information to determine whether or not a provided <a>credential</a>
-or <a>presentation</a> is appropriate. Type information MUST be expressed
+use type information to determine whether or not a provided <a>credential</a> 
+or <a>presentation</a> is appropriate. Type information MUST be expressed 
 using the <code>type</code> property.
         </p>
 
         <dl>
            <dt><dfn data-lt="type|types">type</dfn></dt>
           <dd>
-The value of the <code>type</code> property MUST be, or map to, one or more
+The value of the <code>type</code> property MUST be, or map to, one or more 
 URIs. If more than one URI is provided, the URIs MUST be interpreted as an
-unordered set. Syntactic conveniences, such as JSON-LD terms, SHOULD be used
+unordered set. Syntactic conveniences, such as JSON-LD terms, SHOULD be used 
 to ease developer usage. It is RECOMMENDED that dereferencing
 the URIs results in a document containing machine-readable information about
 the type.
@@ -909,7 +909,7 @@ the type.
         </pre>
 
         <p>
-With respect to this specification, the following table lists the objects that
+With respect to this specification, the following table lists the objects that 
 MUST have a <a>type</a> specified.
         </p>
 
@@ -927,9 +927,9 @@ MUST have a <a>type</a> specified.
 <a href="#credentials">Credential</a>&nbsp;object
               </td>
               <td>
-<code>VerifiableCredential</code> and a more specific
-<a>credential</a> type. For example,<br>
-<code>"type": ["VerifiableCredential", "UniversityDegreeCredential"]</code>
+<code>VerifiableCredential</code> and a more specific <a>credential</a> type. 
+For example,<br>  
+<code>"type": ["VerifiableCredential", "ProofOfAgeCredential"]</code>
               </td>
             </tr>
 
@@ -938,8 +938,8 @@ MUST have a <a>type</a> specified.
 <a href="#presentations">Presentation</a>&nbsp;object
               </td>
               <td>
-<code>VerifiablePresentation</code> and a more specific
-<a>presentation</a> type. For example,<br>
+<code>VerifiablePresentation</code> and a more specific <a>presentation</a> 
+type. For example,<br>
 <code>"type": ["VerifiablePresentation", "CredentialManagerPresentation"]</code>
               </td>
             </tr>
@@ -979,28 +979,28 @@ A valid evidence type. For example,<br>
 
         <p>
 All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
-specify, or be associated with, additional more narrow <a>types</a> (like
-<code>ProofOfAgeCredential</code>, for example) so software systems can
+specify, or be associated with, additional more narrow <a>types</a> (like 
+<code>ProofOfAgeCredential</code>, for example) so software systems can 
 process this additional information.
         </p>
 
         <p>
-When processing encapsulated objects defined in this specification, (for
-example, objects associated with the <code>credentialSubject</code> object
-or deeply nested therein), software systems SHOULD use the <a>type</a>
-information specified in encapsulating objects higher in the hierarchy.
-Specifically, an encapsulating object, such as <a>credential</a>, SHOULD
-convey the associated object <a>types</a> so that <a>verifiers</a> can quickly
-determine the contents of an associated object based on the encapsulating
-object <a>type</a>. For example, a <a>credential</a> object with the
+When processing encapsulated objects defined in this specification, (for 
+example, objects associated with the <code>credentialSubject</code> object 
+or deeply nested therein), software systems SHOULD use the <a>type</a> 
+information specified in encapsulating objects higher in the hierarchy. 
+Specifically, an encapsulating object, such as <a>credential</a>, SHOULD 
+convey the associated object <a>types</a> so that <a>verifiers</a> can quickly 
+determine the contents of an associated object based on the encapsulating 
+object <a>type</a>. For example, a <a>credential</a> object with the 
 <code>type</code> of <code>ProofOfAgeCredential</code>, would signal to a
-<a>verifier</a> that the object associated with the
-<code>credentialSubject</code> property contains the identifier for the
-<a>subject</a> in the <code>id</code> property, and the age assertion in the
-<code>ageOver</code> property. This enables implementers to rely on values
-associated with the <code>type</code> property for verification purposes. The
-expectation of <a>types</a> and their associated properties SHOULD be
-documented in at least a human-readable specification, and preferably, in an
+<a>verifier</a> that the object associated with the 
+<code>credentialSubject</code> property contains the identifier for the 
+<a>subject</a> in the <code>id</code> property, and the age assertion in the 
+<code>ageOver</code> property. This enables implementers to rely on values 
+associated with the <code>type</code> property for verification purposes. The 
+expectation of <a>types</a> and their associated properties SHOULD be 
+documented in at least a human-readable specification, and preferably, in an 
 additional machine-readable representation.
         </p>
 
@@ -1011,10 +1011,10 @@ The type system for the Verifiable Credentials Data Model is the same as for
 and
 <a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
 When using a JSON-LD context (see Section <a href="#extensibility"></a>),
-this specification aliases the <code>@type</code> keyword to <code>type</code>
-to make the JSON-LD documents more easily understood. While application
-developers and document authors do not need to understand the specifics of the
-JSON-LD type system, implementers of this specification who want to support
+this specification aliases the <code>@type</code> keyword to <code>type</code> 
+to make the JSON-LD documents more easily understood. While application 
+developers and document authors do not need to understand the specifics of the 
+JSON-LD type system, implementers of this specification who want to support 
 interoperable extensibility, do.
         </p>
 
@@ -1029,17 +1029,17 @@ Issuer information can be expressed using the following <a>properties</a>:
         <dl>
           <dt><var>issuer</var></dt>
           <dd>
-The value of the <code>issuer</code> property MUST be a URI. It is RECOMMENDED
-that dereferencing the URI results in a document containing machine-readable
-information about the issuer that can be used to verify the information
+The value of the <code>issuer</code> property MUST be a URI. It is RECOMMENDED 
+that dereferencing the URI results in a document containing machine-readable 
+information about the issuer that can be used to verify the information 
 expressed in the <a>credential</a>.
           </dd>
           <dt><var>issuanceDate</var></dt>
           <dd>
-The value of the <code>issuanceDate</code> property MUST be a string value of
-an [[!ISO8601]] combined date and time string representing the date and
-time the <a>credential</a> was issued. Note that this date represents the
-earliest date when the information associated with the
+The value of the <code>issuanceDate</code> property MUST be a string value of 
+an [[!ISO8601]] combined date and time string representing the date and 
+time the <a>credential</a> was issued. Note that this date represents the 
+earliest date when the information associated with the 
 <code>credentialSubject</code> property became valid.
           </dd>
         </dl>
@@ -1069,16 +1069,16 @@ earliest date when the information associated with the
         <h2>Proofs (Signatures)</h2>
 
         <p>
-For a <a>credential</a> or <a>presentation</a> to be verifiable, the following
+For a <a>credential</a> or <a>presentation</a> to be verifiable, the following 
 <a>property</a> MUST be present:
         </p>
         <dl>
           <dt><var>proof</var></dt>
           <dd>
-The method used for a mathematical proof varies by representation language and
-the technology used.  For example, if digital signatures are used for the
-proof mechanism, the <code>proof</code> property is expected to have a value
-that is a set of name-value pairs including at least a signature, a reference
+The method used for a mathematical proof varies by representation language and 
+the technology used.  For example, if digital signatures are used for the 
+proof mechanism, the <code>proof</code> property is expected to have a value 
+that is a set of name-value pairs including at least a signature, a reference 
 to the signing entity, and a representation of the signing date.</dd>
         </dl>
         <pre class="example nohighlight"
@@ -1130,8 +1130,8 @@ the following <a>property</a>:
         <dl>
           <dt><var>expirationDate</var></dt>
           <dd>
-The value of the <code>expirationDate</code> property MUST be a string value
-of an [[!ISO8601]] combined date and time string representing the date and
+The value of the <code>expirationDate</code> property MUST be a string value 
+of an [[!ISO8601]] combined date and time string representing the date and 
 time the <a>credential</a> ceases to be valid.
           </dd>
         </dl>
@@ -1167,8 +1167,7 @@ time the <a>credential</a> ceases to be valid.
 Information about the current status of a <a>verifiable credential</a>, such
 as whether it is suspended or revoked, MAY be provided using the
 <code>credentialStatus</code> <a>property</a>.
-	</p>
-
+	      </p>
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>
@@ -1220,7 +1219,7 @@ privacy-enhancing.
         </pre>
 
         <p>
-Defining the data model, formats, and protocols for status schemes are out of
+Defining the data model, formats, and protocols for status schemes are out of 
 scope for this specification. A status scheme registry [[VC-STATUS-REGISTRY]]
 exists for implementers who want to implement credential status checking.
         </p>
@@ -1268,17 +1267,17 @@ The contents of the <code>verifiableCredential</code> property shown above are
 <a>verifiable credentials</a> as described by this specification. The contents
 of the <code>proof</code> property are proofs as described by the
 Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
-is optional and MAY be used to provide a unique identifier for the
-presentation. The value associated with the <code>id</code> property MUST be a
+is optional and MAY be used to provide a unique identifier for the 
+presentation. The value associated with the <code>id</code> property MUST be a 
 URI.
         </p>
 
         <p>
-Some zero-knowledge cryptography schemes might enable <a>holders</a> to
-indirectly prove they hold a <a>credential</a> without revealing the
-<a>credential</a> itself. In these schemes, the original attribute, such as
-date of birth, might be translated into another value, such as "over the age
-of 15", which is cryptographically asserted such that a <a>verifier</a> can
+Some zero-knowledge cryptography schemes might enable <a>holders</a> to 
+indirectly prove they hold a <a>credential</a> without revealing the 
+<a>credential</a> itself. In these schemes, the original attribute, such as  
+date of birth, might be translated into another value, such as "over the age 
+of 15", which is cryptographically asserted such that a <a>verifier</a> can 
 trust the value if they trust the <a>issuer</a>.
         </p>
 
@@ -1290,51 +1289,55 @@ that contains derived data instead of directly embedded verifiable credentials.
     </section>
 
     <section>
-      <h1>Advanced Concepts</h1>
+      <h2>Advanced Concepts</h2>
+	  
+	  <p>
+Building on the concepts introduced in Section <a href="#basic-concepts">, 
+this section explores more complex topics about <a>verifiable credentials</a>.
+      </p>
 
       <section>
-        <h2>Extensibility</h2>
+        <h3>Extensibility</h3>
 
         <p>
 One of the goals of the Verifiable Credentials Data Model is to enable
-permissionless innovation. This requires that the data model is extensible
-in a number of different ways:
+permissionless innovation. To achieve this, the data model need to be 
+extensible in a number of different ways. The data model is required to:
         </p>
 
         <ul>
           <li>
-The requirement to model complex multi-entity relationships is provided
-through the use of a graph-based data model.
+Model complex multi-entity relationships through the use of a graph-based data 
+model.
           </li>
           <li>
-The requirement to be able to extend the machine-readable vocabularies
-used to describe information in the data model without the use of a
-centralized system for doing so is accomplished via the use
-of [[LINKED-DATA]].
+Extend the machine-readable vocabularies used to describe information in the 
+data model without the use of a centralized system for doing so through the 
+use of [[LINKED-DATA]].
           </li>
           <li>
-The requirement to support multiple types of cryptographic proof formats is
-accomplished via the use of Linked Data Proofs [[LD-PROOFS]],
-Linked Data Signatures [[LD-SIGNATURES]], and a variety of signature suites.
+Support multiple types of cryptographic proof formats through the use of 
+Linked Data Proofs [[LD-PROOFS]], Linked Data Signatures [[LD-SIGNATURES]], 
+and a variety of signature suites.
           </li>
           <li>
-The requirement to provide all of the extensibility mechanisms outlined above
-in a data format that is popular among software developers and web page authors
-is enabled via the use of [[!JSON-LD]].
+Provide all of the extensibility mechanisms outlined above in a data format 
+that is popular with software developers and web page authors, and is enabled 
+through the use of [[!JSON-LD]].
           </li>
         </ul>
 
         <p>
-This approach to data modelling is often called an "open world assumption,"
-meaning that any entity can say anything about any other entity. This approach
-often feels in conflict with building simple and predictable software systems.
-Balancing extensibility with program correctness is always more challenging
-with an open world assumption than it is with closed software systems.
+This approach to data modelling is often called an "open world assumption",
+meaning that any entity can say anything about any other entity. While this 
+approach seems to conflict with building simple and predictable software 
+systems, balancing extensibility with program correctness is always more 
+challenging with an open world assumption than with closed software systems.
         </p>
 
         <p>
-The rest of this section describes how both extensibility and program
-correctness are achieved through a series of examples.
+The rest of this section describes, through a series of examples, how both 
+extensibility and program correctness are achieved.
         </p>
 
         <p>
@@ -1360,17 +1363,19 @@ Let us assume that we start with the following <a>verifiable credential</a>:
         </pre>
 
         <p>
-The credential above simply states that the entity associated with
-<code>did:example:abcdef1234567</code> has a <code>name</code> with a
-value of <code>Jane Doe</code>. Let's assume that a developer wanted to
-extend the <a>verifiable credential</a> to store two additional pieces of
-information: an internal corporate reference number, and Jane's favorite
-food.
+The <a>verifiable credential</a> above states that the <a>entity</a> 
+associated with <code>did:example:abcdef1234567</code> has a <code>name</code> 
+with a value of <code>Jane Doe</code>. 
+        </p>
+		
+		<p>
+Now let us assume that a developer wants to extend the 
+<a>verifiable credential</a> to store two additional pieces of information: an 
+internal corporate reference number, and Jane's favorite food.
         </p>
 
         <p>
-The first thing that a developer would do is create a JSON-LD Context
-containing two new terms:
+The first thing to do is to create a JSON-LD Context containing two new terms:
         </p>
 
         <pre class="example nohighlight" title="An example JSON-LD Context">
@@ -1383,22 +1388,21 @@ containing two new terms:
         </pre>
 
         <p>
-Now that the JSON-LD Context has been created, the developer must publish it
-somewhere that is accessible to <a>verifiers</a> that will be processing the
-<a>verifiable credential</a>. For this example, let us assume that the
-JSON-LD Context above is published at the following URL:
-<code>https://example.com/contexts/mycontext.jsonld</code>. At this point,
-extending the first example in this section is a simple matter of including the
-context above and adding the new properties to the <a>verifiable credential</a>.
+After the JSON-LD Context is created, the developer must publish it somewhere 
+so it is accessible to <a>verifiers</a> who will be processing the
+<a>verifiable credential</a>. Assuming the above JSON-LD Context is published 
+at <code>https://example.com/contexts/mycontext.jsonld</code>, we can extend
+this example by including the context and adding the new properties to the 
+<a>verifiable credential</a>:
         </p>
 
         <pre class="example nohighlight"
           title="A verifiable credential with a custom extension">
 {
-  "@context": <span class="highlight">[
-    </span>"https://w3.org/2018/credentials/v1",
-    <span class="highlight">"https://example.com/contexts/mycontext.jsonld"
-  ]</span>,
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    <span class="highlight">"https://example.com/contexts/mycontext.jsonld"</span>
+  ],
   "id": "http://example.com/credentials/4643",
   "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
@@ -1414,24 +1418,27 @@ context above and adding the new properties to the <a>verifiable credential</a>.
         </pre>
 
         <p>
-The examples so far have shown that it is easy to extend the Verifiable
+This example demonstrates that it is possible to extend the Verifiable
 Credentials Data Model in a permissionless and decentralized way. The
-mechanism shown also ensures that verifiable credentials that were created
-in this way provide a mechanism to prevent namespace conflicts and
-semantic ambiguity.
+mechanism shown also ensures that <a>verifiable credentials</a> created in 
+this way provide a mechanism to prevent namespace conflicts and semantic 
+ambiguity.
         </p>
 
         <p>
-An extensibility model that is this dynamic does increase implementation burden.
-Software written for such a system will have to determine if accepting
-<a>verifiable credentials</a> with extensions is acceptable based on the
-risk profile of the application. Some applications may choose to only accept
-certain extensions while highly secure environments may require that no
-extensions are allowed. These decisions are up to the developers of these
+A dynamic extensibility model such as this does increase the implementation 
+burden. Software written for such a system has to determine whether
+<a>verifiable credentials</a> with extensions are acceptable based on the
+risk profile of the application. Some applications might accept only
+certain extensions while highly secure environments might not accept any
+extensions. These decisions are up to the developers of these
 applications and are specifically not the domain of this specification.
+        </p>
+
+        <p>
 Applications that do not understand the semantic meaning of all properties
-while processing a verifiable credential or a verifiable presentation MUST
-produce an error.
+while processing a <a>verifiable credential</a> or a 
+<a>verifiable presentation</a> MUST produce an error.
         </p>
 
         <p>
@@ -1443,26 +1450,26 @@ with implementations, or enabling aggressive caching of contexts.
         </p>
 
         <section>
-          <h3>Semantic Interoperability</h3>
+          <h4>Semantic Interoperability</h4>
 
           <p>
-This specification endeavors to enable both the JSON and JSON-LD syntaxes
-to be semantically compatible with one another without the JSON implementations
-needing to process the documents as JSON-LD. In order to achieve this, the
-specification creates the following additional restrictions on both syntaxes:
+This specification endeavors to enable both the JSON and JSON-LD syntaxes to 
+be semantically compatible with one another without the JSON implementations
+needing to process the documents as JSON-LD. To achieve this, the 
+specification imposes the following additional restrictions on both syntaxes:
           </p>
 
           <ul>
             <li>
-JSON-based processors MUST process the <code>@context</code> property, ensuring
-the expected values exist in the expected order for the <code>type</code> of
-<a>credential</a> that they are processing. The expected order MUST be defined
-by at least a human-readable extension specification and, preferably, a
-machine-readable specification.
+JSON-based processors MUST process the <code>@context</code> property, 
+ensuring the expected values exist in the expected order for the 
+<a>credential</a> <code>type</code> being processed. The expected order MUST 
+be defined by at least a human-readable extension specification and 
+preferably, by a machine-readable specification.
             </li>
             <li>
-In addition to the rule above, JSON-LD-based processors MUST produce an error
-when a JSON-LD Context redefines any term in the
+JSON-LD-based processors MUST produce an error when a JSON-LD Context 
+redefines any term in the
 <a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>.
             </li>
           </ul>
@@ -1470,7 +1477,7 @@ when a JSON-LD Context redefines any term in the
           <p>
 To avoid the possibility of accidentally overriding terms, developers are urged
 to scope their extensions. For example, the following extension scopes the
-new <code>favoriteFood</code> term so that it may only be used within the
+new <code>favoriteFood</code> term so that it can only be used within the
 <code>credentialSubject</code> property:
           </p>
 
@@ -1606,35 +1613,38 @@ proof provided with the <a>verifiable credential</a> is valid.
 
         <p>
 It is often useful for systems to enable the manual or automatic refresh of a
-<a>verifiable credential</a> that has <a href="#expiration">expired</a>.
-This specification enables an <a>issuer</a> to include a link to a refresh
-service.
+<a href="#expiration">expired</a> <a>verifiable credential</a>. This 
+specification enables an <a>issuer</a> to include a link to a refresh service.
         </p>
         <p>
-The issuer may include the refresh service as an element inside the <a>verifiable
-credential</a> if it is intended for either the verifier or the holder or both, or
-inside the <a>verifiable presentation</a> if it is intended for the holder only.
+The <a>issuer</a> can include the refresh service as an element inside the 
+<a>verifiable credential</a> if it is intended for either the <a>verifier</a> 
+or the <a>holder</a> (or both), or inside the <a>verifiable presentation</a> 
+if it is intended for the <a>holder</a> only.
         </p>
         <p>
-Including the refresh reference in the presentation enables the holder to refresh the
-credential details before creating a presentation to share with a verifier, while including
-the refresh reference in the <a>verifiable credential</a> enables the both the holder and
-the verifier to perform future updates of the credential.
+Including the refresh reference inside the <a>verifiable presentation</a> 
+enables the <a>holder</a> to refresh the <a>credential</a> details before 
+creating a <a>presentation</a> to share with a <a>verifier</a>, while 
+including the refresh reference inside the <a>verifiable credential</a> 
+enables both the <a>holder</a> and the <a>verifier</a> to perform future 
+updates of the <a>credential</a>.
         </p>
        <p>
-The expression of a refresh service may be performed via the following
-<a>property</a>:
+A refresh service can be expressed using the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>refreshService</var></dt>
-          <dd>The value of this property MUST be one or more refresh services
-            that provides enough information to the <a>holder</a>'s software
-            such that it may refresh the credential.
-            Each <code>refreshService</code> comprises at least its
-            <code>type</code> (e.g. <code>ManualRefreshService2018</code>),
-            and the serviceEndpoint URL. The precise contents of each
-            refresh service is determined by the specific type definition.
+          <dd>
+The value of the <code>refreshService</code> property MUST be one or more 
+refresh services that provides enough information to the <a>holder</a>'s 
+software such that the <a>holder</a> can refresh the credential. Each 
+<code>refreshService</code> property comprises at least its <code>type</code> 
+(for example, <code>ManualRefreshService2018</code>) and the 
+<code>serviceEndpoint</code> URL. The precise content of each refresh service 
+is determined by the specific <code>refreshService</code> <a>type</a> 
+definition.
           </dd>
         </dl>
 
@@ -1664,10 +1674,9 @@ The expression of a refresh service may be performed via the following
         </pre>
 
         <p>
-In the example above, the <a>issuer</a> is specifying a
-manual <code>refreshService</code> that can be used by directing the
-<a>holder</a> to the following URL:
-<code>https://example.edu/refresh/283947</code>.
+In the example above, the <a>issuer</a> specifies a manual 
+<code>refreshService</code> that can be used by directing the <a>holder</a> to 
+<code>https://dmv.example.gov/refresh/283947</code>.
         </p>
 
       </section>
@@ -1764,36 +1773,41 @@ any restrictions on the use of the verifiable credentials by the holder and/or v
       <section>
         <h2>Terms of Use</h2>
 
-        <p>Terms of use can be utilized by an <a>issuer</a>, a <a>subject</a>, or a
-        <a>holder</a> to constrain the use of information expressed by the Verifiable
-        Credentials Data Model. The <a>issuer</a> places their terms of use inside
-        the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
-        The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
+        <p>
+Terms of use can be used by an <a>issuer</a>, a <a>subject</a>, or a 
+<a>holder</a> to constrain the use of information expressed by the Verifiable
+Credentials Data Model. The <a>issuer</a> places their terms of use inside the 
+<a>credential</a> before it is converted into a <a>verifiable credential</a>.
+The <a>holder</a> places <a>holder</a> terms of use inside a 
+<a>presentation</a>.
         </p>
 
-       <p class="note"> it is for further study how a subject who is not a
-       holder places terms of
-       use on his or her verifiable credentials. One way could be for the subject to
-       request the issuer to place them inside the issued verifiable credentials. Another
-       way could be by the subject delegating a verifiable credential to a holder and
-       placing terms of use restrictions on the delegated verifiable credential.
+       <p class="note">
+Further study is required to determine how a <a>subject</a> who is not a
+<a>holder</a> places terms of use on their <a>verifiable credentials</a>. One 
+way could be for the <a>subject</a> to request the <a>issuer</a> to place the
+terms of use inside the issued <a>verifiable credentials</a>. Another way 
+could be for the <a>subject</a> to delegate a <a>verifiable credential</a> to 
+a <a>holder</a> and placing terms of use restrictions on the delegated 
+<a>verifiable credential</a>.
        </p>
-       <p> The expression of
-        terms of use may be performed via the following <a>property</a>:
+       <p>
+Terms of use can be expressed using the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
-          <dd>The value of this property MUST be one or more terms of use that tell the
-verifier what actions it either MUST perform (i.e. an Obligation) or MUST NOT perform
-(i.e. a Prohibition) or MAY perform (i.e. a Permission) if it is to accept the
-verifiable credential or verifiable presentation.
-          If the verifier is not willing to accept these terms of use then it MUST reject
-          the verifiable credential or verifiable presentation.
-          Each <code>termsOfUse</code> comprises its type,
-            for example, <code>IssuerPolicy</code>, and
-            optionally its instance id. The precise contents of each term of use is
-            determined by the specific <code>TermsOfUse</code> type definition.
+          <dd>
+The value of the <code>termsOfUse</code> property MUST be one or more terms of  
+use telling a <a>verifier</a> what actions it MUST perform (Obligations), MUST 
+NOT perform (Prohibitions), or MAY perform (Permissions) if it is to accept 
+the <a>verifiable credential</a> or <a>verifiable presentation</a>. If a 
+<a>verifier</a> is not willing to accept these terms of use, it MUST reject
+the <a>verifiable credential</a> or <a>verifiable presentation</a>. Each 
+<code>termsOfUse</code> property comprises its <a>type</a> (for example, 
+<code>IssuerPolicy</code>) and optionally its instance <a>id</a>. The precise 
+content of each term of use is determined by the specific 
+<code>TermsOfUse</code> <a>type</a> definition.
           </dd>
         </dl>
 
@@ -1837,7 +1851,7 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
         </pre>
 
         <p>
-In the example above, the <a>issuer</a> is prohibiting a <a>verifier</a> from
+In the example above, the <a>issuer</a> is prohibiting <a>verifiers</a> from
 storing the data in an archive.
         </p>
 
@@ -1879,39 +1893,39 @@ storing the data in an archive.
         </pre>
 
         <p>
-In the example above, the <a>holder</a>, who is also the <a>subject</a>,
-is prohibiting the <a>verifier</a> (<code>https://wineonline.example.org</code>)
-from using the information provided to correlate the
-<a>holder</a>/<a>subject</a> by using a 3rd party service.
+In the example above, the <a>holder</a>, who is also the <a>subject</a>, is 
+prohibiting a specific <a>verifier</a> 
+(<code>https://wineonline.example.org</code>) from using the information 
+provided to correlate the <a>holder</a> with the <a>subject</a> using a 
+third-party service.
         </p>
 
       </section>
 
       <section>
-        <h2>Evidence</h2>
+        <h3>Evidence</h3>
 
         <p>
-The <em>evidence</em> property is used by an <a>issuer</a> to represent the
-set of evidence that was used to determine whether or not to issue
-a <a>credential</a>. For example, an issuer might check physical documentation
-provided by the <a>subject</a> or might perform a set of background checks
-before issuing the credential. In certain scenarios, this information is useful
-to the <a>verifier</a> when determining the risk associated with accepting
-the credential.
+Evidence information is used by an <a>issuer</a> to determine whether to issue 
+a <a>credential</a>. For example, an <a>issuer</a> might check physical 
+documentation provided by a <a>subject</a> or perform a set of background 
+checks before issuing a <a>credential</a>. In some situations, this 
+information is useful to the <a>verifier</a> when determining the risk 
+associated with accepting the <a>credential</a>.
         </p>
 
         <p>
-Evidence information for the credential in the Verifiable Credentials Data
-Model is provided by adding the following <a>property</a>:
+Evidence information can be expressed using the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>evidence</var></dt>
-          <dd>The value of this property MUST be one or more evidence schemes
-            that provides enough information to a <a>verifier</a>
-            to determine whether or not the evidence gathered meets their
-            requirements. The contents of each evidence scheme is determined
-            by the particular scheme itself.
+          <dd>
+The value of the <code>evidence</code> property MUST be one or more evidence 
+schemes providing enough information to a <a>verifier</a> to determine whether 
+the evidence gathered meets their requirements. The precise content of each 
+evidence scheme is determined by the specific <code>evidence</code> 
+<a>type</a> definition.
           </dd>
         </dl>
 
@@ -1960,27 +1974,26 @@ credentials are supported by the specification.
         </pre>
 
         <p class="note">
-For the avoidance of doubt, the <em>evidence</em> <a>property</a> provides
-information that is different from and complementary to the
-<a href="#proofs-signatures">proof</a> property. The <em>evidence</em>
-property is used to express supporting information, such as documentary
-evidence, related to the integrity of the credential. In contrast, the
-<em>proof</em> property is used to express machine-verifiable mathematical
-proofs related to the authenticity of the issuer and integrity of the
-credential.
+The <code>evidence</code> property provides information that is different from 
+and complementary to the <a href="#proofs-signatures"><code>proof</code></a> 
+property. The <code>evidence</em> property is used to express supporting 
+information, such as documentary evidence, related to the integrity of the 
+<a>credential</a>. In contrast, the <code>proof</code> property is used to 
+express machine-verifiable mathematical proofs related to the authenticity of 
+the <a>issuer</a> and integrity of the <a>credential</a>.
         </p>
 
     </section>
 
     <section>
 
-      <h1>Subject-Holder Relationships</h1>
+      <h3>Subject-Holder Relationships</h3>
 
       <p>
-This section describes the possible relationships between the subject
-and the holder and how the data model expresses the various relationships. The
-following diagram depicts the various types of relationships that are covered in
-the rest of this section:
+This section describes the possible relationships between a <a>subject</a>
+and a <a>holder</a> and how the Verifiable Claims Data Model expresses these 
+relationships. The following diagram illustrates the different types of 
+relationships covered in the rest of this section.
      </p>
 
       <figure>
@@ -1992,34 +2005,34 @@ Subject-Holder Relationships in Verifiable Credentials.
       </figure>
 
      <p>
-The following sections describe how each of these instances are handled in
+The following sections describe how each of these relationships are handled in 
 the data model.
      </p>
 
     <section>
-      <h2>Subject is the Holder</h2>
+      <h4>Subject is the Holder</h4>
 
       <p>
-The most common case is when the <a>subject</a> is the <a>holder</a>. For
-example, the <a>verifier</a> can easily deduce that the subject is the
-holder if the <a>verifiable presentation</a> is digitally signed by the
-holder and all contained <a>verifiable credentials</a> are about a subject
-that can be identified to be the same as the holder.
+The most common case is when a <a>subject</a> is the <a>holder</a>. For
+example, a <a>verifier</a> can easily deduce that a <a>subject</a> is the 
+<a>holder</a> if the <a>verifiable presentation</a> is digitally signed by the
+<a>holder</a> and all contained <a>verifiable credentials</a> are about a 
+<a>subject</a> that can be identified to be the same as the <a>holder</a>.
       </p>
 
     </section>
 
     <section>
-      <h2>Credential Uniquely Identifies Subject</h2>
+      <h4>Credential Uniquely Identifies a Subject</h4>
 
-      <p>.
-In this case, the <code>credentialSubject</code> may contain multiple
-properties that each provide an aspect of the identity of the subject, and
-which together unambiguously identify the subject. Some use cases may not
-require the holder to be identified at all, such as checking to see if a
-doctor (the subject) is board certified. Other use cases may require the
-verifier to use out-of-band knowledge to determine the relationship between
-the subject and the holder.
+      <p>
+In this case, the <code>credentialSubject</code> property might contain 
+multiple properties that each provide an aspect of the identity of the 
+<a>subject</a>, and which together, unambiguously identifies the subject. Some 
+use cases might not require the <a>holder</a> to be identified at all, such as 
+checking to see if a doctor (the <a>subject</a>) is board certified. Other use 
+cases might require the <a>verifier</a> to use out-of-band knowledge to 
+determine the relationship between the <a>subject</a> and the <a>holder</a>.
       </p>
 
       <pre class="example nohighlight" title="An example of a credential
@@ -2046,57 +2059,60 @@ that uniquely identifies a subject">
       </pre>
 
       <p>
-The example above uniquely identifies the subject through the use of the
-name, address, and birth date of the individual.
+The example above uniquely identifies the <a>subject</a> using the name, 
+address, and birth date of the individual.
       </p>
 
    </section>
 
     <section>
-      <h2>Subject Passes the Verifiable Credential to a Holder</h2>
+      <h4>Subject Passes the Verifiable Credential to a Holder</h4>
 
       <p>
-Normally verifiable credentials will be presented to verifiers by the
-subject. However in some cases, the subject may need to pass the whole or
-part of a verifiable credential to another holder. The data model allows for
-both cases as follows.
+<a>Verifiable credentials</a> are usually presented to <a>verifiers</a> by the
+<a>subject</a>. In some cases, the <a>subject</a> might need to pass the whole 
+or part of a <a>verifiable credential</a> to another <a>holder</a>. The data 
+model allows for both cases, as outlined below.
       </p>
 
       <p>
-If only the subject is allowed to present the verifiable credential to a
-verifier, the issuer MUST insert the "subject only" Terms of Use into the
-verifiable credential, as defined below. <span class="issue">
+If only the <a>subject</a> is allowed to present the 
+<a>verifiable credential</a> to a <a>verifier</a>, the <a>issuer</a> MUST 
+insert the <code>SubjectOnly</code> <code>termsOfUse</code> property into the 
+<a>verifiable credential</a>, as defined below. <span class="issue">
 This feature is at risk and is likely to be removed due to lack of consensus.
 </span>
       </p>
 
       <p>
-If the subject is not forbidden by the issuer to pass the whole or part of a
-verifiable credential to a holder, for example, a patient may pass a
-prescription verifiable credential to a relative for the relative to present
-it to a pharmacist for dispensing, then the subject MUST issue a verifiable
-credential to the holder containing the credentialSubject properties that are being
-passed on, as described below. <span class="issue">
-This feature is at risk and is likely to be removed and replaced with
-another solution, possibly created by another Working Group, that focuses on
-delegation of authority instead of delegation of attributes.
+If the <a>issuer</a> permits the <a>subject</a> to pass the whole or part of a 
+<a>verifiable credential</a> to a <a>holder</a> (for example, a patient might 
+pass a prescription <a>verifiable credential</a> to a relative for 
+presentation to a pharmacist for dispensing), the <a>subject</a> MUST issue a 
+<a>verifiable credential</a> to the <a>holder</a> containing the 
+<code>credentialSubject</code> properties being passed on, as described below. 
+<span class="issue">This feature is at risk and is likely to be removed and 
+replaced with another solution, possibly created by another Working Group 
+focusing on delegation of authority instead of delegation of attributes.
 </span>
       </p>
 
    <section>
 
-   <h3> 'Subject Only' Terms of Use </h3>
+   <h5> SubjectOnly Terms of Use </h5>
 
       <p class="issue" data-number=204>
 The group is currently debating the best security model for delegation. Readers
 should treat this entire section as at-risk and currently under debate.
       </p>
 
-  <p>
-The Subject Only Terms of Use states that a verifiable credential MUST only be
-presented to a verifier by the subject. If a verifier is presented with a
-verifiable credential containing the Subject Only Terms of Use, by anyone other
-    than the subject, it MUST refuse to accept it.
+      <p>
+The <code>SubjectOnly</code> <code>termsOfUse</code> property states that a 
+<a>verifiable credential</a> MUST be presented to a <a>verifier</a> by the 
+<a>subject</a> only. If a <a>verifier</a> is presented with a
+<a>verifiable credential</a> containing the <code>SubjectOnly</code> 
+<code>termsOfUse</code> property by anyone other than the <a>subject</a>, the
+<a>verifier</a> MUST refuse to accept it.
      </p>
 
         <pre class="example nohighlight" title="Subject Only termsOfUse property by an Issuer">
@@ -2123,23 +2139,34 @@ verifiable credential containing the Subject Only Terms of Use, by anyone other
        </section>
 
   <section>
-   <h3> Passing on a Verifiable Credential </h3>
+   <h5> Passing on a Verifiable Credential </h5>
 
       <p class="issue" data-number=204>
 The group is currently debating the best security model for delegation. Readers
 should treat this entire section as at-risk and currently under debate.
       <p>
 
-   <p>
+      <p>
+When a <a>subject</a> passes a <a>verifiable credential</a> to a 
+<a>holder</a>, the <a>subject</a> SHOULD issue a new 
+<a>verifiable credential</a> to the <a>holder</a> in which the:
 
-When the subject passes a verifiable credential to a
-holder, the subject SHOULD issue a new verifiable credential to the holder in which:
-the issuer is the subject,
-the subject is the holder to whom the verifiable credential is being passed,
-and the credentialSubject contains the properties that are being passed on. In addition, the
-holder creates a verifiable presentation that contains these two
-verifiable credentials.
-</p>
+        <ul>
+			<li>
+<a>Issuer</a> is the <a>subject</a>.
+			</li>
+			<li>
+<a>Subject</a> is the <a>holder</a> to whom the <a>verifiable credential</a> 
+is being passed.
+			</li>
+			<li>
+<code>credentialSubject</code> property contains the data being passed on.
+	 		</li>
+		</ul>
+
+As well, the <a>holder</a> creates a <a>verifiable presentation</a> containing 
+these two <a>verifiable credentials</a>.
+      </p>
 
         <pre class="example nohighlight" title="An example of a holder presenting verifiable
 credential properties that have been passed to it by the subject">
@@ -2194,38 +2221,39 @@ credential properties that have been passed to it by the subject">
   </section>
 
    <section>
-      <h2>Holder Acts on Behalf of the Subject</h2>
+      <h4>Holder Acts on Behalf of the Subject</h4>
 
       <p>
-The data model supports the <a>holder</a> acting on behalf of the
-<a>subject</a> in at least the following ways:
+The Verifiable Credentials Data Model supports the <a>holder</a> acting on 
+behalf of the <a>subject</a> in at least the following ways:
       </p>
 
       <ul>
         <li>
-The issuer may include the relationship between the holder and the subject
-in the <code>credentialSubject</code> data.
+The <a>issuer</a> can include the relationship between the <a>holder</a> and 
+the <a>subject</a> in the <code>credentialSubject</code> property.
         </li>
         <li>
-The issuer may express the relationship between the holder and the subject
-by issuing a new <a>verifiable credential</a> which the holder utilizes.
+The <a>issuer</a> can express the relationship between the <a>holder</a> and 
+the <a>subject</a> by issuing a new <a>verifiable credential</a>, which the 
+<a>holder</a> utilizes.
         </li>
         <li>
-The subject may express their relationship with the holder by issuing a
-new <a>verifiable credential</a> which the holder utilizes.
+The <a>subject</a> can express their relationship with the <a>holder</a> by 
+issuing a new <a>verifiable credential</a>, which the holder utilizes.
         </li>
       </ul>
 
       <p>
-The mechanisms above describe the relationship between the holder and the
-subject and helps the verifier to decide whether the relationship is
-sufficiently expressed for the given use case.
+The mechanisms listed above describe the relationship between the 
+<a>holder</a> and the <a>subject</a> and helps the <a>verifier</a> decide 
+whether the relationship is sufficiently expressed for the given use case.
       </p>
 
       <p class="note">
-The additional mechanisms that the issuer or the verifier uses to verify the
-relationship between the subject and the holder are outside of the scope of
-this specification.
+The additional mechanisms the <a>issuer</a> or the <a>verifier</a> uses to 
+verify the relationship between the <a>subject</a> and the <a>holder</a> are 
+outside of the scope of this specification.
       </p>
 
       <p class="issue">
@@ -2252,9 +2280,9 @@ property in a child's credential">{
       </pre>
 
       <p>
-In the example above, the issuer has expressed the relationship between the
-child and the parent such that a verifier would most likely accept the
-credential if it is provided by the child or the parent.
+In the example above, the <a>issuer</a> expresses the relationship between the 
+child and the parent such that a <a>verifier</a> would most likely accept the
+<a>credential</a> if it is provided by the child or the parent.
       </p>
 
       <pre class="example nohighlight" title="An example of a relationship
@@ -2275,10 +2303,11 @@ credential issued to a parent">{
 </pre>
 
      <p>
-In the example above, the issuer has expressed the relationship between the
-child and the parent in a separate credential such that a verifier would most
-likely accept any of the child's credentials if it is provided by the child or
-if the credential above is provided with any of the child's credentials.
+In the example above, the <a>issuer</a> expresses the relationship between the 
+child and the parent in a separate <a>credential</a> such that a 
+<a>verifier</a> would most likely accept any of the child's <a>credentials</a> 
+if they are provided by the child or if the <a>credential</a> above is 
+provided with any of the child's <a>credentials</a>.
      </p>
 
      <pre class="example nohighlight" title="An example of a relationship
@@ -2300,26 +2329,27 @@ credential issued by a child">{
 
       <p>
 In the example above, the child has expressed the relationship between the
-child and the parent in a separate credential such that a verifier would most
-likely accept any of the child's credentials if the credential above is
-provided.
+child and the parent in a separate <a>credential</a> such that a 
+<a>verifier</a> would most likely accept any of the child's <a>credentials</a> 
+if the <a>credential</a> above is provided.
       </p>
 
       <p>
 Similarly, these same strategies can be used for many other types of use cases
-such as power of attorney, pet ownership, and patient prescription pick up.
+such as power of attorney, pet ownership, and patient prescription pickup.
       </p>
 
     </section>
 
   <section>
-      <h2>Issuer Authorises Holder</h2>
+      <h4>Issuer Authorises Holder</h4>
 
       <p>
-When the issuer wishes to authorise a holder to possess a credential that
-describes a subject who is not the holder, and the holder has no known relationship
- with the subject, then the issuer inserts the
-relationship of the holder to itself into the subject's credential.
+When an <a>issuer</a> wants to authorize a <a>holder</a> to possess a 
+<a>credential</a> that describes a <a>subject</a> who is not the 
+<a>holder</a>, and the <a>holder</a> has no known relationship with the 
+<a>subject</a>, then the <a>issuer</a> inserts the relationship of the 
+<a>holder</a> to itself into the <a>credential</a> for the <a>subject</a>.
       </p>
 
 
@@ -2350,49 +2380,61 @@ with the subject of the credential, but who has a relationship with the issuer">
   }
 }        </pre>
 
-
-
-
      </section>
 
   <section>
-      <h2>Holder Acts on Behalf of Verifier or has no Relationship with the
-Subject, Issuer or Verifier</h1>
+      <h4>Holder Acts on Behalf of the Verifier, or has no Relationship with 
+the Subject, Issuer, or Verifier</h4>
 
       <p>
-
-The data model currently does not support either of these scenarios. It is
-for further study how they might be supported.
+The Verifiable Credentials Data Model currently does not support either of 
+these scenarios. It is for further study how they might be supported.
       </p>
       </section>
 
    </section>
 
       <section>
-        <h2>Disputes</h2>
+        <h3>Disputes</h3>
 
         <p>
-The time may come when an <a>entity</a> wants to dispute a <a>credential</a>
-issued by the issuer. There are at least two different cases to consider:
-a subject disputes a claim made by the issuer, e.g. the address property is out
-of date, or an entity disputes a (false) claim made by the issuer about a
-different subject, e.g. an imposter is claiming the entity's social security
-number. Only the subject of a verifiable credential is entitled to issue a
-"DisputeCredential". A "DisputeCredential" issued by anyone other than the
-subject SHOULD be disregarded by the verifier, unless the verifier has some out
-of band means of ascertaining the truth of the dispute. This is to prevent
-denial of service attacks whereby an attacker falsely disputes a true claim.
+There are at least two different cases to consider for an <a>entity</a> 
+wanting to dispute a <a>credential</a> issued by an <a>issuer</a>:
+        </p>
 
-The mechanism for issuing a "DisputeCredential"
-is the same as issuing a regular credential except that the
-<code>credentialSubject</code> identifier in the "DisputeCredential" is the
-identifier of the disputed credential.  For example, if a credential with an
-identifier of <code>https://example.org/credentials/245</code>
-is disputed, an entity may issue one of the following credentials. In the
-former case, the subject might present this to the verifier along with the
-disputed credential. In the latter case, the entity might publish the
-"DisputeCredential" in a public venue to make it known that the credential
-is disputed.
+			<ul>
+				<li>
+A <a>subject</a> disputes a claim made by the <a>issuer</a>. For example, the 
+address property is out of date.
+	 			</li>
+				<li>
+An entity disputes a potentially false claim made by the <a>issuer</a> about a 
+different <a>subject</a>. For example, an imposter claims the social security 
+number for an <a>entity<a>. 
+				</li>
+			<ul>
+
+        <p>
+Only the <a>subject</a> of a <a>verifiable credential</a> is entitled to issue 
+a <code>DisputeCredential</code>. A <code>DisputeCredential</code> issued by 
+anyone other than the <a>subject</a> SHOULD be disregarded by the 
+<a>verifier</a>, unless the <a>verifier</a> has some other way of determining 
+the truth of the dispute. This is to prevent denial of service attacks whereby 
+an attacker falsely disputes a true claim.
+        </p>
+
+        <p>
+The mechanism for issuing a <code>DisputeCredential</code>is the same as 
+issuing a regular <a>credential</a> except that the 
+<code>credentialSubject</code> identifier in the 
+<code>DisputeCredential</code> property is the identifier of the disputed 
+<a>credential</a>.  For example, if a <a>credential</a> with an identifier of 
+<code>https://example.org/credentials/245</code> is disputed, an <a>entity</a> 
+can issue one of the following <a>credentials</a>. In the first example, the 
+<a>subject</a> might present this to the <a>verifier</a> along with the 
+disputed <a>credential</a>. In the second example, the <a>entity</a> might 
+publish the <code>DisputeCredential</code> in a public venue to make it known 
+that the <a>credential</a> is disputed.
         </p>
 
         <pre class="example nohighlight" title="Subject disputes a credential">
@@ -2438,17 +2480,10 @@ is disputed.
 }
         </pre>
 
-        <p>
-A <code>DisputeCredential</code> issued by anyone other than the
-<a>subject</a>, or its authorised agent, SHOULD be disregarded by a
-<a>verifier</a>, unless the verifier has some out of band means of
-ascertaining the truth of the dispute.
-        </p>
-
         <p class="note">
-If a credential does not have an identifier, a content-addressed identifier
-can be used to identify the disputed credential. Similarly, content-addressed
-identifiers can be used to uniquely identify individual claims.
+If a <a>credential</a> does not have an identifier, a content-addressed 
+identifier can be used to identify the disputed <a>credential</a>. Similarly, 
+content-addressed identifiers can be used to uniquely identify individual claims.
         </p>
 
         <p class="issue">
@@ -2460,21 +2495,21 @@ as the specific vocabulary terms for disputed claims.
       </section>
 
       <section>
-        <h2>Authorization</h2>
+        <h3>Authorization</h3>
 
         <p>
 <a>Verifiable credentials</a> are intended as a means of reliably identifying
-subjects. Whilst it is recognized that Role Based Access Controls (RBAC) and
+<a>subjects</a>. While it is recognized that Role Based Access Controls (RBAC) and
 Attribute Based Access Controls (ABAC) rely on this identification as a means
-of authorizing subjects to access resources, this specification
+of authorizing <a>subjects</a> to access resources, this specification
 MUST NOT be used for authorization purposes without an accompanying
 authorization framework.
         </p>
 
         <p>
 The Working Group did consider authorization use cases during the creation of
-this specification and is pursuing that work as an architectural layer that is
-built on top of this specification.
+this specification and is pursuing that work as an architectural layer built 
+on top of this specification.
         </p>
 
       </section>
@@ -2527,24 +2562,25 @@ each graph is preserved.
 
         <p>
 A concrete expression of the data model in this specification is a
-<em>conforming document</em> if it complies with the normative statements in
-this specification regarding syntax (e.g., the content in
+<em>conforming document</em> if it complies with the normative statements in 
+this specification regarding syntax. That is, the content in the
 <a href="#basic-concepts">Basic Concepts</a>,
 <a href="#advanced-concepts">Advanced Concepts</a>, and
-<a href="#syntaxes">Syntaxes</a>).
-For convenience, normative statements for <em>conforming documents</em> are
+<a href="#syntaxes">Syntaxes</a> sections of this document. For convenience, 
+normative statements for <em>conforming documents</em> are
 often phrased as statements on the syntax used in properties and their
-associated values in the document (e.g., "MUST be a URI",
+associated values in the document (for example, "MUST be a URI", or
 "MUST be a string value of an ISO8601 combined date and time string").
         </p>
 
         <p>
 A <em>conforming processor</em> is a software or hardware-based implementation
 of the normative statements in this specification regarding the expected
-contents of property-value pairs (e.g., the content in <a>Verification</a>).
-For convenience, normative statements for <em>conforming processors</em> are
-often phrased as behavioral statements regarding the contents of
-property-value pairs (e.g., "MUST NOT be revoked", "MUST be in the expected range").
+contents of property-value pairs (for example, the content in 
+<a>Verification</a>). For convenience, normative statements for 
+<em>conforming processors</em> are often phrased as behavioral statements 
+regarding the contents of property-value pairs (for example, "MUST NOT be 
+revoked", or "MUST be in the expected range").
         </p>
 
       </section>
