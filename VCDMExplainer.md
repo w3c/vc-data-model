@@ -1,4 +1,5 @@
-#Verfiable Credentials Data-Model Explainer
+# Verfiable Credentials Data-Model Explainer
+
 ***by Tzviya Siegman, Wiley with a great deal of cribbing from Manu Sporny, Digital Bazaar***
 
 ***NOTE***: "Verifiable Claims" are now known as "Verifiable Credentials".
@@ -106,7 +107,14 @@ Here is an example of usage of the ID property in a credential, using the DID sc
 
 ## Tricky Design Choices
 * JOSE vs JWT - see [Issue 93](https://github.com/w3c/vc-data-model/issues/93)
+
 (what else should go here?)
 
+## Implementations and Reviews
+
+The VCWG has begun the process of horizontal review. Feedbeck from APA and PING has been or is in the process of being incorporated. 
+
+This data model has numerous successful implementations, including goverments, universities, major technology organizations, and not for profits. 
+
 ## References and Acknowledgements
-Thanks to Manu Sporny for writing most of this in previous formats. Much of the text came from [Motivation for Verifiable Claims Working Group Charter]http://w3c.github.io/webpayments-ig/VCTF/charter/charter-motivation.html, [Verifiable Claims Working Group Primer](http://w3c.github.io/webpayments-ig/VCTF/primer/), and [A Verifiable Credentials Primer](https://github.com/WebOfTrustInfo/rwot7/blob/master/topics-and-advance-readings/verifiable-credentials-primer.md).
+Thanks to Manu Sporny for writing most of this in previous formats. Much of the text came from [Motivation for Verifiable Claims Working Group Charter](http://w3c.github.io/webpayments-ig/VCTF/charter/charter-motivation.html, [Verifiable Claims Working Group Primer](http://w3c.github.io/webpayments-ig/VCTF/primer/), and [A Verifiable Credentials Primer](https://github.com/WebOfTrustInfo/rwot7/blob/master/topics-and-advance-readings/verifiable-credentials-primer.md).
