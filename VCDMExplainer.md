@@ -87,26 +87,33 @@ Here is an example of usage of the ID property in a credential, using the DID sc
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.com/examples/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/1872",
+  "type": ["VerifiableCredential", "AlumniCredential"],
+  "issuer": "https://example.edu/issuers/565049",,
   "issuanceDate": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "alumniOf": "Example University"
   },
-  <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/motorlicense/proof-of-age.json",
-    "type": "JsonSchemaValidator2018"
-  }</span>,
-  "proof": { ... }
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "https://example.com/jdoe/keys/1",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+      +W3JT24="
+  }
 }
 ```
 
 ## Tricky Design Choices
 * JOSE vs JWT - see [Issue 93](https://github.com/w3c/vc-data-model/issues/93)
+* JSON vs JSON-LD
+* Selective disclosure as a requirement see [Issue 224](https://github.com/w3c/vc-data-model/issues/224) for example
 
 (what else should go here?)
 
