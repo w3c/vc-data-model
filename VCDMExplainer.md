@@ -16,7 +16,7 @@ Internet in a way that is verifiable yet protects individual privacy.
 Starting in 2013, the [W3C Credentials Community Group](https://w3c-ccg.github.io/) started to
 work in earnest on solutions in this space followed shortly thereafter by the
 [Rebooting Web of Trust Community](http://www.weboftrust.info/)
-and W3C Verifiable Claims Working Group](https://www.w3.org/2017/vc/).
+and [W3C Verifiable Claims Working Group](https://www.w3.org/2017/vc/).
 These groups, composed of 150+ individuals and organizations, are currently
 focused on the creation, storage, transmission, and verification of digital
 credentials via the Internet.
@@ -117,4 +117,4 @@ The VCWG has begun the process of horizontal review. Feedbeck from APA and PING 
 This data model has numerous successful implementations, including goverments, universities, major technology organizations, and not for profits. 
 
 ## References and Acknowledgements
-Thanks to Manu Sporny for writing most of this in previous formats. Much of the text came from [Motivation for Verifiable Claims Working Group Charter](http://w3c.github.io/webpayments-ig/VCTF/charter/charter-motivation.html, [Verifiable Claims Working Group Primer](http://w3c.github.io/webpayments-ig/VCTF/primer/), and [A Verifiable Credentials Primer](https://github.com/WebOfTrustInfo/rwot7/blob/master/topics-and-advance-readings/verifiable-credentials-primer.md).
+Thanks to Manu Sporny for writing most of this in previous formats. Much of the text came from [Motivation for Verifiable Claims Working Group Charter](http://w3c.github.io/webpayments-ig/VCTF/charter/charter-motivation.html), [Verifiable Claims Working Group Primer](http://w3c.github.io/webpayments-ig/VCTF/primer/), and [A Verifiable Credentials Primer](https://github.com/WebOfTrustInfo/rwot7/blob/master/topics-and-advance-readings/verifiable-credentials-primer.md).
