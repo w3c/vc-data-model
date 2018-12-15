@@ -1,4 +1,5 @@
-#Verfiable Credentials Data-Model Explainer
+# Verfiable Credentials Data-Model Explainer
+
 ***by Tzviya Siegman, Wiley with a great deal of cribbing from Manu Sporny, Digital Bazaar***
 
 ***NOTE***: "Verifiable Claims" are now known as "Verifiable Credentials".
@@ -15,7 +16,7 @@ Internet in a way that is verifiable yet protects individual privacy.
 Starting in 2013, the [W3C Credentials Community Group](https://w3c-ccg.github.io/) started to
 work in earnest on solutions in this space followed shortly thereafter by the
 [Rebooting Web of Trust Community](http://www.weboftrust.info/)
-and W3C Verifiable Claims Working Group](https://www.w3.org/2017/vc/).
+and [W3C Verifiable Claims Working Group](https://www.w3.org/2017/vc/).
 These groups, composed of 150+ individuals and organizations, are currently
 focused on the creation, storage, transmission, and verification of digital
 credentials via the Internet.
@@ -86,27 +87,41 @@ Here is an example of usage of the ID property in a credential, using the DID sc
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.com/examples/v1"
   ],
-  "id": "http://dmv.example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
+  "id": "http://example.edu/credentials/1872",
+  "type": ["VerifiableCredential", "AlumniCredential"],
+  "issuer": "https://example.edu/issuers/565049",,
   "issuanceDate": "2010-01-01T19:73:24Z",
-  "claim": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
+    "alumniOf": "Example University"
   },
-  <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/motorlicense/proof-of-age.json",
-    "type": "JsonSchemaValidator2018"
-  }</span>,
-  "proof": { ... }
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-18T21:19:10Z",
+    "creator": "https://example.com/jdoe/keys/1",
+    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+      +W3JT24="
+  }
 }
 ```
 
 ## Tricky Design Choices
 * JOSE vs JWT - see [Issue 93](https://github.com/w3c/vc-data-model/issues/93)
+* JSON vs JSON-LD
+* Selective disclosure as a requirement see [Issue 224](https://github.com/w3c/vc-data-model/issues/224) for example
+
 (what else should go here?)
 
+## Implementations and Reviews
+
+The VCWG has begun the process of horizontal review. Feedbeck from APA and PING has been or is in the process of being incorporated. 
+
+This data model has numerous successful implementations, including goverments, universities, major technology organizations, and not for profits. 
+
 ## References and Acknowledgements
-Thanks to Manu Sporny for writing most of this in previous formats. Much of the text came from [Motivation for Verifiable Claims Working Group Charter]http://w3c.github.io/webpayments-ig/VCTF/charter/charter-motivation.html, [Verifiable Claims Working Group Primer](http://w3c.github.io/webpayments-ig/VCTF/primer/), and [A Verifiable Credentials Primer](https://github.com/WebOfTrustInfo/rwot7/blob/master/topics-and-advance-readings/verifiable-credentials-primer.md).
+Thanks to Manu Sporny for writing most of this in previous formats. Much of the text came from [Motivation for Verifiable Claims Working Group Charter](http://w3c.github.io/webpayments-ig/VCTF/charter/charter-motivation.html), [Verifiable Claims Working Group Primer](http://w3c.github.io/webpayments-ig/VCTF/primer/), and [A Verifiable Credentials Primer](https://github.com/WebOfTrustInfo/rwot7/blob/master/topics-and-advance-readings/verifiable-credentials-primer.md).
