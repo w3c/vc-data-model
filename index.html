@@ -805,7 +805,8 @@ expressed using the <code>id</code> property.
 Developers should remember that identifiers might be harmful in scenarios
 where pseudonymity is required. Developers are encouraged to read
 Section <a href="#privacy-considerations"></a> carefully when considering
-such scenarios.
+such scenarios. Where privacy is a strong consideration, the <code>id</code>
+property may be omitted.
         </p>
 
         <dl>
@@ -1992,6 +1993,166 @@ information, such as documentary evidence, related to the integrity of the
 <a>credential</a>. In contrast, the <code>proof</code> property is used to
 express machine-verifiable mathematical proofs related to the authenticity of
 the <a>issuer</a> and integrity of the <a>credential</a>.
+        </p>
+      </section>
+
+      <section>
+        <h3>Zero-Knowledge Proofs</h3>
+
+        <p>
+A zero-knowledge proof is a cryptographic method where an entity can prove
+to another entity that they know a certain value without disclosing the
+actual value. A real world example is proving that an accredited university
+has granted a degree to you without revealing your identity or any other
+personally identifiable information contained on the degree.
+        </p>
+
+        <p>
+One of the goals of this specification is to provide a data model that enables
+multiple different types of zero-knowledge proof mechanisms to be supported.
+The examples below highlight how the data model may be utilized to issue,
+present, and verify zero-knowledge based <a>verifiable credentials</a>.
+        </p>
+
+        <p>
+The first stage of utilizing zero-knowledge based <a>verifiable credentials</a>
+is for the <a>issuer</a> to issue a <a>verifiable credential</a> in a manner
+that enables the <a>holder</a> to present the information to a <a>verifier</a>
+in a privacy-enhancing manner. There are two requirements that are required of
+most <a>verifiable credentials</a> when they are to be used in
+zero-knowledge systems:
+        </p>
+
+        <ul>
+          <li>
+The <a>verifiable credential</a> MUST contain a credential definition that
+will be used by all parties to perform various zero-knowledge based
+cryptographic operations.
+          </li>
+          <li>
+The <a>verifiable credential</a> MUST contain a proof that enables
+<a>presentations</a> to be created that prove information contained in the
+original <a>verifiable credential</a> in zero-knowledge and without leaking
+any information not intended to be leaked by the <a>holder</a> that is
+presenting the <a>presentation</a>.
+          </li>
+        </ul>
+
+        <p>
+The following example describes one way that a <a>verifiable credential</a>
+can express the information needed by a Camenisch-Lysyanskaya Zero-Knowledge
+Proof system, also known as "CL Signatures".
+        </p>
+
+        <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  <span class="highlight">"credentialSchema": {
+    "id": "did:example:schema:3jf74yr7dsjw83jf",
+    "type": "CLCredentialDefinition2019"
+  }</span>,
+  "issuer": "https://example.edu/issuers/14",
+  "credentialSubject": {
+    "givenName": "Jane",
+    "familyName": "Doe",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering",
+      "college": "College of Engineering"
+    }
+  },
+  <span class="highlight">"proof": {
+    "type": "CLSignature2019",
+    "created": "2017-06-17T10:03:48Z",
+    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+    "nonce": "bb864289-cec1-4222-afd7-d314239be92e",
+    "proofValue: "zqmRkM7gkq5LFYKjixMdqM7gkq5LFYyWbNsVpsq...7Ey3",
+  }</span>
+}
+        </pre>
+
+        <p>
+The example above provides the credential definition by using the
+<code>credentialSchema</code> property and a specific proof that is usable in
+the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
+        </p>
+
+        <p>
+The next example utilizes the <a>verifiable credential</a> above to generate a
+new derived <a>verifiable credential</a> with a privacy-preserving proof. The
+derived <a>verifiable credential</a> is then placed in a
+<a>verifiable presentation</a> that further proves that the entire assertion
+is valid.  There are three requirements that are required of
+most <a>verifiable presentations</a> when they are to be used in
+zero-knowledge systems:
+        </p>
+
+        <ul>
+          <li>
+All derived <a>verifiable credentials</a> MUST contain a reference to the
+credential definition that was used to generate the derived proof.
+          </li>
+          <li>
+All derived proofs in <a>verifiable credentials</a> MUST NOT leak
+information that would enable the <a>verifier</a> to correlate the
+<a>holder</a> that is presenting the credential.
+          </li>
+          <li>
+The <a>verifiable presentation</a> MUST contain a proof that enables the
+<a>verifier</a> to ascertain that all <a>verifiable credentials</a> in the
+<a>verifiable presentation</a> were issued to the same <a>holder</a> without
+leaking personally identifiable information that the <a>holder</a> did not
+intend to share.
+          </li>
+        </ul>
+        </p>
+
+        <pre class="example nohighlight" title="A verifiable presentation that supports CL Signatures">
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "type": "VerifiablePresentation",
+  "verifiableCredential": [{
+    "@context": [
+      "https://w3.org/2018/credentials/v1",
+      "https://example.com/examples/v1"
+    ],
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    <span class="highlight">"credentialSchema": {
+      "id": "did:sov:schema:3jf74yr7dsjw83jf",
+      "type": "CLCredentialDefinition2019"
+    }</span>,
+    "issuer": "https://example.edu/issuers/14",
+    "credentialSubject": {
+      "degree": {
+        "type": "BachelorDegree",
+        "college": "College of Engineering"
+      }
+    },
+    <span class="highlight">"proof": {
+      "type": "CLDerivedCredentialProof2019",
+      "proofValue": "zM7gkqMqmRkdqM7...kq5"
+    }</span>
+  }],
+  <span class="highlight">"proof": {
+    "type": "CLPresentationProof2019",
+    "proofValue": "zWbNskM7...psq"
+  }</span>
+}
+        </pre>
+
+        <p>
+Important details regarding the format for the credential definition and of
+the proofs have been omitted on purpose as those are outside of the scope of
+this document. The purpose of this section is to guide implementers that
+desire to extend <a>verifiable credentials</a> and
+<a>verifiable presentations</a> to support zero-knowledge proof systems.
         </p>
       </section>
 
