@@ -1445,11 +1445,7 @@ extensions. These decisions are up to the developers of these
 applications and are specifically not the domain of this specification.
         </p>
 
-        <p>
-Applications that do not understand the semantic meaning of all properties
-while processing a <a>verifiable credential</a> or a
-<a>verifiable presentation</a> MUST produce an error.
-        </p>
+
 
         <p>
 Developers are urged to ensure that extension JSON-LD contexts are highly
@@ -1789,12 +1785,11 @@ or <a>verifier</a>.
       <section>
         <h3>Terms of Use</h3>
 
-        <p>
-Terms of use can be used by an <a>issuer</a>, a <a>subject</a>, or a
-<a>holder</a> to constrain the use of information expressed by the Verifiable
-Credentials Data Model. The <a>issuer</a> places their terms of use inside the
-<a>credential</a> before it is converted into a <a>verifiable credential</a>.
-The <a>holder</a> places their terms of use inside a <a>presentation</a>.
+        <p>Terms of use can be utilized by an <a>issuer</a> or a
+        <a>holder</a> to communicate the terms under which a verifiable credential
+			or verifiable presentation was issued. The <a>issuer</a> places their terms of use inside
+        the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
+        The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
         </p>
 
         <p class="note">
@@ -1807,22 +1802,22 @@ a <a>holder</a> and placing terms of use restrictions on the delegated
 <a>verifiable credential</a>.
         </p>
         <p>
-Terms of use can be expressed using the following <a>property</a>:
+Terms of use MAY be expressed using the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
-          <dd>
-The value of the <code>termsOfUse</code> property MUST be one or more terms of
-use telling a <a>verifier</a> what actions it MUST perform (Obligations), MUST
-NOT perform (Prohibitions), or MAY perform (Permissions) if it is to accept
-the <a>verifiable credential</a> or <a>verifiable presentation</a>. If a
-<a>verifier</a> is not willing to accept these terms of use, it MUST reject
-the <a>verifiable credential</a> or <a>verifiable presentation</a>. Each
-<code>termsOfUse</code> property comprises its <a>type</a> (for example,
-<code>IssuerPolicy</code>) and optionally its instance <a>id</a>. The precise
-content of each term of use is determined by the specific
-<code>TermsOfUse</code> <a>type</a> definition.
+          <dd>If present, the value of this property MUST specify one or more 
+			  terms of use policies under which the creator issued the credential 
+			  or presentation. If the recipient (holder or verifier) is not willing 
+			  to adhere to the specified terms of use then they do so on their own 
+			  responsibility and may incur legal liability if they violate the 
+			  stated Terms of Use.
+
+			Each <code>termsOfUse</code> comprises its type,
+            for example, <code>IssuerPolicy</code>, and
+            optionally its instance id. The precise contents of each term of use is
+            determined by the specific <code>TermsOfUse</code> type definition.
           </dd>
         </dl>
 
@@ -1907,25 +1902,27 @@ storing the data in an archive.
 }
         </pre>
 
-        <p>
-In the example above, the <a>holder</a>, who is also the <a>subject</a>, is
-prohibiting a specific <a>verifier</a>
-(<code>https://wineonline.example.org</code>) from using the information
-provided to correlate the <a>holder</a> with the <a>subject</a> using a
-third-party service.
+        <p>In the example above, the <a>holder</a>, who is also the <a>subject</a>, 
+			has expressed a Term of Use which prohibits the <a>verifier</a> (<code>https://wineonline.example.org</code>)
+			from using the information provided to correlate the <a>holder</a>/<a>subject</a> 
+			by using a 3rd party service. If the verifier were to use such a 3rd party 
+			service for correlation, they would violate the terms under which the holder 
+			created the presentation.
         </p>
+
       </section>
 
       <section>
         <h3>Evidence</h3>
 
         <p>
-Evidence information is used by an <a>issuer</a> to determine whether to issue
-a <a>credential</a>. For example, an <a>issuer</a> might check physical
-documentation provided by a <a>subject</a> or perform a set of background
-checks before issuing a <a>credential</a>. In some situations, this
-information is useful to the <a>verifier</a> when determining the risk
-associated with accepting the <a>credential</a>.
+The <em>evidence</em> property is used by an <a>issuer</a> to represent the
+set of evidence that was used to determine whether or not to issue
+a <a>credential</a>. For example, an issuer might check physical documentation
+provided by the <a>subject</a> or might perform a set of background checks
+before issuing the credential. In certain scenarios, this information is useful
+to the <a>verifier</a> when determining the risk associated with relying on a
+given credential.
         </p>
 
         <p>
@@ -2428,7 +2425,21 @@ When an <a>issuer</a> wants to authorize a <a>holder</a> to possess a
 <a>subject</a>, then the <a>issuer</a> inserts the relationship of the
 <a>holder</a> to itself into the <a>credential</a> for the <a>subject</a>.
           </p>
+	  
+      <p class="issue" data-number=204>
+Verifiable credentials are not an authorization framework and therefore delegation 
+is out of scope for this specification. However, it is understood that Verifiable 
+Credentials are likely to be used to build authorization and delegation systems. 
+The following is one approach that may be appropriate for some use cases.
+      <p>
 
+
+      <p>
+When the issuer wishes to authorise a holder to possess a credential that
+describes a subject who is not the holder, and the holder has no known relationship
+ with the subject, then the issuer may insert the
+relationship of the holder to itself into the subject's credential.
+      </p>
 
           <pre class="example nohighlight" title="A credential issued to a
 holder who is not the subject of the credential, who has no relationship with
@@ -3184,36 +3195,23 @@ have been revoked.
         <h3>Fitness for Purpose</h3>
 
         <p>
-Custom properties in the <a>credential</a> are appropriate for the purpose of
-the <a>verifier</a>. For example, if a <a>verifier</a> needs to determine if a
-<a>subject</a> is older than 21 years of age, they might accept claims of
-specific <code>birthdate</code> or abstract properties such as
-<code>ageOver</code>.
-        </p>
+The custom properties in the <a>credential</a> are
+appropriate for the <a>verifier</a>'s purpose. For example if a
+verifier needs to determine that a <a>subject</a> is older than 21
+years of age, they may rely on claims of a specific
+<code>birthdate</code> or abstract properties such as
+<code>ageOver</code>.</p>
 
-        <p>
-The <a>issuer</a> is trusted by the <a>verifier</a> to make the claims at
-hand. For example, a franchised fast food restaurant location will trust
-discount coupon claims made by the corporate headquarters of the franchise.
-        </p>
+          <p>
+The <a>issuer</a> is trusted by the <a>verifier</a> to make the
+claims at hand. For example, a franchised Fast Food restaurant
+location will trust discount coupon claims made by the
+corporate headquarters of the franchise.</li>
+Policy information expressed by the <a>issuer</a>
+in the <a>verifiable credential</a> SHOULD be respected by holders 
+  and verifiers unless they accept the liability of ignoring the policy.
+</p>
 
-        <p>
-All policy information expressed by an <a>issuer</a> in a
-<a>verifiable credential</a> MUST be enforced unless <a>verifiers</a> accept
-the risk of not enforcing the policy information. For example, an
-<a>issuer</a> might limit the use of a <a>credential</a> to specific
-<a>verifiers</a>, to <a>holders</a> within a specific age range, or between
-specific dates.
-        </p>
-
-        <p>
-All policy information expressed by a <a>holder</a> in a
-<a>verifiable presentation</a> MUST be enforced unless <a>verifiers</a> accept
-the risk of not enforcing the policy information. For example, a <a>holder</a>
-might limit the use of a <a>credential</a> to specific <a>verifiers</a> or for
-specific purposes (such as authentication, but not data mining).
-        </p>
-      </section>
     </section>
 
     <section class="informative">
@@ -3758,8 +3756,8 @@ same person at both services. That is, the accounts are controlled by the same
 person.
           </li>
           <li>
-The same <a>subject</a> identifier of a <a>credential</a> refers to the same
-<a>subject</a> across <a>presentations</a> or <a>verifiers</a>, then loss of
+When a <a>subject</a> identifier of <a>credential</a> refers to the same
+<a>subject</a> across multiple <a>presentations</a> or <a>verifiers</a>, then loss of
 privacy is possible. Even when different <a>credentials</a> are presented, if
 the <a>subject</a> identifier is the same, <a>verifiers</a> (and those with
 access to <a>verifier</a> logs) could infer that the <a>holder</a> of the
