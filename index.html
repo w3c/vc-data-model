@@ -510,8 +510,8 @@ certificates.
         <p class="note">
 <a>Credential</a> identifiers are often used to identify specific instances
 of a <a>credential</a>. These identifiers can also be used for correlation. A
-<a>holder</a> wanting to minimize correlation MUST use a selective disclosure
-scheme that does not reveal the <a>credential</a> identifier.
+<a>holder</a> wanting to minimize correlation is advised to use a selective
+disclosure scheme that does not reveal the <a>credential</a> identifier.
         </p>
 
         <p>
@@ -871,7 +871,7 @@ used in the <a>verifiable credentials</a> ecosystem.
         <p>
 Software systems that process the kinds of objects specified in this document
 use type information to determine whether or not a provided <a>credential</a>
-or <a>presentation</a> is appropriate. Type information MUST be expressed
+or <a>presentation</a> is appropriate. Type information SHOULD be expressed
 using the <code>type</code> property.
         </p>
 
@@ -1433,7 +1433,7 @@ The first thing to do is to create a JSON-LD context containing two new terms:
         </pre>
 
         <p>
-After the JSON-LD context is created, the developer must publish it somewhere
+After the JSON-LD context is created, the developer publishes it somewhere
 so it is accessible to <a>verifiers</a> who will be processing the
 <a>verifiable credential</a>. Assuming the above JSON-LD context is published
 at <code>https://example.com/contexts/mycontext.jsonld</code>, we can extend
@@ -1569,7 +1569,7 @@ The expression of a data schema can be performed using the following
 The value of the <code>credentialSchema</code> property MUST be one or more
 data schemas that provide <a>verifiers</a> with enough information to determine
 if the provided data conforms to the provided schema. Each
-<code>credentialSchema</code> comprises at least its
+<code>credentialSchema</code> MUST specify its
 <code>type</code> (for example, <code>JsonSchemaValidator2018</code>),
 and an <code>id</code> property that MUST be a URI identifying
 the schema file. The precise contents of each
@@ -1685,7 +1685,7 @@ A refresh service can be expressed using the following <a>property</a>:
 The value of the <code>refreshService</code> property MUST be one or more
 refresh services that provides enough information to the <a>holder's</a>
 software such that the <a>holder</a> can refresh the credential. Each
-<code>refreshService</code> property comprises at least its <code>type</code>
+<code>refreshService</code> value MUST specify its <code>type</code>
 (for example, <code>ManualRefreshService2018</code>) and the
 <code>serviceEndpoint</code> URL. The precise content of each refresh service
 is determined by the specific <code>refreshService</code> <a>type</a>
@@ -1848,7 +1848,7 @@ Terms of use MAY be expressed using the following <a>property</a>:
 			  responsibility and may incur legal liability if they violate the
 			  stated Terms of Use.
 
-			Each <code>termsOfUse</code> comprises its type,
+			Each <code>termsOfUse</code> MUST specify its type,
             for example, <code>IssuerPolicy</code>, and
             optionally its instance id. The precise contents of each term of use is
             determined by the specific <code>TermsOfUse</code> type definition.
@@ -2821,7 +2821,7 @@ are enclosed in the JWT payload as follows:
 
           <h5>JWT Encoding</h5>
           <p>
-To encode a <a>verifiable credential</a> as a JWT, certain properties introduced by this specification MUST be encoded
+To encode a <a>verifiable credential</a> as a JWT, specific properties introduced by this specification MUST be encoded
 as standard JOSE header parameters, JWT registered claim names, or contained in the JWS signature part. If no explicit
 rule was specified, properties are encoded in the same way as with
 a standard <a>verifiable credential</a>, and are added to the <code>vc</code> property of the JWT. The following
@@ -3235,7 +3235,7 @@ signature is available. For example, the metadata might include properties
 related to expiration, key owner, or key purpose.
           </li>
           <li>
-The key MUST NOT be revoked or expired.
+The key MUST NOT be suspended, revoked, or expired.
           </li>
           <li>
 The cryptographic signature MUST verify.
