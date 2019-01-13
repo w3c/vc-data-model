@@ -218,6 +218,7 @@ require(["core/pubsubhub"], function(respecEvents) {
             });
 
             // delete any terms that were not referenced.
+            /*
             Object.keys(termNames).forEach(function(term) {
                 var $p = $("#"+term) ;
                 if ($p) {
@@ -225,12 +226,13 @@ require(["core/pubsubhub"], function(respecEvents) {
                     $p.parent().next().remove();
                     $p.parent().remove() ;
                     tList.forEach(function( item ) {
+                      console.log("CHECKING ITEM", item, respecConfig);
                         if (respecConfig.definitionMap[item]) {
                             delete respecConfig.definitionMap[item];
                         }
                     });
                 }
-            });
+            });*/
         }
     });
 });
