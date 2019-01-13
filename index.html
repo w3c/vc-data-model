@@ -2753,7 +2753,7 @@ Model onto JWT and JWS. It further defines processing rules how and when to
 make use of specific JWT registered claim names and specific JWS registered
 header parameter names to allow systems based on JWT to comply with this
 specification. If these specific claim names and header parameters are
-present, their respective counterpart in the <a>verifiable credential</a> and
+present, their respective counterpart in the standard <a>verifiable credential</a> and
 <a>verifiable presentation</a> MAY be omitted to avoid duplication.
           </p>
         </section>
@@ -2762,9 +2762,10 @@ present, their respective counterpart in the <a>verifiable credential</a> and
           <h4>IANA Considerations</h4>
 
           <p>
-This specification introduces two new registered claim names, which contain the
-JSON or JSON-LD <a>verifiable credentials</a> and
-<a>verifiable presentation</a> object enclosed in the JWT payload:
+This specification introduces two new registered claim names, which contain
+those parts of the standard <a>verifiable credentials</a> and
+<a>verifiable presentation</a> where no explicit encoding rules for JWT exist. These objects
+are enclosed in the JWT payload as follows:
           </p>
 
           <ul>
@@ -2784,6 +2785,7 @@ JSON or JSON-LD <a>verifiable credentials</a> and
         <section>
           <h4>JWT and JWS Considerations</h4>
 
+          <h5>JWT Encoding</h5>
           <p>
 To encode a <a>verifiable credential</a> as a JWT, certain properties introduced by this specification MUST be encoded
 as standard JOSE header parameters, JWT registered claim names, or contained in the JWS signature part. If no explicit
@@ -2835,7 +2837,7 @@ Document, or can be the identifier of a key inside a JWKS.
           <p>
 For backward compatibility with JWT processors the following JWT registered
 claim names MUST be used instead of, or in addition to, their respective
-<a>verifiable credential</a> counterparts:
+standard <a>verifiable credential</a> counterparts:
           </p>
 
           <ul>
@@ -2866,15 +2868,63 @@ timestamp (<code>NumericDate</code>).
 
           <p>
 Other JOSE header parameters and claim names not specified herein can be used
-if their use is not explicitly discouraged.
+if their use is not explicitly discouraged. Additional claims MUST be added to the <code>credentialSubject</code>
+property of the JWT.
           </p>
 
           <p>
-This version of the specification defines no <code>JWT</code> specific encoding rules for
+This version of the specification defines no JWT specific encoding rules for
 <a href="#advanced-concepts">Advanced Concepts</a>, e.g., <code>refreshService</code>, <code>termsOfUse</code>, and
 <code>evidence</code>. These concepts can be encoded as they are without any transformation, and can be added to the
-<code>vc</code> property of the <code>JWT</code>.
+<code>vc</code> property of the JWT.
           </p>
+
+          <h5>JWT Decoding</h5>
+          <p>
+To decode a JWT to a standard <a>verifiable credential</a>, the following transformation MUST be performed:
+          </p>
+            <ul>
+                <li>
+Create a new JSON object.
+                </li>
+                <li>
+If no <code>@context</code> is specified under <code>vc</code>, add the default
+<code>@context</code> to the new JSON object.
+                </li>
+                <li>
+Add the content from the <code>vc</code> property to the new JSON object.
+                </li>
+                <li>
+Transform the remaining JWT specific headers and claims, and add the results to the new
+JSON object.
+                </li>
+            </ul>
+
+            <p>
+To transform the JWT specific headers and claims, the following MUST be done:
+            </p>
+            <ul>
+                <li>
+If <code>exp</code> is present, the UNIX timestamp MUST be converted to an [[!ISO8601]] combined date and
+time string, and MUST be used to set the value of the <code>expirationDate</code> property of
+<code>credentialSubject</code> of the new JSON object.
+                </li>
+                <li>
+If <code>iss</code> is present, the value MUST be used to set the <code>issuer</code> property of the new JSON object.
+                </li>
+                <li>
+If <code>iat</code> is present, the UNIX timestamp MUST be converted to an [[!ISO8601]] combined date and
+time string, and MUST be used to set the value of the <code>issuanceDate</code> property of the new JSON object.
+                </li>
+                <li>
+If <code>jti</code> is present, the value MUST be used to set the value of the <code>id</code> property of
+<code>credentialSubject</code> of the new JSON object.
+                </li>
+                <li>
+If <code>sub</code> is present, the value MUST be used to set the value of the <code>id</code> property of
+the new JSON object.
+                </li>
+            </ul>
 
           <pre class="example nohighlight" title="JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)">
 {
