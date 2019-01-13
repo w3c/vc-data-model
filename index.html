@@ -101,6 +101,10 @@ pre .comment {
   font-weight: bold;
   color: Gray;
 }
+.color-text {
+  font-weight: bold;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
     </style>
   </head>
   <body>
@@ -518,10 +522,10 @@ The example above provides a simple visual describing the components of a
 complete visual depiction of a <a>verifiable credential</a>, which is
 normally composed of at least two <a>graphs</a> of information.
 The first <a>graph</a> expresses the <a>credential</a> itself, which contains
-<span style="color:#d5a6bdff;font-weight:bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">credential metadata</span> and
-<span style="color:#ffe599ff;font-weight:bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">claims</span>.
+<span class="color-text" style="color:#d5a6bd;">credential metadata</span> and
+<span class="color-text" style="color:#ffe599;">claims</span>.
 The second <a>graph</a> expresses the
-<span style="color:#b6d7a8ff;font-weight:bold;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">digital proof</span>,
+<span class="color-text" style="color:#b6d7a8;">digital proof</span>,
 which is usually a digital signature.
         </p>
 
@@ -544,10 +548,13 @@ not required to be related.
         <h3>Presentations</h3>
 
         <p>
-Because this specification takes a privacy-first approach, it is important for
-<a>entities</a> using this technology to be able to express only the portions
-of their persona that are appropriate for a given situation. The expression of
-a subset of one's persona is called a <a>verifiable presentation</a>.
+Enhancing privacy is a key design feature of this specification. Therefore, it
+is important for <a>entities</a> using this technology to be able to
+express only the portions of their persona that are appropriate for a given
+situation. The expression of a subset of one's persona is called a
+<a>verifiable presentation</a>. Examples of different personas include a
+person's professional persona, their online gaming persona, or their
+home-life persona.
         </p>
 
         <p>
@@ -558,6 +565,7 @@ presented, they become a <a>presentation</a>. Data formats derived from
 <a>credentials</a> that are cryptographically verifiable but do not of
 themselves contain <a>credentials</a>, might also be <a>presentations</a>.
         </p>
+
         <p>
 The data in a <a>presentation</a> is often about the same <a>subject</a>, but
 was issued by multiple <a>issuers</a>. The aggregation of this information
@@ -573,9 +581,33 @@ The basic components of a verifiable presentation.
         </figure>
 
         <p>
-Examples of different <a>presentations</a> include a person's professional
-persona, their online gaming persona, or their home-life persona.
+The example above provides a simple visual describing the components of a
+<a>verifiable presentation</a>, but abstracts some of the details about how
+<a>verifiable credentials</a> are organized into <a>graphs</a>, which are then
+organized into <a>verifiable presentations</a>. The example below attempts to
+provide a complete visual depiction of a <a>verifiable presentation</a>, which
+is normally composed of at least four <a>graphs</a> of information.
+The first <a>graph</a> expresses the <a>presentation</a> itself, which contains
+<span class="color-text" style="color:#b4a7d6;">presentation metadata</span>.
+The <code>verifiablePresentation</code> property in the graph refers to one or
+more <a>verifiable credentials</a> (each a self-contained <a>graph</a>) which
+in turn contains
+<span class="color-text" style="color:#d5a6bd;">credential metadata</span> and
+<span class="color-text" style="color:#ffe599;">claims</span>.
+The third <a>graph</a> expresses the
+<span class="color-text" style="color:#b6d7a8;">credential graph proof</span>,
+which is usually a digital signature. The fourth <a>graph</a> expresses the
+<span class="color-text" style="color:#a4c2f4;">presentation graph proof</span>,
+which is usually a digital signature.
         </p>
+
+        <figure>
+          <img style="margin: auto; display: block;" width="75%" src="diagrams/presentation-graph.svg">
+          <figcaption style="text-align: center;">
+A visual depiction of the information graphs associated with a basic verifiable
+presentation.
+          </figcaption>
+        </figure>
 
         <p class="note">
 It is possible to have a <a>presentation</a>, such as a business persona,
@@ -583,30 +615,6 @@ that draws on multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
         </p>
 
-        <p>
-If a <a>presentation</a> supports <a>derived predicates</a>, a <a>claim</a>
-about birthdate in a <a>credential</a> can become the basis of proof that at a
-given point in time, the age of a <a>subject</a> did or will fall within a
-specified interval. Selective disclosure schemes using zero-knowledge proofs
-can use <a>claims</a> expressed in this model to prove additional statements
-about those <a>claims</a>. For example, a <a>claim</a> specifying a
-<a>subject's</a> date of birth can be used as a predicate to prove the
-<a>subject's</a> age is within a given range, and therefore prove the
-<a>subject</a> qualifies for age-related discounts, without actually revealing
-the <a>subject's</a> birthdate. The <a>holder</a> has the flexibility to use
-the <a>claim</a> in any way that is applicable to the desired
-<a>presentation</a>.
-        </p>
-
-        <figure>
-          <img style="margin: auto; display: block;"
-            width="50%" src="diagrams/claim-example-2.svg">
-          <figcaption style="text-align: center;">
-An example of a basic claim expressing that Pat's date of
-birth is 2010-01-01T19:23:24Z.
-Date encoding would be determined by the schema.
-          </figcaption>
-        </figure>
       </section>
     </section>
 
@@ -1291,6 +1299,32 @@ trust the value if they trust the <a>issuer</a>.
 We are currently working on an example of a ZKP-style verifiable presentation
 that contains derived data instead of directly embedded verifiable credentials.
         </p>
+
+        <p>
+If a <a>presentation</a> supports <a>derived predicates</a>, a <a>claim</a>
+about birthdate in a <a>credential</a> can become the basis of proof that at a
+given point in time, the age of a <a>subject</a> did or will fall within a
+specified interval. Selective disclosure schemes using zero-knowledge proofs
+can use <a>claims</a> expressed in this model to prove additional statements
+about those <a>claims</a>. For example, a <a>claim</a> specifying a
+<a>subject's</a> date of birth can be used as a predicate to prove the
+<a>subject's</a> age is within a given range, and therefore prove the
+<a>subject</a> qualifies for age-related discounts, without actually revealing
+the <a>subject's</a> birthdate. The <a>holder</a> has the flexibility to use
+the <a>claim</a> in any way that is applicable to the desired
+<a>presentation</a>.
+        </p>
+
+        <figure>
+          <img style="margin: auto; display: block;"
+            width="50%" src="diagrams/claim-example-2.svg">
+          <figcaption style="text-align: center;">
+An example of a basic claim expressing that Pat's date of
+birth is 2010-01-01T19:23:24Z.
+Date encoding would be determined by the schema.
+          </figcaption>
+        </figure>
+
       </section>
     </section>
 
@@ -1807,11 +1841,11 @@ Terms of use MAY be expressed using the following <a>property</a>:
 
         <dl>
           <dt><var>termsOfUse</var></dt>
-          <dd>If present, the value of this property MUST specify one or more 
-			  terms of use policies under which the creator issued the credential 
-			  or presentation. If the recipient (holder or verifier) is not willing 
-			  to adhere to the specified terms of use then they do so on their own 
-			  responsibility and may incur legal liability if they violate the 
+          <dd>If present, the value of this property MUST specify one or more
+			  terms of use policies under which the creator issued the credential
+			  or presentation. If the recipient (holder or verifier) is not willing
+			  to adhere to the specified terms of use then they do so on their own
+			  responsibility and may incur legal liability if they violate the
 			  stated Terms of Use.
 
 			Each <code>termsOfUse</code> comprises its type,
@@ -1902,11 +1936,11 @@ storing the data in an archive.
 }
         </pre>
 
-        <p>In the example above, the <a>holder</a>, who is also the <a>subject</a>, 
+        <p>In the example above, the <a>holder</a>, who is also the <a>subject</a>,
 			has expressed a Term of Use which prohibits the <a>verifier</a> (<code>https://wineonline.example.org</code>)
-			from using the information provided to correlate the <a>holder</a>/<a>subject</a> 
-			by using a 3rd party service. If the verifier were to use such a 3rd party 
-			service for correlation, they would violate the terms under which the holder 
+			from using the information provided to correlate the <a>holder</a>/<a>subject</a>
+			by using a 3rd party service. If the verifier were to use such a 3rd party
+			service for correlation, they would violate the terms under which the holder
 			created the presentation.
         </p>
 
@@ -2425,11 +2459,11 @@ When an <a>issuer</a> wants to authorize a <a>holder</a> to possess a
 <a>subject</a>, then the <a>issuer</a> inserts the relationship of the
 <a>holder</a> to itself into the <a>credential</a> for the <a>subject</a>.
           </p>
-	  
+
       <p class="issue" data-number=204>
-Verifiable credentials are not an authorization framework and therefore delegation 
-is out of scope for this specification. However, it is understood that Verifiable 
-Credentials are likely to be used to build authorization and delegation systems. 
+Verifiable credentials are not an authorization framework and therefore delegation
+is out of scope for this specification. However, it is understood that Verifiable
+Credentials are likely to be used to build authorization and delegation systems.
 The following is one approach that may be appropriate for some use cases.
       <p>
 
@@ -3273,7 +3307,7 @@ claims at hand. For example, a franchised Fast Food restaurant
 location will trust discount coupon claims made by the
 corporate headquarters of the franchise.</li>
 Policy information expressed by the <a>issuer</a>
-in the <a>verifiable credential</a> SHOULD be respected by holders 
+in the <a>verifiable credential</a> SHOULD be respected by holders
   and verifiers unless they accept the liability of ignoring the policy.
 </p>
 
