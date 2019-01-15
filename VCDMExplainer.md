@@ -117,6 +117,9 @@ Here is an example of usage of the ID property in a credential, using the DID sc
 
 (what else should go here?)
 
+## Features at Risk
+tocome
+
 ## Implementations and Reviews
 
 The VCWG has begun the process of horizontal review. Feedbeck from APA and PING has been or is in the process of being incorporated. 
