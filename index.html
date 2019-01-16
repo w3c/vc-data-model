@@ -1386,7 +1386,7 @@ extensibility and program correctness are achieved.
         </p>
 
         <p>
-Let us assume that we start with the following <a>verifiable credential</a>:
+Let us assume that we start with the <a>verifiable credential</a> shown below.
         </p>
 
         <pre class="example nohighlight" title="A simple credential">
@@ -1408,8 +1408,8 @@ Let us assume that we start with the following <a>verifiable credential</a>:
         </pre>
 
         <p>
-The <a>verifiable credential</a> above states that the <a>entity</a>
-associated with <code>did:example:abcdef1234567</code> has a <code>name</code>
+This <a>verifiable credential</a> states that the <a>entity</a> associated with
+<code>did:example:abcdef1234567</code> has a <code>name</code>
 with a value of <code>Jane Doe</code>.
         </p>
 
@@ -1420,7 +1420,8 @@ internal corporate reference number, and Jane's favorite food.
         </p>
 
         <p>
-The first thing to do is to create a JSON-LD context containing two new terms:
+The first thing to do is to create a JSON-LD context containing two new terms,
+as shown below.
         </p>
 
         <pre class="example nohighlight" title="A JSON-LD context">
@@ -1433,12 +1434,12 @@ The first thing to do is to create a JSON-LD context containing two new terms:
         </pre>
 
         <p>
-After the JSON-LD context is created, the developer publishes it somewhere
+After this JSON-LD context is created, the developer publishes it somewhere
 so it is accessible to <a>verifiers</a> who will be processing the
 <a>verifiable credential</a>. Assuming the above JSON-LD context is published
 at <code>https://example.com/contexts/mycontext.jsonld</code>, we can extend
 this example by including the context and adding the new properties to the
-<a>verifiable credential</a>:
+<a>verifiable credential</a>.
         </p>
 
         <pre class="example nohighlight"
@@ -1479,8 +1480,6 @@ extensions. These decisions are up to the developers of these
 applications and are specifically not the domain of this specification.
         </p>
 
-
-
         <p>
 Developers are urged to ensure that extension JSON-LD contexts are highly
 available. Implementations that cannot fetch a context will produce an error.
@@ -1501,7 +1500,7 @@ specification imposes the following additional restrictions on both syntaxes:
 
           <ul>
             <li>
-JSON-based processors MUST process the <code>@context</code> property,
+JSON-based processors MUST process the <code>@context</code> <a>property</a>,
 ensuring the expected values exist in the expected order for the
 <a>credential</a> <code>type</code> being processed. The expected order MUST
 be defined by at least a human-readable extension specification and
@@ -1518,7 +1517,7 @@ redefines any term in the
 To avoid the possibility of accidentally overriding terms, developers are urged
 to scope their extensions. For example, the following extension scopes the
 new <code>favoriteFood</code> term so that it can only be used within the
-<code>credentialSubject</code> property:
+<code>credentialSubject</code> <a>property</a>.
           </p>
 
           <pre class="example nohighlight" title="Scoping terms in a JSON-LD context">
@@ -1543,7 +1542,7 @@ new <code>favoriteFood</code> term so that it can only be used within the
         <p>
 Data schemas are useful when enforcing a specific structure on a given
 collection of data. There are at least two types of data schemas that this
-specification contemplates:
+specification considers:
         </p>
 
         <ul>
@@ -1566,14 +1565,14 @@ The expression of a data schema can be performed using the following
         <dl>
           <dt><var>credentialSchema</var></dt>
           <dd>
-The value of the <code>credentialSchema</code> property MUST be one or more
-data schemas that provide <a>verifiers</a> with enough information to determine
-if the provided data conforms to the provided schema. Each
+The value of the <code>credentialSchema</code> <a>property</a> MUST be one or
+more data schemas that provide <a>verifiers</a> with enough information to
+determine if the provided data conforms to the provided schema. Each
 <code>credentialSchema</code> MUST specify its
-<code>type</code> (for example, <code>JsonSchemaValidator2018</code>),
-and an <code>id</code> property that MUST be a URI identifying
-the schema file. The precise contents of each
-data schema is determined by the specific type definition.
+<code>type</code> (for example, <code>JsonSchemaValidator2018</code>), and an
+<code>id</code> <a>property</a> that MUST be a URI identifying the schema file.
+The precise contents of each data schema is determined by the specific type
+definition.
           </dd>
         </dl>
 
@@ -1682,8 +1681,8 @@ A refresh service can be expressed using the following <a>property</a>:
         <dl>
           <dt><var>refreshService</var></dt>
           <dd>
-The value of the <code>refreshService</code> property MUST be one or more
-refresh services that provides enough information to the <a>holder's</a>
+The value of the <code>refreshService</code> <a>property</a> MUST be one or
+more refresh services that provides enough information to the <a>holder's</a>
 software such that the <a>holder</a> can refresh the credential. Each
 <code>refreshService</code> value MUST specify its <code>type</code>
 (for example, <code>ManualRefreshService2018</code>) and the
@@ -1819,11 +1818,13 @@ or <a>verifier</a>.
       <section>
         <h3>Terms of Use</h3>
 
-        <p>Terms of use can be utilized by an <a>issuer</a> or a
-        <a>holder</a> to communicate the terms under which a verifiable credential
-			or verifiable presentation was issued. The <a>issuer</a> places their terms of use inside
-        the <a>credential</a> before it is converted into a <a>verifiable credential</a>.
-        The <a>holder</a> places holder terms of use inside a <a>presentation</a>.
+        <p>
+Terms of use can be utilized by an <a>issuer</a> or a <a>holder</a> to
+communicate the terms under which a <a>verifiable credential</a> or
+<a>verifiable presentation</a> was issued. The <a>issuer</a> places their terms
+of use inside the <a>credential</a> before it is converted into a
+<a>verifiable credential</a>. The <a>holder</a> places their terms of use
+inside a <a>presentation</a>.
         </p>
 
         <p class="note">
@@ -1835,23 +1836,27 @@ could be for the <a>subject</a> to delegate a <a>verifiable credential</a> to
 a <a>holder</a> and placing terms of use restrictions on the delegated
 <a>verifiable credential</a>.
         </p>
+
         <p>
 Terms of use MAY be expressed using the following <a>property</a>:
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
-          <dd>If present, the value of this property MUST specify one or more
-			  terms of use policies under which the creator issued the credential
-			  or presentation. If the recipient (holder or verifier) is not willing
-			  to adhere to the specified terms of use then they do so on their own
-			  responsibility and may incur legal liability if they violate the
-			  stated Terms of Use.
+          <dd>
+If specified, the value of the <code>termsOfUse</code> <a>property</a> MUST
+specify one or more terms of use policies under which the creator issued the
+<a>credential</a> or <a>presentation</a>. If the recipient (a <a>holder</a> or
+<a>verifier</a>) is not willing to adhere to the specified terms of use, then
+they do so on their own responsibility and might incur legal liability if they
+violate the stated Terms of Use.
+          </dd>
 
-			Each <code>termsOfUse</code> MUST specify its type,
-            for example, <code>IssuerPolicy</code>, and
-            optionally its instance id. The precise contents of each term of use is
-            determined by the specific <code>TermsOfUse</code> type definition.
+          <dd>
+Each <code>termsOfUse</code> MUST specify its <a>type</a>, for example,
+<code>IssuerPolicy</code>, and optionally, its instance id. The precise
+contents of each term of use is determined by the specific 
+<code>TermsOfUse</code> <a>type</a> definition.
           </dd>
         </dl>
 
@@ -1936,12 +1941,14 @@ storing the data in an archive.
 }
         </pre>
 
-        <p>In the example above, the <a>holder</a>, who is also the <a>subject</a>,
-			has expressed a Term of Use which prohibits the <a>verifier</a> (<code>https://wineonline.example.org</code>)
-			from using the information provided to correlate the <a>holder</a>/<a>subject</a>
-			by using a 3rd party service. If the verifier were to use such a 3rd party
-			service for correlation, they would violate the terms under which the holder
-			created the presentation.
+        <p>
+In the example above, the <a>holder</a>, who is also the <a>subject</a>,
+expressed a Term of Use prohibiting the <a>verifier</a>
+(<code>https://wineonline.example.org</code>) from using the information
+provided to correlate the <a>holder</a> or <a>subject</a> using a third-party
+service. If the <a>verifier</a> were to use a third-party service for
+correlation, they would violate the terms under which the holder created the
+presentation.
         </p>
 
       </section>
@@ -1950,8 +1957,7 @@ storing the data in an archive.
         <h3>Evidence</h3>
 
         <p>
-The <em>evidence</em> property is used by an <a>issuer</a> to represent the
-set of evidence that was used to determine whether or not to issue
+Evidence is used by an <a>issuer</a> to determine whether or not to issue
 a <a>credential</a>. For example, an issuer might check physical documentation
 provided by the <a>subject</a> or might perform a set of background checks
 before issuing the credential. In certain scenarios, this information is useful
@@ -1966,11 +1972,11 @@ Evidence information can be expressed using the following <a>property</a>:
         <dl>
           <dt><var>evidence</var></dt>
           <dd>
-The value of the <code>evidence</code> property MUST be one or more evidence
-schemes providing enough information to a <a>verifier</a> to determine whether
-the evidence gathered meets their requirements. The precise content of each
-evidence scheme is determined by the specific <code>evidence</code>
-<a>type</a> definition.
+The value of the <code>evidence</code> <a>property</a> MUST be one or more
+evidence schemes providing enough information to a <a>verifier</a> to determine
+whether the evidence gathered meets their requirements for issuing a
+<a>credential</a>. The precise content of each evidence scheme is determined by
+the specific <code>evidence</code> <a>type</a> definition.
           </dd>
         </dl>
 
@@ -2019,13 +2025,13 @@ credentials are supported by the specification.
         </pre>
 
         <p class="note">
-The <code>evidence</code> property provides different and complimentary
+The <code>evidence</code> <a>property</a> provides different and complimentary
 information to the <a href="#proofs-signatures"><code>proof</code></a>
-property. The <code>evidence</code> property is used to express supporting
-information, such as documentary evidence, related to the integrity of the
-<a>credential</a>. In contrast, the <code>proof</code> property is used to
-express machine-verifiable mathematical proofs related to the authenticity of
-the <a>issuer</a> and integrity of the <a>credential</a>.
+<a>property</a>. The <code>evidence</code> <a>property</a> is used to express
+supporting information, such as documentary evidence, related to the integrity
+of the <a>credential</a>. In contrast, the <code>proof</code> <a>property</a>
+is used to express machine-verifiable mathematical proofs related to the
+authenticity of the <a>issuer</a> and integrity of the <a>credential</a>.
         </p>
       </section>
 
@@ -2074,7 +2080,7 @@ presenting the <a>presentation</a>.
         <p>
 The following example describes one way that a <a>verifiable credential</a>
 can express the information needed by a Camenisch-Lysyanskaya Zero-Knowledge
-Proof system, also known as "CL Signatures".
+Proof system, also known as CL Signatures.
         </p>
 
         <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
@@ -2109,9 +2115,9 @@ Proof system, also known as "CL Signatures".
         </pre>
 
         <p>
-The example above provides the credential definition by using the
-<code>credentialSchema</code> property and a specific proof that is usable in
-the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
+The example above provides the <a>credential</a> definition by using the
+<code>credentialSchema</code> <a>property</a> and a specific proof that is
+usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
         </p>
 
         <p>
@@ -2119,23 +2125,22 @@ The next example utilizes the <a>verifiable credential</a> above to generate a
 new derived <a>verifiable credential</a> with a privacy-preserving proof. The
 derived <a>verifiable credential</a> is then placed in a
 <a>verifiable presentation</a> that further proves that the entire assertion
-is valid.  There are three requirements that are required of
-most <a>verifiable presentations</a> when they are to be used in
-zero-knowledge systems:
+is valid. There are three requirements of most <a>verifiable presentations</a>
+when they are to be used in zero-knowledge systems:
         </p>
 
         <ul>
           <li>
 All derived <a>verifiable credentials</a> MUST contain a reference to the
-credential definition that was used to generate the derived proof.
+<a>credential</a> definition used to generate the derived proof.
           </li>
           <li>
-All derived proofs in <a>verifiable credentials</a> MUST NOT leak
-information that would enable the <a>verifier</a> to correlate the
-<a>holder</a> that is presenting the credential.
+All derived proofs in <a>verifiable credentials</a> MUST NOT leak information
+that would enable the <a>verifier</a> to correlate the <a>holder</a> presenting
+the credential.
           </li>
           <li>
-The <a>verifiable presentation</a> MUST contain a proof that enables the
+The <a>verifiable presentation</a> MUST contain a proof enabling the
 <a>verifier</a> to ascertain that all <a>verifiable credentials</a> in the
 <a>verifiable presentation</a> were issued to the same <a>holder</a> without
 leaking personally identifiable information that the <a>holder</a> did not
@@ -2180,13 +2185,14 @@ intend to share.
 }
         </pre>
 
-        <p>
-Important details regarding the format for the credential definition and of
-the proofs have been omitted on purpose as those are outside of the scope of
-this document. The purpose of this section is to guide implementers that
-desire to extend <a>verifiable credentials</a> and
-<a>verifiable presentations</a> to support zero-knowledge proof systems.
+        <p class="note">
+Important details regarding the format for the <a>credential</a> definition and
+of the proofs are omitted on purpose because they are outside of the scope of
+this document. The purpose of this section is to guide implementers wanting to
+extend <a>verifiable credentials</a> and <a>verifiable presentations</a> to
+support zero-knowledge proof systems.
         </p>
+		
       </section>
 
       <section>
@@ -2226,7 +2232,7 @@ this case, a <a>verifier</a> can easily deduce that a <a>subject</a> is the
           <p>
 If only the <code>credentialSubject</code> is allowed to insert a
 <a>verifiable credential</a> into a <a>verifiable presentation</a>, the issuer
-MAY insert the <code>subjectOnly</code> property into the
+MAY insert the <code>subjectOnly</code> <a>property</a> into the
 <a>verifiable credential</a>, as described below.
           </p>
 
@@ -2238,12 +2244,13 @@ This feature is at risk and is likely to be removed due to lack of consensus.
             <h5>subjectOnly Property</h5>
 
             <p>
-The <code>subjectOnly</code> property states that a
+The <code>subjectOnly</code> <a>property</a> states that a
 <a>verifiable credential</a> MUST only be encapsulated into a
 <a>verifiable presentation</a> whose proof was issued by the
 <code>credentialSubject</code>. A <a>verifiable presentation</a> that contains
-a <a>verifiable credential</a> containing the <code>subjectOnly</code> property
-whose proof creator is not the <code>credentialSubject</code> is invalid.
+a <a>verifiable credential</a> containing the <code>subjectOnly</code>
+<a>property</a> whose proof creator is not the <code>credentialSubject</code>
+is invalid.
             </p>
 
             <pre class="example nohighlight" title="Usage of the subjectOnly property">
@@ -2269,7 +2276,7 @@ whose proof creator is not the <code>credentialSubject</code> is invalid.
           <h4>Credential Uniquely Identifies a Subject</h4>
 
           <p>
-In this case, the <code>credentialSubject</code> property might contain
+In this case, the <code>credentialSubject</code> <a>property</a> might contain
 multiple properties each providing an aspect of the identity of the
 <a>subject</a>, which together, unambiguously identify the <a>subject</a>.
 Some use cases might not require the <a>holder</a> to be identified at all,
@@ -2342,7 +2349,7 @@ behalf of the <a>subject</a> in at least the following ways. The:
           <ul>
             <li>
 <a>Issuer</a> can include the relationship between the <a>holder</a> and
-the <a>subject</a> in the <code>credentialSubject</code> property.
+the <a>subject</a> in the <code>credentialSubject</code> <a>property</a>.
             </li>
             <li>
 <a>Issuer</a> can express the relationship between the <a>holder</a> and
@@ -2467,12 +2474,12 @@ Credentials are likely to be used to build authorization and delegation systems.
 The following is one approach that may be appropriate for some use cases.
       <p>
 
-
       <p>
-When the issuer wishes to authorise a holder to possess a credential that
-describes a subject who is not the holder, and the holder has no known relationship
- with the subject, then the issuer may insert the
-relationship of the holder to itself into the subject's credential.
+When an <a>issuer</a> wants to authorise a <a>holder</a> to possess a
+<a>credential</a> that describes a <a>subject</a> who is not the <a>holder</a>,
+and the <a>holder</a> has no known relationship with the <a>subject</a>, then
+the <a>issuer</a> might insert the relationship of the <a>holder</a> to itself
+into the <a>subject's</a> <a>credential<a>.
       </p>
 
           <pre class="example nohighlight" title="A credential issued to a
@@ -2526,7 +2533,7 @@ wanting to dispute a <a>credential</a> issued by an <a>issuer</a>:
         <ul>
           <li>
 A <a>subject</a> disputes a claim made by the <a>issuer</a>. For example, the
-<code>address</code> property is incorrect or out of date.
+<code>address</code> <a>property</a> is incorrect or out of date.
           </li>
           <li>
 An <a>entity</a> disputes a potentially false claim made by the <a>issuer</a>
