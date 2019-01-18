@@ -114,7 +114,7 @@ Here is an example of usage of the ID property in a credential, using the DID sc
 
 ### JSON vs JSON-LD
 
-### Support for JWT
+Support for JWT
 
 JSON Web Token (JWT) is still a widely used means to express claims to be transferred between two parties. Providing a
 representation of the Verifiable Credentials Data Model for JWT allows existing systems and libraries to participate in
