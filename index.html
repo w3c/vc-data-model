@@ -1121,8 +1121,8 @@ reference to the signing entity, and a representation of the signing date.</dd>
   },
   <span class="highlight">"proof": {
     "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "https://example.com/jdoe/keys/1",
+    "created": "2018-06-18T21:19:10Z",
+    "verificationMethod": "https://example.com/jdoe/keys/1",
     "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
     "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
       MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
@@ -1713,7 +1713,7 @@ definition.
   },
   <span class="highlight">"refreshService": {
     "type": "ManualRefreshService2018",
-    "serviceEndpoint": "https://example.edu/refresh/283947"
+    "serviceEndpoint": "https://example.edu/refresh/3732"
   }</span>,
   "proof": { ... }
 }
@@ -1722,7 +1722,7 @@ definition.
         <p>
 In the example above, the <a>issuer</a> specifies a manual
 <code>refreshService</code> that can be used by directing the <a>holder</a> to
-<code>https://dmv.example.gov/refresh/283947</code>.
+<code>https://example.edu/refresh/3732</code>.
         </p>
       </section>
 
@@ -2108,8 +2108,8 @@ Proof system, also known as CL Signatures.
   },
   <span class="highlight">"proof": {
     "type": "CLSignature2019",
-    "created": "2017-06-17T10:03:48Z",
-    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+    "created": "2018-06-17T10:03:48Z",
+    "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
     "nonce": "bb864289-cec1-4222-afd7-d314239be92e",
     "proofValue: "zqmRkM7gkq5LFYKjixMdqM7gkq5LFYyWbNsVpsq...7Ey3",
   }</span>
@@ -2257,17 +2257,17 @@ is invalid.
 
             <pre class="example nohighlight" title="Usage of the subjectOnly property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
+  "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuer": "https://example.edu/issuers/14",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "claim": {
     "credentialSubject": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
     },
   "SubjectOnly": "True",
   "proof": { ..
-  "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   ... }
 }
             </pre>
@@ -2293,7 +2293,7 @@ to determine the relationship between the <a>subject</a> and the <a>holder</a>.
   "id": "http://example.edu/credentials/332",
   "type": ["VerifiableCredential", "IdentityCredential"],
   "issuer": "https://example.edu/issuers/4",
-  "issued": "2017-02-24",
+  "issuanceDate": "2017-02-24",
   "credentialSubject": {
     "name": "J. Doe",
     "address": {
@@ -2385,7 +2385,7 @@ standardised by the working group.
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential", "RelationshipCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageUnder": 16,
@@ -2408,7 +2408,7 @@ child and the parent such that a <a>verifier</a> would most likely accept the
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
     "child": {
@@ -2432,7 +2432,7 @@ provided with any of the child's <a>credentials</a>.
   "id": "http://example.org/credentials/23894",
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "http://example.org/credentials/23894",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "parent": {
@@ -2496,7 +2496,7 @@ the subject of the credential, but who has a relationship with the issuer">
     "type": "LawEnforcement",
     "id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
   },
-  "issued": "2010-01-01",
+  "issuanceDate": "2010-01-01",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "name": "Mr John Doe",
@@ -2504,8 +2504,8 @@ the subject of the credential, but who has a relationship with the issuer">
   },
   "proof": {
     "type": "RsaSignature2018",
-    "created": "2017-06-17T10:03:48Z",
-    "creator": "https://example.edu/issuers/14/keys/234",
+    "created": "2018-06-17T10:03:48Z",
+    "verificationMethod": "https://example.edu/issuers/14/keys/234",
     "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
     "signatureValue": "pY9...Cky6Ed = "
   }
@@ -4224,8 +4224,8 @@ verifiable credential that was passed to it by the subject">
     {
       "id": "http://example.gov/credentials/3732",
       "type": ["VerifiableCredential", "PrescriptionCredential"],
-      "issuer": "https://dmv.example.gov",
-      "issued": "2010-01-01",
+      "issuer": "https://example.edu",
+      "issuanceDate": "2010-01-01",
       "claim": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "prescription": {....}
@@ -4240,15 +4240,15 @@ verifiable credential that was passed to it by the subject">
       "id": "https://example.com/VC/123456789",
       "type": ["VerifiableCredential", "PrescriptionCredential"],
       "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "issued": "2010-01-03",
+      "issuanceDate": "2010-01-03",
       "claim": {
         "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
         "prescription": {....}
       },
       "proof": {
         "type": "RsaSignature2018",
-        "created": "2017-06-17T10:03:48Z",
-        "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+        "created": "2018-06-17T10:03:48Z",
+        "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
         "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
         "signatureValue": "pYw8XNi1..Cky6Ed="
       }
@@ -4256,8 +4256,8 @@ verifiable credential that was passed to it by the subject">
   ],
   "proof": [{
     "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
+    "created": "2018-06-18T21:19:10Z",
+    "verificationMethod": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
     "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
     "signatureValue": "BavEll0/I1..W3JT24="
   }]
