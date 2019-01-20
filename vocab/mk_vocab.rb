@@ -16,7 +16,7 @@ class Vocab
   )
 
   TITLE = "Verifiable Credentials Vocabulary".freeze
-  DESCRIPTION = %(This document describes the RDFS vocabulary description used for Verifiable Credentials [[VC-DATA-MODEL]] along with the default JSON-LD Context.).freeze
+  DESCRIPTION = %(This document describes the RDFS vocabulary description used for Verifiable Credentials [[VERIFIABLE-CREDENTIALS]] along with the default JSON-LD Context.).freeze
   attr_accessor :prefixes, :terms, :properties, :classes, :contexts, :instances, :datatypes,
                 :imports, :date, :commit, :seeAlso
 
