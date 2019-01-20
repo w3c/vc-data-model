@@ -15,8 +15,8 @@ class Vocab
     :array_nl     => "\n"
   )
 
-  TITLE = "Verifiable Claims Vocabulary".freeze
-  DESCRIPTION = %(This document describes the RDFS vocabulary description used for Verifiable Claims [[verifiable-claims-data-model]] along with the default JSON-LD Context.).freeze
+  TITLE = "Verifiable Credentials Vocabulary".freeze
+  DESCRIPTION = %(This document describes the RDFS vocabulary description used for Verifiable Credentials [[VC-DATA-MODEL]] along with the default JSON-LD Context.).freeze
   attr_accessor :prefixes, :terms, :properties, :classes, :contexts, :instances, :datatypes,
                 :imports, :date, :commit, :seeAlso
 
