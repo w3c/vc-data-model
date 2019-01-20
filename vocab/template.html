@@ -155,14 +155,14 @@ var respecConfig = {
     <% next if Array(ont[sect[:key]]).empty? %>
     <section>
       <h2><%= sect[:heading] %></h2>
-      <p>The following are <%= sect[:heading].downcase %> in the <code>shex</code> namespace:</p>
+      <p>The following are <%= sect[:heading].downcase %> in the <code>cred</code> namespace:</p>
       <table class="rdfs-definition">
         <% Array(ont[sect[:key]]).each do |defn| -%>
         <tr><td class="bold"><%= defn['@id'][5..-1] %></td>
           <td resource="<%= defn['@id'] %>" typeof="<%= Array(defn['@type']).join(" ") %>">
             <em property="rdfs:label"><%= defn['rdfs:label']['en'] %></em>
             <p property="rdfs:comment"><%= defn['rdfs:comment']['en'] %></p>
-            <span property="rdfs:isDefinedBy" resource="shex:"></span>
+            <span property="rdfs:isDefinedBy" resource="cred:"></span>
             <% if %w(rdfs:subClassOf rdfs:subPropertyOf rdfs:range rdfs:domain).any? { |p| defn.has_key?(p)} %>
               <dl class="terms">
                 <% %w(rdfs:subClassOf rdfs:subPropertyOf rdfs:range rdfs:domain).each do |p| %>
