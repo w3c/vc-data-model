@@ -174,9 +174,21 @@ Here is an example verifiable credential that supports zero-knowledge proofs:
 ```
 
 ## Tricky Design Choices
-* JOSE vs JWT - see [Issue 93](https://github.com/w3c/vc-data-model/issues/93)
-* JSON vs JSON-LD
-* Selective disclosure as a requirement see [Issue 224](https://github.com/w3c/vc-data-model/issues/224) for example
+
+### JSON vs JSON-LD
+
+Support for JWT
+
+JSON Web Token (JWT) is still a widely used means to express claims to be transferred between two parties. Providing a
+representation of the Verifiable Credentials Data Model for JWT allows existing systems and libraries to participate in
+the ecosystem.
+
+This specification defines the encoding rules of the Verifiable Credential Data Model onto JWT and JWS. It further
+defines processing rules how and when to make use of specific JWT registered claim names and specific JWS registered
+header parameter names to allow systems based on JWT to comply with this specification while avoiding duplicate
+representation of specific information contained in the enclosed JSON or JSON-LD object.
+
+### Selective disclosure as a requirement see [Issue 224](https://github.com/w3c/vc-data-model/issues/224) for example
 
 (what else should go here?)
 
