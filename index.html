@@ -109,6 +109,12 @@ pre .comment {
   font-weight: bold;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
+.supported {
+  background-color: #93c47d;
+}
+.missing {
+  background-color: #e06666;
+}
     </style>
   </head>
   <body>
@@ -3097,6 +3103,208 @@ request: <a href="https://github.com/w3c/vc-data-model/pull/384">Add section on 
           </p>
 
         </section>
+
+      </section>
+      <section>
+        <h3>Proof Format Trade-Offs</h3>
+
+        <p>
+The Verifiable Credentials Data Model is designed to be compatible with a
+variety of existing and emerging syntaxes and digital proof formats. Each
+format has benefits and drawbacks. The following table is intended to summarize
+a number of these native trade-offs.
+        </p>
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th style="text-align: center;">Feature</th>
+              <th style="text-align: center;">JSON<br>+<br>JWTs</th>
+              <th style="text-align: center;">JSON&#8209;LD<br>+<br>JWTs</th>
+              <th style="text-align: center;">JSON&#8209;LD<br>+<br>LD&#8209;Proofs</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+Support for open world data modelling.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+Universal identifier mechanism for JSON objects via the use of URLs.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+A way to disambiguate keys shared among different JSON documents by mapping
+them to IRIs via a context.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+A mechanism in which a value in a JSON object may refer to a resource on a
+different site on the Web.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+The ability to annotate strings with their language.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+A way to associate datatypes with values such as dates and times.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+A facility to express one or more directed graphs, such as a social network,
+in a single document.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+Supports signature sets.
+              </td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+Embeddable in HTML such that search crawlers will index the machine-readable
+content.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+            <tr>
+              <td>
+Data on the wire is easy to debug.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Nesting signed data does not cause data size to double for every embedding.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Proof format supports Zero-Knowledge Proofs.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Proof format supports arbitrary proofs such as Proof of Work, Proof of
+Elapsed Time, and Proof of Stake.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Proofs can be expressed unmodified in other data syntaxes such as
+YAML, N-Quads, and CBOR.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Changing key-value ordering, or introducing whitespace does not
+invalidate signature.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Support experimental signature systems.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Supports signature chaining.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Does not require pre-processing or post-processing.
+              </td>
+              <td class="missing">✖</td>
+              <td class="missing">✖</td>
+              <td class="supported">✓</td>
+            </tr>
+
+            <tr>
+              <td>
+Canonicalization requires more than base-64 encoding.
+              </td>
+              <td class="supported">✓</td>
+              <td class="supported">✓</td>
+              <td class="missing">✖</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="note">
+Some of the features listed in the table above are debateable since a feature
+can always be added to a particular syntax or digital proof format. The table
+is intended to identify native features of each combination such that no
+additional language design or extension is required to achieve the identified
+feature. Features that all languages provide, such as the ability to express
+numbers, have not been included for the purposes of brevity.
+        </p>
 
       </section>
     </section>
