@@ -140,7 +140,7 @@ Here is an example verifiable credential that supports zero-knowledge proofs:
     "ctx:sov:anoncred:v1",
     "ctx:sov:GppHbMLLeKNYRhcQiXh3GjP2Yh",
   ],
-  "@type": [
+  "type": [
     "VerifiableCredential",
     "AnonCred",
     "ExampleNameDOB"
