@@ -2701,8 +2701,8 @@ JSON syntax. This section formalizes how the data model (described in Sections
 <a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
 <a href="#advanced-concepts"></a>) is realized in JSON and JSON-LD. Although
 syntactic mappings are provided for these two syntaxes only, applications and
-services can use any other data representation syntax,
-such as XML, YAML, or CBOR, that is capable of expressing the data model.
+services can use any other data representation syntax, such as XML, YAML, or
+CBOR, that is capable of expressing the data model.
       </p>
 
       <section>
@@ -2744,8 +2744,8 @@ Other values MUST be represented as a String type.
 
         <p>
 [[!JSON-LD]] is a JSON-based format used to serialize
-<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>.
-The syntax is designed to easily integrate into deployed systems already using
+<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. The
+syntax is designed to easily integrate into deployed systems already using
 JSON, and provides a smooth upgrade path from JSON to JSON-LD. It is primarily
 intended to be a way to use Linked Data in Web-based programming environments,
 to build interoperable Web services, and to store Linked Data in JSON-based
@@ -2756,7 +2756,7 @@ storage engines.
 JSON-LD is useful when extending the data model described in this
 specification. Instances of the data model are encoded in JSON-LD in the same
 way they are encoded in JSON (Section <a href="#json"></a>), with the addition
-of the <code>@context</code> property. The
+of the <code>@context</code> <a>property</a>. The
 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD Context</a>
 is described in detail in the [[!JSON-LD]] specification and its use is
 elaborated on in Section <a href="#extensibility"></a>.
@@ -2766,8 +2766,8 @@ elaborated on in Section <a href="#extensibility"></a>.
 Multiple contexts MAY be used or combined to express any arbitrary information
 about <a>credentials</a> in idiomatic JSON. If an application is processing a
 <a>verifiable credential</a> or <a>verifiable presentation</a>, and a
-<code>@context</code> property is not present at the top-level of the JSON-LD
-document, then a <code>@context</code> property with a value of
+<code>@context</code> <a>property</a> is not present at the top-level of the
+JSON-LD document, then a <code>@context</code> <a>property</a> with a value of
 <code>https://w3.org/2018/credentials/v1</code> MUST be assumed. The JSON-LD
 Context available at <code>https://w3.org/2018/credentials/v1</code> is a
 static document that is never updated and can therefore be downloaded and
@@ -2798,8 +2798,8 @@ This specification defines encoding rules of the Verifiable Credential Data
 Model onto JWT and JWS. It further defines processing rules how and when to
 make use of specific JWT registered claim names and specific JWS registered
 header parameter names to allow systems based on JWT to comply with this
-specification. If these specific claim names and header parameters are
-present, their respective counterpart in the standard <a>verifiable credential</a> and
+specification. If these specific claim names and header parameters are present,
+their respective counterpart in the standard <a>verifiable credential</a> and
 <a>verifiable presentation</a> MAY be omitted to avoid duplication.
           </p>
         </section>
@@ -2810,8 +2810,8 @@ present, their respective counterpart in the standard <a>verifiable credential</
           <p>
 This specification introduces two new registered claim names, which contain
 those parts of the standard <a>verifiable credentials</a> and
-<a>verifiable presentation</a> where no explicit encoding rules for JWT exist. These objects
-are enclosed in the JWT payload as follows:
+<a>verifiable presentation</a> where no explicit encoding rules for JWT exist.
+These objects are enclosed in the JWT payload as follows:
           </p>
 
           <ul>
@@ -2833,29 +2833,32 @@ are enclosed in the JWT payload as follows:
 
           <h5>JWT Encoding</h5>
           <p>
-To encode a <a>verifiable credential</a> as a JWT, specific properties introduced by this specification MUST be encoded
-as standard JOSE header parameters, JWT registered claim names, or contained in the JWS signature part. If no explicit
-rule was specified, properties are encoded in the same way as with
-a standard <a>verifiable credential</a>, and are added to the <code>vc</code> property of the JWT. The following
-paragraphs describe these encoding rules.
+To encode a <a>verifiable credential</a> as a JWT, specific <a>properties</a>
+introduced by this specification MUST be encoded as standard JOSE header
+parameters, JWT registered claim names, or contained in the JWS signature part.
+If no explicit rule is specified, <a>properties</a> are encoded in the same way
+as with a standard <a>verifiable credential</a>, and are added to the
+<code>vc</code> <a>property</a> of the JWT. The following paragraphs describe
+these encoding rules.
           </p>
 
           <p>
 If the JWS is present, the digital signature either refers to the <a>issuer</a>
-of the <a>verifiable credential</a> or the <a>holder</a> of the
-<a>verifiable credential</a> in case of a <a>verifiable presentation</a>. The
-JWS proves that the <a>issuer</a> of the JWT signed the contained JWT payload
-and therefore, the <code>proof</code> property can be omitted.
+of the <a>verifiable credential</a>, or in the case of a
+<a>verifiable presentation</a>, the <a>holder</a> of the
+<a>verifiable credential</a>. The JWS proves that the <a>issuer</a> of the JWT
+signed the contained JWT payload and therefore, the <code>proof</code>
+<a>property</a> can be omitted.
           </p>
 
           <p>
-If no JWS is present, a <code>proof</code> property MUST be provided. The proof
-property can be used to represent more complex proofs, for example if the
-creator is different from the <a>issuer</a>, or a <code>proof</code> not based
-on digital signatures, such as proof of work. The <a>issuer</a> MAY include
-both a JWS and a <code>proof</code> property. For backward compatibility
-reasons, the issuer MUST use JWS to represent proofs based on a digital
-signature.
+If no JWS is present, a <code>proof</code> <a>property</a> MUST be provided.
+The proof <a>property</a> can be used to represent more complex proofs, for
+example if the creator is different from the <a>issuer</a>, or a
+<code>proof</code> not based on digital signatures, such as Proof of Work.
+The <a>issuer</a> MAY include both a JWS and a <code>proof</code>
+<a>property<a>. For backward compatibility reasons, the issuer MUST use JWS to
+represent proofs based on a digital signature.
           </p>
 
           <p>
@@ -2865,7 +2868,7 @@ specification:
 
           <ul>
             <li>
-<code>alg</code> MUST be used for RSA and ECDSA based digital signatures. If
+<code>alg</code> MUST be used for RSA and ECDSA-based digital signatures. If
 only the <code>proof</code> attribute is used, the <code>alg</code> header MUST
 be set to <code>none</code>.
             </li>
@@ -2876,12 +2879,12 @@ specification. For example, the <code>kid</code> can refer to a key in a DID
 Document, or can be the identifier of a key inside a JWKS.
             </li>
             <li>
-<code>typ</code> MUST be set to <code>JWT</code> if present.
+<code>typ</code> MUST be set to <code>JWT</code>, if present.
             </li>
           </ul>
 
           <p>
-For backward compatibility with JWT processors the following JWT registered
+For backward compatibility with JWT processors, the following JWT registered
 claim names MUST be used instead of, or in addition to, their respective
 standard <a>verifiable credential</a> counterparts:
           </p>
@@ -2892,19 +2895,19 @@ standard <a>verifiable credential</a> counterparts:
 timestamp (<code>NumericDate</code>).
             </li>
             <li>
-<code>iss</code> MUST represent the <code>issuer</code> property.
+<code>iss</code> MUST represent the <code>issuer</code> <a>property</a>.
             </li>
             <li>
 <code>iat</code> MUST represent <code>issuanceDate</code>, encoded as a UNIX
 timestamp (<code>NumericDate</code>).
             </li>
             <li>
-<code>jti</code> MUST represent the <code>id</code> property of the
+<code>jti</code> MUST represent the <code>id</code> <a>property</a> of the
 <a>verifiable credential</a>.
             </li>
             <li>
-<code>sub</code> MUST represent the <code>id</code> property contained in the
-<a>verifiable credential</a> <a>subject</a>.
+<code>sub</code> MUST represent the <code>id</code> <a>property</a> contained
+in the <a>verifiable credential</a> <a>subject</a>.
             </li>
             <li>
 <code>aud</code> MUST represent the <code>subject</code> of the consumer of the
@@ -2914,24 +2917,29 @@ timestamp (<code>NumericDate</code>).
 
           <p>
 Other JOSE header parameters and claim names not specified herein can be used
-if their use is not explicitly discouraged. Additional claims MUST be added to the <code>credentialSubject</code>
-property of the JWT.
+if their use is not explicitly discouraged. Additional claims MUST be added to
+the <code>credentialSubject</code> <a>property</a> of the JWT.
           </p>
 
           <p>
 This version of the specification defines no JWT specific encoding rules for
-<a href="#advanced-concepts">Advanced Concepts</a>, e.g., <code>refreshService</code>, <code>termsOfUse</code>, and
-<code>evidence</code>. These concepts can be encoded as they are without any transformation, and can be added to the
-<code>vc</code> property of the JWT.
+the concepts outlined in Section
+<a href="#advanced-concepts">Advanced Concepts</a> (for example,
+<code>refreshService</code>, <code>termsOfUse</code>, and
+<code>evidence</code>). These concepts can be encoded as they are without any
+transformation, and can be added to the <code>vc</code> <a>property</a> of the
+JWT.
           </p>
 
           <h5>JWT Decoding</h5>
           <p>
-To decode a JWT to a standard <a>verifiable credential</a>, the following transformation MUST be performed:
+To decode a JWT to a standard <a>verifiable credential</a>, the following
+transformation MUST be performed:
           </p>
-            <ul>
+
+            <ol>
                 <li>
-Create a new JSON object.
+Create a JSON object.
                 </li>
                 <li>
 If no <code>@context</code> is specified under <code>vc</code>, add the default
@@ -2941,34 +2949,40 @@ If no <code>@context</code> is specified under <code>vc</code>, add the default
 Add the content from the <code>vc</code> property to the new JSON object.
                 </li>
                 <li>
-Transform the remaining JWT specific headers and claims, and add the results to the new
-JSON object.
+Transform the remaining JWT specific headers and claims, and add the results to
+the new JSON object.
                 </li>
-            </ul>
+            </ol>
 
             <p>
-To transform the JWT specific headers and claims, the following MUST be done:
+To transform the JWT specific headers and claims, the following MUST be done.
+If:
             </p>
+
             <ul>
                 <li>
-If <code>exp</code> is present, the UNIX timestamp MUST be converted to an [[!ISO8601]] combined date and
-time string, and MUST be used to set the value of the <code>expirationDate</code> property of
+<code>exp</code> is present, the UNIX timestamp MUST be converted to an
+[[!ISO8601]] combined date and time string, and MUST be used to set the value
+of the <code>expirationDate</code> <a>property</a> of
 <code>credentialSubject</code> of the new JSON object.
                 </li>
                 <li>
-If <code>iss</code> is present, the value MUST be used to set the <code>issuer</code> property of the new JSON object.
+<code>iss</code> is present, the value MUST be used to set the
+<code>issuer</code> <a>property</a> of the new JSON object.
                 </li>
                 <li>
-If <code>iat</code> is present, the UNIX timestamp MUST be converted to an [[!ISO8601]] combined date and
-time string, and MUST be used to set the value of the <code>issuanceDate</code> property of the new JSON object.
+<code>iat</code> is present, the UNIX timestamp MUST be converted to an
+[[!ISO8601]] combined date and time string, and MUST be used to set the value
+of the <code>issuanceDate</code> <a>property</a> of the new JSON object.
                 </li>
                 <li>
-If <code>jti</code> is present, the value MUST be used to set the value of the <code>id</code> property of
-<code>credentialSubject</code> of the new JSON object.
+<code>jti</code> is present, the value MUST be used to set the value of the
+<code>id</code> <a>property</a> of <code>credentialSubject</code> of the new
+JSON object.
                 </li>
                 <li>
-If <code>sub</code> is present, the value MUST be used to set the value of the <code>id</code> property of
-the new JSON object.
+<code>sub</code> is present, the value MUST be used to set the value of the
+<code>id</code> property of the new JSON object.
                 </li>
             </ul>
 
@@ -2981,7 +2995,10 @@ the new JSON object.
           </pre>
 
           <p>
-In the example above, the VC uses a <code>proof</code> based on <code>JWS</code> digital signatures, and the corresponding verification key can be obtained using the <code>kid</code> header parameter.
+In the example above, the <a>verifiable credential</a> uses a
+<code>proof</code> based on <code>JWS</code> digital signatures, and the
+corresponding verification key can be obtained using the <code>kid</code>
+header parameter.
           </p>
 
           <pre class="example nohighlight" title="JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)">
@@ -3009,9 +3026,11 @@ In the example above, the VC uses a <code>proof</code> based on <code>JWS</code>
           </pre>
 
           <p>
-In the example above, <code>vc</code> does not contain the <code>id</code> property as the <code>JWT</code> encoding uses
-the <code>jti</code> attribute to represent a unique identifier. The <code>sub</code> attribute encodes
-the information represented by the <code>id</code> property of <code>credentialSubject</code>.
+In the example above, <code>vc</code> does not contain the <code>id</code>
+<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
+attribute to represent a unique identifier. The <code>sub</code> attribute
+encodes the information represented by the <code>id</code> <a>property</a> of
+<code>credentialSubject</code>.
           </p>
 
           <pre class="example nohighlight" title="Verifiable credential using JWT compact serialization (non-normative)">
@@ -3044,8 +3063,10 @@ AlQuattLRolXx3EtPysrZe-wU7yrEtNPvpGs-OyJAczfJPzza9lGTbx6IWS-0pTmNq6hwNd0ODMiB3uL
           </pre>
 
           <p>
-In the example above, the verifiable presentation uses a <code>proof</code> based on <code>JWS</code> digital signatures,
-and the corresponding verification key can be obtained using the <code>kid</code> header parameter.
+In the example above, the <a>verifiable presentation</a> uses a 
+<code>proof</code> based on <code>JWS</code> digital signatures, and the
+corresponding verification key can be obtained using the <code>kid</code>
+header parameter.
           </p>
 
           <pre class="example nohighlight" title="JWT payload of a JWT based verifiable presentation (non-normative)">
@@ -3069,9 +3090,11 @@ and the corresponding verification key can be obtained using the <code>kid</code
           </pre>
 
           <p>
-In the example above, <code>vp</code> does not contain the <code>id</code> property as the <code>JWT</code> encoding uses
-the <code>jti</code> attribute to represent a unique identifier. <code>verifiableCredential</code> contains an Array
-of Strings of verifiable credentials using <code>JWT</code> compact serialization.
+In the example above, <code>vp</code> does not contain the <code>id</code>
+<a>property</a> because the <code>JWT</code> encoding uses the
+<code>jti</code> attribute to represent a unique identifier. 
+<code>verifiableCredential</code> contains an string array of
+<a>verifiable credentials</a> using <code>JWT</code> compact serialization.
           </p>
 
           <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
@@ -3118,11 +3141,11 @@ dwapkZcYgpuhxHrzNbofYYS0nIIkZ7dIEHiyGhfLo5XzAEmAIU
           </pre>
 
           <p class="issue">
-A number of the concerns have been raised around security,
-composability, reusability, and extensibility with respect
-to the use of JWTs for Verifiable Credentials. These concerns
-will be documented in time in at least the Verifiable Claims Model
-and Security Considerations section of this document.
+A number of the concerns have been raised around security, composability, 
+reusability, and extensibility with respect to the use of JWTs for
+verifiable credentials. These concerns will be documented in time in at least 
+the Verifiable Claims Model and Security Considerations section of this
+document.
           </p>
 
         </section>
