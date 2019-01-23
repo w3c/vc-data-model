@@ -1,6 +1,6 @@
 # Verfiable Credentials Data-Model Explainer
 
-***by Tzviya Siegman, Wiley with a great deal of cribbing from Manu Sporny, Digital Bazaar***
+***by Tzviya Siegman, Wiley; Manu Sporny, Digital Bazaar; Ken Ebert, Sovrin; Brent Zundel, Evernym***
 
 ***NOTE***: "Verifiable Claims" are now known as "Verifiable Credentials".
 The W3C Verifiable Claims Working Group's experience with using the term
@@ -31,51 +31,73 @@ The VCWG is not defining protocols or APIs. The model is identifier agnostic.
 
 The Verifiable Credentials ecosystem is composed of four primary roles:
 
-* The ***Issuer***, who issues verifiable credentials about a specific
-  ***Subject***.
-* The ***Holder*** stores credentials on behalf of a ***Subject***.
-  ***Holders*** are typically also the ***Subject*** of a credential.
-* The ***Verifier*** requests a ***profile*** of the ***Subject***. A
-  ***profile*** contains a specific set of credentials. The ***verifier***
-  verifies that the credentials provided in the profile are fit-for-purpose.
-* The ***Identifier Registry*** is a mechanism that is used to issue
-  identifiers for ***Subjects***.
+* ***issuer*** - A role an entity might perform by creating a verifiable
+  credential, associating it with a specific ***subject***, and transmitting
+  it to a ***holder***. Example issuers include corporations, non-profit
+  organizations, trade associations, governments, and individuals.
+
+* ***holder*** - A role an entity might perform by possessing one or more
+  verifiable credentials about a ***subject*** and generating presentations from them.
+  Example ***holders*** include students, employees, and customers.
+
+* ***verifier*** - A role an entity might perform by requesting and receiving a
+  verifiable presentation that proves the ***holder*** possesses the required
+  verifiable credentials. Example ***verifiers*** include employers, security
+  personnel, and websites.
+
+* ***verifiable data registry*** - A role a system might perform by mediating
+  the creation and verification of ***issuer*** identifiers, keys, and other
+  relevant data, such as verifiable credential schemas and revocation registries,
+  which might be required to use verifiable credentials. Some configurations might
+  require correlatable identifiers for ***subjects***. Example verifiable data
+  registries include trusted databases, decentralized databases, government ID
+  databases, and distributed ledgers.
 
 A visual depiction of the ecosystem above is shown below:
 
 <a href="https://w3c.github.io/vc-data-model/">
-  <img src="https://rawgithub.com/WebOfTrustInfo/rebooting-the-web-of-trust-spring2018/master/topics-and-advance-readings/verifiable-credentials-primer-diagrams/ecosystem.svg" width="100%" height="400">
+  <img src="diagrams/ecosystem.svg" width="100%" height="400">
 </a>
 
-### Claims, Credentials, and Profiles
+### Claims, Credentials, and Presentations
 
-The ecosystem roles exchange data that enables the realization of the previously
-mentioned use cases. The data that is exchanged differs based on the roles
-participating, but is fundamentally composed of Claims, Credentials, and
-Profiles.
+The ecosystem roles exchange data that enables the realization of the use cases below.
+The data that is exchanged differs based on the roles participating, but is
+fundamentally composed of claims, credentials, and presentations.
 
 A claim is statement about a subject, expressed as a subject-property-value relationship:
 
 <a href="https://w3c.github.io/vc-data-model/">
-  <img src="https://rawgithub.com/WebOfTrustInfo/rebooting-the-web-of-trust-spring2018/master/topics-and-advance-readings/verifiable-credentials-primer-diagrams/claim-simple.svg" width="50%">
+  <img src="diagrams/claim.svg" width="50%">
 </a>
 
 ### Proofs
-The cryptographic mechanism used to prove that the information in a verifiable credential or a verifiable presentation has not been tampered with is called a proof. There are many types of cryptographic proofs including, but not limited to, digital signatures, zero-knowledge proofs, proofs of work, and proofs of stake. In general, when verifying proofs implementations MUST ensure that:
-
-* The proof is available in the form of a known proof suite.
-* All required proof suite properties are present.
-* The proof suite verification agorithm, when applied to the data, results in an acceptable proof.
+The cryptographic mechanism used to prove that the information in a
+verifiable credential or a verifiable presentation has not been tampered
+with is called a proof. There are many types of cryptographic proofs
+including, but not limited to, digital signatures, zero-knowledge proofs,
+proofs of work, and proofs of stake.
 
 The data model does not detail proof mechanisms. 
+
+#### Zero-Knowledge Proofs
+The verifiable credentials data model supports the use of zero-knowledge proof technology.
+This allows credentials with zkp-compatible elements to support presentations that enable:
+* selective disclosure of each credential attribute
+* predicate proofs of numeric values (e.g. integers, dates, enumerations)
+  * greater-than
+  * less-than
+  * range (e.g. 5 < x < 100)
+* set-membership proofs
 
 ## Use Cases
 The VCWG has created an [Use Case](https://w3c.github.io/vc-use-cases/) Document, including focal use cases that demonstrate complicated scenarios and the full encoding. 
 
 Some simple use cases: 
-* A student presents a government-issued identity to verify who she is when presenting herself for a standardized test
+* A student presents a government-issued identity to verify who she is when presenting herself for a standardized test.
 * An airline offers loyal customers upgrades to first-class via digital coupons. Coupons are issued as verifiable credentials.
-* The Board of Physicians maintains its list of board-certified physicians in a credentials repository, enabling them to assert that a physician is certified or revoke certification as needed. This information can be verified as physicians apply for positions or by patients as they seek information about the doctors they are considering.
+* The Board of Physicians maintains its list of board-certified physicians in a credentials repository, enabling them to assert that a physician is certified or revoke certification as needed. This information can be verified as physicians apply for positions or by patients as they seek information about the doctors they are considering. This may be done as a zero-knowledge proof of set membership.
+* A loan applicant presents proof of sufficient income, derived from a credential issued by her employer. This may be done without revealing her exact income by using a zero-knowledge predicate proof.
 
 ## Code Samples
 What does a Verifiable Credential look like?
@@ -106,6 +128,47 @@ Here is an example of usage of the ID property in a credential, using the DID sc
       MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
       PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
       +W3JT24="
+  }
+}
+```
+
+Here is an example verifiable credential that supports zero-knowledge proofs:
+```
+{
+  "@context": [
+    "https://w3.org/2018/credentials/v1",
+    "ctx:sov:anoncred:v1",
+    "ctx:sov:GppHbMLLeKNYRhcQiXh3GjP2Yh",
+  ],
+  "@type": [
+    "VerifiableCredential",
+    "AnonCred",
+    "ExampleNameDOB"
+  ],
+  "issuer": "did:sov:4t1FPo72LzDMwpqtTVGVjysD6GUqS",
+  "issuanceDate": "2018-11-27T12:37:15Z",
+  "credentialSubject": {
+    "name": "John Doe",
+    "birthDate": "1969-02-14",
+  },
+  "proof": {
+    "m_2": "0x375A05242CF33E9AE2E527DB6D6D5A2FA78A3042EF25D21013F82D5C642E98FA",
+    "attributes": [
+      "0x6998340478030A68F6DB6A3D4CB94304C4C60576E0992CBE81C4D32764876AD4",
+      "0x5BFD3A7B",
+      "0x3C414697B170EB2691A2AE126DD07F936005C478FFAEDB3B67255DA017C64A4B",
+      "0x629E",
+    ],
+    "cred_def": "cdf:sov:Q6kuSqnxE57waPFs2xAs7q:3:CL:12:CDL1",
+    "signature": {
+      "A": "0x2B048AFC2099E78A4F11C75FE913ECDAFDE07911D1D54F439ECC5CDB1AC952E95309DB6D809F31E1A0C2326E3603A21DD7F29E11AA2ABA9D5B077A53EF49C45EF9FA757508708B5FBE26EB4D21CC63C40BDC785E758A106FFB9654D8E8B9B1A34A7DA26E8BF6174DF6C735D909EE32B44200E36616C31EA6DDBFC252004F68A30BEE16A714C75DB60D920DB3E6B18622C6944C75337FB1CB8E3AC928CB182ABE49AD76EBE19063D1353D159341DEB76B9D6732A77B45BC5EBD35A6B7AC4C39CCDCDF846281B130D5A5E22CA6F8479F8CDBE3293E317AE4EC5A0716EE1B6348B6D6C196FCE1A594F57FF8999E57AAC8EC54C99296E9D35EE3FEDFB20ACBE97533C"
+      "e": "0x1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006887BBE4F8F22F6FF0EE2863E42615"
+      "v": "0x8639169982733C9D95BC8782C3566E1774BAAFA4B048648BFEF3ACB588A0488982E123B69B09FD03DF501824895FD670F77CB6B832F97FAA85F746B0869EAFB4A358214103B4AB00A4993A1AD9EB1DE0A980818D7C6C085112713989444EEC04D07E99D5C827A76DA4E24BC2F445CB82658F6A079AB03C002E8812C79E1E155CFAEAA12046BAD5C51DE2292DEA64AFB61387813DEC96B2485E84D2039E571ACAF3BA9A820918EE9616300D8D970C1211C7F71966C008FC56D0D8136A1B43074C2AAF3C39E4E59ED4A5C3EB355352083497332B1B37C591DC7786C4A000C6D087C9C7C039CFCB137EAE7B905D5881E94AC626F1B0945D7FDC74CDFADE02D67449706146FE43A32AF560E84CCA7A0FF351F5FD266C3D7D0C1EB1A056BC257392CE170D25CC24918FDA1DBFE4F9BEE702410276C115BE3E0680445429DFAA2B07F2C51296DD3508C796B90A7EB1D301E8079D6CC8099"
+    },
+    "signature_correctness_proof": {
+      "se": "0x2CEF1A529FC0C64EC2D14BF7555E726F99061CBD6C41365401203FE81139496EDB4763FDEFF85124C8CC8DA0C60E16E3B68E57B9A1014B2CA99656AAF69BF7C1B1FA298C16FC6A7FB16E009B5CF03568113BCACBDAF927E04808F5032476274B4302EBDA632B721A3C0899B82762AC436564770E5B34EE85AEEDA43E87A1BBB82FCB2BAA179EA1FE9046CE43FCB5FF589650578518867E40DA438C5DA01B2CB7166650B7546F451A11652EBB80A3FA7193092233533A42BFA19897D6C17964E19826E0F50FA81CEFDB91DC954DFCFE0029463A224CA8DE2AA6A16D64EBCE4208350130E3CC560048863B424CBD9D6FADD780B40B4DD8D3BC1501B2E5FBFCBA8C",
+      "c": "0xD074B91DC755D75F56BA00F0B650190CF7035BFBE65678A290A511DFEF554521"
+    }
   }
 }
 ```

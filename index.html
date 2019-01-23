@@ -44,16 +44,18 @@
 
         // editors, add as many as you like
         // only "name" is required
-        editors:  [
+        editors: [
           { name: "Manu Sporny", url: "http://manu.sporny.org/",
-            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/" },
-          { name: "Daniel C. Burnett", url: "https://www.linkedin.com/in/daburnett/",
-            company: "Invited Expert", companyURL: "https://www.linkedin.com/in/daburnett/"},
-          { name: "Dave Longley", url: "https://github.com/dlongley",
             company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"},
           { name: "Gregg Kellogg", url: "http://greggkellogg.net/",
             company: "Spec-Ops", companyURL: "https://spec-ops.io/",
-            w3cid: "44770" }
+            w3cid: "44770" },
+          { name: "Grant Noble", url: "https://www.linkedin.com/in/grant-noble-8253994a/",
+            company: "ConsenSys", companyURL: "https://consensys.net/"},
+          { name: "Daniel C. Burnett", url: "https://www.linkedin.com/in/daburnett/",
+            company: "ConsenSys", companyURL: "https://consensys.net/"},
+          { name: "Dave Longley", url: "https://github.com/dlongley",
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"}
         ],
         // authors, add as many as you like.
         // This is optional, uncomment if you have authors as well as editors.
@@ -63,7 +65,9 @@
           { name: "Manu Sporny", url: "http://digitalbazaar.com/",
             company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/" },
           { name: "Dave Longley", url: "http://digitalbazaar.com/",
-            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"}
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"},
+          { name: "David Chadwick", url: "https://www.linkedin.com/in/david-chadwick-36816395/",
+            company: "University of Kent", companyURL: "https://www.kent.ac.uk/"}
         ],
         // name of the WG
         wg:           "Verifiable Claims Working Group",
@@ -483,20 +487,20 @@ added.
         <h3>Credentials</h3>
 
         <p>
-A <a>credential</a> is set of one or more <a>claims</a> made by the same
-<a>entity</a>. <a>Credentials</a> might include an identifier as well as
+A <a>credential</a> is a set of one or more <a>claims</a> made by the same
+<a>entity</a>. <a>Credentials</a> might also include an identifier and
 metadata to describe properties of the <a>credential</a>, such as the
-<a>issuer</a>, the expiry time, a representative image, a public key to use
-for <a>verification</a> purposes, the revocation mechanism, and so on. This
-metadata might be signed by the <a>issuer</a>. A <a>verifiable credential</a>
-is a set of tamper-evident <a>claims</a> and metadata that cryptographically
-prove who issued it.
+<a>issuer</a>, the expiry date and time, a representative image, a public key
+to use for <a>verification</a> purposes, the revocation mechanism, and so on.
+The metadata might be signed by the <a>issuer</a>. A
+<a>verifiable credential</a> is a set of tamper-evident <a>claims</a> and
+metadata that cryptographically prove who issued it.
         </p>
 
-        <figure>
-          <img style="margin: auto; display: block; width: 50%;" src="diagrams/credential.svg">
+        <figure id="basic-vc">
+          <img style="margin: auto; display: block;" width="50%" src="diagrams/credential.svg">
           <figcaption style="text-align: center;">
-The basic components of a verifiable credential.
+Basic components of a verifiable credential.
           </figcaption>
         </figure>
 
@@ -514,25 +518,24 @@ disclosure scheme that does not reveal the <a>credential</a> identifier.
         </p>
 
         <p>
-The example above provides a simple visual describing the components of a
-<a>verifiable credential</a>, but abstracts some of the details about how
-<a>claims</a> are organized into <a>graphs</a>, which are then organized into
-<a>verifiable credentials</a>. The example below attempts to provide a
-complete visual depiction of a <a>verifiable credential</a>, which is
-normally composed of at least two <a>graphs</a> of information.
-The first <a>graph</a> expresses the <a>credential</a> itself, which contains
+<a href="#basic-vc"></a> above shows the basic components of a
+<a>verifiable credential</a>, but abstracts the details about how <a>claims</a>
+are organized into information <a>graphs</a>, which are then organized into
+<a>verifiable credentials</a>. <a href="#info-graph-vc"></a> below shows a
+more complete depiction of a <a>verifiable credential</a>,
+which is normally composed of at least two information <a>graphs</a>. The first
+<a>graph</a> expresses the <a>credential</a> itself, which contains
 <span class="color-text" style="color:#d5a6bd;">credential metadata</span> and
-<span class="color-text" style="color:#ffe599;">claims</span>.
-The second <a>graph</a> expresses the
-<span class="color-text" style="color:#b6d7a8;">digital proof</span>,
-which is usually a digital signature.
+<span class="color-text" style="color:#ffe599;">claims</span>. The second
+<a>graph</a> expresses the
+<span class="color-text" style="color:#b6d7a8;">digital proof</span>, which is
+usually a digital signature.
         </p>
 
-        <figure>
-          <img style="margin: auto; display: block; width: 100%;" src="diagrams/credential-graph.svg">
+        <figure id="info-graph-vc">
+          <img style="margin: auto; display: block;" width="100%" src="diagrams/credential-graph.svg">
           <figcaption style="text-align: center;">
-A visual depiction of the information graphs associated with a basic verifiable
-credential.
+Information graphs associated with a basic verifiable credential.
           </figcaption>
         </figure>
 
@@ -571,26 +574,27 @@ was issued by multiple <a>issuers</a>. The aggregation of this information
 typically expresses an aspect of a person, organization, or <a>entity</a>.
         </p>
 
-        <figure>
+        <figure id="basic-vp">
           <img style="margin: auto; display: block;"
             width="50%" src="diagrams/presentation.svg">
           <figcaption style="text-align: center;">
-The basic components of a verifiable presentation.
+Basic components of a verifiable presentation.
           </figcaption>
         </figure>
 
         <p>
-The example above provides a simple visual describing the components of a
-<a>verifiable presentation</a>, but abstracts some of the details about how
-<a>verifiable credentials</a> are organized into <a>graphs</a>, which are then
-organized into <a>verifiable presentations</a>. The example below attempts to
-provide a complete visual depiction of a <a>verifiable presentation</a>, which
-is normally composed of at least four <a>graphs</a> of information.
-The first <a>graph</a> expresses the <a>presentation</a> itself, which contains
+<a href="#basic-vp"></a> above shows the components of a
+<a>verifiable presentation</a>, but abstracts the details about how
+<a>verifiable credentials</a> are organized into information <a>graphs</a>,
+which are then organized into <a>verifiable presentations</a>.
+<a href="#info-graph-vp"></a> below shows a more complete depiction of a
+<a>verifiable presentation</a>, which is normally composed of at least four
+information <a>graphs</a>. The first <a>graph</a> expresses the
+<a>presentation</a> itself, which contains
 <span class="color-text" style="color:#b4a7d6;">presentation metadata</span>.
-The <code>verifiablePresentation</code> property in the graph refers to one or
-more <a>verifiable credentials</a> (each a self-contained <a>graph</a>) which
-in turn contains
+The <code>verifiablePresentation</code> property in the <a>graph</a> refers to
+one or more <a>verifiable credentials</a> (each a self-contained <a>graph</a>),
+which in turn contains
 <span class="color-text" style="color:#d5a6bd;">credential metadata</span> and
 <span class="color-text" style="color:#ffe599;">claims</span>.
 The third <a>graph</a> expresses the
@@ -600,11 +604,10 @@ which is usually a digital signature. The fourth <a>graph</a> expresses the
 which is usually a digital signature.
         </p>
 
-        <figure>
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/presentation-graph.svg">
+        <figure id="info-graph-vp">
+          <img style="margin: auto; display: block;" width="75%" src="diagrams/presentation-graph.svg">
           <figcaption style="text-align: center;">
-A visual depiction of the information graphs associated with a basic verifiable
-presentation.
+Information graphs associated with a basic verifiable presentation.
           </figcaption>
         </figure>
 
@@ -730,7 +733,8 @@ revoked", or "MUST be in the expected range").
 
       <p>
 This section introduces some basic concepts for the specification, in
-preparation for advanced concepts later in the document.
+preparation for Section <a href="#advanced-concepts"></a> later in the
+document.
       </p>
 
       <section>
@@ -741,14 +745,14 @@ When two software systems need to exchange data, they must use terminology and
 a protocol that both systems understand. As an analogy, consider how two
 people communicate. Both people must use the same language and the words they
 use must mean the same thing to each other. This specification uses the
-<code>@context</code> property to express the context of a conversation.
+<code>@context</code> <a>property</a> to express the context of a conversation.
         </p>
 
         <dl>
           <dt><dfn>@context</dfn></dt>
           <dd>
-The value of the <code>@context</code> property MUST be one or more URIs,
-where the value of the first URI is
+The value of the <code>@context</code> <a>property</a> MUST be one or more
+URIs, where the value of the first URI is
 <code>https://w3.org/2018/credentials/v1</code>. If more than one URI is
 provided, the URIs MUST be interpreted as an ordered set. It is RECOMMENDED
 that dereferencing the URIs results in a document containing machine-readable
@@ -805,7 +809,7 @@ When expressing statements about a specific thing, such as a person, product,
 or organization, it is often useful to use some kind of identifier so that
 others can express statements about the same thing. Identifiers that others
 are expected to use when expressing statements about a specific thing MUST be
-expressed using the <code>id</code> property.
+expressed using the <code>id</code> <a>property</a>.
         </p>
 
         <p class="note">
@@ -813,13 +817,13 @@ Developers should remember that identifiers might be harmful in scenarios
 where pseudonymity is required. Developers are encouraged to read
 Section <a href="#privacy-considerations"></a> carefully when considering
 such scenarios. Where privacy is a strong consideration, the <code>id</code>
-property MAY be omitted.
+<a>property</a> MAY be omitted.
         </p>
 
         <dl>
           <dt><dfn>id</dfn></dt>
           <dd>
-The value of the <code>id</code> property MUST be a single URI. It is
+The value of the <code>id</code> <a>property</a> MUST be a single URI. It is
 RECOMMENDED that dereferencing the URI results in a document containing
 machine-readable information about the identifier.
           </dd>
@@ -871,14 +875,14 @@ used in the <a>verifiable credentials</a> ecosystem.
 Software systems that process the kinds of objects specified in this document
 use type information to determine whether or not a provided <a>credential</a>
 or <a>presentation</a> is appropriate. Type information SHOULD be expressed
-using the <code>type</code> property.
+using the <code>type</code> <a>property</a>.
         </p>
 
         <dl>
           <dt><dfn data-lt="type|types">type</dfn></dt>
           <dd>
-The value of the <code>type</code> property MUST be, or map to, one or more
-URIs. If more than one URI is provided, the URIs MUST be interpreted as an
+The value of the <code>type</code> <a>property</a> MUST be, or map to, one or
+more URIs. If more than one URI is provided, the URIs MUST be interpreted as an
 unordered set. Syntactic conveniences, such as JSON-LD terms, SHOULD be used
 to ease developer usage. It is RECOMMENDED that dereferencing
 the URIs results in a document containing machine-readable information about
@@ -924,9 +928,9 @@ MUST have a <a>type</a> specified.
 <a href="#credentials">Credential</a>&nbsp;object
               </td>
               <td>
-<code>VerifiableCredential</code> and a more specific <a>credential</a> type.
-For example,<br>
-<code>"type": ["VerifiableCredential", "ProofOfAgeCredential"]</code>
+<code>VerifiableCredential</code> and a more specific <a>credential</a>
+<a>type</a>. For example,<br>
+<code>"type": ["VerifiableCredential", "UniversityDegreeCredential"]</code>
               </td>
             </tr>
 
@@ -936,7 +940,7 @@ For example,<br>
               </td>
               <td>
 <code>VerifiablePresentation</code> and a more specific <a>presentation</a>
-type. For example,<br>
+<a>type</a>. For example,<br>
 <code>"type": ["VerifiablePresentation", "CredentialManagerPresentation"]</code>
               </td>
             </tr>
@@ -946,7 +950,7 @@ type. For example,<br>
 <a href="#status">credentialStatus</a>&nbsp;object
               </td>
               <td>
-A valid <a>credential</a> status type. For example,<br>
+A valid <a>credential</a> status <a>type</a>. For example,<br>
 <code>"type": "CredentialStatusList2017"</code>
               </td>
             </tr>
@@ -956,7 +960,7 @@ A valid <a>credential</a> status type. For example,<br>
 <a href="#terms-of-use">termsOfUse</a>&nbsp;object
               </td>
               <td>
-A valid terms of use type. For example,<br>
+A valid terms of use <a>type</a>. For example,<br>
 <code>"type": "OdrlPolicy2017"</code>)
               </td>
             </tr>
@@ -966,7 +970,7 @@ A valid terms of use type. For example,<br>
 <a href="#evidence">evidence</a>&nbsp;object
               </td>
               <td>
-A valid evidence type. For example,<br>
+A valid evidence <a>type</a>. For example,<br>
 <code>"type": "DocumentVerification2018"</code>
               </td>
             </tr>
@@ -977,7 +981,7 @@ A valid evidence type. For example,<br>
         <p>
 All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
 specify, or be associated with, additional more narrow <a>types</a> (like
-<code>ProofOfAgeCredential</code>, for example) so software systems can
+<code>UniversityDegreeCredential</code>, for example) so software systems can
 process this additional information.
         </p>
 
@@ -994,9 +998,9 @@ object <a>type</a>.
 
         <p>
 For example, a <a>credential</a> object with the <code>type</code> of
-<code>ProofOfAgeCredential</code>, signals to a <a>verifier</a> that the Object
-associated with the <code>credentialSubject</code> property contains the
-identifier for the:
+<code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that
+the object associated with the <code>credentialSubject</code> property contains
+the identifier for the:
         </p>
 
         <ul>
@@ -1004,7 +1008,10 @@ identifier for the:
 <a>Subject</a> in the <code>id</code> property.
           </li>
           <li>
-Age assertion in the <code>ageOver</code> property.
+The type of degree in the <code>type</code> property.
+          </li>
+          <li>
+The title of the degree in the <code>name</code> property.
           </li>
         </ul>
 
@@ -1042,18 +1049,18 @@ interoperable extensibility, do.
         <dl>
           <dt><var>issuer</var></dt>
           <dd>
-The value of the <code>issuer</code> property MUST be a URI. It is RECOMMENDED
-that dereferencing the URI results in a document containing machine-readable
-information about the <a>issuer</a> that can be used to verify the information
-expressed in the <a>credential</a>.
+The value of the <code>issuer</code> <a>property</a> MUST be a URI. It is
+RECOMMENDED that dereferencing the URI results in a document containing
+machine-readable information about the <a>issuer</a> that can be used to verify
+the information expressed in the <a>credential</a>.
           </dd>
           <dt><var>issuanceDate</var></dt>
           <dd>
-The value of the <code>issuanceDate</code> property MUST be a string value of
-an [[!ISO8601]] combined date and time string representing the date and
-time the <a>credential</a> was issued. Note that this date represents the
+The value of the <code>issuanceDate</code> <a>property</a> MUST be a string
+value of an [[!ISO8601]] combined date and time string representing the date
+and time the <a>credential</a> was issued. Note that this date represents the
 earliest date when the information associated with the
-<code>credentialSubject</code> property became valid.
+<code>credentialSubject</code> <a>property</a> became valid.
           </dd>
         </dl>
 
@@ -1092,9 +1099,9 @@ For a <a>credential</a> or <a>presentation</a> to be verifiable, the following
           <dd>
 The method used for a mathematical proof varies by representation language and
 the technology used.  For example, if digital signatures are used for the
-proof mechanism, the <code>proof</code> property is expected to have a value
-that is a set of name-value pairs including at least a signature, a reference
-to the signing entity, and a representation of the signing date.</dd>
+proof mechanism, the <code>proof</code> <a>property</a> is expected to have a
+value that is a set of name-value pairs including at least a signature, a
+reference to the signing entity, and a representation of the signing date.</dd>
         </dl>
 
         <pre class="example nohighlight"
@@ -1117,8 +1124,8 @@ to the signing entity, and a representation of the signing date.</dd>
   },
   <span class="highlight">"proof": {
     "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "https://example.com/jdoe/keys/1",
+    "created": "2018-06-18T21:19:10Z",
+    "verificationMethod": "https://example.com/jdoe/keys/1",
     "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
     "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
       MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
@@ -1145,9 +1152,9 @@ the following <a>property</a>:
         <dl>
           <dt><var>expirationDate</var></dt>
           <dd>
-If specified, the value of the <code>expirationDate</code> property MUST be a
-string value of an [[!ISO8601]] combined date and time string representing the
-date and time the <a>credential</a> ceases to be valid.
+If specified, the value of the <code>expirationDate</code> <a>property</a> MUST
+be a string value of an [[!ISO8601]] combined date and time string representing
+the date and time the <a>credential</a> ceases to be valid.
           </dd>
         </dl>
 
@@ -1186,18 +1193,18 @@ as whether it is suspended or revoked, MAY be provided using the
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>
-If specified, the value of the <code>credentialStatus</code> property MUST
-include the:
+If specified, the value of the <code>credentialStatus</code> <a>property</a>
+MUST include the:
 
             <ul>
               <li>
-<code>id</code> property, which MUST be a URL.
+<code>id</code> <a>property</a>, which MUST be a URL.
               </li>
               <li>
-<code>type</code> property, which expresses the <a>credential</a> status type
-(also referred to as the <a>credential</a> status scheme), which MUST provide
-enough information to determine the current status of the <a>credential</a>
-(for example, suspended or revoked).
+<code>type</code> <a>property</a>, which expresses the <a>credential</a> status
+type (also referred to as the <a>credential</a> status scheme), which MUST
+provide enough information to determine the current status of the
+<a>credential</a> (for example, suspended or revoked).
               </li>
             </ul>
           </dd>
@@ -1205,9 +1212,9 @@ enough information to determine the current status of the <a>credential</a>
 
         <p>
 The precise contents of the <a>credential</a> status information is determined
-by the specific <code>credentialStatus</code> type definition, and varies
-depending on factors such as whether it is simple to implement or if it is
-privacy-enhancing.
+by the specific <code>credentialStatus</code> <a>type</a> definition, and
+varies depending on factors such as whether it is simple to implement or if it
+is privacy-enhancing.
         </p>
 
         <pre class="example nohighlight" title="Usage of the status property">
@@ -1276,12 +1283,13 @@ The example below shows a <a>verifiable presentation</a> that embeds
         </pre>
 
         <p>
-The contents of the <code>verifiableCredential</code> property shown above are
-<a>verifiable credentials</a> as described by this specification. The contents
-of the <code>proof</code> property are proofs as described by the
-Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code> property
-is optional and MAY be used to provide a unique identifier for the
-presentation.
+The contents of the <code>verifiableCredential</code> <a>property</a> shown
+above are <a>verifiable credentials</a> as described by this specification. The
+contents of the <code>proof</code> <a>property</a> are proofs as described by the
+Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code>
+<a>property</a> is optional and MAY be used to provide a unique identifier for
+the presentation. The value associated with the <code>id</code> property MUST
+be a URI.
         </p>
 
         <p>
@@ -1302,7 +1310,7 @@ that contains derived data instead of directly embedded verifiable credentials.
 If a <a>presentation</a> supports <a>derived predicates</a>, a <a>claim</a>
 about birthdate in a <a>credential</a> can become the basis of proof that at a
 given point in time, the age of a <a>subject</a> did or will fall within a
-specified interval. Selective disclosure schemes using zero-knowledge proofs
+specified range. Selective disclosure schemes using zero-knowledge proofs
 can use <a>claims</a> expressed in this model to prove additional statements
 about those <a>claims</a>. For example, a <a>claim</a> specifying a
 <a>subject's</a> date of birth can be used as a predicate to prove the
@@ -1317,9 +1325,8 @@ the <a>claim</a> in any way that is applicable to the desired
           <img style="margin: auto; display: block;"
             width="50%" src="diagrams/claim-example-2.svg">
           <figcaption style="text-align: center;">
-An example of a basic claim expressing that Pat's date of
-birth is 2010-01-01T19:23:24Z.
-Date encoding would be determined by the schema.
+A basic claim expressing that Pat's date of birth is 2010-01-01T19:23:24Z. Date
+encoding would be determined by the schema.
           </figcaption>
         </figure>
 
@@ -1578,7 +1585,7 @@ definition.
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.org/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -1592,7 +1599,7 @@ definition.
     }
   },
   <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/motorlicense/proof-of-age.json",
+    "id": "https://example.org/examples/degree.json",
     "type": "JsonSchemaValidator2018"
   }</span>,
   "proof": { ... }
@@ -1620,7 +1627,7 @@ such as those used to perform zero-knowledge proofs.
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.org/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -1634,7 +1641,7 @@ such as those used to perform zero-knowledge proofs.
     }
   },
   <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/motorlicense/proof-of-age.zkp",
+    "id": "https://example.org/examples/degree.zkp",
     "type": "ZkpExampleSchema2018"
   }</span>,
   "proof": { ... }
@@ -1694,7 +1701,7 @@ definition.
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.org/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -1709,7 +1716,7 @@ definition.
   },
   <span class="highlight">"refreshService": {
     "type": "ManualRefreshService2018",
-    "serviceEndpoint": "https://example.edu/refresh/283947"
+    "serviceEndpoint": "https://example.edu/refresh/3732"
   }</span>,
   "proof": { ... }
 }
@@ -1718,7 +1725,7 @@ definition.
         <p>
 In the example above, the <a>issuer</a> specifies a manual
 <code>refreshService</code> that can be used by directing the <a>holder</a> to
-<code>https://dmv.example.gov/refresh/283947</code>.
+<code>https://example.edu/refresh/3732</code>.
         </p>
       </section>
 
@@ -1853,7 +1860,7 @@ violate the stated Terms of Use.
           <dd>
 Each <code>termsOfUse</code> MUST specify its <a>type</a>, for example,
 <code>IssuerPolicy</code>, and optionally, its instance id. The precise
-contents of each term of use is determined by the specific 
+contents of each term of use is determined by the specific
 <code>TermsOfUse</code> <a>type</a> definition.
           </dd>
         </dl>
@@ -1869,7 +1876,7 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.org/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -1906,7 +1913,7 @@ storing the data in an archive.
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.org/examples/v1"
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "type": "VerifiablePresentation",
@@ -1997,7 +2004,7 @@ credentials are supported by the specification.
 {
   "@context": [
     "https://w3.org/2018/credentials/v1",
-    "https://example.org/motorlicense/v1"
+    "https://example.org/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -2104,8 +2111,8 @@ Proof system, also known as CL Signatures.
   },
   <span class="highlight">"proof": {
     "type": "CLSignature2019",
-    "created": "2017-06-17T10:03:48Z",
-    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+    "created": "2018-06-17T10:03:48Z",
+    "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
     "nonce": "bb864289-cec1-4222-afd7-d314239be92e",
     "proofValue: "zqmRkM7gkq5LFYKjixMdqM7gkq5LFYyWbNsVpsq...7Ey3",
   }</span>
@@ -2190,7 +2197,7 @@ this document. The purpose of this section is to guide implementers wanting to
 extend <a>verifiable credentials</a> and <a>verifiable presentations</a> to
 support zero-knowledge proof systems.
         </p>
-		
+
       </section>
 
       <section>
@@ -2253,17 +2260,17 @@ is invalid.
 
             <pre class="example nohighlight" title="Usage of the subjectOnly property">
 {
-  "id": "http://dmv.example.gov/credentials/3732",
+  "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://dmv.example.gov/issuers/14",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuer": "https://example.edu/issuers/14",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "claim": {
     "credentialSubject": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
     },
   "SubjectOnly": "True",
   "proof": { ..
-  "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   ... }
 }
             </pre>
@@ -2289,7 +2296,7 @@ to determine the relationship between the <a>subject</a> and the <a>holder</a>.
   "id": "http://example.edu/credentials/332",
   "type": ["VerifiableCredential", "IdentityCredential"],
   "issuer": "https://example.edu/issuers/4",
-  "issued": "2017-02-24",
+  "issuanceDate": "2017-02-24",
   "credentialSubject": {
     "name": "J. Doe",
     "address": {
@@ -2381,7 +2388,7 @@ standardised by the working group.
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential", "RelationshipCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageUnder": 16,
@@ -2404,7 +2411,7 @@ child and the parent such that a <a>verifier</a> would most likely accept the
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
     "child": {
@@ -2428,7 +2435,7 @@ provided with any of the child's <a>credentials</a>.
   "id": "http://example.org/credentials/23894",
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "http://example.org/credentials/23894",
-  "issued": "2010-01-01T19:23:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "parent": {
@@ -2477,7 +2484,7 @@ When an <a>issuer</a> wants to authorise a <a>holder</a> to possess a
 <a>credential</a> that describes a <a>subject</a> who is not the <a>holder</a>,
 and the <a>holder</a> has no known relationship with the <a>subject</a>, then
 the <a>issuer</a> might insert the relationship of the <a>holder</a> to itself
-into the <a>subject's</a> <a>credential<a>.
+into the <a>subject's</a> <a>credential</a>.
       </p>
 
           <pre class="example nohighlight" title="A credential issued to a
@@ -2492,7 +2499,7 @@ the subject of the credential, but who has a relationship with the issuer">
     "type": "LawEnforcement",
     "id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
   },
-  "issued": "2010-01-01",
+  "issuanceDate": "2010-01-01",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "name": "Mr John Doe",
@@ -2500,8 +2507,8 @@ the subject of the credential, but who has a relationship with the issuer">
   },
   "proof": {
     "type": "RsaSignature2018",
-    "created": "2017-06-17T10:03:48Z",
-    "creator": "https://example.edu/issuers/14/keys/234",
+    "created": "2018-06-17T10:03:48Z",
+    "verificationMethod": "https://example.edu/issuers/14/keys/234",
     "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
     "signatureValue": "pY9...Cky6Ed = "
   }
@@ -4192,14 +4199,15 @@ All or any combination of the above.
         </ul>
       </section>
     </section>
+  </section>
 
-    <section class="appendix">
-      <h2>Advanced Examples</h2>
+  <section class="appendix">
+    <h2>Advanced Examples</h2>
 
-      <section class="appendix informative">
-        <h3>Subject Passes a Verifiable Credential to Someone Else</h3>
+    <section class="appendix informative">
+      <h3>Subject Passes a Verifiable Credential to Someone Else</h3>
 
-        <p>
+      <p>
 When the <a>subject</a> passes a <a>verifiable credential</a> to another
 holder, the <a>subject</a> may issue a new <a>verifiable credential</a> to the <a>holder</a> in which:
 the <a>issuer</a> is the <a>subject</a>,
@@ -4208,9 +4216,9 @@ and the <a>claim</a> contains the properties that are being passed on.
 The <a>holder</a> may now create a <a>verifiable presentation</a> that contains these two
 <a>verifiable credentials</a>, so that the <a>verifier</a> can verify that the <a>subject</a> gave
 the original <a>verifiable credential</a> to the <a>holder</a>.
-        </p>
+      </p>
 
-        <pre class="example nohighlight" title="A holder presenting a
+      <pre class="example nohighlight" title="A holder presenting a
 verifiable credential that was passed to it by the subject">
 {
   "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
@@ -4219,8 +4227,8 @@ verifiable credential that was passed to it by the subject">
     {
       "id": "http://example.gov/credentials/3732",
       "type": ["VerifiableCredential", "PrescriptionCredential"],
-      "issuer": "https://dmv.example.gov",
-      "issued": "2010-01-01",
+      "issuer": "https://example.edu",
+      "issuanceDate": "2010-01-01",
       "claim": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "prescription": {....}
@@ -4235,15 +4243,15 @@ verifiable credential that was passed to it by the subject">
       "id": "https://example.com/VC/123456789",
       "type": ["VerifiableCredential", "PrescriptionCredential"],
       "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "issued": "2010-01-03",
+      "issuanceDate": "2010-01-03",
       "claim": {
         "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
         "prescription": {....}
       },
       "proof": {
         "type": "RsaSignature2018",
-        "created": "2017-06-17T10:03:48Z",
-        "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
+        "created": "2018-06-17T10:03:48Z",
+        "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
         "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
         "signatureValue": "pYw8XNi1..Cky6Ed="
       }
@@ -4251,21 +4259,20 @@ verifiable credential that was passed to it by the subject">
   ],
   "proof": [{
     "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
+    "created": "2018-06-18T21:19:10Z",
+    "verificationMethod": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
     "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
     "signatureValue": "BavEll0/I1..W3JT24="
   }]
 }
-        </pre>
+      </pre>
 
-        <p>
+      <p>
 In the above example, a patient (the original subject) has passed a prescription
 (the original verifiable credential) to a friend, and has issued a new verifiable
 credential to the friend, in which the friend is the subject, the original subject is
 the issuer, and the credential is a copy of the original prescription.
-        </p>
-      </section>
+      </p>
     </section>
   </body>
 </html>
