@@ -203,7 +203,7 @@ Here is an example verifiable credential that supports zero-knowledge proofs:
 This section summarizes a number of design choices that the Working Group spent
 a considerable amount of time debating.
 
-### Focusing on Privacy-Enhancing Architectures
+### Privacy-Enhancing Architecture Agility
 
 The group spent a considerable amount of time exploring various
 privacy concerns including, but not limited to, multiple
@@ -214,10 +214,10 @@ strike the right balance between what is currently achievable while ensuring
 that future privacy-enhancing systems are able to use the same architecture
 to protect individual and organizational privacy.
 
-### Support for JSON-LD
+### Syntax Agility
 
 While the document outlines a data model that is expressible in a number of
-different syntaxes, there was considerable thought exertedto the question of
+different syntaxes, there was considerable thought put into the question of
 representation syntaxes that the specification would highlight. JSON-LD, which
 is a fully compatible subset of JSON, was suggested as the primary format. There
 were concerns that a JSON-LD processor would be required to process Verifiable
@@ -246,7 +246,7 @@ data model, there was no consensus on what sorts of restrictions should be
 suggested by the specification. The result is an open mechanism for expressing
 the terms of use for Verifiable Credentials and Verifiable Presentations.
 
-### Support for Multiple Proof Formats
+### Proof Format Agility
 
 There are currently at least four different proof formats that are being
 actively used by participants in the Working Group: JSON Web Signatures,
