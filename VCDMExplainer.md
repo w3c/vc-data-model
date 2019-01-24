@@ -203,6 +203,17 @@ Here is an example verifiable credential that supports zero-knowledge proofs:
 This section summarizes a number of design choices that the Working Group spent
 a considerable amount of time debating.
 
+### Focusing on Privacy-Enhancing Architectures
+
+The group spent a considerable amount of time exploring various
+privacy concerns including, but not limited to, multiple
+zero-knowledge proof systems, selective disclosure schemes,
+avoiding cryptographic fingerprinting, and intersection of tracking technologies
+and Verifiable Credentials. The outcome is a specification that attempts to
+strike the right balance between what is currently achievable while ensuring
+that future privacy-enhancing systems are able to use the same architecture
+to protect individual and organizational privacy.
+
 ### Support for JSON-LD
 
 While the document outlines a data model that is expressible in a number of
