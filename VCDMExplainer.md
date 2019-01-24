@@ -216,6 +216,25 @@ processor is not necessary to conform to the specification. The vast majority
 of developers will be able to work with Verifiable Credentials as if it is
 just another JSON object.
 
+### Authorization
+
+The group debated the usage of Verifiable Credentials as an authorization
+mechanism. The result of the debate was the notion that Verifiable Credentials
+could be used in authorization systems, but did not constitute an authorization
+system by themselves and that great thought should be put into any system that
+attempts to use Verifiable Credentials in an authorization framework.
+
+### Terms of Use
+
+There were multiple discussions related to how a Verifiable Credential
+should be used. For example, issuers may want to place restrictions on
+how a Verifiable Credential should be used. Holders may want to also place
+restrictions on how a Verifier may use their information. While there was
+consensus that these restrictions should be able to be expressed in the
+data model, there was no consensus on what sorts of restrictions should be
+suggested by the specification. The result is an open mechanism for expressing
+the terms of use for Verifiable Credentials and Verifiable Presentations.
+
 ### Support for Multiple Proof Formats
 
 There are currently at least four different proof formats that are being
