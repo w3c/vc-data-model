@@ -1,33 +1,35 @@
-# Verfiable Credentials Data-Model Explainer
+# Verifiable Credentials Data-Model Explainer
 
-***by Tzviya Siegman, Wiley; Manu Sporny, Digital Bazaar; Ken Ebert, Sovrin; Brent Zundel, Evernym***
+***by Tzviya Siegman, Wiley; Manu Sporny, Digital Bazaar; Ken Ebert, Sovrin;
+Brent Zundel, Evernym***
 
-***NOTE***: "Verifiable Claims" are now known as "Verifiable Credentials".
+***NOTE***: "Verifiable claims" are now known as "verifiable credentials".
 The W3C Verifiable Claims Working Group's experience with using the term
-"Verifiable Claims" demonstrated that it led to confusion in the marketplace.
+"verifiable claims" demonstrated that it led to confusion in the marketplace.
 The group has since found consensus in shifting to use the term
-"Verifiable Credentials", which contain "Claims".
+"verifiable credentials", which contain "claims".
 
 ## Introduction
 
 It is currently difficult to transmit credentials such as driver's licenses,
-proofs of age, education qualifications, and healthcare data, via the
+proofs of age, education qualifications, and healthcare data, on the
 Internet in a way that is verifiable yet protects individual privacy.
 
-Starting in 2013, the [W3C Credentials Community Group](https://w3c-ccg.github.io/) started to
-work in earnest on solutions in this space followed shortly thereafter by the
-[Rebooting Web of Trust Community](http://www.weboftrust.info/)
-and [W3C Verifiable Claims Working Group](https://www.w3.org/2017/vc/).
-These groups, composed of 150+ individuals and organizations, are currently
-focused on the creation, storage, transmission, and verification of digital
-credentials via the Internet.
+Starting in 2013, the
+[W3C Credentials Community Group](https://w3c-ccg.github.io/) started work in
+earnest on solutions in this space followed shortly thereafter by the
+[Rebooting Web of Trust Community](http://www.weboftrust.info/) and the
+[Verifiable Claims Working Group](https://www.w3.org/2017/vc/). These groups,
+composed of 150+ individuals and organizations, are currently focused on the
+creation, storage, transmission, and verification of digital credentials on the
+Internet.
 
 ## Goals
 
-The mission of the Verifiable Claims Working Group is to make expressing,
+The mission of the Verifiable Claims Working Group (VCWG)is to make expressing,
 exchanging, and verifying claims easier and more secure on the Web. The
-data-model outlines core data model concepts, such as claims, credentials,
-and presentations, that form the foundation of this specification.
+data model outlines core concepts, such as claims, credentials, and
+presentations, that form the foundation of the Specification.
 
 ## Non-goals
 
@@ -35,7 +37,7 @@ The VCWG is not defining protocols or APIs. The model is identifier agnostic.
 
 ## Getting Started
 
-The Verifiable Credentials ecosystem is composed of four primary roles:
+The verifiable credentials ecosystem is composed of four primary roles:
 
 * ***issuer*** - A role an entity might perform by creating a verifiable
   credential, associating it with a specific ***subject***, and transmitting
@@ -59,7 +61,7 @@ The Verifiable Credentials ecosystem is composed of four primary roles:
   Example verifiable data registries include trusted databases, decentralized
   databases, government ID databases, and distributed ledgers.
 
-A visual depiction of the ecosystem above is shown below:
+A visual depiction of the verifiable credentials ecosystem is shown below.
 
 <a href="https://w3c.github.io/vc-data-model/">
   <img src="diagrams/ecosystem.svg" width="100%" height="400">
@@ -67,13 +69,13 @@ A visual depiction of the ecosystem above is shown below:
 
 ### Claims, Credentials, and Presentations
 
-The ecosystem roles exchange data that enables the realization of the use
-cases below. The data that is exchanged differs based on the roles
+The ecosystem roles exchange data enabling the realization of the use
+cases outlined below. The data exchanged differs depending on the roles
 participating, but is fundamentally composed of claims, credentials, and
 presentations.
 
-A claim is statement about a subject, expressed as a subject-property-value
-relationship:
+A *claim* is statement about a subject, expressed as a subject-property-value
+relationship.
 
 <a href="https://w3c.github.io/vc-data-model/">
   <img src="diagrams/claim.svg" width="50%">
@@ -81,55 +83,57 @@ relationship:
 
 ### Proofs
 
-The cryptographic mechanism used to prove that the information in a
-verifiable credential or a verifiable presentation has not been tampered
-with is called a proof. There are many types of cryptographic proofs
-including, but not limited to, digital signatures, zero-knowledge proofs,
-proofs of work, and proofs of stake.
+The cryptographic mechanism used to prove that the information in a verifiable
+credential or a verifiable presentation was not tampered with is called a
+*proof*. There are many types of cryptographic proofs including, but not
+limited to, digital signatures, zero-knowledge proofs, proofs of work, and
+proofs of stake.
 
 The data model does not detail proof mechanisms.
 
 #### Zero-Knowledge Proofs
-The verifiable credentials data model supports the use of zero-knowledge proof
-technology. This allows credentials with zkp-compatible elements to support
-presentations that enable:
 
-* selective disclosure of each credential attribute
-* predicate proofs of numeric values (e.g. integers, dates, enumerations)
-  * greater-than
-  * less-than
-  * range (e.g. 5 < x < 100)
-* set-membership proofs
+The verifiable credentials data model supports the use of zero-knowledge proof
+(ZKP) technology. This allows credentials with ZKP-compatible elements to
+support presentations that enable:
+
+* Selective disclosure of each credential attribute.
+* Predicate proofs of numeric values (for example, integers, dates, and
+  enumerations) that are:
+  * Greater-than
+  * Less-than
+  * In a range (for example, 5 < x < 100).
+* Set-membership proofs.
 
 ## Use Cases
-The VCWG has created an [Use Case](https://w3c.github.io/vc-use-cases/)
-Document, including focal use cases that demonstrate complicated scenarios
-and the full encoding.
 
-Some simple use cases:
+The VCWG has created a [Use Case](https://w3c.github.io/vc-use-cases/)
+document, demonstrating complicated scenarios and full encoding.
+
+Some simple use cases include:
 * A student presents a government-issued identity to verify who she is when
   presenting herself for a standardized test.
-* An airline offers loyal customers upgrades to first-class via digital coupons.
-  Coupons are issued as verifiable credentials.
-* The Board of Physicians maintains its list of board-certified physicians in
-  a credentials repository, enabling them to assert that a physician is
-  certified or revoke certification as needed. This information can be
-  verified as physicians apply for positions or by patients as they seek
-  information about the doctors they are considering. This may be done as a
-  zero-knowledge proof of set membership.
+* An airline offers loyal customers upgrades to first-class using digital
+  coupons. The coupons are issued as verifiable credentials.
+* A Board of Physicians maintains its list of board-certified physicians in
+  a credentials repository, enabling the board to assert that a physician is
+  certified, or to revoke certification as needed. The information in the 
+  repository can be verified as physicians apply for positions, or by patients
+  as they seek information about the doctors they are considering. This can be
+  done as a ZKP of set membership.
 * A loan applicant presents proof of sufficient income, derived from a
-  credential issued by her employer. This may be done without revealing her
+  credential issued by her employer. This can be done without revealing her
   exact income by using a zero-knowledge predicate proof.
 
 ## Code Samples
 
 What does a Verifiable Credential look like?
 
-There are many pieces of information that MAY be included in a Verifiable
-Credential. There are numerous examples of credentials in the spec.
+There are many pieces of information that MAY be included in a verifiable
+credential, of which there are numerous examples in the Specification.
 
-Here is an example of usage of the ID property in a credential, using the
-DID scheme:
+The following is an example of the ID property in a credential, using the
+Decentralized Identifier (DID) scheme.
 
 ```
 {
@@ -157,7 +161,7 @@ DID scheme:
 }
 ```
 
-Here is an example verifiable credential that supports zero-knowledge proofs:
+The following is an example verifiable credential that supports ZKPs.
 ```
 {
   "@context": [
@@ -200,63 +204,62 @@ Here is an example verifiable credential that supports zero-knowledge proofs:
 
 ## Important Design Choices
 
-This section summarizes a number of design choices that the Working Group spent
-a considerable amount of time debating.
+This section summarizes a number of design choices that the VCWG spent a
+considerable amount of time debating.
 
 ### Privacy-Enhancing Architecture Agility
 
-The group spent a considerable amount of time exploring various
-privacy concerns including, but not limited to, multiple
-zero-knowledge proof systems, selective disclosure schemes,
-avoiding cryptographic fingerprinting, and intersection of tracking technologies
-and Verifiable Credentials. The outcome is a specification that attempts to
-strike the right balance between what is currently achievable while ensuring
-that future privacy-enhancing systems are able to use the same architecture
-to protect individual and organizational privacy.
+The VCWG spent a considerable amount of time exploring various privacy concerns
+including, but not limited to, multiple ZKP systems, selective disclosure
+schemes, avoiding cryptographic fingerprinting, and the intersection of tracking
+technologies and verifiable credentials. The outcome is a specification that
+attempts to strike the right balance between what is currently achievable while
+ensuring that future privacy-enhancing systems are able to use the same
+architecture to protect individual and organizational privacy.
 
 ### Syntax Agility
 
 While the document outlines a data model that is expressible in a number of
 different syntaxes, there was considerable thought put into the question of
-representation syntaxes that the specification would highlight. JSON-LD, which
+which representation syntaxes the specification would highlight. JSON-LD, which
 is a fully compatible subset of JSON, was suggested as the primary format. There
-were concerns that a JSON-LD processor would be required to process Verifiable
-Credentials. After more than a year of technical work and collaboration with
-the JSON-LD 1.1 WG, the group has been able to demonstrate that a JSON-LD
-processor is not necessary to conform to the specification. The vast majority
-of developers will be able to work with Verifiable Credentials as if it is
+were concerns that a JSON-LD processor would be required to process verifiable
+credentials. After more than a year of technical work and collaboration with
+the JSON-LD 1.1 Working Group, the VCWG has demonstrated that a JSON-LD
+processor is not necessary to conform to the Specification. The vast majority
+of developers will be able to work with verifiable credentials as if it is
 just another JSON object.
 
 ### Authorization
 
-The group debated the usage of Verifiable Credentials as an authorization
-mechanism. The result of the debate was the notion that Verifiable Credentials
+The VCWG debated the usage of verifiable credentials as an authorization
+mechanism. The result of this debate was the notion that verifiable credentials
 could be used in authorization systems, but did not constitute an authorization
-system by themselves and that great thought should be put into any system that
-attempts to use Verifiable Credentials in an authorization framework.
+system by themselves, and that great consideration should be put into any
+system that attempts to use verifiable credentials in an authorization
+framework.
 
 ### Terms of Use
 
-There were multiple discussions related to how a Verifiable Credential
-should be used. For example, issuers may want to place restrictions on
-how a Verifiable Credential should be used. Holders may want to also place
-restrictions on how a Verifier may use their information. While there was
+There were multiple discussions related to how a verifiable credential
+should be used. For example, issuers might want to place restrictions on
+how a verifiable credential should be used. Holders might want to also place
+restrictions on how a verifier can use their information. While there was
 consensus that these restrictions should be able to be expressed in the
 data model, there was no consensus on what sorts of restrictions should be
-suggested by the specification. The result is an open mechanism for expressing
-the terms of use for Verifiable Credentials and Verifiable Presentations.
+suggested by the Specification. The result is an open mechanism for expressing
+the terms of use for verifiable credentials and verifiable presentations.
 
 ### Proof Format Agility
 
-There are currently at least four different proof formats that are being
-actively used by participants in the Working Group: JSON Web Signatures,
+Currently there are at least four different proof formats actively being
+used by participants in the VCWG, including JSON Web Signatures,
 Zero-Knowledge Proofs, Common Binary Object Representation Object Signing and
-Encryption, and Linked Data Proofs. It was challenging for the
-Working Group to select one format as there were a number of benefits and
-drawbacks provided by each approach. The result of this challenge was to
-ensure that the Verifiable Credentials Data Model was flexible enough to
-be compatible with each signature format with no changes needed to the
-core data model.
+Encryption, and Linked Data Proofs. It was challenging for the VCWG to select
+one format because there are a number of benefits and drawbacks provided by
+each approach. The result of this challenge was to ensure that the Verifiable
+Credentials Data Model is flexible enough to be compatible with each signature
+format with no changes needed to the core data model.
 
 ### Support for JWT
 
@@ -265,10 +268,12 @@ transferred between two parties. Providing a representation of the Verifiable
 Credentials Data Model for JWT allows existing systems and libraries to
 participate in the ecosystem.
 
-This specification defines the encoding rules of the Verifiable Credential Data Model onto JWT and JWS. It further
-defines processing rules how and when to make use of specific JWT registered claim names and specific JWS registered
-header parameter names to allow systems based on JWT to comply with this specification while avoiding duplicate
-representation of specific information contained in the enclosed JSON or JSON-LD object.
+The Specification defines the encoding rules of the Verifiable Credential Data
+Model onto JWT and JWS. It further defines processing rules on how and when to
+make use of specific JWT-registered claim names and specific JWS-registered
+header parameter names, allowing systems based on JWT to comply with the
+specification while avoiding duplicate representation of specific information
+contained in the enclosed JSON or JSON-LD object.
 
 ### Selective disclosure as a requirement see [Issue 224](https://github.com/w3c/vc-data-model/issues/224) for example
 
@@ -276,21 +281,22 @@ representation of specific information contained in the enclosed JSON or JSON-LD
 
 ## Features at Risk
 
-The current features are waiting on multiple interoperable implementations:
+The following features are waiting on multiple interoperable implementations:
 
 * JSON Web Token
 * Terms of Use
 * Data Schemas
-* SubjectOnly Property
+* SubjectOnly Property.
 
 ## Implementations and Reviews
 
-The VCWG has begun the process of horizontal review. Feedbeck from APA and
-PING has been or is in the process of being incorporated.
+The VCWG has begun the process of horizontal review. Feedback from APA and
+PING is, or is in the process of being, incorporated.
 
-This data model has numerous successful implementations, including goverments,
-universities, major technology organizations, and not for profits.
+This data model has numerous successful implementations, including governments,
+universities, major technology organizations, and not-for-profit organizations.
 
 ## References and Acknowledgements
+
 Thanks to Manu Sporny for writing most of this in previous formats. Much of
 the text came from [Motivation for Verifiable Claims Working Group Charter](http://w3c.github.io/webpayments-ig/VCTF/charter/charter-motivation.html), [Verifiable Claims Working Group Primer](http://w3c.github.io/webpayments-ig/VCTF/primer/), and [A Verifiable Credentials Primer](https://github.com/WebOfTrustInfo/rwot7/blob/master/topics-and-advance-readings/verifiable-credentials-primer.md).
