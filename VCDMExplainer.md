@@ -202,6 +202,57 @@ The following is an example verifiable credential that supports ZKPs.
 }
 ```
 
+Here is an example of a verifiable credential encoded as a JWT that supports JWS proofs. The example shows the header
+and the payload as well as the final JWS compact serialization (base64 encoded).
+```
+{
+    "alg": "RS256",
+    "typ": "JWT",
+    "kid": "did:example:abfe13f712120431c276e12ecab#keys-1"
+}
+
+{
+  "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "jti": "http://example.edu/credentials/3732",
+  "iss": "did:example:abfe13f712120431c276e12ecab",
+  "iat": "1541493724",
+  "exp": "1573029723",
+  "nonce": "660!6345FSer",
+  "vc": {
+    "@context": [
+      "https://w3.org/2018/credentials/v1",
+      "https://example.com/examples/v1"
+    ],
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "credentialSubject": {
+      "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science in Mechanical Engineering"
+      }
+    }
+  }
+}
+
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOmFiZmUxM2Y3MTIxMjA0
+MzFjMjc2ZTEyZWNhYiNrZXlzLTEifQ.eyJzdWIiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxY
+zI3NmUxMmVjMjEiLCJqdGkiOiJodHRwOi8vZXhhbXBsZS5lZHUvY3JlZGVudGlhbHMvMzczMiIsImlzc
+yI6ImRpZDpleGFtcGxlOmFiZmUxM2Y3MTIxMjA0MzFjMjc2ZTEyZWNhYiIsImlhdCI6IjE1NDE0OTM3M
+jQiLCJleHAiOiIxNTczMDI5NzIzIiwibm9uY2UiOiI2NjAhNjM0NUZTZXIiLCJ2YyI6eyJAY29udGV4d
+CI6WyJodHRwczovL3czLm9yZy8yMDE4L2NyZWRlbnRpYWxzL3YxIiwiaHR0cHM6Ly9leGFtcGxlLmNvb
+S9leGFtcGxlcy92MSJdLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiVW5pdmVyc2l0eURlZ
+3JlZUNyZWRlbnRpYWwiXSwiY3JlZGVudGlhbFN1YmplY3QiOnsiZGVncmVlIjp7InR5cGUiOiJCYWNoZ
+WxvckRlZ3JlZSIsIm5hbWUiOiJCYWNoZWxvciBvZiBTY2llbmNlIGluIE1lY2hhbmljYWwgRW5naW5lZ
+XJpbmcifX19fQ.VTotLRYblDOtJBTlOYbvibqC_uu8RXdvv6m_lR6cdEdFcGf4oNKiFZ_WJr07n1A-_E
+jTLzjD5XwmDPzb8lxDlEkCLJ5WQS4_jwzCZAeetNG7YO2slTCFRiE_2xBM2R01ssI8bEPnqLBnc-Lu88
+DmO21wL8-Yud1eL45N_pEE5DqTF5DJ-IesmVkWvC8159GUHKShFIpgHiE1EDDEjUzjYA5ZyzS2_ZmSTj
+5NDLOt8muVlORpO7xJ6aWRdtibkmSTKykUzh75-4Rklz2H9-AWBXEh5ajkyB8yINh_y4jK3g7ypVACRI
+Z9DZhdw2K39KCilAPVJsmejiKlxNhQAOlgcYUlhCzphLsqo-FA90fFGrsg-3JuQihnNw6RSPImjVt_yV
+appfjilEzhyfWT-Smm_KN8LRbFdNtU-awwhKbjDNW-7fNVrnsWHKvLsd_zlch8YlHZ6g0tHJnxo_yOTM
+BSSpt0jzyl1ByqjumgBFNpTR-NTVog4B7vLEvq58RuShraL5VNr7bjNzq2gisp3jq3LpfUmiwc7rQXw6
+AlQuattLRolXx3EtPysrZe-wU7yrEtNPvpGs-OyJAczfJPzza9lGTbx6IWS-0pTmNq6hwNd0ODMiB3uL
+3TeBN1xLoue9Hdc3toUvmdyXecSvltPcaiRoN-uQo8RRAvfK7GALAzaHw
+```
+
 ## Important Design Choices
 
 This section summarizes a number of design choices that the VCWG spent a
