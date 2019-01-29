@@ -84,6 +84,12 @@ var vcwg = {
       status:   'CG-DRAFT',
       publisher:  'Credentials W3C Community Group'
     },
+    'DEMOGRAPHICS': {
+      title: 'Simple Demographics Often Identify People Uniquely',
+      href: 'http://dataprivacylab.org/projects/identifiability/paper1.pdf',
+      authors: ['Latanya Sweeney'],
+      publisher: 'Data Privacy Lab'
+    }
   }
 };
 
