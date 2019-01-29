@@ -169,7 +169,7 @@ The following is an example verifiable credential that supports ZKPs.
     "ctx:sov:anoncred:v1",
     "ctx:sov:GppHbMLLeKNYRhcQiXh3GjP2Yh",
   ],
-  "@type": [
+  "type": [
     "VerifiableCredential",
     "AnonCred",
     "ExampleNameDOB"
@@ -275,9 +275,21 @@ header parameter names, allowing systems based on JWT to comply with the
 specification while avoiding duplicate representation of specific information
 contained in the enclosed JSON or JSON-LD object.
 
-### Selective disclosure as a requirement see [Issue 224](https://github.com/w3c/vc-data-model/issues/224) for example
+### Selective disclosure
+The ability of a holder to selectively disclose the attributes in a credential
+is recognized as a valuable property, in harmony with the principles of data
+minimization and self-sovereign identity.
 
-(what else should go here?)
+It was debated whether this property should be required of all verifiable credential
+implementors, but it was determined that requiring such capability might be too onerous.
+The data model in its current form supports selective disclosure as a best practice,
+but does not require it.
+
+### Authorization Framework
+tocome
+
+### Terms of Use
+tocome
 
 ## Features at Risk
 
