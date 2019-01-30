@@ -67,6 +67,14 @@ A visual depiction of the verifiable credentials ecosystem is shown below.
   <img src="diagrams/ecosystem.svg" width="100%" height="400">
 </a>
 
+It should be noted that the data model has separate roles of holder 
+and subject. Whilst it is recognised that in many cases the holder
+of a verifiable credential will be the subject, in certain cases it
+will not be. For example, a parent (the holder) may hold the verifiable 
+credentials of a child (the subject), or a pet lover (the holder) may hold 
+the verifiable credentials of its pet (the subject). The advanced concepts
+section of the data model document deals with these special cases.
+
 ### Claims, Credentials, and Presentations
 
 The ecosystem roles exchange data enabling the realization of the use
