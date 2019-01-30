@@ -336,11 +336,6 @@ implementors, but it was determined that requiring such capability might be too 
 The data model in its current form supports selective disclosure as a best practice,
 but does not require it.
 
-### Authorization Framework
-tocome
-
-### Terms of Use
-tocome
 
 ## Features at Risk
 
