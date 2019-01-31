@@ -345,12 +345,7 @@ but does not require it.
 
 ## Features at Risk
 
-The following features are waiting on multiple interoperable implementations:
-
-* JSON Web Token
-* Terms of Use
-* Data Schemas
-* SubjectOnly Property.
+We have asked for [preliminary commitments from potential implementers](https://docs.google.com/spreadsheets/d/1SzfAUA0J72-1BORHJEmY4cdZrQ6vmKy4oq_24r_NwB4/edit#gid=0\).  Currently we expect all features to have at least two implementations, although for some features we will have exactly two, assuming all potential implementers do so.  Of course we will continue to recruit for additional implementations.
 
 ## Implementations and Reviews
 
