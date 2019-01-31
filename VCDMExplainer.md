@@ -50,11 +50,6 @@ The verifiable credentials ecosystem is composed of five primary roles:
 * ***holder*** - A role an entity might perform by possessing one or more
   verifiable credentials about a ***subject*** and generating presentations
   from them. Example ***holders*** include students, employees, and customers.
-  Whilst in many cases the holder of a verifiable credential will be the subject,
-  in certain cases it will not be. For example, a parent (the holder) may hold
-  the verifiable credentials of a child (the subject), or a pet lover (the holder)
-  may hold the verifiable credentials of its pet (the subject). The advanced 
-  concepts section of the data model document deals with these special cases.
   
 * ***verifier*** - A role an entity might perform by requesting and receiving a
   verifiable presentation that proves the ***holder*** possesses the required
@@ -68,6 +63,12 @@ The verifiable credentials ecosystem is composed of five primary roles:
   configurations might require correlatable identifiers for ***subjects***.
   Example verifiable data registries include trusted databases, decentralized
   databases, government ID databases, and distributed ledgers.
+
+**Note:** In many cases the ***holder*** and ***subject*** of a verifiable
+credential will be the same, but this is not always the case. For example,
+a parent (the ***holder***) may hold a verifiable credential for a child
+(the ***subject***), or a pet lover (the ***holder***) may hold a verifiable
+credential for their pet (the ***subject***).
 
 A visual depiction of the verifiable credentials ecosystem is shown below.
 
