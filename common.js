@@ -84,6 +84,12 @@ var vcwg = {
       status:   'CG-DRAFT',
       publisher:  'Credentials W3C Community Group'
     },
+    'DEMOGRAPHICS': {
+      title: 'Simple Demographics Often Identify People Uniquely',
+      href: 'http://dataprivacylab.org/projects/identifiability/paper1.pdf',
+      authors: ['Latanya Sweeney'],
+      publisher: 'Data Privacy Lab'
+    }
   }
 };
 
@@ -218,6 +224,7 @@ require(["core/pubsubhub"], function(respecEvents) {
             });
 
             // delete any terms that were not referenced.
+            /*
             Object.keys(termNames).forEach(function(term) {
                 var $p = $("#"+term) ;
                 if ($p) {
@@ -225,12 +232,13 @@ require(["core/pubsubhub"], function(respecEvents) {
                     $p.parent().next().remove();
                     $p.parent().remove() ;
                     tList.forEach(function( item ) {
+                      console.log("CHECKING ITEM", item, respecConfig);
                         if (respecConfig.definitionMap[item]) {
                             delete respecConfig.definitionMap[item];
                         }
                     });
                 }
-            });
+            });*/
         }
     });
 });
