@@ -36,17 +36,26 @@ The VCWG is not defining protocols or APIs. The model is identifier agnostic.
 
 ## Getting Started
 
-The verifiable credentials ecosystem is composed of four primary roles:
+The verifiable credentials ecosystem is composed of five primary roles:
 
 * ***issuer*** - A role an entity might perform by creating a verifiable
   credential, associating it with a specific ***subject***, and transmitting
   it to a ***holder***. Example ***issuers*** include corporations, non-profit
   organizations, trade associations, governments, and individuals.
 
+* ***subject*** - A role an entity might perform by having one or more
+  verifiable credentials asserted about it. Example ***subjects*** include 
+  human beings, animals, and things.
+  
 * ***holder*** - A role an entity might perform by possessing one or more
   verifiable credentials about a ***subject*** and generating presentations
   from them. Example ***holders*** include students, employees, and customers.
-
+  Whilst in many cases the holder of a verifiable credential will be the subject,
+  in certain cases it will not be. For example, a parent (the holder) may hold
+  the verifiable credentials of a child (the subject), or a pet lover (the holder)
+  may hold the verifiable credentials of its pet (the subject). The advanced 
+  concepts section of the data model document deals with these special cases.
+  
 * ***verifier*** - A role an entity might perform by requesting and receiving a
   verifiable presentation that proves the ***holder*** possesses the required
   verifiable credentials. Example ***verifiers*** include employers, security
