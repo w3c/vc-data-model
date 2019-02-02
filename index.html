@@ -199,6 +199,8 @@ photo, name, and identification number)
 Information related to the issuing authority (for example, a city government,
 national agency, or certification body)
           </li>
+Information related to the specific attribute(s) or properties being asserted by
+issuing authority about the subject
           <li>
 Evidence related to how the <a>credential</a> was derived
           </li>
@@ -259,6 +261,18 @@ A role an <a>entity</a> might perform by creating a
 and transmitting it to a <a>holder</a>. Example issuers include
 corporations, non-profit organizations, trade associations, governments, and
 individuals.
+          </dd>
+          <dt><a>subject</a></dt>
+          <dd>
+A role an <a>entity</a> might perform by having one or more
+verifiable credentials asserted about it. Example subjects include 
+human beings, animals, and things. Whilst in many cases the holder of 
+a verifiable credential will be the subject,
+in certain cases it will not be. For example, a parent (the holder) may hold
+the verifiable credentials of a child (the subject), or a pet lover (the holder)
+may hold the verifiable credentials of its pet (the subject). The Subject-Holder
+Relationships section in the Advanced 
+Concepts deals with these special cases.
           </dd>
           <dt><a>verifier</a></dt>
           <dd>
@@ -357,7 +371,7 @@ specific services; <a>holders</a> decide how to aggregate and manage
 associated with them.
           </li>
           <li>
-<a>Holders</a> can easily acquire and control their identifiers.
+<a>Subjects</a> can easily acquire and control their identifiers.
           </li>
           <li>
 <a>Holders</a> control which <a>verifiable credentials</a> to use and when.
@@ -1430,8 +1444,8 @@ After this JSON-LD context is created, the developer publishes it somewhere
 so it is accessible to <a>verifiers</a> who will be processing the
 <a>verifiable credential</a>. Assuming the above JSON-LD context is published
 at <code>https://example.com/contexts/mycontext.jsonld</code>, we can extend
-this example by including the context and adding the new properties to the
-<a>verifiable credential</a>.
+this example by including the context and adding the new properties and credential
+type to the <a>verifiable credential</a>.
         </p>
 
         <pre class="example nohighlight"
@@ -1442,7 +1456,7 @@ this example by including the context and adding the new properties to the
     <span class="highlight">"https://example.com/contexts/mycontext.jsonld"</span>
   ],
   "id": "http://example.com/credentials/4643",
-  "type": ["VerifiableCredential"],
+  "type": ["VerifiableCredential", "CustomExt12"],
   "issuer": "https://example.com/issuers/14",
   "issuanceDate": "2018-02-24T05:28:04Z",
   <span class="highlight">"referenceNumber": 83294847,</span>
@@ -1674,8 +1688,8 @@ A refresh service can be expressed using the following <a>property</a>:
           <dt><var>refreshService</var></dt>
           <dd>
 The value of the <code>refreshService</code> <a>property</a> MUST be one or
-more refresh services that provides enough information to the <a>holder's</a>
-software such that the <a>holder</a> can refresh the credential. Each
+more refresh services that provides enough information to the recipient's
+software such that the recipient can refresh the credential. Each
 <code>refreshService</code> value MUST specify its <code>type</code>
 (for example, <code>ManualRefreshService2018</code>), and its URL as the
 value of <code>id</code>. The precise content of each refresh service
@@ -1711,7 +1725,8 @@ definition.
 
         <p>
 In the example above, the <a>issuer</a> specifies a manual
-<code>refreshService</code> that can be used by directing the <a>holder</a> to
+<code>refreshService</code> that can be used by directing the <a>holder</a> or the 
+<a>verifier</a>to
 <code>https://example.edu/refresh/3732</code>.
         </p>
       </section>
@@ -1937,7 +1952,7 @@ storing the data in an archive.
 In the example above, the <a>holder</a>, who is also the <a>subject</a>,
 expressed a Term of Use prohibiting the <a>verifier</a>
 (<code>https://wineonline.example.org</code>) from using the information
-provided to correlate the <a>holder</a> or <a>subject</a> using a third-party
+provided to correlate the <a>holder</a> / <a>subject</a> using a third-party
 service. If the <a>verifier</a> were to use a third-party service for
 correlation, they would violate the terms under which the holder created the
 presentation.
@@ -1966,7 +1981,7 @@ Evidence information can be expressed using the following <a>property</a>:
           <dd>
 The value of the <code>evidence</code> <a>property</a> MUST be one or more
 evidence schemes providing enough information to a <a>verifier</a> to determine
-whether the evidence gathered meets their requirements for issuing a
+whether the evidence gathered by the issuer meets its requirements for issuing a
 <a>credential</a>. The precise content of each evidence scheme is determined by
 the specific <code>evidence</code> <a>type</a> definition.
           </dd>
@@ -2192,7 +2207,7 @@ support zero-knowledge proof systems.
 
         <p>
 This section describes the possible relationships between a <a>subject</a>
-and a <a>holder</a> and how the Verifiable Claims Data Model expresses these
+and a <a>holder</a> and how the Verifiable Credentials Data Model expresses these
 relationships. The following diagram illustrates the different types of
 relationships covered in the rest of this section.
         </p>
@@ -2373,7 +2388,7 @@ standardised by the working group.
 
           <pre class="example nohighlight" title="The relationship property in a child's credential">{
   "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential", "RelationshipCredential"],
+  "type": ["VerifiableCredential", "AgeCredential", "RelationshipCredential"],
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -2403,7 +2418,7 @@ child and the parent such that a <a>verifier</a> would most likely accept the
     "id": "did:example:ebfeb1c276e12ec211f712ebc6f",
     "child": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "type": ["Person", "Child"]
+      "type": "Child"
     }
   },
   "proof": { ... } // the proof is generated by the DMV
@@ -2591,10 +2606,7 @@ that the <a>credential</a> is disputed.
     "statusReason": "Credential contains disputed statements",
     "disputedClaim": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "degree": {
-        "type": "BachelorDegree",
-        "name": "Bachelor of Science in Mechanical Engineering"
-      }
+      "address": "Is Wrong"
     }
   }</span>,
   "issuer": "https://example.com/people#me",
@@ -2603,6 +2615,9 @@ that the <a>credential</a> is disputed.
 }
         </pre>
 
+<p> In the above credential the issuer is claiming that the address in the disputed
+credential is wrong, for example, the latter might wrongly be claiming to have the same address as that of the issuer.
+</p>
         <p class="note">
 If a <a>credential</a> does not have an identifier, a content-addressed
 identifier can be used to identify the disputed <a>credential</a>. Similarly,
@@ -3606,11 +3621,12 @@ age.
       <p>
 It is considered best practice for <a>issuers</a> to atomize information or
 use a signature scheme that allows for selective disclosure. For example, an
-<a>issuer</a> of driver's licenses could issue a set of <a>credentials</a>
-containing every attribute that appears on a driver's license, as well as
-atomized <a>credentials</a> (for example, a <a>credential</a> containing only
-a person's birthday), and more abstract atomized <a>credentials</a> (for
-example, a <a>credential</a> containing only an <code>ageOver</code>
+<a>issuer</a> of driver's licenses could issue a <a>credential</a>
+containing every attribute that appears on a driver's license, as well as a set of
+atomized <a>credentials</a> where every <a>credential</a> contains only a single 
+attribute such as
+a person's birthday. It could also issue more abstract atomized <a>credentials</a>
+(for example, a <a>credential</a> containing only an <code>ageOver</code>
 attribute). One possible adaptation would be for <a>issuers</a> to provide
 secure HTTP endpoints for retrieving single-use bearer <a>credentials</a> that
 promote the pseudonymous usage of <a>credentials</a>. Implementers that find
