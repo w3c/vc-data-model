@@ -2702,7 +2702,10 @@ each graph is preserved.
           </li>
         </ul>
       </section>
+
     </section>
+
+
 
     <section>
       <h2>Syntaxes</h2>
@@ -4131,6 +4134,84 @@ proper upgrades are made in a timely manner are also important to ensure the
 long term viability of systems processing <a>verifiable credentials</a>.
       </p>
     </section>
+
+    <section>
+      <h3>Content Integrity Protection</h3>
+
+      <p>
+<a>Verifiable credentials</a> often contain URLs to data that resides
+outside of the credential itself. Content that exists outside a
+<a>verifiable credential</a>, such as links to images, JSON-LD Contexts, and
+other machine-readable data are often not protected against tampering because
+the data resides outside of the protection of the
+<a href="#proofs-signatures">proof</a> on the <a>verifiable credential</a>.
+For example, the following highlighted links are not content-integrity
+protected and probably should be:
+      </p>
+
+      <pre class="example nohighlight" title="Non-content-integrity protected links">
+{
+  "@context": [
+    <span class="highlight">"https://www.w3.org/2018/credentials/v1"</span>,
+    <span class="highlight">"https://example.com/examples/v1"</span>
+  ]</span>,
+  "id": "http://example.edu/credentials/58473",
+  "type": ["VerifiableCredential", "AlumniCredential"],
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "image": <span class="highlight">"https://example.edu/images/58473"</span>,
+    "alumniOf": "Example University"
+  },
+  "proof": { ... }
+}
+      </pre>
+
+      <p>
+While this specification does not recommend any particular content integrity
+protection, document authors that would like to ensure that links to content
+are integrity protected are advised to use URL schemes that enforce content
+integrity. Two such schemes are the
+<a href="https://tools.ietf.org/html/draft-sporny-hashlink">Hashlink</a>
+specification and the
+<a href="https://en.wikipedia.org/wiki/InterPlanetary_File_System">
+InterPlanetary File System</a> (IPFS). The example below transforms the
+example above and adds content integrity protection to the JSON-LD Contexts
+using the Hashlink specification, and content integrity protection to the
+image by using an IPFS link:
+      </p>
+
+        <pre class="example nohighlight" title="Content-integrity protection for links to external data">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1<span class="highlight">?hl=z3aq31uzgnZBuWNzUB</span>",
+    "https://example.com/examples/v1<span class="highlight">?hl=z8guWNzUBnZBu3aq31</span>"
+  ]</span>,
+  "id": "http://example.edu/credentials/58473",
+  "type": ["VerifiableCredential", "AlumniCredential"],
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "image": <span class="highlight">"ipfs:/ipfs/QmXfrS3pHerg44zzK6QKQj6JDk8H6cMtQS7pdXbohwNQfK/image"</span>,
+    "alumniOf": "Example University"
+  },
+  "proof": { ... }
+}
+      </pre>
+
+      <p class="note">
+It is debatable whether or not the JSON-LD Contexts above need protection as it
+is expected that production implementations will ship with static copies of
+important JSON-LD Contexts.
+      </p>
+
+      <p>
+While the example above is one way to achieve
+content integrity protection, there are other solutions that may be better
+suited for certain applications. Implementers are urged to understand how
+links to external machine-readable content that are not content-integrity
+protected may result in successful attacks against their applications.
+      </p>
+
+      </section>
 
     <section>
       <h3>Unsigned Claims</h3>
