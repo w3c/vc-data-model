@@ -1905,8 +1905,8 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
     }
   },
   <span class="highlight">"termsOfUse": [{
+    "id": "http://example.com/policies/4",
     "type": "IssuerPolicy",
-    "id": "http://example.com/policies/credential/4",
     "profile": "http://example.com/profiles/credential",
     "prohibition": [{
       "assigner": "https://example.edu/issuers/14",
@@ -1922,6 +1922,44 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
         <p>
 In the example above, the <a>issuer</a> (assigner) is prohibiting
 <a>verifiers</a> (assignee) from storing the data in an archive.
+        </p>
+
+        <pre class="example nohighlight" title="Issuer limiting presentation to the subject of the credential">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.org/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
+  },
+  <span class="highlight">"termsOfUse": [{
+    "id": "http://example.com/policies/4",
+    "type": "IssuerPolicy",
+    "profile": "http://example.com/profiles/credential",
+    "prohibition": [{
+      "assigner": "https://example.edu/issuers/14",
+      "assignee": "AllHoldersExceptSubject",
+      "target": "http://example.edu/credentials/3732",
+      "action": ["Presentation"]
+    }]
+  }</span>,
+  "proof": { ... }
+}
+        </pre>
+
+        <p>
+The example above demonstrates how an <a>issuer</a> would prohibit all
+<a>holders</a> that are not the <code>credentialSubject</code> from
+presenting the credential.
         </p>
 
         <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
@@ -1947,8 +1985,8 @@ In the example above, the <a>issuer</a> (assigner) is prohibiting
     "proof": { ... }
   }],
   <span class="highlight">"termsOfUse": [{
+    "id": "http://example.com/policies/6",
     "type": "HolderPolicy",
-    "id": "http://example.com/policies/credential/6",
     "profile": "http://example.com/profiles/credential",
     "prohibition": [{
       "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -4024,46 +4062,6 @@ this case, a <a>verifier</a> can easily deduce that a <a>subject</a> is the
 <a>subject</a> that can be identified to be the same as the <a>holder</a>.
         </p>
 
-        <p>
-If only the <code>credentialSubject</code> is allowed to insert a
-<a>verifiable credential</a> into a <a>verifiable presentation</a>, the issuer
-MAY insert the <code>subjectOnly</code> <a>property</a> into the
-<a>verifiable credential</a>, as described below.
-        </p>
-
-        <p class="issue">
-This feature is at risk and is likely to be removed due to lack of consensus.
-        </p>
-
-        <section>
-          <h5>subjectOnly Property</h5>
-
-          <p>
-The <code>subjectOnly</code> <a>property</a> states that a
-<a>verifiable credential</a> MUST only be encapsulated into a
-<a>verifiable presentation</a> whose proof was issued by the
-<code>credentialSubject</code>. A <a>verifiable presentation</a> that contains
-a <a>verifiable credential</a> containing the <code>subjectOnly</code>
-<a>property</a> whose proof creator is not the <code>credentialSubject</code>
-is invalid.
-          </p>
-
-          <pre class="example nohighlight" title="Usage of the subjectOnly property">
-{
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "ProofOfAgeCredential"],
-  "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
-  "claim": {
-    "credentialSubject": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "ageOver": 21
-    },
-  "SubjectOnly": "True",
-  "proof": { ..
-  "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  ... }
-}
-          </pre>
         </section>
       </section>
 
