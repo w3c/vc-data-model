@@ -265,13 +265,13 @@ individuals.
           <dt><a>subject</a></dt>
           <dd>
 A role an <a>entity</a> might perform by having one or more
-verifiable credentials asserted about it. Example subjects include 
-human beings, animals, and things. Whilst in many cases the holder of 
+verifiable credentials asserted about it. Example subjects include
+human beings, animals, and things. Whilst in many cases the holder of
 a verifiable credential will be the subject,
 in certain cases it will not be. For example, a parent (the holder) may hold
 the verifiable credentials of a child (the subject), or a pet lover (the holder)
 may hold the verifiable credentials of its pet (the subject). The Subject-Holder
-Relationships section in the Advanced 
+Relationships section in the Advanced
 Concepts deals with these special cases.
           </dd>
           <dt><a>verifier</a></dt>
@@ -715,17 +715,27 @@ in the manner adopted by Certificate Authority systems.
 
     <section id="conformance">
       <p>
-A concrete expression of the data model in this specification is a
-<em>conforming document</em> if it complies with the normative statements in
-this specification regarding syntax. That is, the content in the
-<a href="#basic-concepts">Basic Concepts</a>,
-<a href="#advanced-concepts">Advanced Concepts</a>, and
-<a href="#syntaxes">Syntaxes</a> sections of this document.
+A <em>conforming document</em> is any concrete expression of the data model
+that complies with the normative statements in this specification.
+Specifically, all relevant normative statements in
+<a href="#basic-concepts"></a>,
+<a href="#advanced-concepts"></a>, and
+<a href="#syntaxes"></a> of this document MUST be enforced.
       </p>
-      
+
       <p>
-This document makes no normative statements with regard to conformance of
-document processors such as Issuers, Holders, or Verifiers.
+A <em>conforming processor</em> is any algorithm realized as software and/or
+hardware that generates or consumes a <em>conforming document</em> as
+described by this specification and also enforces all relevant normative
+statements in the <a href="#verification"></a> section of this document
+when performing verification.
+      </p>
+
+      <p>
+This specification makes no normative statements with regard to the
+conformance of roles in the ecosystem such as <a>issuers</a>, <a>holders</a>,
+or <a>verifiers</a> because the conformance of ecosystem roles are highly
+application, use case, and market vertical specific.
       </p>
     </section>
 
@@ -1725,7 +1735,7 @@ definition.
 
         <p>
 In the example above, the <a>issuer</a> specifies a manual
-<code>refreshService</code> that can be used by directing the <a>holder</a> or the 
+<code>refreshService</code> that can be used by directing the <a>holder</a> or the
 <a>verifier</a>to
 <code>https://example.edu/refresh/3732</code>.
         </p>
@@ -3065,7 +3075,7 @@ AlQuattLRolXx3EtPysrZe-wU7yrEtNPvpGs-OyJAczfJPzza9lGTbx6IWS-0pTmNq6hwNd0ODMiB3uL
           </pre>
 
           <p>
-In the example above, the <a>verifiable presentation</a> uses a 
+In the example above, the <a>verifiable presentation</a> uses a
 <code>proof</code> based on <code>JWS</code> digital signatures, and the
 corresponding verification key can be obtained using the <code>kid</code>
 header parameter.
@@ -3094,7 +3104,7 @@ header parameter.
           <p>
 In the example above, <code>vp</code> does not contain the <code>id</code>
 <a>property</a> because the <code>JWT</code> encoding uses the
-<code>jti</code> attribute to represent a unique identifier. 
+<code>jti</code> attribute to represent a unique identifier.
 <code>verifiableCredential</code> contains an string array of
 <a>verifiable credentials</a> using <code>JWT</code> compact serialization.
           </p>
@@ -3143,9 +3153,9 @@ dwapkZcYgpuhxHrzNbofYYS0nIIkZ7dIEHiyGhfLo5XzAEmAIU
           </pre>
 
           <p class="issue">
-A number of the concerns have been raised around security, composability, 
+A number of the concerns have been raised around security, composability,
 reusability, and extensibility with respect to the use of JWTs for
-verifiable credentials. These concerns will be documented in time in at least 
+verifiable credentials. These concerns will be documented in time in at least
 the Verifiable Claims Model and Security Considerations section of this
 document.
           </p>
@@ -3623,7 +3633,7 @@ It is considered best practice for <a>issuers</a> to atomize information or
 use a signature scheme that allows for selective disclosure. For example, an
 <a>issuer</a> of driver's licenses could issue a <a>credential</a>
 containing every attribute that appears on a driver's license, as well as a set of
-atomized <a>credentials</a> where every <a>credential</a> contains only a single 
+atomized <a>credentials</a> where every <a>credential</a> contains only a single
 attribute such as
 a person's birthday. It could also issue more abstract atomized <a>credentials</a>
 (for example, a <a>credential</a> containing only an <code>ageOver</code>
@@ -3796,7 +3806,7 @@ produce privacy violations or that enable bad privacy practices.
 
       <p>
 When a <a>holder</a> receives a <a>credential</a> from an <a>issuer</a>, the
-<a>credential</a> needs to be stored somewhere (for example, in a 
+<a>credential</a> needs to be stored somewhere (for example, in a
 <a>credential</a> repository). <a>Holders</a> are warned that the information in
 a <a>verifiable credential</a> is sensitive in nature and highly individualized,
 making it a high value target for data mining. Services that advertise
@@ -3834,9 +3844,9 @@ your expectations.
       <h3>Aggregation of Credentials</h3>
 
       <p>
-Holding two pieces of information about the same <a>subject</a> almost always 
-reveals more about the <a>subject</a> than just a single piece of information, 
-even when the information is delivered through different channels. The aggregation 
+Holding two pieces of information about the same <a>subject</a> almost always
+reveals more about the <a>subject</a> than just a single piece of information,
+even when the information is delivered through different channels. The aggregation
 of <a>credentials</a> is a privacy risk and all participants in the ecosystem need
 to be aware of the risks of data aggregation.
       </p>
@@ -3907,7 +3917,7 @@ individual across services. In this case, using information from other sources
 the individual with an existing profile. For example, if a <a>holder</a>
 presents <a>credentials</a> that include postal code, age, and sex, a
 <a>verifier</a> can potentially correlate the <a>subject</a> of that
-<a>credential</a> with an established profile. For more information, 
+<a>credential</a> with an established profile. For more information,
 see [[DEMOGRAPHICS]].
         </li>
         <li>
