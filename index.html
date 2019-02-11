@@ -662,77 +662,33 @@ that are often, but not required to be, related.
         </p>
 
     </section>
-    <section>
-      <h3>Lifecycle</h3>
+    </section>
+    <section  class="informative">
+        <h2>Lifecycle</h2>
 
-      <em>This section is non-normative.</em>
+        <p>
+  This section elaborates on the lifecycle of credentials and presentations in
+  the <a href="#ecosystem-overview">ecosystem</a>. The lifecycle of credentials
+  will take a common path: issuance of one or more credentials, storage of
+  credentials, and then the composition of credentials into a presentation for
+  verifiers.
+        </p>
+        <section class="informative">
+          <h3>Basic</h3>
+        <p>
+  We will illustrate the basic lifecycle with our first scenario, redeeming an
+  alumni discount at an university. In
+  <a href="#ex-1-example-verifiable-credential">Example 1</a> Pat receives an
+  "AlumniCredential" from "Example University" that will be stored in Pat's
+  mobile device's digital wallet, a type of credential repository.
+        </p>
 
-      <p>
-This section seeks to illuminate the lifecycle of a credential. Credentials 
-allow one to make statements about a subject. Moreso, it provides a succint 
-composition mechanism for tamper-evident claims that provide cryptographic 
-guarantees on the provenance of those claims. Presentations enable subjects to 
-use one or more credentials to satisfy requests from a verifier and assert 
-proof of control of those credentials. Credentials, when in motion, form a 
-general flow. This flow provides the bedrock for the lifecycle of a 
-credential, it highlights the issuance of credentials to their verification.
-      </p>
-
-      <p>
-The lifecycle of credentials will take a common path: issuance
-of claims to a credential subject, storage of credentials into credential
-repository engineered to store verifiable credentials, and then the
-presentation to a verifer. In <a href="#ex-1-example-verifiable-credential">
-Example 1</a> Pat receives an "AlumniCredential" from "Example University" that 
-will be stored in Pat's digital wallet on his mobile device, a type of 
-credential repository.
-      </p>
-
-      <pre class="example nohighlight" title="Example Verifiable Credential">
-{
-  "@context": [
-    "https://w3.org/2018/credentials/v1",
-    "https://example.com/examples/v1"
-  ],
-  "id": "http://example.edu/credentials/1872",
-  "type": ["VerifiableCredential", "AlumniCredential"],
-  "issuer": "https://example.edu/issuers/565049",,
-  "issuanceDate": "2010-01-01T19:73:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "alumniOf": "Example University"
-  },
-  "proof": {
-    "type": "RsaSignature2018",
-    "created": "2017-06-18T21:19:10Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-      +W3JT24="
-  }
-}
-      </pre>
-
-      <p>
-In the final chapter of this lifecycle, Pat's "AlumniCredential" will be 
-presented for a discount. The verifier, a ticket sales counter, states that any
-alumni of "Example University" will receive a 72% discount on football season 
-tickets. Pat uses thier mobile device to select the Verifiable Credential 
-received earlier to send to the verifier in the form of a Verifiable 
-Presentation in order to receive the discount, this can be found
-in <a href="#ex-2-example-verifiable-presentation">Example 2</a>.
-      </p>
-      <pre class="example nohighlight" title="Example Verifiable Presentation">
-{
-  "@context": [
-    "https://w3.org/2018/credentials/v1",
-    "https://example.com/examples/v1"
-  ],
-  "id": "did:example:Fg15hCqJ19LP4X4RaiumJVb8YeZnzUjWLh74hKqBvk5B",
-  "type": "VerifiablePresentation",
-  "verifiableCredential": [{
+        <pre class="example nohighlight" title="Example Verifiable Credential">
+  {
+    "@context": [
+      "https://w3.org/2018/credentials/v1",
+      "https://example.com/examples/v1"
+    ],
     "id": "http://example.edu/credentials/1872",
     "type": ["VerifiableCredential", "AlumniCredential"],
     "issuer": "https://example.edu/issuers/565049",,
@@ -747,17 +703,56 @@ in <a href="#ex-2-example-verifiable-presentation">Example 2</a>.
       "creator": "https://example.com/jdoe/keys/1",
       "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
       "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-      +W3JT24="
+        MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+        PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+        +W3JT24="
     }
-  }],
-  "proof": { ... }
-}
-      </pre>
+  }
+        </pre>
+        <p>
+  In the final chapter of this lifecycle, Pat's "AlumniCredential" will be
+  presented for a discount. The verifier, a ticket sales counter, states that
+  any alumni of "Example University" will receive a 72% discount on football
+  season tickets. Using a mobile device, Pat selects the Verifiable Credential
+  received earlier that will then be composed into a presentation. That
+  presentation is then sent to the verifier in the form of a Verifiable
+  Presentation in order to receive the discount. We can find that presentation
+  in
+  <a href="#ex-2-example-verifiable-presentation">Example 2</a>.
+        </p>
+        <pre class="example nohighlight" title="Example Verifiable Presentation">
+  {
+    "@context": [
+      "https://w3.org/2018/credentials/v1",
+      "https://example.com/examples/v1"
+    ],
+    "id": "did:example:Fg15hCqJ19LP4X4RaiumJVb8YeZnzUjWLh74hKqBvk5B",
+    "type": "VerifiablePresentation",
+    "verifiableCredential": [{
+      "id": "http://example.edu/credentials/1872",
+      "type": ["VerifiableCredential", "AlumniCredential"],
+      "issuer": "https://example.edu/issuers/565049",,
+      "issuanceDate": "2010-01-01T19:73:24Z",
+      "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "alumniOf": "Example University"
+      },
+      "proof": {
+        "type": "RsaSignature2018",
+        "created": "2017-06-18T21:19:10Z",
+        "creator": "https://example.com/jdoe/keys/1",
+        "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+        "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
+        MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
+        PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
+        +W3JT24="
+      }
+    }],
+    "proof": { ... }
+  }
+        </pre>
+      </section>
     </section>
-    </section>
-
     <section class="informative">
       <h2>Trust Model</h2>
 
