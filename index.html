@@ -4391,8 +4391,8 @@ double for every embedding.
 
         <tr>
           <td>
-<a href="#pf13">PF13.</a> Proof format supports arbitrary proofs such as
-Proof of Work, Proof of Elapsed Time, and Proof of Stake.
+<a href="#pf13">PF13.</a> Proof format supports arbitrary proofs such as Proof
+of Work, Timestamp Proofs, and Proof of Stake.
           </td>
           <td class="missing">✖</td>
           <td class="missing">✖</td>
@@ -4586,58 +4586,116 @@ PF11: Nesting signed data does not cause data size to double for every
 embedding.
       </dt>
       <dd>
-
+When a JWT is encapsulated by another JWT, the entire payload must be base-64
+encoded in the initial JWT, and then base-64 encoded again in the encapsulating
+JWT. This is often necessary when a cryptographic signature is required on a
+document that contains a cryptographic signature, such as when a Notary
+signs a document that has been signed by someone else seeking the Notary's
+services. LD-Proofs do not require base-64 encoding the signed portion of a
+document and instead rely on a canonicalization process that is just as
+secure, and that only requires the cryptographic signature to be encoded
+instead of the entire payload.
       </dd>
       <dt id="pf12">
 PF12: Proof format supports Zero-Knowledge Proofs.
       </dt>
       <dd>
-
+The LD-Proof format is capable of modifying the algorithm that generates
+the hash or hashes that are cryptographically signed. This cryptographic
+agility enables digital signature systems, such as Zero-Knowledge Proofs,
+to be layered on top of LD-Proofs instead of an entirely new digital signature
+container format to be created. JWTs are designed such that an entirely new
+digital signature container format will be required to support Zero-Knowledge
+Proofs.
       </dd>
       <dt id="pf13">
-PF13: Proof format supports arbitrary proofs such as Proof of Work, Proof of
-Elapsed Time, and Proof of Stake.
+PF13: Proof format supports arbitrary proofs such as Proof of Work, Timestamp
+Proofs, and Proof of Stake.
       </dt>
       <dd>
-
+The LD-Proof format was designed with a broader range of proof types in mind
+and supports cryptographic proofs beyond simple cryptographic signatures.
+These proof types are in common usage in systems such as decentralized ledgers
+and provide additional guarantees to
+<a>verifiable credentials</a>, such as the ability to prove that a particular
+claim was made at a particular time or that a certain amount of energy was
+expended to generate a particular credential. The JWT format does not support
+arbitrary proof formats.
       </dd>
       <dt id="pf14">
-PF14: Proofs can be expressed unmodified in other data syntaxes such as YAML,
-N-Quads, and CBOR.
+PF14: Proofs can be expressed unmodified in other data syntaxes such as XML,
+YAML, N-Quads, and CBOR.
       </dt>
       <dd>
-
+The LD-Proof format utilizes a canonicalization algorithm to generate a
+cryptographic hash that is used as an input to the cryptographic proof
+algorithm. This enables the bytes generated as the cryptographic proof to be
+compact and expressible in a variety of other syntaxes such as XML,
+YAML, N-Quads, and CBOR. Since JWTs require the use of JSON to be generated,
+they are inextricably tied to the JSON syntax.
       </dd>
       <dt id="pf15">
 PF15: Changing key-value ordering, or introducing whitespace does not
 invalidate signature.
       </dt>
       <dd>
-
+Since LD-Proofs utilize a canonicalization algorithm, the introduction of
+whitespace that does not change the meaning of the information being expressed
+has no effect on the final cryptographic hash over the information. This means
+that simple changes in whitespace formatting, such as those changes made when
+writing data to a schema-less database and then retrieving the same information
+from the same database do not cause the digital signature to fail. JWTs
+encode the payload using the base-64 format which is not resistant to
+whitespace formatting that has no effect on the information expressed. This
+shortcoming of JWTs make it challenging to, for example, express signed data in
+web pages that search crawlers index.
       </dd>
       <dt id="pf16">
 PF16: Support experimental signature systems.
       </dt>
       <dd>
-
+The LD-Proof format is naturally extensible, not requiring the format to be
+extended in a formal international standards working group in order to
+prevent namespace collisions. The JWT format requires entries in a centralized
+registry and does not support experimentation as easily as the LD-Proof format
+does. LD-Proof format extension is done through the decentralized publication
+of cryptographic suites that are guaranteed to not conflict with other LD-Proof
+extensions. This approach enables developers to easily experiment with new
+cryptographic signature mechanisms that support selective disclosure,
+zero-knowledge proofs, and post-quantum algorithms.
       </dd>
       <dt id="pf17">
 PF17: Supports signature chaining.
       </dt>
       <dd>
-
+A signature chain is an ordered set of signatures over a data payload. Use
+cases, such as cryptographic signatures applied to a notarized document,
+typically require a signature by the signing party and then an additional one
+by a notary to be made after the original signing party has made their
+signature. Linked Data Proofs, including Linked Data Signatures, natively
+support chains of signatures. JWTs only enable a single signature over a
+single payload.
       </dd>
       <dt id="pf18">
 PF18: Does not require pre-processing or post-processing.
       </dt>
       <dd>
-
+In order to encode a <a>verifiable credential</a> or a 
+<a>verifiable presentation</a> in a JWT, an extra set of steps
+are required to convert the data to and from the JWT format. No such extra
+converstion step are required for <a>verifiable credentials</a> and
+<a>verifiable presentations</a> protected by LD-Proofs.
       </dd>
       <dt id="pf19">
 PF19: Canonicalization requires more than base-64 encoding.
       </dt>
       <dd>
-
+The JWT format utilizes a simple base-64 encoding format to generate the
+cryptographic hash of the data. The encoding format for LD-Proofs require 
+a more complex canonicalization algorithm to generate the cryptographic 
+hash. The benefits of the JWT approach are simplicity at the cost of 
+encoding flexibility. The benefits of the LD-Proof approach are flexibility at 
+the cost of implementation complexity.
       </dd>
     </dl>
 
