@@ -2484,11 +2484,11 @@ Credentials Data Model is available at
 
         <p>
 JSON Web Token (JWT) [[!RFC7519]] is still a widely used means to express
-claims to be transferred between two parties. Providing a representation of the
-Verifiable Credentials Data Model for JWT allows existing systems and libraries
-to participate in the ecosystem described in Section
-<a href="#ecosystem-overview"></a>. A JWT encodes a set of claims as a JSON
-object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
+<a>claims</a> to be transferred between two parties. Providing a representation
+of the Verifiable Credentials Data Model for JWT allows existing systems and
+libraries to participate in the ecosystem described in Section
+<a href="#ecosystem-overview"></a>. A JWT encodes a set of <a>claims</a> as a
+JSON object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
 [[!RFC7516]]. For this specification, the use of JWE is out of scope.
         </p>
 
@@ -2498,11 +2498,12 @@ object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
           <p>
 This specification defines encoding rules of the Verifiable Credential Data
 Model onto JWT and JWS. It further defines processing rules how and when to
-make use of specific JWT registered claim names and specific JWS registered
-header parameter names to allow systems based on JWT to comply with this
-specification. If these specific claim names and header parameters are present,
-their respective counterpart in the standard <a>verifiable credential</a> and
-<a>verifiable presentation</a> MAY be omitted to avoid duplication.
+make use of specific JWT registered <a>claim</a> names and specific JWS
+registered header parameter names to allow systems based on JWT to comply with
+this specification. If these specific <a>claim</a> names and header parameters
+are present, their respective counterpart in the standard
+<a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
+to avoid duplication.
           </p>
         </section>
 
@@ -2510,8 +2511,8 @@ their respective counterpart in the standard <a>verifiable credential</a> and
           <h4>IANA Considerations</h4>
 
           <p>
-This specification introduces two new registered claim names, which contain
-those parts of the standard <a>verifiable credentials</a> and
+This specification introduces two new registered <a>claim</a> names, which
+contain those parts of the standard <a>verifiable credentials</a> and
 <a>verifiable presentation</a> where no explicit encoding rules for JWT exist.
 These objects are enclosed in the JWT payload as follows:
           </p>
@@ -2537,11 +2538,11 @@ These objects are enclosed in the JWT payload as follows:
           <p>
 To encode a <a>verifiable credential</a> as a JWT, specific <a>properties</a>
 introduced by this specification MUST be encoded as standard JOSE header
-parameters, JWT registered claim names, or contained in the JWS signature part.
-If no explicit rule is specified, <a>properties</a> are encoded in the same way
-as with a standard <a>verifiable credential</a>, and are added to the
-<code>vc</code> <a>property</a> of the JWT. The following paragraphs describe
-these encoding rules.
+parameters, JWT registered <a>claim</a> names, or contained in the JWS
+signature part. If no explicit rule is specified, <a>properties</a> are encoded
+in the same way as with a standard <a>verifiable credential</a>, and are added
+to the <code>vc</code> <a>property</a> of the JWT. The following paragraphs
+describe these encoding rules.
           </p>
 
           <p>
@@ -2555,12 +2556,12 @@ signed the contained JWT payload and therefore, the <code>proof</code>
 
           <p>
 If no JWS is present, a <code>proof</code> <a>property</a> MUST be provided.
-The proof <a>property</a> can be used to represent more complex proofs, for
-example if the creator is different from the <a>issuer</a>, or a
-<code>proof</code> not based on digital signatures, such as Proof of Work.
-The <a>issuer</a> MAY include both a JWS and a <code>proof</code>
-<a>property</a>. For backward compatibility reasons, the issuer MUST use JWS to
-represent proofs based on a digital signature.
+The <code>proof</code> <a>property</a> can be used to represent more complex
+proofs, for example if the creator is different from the <a>issuer</a>, or a
+proof not based on digital signatures, such as Proof of Work. The <a>issuer</a>
+MAY include both a JWS and a <code>proof</code> <a>property</a>. For backward
+compatibility reasons, the issuer MUST use JWS to represent proofs based on a
+digital signature.
           </p>
 
           <p>
@@ -2577,11 +2578,11 @@ be set to <code>none</code>.
             <li>
 <code>kid</code> MAY be used if there are multiple keys associated with the
 <a>issuer</a> of the JWT. The key discovery is out of the scope of this
-specification. For example, the <code>kid</code> can refer to a key in a DID
-Document, or can be the identifier of a key inside a JWKS.
+specification. For example, the <code>kid</code> can refer to a key in a
+<a>DID document</a>, or can be the identifier of a key inside a JWKS.
             </li>
             <li>
-<code>typ</code> MUST be set to <code>JWT</code>, if present.
+<code>typ</code>, if present, MUST be set to <code>JWT</code>.
             </li>
           </ul>
 
@@ -2618,9 +2619,9 @@ in the <a>verifiable credential</a> <a>subject</a>.
           </ul>
 
           <p>
-Other JOSE header parameters and claim names not specified herein can be used
-if their use is not explicitly discouraged. Additional claims MUST be added to
-the <code>credentialSubject</code> <a>property</a> of the JWT.
+Other JOSE header parameters and <a>claim</a> names not specified herein can be
+used if their use is not explicitly discouraged. Additional <a>claims</a> MUST
+be added to the <code>credentialSubject</code> <a>property</a> of the JWT.
           </p>
 
           <p>
@@ -2651,14 +2652,14 @@ If no <code>@context</code> is specified under <code>vc</code>, add the default
 Add the content from the <code>vc</code> property to the new JSON object.
                 </li>
                 <li>
-Transform the remaining JWT specific headers and claims, and add the results to
-the new JSON object.
+Transform the remaining JWT specific headers and <a>claims</a>, and add the
+results to the new JSON object.
                 </li>
             </ol>
 
             <p>
-To transform the JWT specific headers and claims, the following MUST be done.
-If:
+To transform the JWT specific headers and <a>claims</a>, the following MUST be
+done. If:
             </p>
 
             <ul>
@@ -2793,10 +2794,10 @@ header parameter.
 
           <p>
 In the example above, <code>vp</code> does not contain the <code>id</code>
-<a>property</a> because the <code>JWT</code> encoding uses the
-<code>jti</code> attribute to represent a unique identifier.
-<code>verifiableCredential</code> contains an string array of
-<a>verifiable credentials</a> using <code>JWT</code> compact serialization.
+<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
+attribute to represent a unique identifier. <code>verifiableCredential</code>
+contains an string array of <a>verifiable credentials</a> using
+<code>JWT</code> compact serialization.
           </p>
 
           <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
@@ -3024,7 +3025,8 @@ date of a <a>verifiable credential</a> is not in the past.
 If the <code>credentialStatus</code> property is available, the status of the
 claim MUST be in good standing according to the <code>credentialStatus</code>
 <a>type</a> definition for the <a>credential</a>. For example, a <a>verifier</a>
-can ensure that the status hasn't been withdrawn for cause by the <a>issuer</a>.
+can ensure that the status has not been withdrawn for cause by the
+<a>issuer</a>.
         </p>
       </section>
 
@@ -3041,9 +3043,9 @@ claims of a specific <code>birthdate</code>, or abstract properties such as
 
         <p>
 The <a>issuer</a> is trusted by the <a>verifier</a> to make the <a>claims</a>
-at hand. For example, a franchised fast food restaurant location will trust
-discount coupon claims made by the corporate headquarters of the franchise.
-Policy information expressed by the <a>issuer</a> in the
+at hand. For example, a franchised fast food restaurant location trusts
+discount coupon <a>claims</a> made by the corporate headquarters of the
+franchise. Policy information expressed by the <a>issuer</a> in the
 <a>verifiable credential</a> should be respected by <a>holders</a> and
 <a>verifiers</a> unless they accept the liability of ignoring the policy.
         </p>
@@ -3060,9 +3062,8 @@ standards or protocols implementation, ignoring accessibility issues makes
 this information unusable to a large subset of the population. It is important
 to follow accessibility guidelines and standards, such as [[WCAG21]], to ensure
 all people, regardless of ability, can make use of this data. This is
-especially important when establishing systems that utilize cryptography and
-encryption, which historically, have created problems for assistive
-technologies.
+especially important when establishing systems utilizing cryptography, which
+historically, have created problems for assistive technologies.
     </p>
 
     <p>
@@ -3074,7 +3075,7 @@ account when utilizing this data model.
       <h3>Data First Approaches</h3>
 
       <p>
-Many physical credentials in use today, such as government identification
+Many physical <a>credentials</a> in use today, such as government identification
 cards, have poor accessibility characteristics, including, but not limited to,
 small print, reliance on small and high-resolution images, and no affordances
 for people with vision impairments.
@@ -3085,7 +3086,7 @@ When utilizing this data model to create <a>verifiable credentials</a>, it is
 suggested that data model designers use a <em>data first</em> approach. For
 example, given the choice of using data or a graphical image to depict a
 <a>credential</a>, designers should express every element of the image, such as
-the name of an institution or the professional credential, in a
+the name of an institution or the professional <a>credential</a>, in a
 machine-readable way instead of just relying on the image to convey this
 information. Using a data first approach is preferred because it provides the
 foundational elements of building different interfaces for people with varying
@@ -3218,7 +3219,7 @@ Not used at all, but instead replaced by short-lived, single-use bearer tokens.
 
       <p>
 The contents of <a>verifiable credentials</a> are secured using the
-<code>credential.proof</code> field. The properties in this field
+<code>credential.proof</code> field. The <a>properties</a> in this field
 create a greater risk of correlation when the same values are used across more
 than one session or domain and the value does not change. Examples include the
 <code>creator</code>, <code>created</code>, <code>domain</code> (for very
@@ -3246,14 +3247,14 @@ of the cryptography used.
 be used to correlate individuals. These types of identifiers include
 <a>subject</a> identifiers, email addresses, government-issued identifiers,
 organization-issued identifiers, addresses, healthcare vitals,
-credential-specific JSON-LD contexts, and many other sorts of long-lived
+<a>credential</a>-specific JSON-LD contexts, and many other sorts of long-lived
 identifiers.
       </p>
 
       <p>
 Organizations providing software to <a>holders</a> should strive to identify
-fields in credentials containing information that could be used to correlate
-individuals and warn <a>holders</a> when this information is shared.
+fields in <a>credentials</a> containing information that could be used to
+correlate individuals and warn <a>holders</a> when this information is shared.
       </p>
     </section>
 
@@ -3301,8 +3302,8 @@ identifiable information. If retailers in a specific market commonly require
 purchasers to be older than a certain age, an <a>issuer</a> trusted in that
 market might choose to offer a <a>credential</a> claiming that <a>subjects</a>
 have met that requirement instead of offering <a>credentials</a> containing
-claims about specific birthdates. This enables individual customers to make
-purchases without revealing specific personally identifiable information.
+<a>claims</a> about specific birthdates. This enables individual customers to
+make purchases without revealing specific personally identifiable information.
       </p>
     </section>
 
@@ -3333,20 +3334,20 @@ age.
       </p>
 
       <p>
-It is considered best practice for <a>issuers</a> to atomize information or
-use a signature scheme that allows for <a>selective disclosure</a>. For example,
-an <a>issuer</a> of driver's licenses could issue a <a>credential</a>
-containing every attribute that appears on a driver's license, as well as a set
-of <a>credentials</a> where every <a>credential</a> contains only a
-single attribute such as
-a person's birthday. It could also issue more abstract <a>credentials</a>
-(for example, a <a>credential</a> containing only an <code>ageOver</code>
-attribute). One possible adaptation would be for <a>issuers</a> to provide
-secure HTTP endpoints for retrieving single-use bearer <a>credentials</a> that
-promote the pseudonymous usage of <a>credentials</a>. Implementers that find
-this impractical or unsafe, should consider using <a>selective disclosure</a>
-schemes that eliminate dependence on <a>issuers</a> at proving time and reduce
-temporal correlation risk from <a>issuers</a>.
+It is considered best practice for <a>issuers</a> to atomize information or use
+a signature scheme that allows for <a>selective disclosure</a>. For example, an
+<a>issuer</a> of driver's licenses could issue a <a>credential</a> containing
+every attribute that appears on a driver's license, as well as a set of
+<a>credentials</a> where every <a>credential</a> contains only a single
+attribute such as a person's birthday. It could also issue more abstract
+<a>credentials</a> (for example, a <a>credential</a> containing only an
+<code>ageOver</code> attribute). One possible adaptation would be for
+<a>issuers</a> to provide secure HTTP endpoints for retrieving single-use
+bearer <a>credentials</a> that promote the pseudonymous usage of
+<a>credentials</a>. Implementers that find this impractical or unsafe, should
+consider using <a>selective disclosure</a> schemes that eliminate dependence on
+<a>issuers</a> at proving time and reduce temporal correlation risk from
+<a>issuers</a>.
       </p>
 
       <p>
@@ -3549,10 +3550,10 @@ your expectations.
 
       <p>
 Holding two pieces of information about the same <a>subject</a> almost always
-reveals more about the <a>subject</a> than just a single piece of information,
-even when the information is delivered through different channels. The aggregation
-of <a>credentials</a> is a privacy risk and all participants in the ecosystem need
-to be aware of the risks of data aggregation.
+reveals more about the <a>subject</a> than just the sum of two pieces of
+information, even when the information is delivered through different channels.
+The aggregation of <a>credentials</a> is a privacy risk and all participants in
+the ecosystem need to be aware of the risks of data aggregation.
       </p>
 
       <p>
@@ -3619,7 +3620,7 @@ individual across services. In this case, using information from other sources
 (including information provided directly by the <a>holder</a>),
 <a>verifiers</a> can use information inside the <a>credential</a> to correlate
 the individual with an existing profile. For example, if a <a>holder</a>
-presents <a>credentials</a> that include postal code, age, and sex, a
+presents <a>credentials</a> that include postal code, age, and gender, a
 <a>verifier</a> can potentially correlate the <a>subject</a> of that
 <a>credential</a> with an established profile. For more information,
 see [[DEMOGRAPHICS]].
@@ -3691,7 +3692,7 @@ correlation arises from the presentation of <a>verifiable credentials</a>.
       <p>
 When a <a>holder</a> chooses to share information with a <a>verifier</a>, it
 might be the case that the <a>verifier</a> is acting in bad faith and requests
-information that could be used to harm the holder. For example, a
+information that could be used to harm the <a>holder</a>. For example, a
 <a>verifier</a> might ask for a bank account number, which could then be used
 with other information to defraud the <a>holder</a> or the bank.
       </p>
@@ -3736,16 +3737,16 @@ however, by making their <a>credentials</a> short lived and renewal automatic.
       </p>
 
       <p>
-For example, an "ageOver" <a>credential</a> is useful for gaining access to a
-bar. If an <a>issuer</a> issues such a <a>credential</a> with a very short
-expiration date and an automatic renewal mechanism, then the <a>issuer</a>
-could possibly correlate the behavior of the <a>holder</a> in a way that
-negatively impacts the <a>holder</a>.
+For example, an <code>ageOver</code> <a>credential</a> is useful for gaining
+access to a bar. If an <a>issuer</a> issues such a <a>credential</a> with a
+very short expiration date and an automatic renewal mechanism, then the
+<a>issuer</a> could possibly correlate the behavior of the <a>holder</a> in a
+way that negatively impacts the <a>holder</a>.
       </p>
 
       <p>
 Organizations providing software to <a>holders</a> should warn them if they
-repeatedly use credentials with short lifespans, which could result in
+repeatedly use <a>credentials</a> with short lifespans, which could result in
 behavior correlation. <a>Issuers</a> should avoid issuing <a>credentials</a> in
 a way that enables them to correlate usage patterns.
       </p>
@@ -3828,9 +3829,9 @@ long term viability of systems processing <a>verifiable credentials</a>.
 
       <p>
 <a>Verifiable credentials</a> often contain URLs to data that resides
-outside of the credential itself. Content that exists outside a
+outside of the <a>credential</a> itself. Content that exists outside a
 <a>verifiable credential</a>, such as links to images, JSON-LD Contexts, and
-other machine-readable data are often not protected against tampering because
+other machine-readable data, are often not protected against tampering because
 the data resides outside of the protection of the
 <a href="#proofs-signatures">proof</a> on the <a>verifiable credential</a>.
 For example, the following highlighted links are not content-integrity
@@ -3892,11 +3893,11 @@ important JSON-LD Contexts.
       </p>
 
       <p>
-While the example above is one way to achieve
-content integrity protection, there are other solutions that may be better
-suited for certain applications. Implementers are urged to understand how
-links to external machine-readable content that are not content-integrity
-protected may result in successful attacks against their applications.
+While the example above is one way to achieve content integrity protection,
+there are other solutions that may be better suited for certain applications.
+Implementers are urged to understand how links to external machine-readable
+content that are not content-integrity protected may result in successful
+attacks against their applications.
       </p>
 
       </section>
@@ -3944,14 +3945,15 @@ disclosure. In the case of atomization, if it is not done securely by the
 
       <p>
 For example a university might issue two <a>credentials</a> to a person, each
-containing two properties, for example, "Staff Member" in the "Department of
-Computing" and "Post Graduate Student" in the "Department of Economics". If
-these <a>credentials</a> are atomized into separate properties, then the
-university would issue four credentials to the person, each containing one of
-the following properties, "Staff Member", "Post Graduate Student", "Department
-of Computing", and "Department of Economics". The <a>holder</a> could then
-transfer the "Staff Member" and "Department of Economics" <a>credentials</a> to
-a <a>verifier</a>, which together would comprise a false claim.
+containing two <a>properties</a>, for example, "Staff Member" in the
+"Department of Computing" and "Post Graduate Student" in the "Department of
+Economics". If these <a>credentials</a> are atomized into separate properties,
+then the university would issue four credentials to the person, each containing
+one of the following properties, "Staff Member", "Post Graduate Student",
+"Department of Computing", and "Department of Economics". The <a>holder</a>
+could then transfer the "Staff Member" and "Department of Economics"
+<a>credentials</a> to a <a>verifier</a>, which together would comprise a false
+claim.
       </p>
     </section>
 
@@ -3983,7 +3985,8 @@ this type of attack include:
 
       <ul>
         <li>
-Enabling password, pin, pattern, or biometric screen unlock protection.
+Enabling password, pin, pattern, or biometric screen unlock protection on the
+device.
         </li>
         <li>
 Enabling password, biometric, or multi-factor authentication for the
@@ -4008,8 +4011,8 @@ All or any combination of the above.
 
       <p>
 This section describes the possible relationships between a <a>subject</a>
-and a <a>holder</a> and how the Verifiable Credentials Data Model expresses these
-relationships. The following diagram illustrates the different types of
+and a <a>holder</a> and how the Verifiable Credentials Data Model expresses
+these relationships. The following diagram illustrates the different types of
 relationships covered in the rest of this section.
       </p>
 
@@ -4039,8 +4042,8 @@ this case, a <a>verifier</a> can easily deduce that a <a>subject</a> is the
 
         <p>
 If only the <code>credentialSubject</code> is allowed to insert a
-<a>verifiable credential</a> into a <a>verifiable presentation</a>, the issuer
-MAY insert the <code>subjectOnly</code> <a>property</a> into the
+<a>verifiable credential</a> into a <a>verifiable presentation</a>, the
+<a>issuer</a> MAY insert the <code>subjectOnly</code> <a>property</a> into the
 <a>verifiable credential</a>, as described below.
         </p>
 
@@ -4057,7 +4060,7 @@ The <code>subjectOnly</code> <a>property</a> states that a
 <a>verifiable presentation</a> whose proof was issued by the
 <code>credentialSubject</code>. A <a>verifiable presentation</a> that contains
 a <a>verifiable credential</a> containing the <code>subjectOnly</code>
-<a>property</a> whose proof creator is not the <code>credentialSubject</code>
+<a>property</a>, whose proof creator is not the <code>credentialSubject</code>,
 is invalid.
           </p>
 
@@ -4085,7 +4088,7 @@ is invalid.
 
         <p>
 In this case, the <code>credentialSubject</code> <a>property</a> might contain
-multiple properties each providing an aspect of the identity of the
+multiple <a>properties</a> each providing an aspect of the identity of the
 <a>subject</a>, which together, unambiguously identify the <a>subject</a>.
 Some use cases might not require the <a>holder</a> to be identified at all,
 such as checking to see if a doctor (the <a>subject</a>) is board-certified.
@@ -4288,7 +4291,7 @@ being passed
 
       <p>
 The <a>holder</a> can now create a <a>verifiable presentation</a> containing
-these two <a>verifiable credentials</a>, so that the <a>verifier</a> can verify
+these two <a>verifiable credentials</a> so that the <a>verifier</a> can verify
 that the <a>subject</a> gave the original <a>verifiable credential</a> to the
 <a>holder</a>.
       </p>
@@ -4363,10 +4366,11 @@ When an <a>issuer</a> wants to authorize a <a>holder</a> to possess a
         </p>
 
     <p class="issue" data-number=204>
-Verifiable credentials are not an authorization framework and therefore delegation
-is out of scope for this specification. However, it is understood that Verifiable
-Credentials are likely to be used to build authorization and delegation systems.
-The following is one approach that may be appropriate for some use cases.
+Verifiable credentials are not an authorization framework and therefore
+delegation is out of scope for this specification. However, it is understood
+that verifiable credentials are likely to be used to build authorization and
+delegation systems. The following is one approach that may be appropriate for
+some use cases.
     <p>
 
     <p>
