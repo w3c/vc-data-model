@@ -3105,208 +3105,6 @@ request: <a href="https://github.com/w3c/vc-data-model/pull/384">Add section on 
         </section>
 
       </section>
-      <section>
-        <h3>Proof Format Trade-Offs</h3>
-
-        <p>
-The Verifiable Credentials Data Model is designed to be compatible with a
-variety of existing and emerging syntaxes and digital proof formats. Each
-format has benefits and drawbacks. The following table is intended to summarize
-a number of these native trade-offs.
-        </p>
-
-        <table class="simple">
-          <thead>
-            <tr>
-              <th style="text-align: center;">Feature</th>
-              <th style="text-align: center;">JSON<br>+<br>JWTs</th>
-              <th style="text-align: center;">JSON&#8209;LD<br>+<br>JWTs</th>
-              <th style="text-align: center;">JSON&#8209;LD<br>+<br>LD&#8209;Proofs</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>
-Support for open world data modelling.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-Universal identifier mechanism for JSON objects via the use of URLs.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-A way to disambiguate keys shared among different JSON documents by mapping
-them to IRIs via a context.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-A mechanism in which a value in a JSON object may refer to a resource on a
-different site on the Web.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-The ability to annotate strings with their language.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-A way to associate datatypes with values such as dates and times.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-A facility to express one or more directed graphs, such as a social network,
-in a single document.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-Supports signature sets.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-Embeddable in HTML such that search crawlers will index the machine-readable
-content.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-Data on the wire is easy to debug.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Nesting signed data does not cause data size to double for every embedding.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Proof format supports Zero-Knowledge Proofs.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Proof format supports arbitrary proofs such as Proof of Work, Proof of
-Elapsed Time, and Proof of Stake.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Proofs can be expressed unmodified in other data syntaxes such as
-YAML, N-Quads, and CBOR.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Changing key-value ordering, or introducing whitespace does not
-invalidate signature.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Support experimental signature systems.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Supports signature chaining.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Does not require pre-processing or post-processing.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-
-            <tr>
-              <td>
-Canonicalization requires more than base-64 encoding.
-              </td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-              <td class="missing">✖</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p class="note">
-Some of the features listed in the table above are debateable since a feature
-can always be added to a particular syntax or digital proof format. The table
-is intended to identify native features of each combination such that no
-additional language design or extension is required to achieve the identified
-feature. Features that all languages provide, such as the ability to express
-numbers, have not been included for the purposes of brevity.
-        </p>
-
-      </section>
     </section>
 
     <section>
@@ -4460,6 +4258,389 @@ All or any combination of the above.
         </li>
       </ul>
     </section>
+  </section>
+
+  <section class="appendix">
+    <h2>Proof Format Trade-Offs</h2>
+
+    <p>
+The Verifiable Credentials Data Model is designed to be compatible with a
+variety of existing and emerging syntaxes and digital proof formats. Each
+format has benefits and drawbacks. The following table is intended to summarize
+a number of these native trade-offs.
+    </p>
+
+    <table class="simple">
+      <thead>
+        <tr>
+          <th style="text-align: center;">Feature</th>
+          <th style="text-align: center;">JSON<br>+<br>JWTs</th>
+          <th style="text-align: center;">JSON&#8209;LD<br>+<br>JWTs</th>
+          <th style="text-align: center;">JSON&#8209;LD<br>+<br>LD&#8209;Proofs</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+<a href="#pf1">PF1.</a> Support for open world data modelling.
+          </td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf2">PF2.</a> Universal identifier mechanism for JSON objects via
+the use of URIs.
+          </td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf3">PF3.</a> A way to disambiguate keys shared among different
+JSON documents by mapping them to IRIs via a context.
+          </td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf4">PF4.</a> A mechanism to refer to data in an external document,
+where the data may be merged with the local document without a merge conflict
+in semantics or structure.
+          </td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf5">PF5.</a> The ability to annotate strings with their language.
+          </td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf6">PF6.</a> A way to associate datatypes with values such as
+dates and times.
+          </td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf7">PF7.</a> A facility to express one or more directed graphs,
+such as a social network, in a single document.
+          </td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf8">PF8.</a> Supports signature sets.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf9">PF9.</a> Embeddable in HTML such that search crawlers will
+index the machine-readable content.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+        <tr>
+          <td>
+<a href="#pf10">PF10.</a> Data on the wire is easy to debug and serialize to
+database systems.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf11">PF11.</a> Nesting signed data does not cause data size to
+double for every embedding.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf12">PF12.</a> Proof format supports Zero-Knowledge Proofs.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf13">PF13.</a> Proof format supports arbitrary proofs such as
+Proof of Work, Proof of Elapsed Time, and Proof of Stake.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf14">PF14.</a> Proofs can be expressed unmodified in other data
+syntaxes such as YAML, N-Quads, and CBOR.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf15">PF15.</a> Changing key-value ordering, or introducing
+whitespace does not invalidate signature.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf16">PF16.</a> Support experimental signature systems.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf17">PF17.</a> Supports signature chaining.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf18">PF18.</a> Does not require pre-processing or post-processing.
+          </td>
+          <td class="missing">✖</td>
+          <td class="missing">✖</td>
+          <td class="supported">✓</td>
+        </tr>
+
+        <tr>
+          <td>
+<a href="#pf19">PF19.</a> Canonicalization requires more than base-64 encoding.
+          </td>
+          <td class="supported">✓</td>
+          <td class="supported">✓</td>
+          <td class="missing">✖</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="note">
+Some of the features listed in the table above are debateable since a feature
+can always be added to a particular syntax or digital proof format. The table
+is intended to identify native features of each combination such that no
+additional language design or extension is required to achieve the identified
+feature. Features that all languages provide, such as the ability to express
+numbers, have not been included for the purposes of brevity.
+    </p>
+
+    <dl>
+      <dt id="pf1">
+PF1: Support for open world data modelling
+      </dt>
+      <dd>
+An <em>open world data model</em> is one where any entity can make any
+statement about anything while simultaneously ensuring that the semantics of
+the statement are unambiguous. This specification is enabled by an open world
+data model called Linked Data. One defining characteristic of supporting an open
+world data model is the ability to specify the semantic context in which data
+is being expressed. JSON-LD provides this mechanism via the
+<code>@context</code> property. JSON has no such feature.
+      </dd>
+      <dt id="pf2">
+PF2: Universal identifier mechanism for JSON objects via the use of URIs.
+      </dt>
+      <dd>
+All entities in a JSON-LD document are identified either via an automatic URI,
+or via an explicit URI. This enables all entities in a document to be
+unambiguously referenced. JSON does not have a native URI type nor does it
+require objects to have one, making it difficult to impossible to unambiguously
+identify an entity expressed in JSON.
+      </dd>
+      <dt id="pf3">
+PF3: A way to disambiguate keys shared among different JSON documents by
+mapping them to IRIs via a context.
+      </dt>
+      <dd>
+All object keys in a JSON-LD document are either keywords or they are mapped to
+an IRI. This feature enables open world systems to identify the semantic
+meaning of the key in an unambiguous way, which enables seamless merging of
+data between disparate systems. JSON object keys are not mapped to IRIs, which
+result in ambiguities with respect to the semantic meaning of the key.
+      </dd>
+      <dt id="pf4">
+PF4: A mechanism to refer to data in an external document, where the data may
+be merged with the local document without a merge conflict in semantics or
+structure.
+      </dt>
+      <dd>
+JSON-LD provides a mechanism that enables a data value to use a URL to refer
+to data outside of the local document. This external data may then be
+automatically merged with the local document without a merge conflict in
+semantics or structure. This feature enables a system to apply the
+"follow your nose" principle to discover a richer set of data that is
+associated with the local document. While a JSON document can contain pointers
+to external data, interpreting the pointer is often application specific and
+usually does not support merging the external data to construct a richer data
+set.
+      </dd>
+      <dt id="pf5">
+PF5: The ability to annotate strings with their language.
+      </dt>
+      <dd>
+JSON-LD enables a developer to specify the language, such as English, French,
+or Japanese, in which a text string is expressed via the use of language tags.
+JSON does not provide such a feature.
+      </dd>
+      <dt id="pf6">
+PF6: A way to associate datatypes with values such as dates and times.
+      </dt>
+      <dd>
+JSON-LD enables a developer to specify the data type, such as Date,
+unsigned integer, or Temperature, in which a string is expressed as a native
+feature of the language. JSON does not provide such a feature.
+      </dd>
+      <dt id="pf7">
+PF7: A facility to express one or more directed graphs, such as a social
+network, in a single document.
+      </dt>
+      <dd>
+JSON-LD's abstract data model supports the expression of information
+as a directed graph of labeled nodes and edges, which enables an open world
+data model to be supported. JSON's abstract data model only supports the
+expression of information as a tree of unlabeled nodes and edges, which
+restricts the types of relationships and structures that can be natively
+expressed in the language.
+      </dd>
+      <dt id="pf8">
+PF8: Supports signature sets.
+      </dt>
+      <dd>
+A signature set is an unordered set of signatures over a data payload. Use
+cases, such as cryptographic signatures applied to a legal contract,
+typically require more than one signature to be associated with the contract
+in order to legally bind two or more parties under the terms of the contract.
+Linked Data Proofs, including Linked Data Signatures, natively support sets of
+signatures. JWTs only enable a single signature over a single payload.
+      </dd>
+      <dt id="pf9">
+PF9: Embeddable in HTML such that search crawlers will index the
+machine-readable content.
+      </dt>
+      <dd>
+All major search crawlers natively parse and index information expressed as
+JSON-LD in HTML pages. LD-Proofs enable the current data format that search
+engines use to be extended to support digital signatures. JWTs have no mechanism
+to express data in HTML pages and are currently not indexed by search crawlers.
+      </dd>
+      <dt id="pf10">
+PF10: Data on the wire is easy to debug and serialize to database systems.
+      </dt>
+      <dd>
+When developers are debugging software systems, it is beneficial for them to be
+able to see the data that they are operating on using common debugging tools.
+Similarly, it is useful to be able to serialize data from the network to a
+database and then from the database back out to the network using a minimal
+number of pre and post processing steps. LD-Proofs enable developers to use
+common JSON tooling without having to convert the format into a different
+format or structure. JWTs base-64 encode payload information, resulting in
+complicated pre and post processing steps to convert the data into JSON data
+while not destroying the digital signature. Similarly, schema-less databases,
+which are typically used to index JSON data, cannot index information
+that is expressed in an opaque base-64 encoded wrapper.
+      </dd>
+      <dt id="pf11">
+PF11: Nesting signed data does not cause data size to double for every
+embedding.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf12">
+PF12: Proof format supports Zero-Knowledge Proofs.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf13">
+PF13: Proof format supports arbitrary proofs such as Proof of Work, Proof of
+Elapsed Time, and Proof of Stake.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf14">
+PF14: Proofs can be expressed unmodified in other data syntaxes such as YAML,
+N-Quads, and CBOR.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf15">
+PF15: Changing key-value ordering, or introducing whitespace does not
+invalidate signature.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf16">
+PF16: Support experimental signature systems.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf17">
+PF17: Supports signature chaining.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf18">
+PF18: Does not require pre-processing or post-processing.
+      </dt>
+      <dd>
+
+      </dd>
+      <dt id="pf19">
+PF19: Canonicalization requires more than base-64 encoding.
+      </dt>
+      <dd>
+
+      </dd>
+    </dl>
+
   </section>
 
     <section class="appendix">
