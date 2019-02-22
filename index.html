@@ -2207,39 +2207,43 @@ personally identifiable information contained on the degree.
         </p>
 
         <p>
-This specification provides a data model that supports zero-knowledge proof mechanisms.
-The examples below highlight how the data model may be utilized to issue,
+This specification describes a data model that supports zero-knowledge proof mechanisms.
+The examples below highlight how the data model may be used to issue,
 present, and verify zero-knowledge <a>verifiable credentials</a>.
         </p>
 
         <p>
-The first stage of utilizing zero-knowledge <a>verifiable credentials</a>
-is for the <a>issuer</a> to issue a <a>verifiable credential</a> in a manner
-that enables the <a>holder</a> to present the information to a <a>verifier</a>
-in a privacy-enhancing manner. There are two requirements that are required of
-most <a>verifiable credentials</a> when they are to be used in
-zero-knowledge systems:
+To use zero-knowledge <a>verifiable credentials</a> the <a>issuer</a> must
+issue a <a>verifiable credential</a> in a manner that enables the <a>holder</a>
+to present the information to a <a>verifier</a> in a privacy-enhancing manner.
+This implies that the <a>holder</a> will be able to prove the validity of the
+issuer's signature without revealing the values that were signed, or when only
+revealing certain selected values. The standard practice is to do so by
+proving knowledge of the signature, without revealing the signature itself.
+There are two requirements for <a>verifiable credentials</a> when they are
+to be used in zero-knowledge proof systems:
         </p>
 
         <ul>
           <li>
 The <a>verifiable credential</a> MUST contain a credential definition that
-will be used by all parties to perform various zero-knowledge based
-cryptographic operations.
+may be used by all parties to perform various cryptographic operations
+in zero-knowledge.
           </li>
           <li>
 The <a>verifiable credential</a> MUST contain a proof that enables
-<a>presentations</a> to be created that prove information contained in the
-original <a>verifiable credential</a> in zero-knowledge and without leaking
-any information not intended to be leaked by the <a>holder</a> that is
-presenting the <a>presentation</a>.
+<a>presentations</a> to be derived that prove information contained in the
+original <a>verifiable credential</a> in zero-knowledge. The zero-knowledge
+<a>presentation</a> must not reveal any information not intended to be
+revealed by the <a>holder</a>.
           </li>
         </ul>
 
         <p>
-The following example describes one way that a <a>verifiable credential</a>
-can express the information needed by a Camenisch-Lysyanskaya Zero-Knowledge
-Proof system, also known as CL Signatures.
+The following example shows one method of using <a>verifiable credential</a>s
+in zero-knowledge. It makes use of a CL Signature, which allows the presentation
+of the <a>verifiable credential</a> in a way that supports the privacy of the
+<a>holder</a> through the use of selective disclosure of the credential values.
         </p>
 
         <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
