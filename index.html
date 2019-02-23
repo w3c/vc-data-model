@@ -476,7 +476,7 @@ Specifically, all relevant normative statements in
 <a href="#basic-concepts"></a>, <a href="#advanced-concepts"></a>, and
 <a href="#syntaxes"></a> of this document MUST be enforced.
         </p>
-  
+
         <p>
 A <em>conforming processor</em> is any algorithm realized as software and/or
 hardware that generates or consumes a <em>conforming document</em>, as
@@ -484,7 +484,7 @@ described by this specification, and also enforces all relevant normative
 statements in the <a href="#verification"></a> section of this document
 when performing <a>verification</a>.
         </p>
-  
+
         <p>
 This specification makes no normative statements with regard to the
 conformance of roles in the ecosystem, such as <a>issuers</a>, <a>holders</a>,
@@ -1540,6 +1540,97 @@ Building on the concepts introduced in Section <a href="#basic-concepts"></a>,
 this section explores more complex topics about <a>verifiable credentials</a>.
       </p>
 
+      <section class="informative">
+        <h3>Lifecycle Details</h3>
+
+        <p>
+Section <a href="#ecosystem-overview"></a> provided an overview of the
+<a>verifiable credential</a> ecosystem. This section provides more detail about
+how the ecosystem is envisaged to operate, as follows:
+        </p>
+
+        <ol>
+          <li>
+The <a>verifier</a> defines its policies for accepting
+<a>verifiable credentials</a> from <a>holders</a> for its supported actions.
+          </li>
+          <li>
+The <a>issuer</a> issues a <a>verifiable credential</a> to the <a>holder</a>.
+          </li>
+          <li>
+The <a>holder</a> might pass on its <a>verifiable credentials</a> to another
+<a>holder</a>.
+          </li>
+          <li>
+The final <a>holder</a> presents its <a>verifiable credentials</a> to the
+<a>verifier</a> in a <a>verifiable presentation</a>, requesting a supported
+action.
+          </li>
+          <li>
+The <a>verifier</a> <a>verifies</a> the authenticity of the
+<a>verifiable presentation</a> and <a>verifiable credentials</a>.
+          </li>
+          <li>
+The <a>verifier</a> <a>verifies</a> that the <a>holder</a> posses the
+<a>verifiable credentials</a>.
+          </li>
+          <li>
+The <a>verifier</a> decides whether to accept the <a>verifiable credentials</a>
+for the requested action, taking into account its policy, the <a>holder</a>,
+and the contents of the <a>verifiable credentials</a>.
+          </li>
+          <li>
+The <a>verifier</a> either performs the requested action or rejects the
+request.
+          </li>
+        </ol>
+
+        <p class="note">
+The order of the steps above are not fixed and some steps might be repeated.
+        </p>
+
+        <p>
+This specification does not define any protocol for transfering
+<a>verifiable credentials</a> or <a>verifiable presentations</a>, but assuming
+other specifications do specify how they are transferred between entities, then
+this Verifiable Credential Data Model is:
+        </p>
+
+        <ul>
+          <li>
+Directly applicable to steps 2, 3, 4, 5, and 6.
+          </li>
+          <li>
+Not sufficient on its own for steps 1, 7, and 8 because an authorization
+framework is needed as well.
+          </li>
+        </ul>
+
+        <p>
+In particular, Sections <a href="#terms-of-use"></a> and
+<a href="#subject-holder-relationships"></a> specify how a <a>verifier</a> can
+determine:
+        </p>
+
+        <ul>
+          <li>
+Whether the <a>holder</a> is the <a>subject</a> of a
+<a>verifiable credential</a>.
+          </li>
+          <li>
+The relationship between the <a>subject</a> and the <a>holder</a>.
+          </li>
+          <li>
+Whether the original <a>holder</a> passed a <a>verifiable credential</a> to a
+subsequent <a>holder</a>.
+          </li>
+          <li>
+Any restrictions using the <a>verifiable credentials</a> by the <a>holder</a>
+or <a>verifier</a>.
+          </li>
+        </ul>
+      </section>
+
       <section>
         <h3>Extensibility</h3>
 
@@ -1926,97 +2017,6 @@ In the example above, the <a>issuer</a> specifies a manual
 <code>refreshService</code> that can be used by directing the <a>holder</a> or
 the <a>verifier</a>to <code>https://example.edu/refresh/3732</code>.
         </p>
-      </section>
-
-      <section class="informative">
-        <h3>Mode of Operation</h3>
-
-        <p>
-Section <a href="#ecosystem-overview"></a> provided an overview of the
-<a>verifiable credential</a> ecosystem. This section provides more detail about
-how the ecosystem is envisaged to operate, as follows:
-        </p>
-
-        <p class="note">
-The order of the following steps is not fixed and some steps might be repeated.
-        </p>
-
-        <ol>
-          <li>
-The <a>verifier</a> defines its policies for accepting
-<a>verifiable credentials</a> from <a>holders</a> for its supported actions.
-          </li>
-          <li>
-The <a>issuer</a> issues a <a>verifiable credential</a> to the <a>holder</a>.
-          </li>
-          <li>
-The <a>holder</a> might pass on its <a>verifiable credentials</a> to another
-<a>holder</a>.
-          </li>
-          <li>
-The final <a>holder</a> presents its <a>verifiable credentials</a> to the
-<a>verifier</a> in a <a>verifiable presentation</a>, requesting a supported
-action.
-          </li>
-          <li>
-The <a>verifier</a> <a>verifies</a> the authenticity of the
-<a>verifiable presentation</a> and <a>verifiable credentials</a>.
-          </li>
-          <li>
-The <a>verifier</a> <a>verifies</a> that the <a>holder</a> posses the
-<a>verifiable credentials</a>.
-          </li>
-          <li>
-The <a>verifier</a> decides whether to accept the <a>verifiable credentials</a>
-for the requested action, taking into account its policy, the <a>holder</a>,
-and the contents of the <a>verifiable credentials</a>.
-          </li>
-          <li>
-The <a>verifier</a> either performs the requested action or rejects the
-request.
-          </li>
-        </ol>
-
-        <p>
-This specification does not define any protocol for transfering
-<a>verifiable credentials</a> or <a>verifiable presentations</a>, but assuming
-other specifications do specify how they are transferred between entities, then
-this Verifiable Credential Data Model is:
-        </p>
-
-        <ul>
-          <li>
-Directly applicable to steps 2, 3, 4, 5, and 6.
-          </li>
-          <li>
-Not sufficient on its own for steps 1, 7, and 8 because an authorization
-framework is needed as well.
-          </li>
-        </ul>
-
-        <p>
-In particular, Sections <a href="#terms-of-use"></a> and
-<a href="#subject-holder-relationships"></a> specify how a <a>verifier</a> can
-determine:
-        </p>
-
-        <ul>
-          <li>
-Whether the <a>holder</a> is the <a>subject</a> of a
-<a>verifiable credential</a>.
-          </li>
-          <li>
-The relationship between the <a>subject</a> and the <a>holder</a>.
-          </li>
-          <li>
-Whether the original <a>holder</a> passed a <a>verifiable credential</a> to a
-subsequent <a>holder</a>.
-          </li>
-          <li>
-Any restrictions using the <a>verifiable credentials</a> by the <a>holder</a>
-or <a>verifier</a>.
-          </li>
-        </ul>
       </section>
 
       <section>
