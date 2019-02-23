@@ -676,76 +676,108 @@ that are often, but not required to be, related.
         </p>
 
     </section>
-    </section>
+
     <section  class="informative">
-        <h2>Lifecycle</h2>
+        <h2>Concrete Lifecycle Example</h2>
 
         <p>
-This section elaborates on the lifecycle of credentials and presentations in
-the <a href="#ecosystem-overview">ecosystem</a>. The lifecycle of credentials
-will take a common path: issuance of one or more credentials, storage of
-credentials, and then the composition of credentials into a presentation for
-verifiers.
-        </p>
-        <section class="informative">
-          <h3>Basic</h3>
-        <p>
-We will illustrate the basic lifecycle with our first scenario, redeeming an
-alumni discount at an university. In
-<a href="#example-1-example-verifiable-credential">Example 1</a>, Pat
-receives an "AlumniCredential" from "Example University" that will be stored
-in Pat's mobile device's digital wallet, a type of credential repository.
+The previous sections introduced the concepts of <a>claims</a>,
+<a>credentials</a>, and <a>presentations</a> using graphical depictions.
+This section provides a concrete set of simple but complete lifecycle examples
+of the data model expressed in one of the concrete syntaxes supported by this
+specification. The lifecycle of <a>credentials</a> and <a>presentations</a> in
+the <a href="#ecosystem-overview">Verifiable Credentials Ecosystem</a> often
+take a common path:
         </p>
 
-        <pre class="example nohighlight" title="Example Verifiable Credential">
+        <ol>
+          <li>
+issuance of one or more <a>credentials</a>,
+          </li>
+          <li>
+storage of <a>credentials</a> in a <a>credential repository</a>
+(such as a digital wallet),
+          </li>
+          <li>
+the composition of <a>credentials</a> into a <a>verifiable presentation</a>
+for <a>verifiers</a>, and finally
+          </li>
+          <li>
+the <a>verification</a> of the <a>verifiable presentation</a> by the
+<a>verifier</a>.
+          </li>
+        </ol>
+
+        <p>
+We will use concrete examples to illustrate the lifecycle above by
+demonstrating how one would redeem an alumni discount from a university. In
+the example below, Pat receives an alumni <a>credential</a> from a university
+that will be stored in Pat's digital wallet.
+        </p>
+
+        <pre class="example nohighlight" title="A simple example of a verifiable credential">
 {
+  <span class='comment'>// set the context, which establishes the special terms we will be using
+  // such as 'issuer' and 'alumniOf'.</span>
   "@context": [
-    "https://w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
+  <span class='comment'>// specify the identifier for the credential</span>
   "id": "http://example.edu/credentials/1872",
+  <span class='comment'>// the credential types, which declare what data to expect in the credential</span>
   "type": ["VerifiableCredential", "AlumniCredential"],
-  "issuer": "https://example.edu/issuers/565049",,
+  <span class='comment'>// the entity that issued the credential</span>
+  "issuer": "https://example.edu/issuers/565049",
+  <span class='comment'>// when the credential was issued</span>
   "issuanceDate": "2010-01-01T19:73:24Z",
+  <span class='comment'>// claims about the subject of the credential</span>
   "credentialSubject": {
+    <span class='comment'>// identifier for the subject of the credential</span>
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    <span class='comment'>// assertion about the subject of the credential</span>
     "alumniOf": "Example University"
   },
+  <span class='comment'>// digital proof that makes the credential tamper-evident</span>
   "proof": {
+    <span class='comment'>// the cryptographic signature suite that was used to generate the signature</span>
     "type": "RsaSignature2018",
+    <span class='comment'>// the date the signature was created</span>
     "created": "2017-06-18T21:19:10Z",
-    "creator": "https://example.com/jdoe/keys/1",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-      +W3JT24="
+    <span class='comment'>// the public key identifier that created the signature</span>
+    "creator": "https://example.edu/issuers/keys/1",
+    <span class='comment'>// the digital signature value</span>
+    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
+      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
+      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
+      PAYuNzVBAh4vGHSrQyHUdBBPM"
   }
 }
         </pre>
         <p>
-In the final chapter of this lifecycle, Pat's "AlumniCredential" will be
-presented for a discount. The verifier, a ticket sales counter, states that
-any alumni of "Example University" will receive a 72% discount on football
-season tickets. Using a mobile device, Pat selects the Verifiable Credential
-received earlier that will then be composed into a presentation. That
-presentation is then sent to the verifier in the form of a Verifiable
-Presentation in order to receive the discount. We can find that presentation
-in
-<a href="#example-2-example-verifiable-presentation">Example 2</a>.
+Pat then presents the alumni credential above in order to receive a discount.
+The <a>verifier</a>, a ticket sales system, states that any alumni of
+"Example University" will receive a discount on season tickets to
+sporting events. Using a mobile device, Pat starts to purchase a season ticket.
+A step in the process requests an alumni credential and the request is
+routed to Pat's digital wallet. The digital wallet asks Pat if they would like
+to provide the previously issued <a>verifiable credential</a>. Pat selects the
+<a>verifiable credential</a>, which is then composed into a
+<a>verifiable presentation</a>. The <a>verifiable presentation</a> is then sent
+to the <a>verifier</a> and <a>verified</a>.
         </p>
-        <pre class="example nohighlight" title="Example Verifiable Presentation">
+        <pre class="example nohighlight" title="A simple example of a verifiable presentation">
 {
   "@context": [
-    "https://w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
-  "id": "did:example:Fg15hCqJ19LP4X4RaiumJVb8YeZnzUjWLh74hKqBvk5B",
   "type": "VerifiablePresentation",
+  <span class='comment'>// the verifiable credential issued in the previous example</span>
   "verifiableCredential": [{
     "id": "http://example.edu/credentials/1872",
     "type": ["VerifiableCredential", "AlumniCredential"],
-    "issuer": "https://example.edu/issuers/565049",,
+    "issuer": "https://example.edu/issuers/565049",
     "issuanceDate": "2010-01-01T19:73:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -754,19 +786,32 @@ in
     "proof": {
       "type": "RsaSignature2018",
       "created": "2017-06-18T21:19:10Z",
-      "creator": "https://example.com/jdoe/keys/1",
-      "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-      "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-      +W3JT24="
+      "creator": "https://example.edu/issuers/keys/1",
+      "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
+        sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
+        X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
+        PAYuNzVBAh4vGHSrQyHUdBBPM"
     }
   }],
-  "proof": { ... }
+  <span class='comment'>// digital signature by Pat on the presentation establishes consent and
+  // protects against replay attacks</span>
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2018-09-14T21:19:10Z",
+    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
+    <span class='comment'>// 'nonce' and 'domain' protect against replay attacks</span>
+    "nonce": "1f44d55f-f161-4938-a659-f8026467f126",
+    "domain": "4jt78h47fh47",
+    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..kTCYt5
+      XsITJX1CxPCT8yAV-TVIw5WEuts01mq-pQy7UJiN5mgREEMGlv50aqzpqh4Qq_PbChOMqs
+      LfRoPsnsgxD-WUcX16dUOqV0G_zS245-kronKb78cPktb3rk-BuQy72IFLN25DYuNzVBAh
+      4vGHSrQyHUGlcTwLtjPAnKb78"
+  }
 }
         </pre>
       </section>
     </section>
+
     <section class="informative">
       <h2>Trust Model</h2>
 
