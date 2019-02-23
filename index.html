@@ -838,89 +838,6 @@ to the <a>verifier</a> and <a>verified</a>.
       </section>
     </section>
 
-    <section class="informative">
-      <h2>Trust Model</h2>
-
-      <p>
-The <a>verifiable credentials</a> trust model is as follows:
-      </p>
-
-      <ul>
-        <li>
-The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
-that it received. To establish this trust, a <a>credential</a> MUST either:
-          <ul>
-            <li>
-Include a <a href="#proofs-signatures">proof</a> establishing that the
-<a>issuer</a> generated the <a>credential</a> (that is, it is a
-<a>verifiable credential</a>).
-            </li>
-            <li>
-Have been transmitted in a way clearly establishing that the <a>issuer</a>
-generated the <a>credential</a> and that the <a>credential</a> was not
-tampered with in transit or storage. This trust could be weakened depending
-on the risk assessment of the <a>verifier</a>.
-            </li>
-          </ul>
-        </li>
-        <li>
-All <a>entities</a> trust the <a>verifiable data registry</a> to be
-tamper-evident and to be a correct record of which data is controlled by which
-<a>entities</a>.
-        </li>
-        <li>
-The <a>subject</a> and <a>verifier</a> trust the <a>issuer</a> to issue
-true (that is, not false) <a>credentials</a> about the <a>subject</a>, and to
-revoke them quickly when appropriate.
-        </li>
-        <li>
-The <a>holder</a> trusts the <a>repository</a> to store the <a>credentials</a>
-securely, to not release them to anyone other than the <a>holder</a>, and to
-not corrupt or lose them while they are in its care.
-        </li>
-      </ul>
-
-      <p>
-This trust model differentiates itself from other trust models by ensuring
-the:
-      </p>
-
-      <ul>
-        <li>
-<a>Issuer</a> and the <a>verifier</a> do not need to trust the
-<a>repository</a>
-        </li>
-        <li>
-<a>Issuer</a> does not need to know or trust the <a>verifier</a>.
-        </li>
-      </ul>
-
-      <p>
-By decoupling the trust between the <a>identity provider</a> and the
-<a>relying party</a> a more flexible and dynamic trust model is created such
-that market competition and customer choice is increased.
-      </p>
-
-      <p>
-For more information about how this trust model interacts with various threat
-models studied by the Working Group, see the Verifiable Credentials Use Cases
-[[VC-USECASES]] document.
-      </p>
-
-      <p class="note">
-The data model detailed in this specification does not imply a transitive trust
-model, such as that provided by more traditional Certificate Authority trust
-models. In the Verifiable Credentials Data Model, a <a>verifier</a> either
-directly trusts or does not trust an <a>issuer</a>. While it is possible to
-build transitive trust models using the Verifiable Credentials Data Model,
-implementers are urged to
-<a href="https://tools.ietf.org/html/draft-housley-web-pki-problems">learn
-about the security weaknesses</a> introduced by
-<a href="https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">broadly
-delegating trust</a> in the manner adopted by Certificate Authority systems.
-      </p>
-    </section>
-
     <section>
       <h2>Basic Concepts</h2>
 
@@ -1629,6 +1546,89 @@ Any restrictions using the <a>verifiable credentials</a> by the <a>holder</a>
 or <a>verifier</a>.
           </li>
         </ul>
+      </section>
+
+      <section class="informative">
+        <h2>Trust Model</h2>
+
+        <p>
+The <a>verifiable credentials</a> trust model is as follows:
+        </p>
+
+        <ul>
+          <li>
+The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
+that it received. To establish this trust, a <a>credential</a> MUST either:
+            <ul>
+              <li>
+Include a <a href="#proofs-signatures">proof</a> establishing that the
+<a>issuer</a> generated the <a>credential</a> (that is, it is a
+<a>verifiable credential</a>).
+              </li>
+              <li>
+Have been transmitted in a way clearly establishing that the <a>issuer</a>
+generated the <a>credential</a> and that the <a>credential</a> was not
+tampered with in transit or storage. This trust could be weakened depending
+on the risk assessment of the <a>verifier</a>.
+              </li>
+            </ul>
+          </li>
+          <li>
+All <a>entities</a> trust the <a>verifiable data registry</a> to be
+tamper-evident and to be a correct record of which data is controlled by which
+<a>entities</a>.
+          </li>
+          <li>
+The <a>subject</a> and <a>verifier</a> trust the <a>issuer</a> to issue
+true (that is, not false) <a>credentials</a> about the <a>subject</a>, and to
+revoke them quickly when appropriate.
+          </li>
+          <li>
+The <a>holder</a> trusts the <a>repository</a> to store the <a>credentials</a>
+securely, to not release them to anyone other than the <a>holder</a>, and to
+not corrupt or lose them while they are in its care.
+          </li>
+        </ul>
+
+        <p>
+This trust model differentiates itself from other trust models by ensuring
+the:
+        </p>
+
+        <ul>
+          <li>
+<a>Issuer</a> and the <a>verifier</a> do not need to trust the
+<a>repository</a>
+          </li>
+          <li>
+<a>Issuer</a> does not need to know or trust the <a>verifier</a>.
+          </li>
+        </ul>
+
+        <p>
+By decoupling the trust between the <a>identity provider</a> and the
+<a>relying party</a> a more flexible and dynamic trust model is created such
+that market competition and customer choice is increased.
+        </p>
+
+        <p>
+For more information about how this trust model interacts with various threat
+models studied by the Working Group, see the Verifiable Credentials Use Cases
+[[VC-USECASES]] document.
+        </p>
+
+        <p class="note">
+The data model detailed in this specification does not imply a transitive trust
+model, such as that provided by more traditional Certificate Authority trust
+models. In the Verifiable Credentials Data Model, a <a>verifier</a> either
+directly trusts or does not trust an <a>issuer</a>. While it is possible to
+build transitive trust models using the Verifiable Credentials Data Model,
+implementers are urged to
+<a href="https://tools.ietf.org/html/draft-housley-web-pki-problems">learn
+about the security weaknesses</a> introduced by
+<a href="https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">broadly
+delegating trust</a> in the manner adopted by Certificate Authority systems.
+        </p>
       </section>
 
       <section>
@@ -2535,49 +2535,6 @@ this specification and is pursuing that work as an architectural layer built
 on top of this specification.
         </p>
       </section>
-
-      <section>
-        <h3>Syntactic Sugar</h3>
-
-        <p>
-In general, the data model and syntaxes described in this document are
-designed such that developers can copy and paste examples to incorporate
-<a>verifiable credentials</a> into their software systems. The design goal of
-this approach is to provide a low barrier to entry while still ensuring global
-interoperability between a heterogeneous set of software systems. This section
-describes some of these approaches, which will likely go unnoticed by most
-developers, but whose details will be of interest to implementers. The most
-noteworthy syntactic sugars used throughout the ecosystem are as follows:
-        </p>
-
-        <ul>
-          <li>
-If processed using a JSON-LD processor:
-            <ul>
-              <li>
-The <code>@id</code> and <code>@type</code> keywords are aliased to
-<code>id</code> and <code>type</code> respectively, enabling developers to use
-this specification as idiomatic JSON.
-              </li>
-              <li>
-Data types, such as integers, dates, units of measure, and URLs, are
-automatically typed to provide stronger type guarantees for use cases that
-require them.
-              </li>
-              <li>
-The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
-are treated as <em>graph containers</em>. That is, mechanisms used to isolate
-sets of data asserted by different entities. This ensures, for example, proper
-cryptographic separation between the data graph provided by each <a>issuer</a>
-and the one provided by the <a>holder</a> presenting the
-<a>verifiable credential</a> to ensure the provenance of the information for
-each graph is preserved.
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </section>
-
     </section>
 
     <section>
@@ -2663,6 +2620,52 @@ cached client side. The associated vocabulary document for the Verifiable
 Credentials Data Model is available at
 <code>https://www.w3.org/2018/credentials</code>.
         </p>
+
+        <section>
+          <h3>Syntactic Sugar</h3>
+
+          <p>
+In general, the data model and syntaxes described in this document are
+designed such that developers can copy and paste examples to incorporate
+<a>verifiable credentials</a> into their software systems. The design goal of
+this approach is to provide a low barrier to entry while still ensuring global
+interoperability between a heterogeneous set of software systems. This section
+describes some of these approaches, which will likely go unnoticed by most
+developers, but whose details will be of interest to implementers. The most
+noteworthy syntactic sugars provided by JSON-LD are:
+          </p>
+
+          <ul>
+            <li>
+The <code>@id</code> and <code>@type</code> keywords are aliased to
+<code>id</code> and <code>type</code> respectively, enabling developers to use
+this specification as idiomatic JSON.
+            </li>
+            <li>
+Data types, such as integers, dates, units of measure, and URLs, are
+automatically typed to provide stronger type guarantees for use cases that
+require them.
+            </li>
+            <li>
+The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
+are treated as <em>graph containers</em>. That is, mechanisms used to isolate
+sets of data asserted by different entities. This ensures, for example, proper
+cryptographic separation between the data graph provided by each <a>issuer</a>
+and the one provided by the <a>holder</a> presenting the
+<a>verifiable credential</a> to ensure the provenance of the information for
+each graph is preserved.
+            </li>
+            <li>
+The <code>@protected</code> properties feature of JSON-LD 1.1 is used to ensure
+that terms defined by this specification cannot be overridden. This means
+that as long as the same <code>@context</code> declaration is made at the top
+of a <a>verifiable credential</a> or <a>verifiable presentation</a>, even when
+<a>issuers</a> do not use a JSON-LD processor, that interoperability is still
+guaranteed if <a>verifiers</a> use a JSON-LD processor.
+            </li>
+          </ul>
+        </section>
+
       </section>
 
       <section>
