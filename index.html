@@ -119,7 +119,7 @@ assert that we are capable of operating a motor vehicle, university degrees
 can be used to assert our level of education, and government-issued passports
 enable us to travel between countries. This specification provides a mechanism
 to express these sorts of <a>credentials</a> on the Web in a way that is
-cryptographically secure, privacy respecting, and machine verifiable.
+cryptographically secure, privacy respecting, and machine-verifiable.
       </p>
     </section>
 
@@ -149,7 +149,7 @@ continues to be elusive.
 
       <p>
 Currently it is difficult to express education qualifications, healthcare
-data, financial account details, and other sorts of third-party verified
+data, financial account details, and other sorts of third-party <a>verified</a>
 machine-readable personal information on the Web. The difficulty of expressing
 digital <a>credentials</a> on the Web makes it challenging to receive the same
 benefits through the Web that physical <a>credentials</a> provide us in the
@@ -159,7 +159,7 @@ physical world.
       <p>
 This specification provides a standard way to express <a>credentials</a> on the
 Web in a way that is cryptographically secure, privacy respecting, and
-machine verifiable.
+machine-verifiable.
       </p>
 
       <p>
@@ -192,8 +192,8 @@ In the physical world, a <a>credential</a> might consist of:
 
         <ul>
           <li>
-Information related to the subject of the <a>credential</a> (for example, a
-photo, name, and identification number)
+Information related to the <a>subject</a> of the <a>credential</a> (for
+example, a photo, name, and identification number)
           </li>
           <li>
 Information related to the issuing authority (for example, a city government,
@@ -201,7 +201,7 @@ national agency, or certification body)
           </li>
           <li>
 Information related to the specific attribute(s) or properties being asserted by
-issuing authority about the subject
+issuing authority about the <a>subject</a>
           </li>
           <li>
 Evidence related to how the <a>credential</a> was derived
@@ -219,16 +219,16 @@ more trustworthy than their physical counterparts. <a>Holders</a> of
 <a>verifiable credentials</a> can generate <a>presentations</a> and then share
 these <a>presentations</a> with <a>verifiers</a> to prove they possess
 <a>verifiable credentials</a> with certain characteristics. Both
-<a>credentials</a> and <a>presentations</a> can be transmitted rapidly, making
-them more convenient than their physical counterparts when trying to establish
-trust at a distance.
+<a>verifiable credentials</a> and <a>verifiable presentations</a> can be
+transmitted rapidly, making them more convenient than their physical
+counterparts when trying to establish trust at a distance.
         </p>
         <p>
 While this specification attempts to improve the ease of expressing digital
 <a>credentials</a>, it also attempts to balance this goal with a number of
 privacy-preserving goals. The persistence of digital information, and the ease
 with which disparate sources of digital data can be collected and correlated,
-comprise a privacy concern that the use of verifiable and easily
+comprise a privacy concern that the use of <a>verifiable</a> and easily
 machine-readable <a>credentials</a> threatens to make worse. This document
 outlines and attempts to address a number of these issues in Section
 <a href="#privacy-considerations"></a>. Examples of how to use this data model
@@ -267,14 +267,14 @@ individuals.
           <dt><a>subject</a></dt>
           <dd>
 A role an <a>entity</a> might perform by having one or more
-verifiable credentials asserted about it. Example subjects include
-human beings, animals, and things. Whilst in many cases the holder of
-a verifiable credential will be the subject,
-in certain cases it will not be. For example, a parent (the holder) may hold
-the verifiable credentials of a child (the subject), or a pet lover (the holder)
-may hold the verifiable credentials of its pet (the subject). The Subject-Holder
-Relationships section in the Advanced
-Concepts deals with these special cases.
+<a>verifiable credentials</a> asserted about it. Example subjects include
+human beings, animals, and things. While in many cases the <a>holder</a> of
+a <a>verifiable credential</a> is the subject, in certain cases it is not. For
+example, a parent (the <a>holder</a>) might hold the
+<a>verifiable credentials</a> of a child (the <a>subject</a>), or a pet owner
+(the <a>holder</a>) might hold the <a>verifiable credentials</a> of their pet
+(the <a>subject</a>). For more information about these special cases, see
+Appendix <a href="#subject-holder-relationships"></a>
           </dd>
           <dt><a>verifier</a></dt>
           <dd>
@@ -285,8 +285,8 @@ verifiers include employers, security personnel, and websites.
           </dd>
           <dt><a>verifiable data registry</a></dt>
           <dd>
-A role a system might perform by mediating the creation and verification of
-identifiers, keys, and other relevant data, such as
+A role a system might perform by mediating the creation and <a>verification</a>
+of identifiers, keys, and other relevant data, such as
 <a>verifiable credential</a> schemas and revocation registries, which might be
 required to use <a>verifiable credentials</a>. Some configurations might
 require correlatable identifiers for <a>subjects</a>. Example verifiable data
@@ -339,8 +339,8 @@ requirements
           </li>
           <li>
 Common
-<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-sequences">sequences and flows</a>
-identified by the Working Group.
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-sequences">sequences
+and flows</a> identified by the Working Group.
           </li>
         </ul>
 
@@ -378,6 +378,11 @@ of credentials from any <a>Issuer</a>.
 any User Agent.
           </li>
           <li>
+<a>Holders</a> can share <a>verifiable presentations</a> that can be
+<a>verified</a> without revealing the identity of the <a>verifier</a> to the
+<a>issuer</a>.
+          </li>
+          <li>
 <a>Holders</a> can store <a>Verifiable Credentials</a> in any location, without
 affecting their verifiability and without the <a>Issuer</a> knowing anything about
 where they are stored or when they are accessed.
@@ -392,18 +397,28 @@ A <a>Verifier</a> can verify <a>Verifiable Presentations</a> from any <a>Holder<
 containing proofs of claims from any <a>Issuer</a>.
           </li>
           <li>
-Verification shouldn't depend on direct interactions between <a>Issuers</a> and <a>Verifiers</a> . 
+<a>Issuers</a> issue <a>verifiable credentials</a>, and <a>holders</a> store
+them. <a>Holders</a> offer <a>verifiable presentations</a>, and
+<a>verifiers</a> <a>verify</a> them. Issuing of <a>verifiable credentials</a>,
+storage of <a>verifiable credentials</a>, generation of
+<a>verifiable presentations</a>, sharing of <a>verifiable presentations</a>,
+and <a>verification</a> of <a>verifiable presentations</a> are all independent
+processes.
           </li>
           <li>
-Verification shouldn't reveal the identity of the <a>Verifier</a> to any Issuer. 
+Verification should not depend on direct interactions between <a>Issuers</a> and
+<a>Verifiers</a>.
           </li>
           <li>
-The specification must provide a means for <a>Issuers</a>  to issue
+Verification should not reveal the identity of the <a>Verifier</a> to any Issuer.
+          </li>
+          <li>
+The specification must provide a means for <a>Issuers</a> to issue
 <a>Verifiable Credentials</a> that support selective disclosure, without requiring all
 conformant software to support that feature.
           </li>
           <li>
-<a>Issuers</a>  can issue <a>Verifiable Credentials</a> which support
+<a>Issuers</a> can issue <a>Verifiable Credentials</a> which support
 selective disclosure.
           </li>
           <li>
@@ -446,13 +461,38 @@ and status change, e.g., the driver’s license is suspended.
         <p class="issue">
 There are
 <a href="https://www.w3.org/TR/verifiable-claims-use-cases/#user-tasks">other requirements</a>
-listed in the Verifiable Credentials Use Cases
-document that may or may not be aligned with the requirements listed above.
-The VCWG will be ensuring alignment of the list of requirements from both
-documents over time and will most likely move the list of requirements to a
-single document.
+listed in the Verifiable Credentials Use Cases [[VC-USECASES]] document that
+might or might not be aligned with the requirements listed above. The VCWG will
+be ensuring alignment of the list of requirements from both documents over time
+and will most likely move the list of requirements to a single document.
         </p>
       </section>
+
+      <section id="conformance" class="normative">
+        <p>
+A <em>conforming document</em> is any concrete expression of the data model
+that complies with the normative statements in this specification.
+Specifically, all relevant normative statements in
+<a href="#basic-concepts"></a>, <a href="#advanced-concepts"></a>, and
+<a href="#syntaxes"></a> of this document MUST be enforced.
+        </p>
+
+        <p>
+A <em>conforming processor</em> is any algorithm realized as software and/or
+hardware that generates or consumes a <em>conforming document</em>, as
+described by this specification, and also enforces all relevant normative
+statements in the <a href="#verification"></a> section of this document
+when performing <a>verification</a>.
+        </p>
+
+        <p>
+This specification makes no normative statements with regard to the
+conformance of roles in the ecosystem, such as <a>issuers</a>, <a>holders</a>,
+or <a>verifiers</a>, because the conformance of ecosystem roles are highly
+application, use case, and market vertical specific.
+        </p>
+      </section>
+
     </section>
 
     <section class="informative">
@@ -468,7 +508,7 @@ single document.
 
       <p>
 The following sections outline core data model concepts, such as
-<a>claims</a>, <a>credentials</a>, and <a>presentations</a>, that form the
+<a>claims</a>, <a>credentials</a>, and <a>presentations</a>, which form the
 foundation of this specification.
       </p>
 
@@ -493,7 +533,7 @@ The basic structure of a claim.
 
         <p>
 The data model for <a>claims</a> described above is powerful and can be used
-to express a large variety of statements. For example, whether or not someone
+to express a large variety of statements. For example, whether someone
 graduated from a particular university can be expressed as shown below.
         </p>
 
@@ -606,9 +646,9 @@ family persona, or an incognito persona.
         <p>
 A <a>verifiable presentation</a> expresses data from one or more
 <a>verifiable credentials</a>, and is packaged in such a way that the
-authorship of the data is verifiable. If <a>credentials</a> are directly
+authorship of the data is <a>verifiable</a>. If <a>credentials</a> are directly
 presented, they become a <a>presentation</a>. Data formats derived from
-<a>credentials</a> that are cryptographically verifiable but do not of
+<a>credentials</a> that are cryptographically <a>verifiable</a> but do not of
 themselves contain <a>credentials</a>, might also be <a>presentations</a>.
         </p>
 
@@ -657,41 +697,113 @@ Information graphs associated with a basic verifiable presentation.
 
         <p class="note">
 It is possible to have a <a>presentation</a>, such as a business persona,
-that draws on multiple <a>credentials</a> about different <a>subjects</a>
+which draws on multiple <a>credentials</a> about different <a>subjects</a>
 that are often, but not required to be, related.
         </p>
 
     </section>
-    </section>
+
     <section  class="informative">
-        <h2>Lifecycle</h2>
+        <h2>Concrete Lifecycle Example</h2>
 
         <p>
-  This section elaborates on the lifecycle of credentials and presentations in
-  the <a href="#ecosystem-overview">ecosystem</a>. The lifecycle of credentials
-  will take a common path: issuance of one or more credentials, storage of
-  credentials, and then the composition of credentials into a presentation for
-  verifiers.
-        </p>
-        <section class="informative">
-          <h3>Basic</h3>
-        <p>
-  We will illustrate the basic lifecycle with our first scenario, redeeming an
-  alumni discount at an university. In
-  <a href="#ex-1-example-verifiable-credential">Example 1</a> Pat receives an
-  "AlumniCredential" from "Example University" that will be stored in Pat's
-  mobile device's digital wallet, a type of credential repository.
+The previous sections introduced the concepts of <a>claims</a>,
+<a>credentials</a>, and <a>presentations</a> using graphical depictions.
+This section provides a concrete set of simple but complete lifecycle examples
+of the data model expressed in one of the concrete syntaxes supported by this
+specification. The lifecycle of <a>credentials</a> and <a>presentations</a> in
+the <a href="#ecosystem-overview">Verifiable Credentials Ecosystem</a> often
+take a common path:
         </p>
 
-        <pre class="example nohighlight" title="Example Verifiable Credential">
-  {
-    "@context": [
-      "https://w3.org/2018/credentials/v1",
-      "https://example.com/examples/v1"
-    ],
+        <ol>
+          <li>
+issuance of one or more <a>credentials</a>,
+          </li>
+          <li>
+storage of <a>credentials</a> in a <a>credential repository</a>
+(such as a digital wallet),
+          </li>
+          <li>
+the composition of <a>credentials</a> into a <a>verifiable presentation</a>
+for <a>verifiers</a>, and finally
+          </li>
+          <li>
+the <a>verification</a> of the <a>verifiable presentation</a> by the
+<a>verifier</a>.
+          </li>
+        </ol>
+
+        <p>
+We will use concrete examples to illustrate the lifecycle above by
+demonstrating how one would redeem an alumni discount from a university. In
+the example below, Pat receives an alumni <a>credential</a> from a university
+that will be stored in Pat's digital wallet.
+        </p>
+
+        <pre class="example nohighlight" title="A simple example of a verifiable credential">
+{
+  <span class='comment'>// set the context, which establishes the special terms we will be using
+  // such as 'issuer' and 'alumniOf'.</span>
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  <span class='comment'>// specify the identifier for the credential</span>
+  "id": "http://example.edu/credentials/1872",
+  <span class='comment'>// the credential types, which declare what data to expect in the credential</span>
+  "type": ["VerifiableCredential", "AlumniCredential"],
+  <span class='comment'>// the entity that issued the credential</span>
+  "issuer": "https://example.edu/issuers/565049",
+  <span class='comment'>// when the credential was issued</span>
+  "issuanceDate": "2010-01-01T19:73:24Z",
+  <span class='comment'>// claims about the subject of the credential</span>
+  "credentialSubject": {
+    <span class='comment'>// identifier for the subject of the credential</span>
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    <span class='comment'>// assertion about the subject of the credential</span>
+    "alumniOf": "Example University"
+  },
+  <span class='comment'>// digital proof that makes the credential tamper-evident</span>
+  "proof": {
+    <span class='comment'>// the cryptographic signature suite that was used to generate the signature</span>
+    "type": "RsaSignature2018",
+    <span class='comment'>// the date the signature was created</span>
+    "created": "2017-06-18T21:19:10Z",
+    <span class='comment'>// the public key identifier that created the signature</span>
+    "creator": "https://example.edu/issuers/keys/1",
+    <span class='comment'>// the digital signature value</span>
+    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
+      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
+      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
+      PAYuNzVBAh4vGHSrQyHUdBBPM"
+  }
+}
+        </pre>
+        <p>
+Pat then presents the alumni credential above in order to receive a discount.
+The <a>verifier</a>, a ticket sales system, states that any alumni of
+"Example University" will receive a discount on season tickets to
+sporting events. Using a mobile device, Pat starts to purchase a season ticket.
+A step in the process requests an alumni credential and the request is
+routed to Pat's digital wallet. The digital wallet asks Pat if they would like
+to provide the previously issued <a>verifiable credential</a>. Pat selects the
+<a>verifiable credential</a>, which is then composed into a
+<a>verifiable presentation</a>. The <a>verifiable presentation</a> is then sent
+to the <a>verifier</a> and <a>verified</a>.
+        </p>
+        <pre class="example nohighlight" title="A simple example of a verifiable presentation">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "type": "VerifiablePresentation",
+  <span class='comment'>// the verifiable credential issued in the previous example</span>
+  "verifiableCredential": [{
     "id": "http://example.edu/credentials/1872",
     "type": ["VerifiableCredential", "AlumniCredential"],
-    "issuer": "https://example.edu/issuers/565049",,
+    "issuer": "https://example.edu/issuers/565049",
     "issuanceDate": "2010-01-01T19:73:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -700,166 +812,30 @@ that are often, but not required to be, related.
     "proof": {
       "type": "RsaSignature2018",
       "created": "2017-06-18T21:19:10Z",
-      "creator": "https://example.com/jdoe/keys/1",
-      "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-      "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-        MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-        PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-        +W3JT24="
+      "creator": "https://example.edu/issuers/keys/1",
+      "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
+        sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
+        X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
+        PAYuNzVBAh4vGHSrQyHUdBBPM"
     }
+  }],
+  <span class='comment'>// digital signature by Pat on the presentation establishes consent and
+  // protects against replay attacks</span>
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2018-09-14T21:19:10Z",
+    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
+    <span class='comment'>// 'nonce' and 'domain' protect against replay attacks</span>
+    "nonce": "1f44d55f-f161-4938-a659-f8026467f126",
+    "domain": "4jt78h47fh47",
+    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..kTCYt5
+      XsITJX1CxPCT8yAV-TVIw5WEuts01mq-pQy7UJiN5mgREEMGlv50aqzpqh4Qq_PbChOMqs
+      LfRoPsnsgxD-WUcX16dUOqV0G_zS245-kronKb78cPktb3rk-BuQy72IFLN25DYuNzVBAh
+      4vGHSrQyHUGlcTwLtjPAnKb78"
   }
-        </pre>
-        <p>
-  In the final chapter of this lifecycle, Pat's "AlumniCredential" will be
-  presented for a discount. The verifier, a ticket sales counter, states that
-  any alumni of "Example University" will receive a 72% discount on football
-  season tickets. Using a mobile device, Pat selects the Verifiable Credential
-  received earlier that will then be composed into a presentation. That
-  presentation is then sent to the verifier in the form of a Verifiable
-  Presentation in order to receive the discount. We can find that presentation
-  in
-  <a href="#ex-2-example-verifiable-presentation">Example 2</a>.
-        </p>
-        <pre class="example nohighlight" title="Example Verifiable Presentation">
-  {
-    "@context": [
-      "https://w3.org/2018/credentials/v1",
-      "https://example.com/examples/v1"
-    ],
-    "id": "did:example:Fg15hCqJ19LP4X4RaiumJVb8YeZnzUjWLh74hKqBvk5B",
-    "type": "VerifiablePresentation",
-    "verifiableCredential": [{
-      "id": "http://example.edu/credentials/1872",
-      "type": ["VerifiableCredential", "AlumniCredential"],
-      "issuer": "https://example.edu/issuers/565049",,
-      "issuanceDate": "2010-01-01T19:73:24Z",
-      "credentialSubject": {
-        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-        "alumniOf": "Example University"
-      },
-      "proof": {
-        "type": "RsaSignature2018",
-        "created": "2017-06-18T21:19:10Z",
-        "creator": "https://example.com/jdoe/keys/1",
-        "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-        "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-        MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-        PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-        +W3JT24="
-      }
-    }],
-    "proof": { ... }
-  }
+}
         </pre>
       </section>
-    </section>
-    <section class="informative">
-      <h2>Trust Model</h2>
-
-      <p>
-The <a>verifiable credentials</a> trust model is as follows:
-      </p>
-
-      <ul>
-        <li>
-The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
-that it received. To establish this trust, a <a>credential</a> MUST either:
-          <ul>
-            <li>
-Include a <a href="#proofs-signatures">proof</a> establishing that the
-<a>issuer</a> generated the <a>credential</a> (that is, it is a
-<a>verifiable credential</a>)
-            </li>
-            <li>
-Have been transmitted in a way clearly establishing that the <a>issuer</a>
-generated the <a>credential</a> and that the <a>credential</a> was not
-tampered with in transit or storage. This trust could be weakened depending
-on the risk assessment of the verifier.
-            </li>
-          </ul>
-        </li>
-        <li>
-All <a>entities</a> trust the <a>verifiable data registry</a> to be
-tamper-evident and to be a correct record of which data is controlled by which
-<a>entities</a>.
-        </li>
-        <li>
-The <a>subject</a> and <a>verifier</a> trust the <a>issuer</a> to issue
-true (that is, not false) <a>credentials</a> about the <a>subject</a>, and to
-revoke them quickly when appropriate.
-        </li>
-        <li>
-The <a>holder</a> trusts the <a>repository</a> to store the <a>credentials</a>
-securely, to not release them to anyone other than the <a>holder</a>, and to
-not corrupt or lose them while they are in its care.
-        </li>
-      </ul>
-
-      <p>
-This trust model differentiates itself from other trust models by ensuring
-the:
-      </p>
-
-      <ul>
-        <li>
-<a>Issuer</a> and the <a>verifier</a> do not need to trust the
-<a>repository</a>
-        </li>
-        <li>
-<a>Issuer</a> does not need to know or trust the <a>verifier</a>.
-        </li>
-      </ul>
-
-      <p>
-By decoupling the trust between the <a>identity provider</a> and the
-<a>relying party</a> a more flexible and dynamic trust model is created
-such that market competition and customer choice is increased.
-      </p>
-
-      <p>
-Readers that would like to learn more about how this trust model interacts
-with various threat models studied by the Working Group are urged to read
-the Verifiable Credentials Use Cases Document [[VC-USECASES]].
-      </p>
-
-      <p class="note">
-The data model detailed in this specification does not imply a transitive trust
-model, such as that provided by more traditional Certificate Authority trust
-models. In the Verifiable Credentials Data Model, a <a>verifier</a> either
-directly trusts or does not trust an <a>issuer</a>. While it is possible to
-build transitive trust models using the Verifiable Credentials Data Model,
-implementers are urged to
-<a href="https://tools.ietf.org/html/draft-housley-web-pki-problems">learn about the security weaknesses</a>
-introduced by
-<a href="https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">broadly delegating trust</a>
-in the manner adopted by Certificate Authority systems.
-      </p>
-    </section>
-
-    <section id="conformance">
-      <p>
-A <em>conforming document</em> is any concrete expression of the data model
-that complies with the normative statements in this specification.
-Specifically, all relevant normative statements in
-<a href="#basic-concepts"></a>,
-<a href="#advanced-concepts"></a>, and
-<a href="#syntaxes"></a> of this document MUST be enforced.
-      </p>
-
-      <p>
-A <em>conforming processor</em> is any algorithm realized as software and/or
-hardware that generates or consumes a <em>conforming document</em> as
-described by this specification and also enforces all relevant normative
-statements in the <a href="#verification"></a> section of this document
-when performing verification.
-      </p>
-
-      <p>
-This specification makes no normative statements with regard to the
-conformance of roles in the ecosystem such as <a>issuers</a>, <a>holders</a>,
-or <a>verifiers</a> because the conformance of ecosystem roles are highly
-application, use case, and market vertical specific.
-      </p>
     </section>
 
     <section>
@@ -887,10 +863,10 @@ use must mean the same thing to each other. This specification uses the
           <dd>
 The value of the <code>@context</code> <a>property</a> MUST be one or more
 <a>URIs</a>, where the value of the first <a>URI</a> is
-<code>https://www.w3.org/2018/credentials/v1</code>. If more than one <a>URI</a> is
-provided, the <a>URIs</a> MUST be interpreted as an ordered set. It is RECOMMENDED
-that dereferencing the <a>URIs</a> results in a document containing machine-readable
-information about the context.
+<code>https://www.w3.org/2018/credentials/v1</code>. If more than one
+<a>URI</a> is provided, the <a>URIs</a> MUST be interpreted as an ordered set.
+It is RECOMMENDED that dereferencing the <a>URIs</a> results in a document
+containing machine-readable information about the context.
           </dd>
         </dl>
 
@@ -913,8 +889,8 @@ information about the context.
         <p>
 The example above uses the base context URI
 (<code>https://www.w3.org/2018/credentials/v1</code>) to establish that the
-conversation is about a <a>verifiable credential</a>. The second
-URI (<code>https://example.com/examples/v1</code>) establishes that the
+conversation is about a <a>verifiable credential</a>. The second URI
+(<code>https://example.com/examples/v1</code>) establishes that the
 conversation is about examples.
         </p>
 
@@ -957,9 +933,9 @@ such scenarios. Where privacy is a strong consideration, the <code>id</code>
         <dl>
           <dt><dfn>id</dfn></dt>
           <dd>
-The value of the <code>id</code> <a>property</a> MUST be a single <a>URI</a>. It is
-RECOMMENDED that dereferencing the <a>URI</a> results in a document containing
-machine-readable information about the identifier.
+The value of the <code>id</code> <a>property</a> MUST be a single <a>URI</a>.
+It is RECOMMENDED that dereferencing the <a>URI</a> results in a document
+containing machine-readable information about the identifier.
           </dd>
         </dl>
 
@@ -1017,11 +993,11 @@ using the <code>type</code> <a>property</a>.
           <dt><dfn data-lt="type|types">type</dfn></dt>
           <dd>
 The value of the <code>type</code> <a>property</a> MUST be, or map to, one or
-more <a>URIs</a>. If more than one <a>URI</a> is provided, the <a>URIs</a> MUST be interpreted as an
-unordered set. Syntactic conveniences, such as JSON-LD terms, SHOULD be used
-to ease developer usage. It is RECOMMENDED that dereferencing
-the <a>URIs</a> results in a document containing machine-readable information about
-the type.
+more <a>URIs</a>. If more than one <a>URI</a> is provided, the <a>URIs</a> MUST
+be interpreted as an unordered set. Syntactic conveniences, such as JSON-LD
+terms, SHOULD be used to ease developer usage. It is RECOMMENDED that
+dereferencing the <a>URIs</a> results in a document containing machine-readable
+information about the type.
           </dd>
         </dl>
 
@@ -1133,9 +1109,9 @@ object <a>type</a>.
 
         <p>
 For example, a <a>credential</a> object with the <code>type</code> of
-<code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that
-the object associated with the <code>credentialSubject</code> property contains
-the identifier for the:
+<code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that the
+object associated with the <code>credentialSubject</code> property contains the
+identifier for the:
         </p>
 
         <ul>
@@ -1152,7 +1128,7 @@ The title of the degree in the <code>name</code> property.
 
         <p>
 This enables implementers to rely on values associated with the
-<code>type</code> property for verification purposes. The expectation of
+<code>type</code> property for <a>verification</a> purposes. The expectation of
 <a>types</a> and their associated properties should be documented in at least a
 human-readable specification, and preferably, in an additional machine-readable
 representation.
@@ -1161,15 +1137,15 @@ representation.
         <p class="note">
 The <a>type</a> system for the Verifiable Credentials Data Model is the same as
 for [[JSON-LD]] and is detailed in
-<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4: Specifying the Type</a>
-and
-<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD Grammar</a>.
-When using a JSON-LD context (see Section <a href="#extensibility"></a>),
-this specification aliases the <code>@type</code> keyword to <code>type</code>
-to make the JSON-LD documents more easily understood. While application
-developers and document authors do not need to understand the specifics of the
-JSON-LD type system, implementers of this specification who want to support
-interoperable extensibility, do.
+<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4:
+Specifying the Type</a> and
+<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD
+Grammar</a>. When using a JSON-LD context (see Section
+<a href="#extensibility"></a>), this specification aliases the
+<code>@type</code> keyword to <code>type</code> to make the JSON-LD documents
+more easily understood. While application developers and document authors do
+not need to understand the specifics of the JSON-LD type system, implementers
+of this specification who want to support interoperable extensibility, do.
         </p>
       </section>
 
@@ -1186,8 +1162,8 @@ interoperable extensibility, do.
           <dd>
 The value of the <code>issuer</code> <a>property</a> MUST be a <a>URI</a>. It is
 RECOMMENDED that dereferencing the <a>URI</a> results in a document containing
-machine-readable information about the <a>issuer</a> that can be used to verify
-the information expressed in the <a>credential</a>.
+machine-readable information about the <a>issuer</a> that can be used to
+<a>verify</a> the information expressed in the <a>credential</a>.
           </dd>
           <dt><var>issuanceDate</var></dt>
           <dd>
@@ -1225,8 +1201,8 @@ earliest date when the information associated with the
         <h3>Proofs (Signatures)</h3>
 
         <p>
-For a <a>credential</a> or <a>presentation</a> to be verifiable, the following
-<a>property</a> MUST be present:
+For a <a>credential</a> or <a>presentation</a> to be <a>verifiable</a>, the
+following <a>property</a> MUST be present:
         </p>
 
         <dl>
@@ -1242,7 +1218,6 @@ if digital signatures are used for the proof mechanism, the <code>proof</code>
 <a>property</a> is expected to have name-value pairs that include a signature, a
 reference to the signing entity, and a representation of the signing date.
 The example below uses RSA digital signatures.
-
           </dd>
         </dl>
 
@@ -1287,8 +1262,8 @@ specifically JWS and JWK.
         <h3>Expiration</h3>
 
         <p>
-Expiration information for a <a>credential</a> MAY be provided by adding
-the following <a>property</a>:
+Expiration information for a <a>credential</a> MAY be provided by adding the
+following <a>property</a>:
         </p>
 
         <dl>
@@ -1387,8 +1362,7 @@ is privacy-enhancing.
         <p>
 Defining the data model, formats, and protocols for status schemes are out of
 scope for this specification. A status scheme registry [[VC-STATUS-REGISTRY]]
-exists for implementers who want to implement <a>credential</a>
-status checking.
+exists for implementers who want to implement <a>credential</a> status checking.
         </p>
       </section>
 
@@ -1403,7 +1377,7 @@ status checking.
         <p>
 If <a>verifiable presentations</a> are used, they MUST be constructed from
 <a>verifiable credentials</a> themselves, or of data derived from
-<a>verifiable credentials</a> in a cryptographically verifiable format.
+<a>verifiable credentials</a> in a cryptographically <a>verifiable</a> format.
         </p>
 
         <p>
@@ -1426,9 +1400,9 @@ The example below shows a <a>verifiable presentation</a> that embeds
 
         <p>
 The contents of the <code>verifiableCredential</code> <a>property</a> shown
-above are <a>verifiable credentials</a> as described by this specification. The
-contents of the <code>proof</code> <a>property</a> are proofs as described by the
-Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code>
+above are <a>verifiable credentials</a>, as described by this specification. The
+contents of the <code>proof</code> <a>property</a> are proofs, as described by
+the Linked Data Proofs [[LD-PROOFS]] specification. The <code>id</code>
 <a>property</a> is optional and MAY be used to provide a unique identifier for
 the presentation. The value associated with the <code>id</code> property MUST
 be a <a>URI</a>.
@@ -1483,6 +1457,180 @@ Building on the concepts introduced in Section <a href="#basic-concepts"></a>,
 this section explores more complex topics about <a>verifiable credentials</a>.
       </p>
 
+      <section class="informative">
+        <h3>Lifecycle Details</h3>
+
+        <p>
+Section <a href="#ecosystem-overview"></a> provided an overview of the
+<a>verifiable credential</a> ecosystem. This section provides more detail about
+how the ecosystem is envisaged to operate, as follows:
+        </p>
+
+        <ol>
+          <li>
+The <a>verifier</a> defines its policies for accepting
+<a>verifiable credentials</a> from <a>holders</a> for its supported actions.
+          </li>
+          <li>
+The <a>issuer</a> issues a <a>verifiable credential</a> to the <a>holder</a>.
+          </li>
+          <li>
+The <a>holder</a> might pass on its <a>verifiable credentials</a> to another
+<a>holder</a>.
+          </li>
+          <li>
+The final <a>holder</a> presents its <a>verifiable credentials</a> to the
+<a>verifier</a> in a <a>verifiable presentation</a>, requesting a supported
+action.
+          </li>
+          <li>
+The <a>verifier</a> <a>verifies</a> the authenticity of the
+<a>verifiable presentation</a> and <a>verifiable credentials</a>.
+          </li>
+          <li>
+The <a>verifier</a> <a>verifies</a> that the <a>holder</a> posses the
+<a>verifiable credentials</a>.
+          </li>
+          <li>
+The <a>verifier</a> decides whether to accept the <a>verifiable credentials</a>
+for the requested action, taking into account its policy, the <a>holder</a>,
+and the contents of the <a>verifiable credentials</a>.
+          </li>
+          <li>
+The <a>verifier</a> either performs the requested action or rejects the
+request.
+          </li>
+        </ol>
+
+        <p class="note">
+The order of the steps above are not fixed and some steps might be repeated.
+        </p>
+
+        <p>
+This specification does not define any protocol for transfering
+<a>verifiable credentials</a> or <a>verifiable presentations</a>, but assuming
+other specifications do specify how they are transferred between entities, then
+this Verifiable Credential Data Model is:
+        </p>
+
+        <ul>
+          <li>
+Directly applicable to steps 2, 3, 4, 5, and 6.
+          </li>
+          <li>
+Not sufficient on its own for steps 1, 7, and 8 because an authorization
+framework is needed as well.
+          </li>
+        </ul>
+
+        <p>
+In particular, Sections <a href="#terms-of-use"></a> and
+<a href="#subject-holder-relationships"></a> specify how a <a>verifier</a> can
+determine:
+        </p>
+
+        <ul>
+          <li>
+Whether the <a>holder</a> is the <a>subject</a> of a
+<a>verifiable credential</a>.
+          </li>
+          <li>
+The relationship between the <a>subject</a> and the <a>holder</a>.
+          </li>
+          <li>
+Whether the original <a>holder</a> passed a <a>verifiable credential</a> to a
+subsequent <a>holder</a>.
+          </li>
+          <li>
+Any restrictions using the <a>verifiable credentials</a> by the <a>holder</a>
+or <a>verifier</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section class="informative">
+        <h2>Trust Model</h2>
+
+        <p>
+The <a>verifiable credentials</a> trust model is as follows:
+        </p>
+
+        <ul>
+          <li>
+The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
+that it received. To establish this trust, a <a>credential</a> MUST either:
+            <ul>
+              <li>
+Include a <a href="#proofs-signatures">proof</a> establishing that the
+<a>issuer</a> generated the <a>credential</a> (that is, it is a
+<a>verifiable credential</a>).
+              </li>
+              <li>
+Have been transmitted in a way clearly establishing that the <a>issuer</a>
+generated the <a>credential</a> and that the <a>credential</a> was not
+tampered with in transit or storage. This trust could be weakened depending
+on the risk assessment of the <a>verifier</a>.
+              </li>
+            </ul>
+          </li>
+          <li>
+All <a>entities</a> trust the <a>verifiable data registry</a> to be
+tamper-evident and to be a correct record of which data is controlled by which
+<a>entities</a>.
+          </li>
+          <li>
+The <a>subject</a> and <a>verifier</a> trust the <a>issuer</a> to issue
+true (that is, not false) <a>credentials</a> about the <a>subject</a>, and to
+revoke them quickly when appropriate.
+          </li>
+          <li>
+The <a>holder</a> trusts the <a>repository</a> to store the <a>credentials</a>
+securely, to not release them to anyone other than the <a>holder</a>, and to
+not corrupt or lose them while they are in its care.
+          </li>
+        </ul>
+
+        <p>
+This trust model differentiates itself from other trust models by ensuring
+the:
+        </p>
+
+        <ul>
+          <li>
+<a>Issuer</a> and the <a>verifier</a> do not need to trust the
+<a>repository</a>
+          </li>
+          <li>
+<a>Issuer</a> does not need to know or trust the <a>verifier</a>.
+          </li>
+        </ul>
+
+        <p>
+By decoupling the trust between the <a>identity provider</a> and the
+<a>relying party</a> a more flexible and dynamic trust model is created such
+that market competition and customer choice is increased.
+        </p>
+
+        <p>
+For more information about how this trust model interacts with various threat
+models studied by the Working Group, see the Verifiable Credentials Use Cases
+[[VC-USECASES]] document.
+        </p>
+
+        <p class="note">
+The data model detailed in this specification does not imply a transitive trust
+model, such as that provided by more traditional Certificate Authority trust
+models. In the Verifiable Credentials Data Model, a <a>verifier</a> either
+directly trusts or does not trust an <a>issuer</a>. While it is possible to
+build transitive trust models using the Verifiable Credentials Data Model,
+implementers are urged to
+<a href="https://tools.ietf.org/html/draft-housley-web-pki-problems">learn
+about the security weaknesses</a> introduced by
+<a href="https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">broadly
+delegating trust</a> in the manner adopted by Certificate Authority systems.
+        </p>
+      </section>
+
       <section>
         <h3>Extensibility</h3>
 
@@ -1533,7 +1681,7 @@ extensibility and program correctness are achieved.
         </p>
 
         <p>
-Let us assume that we start with the <a>verifiable credential</a> shown below.
+Let us assume we start with the <a>verifiable credential</a> shown below.
         </p>
 
         <pre class="example nohighlight" title="A simple credential">
@@ -1556,14 +1704,14 @@ Let us assume that we start with the <a>verifiable credential</a> shown below.
 
         <p>
 This <a>verifiable credential</a> states that the <a>entity</a> associated with
-<code>did:example:abcdef1234567</code> has a <code>name</code>
-with a value of <code>Jane Doe</code>.
+<code>did:example:abcdef1234567</code> has a <code>name</code> with a value of
+<code>Jane Doe</code>.
         </p>
 
         <p>
-Now let us assume that a developer wants to extend the
-<a>verifiable credential</a> to store two additional pieces of information: an
-internal corporate reference number, and Jane's favorite food.
+Now let us assume a developer wants to extend the <a>verifiable credential</a>
+to store two additional pieces of information: an internal corporate reference
+number, and Jane's favorite food.
         </p>
 
         <p>
@@ -1585,8 +1733,8 @@ After this JSON-LD context is created, the developer publishes it somewhere
 so it is accessible to <a>verifiers</a> who will be processing the
 <a>verifiable credential</a>. Assuming the above JSON-LD context is published
 at <code>https://example.com/contexts/mycontext.jsonld</code>, we can extend
-this example by including the context and adding the new properties and credential
-type to the <a>verifiable credential</a>.
+this example by including the context and adding the new <a>properties</a> and
+<a>credential</a> <a>type</a> to the <a>verifiable credential</a>.
         </p>
 
         <pre class="example nohighlight"
@@ -1620,11 +1768,11 @@ prevent namespace conflicts and semantic ambiguity.
         <p>
 A dynamic extensibility model such as this does increase the implementation
 burden. Software written for such a system has to determine whether
-<a>verifiable credentials</a> with extensions are acceptable based on the
-risk profile of the application. Some applications might accept only
-certain extensions while highly secure environments might not accept any
-extensions. These decisions are up to the developers of these
-applications and are specifically not the domain of this specification.
+<a>verifiable credentials</a> with extensions are acceptable based on the risk
+profile of the application. Some applications might accept only certain
+extensions while highly secure environments might not accept any extensions.
+These decisions are up to the developers of these applications and are
+specifically not the domain of this specification.
         </p>
 
         <p>
@@ -1695,8 +1843,8 @@ specification considers:
 
         <ul>
           <li>
-Data verification schemas, which are used to verify that the structure and
-contents of a <a>verifiable credential</a> conform to a published schema.
+Data verification schemas, which are used to <a>verify</a> that the structure
+and contents of a <a>verifiable credential</a> conform to a published schema.
           </li>
           <li>
 Data encoding schemas, which are used to map the contents of a
@@ -1718,9 +1866,9 @@ more data schemas that provide <a>verifiers</a> with enough information to
 determine if the provided data conforms to the provided schema. Each
 <code>credentialSchema</code> MUST specify its
 <code>type</code> (for example, <code>JsonSchemaValidator2018</code>), and an
-<code>id</code> <a>property</a> that MUST be a <a>URI</a> identifying the schema file.
-The precise contents of each data schema is determined by the specific type
-definition.
+<code>id</code> <a>property</a> that MUST be a <a>URI</a> identifying the
+schema file. The precise contents of each data schema is determined by the
+specific type definition.
           </dd>
         </dl>
 
@@ -1751,8 +1899,8 @@ definition.
 
         <p>
 In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code>, which points to a [[?JSON-SCHEMA]] file that can be
-used by a <a>verifier</a> to determine if the <a>verifiable credential</a> is
+<code>credentialSchema</code>, which points to a [[?JSON-SCHEMA]] file that can
+be used by a <a>verifier</a> to determine if the <a>verifiable credential</a> is
 well formed.
         </p>
 
@@ -1762,8 +1910,8 @@ most likely adjust this section based on implementer feedback.
         </p>
 
         <p>
-Data schemas can also be used to specify mappings to other binary formats,
-such as those used to perform zero-knowledge proofs.
+Data schemas can also be used to specify mappings to other binary formats, such
+as those used to perform zero-knowledge proofs.
         </p>
 
         <pre class="example nohighlight" title="Usage of the credentialSchema property to perform zero-knowledge validation">
@@ -1793,10 +1941,10 @@ such as those used to perform zero-knowledge proofs.
 
         <p>
 In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code>, which points to a zero-knowledge packed binary
+<code>credentialSchema</code> pointing to a zero-knowledge packed binary
 data format that is capable of transforming the input data into a format,
-which can then be used by a <a>verifier</a> to determine if the
-proof provided with the <a>verifiable credential</a> is valid.
+which can then be used by a <a>verifier</a> to determine if the proof provided
+with the <a>verifiable credential</a> is valid.
         </p>
       </section>
 
@@ -1832,11 +1980,10 @@ A refresh service can be expressed using the following <a>property</a>:
 The value of the <code>refreshService</code> <a>property</a> MUST be one or
 more refresh services that provides enough information to the recipient's
 software such that the recipient can refresh the credential. Each
-<code>refreshService</code> value MUST specify its <code>type</code>
-(for example, <code>ManualRefreshService2018</code>), and its URL as the
-value of <code>id</code>. The precise content of each refresh service
-is determined by the specific <code>refreshService</code> <a>type</a>
-definition.
+<code>refreshService</code> value MUST specify its <code>type</code> (for
+example, <code>ManualRefreshService2018</code>), and its URL as the value of
+<code>id</code>. The precise content of each refresh service is determined by
+the specific <code>refreshService</code> <a>type</a> definition.
           </dd>
         </dl>
 
@@ -1867,101 +2014,9 @@ definition.
 
         <p>
 In the example above, the <a>issuer</a> specifies a manual
-<code>refreshService</code> that can be used by directing the <a>holder</a> or the
-<a>verifier</a>to
-<code>https://example.edu/refresh/3732</code>.
+<code>refreshService</code> that can be used by directing the <a>holder</a> or
+the <a>verifier</a>to <code>https://example.edu/refresh/3732</code>.
         </p>
-      </section>
-
-      <section class="informative">
-        <h3>Mode of Operation</h3>
-
-        <p>
-Section <a href="#ecosystem-overview"></a> provided an overview of the
-<a>verifiable credential</a> ecosystem. This section provides more detail about
-how the ecosystem is envisaged to operate, as follows:
-        </p>
-
-        <p class="note">
-The order of the following steps is not fixed and some steps might be repeated.
-        </p>
-
-        <ol>
-          <li>
-The <a>verifier</a> defines its policies for accepting
-<a>verifiable credentials</a> from <a>holders</a> for its supported actions.
-          </li>
-          <li>
-The <a>issuer</a> issues a <a>verifiable credential</a> to the <a>holder</a>.
-          </li>
-          <li>
-The <a>holder</a> might pass on its <a>verifiable credentials</a> to another
-<a>holder</a>.
-          </li>
-          <li>
-The final <a>holder</a> presents its <a>verifiable credentials</a> to the
-<a>verifier</a> in a <a>verifiable presentation</a>, requesting a supported
-action.
-          </li>
-          <li>
-The <a>verifier</a> verifies the authenticity of the
-<a>verifiable presentation</a> and <a>verifiable credentials</a>.
-          </li>
-          <li>
-The <a>verifier</a> verifies that the <a>holder</a> posses the
-<a>verifiable credentials</a>.
-          </li>
-          <li>
-The <a>verifier</a> decides whether to accept the <a>verifiable credentials</a>
-for the requested action, taking into account its policy, the <a>holder</a>,
-and the contents of the <a>verifiable credentials</a>.
-          </li>
-          <li>
-The <a>verifier</a> either performs the requested action or rejects the
-request.
-          </li>
-        </ol>
-
-        <p>
-This specification does not define any protocol for transfering
-<a>verifiable credentials</a> or <a>verifiable presentations</a>, but assuming
-other specifications do specify how they are transferred between entities, then
-this Verifiable Credential Data Model is:
-        </p>
-
-        <ul>
-          <li>
-Directly applicable to steps 2, 3, 4, 5, and 6.
-          </li>
-          <li>
-Not sufficient on its own for steps 1, 7, and 8 because an authorization
-framework is needed as well.
-          </li>
-        </ul>
-
-        <p>
-In particular, Sections <a href="#terms-of-use"></a> and
-<a href="#subject-holder-relationships"></a> specify how a <a>verifier</a> can
-determine:
-        </p>
-
-        <ul>
-          <li>
-Whether the <a>holder</a> is the <a>subject</a> of a
-<a>verifiable credential</a>.
-          </li>
-          <li>
-The relationship between the <a>subject</a> and the <a>holder</a>.
-          </li>
-          <li>
-Whether the original <a>holder</a> passed a <a>verifiable credential</a> to a
-subsequent <a>holder</a>.
-          </li>
-          <li>
-Any restrictions using the <a>verifiable credentials</a> by the <a>holder</a>
-or <a>verifier</a>.
-          </li>
-        </ul>
       </section>
 
       <section>
@@ -1972,11 +2027,10 @@ Terms of use can be utilized by an <a>issuer</a> or a <a>holder</a> to
 communicate the terms under which a <a>verifiable credential</a> or
 <a>verifiable presentation</a> was issued. The <a>issuer</a> places their terms
 of use inside the <a>credential</a>. The <a>holder</a> places their terms of use
-inside a <a>presentation</a>.  The value of this property
-tells the <a>verifier</a> what actions it either 1) must perform (an
-Obligation), 2) must not perform (a Prohibition), or 3) may perform
-(a Permission) if it is to accept the <a>verifiable credential</a> or
-<a>verifiable presentation</a>.
+inside a <a>presentation</a>.  The value of this property tells the
+<a>verifier</a> what actions it must perform (an <em>obligation</em>), must not
+perform (a <em>prohibition</em>), or may perform (a <em>permission</em>) if it
+is to accept the <a>verifiable credential</a> or <a>verifiable presentation</a>.
         </p>
 
         <p class="note">
@@ -2013,7 +2067,8 @@ definition.
 The group is currently exploring a variety of ways of expressing the terms of
 use associated with a Verifiable Credential, namely, the
 <a href="http://w3c.github.io/poe/model/">Open Digital Rights Language</a>.
-A related initiative is the one at <a href="https://customercommons.org">Customer Commons</a>.
+A related initiative is the one at
+<a href="https://customercommons.org">Customer Commons</a>.
         </p>
 
         <pre class="example nohighlight" title="Usage of the termsOfUse property by an issuer">
@@ -2049,8 +2104,9 @@ A related initiative is the one at <a href="https://customercommons.org">Custome
         </pre>
 
         <p>
-In the example above, the <a>issuer</a> (assigner) is prohibiting
-<a>verifiers</a> (assignee) from storing the data in an archive.
+In the example above, the <a>issuer</a> (the <code>assigner</code>) is
+prohibiting <a>verifiers</a> (the <code>assignee</code>) from storing the data
+in an archive.
         </p>
 
         <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
@@ -2091,13 +2147,13 @@ In the example above, the <a>issuer</a> (assigner) is prohibiting
         </pre>
 
         <p>
-In the example above, the <a>holder</a> (assigner), who is also the
-<a>subject</a>, expressed a Term of Use prohibiting the <a>verifier</a>
-(assignee) (<code>https://wineonline.example.org</code>) from using the
-information provided to correlate the <a>holder</a> / <a>subject</a> using a
-third-party service. If the <a>verifier</a> were to use a third-party service
-for correlation, they would violate the terms under which the holder created
-the presentation.
+In the example above, the <a>holder</a> (the <code>assigner</code>), who is
+also the <a>subject</a>, expressed a term of use prohibiting the <a>verifier</a>
+(the <code>assignee</code>, <code>https://wineonline.example.org</code>) from
+using the information provided to correlate the <a>holder</a> or <a>subject</a>
+using a third-party service. If the <a>verifier</a> were to use a third-party
+service for correlation, they would violate the terms under which the
+</a>holder</a> created the presentation.
         </p>
 
       </section>
@@ -2106,16 +2162,17 @@ the presentation.
         <h3>Evidence</h3>
 
         <p>
-Evidence may be included by an <a>issuer</a> to provide the <a>verifier</a>
-additional supporting information in a <a>verifiable credential</a>. This could
-be used by the <a>verifier</a> to establish the confidence with which it relies
-on the claims in the <a>verifiable credential</a>. 
+Evidence can be included by an <a>issuer</a> to provide the <a>verifier</a>
+with additional supporting information in a <a>verifiable credential</a>. This
+could be used by the <a>verifier</a> to establish the confidence with which it
+relies on the claims in the <a>verifiable credential</a>.
         </p>
         <p>
-For example, an <a>issuer</a> might check physical documentation provided by the
-<a>subject</a> or might perform a set of background checks before issuing the
-credential. In certain scenarios, this information is useful to the <a>verifier</a>
-when determining the risk associated with relying on a given credential.
+For example, an <a>issuer</a> could check physical documentation provided by the
+<a>subject</a> or perform a set of background checks before issuing the
+<a>credential</a>. In certain scenarios, this information is useful to the
+<a>verifier</a> when determining the risk associated with relying on a given
+<a>credential</a>.
         </p>
 
         <p>
@@ -2127,9 +2184,9 @@ Evidence information can be expressed using the following <a>property</a>:
           <dd>
 The value of the <code>evidence</code> <a>property</a> MUST be one or more
 evidence schemes providing enough information to a <a>verifier</a> to determine
-whether the evidence gathered by the issuer meets its requirements for issuing a
-<a>credential</a>. The precise content of each evidence scheme is determined by
-the specific <code>evidence</code> <a>type</a> definition.
+whether the evidence gathered by the <a>issuer</a> meets its requirements for
+issuing a <a>credential</a>. The precise content of each evidence scheme is
+determined by the specific <code>evidence</code> <a>type</a> definition.
           </dd>
         </dl>
 
@@ -2287,8 +2344,8 @@ usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
 The next example utilizes the <a>verifiable credential</a> above to generate a
 new derived <a>verifiable credential</a> with a privacy-preserving proof. The
 derived <a>verifiable credential</a> is then placed in a
-<a>verifiable presentation</a> that further proves that the entire assertion
-is valid. There are three requirements of most <a>verifiable presentations</a>
+<a>verifiable presentation</a> that further proves that the entire assertion is
+valid. There are three requirements of most <a>verifiable presentations</a>
 when they are to be used in zero-knowledge systems:
         </p>
 
@@ -2443,8 +2500,10 @@ that the <a>credential</a> is disputed.
 }
         </pre>
 
-<p> In the above credential the issuer is claiming that the address in the disputed
-credential is wrong, for example, the latter might wrongly be claiming to have the same address as that of the issuer.
+<p> In the above <a>credential</a> the <a>issuer</a> is claiming that the
+address in the disputed <a>credential</a> is wrong. For example, the
+<a>subject</a> might wrongly be claiming to have the same address as that of
+the <a>issuer</a>.
 </p>
         <p class="note">
 If a <a>credential</a> does not have an identifier, a content-addressed
@@ -2465,11 +2524,12 @@ as the specific vocabulary terms for disputed claims.
 
         <p>
 <a>Verifiable credentials</a> are intended as a means of reliably identifying
-<a>subjects</a>. While it is recognized that Role Based Access Controls (RBAC) and
-Attribute Based Access Controls (ABAC) rely on this identification as a means of
-authorizing <a>subjects</a> to access resources, this specification does not
-provide a complete solution for RBAC or ABAC - authorization is not an appropriate
-use for this specification without an accompanying authorization framework.
+<a>subjects</a>. While it is recognized that Role Based Access Controls (RBACs)
+and Attribute Based Access Controls (ABACs) rely on this identification as a
+means of authorizing <a>subjects</a> to access resources, this specification
+does not provide a complete solution for RBAC or ABAC. Authorization is not an
+appropriate use for this specification without an accompanying authorization
+framework.
         </p>
 
         <p>
@@ -2478,52 +2538,7 @@ this specification and is pursuing that work as an architectural layer built
 on top of this specification.
         </p>
       </section>
-
-      <section>
-        <h3>Syntactic Sugar</h3>
-
-        <p>
-In general, the data model and syntaxes described in this document are
-designed such that developers can copy and paste examples to incorporate
-<a>verifiable credentials</a> into their software systems. The design goal of
-this approach is to provide a low barrier to entry while still ensuring global
-interoperability between a heterogeneous set of software systems. This section
-describes some of these approaches, which will most likely go unnoticed by most
-developers, but whose details will be of interest to implementers. The most
-noteworthy syntactic sugars used throughout the ecosystem are as follows:
-        </p>
-
-        <ul>
-          <li>
-If processed using a JSON-LD processor:
-            <ul>
-              <li>
-The <code>@id</code> and <code>@type</code> keywords are aliased to
-<code>id</code> and <code>type</code> respectively, enabling developers to use
-this specification as idiomatic JSON.
-              </li>
-              <li>
-Data types, such as integers, dates, units of measure, and URLs, are
-automatically typed to provide stronger type guarantees for use cases that
-require them.
-              </li>
-              <li>
-The <code>verifiableCredential</code> and <code>proof</code> properties are
-treated as <em>graph containers</em>. That is, mechanisms used to isolate sets
-of data asserted by different entities. This ensures, for example, proper
-cryptographic separation between the data graph provided by each <a>issuer</a>
-and the one provided by the <a>holder</a> presenting the
-<a>verifiable credential</a> to ensure the provenance of the information for
-each graph is preserved.
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </section>
-
     </section>
-
-
 
     <section>
       <h2>Syntaxes</h2>
@@ -2608,12 +2623,77 @@ cached client side. The associated vocabulary document for the Verifiable
 Credentials Data Model is available at
 <code>https://www.w3.org/2018/credentials</code>.
         </p>
+
+        <section>
+          <h3>Syntactic Sugar</h3>
+
+          <p>
+In general, the data model and syntaxes described in this document are
+designed such that developers can copy and paste examples to incorporate
+<a>verifiable credentials</a> into their software systems. The design goal of
+this approach is to provide a low barrier to entry while still ensuring global
+interoperability between a heterogeneous set of software systems. This section
+describes some of these approaches, which will likely go unnoticed by most
+developers, but whose details will be of interest to implementers. The most
+noteworthy syntactic sugars provided by JSON-LD are:
+          </p>
+
+          <ul>
+            <li>
+The <code>@id</code> and <code>@type</code> keywords are aliased to
+<code>id</code> and <code>type</code> respectively, enabling developers to use
+this specification as idiomatic JSON.
+            </li>
+            <li>
+Data types, such as integers, dates, units of measure, and URLs, are
+automatically typed to provide stronger type guarantees for use cases that
+require them.
+            </li>
+            <li>
+The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
+are treated as <em>graph containers</em>. That is, mechanisms used to isolate
+sets of data asserted by different entities. This ensures, for example, proper
+cryptographic separation between the data graph provided by each <a>issuer</a>
+and the one provided by the <a>holder</a> presenting the
+<a>verifiable credential</a> to ensure the provenance of the information for
+each graph is preserved.
+            </li>
+            <li>
+The <code>@protected</code> properties feature of JSON-LD 1.1 is used to ensure
+that terms defined by this specification cannot be overridden. This means
+that as long as the same <code>@context</code> declaration is made at the top
+of a <a>verifiable credential</a> or <a>verifiable presentation</a>, even when
+<a>issuers</a> do not use a JSON-LD processor, that interoperability is still
+guaranteed if <a>verifiers</a> use a JSON-LD processor.
+            </li>
+          </ul>
+        </section>
+
       </section>
 
       <section>
-        <h3>JSON Web Token</h3>
+        <h2>Proof Formats</h2>
 
         <p>
+The data model described in this specification is designed to be proof format
+agnostic. This specification does not make any normative statements related to
+the use of any particular digital proof or signature format. At the time of
+publication, at least two proof formats are being actively utilized by
+implementers and the Working Group felt that documenting what these proof
+formats are and how they are being used would be beneficial to implementers.
+The sections detailing the current proof formats being actively utilized to
+issue <a>verifiable credentials</a> are:
+        </p>
+
+        <ul>
+          <li>Section <a href="#json-web-token"></a>, and</li>
+          <li>Section <a href="#linked-data-proofs"></a>.</li>
+        </ul>
+
+        <section>
+          <h3>JSON Web Token</h3>
+
+          <p>
 JSON Web Token (JWT) [[!RFC7519]] is still a widely used means to express
 <a>claims</a> to be transferred between two parties. Providing a representation
 of the Verifiable Credentials Data Model for JWT allows existing systems and
@@ -2621,12 +2701,12 @@ libraries to participate in the ecosystem described in Section
 <a href="#ecosystem-overview"></a>. A JWT encodes a set of <a>claims</a> as a
 JSON object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
 [[!RFC7516]]. For this specification, the use of JWE is out of scope.
-        </p>
+          </p>
 
-        <section>
-          <h4>Relation to the Verifiable Credentials Data Model</h4>
+          <section>
+            <h4>Relation to the Verifiable Credentials Data Model</h4>
 
-          <p>
+            <p>
 This specification defines encoding rules of the Verifiable Credential Data
 Model onto JWT and JWS. It further defines processing rules how and when to
 make use of specific JWT registered <a>claim</a> names and specific JWS
@@ -2635,38 +2715,38 @@ this specification. If these specific <a>claim</a> names and header parameters
 are present, their respective counterpart in the standard
 <a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
 to avoid duplication.
-          </p>
-        </section>
+            </p>
+          </section>
 
-        <section>
-          <h4>IANA Considerations</h4>
+          <section>
+            <h4>IANA Considerations</h4>
 
-          <p>
+            <p>
 This specification introduces two new registered <a>claim</a> names, which
 contain those parts of the standard <a>verifiable credentials</a> and
 <a>verifiable presentation</a> where no explicit encoding rules for JWT exist.
 These objects are enclosed in the JWT payload as follows:
-          </p>
+            </p>
 
-          <ul>
-            <li>
+            <ul>
+              <li>
 <code>vc</code>: JSON object, which MUST be present in a JWT
 <a>verifiable credential</a>. The object contains the
 <a>verifiable credential</a> according to this specification.
-            </li>
-            <li>
+              </li>
+              <li>
 <code>vp</code>: JSON object, which MUST be present in a JWT
 <a>verifiable presentation</a>. The object contains the
 <a>verifiable presentation</a> according to this specification.
-            </li>
-          </ul>
-        </section>
+              </li>
+            </ul>
+          </section>
 
-        <section>
-          <h4>JWT and JWS Considerations</h4>
+          <section>
+            <h4>JWT and JWS Considerations</h4>
 
-          <h5>JWT Encoding</h5>
-          <p>
+            <h5>JWT Encoding</h5>
+            <p>
 To encode a <a>verifiable credential</a> as a JWT, specific <a>properties</a>
 introduced by this specification MUST be encoded as standard JOSE header
 parameters, JWT registered <a>claim</a> names, or contained in the JWS
@@ -2674,18 +2754,18 @@ signature part. If no explicit rule is specified, <a>properties</a> are encoded
 in the same way as with a standard <a>verifiable credential</a>, and are added
 to the <code>vc</code> <a>property</a> of the JWT. The following paragraphs
 describe these encoding rules.
-          </p>
+            </p>
 
-          <p>
+            <p>
 If the JWS is present, the digital signature either refers to the <a>issuer</a>
 of the <a>verifiable credential</a>, or in the case of a
 <a>verifiable presentation</a>, the <a>holder</a> of the
 <a>verifiable credential</a>. The JWS proves that the <a>issuer</a> of the JWT
 signed the contained JWT payload and therefore, the <code>proof</code>
 <a>property</a> can be omitted.
-          </p>
+            </p>
 
-          <p>
+            <p>
 If no JWS is present, a <code>proof</code> <a>property</a> MUST be provided.
 The <code>proof</code> <a>property</a> can be used to represent more complex
 proofs, for example if the creator is different from the <a>issuer</a>, or a
@@ -2693,69 +2773,69 @@ proof not based on digital signatures, such as Proof of Work. The <a>issuer</a>
 MAY include both a JWS and a <code>proof</code> <a>property</a>. For backward
 compatibility reasons, the issuer MUST use JWS to represent proofs based on a
 digital signature.
-          </p>
+            </p>
 
-          <p>
+            <p>
 The following defines rules for JOSE headers in the context of this
 specification:
-          </p>
+            </p>
 
-          <ul>
-            <li>
+            <ul>
+              <li>
 <code>alg</code> MUST be used for RSA and ECDSA-based digital signatures. If
 only the <code>proof</code> attribute is used, the <code>alg</code> header MUST
 be set to <code>none</code>.
-            </li>
-            <li>
+              </li>
+              <li>
 <code>kid</code> MAY be used if there are multiple keys associated with the
 <a>issuer</a> of the JWT. The key discovery is out of the scope of this
 specification. For example, the <code>kid</code> can refer to a key in a
 <a>DID document</a>, or can be the identifier of a key inside a JWKS.
-            </li>
-            <li>
+              </li>
+              <li>
 <code>typ</code>, if present, MUST be set to <code>JWT</code>.
-            </li>
-          </ul>
+              </li>
+            </ul>
 
-          <p>
+            <p>
 For backward compatibility with JWT processors, the following JWT registered
 claim names MUST be used instead of, or in addition to, their respective
 standard <a>verifiable credential</a> counterparts:
-          </p>
+            </p>
 
-          <ul>
-            <li>
+            <ul>
+              <li>
 <code>exp</code> MUST represent <code>expirationDate</code>, encoded as a UNIX
 timestamp (<code>NumericDate</code>).
-            </li>
-            <li>
+              </li>
+              <li>
 <code>iss</code> MUST represent the <code>issuer</code> <a>property</a>.
-            </li>
-            <li>
+              </li>
+              <li>
 <code>iat</code> MUST represent <code>issuanceDate</code>, encoded as a UNIX
 timestamp (<code>NumericDate</code>).
-            </li>
-            <li>
+              </li>
+              <li>
 <code>jti</code> MUST represent the <code>id</code> <a>property</a> of the
 <a>verifiable credential</a>.
-            </li>
-            <li>
+              </li>
+              <li>
 <code>sub</code> MUST represent the <code>id</code> <a>property</a> contained
 in the <a>verifiable credential</a> <a>subject</a>.
-            </li>
-            <li>
+              </li>
+              <li>
 <code>aud</code> MUST represent the <code>subject</code> of the consumer of the
 <a>verifiable presentation</a>.
-            </li>
-          </ul>
+              </li>
+            </ul>
 
-          <p>
+            <p>
 Other JOSE header parameters and <a>claim</a> names not specified herein can be
 used if their use is not explicitly discouraged. Additional <a>claims</a> MUST
 be added to the <code>credentialSubject</code> <a>property</a> of the JWT.
-          </p>
+            </p>
 
-          <p>
+            <p>
 This version of the specification defines no JWT specific encoding rules for
 the concepts outlined in Section
 <a href="#advanced-concepts">Advanced Concepts</a> (for example,
@@ -2763,79 +2843,79 @@ the concepts outlined in Section
 <code>evidence</code>). These concepts can be encoded as they are without any
 transformation, and can be added to the <code>vc</code> <a>property</a> of the
 JWT.
-          </p>
-
-          <h5>JWT Decoding</h5>
-          <p>
-To decode a JWT to a standard <a>verifiable credential</a>, the following
-transformation MUST be performed:
-          </p>
-
-            <ol>
-                <li>
-Create a JSON object.
-                </li>
-                <li>
-If no <code>@context</code> is specified under <code>vc</code>, add the default
-<code>@context</code> to the new JSON object.
-                </li>
-                <li>
-Add the content from the <code>vc</code> property to the new JSON object.
-                </li>
-                <li>
-Transform the remaining JWT specific headers and <a>claims</a>, and add the
-results to the new JSON object.
-                </li>
-            </ol>
-
-            <p>
-To transform the JWT specific headers and <a>claims</a>, the following MUST be
-done. If:
             </p>
 
-            <ul>
-                <li>
+            <h5>JWT Decoding</h5>
+            <p>
+To decode a JWT to a standard <a>verifiable credential</a>, the following
+transformation MUST be performed:
+            </p>
+
+              <ol>
+                  <li>
+Create a JSON object.
+                  </li>
+                  <li>
+If no <code>@context</code> is specified under <code>vc</code>, add the default
+<code>@context</code> to the new JSON object.
+                  </li>
+                  <li>
+Add the content from the <code>vc</code> property to the new JSON object.
+                  </li>
+                  <li>
+Transform the remaining JWT specific headers and <a>claims</a>, and add the
+results to the new JSON object.
+                  </li>
+              </ol>
+
+              <p>
+To transform the JWT specific headers and <a>claims</a>, the following MUST be
+done. If:
+              </p>
+
+              <ul>
+                  <li>
 <code>exp</code> is present, the UNIX timestamp MUST be converted to an
 [[!ISO8601]] combined date and time string, and MUST be used to set the value
 of the <code>expirationDate</code> <a>property</a> of
 <code>credentialSubject</code> of the new JSON object.
-                </li>
-                <li>
+                  </li>
+                  <li>
 <code>iss</code> is present, the value MUST be used to set the
 <code>issuer</code> <a>property</a> of the new JSON object.
-                </li>
-                <li>
+                  </li>
+                  <li>
 <code>iat</code> is present, the UNIX timestamp MUST be converted to an
 [[!ISO8601]] combined date and time string, and MUST be used to set the value
 of the <code>issuanceDate</code> <a>property</a> of the new JSON object.
-                </li>
-                <li>
+                  </li>
+                  <li>
 <code>jti</code> is present, the value MUST be used to set the value of the
 <code>id</code> <a>property</a> of <code>credentialSubject</code> of the new
 JSON object.
-                </li>
-                <li>
+                  </li>
+                  <li>
 <code>sub</code> is present, the value MUST be used to set the value of the
 <code>id</code> property of the new JSON object.
-                </li>
-            </ul>
+                  </li>
+              </ul>
 
-          <pre class="example nohighlight" title="JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            <pre class="example nohighlight" title="JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)">
 {
     "alg": "RS256",
     "typ": "JWT",
     "kid": "did:example:abfe13f712120431c276e12ecab#keys-1"
 }
-          </pre>
+            </pre>
 
-          <p>
+            <p>
 In the example above, the <a>verifiable credential</a> uses a
 <code>proof</code> based on <code>JWS</code> digital signatures, and the
 corresponding <a>verification</a> key can be obtained using the <code>kid</code>
 header parameter.
-          </p>
+            </p>
 
-          <pre class="example nohighlight" title="JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            <pre class="example nohighlight" title="JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)">
 {
   "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "jti": "http://example.edu/credentials/3732",
@@ -2857,17 +2937,17 @@ header parameter.
     }
   }
 }
-          </pre>
+            </pre>
 
-          <p>
+            <p>
 In the example above, <code>vc</code> does not contain the <code>id</code>
 <a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
 attribute to represent a unique identifier. The <code>sub</code> attribute
 encodes the information represented by the <code>id</code> <a>property</a> of
 <code>credentialSubject</code>.
-          </p>
+            </p>
 
-          <pre class="example nohighlight" title="Verifiable credential using JWT compact serialization (non-normative)">
+            <pre class="example nohighlight" title="Verifiable credential using JWT compact serialization (non-normative)">
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOmFiZmUxM2Y3MTIxMjA0
 MzFjMjc2ZTEyZWNhYiNrZXlzLTEifQ.<span class="highlight">eyJzdWIiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxY
 zI3NmUxMmVjMjEiLCJqdGkiOiJodHRwOi8vZXhhbXBsZS5lZHUvY3JlZGVudGlhbHMvMzczMiIsImlzc
@@ -2886,24 +2966,24 @@ appfjilEzhyfWT-Smm_KN8LRbFdNtU-awwhKbjDNW-7fNVrnsWHKvLsd_zlch8YlHZ6g0tHJnxo_yOTM
 BSSpt0jzyl1ByqjumgBFNpTR-NTVog4B7vLEvq58RuShraL5VNr7bjNzq2gisp3jq3LpfUmiwc7rQXw6
 AlQuattLRolXx3EtPysrZe-wU7yrEtNPvpGs-OyJAczfJPzza9lGTbx6IWS-0pTmNq6hwNd0ODMiB3uL
 3TeBN1xLoue9Hdc3toUvmdyXecSvltPcaiRoN-uQo8RRAvfK7GALAzaHw
-          </pre>
+            </pre>
 
-          <pre class="example nohighlight" title="JWT header of a JWT based verifiable presentation (non-normative)">
+            <pre class="example nohighlight" title="JWT header of a JWT based verifiable presentation (non-normative)">
 {
   "alg": "RS256",
   "typ": "JWT",
   "kid": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1"
 }
-          </pre>
+            </pre>
 
-          <p>
+            <p>
 In the example above, the <a>verifiable presentation</a> uses a
 <code>proof</code> based on <code>JWS</code> digital signatures, and the
 corresponding <a>verification</a> key can be obtained using the <code>kid</code>
 header parameter.
-          </p>
+            </p>
 
-          <pre class="example nohighlight" title="JWT payload of a JWT based verifiable presentation (non-normative)">
+            <pre class="example nohighlight" title="JWT payload of a JWT based verifiable presentation (non-normative)">
 {
   "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "jti": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
@@ -2921,17 +3001,17 @@ header parameter.
     "verifiableCredential": ["..."]
   }
 }
-          </pre>
+            </pre>
 
-          <p>
+            <p>
 In the example above, <code>vp</code> does not contain the <code>id</code>
 <a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
 attribute to represent a unique identifier. <code>verifiableCredential</code>
 contains an string array of <a>verifiable credentials</a> using
 <code>JWT</code> compact serialization.
-          </p>
+            </p>
 
-          <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
+            <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOmViZmViMWY3MTJlYmM2
 ZjFjMjc2ZTEyZWMyMSNrZXlzLTEifQ.<span class="highlight">eyJpc3MiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxY
 zI3NmUxMmVjMjEiLCJqdGkiOiJ1cm46dXVpZDozOTc4MzQ0Zi04NTk2LTRjM2EtYTk3OC04ZmNhYmEzO
@@ -2972,17 +3052,55 @@ TPQHxlPvq9Zcxh7XEWquhc9UWFvdpx6zGtWYuDkB8q0NXwUZHrFHkqseYuiKsK7sd75ajeMCANxKw164
 K4cUyX9v3w60xz3gFivd2W6A0mFRCqUkFUGfMpe4j-hsf6FyPzyXM6m1JNkNHsD86HHT_Xu9xTGHuaLp
 3kn3l_wwQ687VuPnCPLGlV92lZOHIo-QSMm-WBTo4m5q5X8sr9gior_NI39OH3RfzBPA0iN1JDi8EkOA
 dwapkZcYgpuhxHrzNbofYYS0nIIkZ7dIEHiyGhfLo5XzAEmAIU
-          </pre>
+            </pre>
 
-          <p class="issue">
+            <p class="issue">
 A number of the concerns have been raised around security, composability,
 reusability, and extensibility with respect to the use of JWTs for
 verifiable credentials. These concerns will be documented in time in at least
 the Verifiable Claims Model and Security Considerations section of this
 document.
+            </p>
+
+          </section>
+        </section>
+
+
+        <section>
+          <h3>Linked Data Proofs</h3>
+
+          <p>
+This specification utilizes Linked Data to publish information on the Web
+using standards, such as URLs and JSON-LD, to identify <a>subjects</a> and
+their associated properties. When information is presented in this manner,
+other related information can be easily discovered and new information can be
+easily merged into the existing graph of knowledge. Linked Data is
+extensible in a decentralized way, greatly reducing barriers to large scale
+integration. The data model in this specification works well with the
+<a href="https://w3c-dvcg.github.io/ld-proofs/">Linked Data Proofs</a>,
+<a href="https://w3c-dvcg.github.io/ld-signatures/">Linked Data Signatures</a>,
+and the associated
+<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suites</a>,
+which are designed to protect the data model as described by this specification.
+          </p>
+
+          <p>
+Unlike the use of JSON Web Token, no extra pre- or post-processing is necessary.
+The Linked Data Proofs format was designed to simply and easily protect
+<a>verifiable credentials</a> and <a>verifiable presentations</a>. Protecting
+a <a>verifiable credential</a> or <a>verifiable presentation</a> is as simple
+as passing a valid example in this specification to a Linked Data Signatures
+implementation and generating a digital signature.
+          </p>
+
+          <p class="issue">
+Reviewers have requested to see a comparison between JSON+JWT, JSON-LD+JWT, and
+JSON-LD+LD-Proofs. There is a pull request pending for that particular
+request: <a href="https://github.com/w3c/vc-data-model/pull/384">Add section on Syntax and Proof Format Trade-Offs.</a>
           </p>
 
         </section>
+
       </section>
     </section>
 
