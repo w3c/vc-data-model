@@ -1201,25 +1201,36 @@ earliest date when the information associated with the
         <h3>Proofs (Signatures)</h3>
 
         <p>
-For a <a>credential</a> or <a>presentation</a> to be <a>verifiable</a>, the
-following <a>property</a> MUST be present:
+For a <a>credential</a> or <a>presentation</a> to be <a>verifiable</a>, at
+least one proof mechanism MUST be expressed. This specification identifies
+two classes of proof mechanisms: external proofs and embedded proofs. An
+<dfn>external proof</dfn> is one that wraps an expression of this data model,
+such as a JSON Web Token, which is elaborated upon in Section
+<a href="#json-web-token"></a>. An <dfn>embedded proof</dfn> is a mechanism
+where the proof is included in the data, such as a Linked Data Signature,
+which is elaborated upon in Section <a href="#linked-data-proofs"></a>.
+When embedding a proof, the following <a>property</a> MUST be used:
         </p>
 
         <dl>
           <dt><var>proof</var></dt>
           <dd>
-No single proof mechanism is currently standardised or recommended for verifiable
-credentials. The method used for a proof MUST be included using the <code>type</code>
-<a>property</a>.
-Because the method used for a mathematical proof varies by representation language and
-the technology used, the set of name-value pairs that is expected as the value
-of the <code>proof</code> <a>property</a> will vary accordingly. For example,
-if digital signatures are used for the proof mechanism, the <code>proof</code>
-<a>property</a> is expected to have name-value pairs that include a signature, a
-reference to the signing entity, and a representation of the signing date.
-The example below uses RSA digital signatures.
+One or more cryptographic proofs that can be used to detect tampering and
+verify the authorship of a <a>credential</a> or <a>presentation</a>.
+The specific method used for an <a>embedded proof</a> MUST be included using
+the <code>type</code> <a>property</a>.
           </dd>
         </dl>
+
+        <p>
+Because the method used for a mathematical proof varies by representation
+language and the technology used, the set of name-value pairs that is expected
+as the value of the <code>proof</code> <a>property</a> will vary accordingly.
+For example, if digital signatures are used for the proof mechanism, the
+<code>proof</code> <a>property</a> is expected to have name-value pairs that
+include a signature, a reference to the signing entity, and a representation of
+the signing date. The example below uses RSA digital signatures.
+        </p>
 
         <pre class="example nohighlight"
           title="Usage of the proof property on a verifiable credential">
@@ -1252,10 +1263,11 @@ The example below uses RSA digital signatures.
 }
         </pre>
 
-        <p class="issue" data-number=93>
-The group is currently discussing various alignments with the JOSE stack,
-specifically JWS and JWK.
+        <p class="note">
+No single proof mechanism is currently standardised or recommended for
+verifiable credentials.
         </p>
+
       </section>
 
       <section>
