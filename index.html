@@ -854,9 +854,9 @@ document.
 When two software systems need to exchange data, they must use terminology and
 a protocol that both systems understand. As an analogy, consider how two
 people communicate. Both people must use the same language and the words they
-use must mean the same thing to each other. The
-<code>@context</code> <a>property</a> MUST be used to express the context of a
-verifiable credential.
+use must mean the same thing to each other. The <code>@context</code>
+<a>property</a> MUST be used to express the context of a
+<a>verifiable credential</a> or a <a>verifiable presentation</a>.
         </p>
 
         <dl>
@@ -871,8 +871,8 @@ containing machine-readable information about the context.
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of the @context and
-credentialSubject property">
+        <pre class="example nohighlight"
+          title="Usage of the @context property">
 {
   <span class="highlight">"@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -880,10 +880,10 @@ credentialSubject property">
   ]</span>,
   "id": "http://example.edu/credentials/58473",
   "type": ["VerifiableCredential", "AlumniCredential"],
-  <span class="highlight">"credentialSubject": {
+  "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "alumniOf": "Example University"
-  }</span>,
+  },
   "proof": { ... }
 }
         </pre>
@@ -1023,8 +1023,8 @@ information about the type.
         </pre>
 
         <p>
-With respect to this specification, the following table lists examples of objects that
-MUST have a <a>type</a> specified.
+With respect to this specification, the following table lists examples of
+objects that MUST have a <a>type</a> specified.
         </p>
 
         <table class="simple">
@@ -1151,58 +1151,7 @@ of this specification who want to support interoperable extensibility, do.
         </p>
       </section>
 
-      <section>
-        <h3>Issuer</h3>
-<p>
 
-The <a>Issuer</a> MUST be identified by using the
-<code>issuer</code> <a>property</a>. The value of the <code>issuer</code>
-<a>property</a> MUST be a <a>URI</a>. It is
-RECOMMENDED that dereferencing the <a>URI</a> results in a document containing
-machine-readable information about the <a>issuer</a> that can be used to
-<a>verify</a> the information expressed in the <a>credential</a>.
-</p>
-</section>
-
- <section>
-        <h3>Issuance Date</h3>
-<p>
-
-If present in a verifiable credential, then the date that the verifiable credential
-becomes valid MUST be identified by
-using the <code>issuanceDate</code> <a>property</a>.
-The value of the <code>issuanceDate</code> <a>property</a> MUST be a string
-value of an [[!ISO8601]] combined date and time string representing the date
-and time the <a>credential</a> was issued. Note that this date represents the
-earliest date when the information associated with the
-<code>credentialSubject</code> <a>property</a> became valid. It does not
-necessarily equate to the date that the verifiable credential was actually
-issued as this may be before or after the <code>issuanceDate</code>.
- <p>
-
-
-        <pre class="example nohighlight" title="Usage of credential subject
-and issuer properties">
-{
-  "@context": [
-    "https://www.w3.org/2018/credentials/v1",
-    "https://example.com/examples/v1"
-  ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  <span class="highlight">"issuer": "https://example.edu/issuers/14"</span>,
-  <span class="highlight">"issuanceDate": "2010-01-01T19:23:24Z"</span>,
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "BachelorDegree",
-      "name": "Bachelor of Science in Mechanical Engineering"
-    }
-  },
-  "proof": { ... }
-}
-        </pre>
-      </section>
 
       <section>
         <h3>Credential Subject</h3>
@@ -1242,6 +1191,87 @@ an object that contains one or more properties that are related to the
 }
         </pre>
 
+      </section>
+
+      <section>
+        <h3>Issuer</h3>
+
+        <p>
+An identifier for the <a>issuer</a> of a <a>verifiable credential</a> MUST be
+expressed using the following <a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>issuer</var></dt>
+          <dd>
+The value of the <code>issuer</code> <a>property</a> MUST be a <a>URI</a>. It is
+RECOMMENDED that dereferencing the <a>URI</a> results in a document containing
+machine-readable information about the <a>issuer</a> that can be used to
+<a>verify</a> the information expressed in the <a>credential</a>.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of issuer property">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  <span class="highlight">"issuer": "https://example.edu/issuers/14"</span>,
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
+  },
+  "proof": { ... }
+}
+        </pre>
+      </section>
+
+      <section>
+        <h3>Issuance Date</h3>
+
+        <p>
+The date and time when the <a>credential</a> was issued MUST be
+expressed using the following <a>property</a>:
+        </p>
+
+        <dl>
+          <dt><var>issuanceDate</var></dt>
+          <dd>
+The value of the <code>issuanceDate</code> <a>property</a> MUST be a string
+value of an [[!RFC3339]] combined date and time string representing the date
+and time the <a>credential</a> was issued. Note that this date represents the
+earliest date when the information associated with the
+<code>credentialSubject</code> <a>property</a> became valid.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of issuanceDate property">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
+  <span class="highlight">"issuanceDate": "2010-01-01T19:23:24Z"</span>,
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
+  },
+  "proof": { ... }
+}
+        </pre>
       </section>
 
       <section>
@@ -1309,8 +1339,8 @@ specifically JWS and JWK.
         <h3>Expiration</h3>
 
         <p>
-If expiration information for a <a>credential</a> is needed, then it MUST be provided
-by adding the following <a>property</a>:
+If expiration information for a <a>credential</a> is needed, then it MUST be
+provided by adding the following <a>property</a>:
         </p>
 
         <dl>
@@ -1350,8 +1380,8 @@ the date and time the <a>credential</a> ceases to be valid.
 
         <p>
 If information about the current status of a <a>verifiable credential</a>, such
-as whether it is suspended or revoked, is needed, then it MUST be provided using the
-<code>credentialStatus</code> <a>property</a>.
+as whether it is suspended or revoked, is needed, then it MUST be provided
+using the <code>credentialStatus</code> <a>property</a>.
         </p>
 
         <dl>
@@ -2071,7 +2101,7 @@ the <a>verifier</a>to <code>https://example.edu/refresh/3732</code>.
         <h3>Terms of Use</h3>
 
         <p>
-Terms of use MAY be utilized by an <a>issuer</a> or a <a>holder</a> to
+Terms of use can be utilized by an <a>issuer</a> or a <a>holder</a> to
 communicate the terms under which a <a>verifiable credential</a> or
 <a>verifiable presentation</a> was issued. The <a>issuer</a> places their terms
 of use inside the <a>credential</a>. The <a>holder</a> places their terms of use
@@ -2210,7 +2240,7 @@ service for correlation, they would violate the terms under which the
         <h3>Evidence</h3>
 
         <p>
-Evidence MAY be included by an <a>issuer</a> to provide the <a>verifier</a>
+Evidence can be included by an <a>issuer</a> to provide the <a>verifier</a>
 with additional supporting information in a <a>verifiable credential</a>. This
 could be used by the <a>verifier</a> to establish the confidence with which it
 relies on the claims in the <a>verifiable credential</a>.
@@ -2232,11 +2262,13 @@ Evidence information MUST be expressed using the following <a>property</a>:
           <dd>
 The value of the <code>evidence</code> <a>property</a> MUST be one or more
 evidence schemes providing enough information for a <a>verifier</a> to determine
-whether the evidence gathered by the <a>issuer</a> meets its confidence requirements for
-relying on the <a>credential</a>. Each evidence scheme is identified by its <a>type</a>.
-The  <code>id</code> property is optional, but if present, SHOULD contains a URL that
-points to where more information about this instance of evidence can be found. The precise content of each evidence scheme is
-determined by the specific <code>evidence</code> <a>type</a> definition.
+whether the evidence gathered by the <a>issuer</a> meets its confidence
+requirements for relying on the <a>credential</a>. Each evidence scheme is
+identified by its <a>type</a>. The <code>id</code> property is optional, but
+if present, SHOULD contain a URL that points to where more information about
+this instance of evidence can be found. The precise content of each evidence
+scheme is determined by the specific <code>evidence</code> <a>type</a>
+definition.
           </dd>
         </dl>
 
