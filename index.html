@@ -848,26 +848,6 @@ document.
       </p>
 
       <section>
-        <h3>Credential Subject</h3>
-
-        <p>
-The claims in a verifiable credential MUST be represented by using one of more
-instances of the <code>credentialSubject</code> <a>property</a>. Each
-<code>credentialSubject</code> <a>property</a> MUST contain the properties of
-the same subject and at least one subject property MUST be present. 
-A verifiable credential MAY
-contain claims about different subjects and MUST use different 
-<code>credentialSubject</code> <a>properties</a> for this.
- </p>
-
-    <p>
-The <code>credentialSubject</code> <a>property</a> SHOULD contain 
-the <code>id</code> <a>property</a>. The only time the <code>id</code> <a>property</a>
-MAY be missing is if the verifiable credential is a bearer credential.
- </p>
-  </section>
-
-      <section>
         <h3>Contexts</h3>
 
         <p>
@@ -1174,8 +1154,8 @@ of this specification who want to support interoperable extensibility, do.
       <section>
         <h3>Issuer</h3>
 <p>
- 
-The <a>Issuer</a> MUST be identified by using the 
+
+The <a>Issuer</a> MUST be identified by using the
 <code>issuer</code> <a>property</a>. The value of the <code>issuer</code>
 <a>property</a> MUST be a <a>URI</a>. It is
 RECOMMENDED that dereferencing the <a>URI</a> results in a document containing
@@ -1189,8 +1169,8 @@ machine-readable information about the <a>issuer</a> that can be used to
 <p>
 
 If present in a verifiable credential, then the date that the verifiable credential
-becomes valid MUST be identified by 
-using the <code>issuanceDate</code> <a>property</a>. 
+becomes valid MUST be identified by
+using the <code>issuanceDate</code> <a>property</a>.
 The value of the <code>issuanceDate</code> <a>property</a> MUST be a string
 value of an [[!ISO8601]] combined date and time string representing the date
 and time the <a>credential</a> was issued. Note that this date represents the
@@ -1199,7 +1179,7 @@ earliest date when the information associated with the
 necessarily equate to the date that the verifiable credential was actually
 issued as this may be before or after the <code>issuanceDate</code>.
  <p>
-       
+
 
         <pre class="example nohighlight" title="Usage of credential subject
 and issuer properties">
@@ -1222,6 +1202,46 @@ and issuer properties">
   "proof": { ... }
 }
         </pre>
+      </section>
+
+      <section>
+        <h3>Credential Subject</h3>
+
+        <p>
+A <a>verifiable credential</a> contains <a>claims</a> about a <a>subject</a>.
+The <a>subject</a> of the credential MUST be expressed using the
+<code>credentialSubject</code> <a>property</a>.
+        </p>
+
+        <dl>
+          <dt>credentialSubject</dt>
+          <dd>
+The value of the <code>credentialSubject</code> <a>property</a> MUST be
+an object that contains one or more properties that are related to the
+<a>subject</a> of the <a>verifiable credential</a>. The object MAY contain an
+<code>id</code> as described in Section <a href="#identifiers"></a>.
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of the credentialSubject property">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://example.com/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  <span class="highlight">"credentialSubject"</span>: {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science in Mechanical Engineering"
+    }
+  },
+  "proof": { ... }
+}
+        </pre>
+
       </section>
 
       <section>
@@ -2008,8 +2028,8 @@ The value of the <code>refreshService</code> <a>property</a> MUST be one or
 more refresh services that provides enough information to the recipient's
 software such that the recipient can refresh the credential. Each
 <code>refreshService</code> value MUST specify its <code>type</code> (for
-example, <code>ManualRefreshService2018</code>) and its 
-<code>id</code>, which is the URL of the service. The precise content of each 
+example, <code>ManualRefreshService2018</code>) and its
+<code>id</code>, which is the URL of the service. The precise content of each
 refresh service is determined by
 the specific <code>refreshService</code> <a>type</a> definition.
           </dd>
