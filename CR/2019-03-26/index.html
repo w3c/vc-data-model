@@ -369,7 +369,7 @@ pre .comment {
   "shortName": "verifiable-claims-data-model",
   "subtitle": "Expressing verifiable information on the Web",
   "publishDate": "2019-03-26",
-  "crEnd": "2019-06-25",
+  "crEnd": "2019-04-23",
   "implementationReportURI": "https://w3c.github.io/vc-test-suite/implementations/",
   "previousMaturity": "WD",
   "previousPublishDate": "2019-02-08",
@@ -892,7 +892,7 @@ Moving some content out to an Implementation Guidance document.
                   <abbr title="World Wide Web Consortium">W3C</abbr> publishes a Candidate Recommendation to indicate that the document is believed to be
                   stable and to encourage implementation by the developer community. This Candidate
                   Recommendation is expected to advance to Proposed Recommendation no earlier than
-                  25 June 2019.
+                  23 April 2019.
                 
                               
                               
@@ -2193,10 +2193,12 @@ the following <a href="#dfn-property" class="internalDFN" data-link-type="dfn">p
         <dl>
           <dt><var>issuer</var></dt>
           <dd>
-The value of the <code>issuer</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a> <em class="rfc2119" title="MUST">MUST</em> be a <a href="#dfn-uri" class="internalDFN" data-link-type="dfn">URI</a>. It is
-<em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em> that dereferencing the <a href="#dfn-uri" class="internalDFN" data-link-type="dfn">URI</a> results in a document containing
-machine-readable information about the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> that can be used to
-<a href="#dfn-verification" class="internalDFN" data-link-type="dfn">verify</a> the information expressed in the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>.
+The value of the <code>issuer</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a> <em class="rfc2119" title="MUST">MUST</em> either be a
+<a href="#dfn-uri" class="internalDFN" data-link-type="dfn">URI</a> or an object containing a <code>id</code> property. It is
+<em class="rfc2119" title="RECOMMENDED">RECOMMENDED</em> that dereferencing the <a href="#dfn-uri" class="internalDFN" data-link-type="dfn">URI</a>, or the <code>id</code> property,
+results in a document containing machine-readable information about the
+<a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> that can be used to <a href="#dfn-verification" class="internalDFN" data-link-type="dfn">verify</a> the information expressed in
+the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>.
           </dd>
         </dl>
 
@@ -2329,7 +2331,6 @@ the signing date. The example below uses RSA digital signatures.
     "type": "RsaSignature2018",
     "created": "2018-06-18T21:19:10Z",
     "verificationMethod": "https://example.com/jdoe/keys/1",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
     "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
       MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
       PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
@@ -2910,32 +2911,13 @@ machine-readable specification as well.
 JSON-LD-based processors <em class="rfc2119" title="MUST">MUST</em> produce an error when a JSON-LD context
 redefines any term in the
 <a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>.
+The only way to change the definition of existing terms is to introduce a
+new term that clears the active context within the scope of that new term.
+Authors that are interested in this feature should read about the
+<code>@protected</code> feature in the JSON-LD 1.1 specification.
             </li>
           </ul>
 
-          <p>
-To avoid the possibility of accidentally overriding terms, developers are urged
-to scope their extensions. For example, the following extension scopes the
-new <code>favoriteFood</code> term so that it can only be used within the
-<code>credentialSubject</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a>.
-          </p>
-
-          <div class="example" id="example-16-scoping-terms-in-a-json-ld-context">
-          <div class="marker">
-      <a class="self-link" href="#example-16-scoping-terms-in-a-json-ld-context">Example 16</a><span class="example-title">: Scoping terms in a JSON-LD context</span>
-    </div>
-          <pre class="nohighlight">{
-  "@context": {
-    "referenceNumber": "https://example.com/vocab#referenceNumber",
-    <span class="highlight">"credentialSubject": {
-      "@id": "https://www.w3.org/2018/credentials#credentialSubject",
-      "@context": {
-        "favoriteFood": "https://example.com/vocab#favoriteFood"
-      }
-    }</span>
-  }
-}</pre>
-        </div>
         </section>
       </section>
 
@@ -2979,9 +2961,9 @@ specific type definition.
           </dd>
         </dl>
 
-        <div class="example" id="example-17-usage-of-the-credentialschema-property-to-perform-json-schema-validation">
+        <div class="example" id="example-16-usage-of-the-credentialschema-property-to-perform-json-schema-validation">
           <div class="marker">
-      <a class="self-link" href="#example-17-usage-of-the-credentialschema-property-to-perform-json-schema-validation">Example 17</a><span class="example-title">: Usage of the credentialSchema property to perform JSON schema validation</span>
+      <a class="self-link" href="#example-16-usage-of-the-credentialschema-property-to-perform-json-schema-validation">Example 16</a><span class="example-title">: Usage of the credentialSchema property to perform JSON schema validation</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3027,9 +3009,9 @@ the <code>credentialSchema</code> <a href="#dfn-property" class="internalDFN" da
 see Section <a href="#zero-knowledge-proofs" class="sec-ref"><span class="secno">§&nbsp;5.8</span> <span class="sec-title">Zero-Knowledge Proofs</span></a>.
         </p>
 
-        <div class="example" id="example-18-usage-of-the-credentialschema-property-to-perform-zero-knowledge-validation">
+        <div class="example" id="example-17-usage-of-the-credentialschema-property-to-perform-zero-knowledge-validation">
           <div class="marker">
-      <a class="self-link" href="#example-18-usage-of-the-credentialschema-property-to-perform-zero-knowledge-validation">Example 18</a><span class="example-title">: Usage of the credentialSchema property to perform zero-knowledge validation</span>
+      <a class="self-link" href="#example-17-usage-of-the-credentialschema-property-to-perform-zero-knowledge-validation">Example 17</a><span class="example-title">: Usage of the credentialSchema property to perform zero-knowledge validation</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3066,7 +3048,7 @@ with the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-typ
         <div class="issue" id="issue-container-number-2"><div role="heading" class="issue-title marker" id="h-issue-0" aria-level="4"><span>Issue 2</span></div><p class="">
 The usage of the Data Schemas property may change during the <abbr title="World Wide Web Consortium">W3C</abbr>
 Candidate Recommendation process based on implementer feedback. Specifically,
-the location of it's usage may be expanded. It may also be removed if there
+the location of its usage may be expanded. It may also be removed if there
 is not enough implementation support.
         </p></div>
 
@@ -3113,9 +3095,9 @@ the specific <code>refreshService</code> <a href="#dfn-type" class="internalDFN"
           </dd>
         </dl>
 
-        <div class="example" id="example-19-usage-of-the-refreshservice-property-by-an-issuer">
+        <div class="example" id="example-18-usage-of-the-refreshservice-property-by-an-issuer">
           <div class="marker">
-      <a class="self-link" href="#example-19-usage-of-the-refreshservice-property-by-an-issuer">Example 19</a><span class="example-title">: Usage of the refreshService property by an issuer</span>
+      <a class="self-link" href="#example-18-usage-of-the-refreshservice-property-by-an-issuer">Example 18</a><span class="example-title">: Usage of the refreshService property by an issuer</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3199,9 +3181,9 @@ definition.
           </dd>
         </dl>
 
-        <div class="example" id="example-20-usage-of-the-termsofuse-property-by-an-issuer">
+        <div class="example" id="example-19-usage-of-the-termsofuse-property-by-an-issuer">
           <div class="marker">
-      <a class="self-link" href="#example-20-usage-of-the-termsofuse-property-by-an-issuer">Example 20</a><span class="example-title">: Usage of the termsOfUse property by an issuer</span>
+      <a class="self-link" href="#example-19-usage-of-the-termsofuse-property-by-an-issuer">Example 19</a><span class="example-title">: Usage of the termsOfUse property by an issuer</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3240,9 +3222,9 @@ prohibiting <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">ver
 in an archive.
         </p>
 
-        <div class="example" id="example-21-usage-of-the-termsofuse-property-by-a-holder">
+        <div class="example" id="example-20-usage-of-the-termsofuse-property-by-a-holder">
           <div class="marker">
-      <a class="self-link" href="#example-21-usage-of-the-termsofuse-property-by-a-holder">Example 21</a><span class="example-title">: Usage of the termsOfUse property by a holder</span>
+      <a class="self-link" href="#example-20-usage-of-the-termsofuse-property-by-a-holder">Example 20</a><span class="example-title">: Usage of the termsOfUse property by a holder</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3341,9 +3323,9 @@ non-credential data may be supported by the specification, please refer to the
 <a href="https://w3c.github.io/vc-imp-guide/">Verifiable Credentials Implementation Guidelines</a>.
         </p></div>
 
-        <div class="example" id="example-22-usage-of-the-evidence-property">
+        <div class="example" id="example-21-usage-of-the-evidence-property">
           <div class="marker">
-      <a class="self-link" href="#example-22-usage-of-the-evidence-property">Example 22</a><span class="example-title">: Usage of the evidence property</span>
+      <a class="self-link" href="#example-21-usage-of-the-evidence-property">Example 21</a><span class="example-title">: Usage of the evidence property</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3389,6 +3371,13 @@ of the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">creden
 is used to express machine-verifiable mathematical proofs related to the
 authenticity of the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> and integrity of the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>.
         </p></div>
+
+        <div class="issue" id="issue-container-number-5"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="4"><span>Issue 5</span></div><p class="">
+The evidence feature may change during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate Recommendation phase
+based on implementer feedback, or be removed entirely due to lack of support
+by implementers.
+        </p></div>
+
       </section>
 
       <section id="zero-knowledge-proofs">
@@ -3442,9 +3431,9 @@ of the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type=
 <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> and <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> through the use of selective disclosure of the credential values.
         </p>
 
-        <div class="example" id="example-23-a-verifiable-credential-that-supports-cl-signatures">
+        <div class="example" id="example-22-a-verifiable-credential-that-supports-cl-signatures">
           <div class="marker">
-      <a class="self-link" href="#example-23-a-verifiable-credential-that-supports-cl-signatures">Example 23</a><span class="example-title">: A verifiable credential that supports CL Signatures</span>
+      <a class="self-link" href="#example-22-a-verifiable-credential-that-supports-cl-signatures">Example 22</a><span class="example-title">: A verifiable credential that supports CL Signatures</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3453,10 +3442,10 @@ of the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type=
   ],
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   <span class="highlight">"credentialSchema": {
-    "id": "did:example:schema:3jf74yr7dsjw83jf",
-    "type": "CLCredentialDefinition2019"
+    "id": "did:example:cdf:35LB7w9ueWbagPL94T9bMLtyXDj9pX5o",
+    "type": "did:example:schema:22KpkXgecryx9k7N6XN1QoN3gXwBkSU8SfyyYQG"
   }</span>,
-  "issuer": "https://example.edu/issuers/14",
+  "issuer": "did:example:Wz4eUg7SetGfaUVCn8U9d62oDYrUJLuUtcy619",
   "credentialSubject": {
     "givenName": "Jane",
     "familyName": "Doe",
@@ -3467,11 +3456,11 @@ of the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type=
     }
   },
   <span class="highlight">"proof": {
-    "type": "CLSignature2019",
-    "created": "2018-06-17T10:03:48Z",
-    "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
-    "nonce": "bb864289-cec1-4222-afd7-d314239be92e",
-    "proofValue: "zqmRkM7gkq5LFYKjixMdqM7gkq5LFYyWbNsVpsq...7Ey3",
+    "type": "AnonCredv1",
+    "issuerData": "5NQ4TgzNfSQxoLzf2d5AV3JNiCdMaTgm...BXiX5UggB381QU7ZCgqWivUmy4D",
+    "attributes": "pPYmqDvwwWBDPNykXVrBtKdsJDeZUGFA...tTERiLqsZ5oxCoCSodPQaggkDJy",
+    "signature": "8eGWSiTiWtEA8WnBwX4T259STpxpRKuk...kpFnikqqSP3GMW7mVxC4chxFhVs",
+    "signatureCorrectnessProof": "SNQbW3u1QV5q89qhxA1xyVqFa6jCrKwv...dsRypyuGGK3RhhBUvH1tPEL8orH"
   }</span>
 }</pre>
         </div>
@@ -3510,9 +3499,9 @@ intend to share.
           </li>
         </ul>
 
-        <div class="example" id="example-24-a-verifiable-presentation-that-supports-cl-signatures">
+        <div class="example" id="example-23-a-verifiable-presentation-that-supports-cl-signatures">
           <div class="marker">
-      <a class="self-link" href="#example-24-a-verifiable-presentation-that-supports-cl-signatures">Example 24</a><span class="example-title">: A verifiable presentation that supports CL Signatures</span>
+      <a class="self-link" href="#example-23-a-verifiable-presentation-that-supports-cl-signatures">Example 23</a><span class="example-title">: A verifiable presentation that supports CL Signatures</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3527,28 +3516,34 @@ intend to share.
     ],
     "type": ["VerifiableCredential", "UniversityDegreeCredential"],
     <span class="highlight">"credentialSchema": {
-      "id": "did:example:schema:3jf74yr7dsjw83jf",
-      "type": "CLCredentialDefinition2019"
+      "id": "did:example:cdf:35LB7w9ueWbagPL94T9bMLtyXDj9pX5o",
+      "type": "did:example:schema:22KpkXgecryx9k7N6XN1QoN3gXwBkSU8SfyyYQG"
     }</span>,
-    "issuer": "https://example.edu/issuers/14",
+    "issuer": "did:example:Wz4eUg7SetGfaUVCn8U9d62oDYrUJLuUtcy619",
     "credentialSubject": {
-      "degree": {
-        "type": "BachelorDegree",
-        "college": "College of Engineering"
+      "degreeType": "BachelorDegree",
+      "degreeSchool": "College of Engineering"
       }
     },
     <span class="highlight">"proof": {
-      "type": "CLDerivedCredentialProof2019",
-      "proofValue": "zM7gkqMqmRkdqM7...kq5"
+      "type": "AnonCredDerivedCredentialv1",
+      "primaryProof": "cg7wLNSi48K5qNyAVMwdYqVHSMv1Ur8i...Fg2ZvWF6zGvcSAsym2sgSk737",
+      "nonRevocationProof": "mu6fg24MfJPU1HvSXsf3ybzKARib4WxG...RSce53M6UwQCxYshCuS3d2h"
     }</span>
   }],
   <span class="highlight">"proof": {
-    "type": "CLPresentationProof2019",
-    "proofValue": "zWbNskM7...psq"
+    "type": "AnonCredPresentationProofv1",
+    "proofValue": "DgYdYMUYHURJLD7xdnWRinqWCEY5u5fK...j915Lt3hMzLHoPiPQ9sSVfRrs1D"
   }</span>
 }</pre>
         </div>
-
+        <figure id="fig-a-visual-example-of-the-relationship-between-credentials-and-derived-credentials-in-a-zkp-presentation">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/zkp-cred-pres.svg" height="150" width="154">
+          <figcaption style="text-align: center;">Figure <span class="figno">10</span> <span class="fig-title">
+A visual example of the relationship between credentials and derived
+credentials in a ZKP <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentation</a>.
+          </span></figcaption>
+        </figure>
         <div class="note" role="note" id="issue-container-generatedID-15"><div role="heading" class="note-title marker" id="h-note-15" aria-level="4"><span>Note</span></div><p class="">
 Important details regarding the format for the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> definition and
 of the proofs are omitted on purpose because they are outside of the scope of
@@ -3557,7 +3552,7 @@ extend <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type=
 support zero-knowledge proof systems.
         </p></div>
 
-        <div class="issue" id="issue-container-number-5"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="4"><span>Issue 5</span></div><p class="">
+        <div class="issue" id="issue-container-number-6"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="4"><span>Issue 6</span></div><p class="">
 Zero Knowledge Proofs are a feature at risk. The Working Group is looking
 for multiple implementers to support the feature during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate
 Recommendation phase.
@@ -3611,9 +3606,9 @@ publish the <code>DisputeCredential</code> in a public venue to make it known
 that the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> is disputed.
         </p>
 
-        <div class="example" id="example-25-a-subject-disputes-a-credential">
+        <div class="example" id="example-24-a-subject-disputes-a-credential">
           <div class="marker">
-      <a class="self-link" href="#example-25-a-subject-disputes-a-credential">Example 25</a><span class="example-title">: A subject disputes a credential</span>
+      <a class="self-link" href="#example-24-a-subject-disputes-a-credential">Example 24</a><span class="example-title">: A subject disputes a credential</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -3634,9 +3629,9 @@ that the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">cred
         </div>
 
 
-        <div class="example" id="example-26-another-entity-disputes-a-credential">
+        <div class="example" id="example-25-another-entity-disputes-a-credential">
           <div class="marker">
-      <a class="self-link" href="#example-26-another-entity-disputes-a-credential">Example 26</a><span class="example-title">: Another entity disputes a credential</span>
+      <a class="self-link" href="#example-25-another-entity-disputes-a-credential">Example 25</a><span class="example-title">: Another entity disputes a credential</span>
     </div>
           <pre class="nohighlight">{
   "@context": "https://w3id.org/credentials/v1",
@@ -3669,7 +3664,7 @@ content-addressed identifiers can be used to uniquely identify individual
 claims.
         </p></div>
 
-        <div class="issue" id="issue-container-number-6"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="4"><span>Issue 6</span></div><p class="">
+        <div class="issue" id="issue-container-number-7"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="4"><span>Issue 7</span></div><p class="">
 The dispute feature may change significantly during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate
 Recommendation process including possibly being removed if there is not enough
 support from implementations for the feature.
@@ -3770,11 +3765,7 @@ elaborated on in Section <a href="#extensibility" class="sec-ref"><span class="s
 
         <p>
 Multiple contexts <em class="rfc2119" title="MAY">MAY</em> be used or combined to express any arbitrary information
-about <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> in idiomatic JSON. If an application is processing a
-<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> or <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>, and a
-<code>@context</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a> is not present at the top-level of the
-JSON-LD document, then a <code>@context</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn">property</a> with a value of
-<code>https://www.w3.org/2018/credentials/v1</code> <em class="rfc2119" title="MUST">MUST</em> be assumed. The JSON-LD
+about <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> in idiomatic JSON. The JSON-LD
 Context available at <code>https://www.w3.org/2018/credentials/v1</code> is a
 static document that is never updated and can therefore be downloaded and
 cached client side. The associated vocabulary document for the Verifiable
@@ -3818,11 +3809,11 @@ each graph is preserved.
             </li>
             <li>
 The <code>@protected</code> properties feature of JSON-LD 1.1 is used to ensure
-that terms defined by this specification cannot be overridden. This means
-that as long as the same <code>@context</code> declaration is made at the top
-of a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> or <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>, even when
-<a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a> do not use a JSON-LD processor, that interoperability is still
-guaranteed if <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifiers</a> use a JSON-LD processor.
+that terms defined by this specification cannot be overridden. This means that
+as long as the same <code>@context</code> declaration is made at the top of a
+<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> or <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a>,
+interoperability is guaranteed for all terms understood by users of the data
+model whether or not they use a JSON-LD processor.
             </li>
           </ul>
         </section>
@@ -3861,7 +3852,7 @@ JSON object that is contained in a JSON Web Signature (JWS) [<cite><a class="bib
 [<cite><a class="bibref" href="#bib-rfc7516">RFC7516</a></cite>]. For this specification, the use of JWE is out of scope.
           </p>
 
-          <div class="issue" id="issue-container-number-7"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="5"><span>Issue 7</span></div><p class="">
+          <div class="issue" id="issue-container-number-8"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="5"><span>Issue 8</span></div><p class="">
 JWT support is a feature at risk and may be removed during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate
 Recommendation phase if there is not enough implementer support for the
 feature.
@@ -4020,10 +4011,6 @@ transformation <em class="rfc2119" title="MUST">MUST</em> be performed:
 Create a JSON object.
                   </li>
                   <li>
-If no <code>@context</code> is specified under <code>vc</code>, add the default
-<code>@context</code> to the new JSON object.
-                  </li>
-                  <li>
 Add the content from the <code>vc</code> property to the new JSON object.
                   </li>
                   <li>
@@ -4064,9 +4051,9 @@ JSON object.
                   </li>
               </ul>
 
-            <div class="example" id="example-27-jwt-header-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">
+            <div class="example" id="example-26-jwt-header-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">
           <div class="marker">
-      <a class="self-link" href="#example-27-jwt-header-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">Example 27</a><span class="example-title">: JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)</span>
+      <a class="self-link" href="#example-26-jwt-header-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">Example 26</a><span class="example-title">: JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)</span>
     </div>
           <pre class="nohighlight">{
     "alg": "RS256",
@@ -4082,9 +4069,9 @@ corresponding <a href="#dfn-verification" class="internalDFN" data-link-type="df
 header parameter.
             </p>
 
-            <div class="example" id="example-28-jwt-payload-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">
+            <div class="example" id="example-27-jwt-payload-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">
           <div class="marker">
-      <a class="self-link" href="#example-28-jwt-payload-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">Example 28</a><span class="example-title">: JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)</span>
+      <a class="self-link" href="#example-27-jwt-payload-of-a-jwt-based-verifiable-credential-using-jws-as-a-proof-non-normative">Example 27</a><span class="example-title">: JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)</span>
     </div>
           <pre class="nohighlight">{
   "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -4117,9 +4104,9 @@ encodes the information represented by the <code>id</code> <a href="#dfn-propert
 <code>credentialSubject</code>.
             </p>
 
-            <div class="example" id="example-29-verifiable-credential-using-jwt-compact-serialization-non-normative">
+            <div class="example" id="example-28-verifiable-credential-using-jwt-compact-serialization-non-normative">
           <div class="marker">
-      <a class="self-link" href="#example-29-verifiable-credential-using-jwt-compact-serialization-non-normative">Example 29</a><span class="example-title">: Verifiable credential using JWT compact serialization (non-normative)</span>
+      <a class="self-link" href="#example-28-verifiable-credential-using-jwt-compact-serialization-non-normative">Example 28</a><span class="example-title">: Verifiable credential using JWT compact serialization (non-normative)</span>
     </div>
           <pre class="nohighlight">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOmFiZmUxM2Y3MTIxMjA0
 MzFjMjc2ZTEyZWNhYiNrZXlzLTEifQ.<span class="highlight">eyJzdWIiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxY
@@ -4141,9 +4128,9 @@ AlQuattLRolXx3EtPysrZe-wU7yrEtNPvpGs-OyJAczfJPzza9lGTbx6IWS-0pTmNq6hwNd0ODMiB3uL
 3TeBN1xLoue9Hdc3toUvmdyXecSvltPcaiRoN-uQo8RRAvfK7GALAzaHw</pre>
         </div>
 
-            <div class="example" id="example-30-jwt-header-of-a-jwt-based-verifiable-presentation-non-normative">
+            <div class="example" id="example-29-jwt-header-of-a-jwt-based-verifiable-presentation-non-normative">
           <div class="marker">
-      <a class="self-link" href="#example-30-jwt-header-of-a-jwt-based-verifiable-presentation-non-normative">Example 30</a><span class="example-title">: JWT header of a JWT based verifiable presentation (non-normative)</span>
+      <a class="self-link" href="#example-29-jwt-header-of-a-jwt-based-verifiable-presentation-non-normative">Example 29</a><span class="example-title">: JWT header of a JWT based verifiable presentation (non-normative)</span>
     </div>
           <pre class="nohighlight">{
   "alg": "RS256",
@@ -4159,9 +4146,9 @@ corresponding <a href="#dfn-verification" class="internalDFN" data-link-type="df
 header parameter.
             </p>
 
-            <div class="example" id="example-31-jwt-payload-of-a-jwt-based-verifiable-presentation-non-normative">
+            <div class="example" id="example-30-jwt-payload-of-a-jwt-based-verifiable-presentation-non-normative">
           <div class="marker">
-      <a class="self-link" href="#example-31-jwt-payload-of-a-jwt-based-verifiable-presentation-non-normative">Example 31</a><span class="example-title">: JWT payload of a JWT based verifiable presentation (non-normative)</span>
+      <a class="self-link" href="#example-30-jwt-payload-of-a-jwt-based-verifiable-presentation-non-normative">Example 30</a><span class="example-title">: JWT payload of a JWT based verifiable presentation (non-normative)</span>
     </div>
           <pre class="nohighlight">{
   "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -4190,9 +4177,9 @@ contains an string array of <a href="#dfn-verifiable-credentials" class="interna
 <code>JWT</code> compact serialization.
             </p>
 
-            <div class="example" id="example-32-verifiable-presentation-using-jwt-compact-serialization-non-normative">
+            <div class="example" id="example-31-verifiable-presentation-using-jwt-compact-serialization-non-normative">
           <div class="marker">
-      <a class="self-link" href="#example-32-verifiable-presentation-using-jwt-compact-serialization-non-normative">Example 32</a><span class="example-title">: Verifiable presentation using JWT compact serialization (non-normative)</span>
+      <a class="self-link" href="#example-31-verifiable-presentation-using-jwt-compact-serialization-non-normative">Example 31</a><span class="example-title">: Verifiable presentation using JWT compact serialization (non-normative)</span>
     </div>
           <pre class="nohighlight">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOmViZmViMWY3MTJlYmM2
 ZjFjMjc2ZTEyZWMyMSNrZXlzLTEifQ.<span class="highlight">eyJpc3MiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxY
@@ -4300,7 +4287,7 @@ and what information can be derived from what is provided.
 
       <figure id="fig-privacy-spectrum-ranging-from-pseudonymous-to-fully-identified">
         <img style="margin: auto; display: block; width: 80%;" src="diagrams/privacy-spectrum.svg" height="122" width="300">
-        <figcaption style="text-align: center;">Figure <span class="figno">10</span> <span class="fig-title">
+        <figcaption style="text-align: center;">Figure <span class="figno">11</span> <span class="fig-title">
 Privacy spectrum ranging from pseudonymous to fully identified.
         </span></figcaption>
       </figure>
@@ -4566,7 +4553,9 @@ principle in real-world scenarios.
 A <em>bearer credential</em> is a privacy-enhancing piece of information,
 such as a concert ticket, which entitles the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> of the
 <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> to a specific resource without divulging sensitive
-information about the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>.
+information about the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>. Bearer credentials are often used in
+low-risk use cases where the sharing of the credential is not a concern or
+would not result in large economic or reputational losses.
       </p>
 
       <p>
@@ -4577,9 +4566,9 @@ possible by not specifying the <a href="#dfn-subjects" class="internalDFN" data-
 <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> is a bearer <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>:
       </p>
 
-      <div class="example" id="example-33-usage-of-issuer-properties">
+      <div class="example" id="example-32-usage-of-issuer-properties">
           <div class="marker">
-      <a class="self-link" href="#example-33-usage-of-issuer-properties">Example 33</a><span class="example-title">: Usage of issuer properties</span>
+      <a class="self-link" href="#example-32-usage-of-issuer-properties">Example 32</a><span class="example-title">: Usage of issuer properties</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -5038,9 +5027,9 @@ For example, the following highlighted links are not content-integrity
 protected and probably should be:
       </p>
 
-      <div class="example" id="example-34-non-content-integrity-protected-links">
+      <div class="example" id="example-33-non-content-integrity-protected-links">
           <div class="marker">
-      <a class="self-link" href="#example-34-non-content-integrity-protected-links">Example 34</a><span class="example-title">: Non-content-integrity protected links</span>
+      <a class="self-link" href="#example-33-non-content-integrity-protected-links">Example 33</a><span class="example-title">: Non-content-integrity protected links</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -5072,9 +5061,9 @@ using the Hashlink specification, and content integrity protection to the
 image by using an IPFS link:
       </p>
 
-        <div class="example" id="example-35-content-integrity-protection-for-links-to-external-data">
+        <div class="example" id="example-34-content-integrity-protection-for-links-to-external-data">
           <div class="marker">
-      <a class="self-link" href="#example-35-content-integrity-protection-for-links-to-external-data">Example 35</a><span class="example-title">: Content-integrity protection for links to external data</span>
+      <a class="self-link" href="#example-34-content-integrity-protection-for-links-to-external-data">Example 34</a><span class="example-title">: Content-integrity protection for links to external data</span>
     </div>
           <pre class="nohighlight">{
   "@context": [
@@ -5538,7 +5527,7 @@ relationships covered in the rest of this section.
 
       <figure id="fig-subject-holder-relationships-in-verifiable-credentials">
         <img style="margin: auto; display: block; width: 75%;" src="diagrams/subject-ne-holder.svg" height="150" width="200">
-        <figcaption style="text-align: center;">Figure <span class="figno">11</span> <span class="fig-title">
+        <figcaption style="text-align: center;">Figure <span class="figno">12</span> <span class="fig-title">
 Subject-Holder Relationships in Verifiable Credentials.
         </span></figcaption>
       </figure>
@@ -5566,7 +5555,7 @@ If only the <code>credentialSubject</code> is allowed to insert a
 <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>, as described below.
         </p>
 
-        <div class="issue" id="issue-container-number-8"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="4"><span>Issue 8</span></div><p class="">
+        <div class="issue" id="issue-container-number-9"><div role="heading" class="issue-title marker" id="h-issue-7" aria-level="4"><span>Issue 9</span></div><p class="">
 The nonTransferable feature is at risk and is likely to be removed due to
 lack of consensus.
         </p></div>
@@ -5584,9 +5573,9 @@ a <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn"
 is invalid.
           </p>
 
-          <div class="example" id="example-36-usage-of-the-nontransferable-property">
+          <div class="example" id="example-35-usage-of-the-nontransferable-property">
           <div class="marker">
-      <a class="self-link" href="#example-36-usage-of-the-nontransferable-property">Example 36</a><span class="example-title">: Usage of the nonTransferable property</span>
+      <a class="self-link" href="#example-35-usage-of-the-nontransferable-property">Example 35</a><span class="example-title">: Usage of the nonTransferable property</span>
     </div>
           <pre class="nohighlight">{
   "id": "http://example.edu/credentials/3732",
@@ -5619,9 +5608,9 @@ Other use cases might require the <a href="#dfn-verifier" class="internalDFN" da
 to determine the relationship between the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> and the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>.
         </p>
 
-        <div class="example" id="example-37-a-credential-uniquely-identifying-a-subject">
+        <div class="example" id="example-36-a-credential-uniquely-identifying-a-subject">
           <div class="marker">
-      <a class="self-link" href="#example-37-a-credential-uniquely-identifying-a-subject">Example 37</a><span class="example-title">: A credential uniquely identifying a subject</span>
+      <a class="self-link" href="#example-36-a-credential-uniquely-identifying-a-subject">Example 36</a><span class="example-title">: A credential uniquely identifying a subject</span>
     </div>
           <pre class="nohighlight">{
   "@context": ["https://www.w3.org/2018/credentials/v1", "https://schema.org/"]
@@ -5711,9 +5700,9 @@ verify the relationship between the <a href="#dfn-subjects" class="internalDFN" 
 outside the scope of this specification.
         </p></div>
 
-        <div class="example" id="example-38-the-relationship-property-in-a-child-s-credential">
+        <div class="example" id="example-37-the-relationship-property-in-a-child-s-credential">
           <div class="marker">
-      <a class="self-link" href="#example-38-the-relationship-property-in-a-child-s-credential">Example 38</a><span class="example-title">: The relationship property in a child's credential</span>
+      <a class="self-link" href="#example-37-the-relationship-property-in-a-child-s-credential">Example 37</a><span class="example-title">: The relationship property in a child's credential</span>
     </div>
           <pre class="nohighlight">{
   "id": "http://example.edu/credentials/3732",
@@ -5738,9 +5727,9 @@ child and the parent such that a <a href="#dfn-verifier" class="internalDFN" dat
 <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> if it is provided by the child or the parent.
         </p>
 
-        <div class="example" id="example-39-a-relationship-credential-issued-to-a-parent">
+        <div class="example" id="example-38-a-relationship-credential-issued-to-a-parent">
           <div class="marker">
-      <a class="self-link" href="#example-39-a-relationship-credential-issued-to-a-parent">Example 39</a><span class="example-title">: A relationship credential issued to a parent</span>
+      <a class="self-link" href="#example-38-a-relationship-credential-issued-to-a-parent">Example 38</a><span class="example-title">: A relationship credential issued to a parent</span>
     </div>
           <pre class="nohighlight">{
   "id": "http://example.edu/credentials/3732",
@@ -5766,9 +5755,9 @@ if they are provided by the child or if the <a href="#dfn-credential" class="int
 provided with any of the child's <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a>.
         </p>
 
-        <div class="example" id="example-40-a-relationship-credential-issued-by-a-child">
+        <div class="example" id="example-39-a-relationship-credential-issued-by-a-child">
           <div class="marker">
-      <a class="self-link" href="#example-40-a-relationship-credential-issued-by-a-child">Example 40</a><span class="example-title">: A relationship credential issued by a child</span>
+      <a class="self-link" href="#example-39-a-relationship-credential-issued-by-a-child">Example 39</a><span class="example-title">: A relationship credential issued by a child</span>
     </div>
           <pre class="nohighlight">{
   "id": "http://example.org/credentials/23894",
@@ -5829,9 +5818,9 @@ these two <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-ty
 <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> to the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>.
       </p>
 
-      <div class="example" id="example-41-a-holder-presenting-a-verifiable-credential-that-was-passed-to-it-by-the-subject">
+      <div class="example" id="example-40-a-holder-presenting-a-verifiable-credential-that-was-passed-to-it-by-the-subject">
           <div class="marker">
-      <a class="self-link" href="#example-41-a-holder-presenting-a-verifiable-credential-that-was-passed-to-it-by-the-subject">Example 41</a><span class="example-title">: A holder presenting a
+      <a class="self-link" href="#example-40-a-holder-presenting-a-verifiable-credential-that-was-passed-to-it-by-the-subject">Example 40</a><span class="example-title">: A holder presenting a
 verifiable credential that was passed to it by the subject</span>
     </div>
           <pre class="nohighlight">{
@@ -5866,7 +5855,6 @@ verifiable credential that was passed to it by the subject</span>
         "type": "RsaSignature2018",
         "created": "2018-06-17T10:03:48Z",
         "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
-        "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
         "signatureValue": "pYw8XNi1..Cky6Ed="
       }
     }
@@ -5917,9 +5905,9 @@ the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> m
 into the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject's</a> <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>.
     </p>
 
-        <div class="example" id="example-42-a-credential-issued-to-a-holder-who-is-not-the-subject-of-the-credential-who-has-no-relationship-with-the-subject-of-the-credential-but-who-has-a-relationship-with-the-issuer">
+        <div class="example" id="example-41-a-credential-issued-to-a-holder-who-is-not-the-subject-of-the-credential-who-has-no-relationship-with-the-subject-of-the-credential-but-who-has-a-relationship-with-the-issuer">
           <div class="marker">
-      <a class="self-link" href="#example-42-a-credential-issued-to-a-holder-who-is-not-the-subject-of-the-credential-who-has-no-relationship-with-the-subject-of-the-credential-but-who-has-a-relationship-with-the-issuer">Example 42</a><span class="example-title">: A credential issued to a
+      <a class="self-link" href="#example-41-a-credential-issued-to-a-holder-who-is-not-the-subject-of-the-credential-who-has-no-relationship-with-the-subject-of-the-credential-but-who-has-a-relationship-with-the-issuer">Example 41</a><span class="example-title">: A credential issued to a
 holder who is not the subject of the credential, who has no relationship with
 the subject of the credential, but who has a relationship with the issuer</span>
     </div>
@@ -5941,7 +5929,6 @@ the subject of the credential, but who has a relationship with the issuer</span>
     "type": "RsaSignature2018",
     "created": "2018-06-17T10:03:48Z",
     "verificationMethod": "https://example.edu/issuers/14/keys/234",
-    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
     "signatureValue": "pY9...Cky6Ed = "
   }
 }</pre>
