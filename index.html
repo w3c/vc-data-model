@@ -4187,6 +4187,100 @@ abilities.
     </section>
   </section>
 
+  <section class="informative">
+    <h2>Internationalization Considerations</h2>
+
+    <p>
+There are a number of internationalization considerations implementers should be
+aware of when publishing data described in this specification. As with any web
+standards or protocols implementation, ignoring internationalization makes
+it difficult for data to be produced and consumed across a disparate set
+of languages and societies.
+    </p>
+
+    <p>
+This section outlines general internationalization considerations to take into
+account when utilizing this data model.
+    </p>
+
+    <section class="informative">
+      <h3>Language Declarations</h3>
+
+      <p>
+When expressing human-readable text content in the data model, it is often
+useful to specify the language of the text to software agents that are
+responsible for rendering the information to an individual. The expressibility
+of language information is often a function of the syntax utilized. Options
+for encoding language information in are described below:
+      </p>
+
+      <ul>
+        <li>
+JSON-LD supports the expression of language information via the
+<code>@language</code> feature, which is described in JSON-LD 1.1,
+<a href="https://www.w3.org/TR/json-ld11/#string-internationalization">Section 4.2.3: String Internationalization</a>.
+        </li>
+        <li>
+JSON-LD supports the expression of language information via the
+<code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
+<a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
+This mechanism enables a developer to use the internationalization features
+present in HTML to express language information. For example, consider the
+following key-value pair:
+<code>"nameHtml": "&lt;span lang="jp">和美&lt;/span>"</code>. If the JSON-LD
+Context expressed that any value associated with the <code>nameHtml</code>
+property as being of type <code>rdf:HTML</code>, then software agents
+rendering the property would be able to deterministically identify the
+language in use.
+        </li>
+        <li>
+Both JSON and JSON-LD support raw UTF-8 when used to express internationalized
+text. This mechanism is not as accurate as the previous mechanisms because
+language information is often implicit and software agents often resort to
+content-sniffing when attempting to determine the language.
+        </li>
+      </ul>
+    </section>
+
+    <section class="informative">
+      <h3>Text Layout</h3>
+
+  <p>
+When expressing human-readable text content in the data model, it is often
+useful to encode the text direction for languages. In some cases, the layout
+of text is complicated and multi-dimensional (for example, in the case of
+<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>).
+The expressibility of text direction and layout is often a function of the
+syntax utilized. Options for encoding text layout information in are described
+below:
+      </p>
+
+      <ul>
+        <li>
+JSON-LD supports the expression of text layout information via the
+<code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
+<a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
+This mechanism enables a developer to use the internationalization features
+present in HTML to express language information. For example, consider the
+following key-value pair:
+<code>"nameHtml": "&lt;span dir="rtl" lang="ar">أمل&lt;/span>"</code>.
+If the JSON-LD Context expressed that any value associated with the <code>nameHtml</code>
+property as being of type <code>rdf:HTML</code>, then software agents
+rendering the property would be able to deterministically identify the
+language in use as well as the text direction of the language.
+        </li>
+        <li>
+Both JSON and JSON-LD support raw
+<a href="https://en.wikipedia.org/wiki/Bi-directional_text">UTF-8 Bi-Directional</a>
+text when used to express text direction. This mechanism is limited and
+often does not support more complex text layout mechanism provided by the
+mechanism expressed above.
+        </li>
+      </ul>
+    </section>
+
+  </section>
+
   <section class="appendix informative">
       <h2>Validation</h2>
 
