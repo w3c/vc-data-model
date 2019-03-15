@@ -1944,30 +1944,13 @@ machine-readable specification as well.
             <li>
 JSON-LD-based processors MUST produce an error when a JSON-LD context
 redefines any term in the
-<a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>.
+<a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>
+without doing so by creating a new subtree in the JSON structure. This ensures
+that users of the data model will not encounter new term definitions unless new
+terms are traversed in the JSON tree.
             </li>
           </ul>
 
-          <p>
-To avoid the possibility of accidentally overriding terms, developers are urged
-to scope their extensions. For example, the following extension scopes the
-new <code>favoriteFood</code> term so that it can only be used within the
-<code>credentialSubject</code> <a>property</a>.
-          </p>
-
-          <pre class="example nohighlight" title="Scoping terms in a JSON-LD context">
-{
-  "@context": {
-    "referenceNumber": "https://example.com/vocab#referenceNumber",
-    <span class="highlight">"credentialSubject": {
-      "@id": "https://www.w3.org/2018/credentials#credentialSubject",
-      "@context": {
-        "favoriteFood": "https://example.com/vocab#favoriteFood"
-      }
-    }</span>
-  }
-}
-          </pre>
         </section>
       </section>
 
@@ -2403,6 +2386,13 @@ of the <a>credential</a>. In contrast, the <code>proof</code> <a>property</a>
 is used to express machine-verifiable mathematical proofs related to the
 authenticity of the <a>issuer</a> and integrity of the <a>credential</a>.
         </p>
+
+        <p class="issue">
+The evidence feature may change during the W3C Candidate Recommendation phase
+based on implementer feedback, or be removed entirely due to lack of support
+by implementers.
+        </p>
+
       </section>
 
       <section>
@@ -2778,11 +2768,7 @@ elaborated on in Section <a href="#extensibility"></a>.
 
         <p>
 Multiple contexts MAY be used or combined to express any arbitrary information
-about <a>credentials</a> in idiomatic JSON. If an application is processing a
-<a>verifiable credential</a> or <a>verifiable presentation</a>, and a
-<code>@context</code> <a>property</a> is not present at the top-level of the
-JSON-LD document, then a <code>@context</code> <a>property</a> with a value of
-<code>https://www.w3.org/2018/credentials/v1</code> MUST be assumed. The JSON-LD
+about <a>credentials</a> in idiomatic JSON. The JSON-LD
 Context available at <code>https://www.w3.org/2018/credentials/v1</code> is a
 static document that is never updated and can therefore be downloaded and
 cached client side. The associated vocabulary document for the Verifiable
@@ -3026,10 +3012,6 @@ transformation MUST be performed:
               <ol>
                   <li>
 Create a JSON object.
-                  </li>
-                  <li>
-If no <code>@context</code> is specified under <code>vc</code>, add the default
-<code>@context</code> to the new JSON object.
                   </li>
                   <li>
 Add the content from the <code>vc</code> property to the new JSON object.
@@ -3557,7 +3539,9 @@ principle in real-world scenarios.
 A <em>bearer credential</em> is a privacy-enhancing piece of information,
 such as a concert ticket, which entitles the <a>holder</a> of the
 <a>credential</a> to a specific resource without divulging sensitive
-information about the <a>holder</a>.
+information about the <a>holder</a>. Bearer credentials are often used in
+low-risk use cases where the sharing of the credential is not a concern or
+would not result in large economic or reputational losses.
       </p>
 
       <p>
@@ -4828,7 +4812,6 @@ verifiable credential that was passed to it by the subject">
         "type": "RsaSignature2018",
         "created": "2018-06-17T10:03:48Z",
         "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
-        "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
         "signatureValue": "pYw8XNi1..Cky6Ed="
       }
     }
@@ -4901,7 +4884,6 @@ the subject of the credential, but who has a relationship with the issuer">
     "type": "RsaSignature2018",
     "created": "2018-06-17T10:03:48Z",
     "verificationMethod": "https://example.edu/issuers/14/keys/234",
-    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
     "signatureValue": "pY9...Cky6Ed = "
   }
 }
