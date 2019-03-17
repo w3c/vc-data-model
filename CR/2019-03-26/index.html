@@ -5320,18 +5320,22 @@ JSON-LD supports the expression of text layout information via the
 This mechanism enables a developer to use the internationalization features
 present in HTML to express language information. For example, consider the
 following key-value pair:
-<code>"nameHtml": "&lt;span dir="rtl" lang="ar"&gt;أمل&lt;/span&gt;"</code>.
+<code>"nameHtml": "&lt;span dir="rtl" lang="ar"&gt;HTML و CSS: تصميم و إنشاء مواقع الويب&lt;/span&gt;"</code>.
+            
+Although the string starts with a "Left To Right" character ("H"), 
+it should be treated as a Right-to-Left string. 
+            
 If the JSON-LD Context expressed that any value associated with the <code>nameHtml</code>
-property as being of type <code>rdf:HTML</code>, then software agents
-rendering the property would be able to deterministically identify the
-language in use as well as the text direction of the language.
+property is of type <code>rdf:HTML</code>, then software agents
+rendering the property would be able to deterministically recognise that the content is HTML,
+and identify the text direction of the content.
         </li>
         <li>
 Both JSON and JSON-LD support raw
 <a href="https://en.wikipedia.org/wiki/Bi-directional_text">UTF-8 Bi-Directional</a>
-text when used to express text direction. This mechanism is limited and
-often does not support more complex text layout mechanism provided by the
-mechanism expressed above.
+text when used to express text direction. This can be useful to ensure correct presentation
+in simple cases, but is extremely limited. Without supplementary information on language and text direction,
+there is generally insufficient information in the raw string to allow an accurate presentation of text.
         </li>
       </ul>
     </section>
