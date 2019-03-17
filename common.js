@@ -24,7 +24,7 @@ var vcwg = {
         "Brian Sletten",
         "Manu Sporny"
       ],
-      status: "FPWD",
+      status: "NOTE",
       publisher: "Verifiable Claims Working Group"
     },
     "VC-STATUS-REGISTRY": {
