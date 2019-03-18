@@ -23,7 +23,7 @@
 
         // if you wish the publication date to be other than today, set this
         publishDate: "2019-03-26",
-        crEnd: "2019-06-25",
+        crEnd: "2019-04-23",
         implementationReportURI: "https://w3c.github.io/vc-test-suite/implementations/",
         previousMaturity: "WD",
         previousPublishDate: "2019-02-08",
@@ -1380,7 +1380,6 @@ the signing date. The example below uses RSA digital signatures.
     "type": "RsaSignature2018",
     "created": "2018-06-18T21:19:10Z",
     "verificationMethod": "https://example.com/jdoe/keys/1",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
     "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
       MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
       PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
@@ -1945,29 +1944,13 @@ machine-readable specification as well.
 JSON-LD-based processors MUST produce an error when a JSON-LD context
 redefines any term in the
 <a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>.
+The only way to change the definition of existing terms is to introduce a
+new term that clears the active context within the scope of that new term.
+Authors that are interested in this feature should read about the
+<code>@protected</code> feature in the JSON-LD 1.1 specification.
             </li>
           </ul>
 
-          <p>
-To avoid the possibility of accidentally overriding terms, developers are urged
-to scope their extensions. For example, the following extension scopes the
-new <code>favoriteFood</code> term so that it can only be used within the
-<code>credentialSubject</code> <a>property</a>.
-          </p>
-
-          <pre class="example nohighlight" title="Scoping terms in a JSON-LD context">
-{
-  "@context": {
-    "referenceNumber": "https://example.com/vocab#referenceNumber",
-    <span class="highlight">"credentialSubject": {
-      "@id": "https://www.w3.org/2018/credentials#credentialSubject",
-      "@context": {
-        "favoriteFood": "https://example.com/vocab#favoriteFood"
-      }
-    }</span>
-  }
-}
-          </pre>
         </section>
       </section>
 
@@ -2089,10 +2072,10 @@ which can then be used by a <a>verifier</a> to determine if the proof provided
 with the <a>verifiable credential</a> is valid.
         </p>
 
-        <p class="issue">
+        <p class="issue atrisk">
 The usage of the Data Schemas property may change during the W3C
 Candidate Recommendation process based on implementer feedback. Specifically,
-the location of it's usage may be expanded. It may also be removed if there
+the location of its usage may be expanded. It may also be removed if there
 is not enough implementation support.
         </p>
 
@@ -2170,7 +2153,7 @@ In the example above, the <a>issuer</a> specifies a manual
 the <a>verifier</a>to <code>https://example.edu/refresh/3732</code>.
         </p>
 
-        <p class="issue">
+        <p class="issue atrisk">
 The refresh service may change based on implementer feedback, including being
 removed from the specification if there is not enough implementer support
 for the feature.
@@ -2216,7 +2199,7 @@ specify one or more terms of use policies under which the creator issued the
 they do so on their own responsibility and might incur legal liability if they
 violate the stated terms of use. Each <code>termsOfUse</code> value MUST
 specify its <a>type</a>, for example, <code>IssuerPolicy</code>, and
-optionally, its instance <code>id</code>. The precise contents of each term of
+MAY specify its instance <code>id</code>. The precise contents of each term of
 use is determined by the specific <code>termsOfUse</code> <a>type</a>
 definition.
           </dd>
@@ -2307,7 +2290,7 @@ service for correlation, they would violate the terms under which the
 </a>holder</a> created the presentation.
         </p>
 
-        <p class="issue">
+        <p class="issue atrisk">
 The terms of use feature may change during the W3C Candidate Recommendation
 phase including being removed entirely if there is not enough implementer
 support for the feature.
@@ -2403,6 +2386,13 @@ of the <a>credential</a>. In contrast, the <code>proof</code> <a>property</a>
 is used to express machine-verifiable mathematical proofs related to the
 authenticity of the <a>issuer</a> and integrity of the <a>credential</a>.
         </p>
+
+        <p class="issue atrisk">
+The evidence feature may change during the W3C Candidate Recommendation phase
+based on implementer feedback, or be removed entirely due to lack of support
+by implementers.
+        </p>
+
       </section>
 
       <section>
@@ -2581,10 +2571,11 @@ intend to share.
 }
         </pre>
         <figure>
-          <img style="margin: auto; display: block; width: 50%;"
+          <img style="margin: auto; display: block; width: 75%;"
             src="diagrams/zkp-cred-pres.svg">
           <figcaption style="text-align: center;">
-An visual example of the relationship between credentials and derived credentials in a ZKP <a>presentation</a>.
+A visual example of the relationship between credentials and derived
+credentials in a ZKP <a>presentation</a>.
           </figcaption>
         </figure>
         <p class="note">
@@ -2595,7 +2586,7 @@ extend <a>verifiable credentials</a> and <a>verifiable presentations</a> to
 support zero-knowledge proof systems.
         </p>
 
-        <p class="issue">
+        <p class="issue atrisk">
 Zero Knowledge Proofs are a feature at risk. The Working Group is looking
 for multiple implementers to support the feature during the W3C Candidate
 Recommendation phase.
@@ -2701,7 +2692,7 @@ content-addressed identifiers can be used to uniquely identify individual
 claims.
         </p>
 
-        <p class="issue">
+        <p class="issue atrisk">
 The dispute feature may change significantly during the W3C Candidate
 Recommendation process including possibly being removed if there is not enough
 support from implementations for the feature.
@@ -2709,7 +2700,7 @@ support from implementations for the feature.
 
       </section>
 
-      <section>
+      <section class="informative">
         <h3>Authorization</h3>
 
         <p>
@@ -2802,11 +2793,7 @@ elaborated on in Section <a href="#extensibility"></a>.
 
         <p>
 Multiple contexts MAY be used or combined to express any arbitrary information
-about <a>credentials</a> in idiomatic JSON. If an application is processing a
-<a>verifiable credential</a> or <a>verifiable presentation</a>, and a
-<code>@context</code> <a>property</a> is not present at the top-level of the
-JSON-LD document, then a <code>@context</code> <a>property</a> with a value of
-<code>https://www.w3.org/2018/credentials/v1</code> MUST be assumed. The JSON-LD
+about <a>credentials</a> in idiomatic JSON. The JSON-LD
 Context available at <code>https://www.w3.org/2018/credentials/v1</code> is a
 static document that is never updated and can therefore be downloaded and
 cached client side. The associated vocabulary document for the Verifiable
@@ -2893,7 +2880,7 @@ JSON object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
 [[!RFC7516]]. For this specification, the use of JWE is out of scope.
           </p>
 
-          <p class="issue">
+          <p class="issue atrisk">
 JWT support is a feature at risk and may be removed during the W3C Candidate
 Recommendation phase if there is not enough implementer support for the
 feature.
@@ -3050,10 +3037,6 @@ transformation MUST be performed:
               <ol>
                   <li>
 Create a JSON object.
-                  </li>
-                  <li>
-If no <code>@context</code> is specified under <code>vc</code>, add the default
-<code>@context</code> to the new JSON object.
                   </li>
                   <li>
 Add the content from the <code>vc</code> property to the new JSON object.
@@ -3581,7 +3564,9 @@ principle in real-world scenarios.
 A <em>bearer credential</em> is a privacy-enhancing piece of information,
 such as a concert ticket, which entitles the <a>holder</a> of the
 <a>credential</a> to a specific resource without divulging sensitive
-information about the <a>holder</a>.
+information about the <a>holder</a>. Bearer credentials are often used in
+low-risk use cases where the sharing of the credential is not a concern or
+would not result in large economic or reputational losses.
       </p>
 
       <p>
@@ -4852,7 +4837,6 @@ verifiable credential that was passed to it by the subject">
         "type": "RsaSignature2018",
         "created": "2018-06-17T10:03:48Z",
         "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
-        "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
         "signatureValue": "pYw8XNi1..Cky6Ed="
       }
     }
@@ -4925,7 +4909,6 @@ the subject of the credential, but who has a relationship with the issuer">
     "type": "RsaSignature2018",
     "created": "2018-06-17T10:03:48Z",
     "verificationMethod": "https://example.edu/issuers/14/keys/234",
-    "nonce": "d61c4599-0cc2-4479-9efc-c63add3a43b2",
     "signatureValue": "pY9...Cky6Ed = "
   }
 }
