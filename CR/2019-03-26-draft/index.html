@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html;charset=utf-8"><meta name="generator" content="ReSpec 24.5.1"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style>/* --- EXAMPLES --- */
+<!DOCTYPE html><html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html;charset=utf-8"><meta name="generator" content="ReSpec 24.4.5"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><style>/* --- EXAMPLES --- */
 span.example-title {
     text-transform: none;
 }
@@ -393,7 +393,7 @@ pre .comment {
         "Brian Sletten",
         "Manu Sporny"
       ],
-      "status": "NOTE",
+      "status": "FPWD",
       "publisher": "Verifiable Claims Working Group",
       "id": "vc-usecases"
     },
@@ -744,16 +744,10 @@ cryptographically secure, privacy respecting, and machine-verifiable."><script t
       "type": "TechArticle",
       "name": "Web Content Accessibility Guidelines (WCAG) 2.1",
       "url": "https://www.w3.org/TR/WCAG21/"
-    },
-    {
-      "id": "https://www.unicode.org/versions/latest/",
-      "type": "TechArticle",
-      "name": "The Unicode Standard",
-      "url": "https://www.unicode.org/versions/latest/"
     }
   ]
 }</script><link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/W3C-CR"></head>
-  <body class="h-entry toc-inline"><div class="head">
+  <body class="h-entry"><div class="head">
       <a href="https://www.w3.org/" class="logo"><img alt="W3C" width="72" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"></a> <h1 id="title" class="title p-name">Verifiable Credentials Data Model 1.0</h1>
       <h2 id="subtitle" class="subtitle">Expressing verifiable information on the Web</h2>
       <h2>
@@ -844,15 +838,6 @@ or send them to
       </p>
 
       <p>
-The following features are considered at risk of removal due to
-potentially insufficient implementation experience (reports):
-<code>credentialSchema</code> property, <code>refreshService</code>
-property, <code>evidence</code> property, zero-knowledge proof
-support, <code>disputedClaim</code> property, JWT support,
-<code>nonTransferable</code> property.
-      </p>
-
-      <p>
 Changes since the last publication of this document include:
       </p>
 
@@ -862,46 +847,30 @@ Editorial modifications to group similar information together and make
 the document flow easier to navigate.
         </li>
         <li>
-Added a Concrete Lifecycle Example.
+Addition of a Concrete Lifecycle Example.
         </li>
         <li>
-Modified conformance statements to ensure that all conformance
+Modifications to conformance statements to ensure that all conformance
 statements are testable.
         </li>
         <li>
-Renamed subject to credentialSubject.
+Addition of a section on Proof Formats.
         </li>
         <li>
-Clarified that verifiable credentials and verifiable presentations
-<em class="rfc2119" title="MUST">MUST</em> include the @context property and that for a VC or VP to be
-verifiable at least one proof mechanism <em class="rfc2119" title="MUST">MUST</em> be expressed: external or
-embedded.
+Clarification of JSON-LD Context URLs and their cache-ability.
         </li>
         <li>
-Clarified that a VC <em class="rfc2119" title="MUST">MUST</em> contain the issuer and issuanceDate properties.
+Refactoring of the Verification to a non-normative Validation section.
         </li>
         <li>
-Significant clarifying text added for Zero-Knowledge and JWT use.
-        </li>
-        <li>
-Added section on Proof Formats.
-        </li>
-        <li>
-Clarified JSON-LD Context URLs and their cache-ability.
-        </li>
-        <li>
-Refactored Verification section to a non-normative Validation section.
-        </li>
-        <li>
-Marked a number of features as features at risk and documenting implementation
+Marking a number of features as features at risk and documenting implementation
 details that may change based on feedback from implementers.
         </li>
         <li>
-Privacy, Security, Accessibility, and (new) Internationalization
-Considerations all promoted to top level.
+Addition of an Internationalization Considerations section.
         </li>
         <li>
-Moved some content out to an Implementation Guidance document.
+Moving some content out to an Implementation Guidance document.
         </li>
       </ul>
 
@@ -960,7 +929,7 @@ Moved some content out to an Implementation Guidance document.
                 </p><p>
                   This document is governed by the
                   <a id="w3c_process_revision" href="https://www.w3.org/2019/Process-20190301/">1 March 2019 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
-                </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#introduction"><span class="secno">1. </span>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#what-is-a-verifiable-credential"><span class="secno">1.1 </span>What is a Verifiable Credential?</a></li><li class="tocline"><a class="tocxref" href="#ecosystem-overview"><span class="secno">1.2 </span>Ecosystem Overview</a></li><li class="tocline"><a class="tocxref" href="#use-cases-and-requirements"><span class="secno">1.3 </span>Use Cases and Requirements</a></li><li class="tocline"><a class="tocxref" href="#conformance"><span class="secno">1.4 </span>Conformance</a></li></ol></li><li class="tocline"><a class="tocxref" href="#terminology"><span class="secno">2. </span>Terminology</a></li><li class="tocline"><a class="tocxref" href="#core-data-model"><span class="secno">3. </span>Core Data Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#claims"><span class="secno">3.1 </span>Claims</a></li><li class="tocline"><a class="tocxref" href="#credentials"><span class="secno">3.2 </span>Credentials</a></li><li class="tocline"><a class="tocxref" href="#presentations"><span class="secno">3.3 </span>Presentations</a></li><li class="tocline"><a class="tocxref" href="#concrete-lifecycle-example"><span class="secno">3.4 </span>Concrete Lifecycle Example</a></li></ol></li><li class="tocline"><a class="tocxref" href="#basic-concepts"><span class="secno">4. </span>Basic Concepts</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#contexts"><span class="secno">4.1 </span>Contexts</a></li><li class="tocline"><a class="tocxref" href="#identifiers"><span class="secno">4.2 </span>Identifiers</a></li><li class="tocline"><a class="tocxref" href="#types"><span class="secno">4.3 </span>Types</a></li><li class="tocline"><a class="tocxref" href="#credential-subject"><span class="secno">4.4 </span>Credential Subject</a></li><li class="tocline"><a class="tocxref" href="#issuer"><span class="secno">4.5 </span>Issuer</a></li><li class="tocline"><a class="tocxref" href="#issuance-date"><span class="secno">4.6 </span>Issuance Date</a></li><li class="tocline"><a class="tocxref" href="#proofs-signatures"><span class="secno">4.7 </span>Proofs (Signatures)</a></li><li class="tocline"><a class="tocxref" href="#expiration"><span class="secno">4.8 </span>Expiration</a></li><li class="tocline"><a class="tocxref" href="#status"><span class="secno">4.9 </span>Status</a></li><li class="tocline"><a class="tocxref" href="#presentations-0"><span class="secno">4.10 </span>Presentations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#advanced-concepts"><span class="secno">5. </span>Advanced Concepts</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#lifecycle-details"><span class="secno">5.1 </span>Lifecycle Details</a></li><li class="tocline"><a class="tocxref" href="#trust-model"><span class="secno">5.2 </span>Trust Model</a></li><li class="tocline"><a class="tocxref" href="#extensibility"><span class="secno">5.3 </span>Extensibility</a><ol class="toc"></ol></li><li class="tocline"><a class="tocxref" href="#data-schemas"><span class="secno">5.4 </span>Data Schemas</a></li><li class="tocline"><a class="tocxref" href="#refreshing"><span class="secno">5.5 </span>Refreshing</a></li><li class="tocline"><a class="tocxref" href="#terms-of-use"><span class="secno">5.6 </span>Terms of Use</a></li><li class="tocline"><a class="tocxref" href="#evidence"><span class="secno">5.7 </span>Evidence</a></li><li class="tocline"><a class="tocxref" href="#zero-knowledge-proofs"><span class="secno">5.8 </span>Zero-Knowledge Proofs</a></li><li class="tocline"><a class="tocxref" href="#disputes"><span class="secno">5.9 </span>Disputes</a></li><li class="tocline"><a class="tocxref" href="#authorization"><span class="secno">5.10 </span>Authorization</a></li></ol></li><li class="tocline"><a class="tocxref" href="#syntaxes"><span class="secno">6. </span>Syntaxes</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#json"><span class="secno">6.1 </span>JSON</a></li><li class="tocline"><a class="tocxref" href="#json-ld"><span class="secno">6.2 </span>JSON-LD</a><ol class="toc"></ol></li><li class="tocline"><a class="tocxref" href="#proof-formats"><span class="secno">6.3 </span>Proof Formats</a><ol class="toc"></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#privacy-considerations"><span class="secno">7. </span>Privacy Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#spectrum-of-privacy"><span class="secno">7.1 </span>Spectrum of Privacy</a></li><li class="tocline"><a class="tocxref" href="#personally-identifiable-information"><span class="secno">7.2 </span>Personally Identifiable Information</a></li><li class="tocline"><a class="tocxref" href="#identifier-based-correlation"><span class="secno">7.3 </span>Identifier-Based Correlation</a></li><li class="tocline"><a class="tocxref" href="#signature-based-correlation"><span class="secno">7.4 </span>Signature-Based Correlation</a></li><li class="tocline"><a class="tocxref" href="#long-lived-identifier-based-correlation"><span class="secno">7.5 </span>Long-Lived Identifier-Based Correlation</a></li><li class="tocline"><a class="tocxref" href="#device-fingerprinting"><span class="secno">7.6 </span>Device Fingerprinting</a></li><li class="tocline"><a class="tocxref" href="#favor-abstract-claims"><span class="secno">7.7 </span>Favor Abstract Claims</a></li><li class="tocline"><a class="tocxref" href="#the-principle-of-data-minimization"><span class="secno">7.8 </span>The Principle of Data Minimization</a></li><li class="tocline"><a class="tocxref" href="#bearer-credentials"><span class="secno">7.9 </span>Bearer Credentials</a></li><li class="tocline"><a class="tocxref" href="#validity-checks"><span class="secno">7.10 </span>Validity Checks</a></li><li class="tocline"><a class="tocxref" href="#storage-providers-and-data-mining"><span class="secno">7.11 </span>Storage Providers and Data Mining</a></li><li class="tocline"><a class="tocxref" href="#aggregation-of-credentials"><span class="secno">7.12 </span>Aggregation of Credentials</a></li><li class="tocline"><a class="tocxref" href="#usage-patterns"><span class="secno">7.13 </span>Usage Patterns</a></li><li class="tocline"><a class="tocxref" href="#sharing-information-with-the-wrong-party"><span class="secno">7.14 </span>Sharing Information with the Wrong Party</a></li><li class="tocline"><a class="tocxref" href="#frequency-of-claim-issuance"><span class="secno">7.15 </span>Frequency of Claim Issuance</a></li><li class="tocline"><a class="tocxref" href="#prefer-single-use-credentials"><span class="secno">7.16 </span>Prefer Single-Use Credentials</a></li><li class="tocline"><a class="tocxref" href="#private-browsing"><span class="secno">7.17 </span>Private Browsing</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-considerations"><span class="secno">8. </span>Security Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#cryptography-suites-and-libraries"><span class="secno">8.1 </span>Cryptography Suites and Libraries</a></li><li class="tocline"><a class="tocxref" href="#content-integrity-protection"><span class="secno">8.2 </span>Content Integrity Protection</a></li><li class="tocline"><a class="tocxref" href="#unsigned-claims"><span class="secno">8.3 </span>Unsigned Claims</a></li><li class="tocline"><a class="tocxref" href="#token-binding"><span class="secno">8.4 </span>Token Binding</a></li><li class="tocline"><a class="tocxref" href="#bundling-dependent-claims"><span class="secno">8.5 </span>Bundling Dependent Claims</a></li><li class="tocline"><a class="tocxref" href="#highly-dynamic-information"><span class="secno">8.6 </span>Highly Dynamic Information</a></li><li class="tocline"><a class="tocxref" href="#device-theft-and-impersonation"><span class="secno">8.7 </span>Device Theft and Impersonation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#accessibility-considerations"><span class="secno">9. </span>Accessibility Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#data-first-approaches"><span class="secno">9.1 </span>Data First Approaches</a></li></ol></li><li class="tocline"><a class="tocxref" href="#internationalization-considerations"><span class="secno">10. </span>Internationalization Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#language-declarations"><span class="secno">10.1 </span>Language Declarations</a></li><li class="tocline"><a class="tocxref" href="#text-direction"><span class="secno">10.2 </span>Text direction</a></li><li class="tocline"><a class="tocxref" href="#ruby-text"><span class="secno">10.3 </span>Ruby Text</a></li><li class="tocline"><a class="tocxref" href="#further-information"><span class="secno">10.4 </span>Further information</a></li></ol></li><li class="tocline"><a class="tocxref" href="#validation"><span class="secno">A. </span>Validation</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#credential-subject-0"><span class="secno">A.1 </span>Credential Subject</a></li><li class="tocline"><a class="tocxref" href="#issuer-0"><span class="secno">A.2 </span>Issuer</a></li><li class="tocline"><a class="tocxref" href="#issuance-date-0"><span class="secno">A.3 </span>Issuance Date</a></li><li class="tocline"><a class="tocxref" href="#proofs-signatures-0"><span class="secno">A.4 </span>Proofs (Signatures)</a></li><li class="tocline"><a class="tocxref" href="#expiration-0"><span class="secno">A.5 </span>Expiration</a></li><li class="tocline"><a class="tocxref" href="#status-0"><span class="secno">A.6 </span>Status</a></li><li class="tocline"><a class="tocxref" href="#fitness-for-purpose"><span class="secno">A.7 </span>Fitness for Purpose</a></li></ol></li><li class="tocline"><a class="tocxref" href="#subject-holder-relationships"><span class="secno">B. </span>Subject-Holder Relationships</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#subject-is-the-holder"><span class="secno">B.1 </span>Subject is the Holder</a><ol class="toc"></ol></li><li class="tocline"><a class="tocxref" href="#credential-uniquely-identifies-a-subject"><span class="secno">B.2 </span>Credential Uniquely Identifies a Subject</a></li><li class="tocline"><a class="tocxref" href="#subject-passes-the-verifiable-credential-to-a-holder"><span class="secno">B.3 </span>Subject Passes the Verifiable Credential to a Holder</a></li><li class="tocline"><a class="tocxref" href="#holder-acts-on-behalf-of-the-subject"><span class="secno">B.4 </span>Holder Acts on Behalf of the Subject</a></li><li class="tocline"><a class="tocxref" href="#subject-passes-a-verifiable-credential-to-someone-else"><span class="secno">B.5 </span>Subject Passes a Verifiable Credential to Someone Else</a></li><li class="tocline"><a class="tocxref" href="#issuer-authorises-holder"><span class="secno">B.6 </span>Issuer Authorises Holder</a></li><li class="tocline"><a class="tocxref" href="#holder-acts-on-behalf-of-the-verifier-or-has-no-relationship-with-the-subject-issuer-or-verifier"><span class="secno">B.7 </span>Holder Acts on Behalf of the Verifier, or has no Relationship with
+                </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#introduction"><span class="secno">1. </span>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#what-is-a-verifiable-credential"><span class="secno">1.1 </span>What is a Verifiable Credential?</a></li><li class="tocline"><a class="tocxref" href="#ecosystem-overview"><span class="secno">1.2 </span>Ecosystem Overview</a></li><li class="tocline"><a class="tocxref" href="#use-cases-and-requirements"><span class="secno">1.3 </span>Use Cases and Requirements</a></li><li class="tocline"><a class="tocxref" href="#conformance"><span class="secno">1.4 </span>Conformance</a></li></ol></li><li class="tocline"><a class="tocxref" href="#terminology"><span class="secno">2. </span>Terminology</a></li><li class="tocline"><a class="tocxref" href="#core-data-model"><span class="secno">3. </span>Core Data Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#claims"><span class="secno">3.1 </span>Claims</a></li><li class="tocline"><a class="tocxref" href="#credentials"><span class="secno">3.2 </span>Credentials</a></li><li class="tocline"><a class="tocxref" href="#presentations"><span class="secno">3.3 </span>Presentations</a></li><li class="tocline"><a class="tocxref" href="#concrete-lifecycle-example"><span class="secno">3.4 </span>Concrete Lifecycle Example</a></li></ol></li><li class="tocline"><a class="tocxref" href="#basic-concepts"><span class="secno">4. </span>Basic Concepts</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#contexts"><span class="secno">4.1 </span>Contexts</a></li><li class="tocline"><a class="tocxref" href="#identifiers"><span class="secno">4.2 </span>Identifiers</a></li><li class="tocline"><a class="tocxref" href="#types"><span class="secno">4.3 </span>Types</a></li><li class="tocline"><a class="tocxref" href="#credential-subject"><span class="secno">4.4 </span>Credential Subject</a></li><li class="tocline"><a class="tocxref" href="#issuer"><span class="secno">4.5 </span>Issuer</a></li><li class="tocline"><a class="tocxref" href="#issuance-date"><span class="secno">4.6 </span>Issuance Date</a></li><li class="tocline"><a class="tocxref" href="#proofs-signatures"><span class="secno">4.7 </span>Proofs (Signatures)</a></li><li class="tocline"><a class="tocxref" href="#expiration"><span class="secno">4.8 </span>Expiration</a></li><li class="tocline"><a class="tocxref" href="#status"><span class="secno">4.9 </span>Status</a></li><li class="tocline"><a class="tocxref" href="#presentations-0"><span class="secno">4.10 </span>Presentations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#advanced-concepts"><span class="secno">5. </span>Advanced Concepts</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#lifecycle-details"><span class="secno">5.1 </span>Lifecycle Details</a></li><li class="tocline"><a class="tocxref" href="#trust-model"><span class="secno">5.2 </span>Trust Model</a></li><li class="tocline"><a class="tocxref" href="#extensibility"><span class="secno">5.3 </span>Extensibility</a><ol class="toc"></ol></li><li class="tocline"><a class="tocxref" href="#data-schemas"><span class="secno">5.4 </span>Data Schemas</a></li><li class="tocline"><a class="tocxref" href="#refreshing"><span class="secno">5.5 </span>Refreshing</a></li><li class="tocline"><a class="tocxref" href="#terms-of-use"><span class="secno">5.6 </span>Terms of Use</a></li><li class="tocline"><a class="tocxref" href="#evidence"><span class="secno">5.7 </span>Evidence</a></li><li class="tocline"><a class="tocxref" href="#zero-knowledge-proofs"><span class="secno">5.8 </span>Zero-Knowledge Proofs</a></li><li class="tocline"><a class="tocxref" href="#disputes"><span class="secno">5.9 </span>Disputes</a></li><li class="tocline"><a class="tocxref" href="#authorization"><span class="secno">5.10 </span>Authorization</a></li></ol></li><li class="tocline"><a class="tocxref" href="#syntaxes"><span class="secno">6. </span>Syntaxes</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#json"><span class="secno">6.1 </span>JSON</a></li><li class="tocline"><a class="tocxref" href="#json-ld"><span class="secno">6.2 </span>JSON-LD</a><ol class="toc"></ol></li><li class="tocline"><a class="tocxref" href="#proof-formats"><span class="secno">6.3 </span>Proof Formats</a><ol class="toc"></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#privacy-considerations"><span class="secno">7. </span>Privacy Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#spectrum-of-privacy"><span class="secno">7.1 </span>Spectrum of Privacy</a></li><li class="tocline"><a class="tocxref" href="#personally-identifiable-information"><span class="secno">7.2 </span>Personally Identifiable Information</a></li><li class="tocline"><a class="tocxref" href="#identifier-based-correlation"><span class="secno">7.3 </span>Identifier-Based Correlation</a></li><li class="tocline"><a class="tocxref" href="#signature-based-correlation"><span class="secno">7.4 </span>Signature-Based Correlation</a></li><li class="tocline"><a class="tocxref" href="#long-lived-identifier-based-correlation"><span class="secno">7.5 </span>Long-Lived Identifier-Based Correlation</a></li><li class="tocline"><a class="tocxref" href="#device-fingerprinting"><span class="secno">7.6 </span>Device Fingerprinting</a></li><li class="tocline"><a class="tocxref" href="#favor-abstract-claims"><span class="secno">7.7 </span>Favor Abstract Claims</a></li><li class="tocline"><a class="tocxref" href="#the-principle-of-data-minimization"><span class="secno">7.8 </span>The Principle of Data Minimization</a></li><li class="tocline"><a class="tocxref" href="#bearer-credentials"><span class="secno">7.9 </span>Bearer Credentials</a></li><li class="tocline"><a class="tocxref" href="#validity-checks"><span class="secno">7.10 </span>Validity Checks</a></li><li class="tocline"><a class="tocxref" href="#storage-providers-and-data-mining"><span class="secno">7.11 </span>Storage Providers and Data Mining</a></li><li class="tocline"><a class="tocxref" href="#aggregation-of-credentials"><span class="secno">7.12 </span>Aggregation of Credentials</a></li><li class="tocline"><a class="tocxref" href="#usage-patterns"><span class="secno">7.13 </span>Usage Patterns</a></li><li class="tocline"><a class="tocxref" href="#sharing-information-with-the-wrong-party"><span class="secno">7.14 </span>Sharing Information with the Wrong Party</a></li><li class="tocline"><a class="tocxref" href="#frequency-of-claim-issuance"><span class="secno">7.15 </span>Frequency of Claim Issuance</a></li><li class="tocline"><a class="tocxref" href="#prefer-single-use-credentials"><span class="secno">7.16 </span>Prefer Single-Use Credentials</a></li><li class="tocline"><a class="tocxref" href="#private-browsing"><span class="secno">7.17 </span>Private Browsing</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-considerations"><span class="secno">8. </span>Security Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#cryptography-suites-and-libraries"><span class="secno">8.1 </span>Cryptography Suites and Libraries</a></li><li class="tocline"><a class="tocxref" href="#content-integrity-protection"><span class="secno">8.2 </span>Content Integrity Protection</a></li><li class="tocline"><a class="tocxref" href="#unsigned-claims"><span class="secno">8.3 </span>Unsigned Claims</a></li><li class="tocline"><a class="tocxref" href="#token-binding"><span class="secno">8.4 </span>Token Binding</a></li><li class="tocline"><a class="tocxref" href="#bundling-dependent-claims"><span class="secno">8.5 </span>Bundling Dependent Claims</a></li><li class="tocline"><a class="tocxref" href="#highly-dynamic-information"><span class="secno">8.6 </span>Highly Dynamic Information</a></li><li class="tocline"><a class="tocxref" href="#device-theft-and-impersonation"><span class="secno">8.7 </span>Device Theft and Impersonation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#accessibility-considerations"><span class="secno">9. </span>Accessibility Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#data-first-approaches"><span class="secno">9.1 </span>Data First Approaches</a></li></ol></li><li class="tocline"><a class="tocxref" href="#internationalization-considerations"><span class="secno">10. </span>Internationalization Considerations</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#language-declarations"><span class="secno">10.1 </span>Language Declarations</a></li><li class="tocline"><a class="tocxref" href="#text-layout"><span class="secno">10.2 </span>Text Layout</a></li></ol></li><li class="tocline"><a class="tocxref" href="#validation"><span class="secno">A. </span>Validation</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#credential-subject-0"><span class="secno">A.1 </span>Credential Subject</a></li><li class="tocline"><a class="tocxref" href="#issuer-0"><span class="secno">A.2 </span>Issuer</a></li><li class="tocline"><a class="tocxref" href="#issuance-date-0"><span class="secno">A.3 </span>Issuance Date</a></li><li class="tocline"><a class="tocxref" href="#proofs-signatures-0"><span class="secno">A.4 </span>Proofs (Signatures)</a></li><li class="tocline"><a class="tocxref" href="#expiration-0"><span class="secno">A.5 </span>Expiration</a></li><li class="tocline"><a class="tocxref" href="#status-0"><span class="secno">A.6 </span>Status</a></li><li class="tocline"><a class="tocxref" href="#fitness-for-purpose"><span class="secno">A.7 </span>Fitness for Purpose</a></li></ol></li><li class="tocline"><a class="tocxref" href="#subject-holder-relationships"><span class="secno">B. </span>Subject-Holder Relationships</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#subject-is-the-holder"><span class="secno">B.1 </span>Subject is the Holder</a><ol class="toc"></ol></li><li class="tocline"><a class="tocxref" href="#credential-uniquely-identifies-a-subject"><span class="secno">B.2 </span>Credential Uniquely Identifies a Subject</a></li><li class="tocline"><a class="tocxref" href="#subject-passes-the-verifiable-credential-to-a-holder"><span class="secno">B.3 </span>Subject Passes the Verifiable Credential to a Holder</a></li><li class="tocline"><a class="tocxref" href="#holder-acts-on-behalf-of-the-subject"><span class="secno">B.4 </span>Holder Acts on Behalf of the Subject</a></li><li class="tocline"><a class="tocxref" href="#subject-passes-a-verifiable-credential-to-someone-else"><span class="secno">B.5 </span>Subject Passes a Verifiable Credential to Someone Else</a></li><li class="tocline"><a class="tocxref" href="#issuer-authorises-holder"><span class="secno">B.6 </span>Issuer Authorises Holder</a></li><li class="tocline"><a class="tocxref" href="#holder-acts-on-behalf-of-the-verifier-or-has-no-relationship-with-the-subject-issuer-or-verifier"><span class="secno">B.7 </span>Holder Acts on Behalf of the Verifier, or has no Relationship with
 the Subject, Issuer, or Verifier</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><span class="secno">C. </span>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><span class="secno">C.1 </span>Normative references</a></li><li class="tocline"><a class="tocxref" href="#informative-references"><span class="secno">C.2 </span>Informative references</a></li></ol></li></ol></nav>
 
     <section class="informative" id="introduction">
@@ -1125,7 +1094,7 @@ verifiable data registry utilized in an ecosystem.
         </dl>
 
         <figure id="fig-the-roles-and-information-flows-forming-the-basis-for-this-specification">
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/ecosystem.svg">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/ecosystem.svg" height="133" width="300">
           <figcaption style="text-align: center;">Figure <span class="figno">1</span> <span class="fig-title">
             The roles and information flows forming the basis for this specification.
           </span></figcaption>
@@ -1211,7 +1180,7 @@ through any user agent.
           </li>
           <li>
 <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">Holders</a> can store <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a> in any location, without
-affecting their verifiability and without the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> knowing
+affecting their verifiability&gt; and without the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> knowing
 anything about where they are stored or when they are accessed.
           </li>
           <li>
@@ -1260,8 +1229,7 @@ serializable in one or more interoperable machine-readable data formats.
 The data model and serialization must be extendable with minimal coordination.
           </li>
           <li>
-Revocation by the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> should not reveal 
-any identifying information
+Revocation should not reveal to the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> any identifying information
 about the <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a>, the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a>, the specific
 <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a>, or the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>.
           </li>
@@ -1594,7 +1562,7 @@ usually a digital signature.
         </p>
 
         <figure id="info-graph-vc">
-          <img style="margin: auto; display: block; width: 100%;" src="diagrams/credential-graph.svg">
+          <img style="margin: auto; display: block; width: 100%;" src="diagrams/credential-graph.svg" height="150" width="215">
           <figcaption style="text-align: center;">Figure <span class="figno">6</span> <span class="fig-title">
 Information graphs associated with a basic verifiable credential.
           </span></figcaption>
@@ -1665,7 +1633,7 @@ which is usually a digital signature.
         </p>
 
         <figure id="info-graph-vp">
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/presentation-graph.svg">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/presentation-graph.svg" height="150" width="135">
           <figcaption style="text-align: center;">Figure <span class="figno">8</span> <span class="fig-title">
 Information graphs associated with a basic verifiable presentation.
           </span></figcaption>
@@ -1741,7 +1709,7 @@ that will be stored in Pat's digital wallet.
     <span class="comment">// identifier for the subject of the credential</span>
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     <span class="comment">// assertion about the subject of the credential</span>
-    "alumniOf": "&lt;span lang='en'&gt;Example University&lt;/span&gt;"
+    "alumniOf": "Example University"
   },
   <span class="comment">// digital proof that makes the credential tamper-evident</span>
   "proof": {
@@ -1789,7 +1757,7 @@ to the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier
     "issuanceDate": "2010-01-01T19:73:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "alumniOf": "&lt;span lang='en'&gt;Example University&lt;/span&gt;"
+      "alumniOf": "Example University"
     },
     "proof": {
       "type": "RsaSignature2018",
@@ -1871,7 +1839,7 @@ the context.
   "type": ["VerifiableCredential", "AlumniCredential"],
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "alumniOf": "&lt;span lang='en'&gt;Example University&lt;/span&gt;"
+    "alumniOf": "Example University"
   },
   "proof": { ... }
 }</pre>
@@ -1952,7 +1920,7 @@ containing machine-readable information about the identifier.
     <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   "proof": { ... }
@@ -2019,7 +1987,7 @@ information about the type.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   "proof": { ... }
@@ -2204,7 +2172,7 @@ a set of objects that contain one or more properties that are each related to a
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   "proof": { ... }
@@ -2251,7 +2219,7 @@ the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentia
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   "proof": { ... }
@@ -2296,7 +2264,7 @@ earliest date when the information associated with the
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   "proof": { ... }
@@ -2356,7 +2324,7 @@ the signing date. The example below uses RSA digital signatures.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   <span class="highlight">"proof": {
@@ -2413,7 +2381,7 @@ the date and time the <a href="#dfn-credential" class="internalDFN" data-link-ty
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   "proof": { ... }
@@ -2477,7 +2445,7 @@ is privacy-enhancing.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   <span class="highlight">"credentialStatus": {
@@ -2620,7 +2588,7 @@ The <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a
 <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn">verifiable presentation</a> and <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>.
           </li>
           <li>
-The <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> <a href="#dfn-verification" class="internalDFN" data-link-type="dfn">verifies</a> that the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> possesses the
+The <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> <a href="#dfn-verification" class="internalDFN" data-link-type="dfn">verifies</a> that the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> posses the
 <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>.
           </li>
           <li>
@@ -3010,7 +2978,7 @@ specific type definition.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   <span class="highlight">"credentialSchema": {
@@ -3058,7 +3026,7 @@ see Section <a href="#zero-knowledge-proofs" class="sec-ref"><span class="secno"
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   <span class="highlight">"credentialSchema": {
@@ -3077,7 +3045,7 @@ which can then be used by a <a href="#dfn-verifier" class="internalDFN" data-lin
 with the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credential</a> is valid.
         </p>
 
-        <div class="issue atrisk" id="issue-container-number-2"><div role="heading" class="issue-title marker" id="h-issue-0" aria-level="4"><span>(Feature at Risk) Issue 2</span></div><p class="atrisk">
+        <div class="issue" id="issue-container-number-2"><div role="heading" class="issue-title marker" id="h-issue-0" aria-level="4"><span>Issue 2</span></div><p class="">
 The usage of the Data Schemas property may change during the <abbr title="World Wide Web Consortium">W3C</abbr>
 Candidate Recommendation process based on implementer feedback. Specifically,
 the location of its usage may be expanded. It may also be removed if there
@@ -3144,7 +3112,7 @@ the specific <code>refreshService</code> <a href="#dfn-type" class="internalDFN"
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   <span class="highlight">"refreshService": {
@@ -3158,10 +3126,10 @@ the specific <code>refreshService</code> <a href="#dfn-type" class="internalDFN"
         <p>
 In the example above, the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> specifies a manual
 <code>refreshService</code> that can be used by directing the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> or
-the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> to <code>https://example.edu/refresh/3732</code>.
+the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>to <code>https://example.edu/refresh/3732</code>.
         </p>
 
-        <div class="issue atrisk" id="issue-container-number-3"><div role="heading" class="issue-title marker" id="h-issue-1" aria-level="4"><span>(Feature at Risk) Issue 3</span></div><p class="atrisk">
+        <div class="issue" id="issue-container-number-3"><div role="heading" class="issue-title marker" id="h-issue-1" aria-level="4"><span>Issue 3</span></div><p class="">
 The refresh service may change based on implementer feedback, including being
 removed from the specification if there is not enough implementer support
 for the feature.
@@ -3207,7 +3175,7 @@ specify one or more terms of use policies under which the creator issued the
 they do so on their own responsibility and might incur legal liability if they
 violate the stated terms of use. Each <code>termsOfUse</code> value <em class="rfc2119" title="MUST">MUST</em>
 specify its <a href="#dfn-type" class="internalDFN" data-link-type="dfn">type</a>, for example, <code>IssuerPolicy</code>, and
-<em class="rfc2119" title="MAY">MAY</em> specify its instance <code>id</code>. The precise contents of each term of
+optionally, its instance <code>id</code>. The precise contents of each term of
 use is determined by the specific <code>termsOfUse</code> <a href="#dfn-type" class="internalDFN" data-link-type="dfn">type</a>
 definition.
           </dd>
@@ -3230,7 +3198,7 @@ definition.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   <span class="highlight">"termsOfUse": [{
@@ -3274,7 +3242,7 @@ in an archive.
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
     },
     "proof": { ... }
@@ -3304,7 +3272,7 @@ service for correlation, they would violate the terms under which the
 holder created the presentation.
         </p>
 
-        <div class="issue atrisk" id="issue-container-number-4"><div role="heading" class="issue-title marker" id="h-issue-2" aria-level="4"><span>(Feature at Risk) Issue 4</span></div><p class="atrisk">
+        <div class="issue" id="issue-container-number-4"><div role="heading" class="issue-title marker" id="h-issue-2" aria-level="4"><span>Issue 4</span></div><p class="">
 The terms of use feature may change during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate Recommendation
 phase including being removed entirely if there is not enough implementer
 support for the feature.
@@ -3372,7 +3340,7 @@ non-credential data may be supported by the specification, please refer to the
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   <span class="highlight">"evidence": [{
@@ -3404,7 +3372,7 @@ is used to express machine-verifiable mathematical proofs related to the
 authenticity of the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> and integrity of the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>.
         </p></div>
 
-        <div class="issue atrisk" id="issue-container-number-5"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="4"><span>(Feature at Risk) Issue 5</span></div><p class="atrisk">
+        <div class="issue" id="issue-container-number-5"><div role="heading" class="issue-title marker" id="h-issue-3" aria-level="4"><span>Issue 5</span></div><p class="">
 The evidence feature may change during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate Recommendation phase
 based on implementer feedback, or be removed entirely due to lack of support
 by implementers.
@@ -3422,31 +3390,7 @@ actual value. A real world example is proving that an accredited university
 has granted a degree to you without revealing your identity or any other
 personally identifiable information contained on the degree.
         </p>
-        <p>
-The key capabilities introduced by zero-knowledge proof mechanisms are:
-        </p>
-        <ol>
-          <li>
-The ability of a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> to combine multiple <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">verifiable credentials</a>
-from multiple <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuers</a> into a single presentation without revealing
-<a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> or <a href="#dfn-subjects" class="internalDFN" data-link-type="dfn">subject</a> identifiers to the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>. This
-makes it more difficult for the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> to collude with any of the
-issuers regarding the issued <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a>.
-          </li>
-          <li>
-The ability of a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> to selectively disclose the claims in a <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a>
-to a <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> without requiring the issuance of multiple atomic <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a>.
-This allows a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> to provide a <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a> with precisely the information
-they need and nothing more.
-          </li>
-          <li>
-The ability of a <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holder</a> to produce a derived <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> that is formatted
-according to the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn">verifier</a>'s data schema rather than the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a>'s, without
-needing to involve the <a href="#dfn-issuers" class="internalDFN" data-link-type="dfn">issuer</a> after <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credential</a> issuance. This provides
-a great deal of flexibility for <a href="#dfn-holders" class="internalDFN" data-link-type="dfn">holders</a> to use the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">credentials</a> they have
-been issued.
-          </li>
-        </ol>
+
         <p>
 This specification describes a data model that supports zero-knowledge proof mechanisms.
 The examples below highlight how the data model may be used to issue,
@@ -3507,7 +3451,7 @@ of the <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type=
     "familyName": "Doe",
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;",
+      "name": "Bachelor of Science in Mechanical Engineering",
       "college": "College of Engineering"
     }
   },
@@ -3594,7 +3538,7 @@ intend to share.
 }</pre>
         </div>
         <figure id="fig-a-visual-example-of-the-relationship-between-credentials-and-derived-credentials-in-a-zkp-presentation">
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/zkp-cred-pres.svg">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/zkp-cred-pres.svg" height="150" width="154">
           <figcaption style="text-align: center;">Figure <span class="figno">10</span> <span class="fig-title">
 A visual example of the relationship between credentials and derived
 credentials in a ZKP <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentation</a>.
@@ -3608,7 +3552,7 @@ extend <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type=
 support zero-knowledge proof systems.
         </p></div>
 
-        <div class="issue atrisk" id="issue-container-number-6"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="4"><span>(Feature at Risk) Issue 6</span></div><p class="atrisk">
+        <div class="issue" id="issue-container-number-6"><div role="heading" class="issue-title marker" id="h-issue-4" aria-level="4"><span>Issue 6</span></div><p class="">
 Zero Knowledge Proofs are a feature at risk. The Working Group is looking
 for multiple implementers to support the feature during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate
 Recommendation phase.
@@ -3676,10 +3620,7 @@ that the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">cred
   <span class="highlight">"credentialSubject": {
     "id": "http://example.com/credentials/245",
     "currentStatus": "Disputed",
-    "statusReason": {
-      "@value": "Address is out of date",
-      "@language": "en"
-    },
+    "statusReason": "Address is out of date"
   }</span>,
   "issuer": "https://example.com/people#me",
   "issuanceDate": "2017-12-05T14:27:42Z",
@@ -3699,10 +3640,7 @@ that the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn">cred
   <span class="highlight">"credentialSubject": {
     "id": "http://example.com/credentials/245",
     "currentStatus": "Disputed",
-    "statusReason": {
-      "@value": "Credential contains disputed statements",
-      "@language": "en"
-    },
+    "statusReason": "Credential contains disputed statements",
     "disputedClaim": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "address": "Is Wrong"
@@ -3726,7 +3664,7 @@ content-addressed identifiers can be used to uniquely identify individual
 claims.
         </p></div>
 
-        <div class="issue atrisk" id="issue-container-number-7"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="4"><span>(Feature at Risk) Issue 7</span></div><p class="atrisk">
+        <div class="issue" id="issue-container-number-7"><div role="heading" class="issue-title marker" id="h-issue-5" aria-level="4"><span>Issue 7</span></div><p class="">
 The dispute feature may change significantly during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate
 Recommendation process including possibly being removed if there is not enough
 support from implementations for the feature.
@@ -3734,8 +3672,8 @@ support from implementations for the feature.
 
       </section>
 
-      <section class="informative" id="authorization">
-        <h3 id="x5-10-authorization"><span class="secno">5.10 </span>Authorization<a class="self-link" aria-label="§" href="#authorization"></a></h3><p><em>This section is non-normative.</em></p>
+      <section id="authorization">
+        <h3 id="x5-10-authorization"><span class="secno">5.10 </span>Authorization<a class="self-link" aria-label="§" href="#authorization"></a></h3>
 
         <p>
 <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn">Verifiable credentials</a> are intended as a means of reliably identifying
@@ -3914,7 +3852,7 @@ JSON object that is contained in a JSON Web Signature (JWS) [<cite><a class="bib
 [<cite><a class="bibref" href="#bib-rfc7516">RFC7516</a></cite>]. For this specification, the use of JWE is out of scope.
           </p>
 
-          <div class="issue atrisk" id="issue-container-number-8"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="5"><span>(Feature at Risk) Issue 8</span></div><p class="atrisk">
+          <div class="issue" id="issue-container-number-8"><div role="heading" class="issue-title marker" id="h-issue-6" aria-level="5"><span>Issue 8</span></div><p class="">
 JWT support is a feature at risk and may be removed during the <abbr title="World Wide Web Consortium">W3C</abbr> Candidate
 Recommendation phase if there is not enough implementer support for the
 feature.
@@ -4151,7 +4089,7 @@ header parameter.
     "credentialSubject": {
       "degree": {
         "type": "BachelorDegree",
-        "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+        "name": "Bachelor of Science in Mechanical Engineering"
       }
     }
   }
@@ -4348,7 +4286,7 @@ and what information can be derived from what is provided.
       </p>
 
       <figure id="fig-privacy-spectrum-ranging-from-pseudonymous-to-fully-identified">
-        <img style="margin: auto; display: block; width: 80%;" src="diagrams/privacy-spectrum.svg">
+        <img style="margin: auto; display: block; width: 80%;" src="diagrams/privacy-spectrum.svg" height="122" width="300">
         <figcaption style="text-align: center;">Figure <span class="figno">11</span> <span class="fig-title">
 Privacy spectrum ranging from pseudonymous to fully identified.
         </span></figcaption>
@@ -4645,7 +4583,7 @@ possible by not specifying the <a href="#dfn-subjects" class="internalDFN" data-
     <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
     "degree": {
       "type": "BachelorDegree",
-      "name": "&lt;span lang='fr-CA'&gt;Baccalauréat en musiques numériques&lt;/span&gt;"
+      "name": "Bachelor of Science in Mechanical Engineering"
     }
   },
   "proof": { ... }
@@ -5103,7 +5041,7 @@ protected and probably should be:
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "image": <span class="highlight">"https://example.edu/images/58473"</span>,
-    "alumniOf": "&lt;span lang='en'&gt;Example University&lt;/span&gt;"
+    "alumniOf": "Example University"
   },
   "proof": { ... }
 }</pre>
@@ -5137,7 +5075,7 @@ image by using an IPFS link:
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "image": <span class="highlight">"ipfs:/ipfs/QmXfrS3pHerg44zzK6QKQj6JDk8H6cMtQS7pdXbohwNQfK/image"</span>,
-    "alumniOf": "&lt;span lang='en'&gt;Example University&lt;/span&gt;"
+    "alumniOf": "Example University"
   },
   "proof": { ... }
 }</pre>
@@ -5314,8 +5252,7 @@ There are a number of internationalization considerations implementers should be
 aware of when publishing data described in this specification. As with any web
 standards or protocols implementation, ignoring internationalization makes
 it difficult for data to be produced and consumed across a disparate set
-of languages and societies, which would limit the applicability of the specification
-and significantly diminish its value as a standard.
+of languages and societies.
     </p>
 
     <p>
@@ -5327,9 +5264,11 @@ account when utilizing this data model.
       <h3 id="x10-1-language-declarations"><span class="secno">10.1 </span>Language Declarations<a class="self-link" aria-label="§" href="#language-declarations"></a></h3><p><em>This section is non-normative.</em></p>
 
       <p>
-When expressing human-readable text content in the data model, it is important
-for presentation, accessibility, and further processing to specify the language
-of the text.
+When expressing human-readable text content in the data model, it is often
+useful to specify the language of the text to software agents that are
+responsible for rendering the information to an individual. The expressibility
+of language information is often a function of the syntax utilized. Options
+for encoding language information in are described below:
       </p>
 
       <ul>
@@ -5339,7 +5278,7 @@ JSON-LD supports the expression of language information via the
 <a href="https://www.w3.org/TR/json-ld11/#string-internationalization">Section 4.2.3: String Internationalization</a>.
         </li>
         <li>
-JSON-LD also supports the expression of language information via the
+JSON-LD supports the expression of language information via the
 <code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
 <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
 This mechanism enables a developer to use the internationalization features
@@ -5351,21 +5290,30 @@ property as being of type <code>rdf:HTML</code>, then software agents
 rendering the property would be able to deterministically identify the
 language in use.
         </li>
+        <li>
+Both JSON and JSON-LD support raw UTF-8 when used to express internationalized
+text. This mechanism is not as accurate as the previous mechanisms because
+language information is often implicit and software agents often resort to
+content-sniffing when attempting to determine the language.
+        </li>
       </ul>
     </section>
 
-    <section class="informative" id="text-direction">
-      <h3 id="x10-2-text-direction"><span class="secno">10.2 </span>Text direction<a class="self-link" aria-label="§" href="#text-direction"></a></h3><p><em>This section is non-normative.</em></p>
+    <section class="informative" id="text-layout">
+      <h3 id="x10-2-text-layout"><span class="secno">10.2 </span>Text Layout<a class="self-link" aria-label="§" href="#text-layout"></a></h3><p><em>This section is non-normative.</em></p>
 
   <p>
-When expressing human-readable text content in the data model, it is important
-to be able to explicitly encode the text direction. JSON and its derived formats
-use the UTF-8 encoding of [<cite><a class="bibref" href="#bib-unicode">Unicode</a></cite>] for serializing and transmitting text.
-This enables text direction to be directly determined in simple cases,
-but the mechanism is insufficient for general use.
-  </p>  
-    
-  <p>
+When expressing human-readable text content in the data model, it is often
+useful to encode the text direction for languages. In some cases, the layout
+of text is complicated and multi-dimensional (for example, in the case of
+<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>).
+The expressibility of text direction and layout is often a function of the
+syntax utilized. Options for encoding text layout information in are described
+below:
+      </p>
+
+      <ul>
+        <li>
 JSON-LD supports the expression of text layout information via the
 <code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
 <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
@@ -5373,31 +5321,23 @@ This mechanism enables a developer to use the internationalization features
 present in HTML to express language information. For example, consider the
 following key-value pair:
 <code>"nameHtml": "&lt;span dir="rtl" lang="ar"&gt;HTML و CSS: تصميم و إنشاء مواقع الويب&lt;/span&gt;"</code>.
-If the JSON-LD Context states that any value associated with the <code>nameHtml</code>
+            
+Although the string starts with a "Left To Right" character ("H"), 
+it should be treated as a Right-to-Left string. 
+            
+If the JSON-LD Context expressed that any value associated with the <code>nameHtml</code>
 property is of type <code>rdf:HTML</code>, then software agents
-have sufficient information to deterministically identify the text direction of the language.
-  </p>
-      
-    </section>
-    
-    <section class="informative" id="ruby-text">
-      <h3 id="x10-3-ruby-text"><span class="secno">10.3 </span>Ruby Text<a class="self-link" aria-label="§" href="#ruby-text"></a></h3><p><em>This section is non-normative.</em></p>
-  <p>
-In some situations it is common to use
-<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>)
-to ensure that text information is clear and as useful as possible.
-JSON-LD's support for HTML data allows text to be encoded with ruby, supporting
-these cases. 
-  </p>
-    </section>
-
-    <section class="informative" id="further-information">
-      <h3 id="x10-4-further-information"><span class="secno">10.4 </span>Further information<a class="self-link" aria-label="§" href="#further-information"></a></h3><p><em>This section is non-normative.</em></p>
-  <p>
-The <abbr title="World Wide Web Consortium">W3C</abbr> Internationalisation document [<cite><a class="bibref" href="#bib-string-meta">string-meta</a></cite>] gives more information
-about the need to be able to provide reliable metadata about text to support
-internationalization
-  </p>
+rendering the property would be able to deterministically recognise that the content is HTML,
+and identify the text direction of the content.
+        </li>
+        <li>
+Both JSON and JSON-LD support raw
+<a href="https://en.wikipedia.org/wiki/Bi-directional_text">UTF-8 Bi-Directional</a>
+text when used to express text direction. This can be useful to ensure correct presentation
+in simple cases, but is extremely limited. Without supplementary information on language and text direction,
+there is generally insufficient information in the raw string to allow an accurate presentation of text.
+        </li>
+      </ul>
     </section>
 
   </section>
@@ -5590,7 +5530,7 @@ relationships covered in the rest of this section.
       </p>
 
       <figure id="fig-subject-holder-relationships-in-verifiable-credentials">
-        <img style="margin: auto; display: block; width: 75%;" src="diagrams/subject-ne-holder.svg">
+        <img style="margin: auto; display: block; width: 75%;" src="diagrams/subject-ne-holder.svg" height="150" width="200">
         <figcaption style="text-align: center;">Figure <span class="figno">12</span> <span class="fig-title">
 Subject-Holder Relationships in Verifiable Credentials.
         </span></figcaption>
@@ -6022,5 +5962,5 @@ these scenarios. It is for further study how they might be supported.
       </dl></section><section id="informative-references">
         <h3 id="c-2-informative-references"><span class="secno">C.2 </span>Informative references<a class="self-link" aria-label="§" href="#informative-references"></a></h3>
       <dl class="bibliography">
-        <dt id="bib-demographics">[DEMOGRAPHICS]</dt><dd><a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf"><cite>Simple Demographics Often Identify People Uniquely</cite></a>. Latanya Sweeney. Data Privacy Lab. URL: <a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">http://dataprivacylab.org/projects/identifiability/paper1.pdf</a></dd><dt id="bib-json-schema">[JSON-SCHEMA]</dt><dd><a href="https://tools.ietf.org/html/draft-zyp-json-schema"><cite>JSON Schema: core definitions and terminology</cite></a>. K. Zyp. Internet Engineering Task Force (IETF). 31 January 2013. Internet-Draft. URL: <a href="https://tools.ietf.org/html/draft-zyp-json-schema">https://tools.ietf.org/html/draft-zyp-json-schema</a></dd><dt id="bib-ld-proofs">[LD-PROOFS]</dt><dd><a href="https://w3c-dvcg.github.io/ld-proofs/"><cite>Linked Data Proofs</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-proofs/">https://w3c-dvcg.github.io/ld-proofs/</a></dd><dt id="bib-ld-signatures">[LD-SIGNATURES]</dt><dd><a href="https://w3c-dvcg.github.io/ld-signatures/"><cite>Linked Data Signatures</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-signatures/">https://w3c-dvcg.github.io/ld-signatures/</a></dd><dt id="bib-rfc3986">[RFC3986]</dt><dd><a href="https://tools.ietf.org/html/rfc3986"><cite>Uniform Resource Identifier (URI): Generic Syntax</cite></a>. T. Berners-Lee; R. Fielding; L. Masinter. IETF. January 2005. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc3986">https://tools.ietf.org/html/rfc3986</a></dd><dt id="bib-string-meta">[string-meta]</dt><dd><em class="respec-offending-element">Reference not found.</em></dd><dt id="bib-unicode">[Unicode]</dt><dd><a href="https://www.unicode.org/versions/latest/"><cite>The Unicode Standard</cite></a>.  Unicode Consortium. URL: <a href="https://www.unicode.org/versions/latest/">https://www.unicode.org/versions/latest/</a></dd><dt id="bib-vc-status-registry">[VC-STATUS-REGISTRY]</dt><dd><a href="https://w3c-ccg.github.io/vc-status-registry/"><cite>Verifiable Credentials Status Scheme Registry</cite></a>. Manu Sporny. Credentials Community Group. CG-DRAFT. URL: <a href="https://w3c-ccg.github.io/vc-status-registry/">https://w3c-ccg.github.io/vc-status-registry/</a></dd><dt id="bib-vc-usecases">[VC-USECASES]</dt><dd><a href="https://www.w3.org/TR/verifiable-claims-use-cases/"><cite>Verifiable Claims Use Cases</cite></a>. Shane McCarron; Daniel Burnett; Gregg Kellogg; Brian Sletten; Manu Sporny. Verifiable Claims Working Group. W3C Note. URL: <a href="https://www.w3.org/TR/verifiable-claims-use-cases/">https://www.w3.org/TR/verifiable-claims-use-cases/</a></dd><dt id="bib-wcag21">[WCAG21]</dt><dd><a href="https://www.w3.org/TR/WCAG21/"><cite>Web Content Accessibility Guidelines (WCAG) 2.1</cite></a>. Andrew Kirkpatrick; Joshue O Connor; Alastair Campbell; Michael Cooper. W3C. 5 June 2018. W3C Recommendation. URL: <a href="https://www.w3.org/TR/WCAG21/">https://www.w3.org/TR/WCAG21/</a></dd>
+        <dt id="bib-demographics">[DEMOGRAPHICS]</dt><dd><a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf"><cite>Simple Demographics Often Identify People Uniquely</cite></a>. Latanya Sweeney. Data Privacy Lab. URL: <a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">http://dataprivacylab.org/projects/identifiability/paper1.pdf</a></dd><dt id="bib-json-schema">[JSON-SCHEMA]</dt><dd><a href="https://tools.ietf.org/html/draft-zyp-json-schema"><cite>JSON Schema: core definitions and terminology</cite></a>. K. Zyp. Internet Engineering Task Force (IETF). 31 January 2013. Internet-Draft. URL: <a href="https://tools.ietf.org/html/draft-zyp-json-schema">https://tools.ietf.org/html/draft-zyp-json-schema</a></dd><dt id="bib-ld-proofs">[LD-PROOFS]</dt><dd><a href="https://w3c-dvcg.github.io/ld-proofs/"><cite>Linked Data Proofs</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-proofs/">https://w3c-dvcg.github.io/ld-proofs/</a></dd><dt id="bib-ld-signatures">[LD-SIGNATURES]</dt><dd><a href="https://w3c-dvcg.github.io/ld-signatures/"><cite>Linked Data Signatures</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-signatures/">https://w3c-dvcg.github.io/ld-signatures/</a></dd><dt id="bib-rfc3986">[RFC3986]</dt><dd><a href="https://tools.ietf.org/html/rfc3986"><cite>Uniform Resource Identifier (URI): Generic Syntax</cite></a>. T. Berners-Lee; R. Fielding; L. Masinter. IETF. January 2005. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc3986">https://tools.ietf.org/html/rfc3986</a></dd><dt id="bib-vc-status-registry">[VC-STATUS-REGISTRY]</dt><dd><a href="https://w3c-ccg.github.io/vc-status-registry/"><cite>Verifiable Credentials Status Scheme Registry</cite></a>. Manu Sporny. Credentials Community Group. CG-DRAFT. URL: <a href="https://w3c-ccg.github.io/vc-status-registry/">https://w3c-ccg.github.io/vc-status-registry/</a></dd><dt id="bib-vc-usecases">[VC-USECASES]</dt><dd><a href="https://www.w3.org/TR/verifiable-claims-use-cases/"><cite>Verifiable Claims Use Cases</cite></a>. Shane McCarron; Daniel Burnett; Gregg Kellogg; Brian Sletten; Manu Sporny. Verifiable Claims Working Group. W3C First Public Working Draft. URL: <a href="https://www.w3.org/TR/verifiable-claims-use-cases/">https://www.w3.org/TR/verifiable-claims-use-cases/</a></dd><dt id="bib-wcag21">[WCAG21]</dt><dd><a href="https://www.w3.org/TR/WCAG21/"><cite>Web Content Accessibility Guidelines (WCAG) 2.1</cite></a>. Andrew Kirkpatrick; Joshue O Connor; Alastair Campbell; Michael Cooper. W3C. 5 June 2018. W3C Recommendation. URL: <a href="https://www.w3.org/TR/WCAG21/">https://www.w3.org/TR/WCAG21/</a></dd>
       </dl></section></section><p role="navigation" id="back-to-top"><a href="#title"><abbr title="Back to Top">↑</abbr></a></p><script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script></body></html>
