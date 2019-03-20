@@ -407,6 +407,17 @@ pre .comment {
       "publisher": "Credentials Community Group",
       "id": "vc-status-registry"
     },
+    "string-meta": {
+      "title": "Requirements for Language and Direction Metadata in Data Formats",
+      "href": "https://w3c.github.io/string-meta/",
+      "authors": [
+        "Addison Phillips",
+        "Richard Ishida"
+      ],
+      "status": "Editors-DRAFT",
+      "publisher": "Internationalization Working Group",
+      "id": "string-meta"
+    },
     "LD-PROOFS": {
       "title": "Linked Data Proofs",
       "href": "https://w3c-dvcg.github.io/ld-proofs/",
@@ -750,6 +761,12 @@ cryptographically secure, privacy respecting, and machine-verifiable."><script t
       "type": "TechArticle",
       "name": "The Unicode Standard",
       "url": "https://www.unicode.org/versions/latest/"
+    },
+    {
+      "id": "https://w3c.github.io/string-meta/",
+      "type": "TechArticle",
+      "name": "Requirements for Language and Direction Metadata in Data Formats",
+      "url": "https://w3c.github.io/string-meta/"
     }
   ]
 }</script><link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2016/W3C-CR"></head>
@@ -1125,7 +1142,11 @@ verifiable data registry utilized in an ecosystem.
         </dl>
 
         <figure id="fig-the-roles-and-information-flows-forming-the-basis-for-this-specification">
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/ecosystem.svg">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/ecosystem.svg" alt="diagram showing how
+	       credentials flow from issuer to holder and
+	       presentations flow from holder to verifier where all
+	       three parties can use information from a logical
+	       verifiable data registry" height="133" width="300">
           <figcaption style="text-align: center;">Figure <span class="figno">1</span> <span class="fig-title">
             The roles and information flows forming the basis for this specification.
           </span></figcaption>
@@ -1504,7 +1525,8 @@ relationships.
         </p>
 
         <figure id="fig-the-basic-structure-of-a-claim">
-          <img style="margin: auto; display: block; width: 50%;" src="diagrams/claim.svg" height="101" width="300">
+          <img style="margin: auto; display: block; width: 50%;" src="diagrams/claim.svg" alt="subject has a property which
+            has a value" height="101" width="300">
           <figcaption style="text-align: center;">Figure <span class="figno">2</span> <span class="fig-title">
 The basic structure of a claim.
           </span></figcaption>
@@ -1517,7 +1539,8 @@ graduated from a particular university can be expressed as shown below.
         </p>
 
         <figure id="fig-a-basic-claim-expressing-that-pat-is-an-alumni-of-example-university">
-          <img style="margin: auto; display: block; width: 60%;" src="diagrams/claim-example.svg" height="79" width="300">
+          <img style="margin: auto; display: block; width: 60%;" src="diagrams/claim-example.svg" alt="Pat has an alumniOf
+            property whose value is Example University" height="79" width="300">
           <figcaption style="text-align: center;">Figure <span class="figno">3</span> <span class="fig-title">
 A basic claim expressing that Pat is an alumni of "Example University".
           </span></figcaption>
@@ -1531,7 +1554,9 @@ employed as a professor.
         </p>
 
         <figure id="fig-multiple-claims-can-be-combined-to-express-a-graph-of-information">
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/claim-extended.svg" height="85" width="300">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/claim-extended.svg" alt="extends previous
+            diagram with another property called knows whose value is
+            Sam, and Sam has a property jobTitle whose value is Professor" height="85" width="300">
           <figcaption style="text-align: center;">Figure <span class="figno">4</span> <span class="fig-title">
 Multiple claims can be combined to express a graph of information.
           </span></figcaption>
@@ -1559,7 +1584,9 @@ metadata that cryptographically prove who issued it.
         </p>
 
         <figure id="basic-vc">
-          <img style="margin: auto; display: block; width: 50%;" src="diagrams/credential.svg" height="150" width="201">
+          <img style="margin: auto; display: block; width: 50%;" src="diagrams/credential.svg" alt="a Verifible
+	       Credential contains Credential Metadata, Claim(s), and
+	       Proof(s)" height="150" width="201">
           <figcaption style="text-align: center;">Figure <span class="figno">5</span> <span class="fig-title">
 Basic components of a verifiable credential.
           </span></figcaption>
@@ -1594,7 +1621,19 @@ usually a digital signature.
         </p>
 
         <figure id="info-graph-vc">
-          <img style="margin: auto; display: block; width: 100%;" src="diagrams/credential-graph.svg">
+          <img style="margin: auto; display: block; width: 100%;" src="diagrams/credential-graph.svg" alt="diagram with a
+	       Credential Graph on top connected via a proof to a
+	       Proof Graph on the bottom.  The Credental Graph has
+	       Credential 123 with 4 properties: 'type' of value
+	       AlumniCredential, 'issuer' of Example University,
+	       'issuanceDate' of 2010-01-01T19:73:24Z, and
+	       credentialSubject of Pat, who has an alumniOf property
+	       with value of Example University.  The Proof Graph has
+	       Signature 456 with 5 properties: 'type' of
+	       RsaSignature2018, 'creator' of Example University
+	       Public Key 7, 'created' of 2017-06-18T21:19:10Z,
+	       'nonce' of 348dj239dsj328, and 'signatureValue' of
+	       BavEll0...3JT24=" height="150" width="215">
           <figcaption style="text-align: center;">Figure <span class="figno">6</span> <span class="fig-title">
 Information graphs associated with a basic verifiable credential.
           </span></figcaption>
@@ -1636,7 +1675,9 @@ typically expresses an aspect of a person, organization, or <a href="#dfn-entiti
         </p>
 
         <figure id="basic-vp">
-          <img style="margin: auto; display: block; width: 50%;" src="diagrams/presentation.svg" height="150" width="187">
+          <img style="margin: auto; display: block; width: 50%;" src="diagrams/presentation.svg" alt="A Verifiable
+            Presentation contains Presentation Metadata, Verifiable
+            Credential(s), and Proof(s)" height="150" width="187">
           <figcaption style="text-align: center;">Figure <span class="figno">7</span> <span class="fig-title">
 Basic components of a verifiable presentation.
           </span></figcaption>
@@ -1665,7 +1706,18 @@ which is usually a digital signature.
         </p>
 
         <figure id="info-graph-vp">
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/presentation-graph.svg">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/presentation-graph.svg" alt="diagram with
+	       a Presentation Graph on top connected via a proof to a
+	       Presentation Proof Graph on the bottom.  The
+	       Presentation Graph has Presentation ABC with 3
+	       properties: 'type' of value VerifiablePresentation,
+	       'termsOfUse' of value Do Not Archive, and
+	       'verifiableCredential' whose value is Figure 6.  The
+	       Presentation Proof Graph has Signature 8910 with 5
+	       properties: 'type' of RsaSignature2018, 'creator' of
+	       Example Presenter Public Key 11, 'created' of
+	       2018-01-15T12:43:56Z, 'nonce' of d28348djsj3239, and
+	       'signatureValue' of p2KaZ...8Fj3K=" height="150" width="135">
           <figcaption style="text-align: center;">Figure <span class="figno">8</span> <span class="fig-title">
 Information graphs associated with a basic verifiable presentation.
           </span></figcaption>
@@ -2571,7 +2623,8 @@ the <a href="#dfn-claims" class="internalDFN" data-link-type="dfn">claim</a> in 
         </p>
 
         <figure id="fig-a-basic-claim-expressing-that-pat-s-date-of-birth-is-2010-01-01t19-23-24z-date-encoding-would-be-determined-by-the-schema">
-          <img style="margin: auto; display: block; width: 50%;" src="diagrams/claim-example-2.svg" height="101" width="300">
+          <img style="margin: auto; display: block; width: 50%;" src="diagrams/claim-example-2.svg" alt="Pat has a property
+            dateOfBirth whose value is 2010-01-01T19:73:24Z" height="101" width="300">
           <figcaption style="text-align: center;">Figure <span class="figno">9</span> <span class="fig-title">
 A basic claim expressing that Pat's date of birth is 2010-01-01T19:23:24Z. Date
 encoding would be determined by the schema.
@@ -3594,7 +3647,34 @@ intend to share.
 }</pre>
         </div>
         <figure id="fig-a-visual-example-of-the-relationship-between-credentials-and-derived-credentials-in-a-zkp-presentation">
-          <img style="margin: auto; display: block; width: 75%;" src="diagrams/zkp-cred-pres.svg">
+          <img style="margin: auto; display: block; width: 75%;" src="diagrams/zkp-cred-pres.svg" alt="Verifiable
+            Credential 1 and Verifiable Credential 2 on the left map
+            to Derived Credential 1 and Derived Credential 2 inside a
+            Presentation on the right.  Verifiable Credential 1
+            contains Context, Type, ID, Issuer, Issue Date, Expiration
+            Date, CredentialSubject, and Proof, where
+            CredentialSubject contains GivenName, FamilyName, and
+            Birthdate and Proof contains Signature, Proof of
+            Correctness, and Attributes.  Verifiable Credential 2
+            contains Context, Type, ID, Issuer, Issue Date, Expiration
+            Date, CredentialSubject, and Proof, where
+            CredentialSubject contains University, which contains
+            Department, which contains DegreeAwarded, and Proof contains Signature, Proof of
+            Correctness, and Attributes.  The Presentation diagram on
+            the right contains Context, Type, ID,
+            VerifiableCredential, and Proof, where
+            VerifiableCredential contains Derived Credential 1 and
+            Derived Credential 2 and Proof contains Common Link
+            Secret.  Derived Credential 1 contains Context, Type, ID,
+            Issuer, Issue Date, CredentialSubject, and Proof, where
+            CredentialSubject contains AgeOver18 and Proof contains
+            Knowledge of Signature.  Derived Credential 2 contains
+            Context, Type, ID, Issuer, Issue Date, CredentialSubject,
+            and Proof, where CredentialSubject contains Degree and
+            Proof contains Knowledge of Signature.  A line links
+            Birthdate in Verifiable Credential 1 to AgeOver18 in
+            Derived Credential 1.  A line links DegreeAwarded in
+            Verifiable Credential 2 to Degree in Derived Credential 2." height="150" width="154">
           <figcaption style="text-align: center;">Figure <span class="figno">10</span> <span class="fig-title">
 A visual example of the relationship between credentials and derived
 credentials in a ZKP <a href="#dfn-presentations" class="internalDFN" data-link-type="dfn">presentation</a>.
@@ -4348,7 +4428,14 @@ and what information can be derived from what is provided.
       </p>
 
       <figure id="fig-privacy-spectrum-ranging-from-pseudonymous-to-fully-identified">
-        <img style="margin: auto; display: block; width: 80%;" src="diagrams/privacy-spectrum.svg">
+        <img style="margin: auto; display: block; width: 80%;" src="diagrams/privacy-spectrum.svg" alt="Horizontal bar with
+          red on the left, orange in the middle, and green on the
+          right.  The red has the text 'Highly correlatable (global
+          IDs), e.g. government ID, shipping address, credit card
+          number'.  The orange has the text 'Correlatable ia collusion
+          (personally identifiable info), e.g. name, birthday, zip
+          code'.  The green has the text 'Non-correlatable
+          (pseudonyms), e.g. age over 21'." height="122" width="300">
         <figcaption style="text-align: center;">Figure <span class="figno">11</span> <span class="fig-title">
 Privacy spectrum ranging from pseudonymous to fully identified.
         </span></figcaption>
@@ -5590,7 +5677,22 @@ relationships covered in the rest of this section.
       </p>
 
       <figure id="fig-subject-holder-relationships-in-verifiable-credentials">
-        <img style="margin: auto; display: block; width: 75%;" src="diagrams/subject-ne-holder.svg">
+        <img style="margin: auto; display: block; width: 75%;" src="diagrams/subject-ne-holder.svg" alt="Long decision tree
+          from top to bottom.  For the first question, 'Subject
+          Present?', No means Bearer Credential and Yes points to the
+          rest of the tree.  From this point on until the very end,
+          each Yes points to an answer and each No points to another
+          question.  The first question here is 'Subject = Holder?',
+          with Yes meaning Most Common Use Case.  If No, 'Credential
+          Uniquely Identifies Subject?' with Yes meaning Irrelevant who
+          Holder is.  If No, 'Subject Passes VC to Holder?' with Yes
+          meaning E.g. Power of Attorney, Employee.  If No, 'Issuer
+          Independently Authorises Holder?' with Yes meaning E.g. Law
+          Enforcement.  If No, 'Holder Acts for Subject?' with Yes
+          meaning E.g. Parent, Pet Owner, Travel Agent.  If No,
+          'Holder Acts for Verifier?' with Yes meaning E.g. Recruiter
+          passing on VC of job applicant to employer and No meaning
+          'Random Holder with no relationship to Subject, Issuer or Verifier" height="150" width="200">
         <figcaption style="text-align: center;">Figure <span class="figno">12</span> <span class="fig-title">
 Subject-Holder Relationships in Verifiable Credentials.
         </span></figcaption>
@@ -6022,5 +6124,5 @@ these scenarios. It is for further study how they might be supported.
       </dl></section><section id="informative-references">
         <h3 id="c-2-informative-references"><span class="secno">C.2 </span>Informative references<a class="self-link" aria-label="§" href="#informative-references"></a></h3>
       <dl class="bibliography">
-        <dt id="bib-demographics">[DEMOGRAPHICS]</dt><dd><a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf"><cite>Simple Demographics Often Identify People Uniquely</cite></a>. Latanya Sweeney. Data Privacy Lab. URL: <a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">http://dataprivacylab.org/projects/identifiability/paper1.pdf</a></dd><dt id="bib-json-schema">[JSON-SCHEMA]</dt><dd><a href="https://tools.ietf.org/html/draft-zyp-json-schema"><cite>JSON Schema: core definitions and terminology</cite></a>. K. Zyp. Internet Engineering Task Force (IETF). 31 January 2013. Internet-Draft. URL: <a href="https://tools.ietf.org/html/draft-zyp-json-schema">https://tools.ietf.org/html/draft-zyp-json-schema</a></dd><dt id="bib-ld-proofs">[LD-PROOFS]</dt><dd><a href="https://w3c-dvcg.github.io/ld-proofs/"><cite>Linked Data Proofs</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-proofs/">https://w3c-dvcg.github.io/ld-proofs/</a></dd><dt id="bib-ld-signatures">[LD-SIGNATURES]</dt><dd><a href="https://w3c-dvcg.github.io/ld-signatures/"><cite>Linked Data Signatures</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-signatures/">https://w3c-dvcg.github.io/ld-signatures/</a></dd><dt id="bib-rfc3986">[RFC3986]</dt><dd><a href="https://tools.ietf.org/html/rfc3986"><cite>Uniform Resource Identifier (URI): Generic Syntax</cite></a>. T. Berners-Lee; R. Fielding; L. Masinter. IETF. January 2005. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc3986">https://tools.ietf.org/html/rfc3986</a></dd><dt id="bib-string-meta">[string-meta]</dt><dd><em class="respec-offending-element">Reference not found.</em></dd><dt id="bib-unicode">[Unicode]</dt><dd><a href="https://www.unicode.org/versions/latest/"><cite>The Unicode Standard</cite></a>.  Unicode Consortium. URL: <a href="https://www.unicode.org/versions/latest/">https://www.unicode.org/versions/latest/</a></dd><dt id="bib-vc-status-registry">[VC-STATUS-REGISTRY]</dt><dd><a href="https://w3c-ccg.github.io/vc-status-registry/"><cite>Verifiable Credentials Status Scheme Registry</cite></a>. Manu Sporny. Credentials Community Group. CG-DRAFT. URL: <a href="https://w3c-ccg.github.io/vc-status-registry/">https://w3c-ccg.github.io/vc-status-registry/</a></dd><dt id="bib-vc-usecases">[VC-USECASES]</dt><dd><a href="https://www.w3.org/TR/verifiable-claims-use-cases/"><cite>Verifiable Claims Use Cases</cite></a>. Shane McCarron; Daniel Burnett; Gregg Kellogg; Brian Sletten; Manu Sporny. Verifiable Claims Working Group. W3C Note. URL: <a href="https://www.w3.org/TR/verifiable-claims-use-cases/">https://www.w3.org/TR/verifiable-claims-use-cases/</a></dd><dt id="bib-wcag21">[WCAG21]</dt><dd><a href="https://www.w3.org/TR/WCAG21/"><cite>Web Content Accessibility Guidelines (WCAG) 2.1</cite></a>. Andrew Kirkpatrick; Joshue O Connor; Alastair Campbell; Michael Cooper. W3C. 5 June 2018. W3C Recommendation. URL: <a href="https://www.w3.org/TR/WCAG21/">https://www.w3.org/TR/WCAG21/</a></dd>
+        <dt id="bib-demographics">[DEMOGRAPHICS]</dt><dd><a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf"><cite>Simple Demographics Often Identify People Uniquely</cite></a>. Latanya Sweeney. Data Privacy Lab. URL: <a href="http://dataprivacylab.org/projects/identifiability/paper1.pdf">http://dataprivacylab.org/projects/identifiability/paper1.pdf</a></dd><dt id="bib-json-schema">[JSON-SCHEMA]</dt><dd><a href="https://tools.ietf.org/html/draft-zyp-json-schema"><cite>JSON Schema: core definitions and terminology</cite></a>. K. Zyp. Internet Engineering Task Force (IETF). 31 January 2013. Internet-Draft. URL: <a href="https://tools.ietf.org/html/draft-zyp-json-schema">https://tools.ietf.org/html/draft-zyp-json-schema</a></dd><dt id="bib-ld-proofs">[LD-PROOFS]</dt><dd><a href="https://w3c-dvcg.github.io/ld-proofs/"><cite>Linked Data Proofs</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-proofs/">https://w3c-dvcg.github.io/ld-proofs/</a></dd><dt id="bib-ld-signatures">[LD-SIGNATURES]</dt><dd><a href="https://w3c-dvcg.github.io/ld-signatures/"><cite>Linked Data Signatures</cite></a>. Manu Sporny; Dave Longley. Digital Verification Community Group. CG-DRAFT. URL: <a href="https://w3c-dvcg.github.io/ld-signatures/">https://w3c-dvcg.github.io/ld-signatures/</a></dd><dt id="bib-rfc3986">[RFC3986]</dt><dd><a href="https://tools.ietf.org/html/rfc3986"><cite>Uniform Resource Identifier (URI): Generic Syntax</cite></a>. T. Berners-Lee; R. Fielding; L. Masinter. IETF. January 2005. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc3986">https://tools.ietf.org/html/rfc3986</a></dd><dt id="bib-string-meta">[string-meta]</dt><dd><a href="https://w3c.github.io/string-meta/"><cite>Requirements for Language and Direction Metadata in Data Formats</cite></a>. Addison Phillips; Richard Ishida. Internationalization Working Group. Editors-DRAFT. URL: <a href="https://w3c.github.io/string-meta/">https://w3c.github.io/string-meta/</a></dd><dt id="bib-unicode">[Unicode]</dt><dd><a href="https://www.unicode.org/versions/latest/"><cite>The Unicode Standard</cite></a>.  Unicode Consortium. URL: <a href="https://www.unicode.org/versions/latest/">https://www.unicode.org/versions/latest/</a></dd><dt id="bib-vc-status-registry">[VC-STATUS-REGISTRY]</dt><dd><a href="https://w3c-ccg.github.io/vc-status-registry/"><cite>Verifiable Credentials Status Scheme Registry</cite></a>. Manu Sporny. Credentials Community Group. CG-DRAFT. URL: <a href="https://w3c-ccg.github.io/vc-status-registry/">https://w3c-ccg.github.io/vc-status-registry/</a></dd><dt id="bib-vc-usecases">[VC-USECASES]</dt><dd><a href="https://www.w3.org/TR/verifiable-claims-use-cases/"><cite>Verifiable Claims Use Cases</cite></a>. Shane McCarron; Daniel Burnett; Gregg Kellogg; Brian Sletten; Manu Sporny. Verifiable Claims Working Group. W3C Note. URL: <a href="https://www.w3.org/TR/verifiable-claims-use-cases/">https://www.w3.org/TR/verifiable-claims-use-cases/</a></dd><dt id="bib-wcag21">[WCAG21]</dt><dd><a href="https://www.w3.org/TR/WCAG21/"><cite>Web Content Accessibility Guidelines (WCAG) 2.1</cite></a>. Andrew Kirkpatrick; Joshue O Connor; Alastair Campbell; Michael Cooper. W3C. 5 June 2018. W3C Recommendation. URL: <a href="https://www.w3.org/TR/WCAG21/">https://www.w3.org/TR/WCAG21/</a></dd>
       </dl></section></section><p role="navigation" id="back-to-top"><a href="#title"><abbr title="Back to Top">↑</abbr></a></p><script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script></body></html>
