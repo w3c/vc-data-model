@@ -1102,12 +1102,13 @@ have a <code>type</code> <a>property</a>.
         <dl>
           <dt><dfn data-lt="type|types">type</dfn></dt>
           <dd>
-The value of the <code>type</code> <a>property</a> MUST be, or map to, one or
-more <a>URIs</a>. If more than one <a>URI</a> is provided, the <a>URIs</a> MUST
-be interpreted as an unordered set. Syntactic conveniences, such as JSON-LD
-terms, SHOULD be used to ease developer usage. It is RECOMMENDED that
-dereferencing the <a>URIs</a> results in a document containing machine-readable
-information about the type.
+The value of the <code>type</code> <a>property</a> MUST be, or map to (via
+JSON-LD processing of the <code>@context</code> property), one or more <a>URIs</a>. If
+more than one <a>URI</a> is provided, the <a>URIs</a> MUST be interpreted
+as an unordered set. Syntactic conveniences, such as JSON-LD terms, SHOULD
+be used to ease developer usage. It is RECOMMENDED that dereferencing the
+<a>URIs</a> results in a document containing machine-readable information
+about the type.
           </dd>
         </dl>
 
@@ -1209,6 +1210,20 @@ A valid evidence <a>type</a>. For example,<br>
           </tbody>
         </table>
 
+        <p class="note">
+The <a>type</a> system for the Verifiable Credentials Data Model is the same as
+for [[JSON-LD]] and is detailed in
+<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4:
+Specifying the Type</a> and
+<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD
+Grammar</a>. When using a JSON-LD context (see Section
+<a href="#extensibility"></a>), this specification aliases the
+<code>@type</code> keyword to <code>type</code> to make the JSON-LD documents
+more easily understood. While application developers and document authors do
+not need to understand the specifics of the JSON-LD type system, implementers
+of this specification who want to support interoperable extensibility, do.
+        </p>
+
         <p>
 All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
 specify, or be associated with, additional more narrow <a>types</a> (like
@@ -1254,19 +1269,6 @@ human-readable specification, and preferably, in an additional machine-readable
 representation.
         </p>
 
-        <p class="note">
-The <a>type</a> system for the Verifiable Credentials Data Model is the same as
-for [[JSON-LD]] and is detailed in
-<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4:
-Specifying the Type</a> and
-<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD
-Grammar</a>. When using a JSON-LD context (see Section
-<a href="#extensibility"></a>), this specification aliases the
-<code>@type</code> keyword to <code>type</code> to make the JSON-LD documents
-more easily understood. While application developers and document authors do
-not need to understand the specifics of the JSON-LD type system, implementers
-of this specification who want to support interoperable extensibility, do.
-        </p>
       </section>
 
 
