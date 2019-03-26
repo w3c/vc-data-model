@@ -99,6 +99,13 @@ var vcwg = {
       href: 'http://dataprivacylab.org/projects/identifiability/paper1.pdf',
       authors: ['Latanya Sweeney'],
       publisher: 'Data Privacy Lab'
+    },
+    'VC-IMP-GUIDE': {
+      title: 'Verifiable Credentials Implementation Guidelines 1.0',
+      href: 'https://w3c.github.io/vc-imp-guide/',
+      authors: ['Andrei Sambra', 'Manu Sporny'],
+      status: 'ED',
+      publisher: 'Credentials Community Group'
     }
   }
 };
