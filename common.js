@@ -113,6 +113,11 @@ var vcwg = {
       authors: ['Manu Sporny'],
       status: 'Internet-Draft',
       publisher: 'Internet Engineering Task Force (IETF)'
+    },
+    'IPFS': {
+      title: 'InterPlanetary File System (IPFS)',
+      href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
+      publisher: 'Wikipedia'
     }
   }
 };
