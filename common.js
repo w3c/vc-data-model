@@ -106,6 +106,13 @@ var vcwg = {
       authors: ['Andrei Sambra', 'Manu Sporny'],
       status: 'ED',
       publisher: 'Credentials Community Group'
+    },
+    'HASHLINK': {
+      title: 'Cryptographic Hyperlinks',
+      href: 'https://tools.ietf.org/html/draft-sporny-hashlink',
+      authors: ['Manu Sporny'],
+      status: 'Internet-Draft',
+      publisher: 'Internet Engineering Task Force (IETF)'
     }
   }
 };
