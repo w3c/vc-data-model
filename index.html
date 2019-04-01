@@ -232,7 +232,7 @@ physical world.
 
       <p>
 This specification provides a standard way to express <a>credentials</a> on the
-Web in a way that is cryptographically secure, privacy respecting, and
+Web, a way that is cryptographically secure, privacy respecting, and
 machine-verifiable.
       </p>
 
@@ -274,8 +274,8 @@ Information related to the issuing authority (for example, a city government,
 national agency, or certification body)
           </li>
           <li>
-Information related to the specific attribute(s) or properties being asserted by
-issuing authority about the <a>subject</a>
+Information related to the specific attributes or properties being asserted by
+the issuing authority about the <a>subject</a>
           </li>
           <li>
 Evidence related to how the <a>credential</a> was derived
@@ -289,14 +289,22 @@ Information related to expiration dates.
 A <a>verifiable credential</a> can represent all of the same information that a
 physical <a>credential</a> represents. The addition of technologies, such as
 digital signatures, makes <a>verifiable credentials</a> more tamper-evident and
-more trustworthy than their physical counterparts. <a>Holders</a> of
-<a>verifiable credentials</a> can generate <a>presentations</a> and then share
-these <a>presentations</a> with <a>verifiers</a> to prove they possess
-<a>verifiable credentials</a> with certain characteristics. Both
-<a>verifiable credentials</a> and <a>verifiable presentations</a> can be
+more trustworthy than their physical counterparts.
+        </p>
+
+        <p>
+<a>Holders</a> of <a>verifiable credentials</a> can generate
+<a>verifiable presentations</a> and then share these
+<a>verifiable presentations</a> with <a>verifiers</a> to prove they possess
+<a>verifiable credentials</a> with certain characteristics.
+        </p>
+
+        <p>
+Both <a>verifiable credentials</a> and <a>verifiable presentations</a> can be
 transmitted rapidly, making them more convenient than their physical
 counterparts when trying to establish trust at a distance.
         </p>
+
         <p>
 While this specification attempts to improve the ease of expressing digital
 <a>credentials</a>, it also attempts to balance this goal with a number of
@@ -327,8 +335,8 @@ specification:
           <dt><a>holder</a></dt>
           <dd>
 A role an <a>entity</a> might perform by possessing one or more
-<a>verifiable credentials</a> and generating <a>presentations</a> from them.
-Example holders include students, employees, and customers.
+<a>verifiable credentials</a> and generating <a>verifiable presentations</a>
+from them. Example holders include students, employees, and customers.
           </dd>
           <dt><a>issuer</a></dt>
           <dd>
@@ -341,14 +349,14 @@ individuals.
           <dt><a>subject</a></dt>
           <dd>
 A role an <a>entity</a> might perform by having one or more
-<a>verifiable credentials</a> asserted about it. Example subjects include
-human beings, animals, and things. While in many cases the <a>holder</a> of
-a <a>verifiable credential</a> is the subject, in certain cases it is not. For
+<a>verifiable credentials</a> associated with it. Example subjects include
+human beings, animals, and things. In many cases the <a>holder</a> of a
+<a>verifiable credential</a> is the subject, but in certain cases it is not. For
 example, a parent (the <a>holder</a>) might hold the
 <a>verifiable credentials</a> of a child (the <a>subject</a>), or a pet owner
 (the <a>holder</a>) might hold the <a>verifiable credentials</a> of their pet
 (the <a>subject</a>). For more information about these special cases, see
-Appendix <a href="#subject-holder-relationships"></a>
+Appendix <a href="#subject-holder-relationships"></a>.
           </dd>
           <dt><a>verifier</a></dt>
           <dd>
@@ -370,7 +378,7 @@ verifiable data registry utilized in an ecosystem.
           </dd>
         </dl>
 
-        <figure>
+        <figure id="roles">
           <img style="margin: auto; display: block; width: 75%;"
 	       src="diagrams/ecosystem.svg" alt="diagram showing how
 	       credentials flow from issuer to holder and
@@ -383,10 +391,10 @@ verifiable data registry utilized in an ecosystem.
         </figure>
 
         <p class="note">
-The ecosystem above is provided as an example to ground the rest of the
-concepts in this specification. Other ecosystems exist, such as protected
-environments or proprietary systems, where <a>verifiable credentials</a> also
-provide benefit.
+<a href="#roles"></a> above provides an example ecosystem in which to ground the
+rest of the concepts in this specification. Other ecosystems exist, such as
+protected environments or proprietary systems, where
+<a>verifiable credentials</a> also provide benefit.
         </p>
       </section>
 
@@ -394,7 +402,7 @@ provide benefit.
         <h3>Use Cases and Requirements</h3>
 
         <p>
-The Verifiable Credentials Use Cases [[VC-USECASES]] document outlines a number
+The Verifiable Credentials Use Cases document [[VC-USECASES]] outlines a number
 of key topics that readers might find useful, including:
         </p>
 
@@ -434,8 +442,9 @@ desirable ecosystem characteristics were identified for this specification:
 a tamper-evident and privacy-respecting manner.
           </li>
           <li>
-<a>Holders</a> assemble collections of <a>credentials</a> from different
-<a>issuers</a> into a single artifact, a <a>verifiable presentation</a>.
+<a>Holders</a> assemble collections of <a>verifiable credentials</a> from
+different <a>issuers</a> into a single artifact, a
+<a>verifiable presentation</a>.
           </li>
           <li>
 <a>Issuers</a> can issue <a>verifiable credentials</a> about any <a>subject</a>.
@@ -446,7 +455,7 @@ registration nor approval by any authority.
           </li>
           <li>
 <a>Verifiable presentations</a> allow any <a>verifier</a> to <a>verify</a> the
-authenticity of <a>credentials</a> from any <a>issuer</a>.
+authenticity of <a>verifiable credentials</a> from any <a>issuer</a>.
           </li>
           <li>
 <a>Holders</a> can receive <a>verifiable credentials</a> from anyone.
@@ -462,7 +471,7 @@ through any user agent.
           </li>
           <li>
 <a>Holders</a> can store <a>verifiable credentials</a> in any location, without
-affecting their verifiability and without the <a>issuer</a> knowing
+affecting their <a>verifiability</a> and without the <a>issuer</a> knowing
 anything about where they are stored or when they are accessed.
           </li>
           <li>
@@ -497,8 +506,10 @@ If a single <a>verifiable credential</a> supports selective disclosure, then
 <a>verifiable credential</a>.
           </li>
           <li>
-<a>Presentations</a> can either disclose the attributes of a <a>credential</a>,
-or satisfy <a>derived predicates</a> requested by the <a>verifier</a>. <a>Derived predicates</a> are Boolean conditions, such as greater than, less than, equal to, is in set, and so on.
+<a>Verifiable presentations</a> can either disclose the attributes of a
+<a>verifiable credential</a>, or satisfy <a>derived predicates</a> requested by
+the <a>verifier</a>. <a>Derived predicates</a> are Boolean conditions, such as
+greater than, less than, equal to, is in set, and so on.
           </li>
           <li>
 <a>Issuers</a> can issue revocable <a>verifiable credentials</a>.
@@ -511,8 +522,7 @@ serializable in one or more interoperable machine-readable data formats.
 The data model and serialization must be extendable with minimal coordination.
           </li>
           <li>
-Revocation by the <a>issuer</a> should not reveal 
-any identifying information
+Revocation by the <a>issuer</a> should not reveal any identifying information
 about the <a>subject</a>, the <a>holder</a>, the specific
 <a>verifiable credential</a>, or the <a>verifier</a>.
           </li>
@@ -522,7 +532,8 @@ about the <a>subject</a>, the <a>holder</a>, the specific
           <li>
 <a>Issuers</a> revoking <a>verifiable credentials</a> should distinguish between
 revocation for cryptographic integrity (for example, the signing key is
-compromised) versus revocation for a status change (for example, the driver’s license is suspended).
+compromised) versus revocation for a status change (for example, the driver’s
+license is suspended).
           </li>
           <li>
 <a>Issuers</a> can provide a service for refreshing a
