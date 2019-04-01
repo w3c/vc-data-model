@@ -953,18 +953,21 @@ use must mean the same thing to each other. This is often referred to as
 "the context in which a conversation happens". This specification defines the
 use of the <code>@context</code> <a>property</a> when communicating information
 related to specific <a>verifiable credentials</a> or
-<a>verifiable presentations</a>. <a>Verifiable credentials</a> and
-<a>verifiable presentations</a> MUST include a <code>@context</code>
-<a>property</a>.
+<a>verifiable presentations</a>.
+        </p>
+
+        <p>
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST include a
+<code>@context</code> <a>property</a>.
         </p>
 
         <dl>
           <dt><dfn>@context</dfn></dt>
           <dd>
 The value of the <code>@context</code> <a>property</a> MUST be an ordered set
-where the first item is a URI with the value
+where the first item is a <a>URI</a> with the value
 <code>https://www.w3.org/2018/credentials/v1</code>. Subsequent items in the
-array MUST be composed of any combination of <a>URI</a>s or objects that
+array MUST be composed of any combination of <a>URIs</a> or objects that
 express context information. It is RECOMMENDED that dereferencing the
 <a>URIs</a> results in a document containing machine-readable information about
 the context.
@@ -988,18 +991,18 @@ the context.
         </pre>
 
         <p>
-The example above uses the base context URI
+The example above uses the base context <a>URI</a>
 (<code>https://www.w3.org/2018/credentials/v1</code>) to establish that the
-conversation is about a <a>verifiable credential</a>. The second URI
-(<code>https://www.w3.org/2018/credentials/examples/v1</code>) establishes that the
-conversation is about examples.
+conversation is about a <a>verifiable credential</a>. The second <a>URI</a>
+(<code>https://www.w3.org/2018/credentials/examples/v1</code>) establishes that
+the conversation is about examples.
         </p>
 
         <p class="note">
-This document uses the examples context URI
-(<code>https://www.w3.org/2018/credentials/examples/v1</code>) for the purposes of
-demonstrating examples. The examples context URI MUST NOT be used for any
-other purpose, such as in pilot or production systems.
+This document uses the examples context <a>URI</a>
+(<code>https://www.w3.org/2018/credentials/examples/v1</code>) for the purposes
+of demonstrating examples. The examples context <a>URI</a> MUST NOT be used for
+any other purpose, such as in pilot or production systems.
         </p>
 
         <p>
@@ -1068,9 +1071,10 @@ containing machine-readable information about the identifier.
 
         <p>
 The example above uses two types of identifiers. The first identifier is for
-the <a>credential</a> and uses an HTTP-based URL. The second identifier is for
-the <a>subject</a> of the <a>credential</a> (the thing the <a>claims</a> are
-about) and uses a <a>decentralized identifier</a>, also known as a <a>DID</a>.
+the <a>verifiable credential</a> and uses an HTTP-based URL. The second
+identifier is for the <a>subject</a> of the <a>verifiable credential</a> (the
+thing the <a>claims</a> are about) and uses a <a>decentralized identifier</a>,
+also known as a <a>DID</a>.
         </p>
 
         <p class="note">
@@ -1092,11 +1096,15 @@ with a <a>verifiable credential</a>.
 
         <p>
 Software systems that process the kinds of objects specified in this document
-use type information to determine whether or not a provided <a>credential</a>
-or <a>presentation</a> is appropriate. This specification defines a
-<code>type</code> <a>property</a> for the expression of type information.
-<a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST
-have a <code>type</code> <a>property</a>.
+use type information to determine whether or not a provided
+<a>verifiable credential</a> or <a>verifiable presentation</a> is appropriate.
+This specification defines a <code>type</code> <a>property</a> for the
+expression of type information.
+        </p>
+
+        <p>
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST have a
+<code>type</code> <a>property</a>.
         </p>
 
         <dl>
@@ -1149,8 +1157,8 @@ objects that MUST have a <a>type</a> specified.
 <a href="#credentials">Credential</a>&nbsp;object
               </td>
               <td>
-<code>VerifiableCredential</code> and a more specific <a>credential</a>
-<a>type</a>. For example,<br>
+<code>VerifiableCredential</code> and a more specific
+<a>verifiable credential</a> <a>type</a>. For example,<br>
 <code>"type": ["VerifiableCredential", "UniversityDegreeCredential"]</code>
               </td>
             </tr>
@@ -1160,8 +1168,8 @@ objects that MUST have a <a>type</a> specified.
 <a href="#presentations">Presentation</a>&nbsp;object
               </td>
               <td>
-<code>VerifiablePresentation</code> and a more specific <a>presentation</a>
-<a>type</a>. For example,<br>
+<code>VerifiablePresentation</code> and a more specific
+<a>verifiable presentation</a> <a>type</a>. For example,<br>
 <code>"type": ["VerifiablePresentation", "CredentialManagerPresentation"]</code>
               </td>
             </tr>
@@ -1181,7 +1189,7 @@ A valid proof <a>type</a>. For example,<br>
 <a href="#status">credentialStatus</a>&nbsp;object
               </td>
               <td>
-A valid <a>credential</a> status <a>type</a>. For example,<br>
+A valid <a>verifiable credential</a> status <a>type</a>. For example,<br>
 <code>"type": "CredentialStatusList2017"</code>
               </td>
             </tr>
@@ -1210,10 +1218,10 @@ A valid evidence <a>type</a>. For example,<br>
         </table>
 
         <p>
-All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
-specify, or be associated with, additional more narrow <a>types</a> (like
-<code>UniversityDegreeCredential</code>, for example) so software systems can
-process this additional information.
+All <a>verifiable credentials</a>, <a>verifiable presentations</a>, and
+encapsulated objects MUST specify, or be associated with, additional more narrow
+<a>types</a> (like <code>UniversityDegreeCredential</code>, for example) so
+software systems can process this additional information.
         </p>
 
         <p>
@@ -1221,14 +1229,14 @@ When processing encapsulated objects defined in this specification, (for
 example, objects associated with the <code>credentialSubject</code> object
 or deeply nested therein), software systems SHOULD use the <a>type</a>
 information specified in encapsulating objects higher in the hierarchy.
-Specifically, an encapsulating object, such as <a>credential</a>, SHOULD
-convey the associated object <a>types</a> so that <a>verifiers</a> can quickly
-determine the contents of an associated object based on the encapsulating
-object <a>type</a>.
+Specifically, an encapsulating object, such as a <a>verifiable credential</a>,
+SHOULD convey the associated object <a>types</a> so that <a>verifiers</a> can
+quickly determine the contents of an associated object based on the
+encapsulating object <a>type</a>.
         </p>
 
         <p>
-For example, a <a>credential</a> object with the <code>type</code> of
+For example, a <a>verifiable credential</a> object with the <code>type</code> of
 <code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that the
 object associated with the <code>credentialSubject</code> property contains the
 identifier for the:
@@ -1279,6 +1287,9 @@ A <a>verifiable credential</a> contains <a>claims</a> about one or
 more <a>subjects</a>. This specification defines a
 <code>credentialSubject</code> <a>property</a> for the expression of
 <a>claims</a> about one or more <a>subjects</a>.
+        </p>
+
+        <p>
 A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
 <a>property</a>.
         </p>
@@ -1331,7 +1342,7 @@ The value of the <code>issuer</code> <a>property</a> MUST either be a
 RECOMMENDED that dereferencing the <a>URI</a>, or the <code>id</code> property,
 results in a document containing machine-readable information about the
 <a>issuer</a> that can be used to <a>verify</a> the information expressed in
-the <a>credential</a>.
+the <a>verifiable credential</a>.
           </dd>
         </dl>
 
@@ -1362,17 +1373,17 @@ the <a>credential</a>.
 
         <p>
 This specification defines the following <a>property</a> for expressing the
-date and time when the <a>credential</a> was issued:
+date and time when the <a>verifiable credential</a> was issued:
         </p>
 
         <dl>
           <dt><var>issuanceDate</var></dt>
           <dd>
-A <a>verifiable credential</a> MUST have an <code>issuanceDate</code> <a>property</a>.
-The value of the <code>issuanceDate</code> <a>property</a> MUST be a string
-value of an [[!RFC3339]] combined date and time string representing the date
-and time the <a>credential</a> was issued. Note that this date represents the
-earliest date when the information associated with the
+A <a>verifiable credential</a> MUST have an <code>issuanceDate</code>
+<a>property</a>. The value of the <code>issuanceDate</code> <a>property</a> MUST
+be a string value of an [[!RFC3339]] combined date and time string representing
+the date and time the <a>credential</a> was issued. Note that this date
+represents the earliest date when the information associated with the
 <code>credentialSubject</code> <a>property</a> became valid.
           </dd>
         </dl>
@@ -1465,8 +1476,8 @@ the signing date. The example below uses RSA digital signatures.
         </pre>
 
         <p class="note">
-No single proof mechanism is currently standardised or recommended for
-verifiable credentials.
+No single proof mechanism is currently standardized or recommended for
+<a>verifiable credentials</a>.
         </p>
 
       </section>
@@ -1475,16 +1486,16 @@ verifiable credentials.
         <h3>Expiration</h3>
 
         <p>
-This specification defines the following <a>property</a> for the
-expression of <a>credential</a> expiration information:
+This specification defines the following <a>property</a> for the expression of
+<a>verifiable credential</a> expiration information:
         </p>
 
         <dl>
           <dt><var>expirationDate</var></dt>
           <dd>
-The value of the <code>expirationDate</code> <a>property</a> MUST
-be a string value of an [[!RFC3339]] combined date and time string representing
-the date and time the <a>credential</a> ceases to be valid.
+The value of the <code>expirationDate</code> <a>property</a> MUST be a string
+value of an [[!RFC3339]] combined date and time string representing the date and
+time the <a>verifiable credential</a> ceases to be valid.
           </dd>
         </dl>
 
@@ -1515,27 +1526,26 @@ the date and time the <a>credential</a> ceases to be valid.
         <h3>Status</h3>
 
         <p>
-This specification defines the following <a>property</a> for the
-discovery of information about the current status of a
-<a>verifiable credential</a>, such as whether it is suspended
-or revoked:
+This specification defines the following <a>property</a> for the discovery of
+information about the current status of a <a>verifiable credential</a>, such as
+whether it is suspended or revoked:
         </p>
 
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>
-The value of the <code>credentialStatus</code> <a>property</a>
-MUST include the:
+The value of the <code>credentialStatus</code> <a>property</a> MUST include the:
 
             <ul>
               <li>
 <code>id</code> <a>property</a>, which MUST be a URL.
               </li>
               <li>
-<code>type</code> <a>property</a>, which expresses the <a>credential</a> status
-type (also referred to as the <a>credential</a> status method). It is expected
-that the value will provide enough information to determine the current
-status of the <a>credential</a>. For example, the object could contain a link
+<code>type</code> <a>property</a>, which expresses the
+<a>verifiable credential</a> status type (also referred to as the
+<a>verifiable credential</a> status method). It is expected that the value will
+provide enough information to determine the current status of the
+<a>verifiable credential</a>. For example, the object could contain a link
 to an external document noting whether or not the <a>verifiable credential</a>
 is suspended or revoked.
               </li>
@@ -1544,10 +1554,10 @@ is suspended or revoked.
         </dl>
 
         <p>
-The precise contents of the <a>credential</a> status information is determined
-by the specific <code>credentialStatus</code> <a>type</a> definition, and
-varies depending on factors such as whether it is simple to implement or if it
-is privacy-enhancing.
+The precise contents of the <a>verifiable credential</a> status information is
+determined by the specific <code>credentialStatus</code> <a>type</a> definition,
+and varies depending on factors such as whether it is simple to implement or if
+it is privacy-enhancing.
         </p>
 
         <pre class="example nohighlight" title="Usage of the status property">
@@ -1578,7 +1588,8 @@ is privacy-enhancing.
         <p>
 Defining the data model, formats, and protocols for status schemes are out of
 scope for this specification. A status scheme registry [[?VC-STATUS-REGISTRY]]
-exists for implementers who want to implement <a>credential</a> status checking.
+exists for implementers who want to implement <a>verifiable credential</a>
+status checking.
         </p>
       </section>
 
@@ -1618,7 +1629,7 @@ The example below shows a <a>verifiable presentation</a> that embeds
 The contents of the <code>verifiableCredential</code> <a>property</a> shown
 above are <a>verifiable credentials</a>, as described by this specification. The
 contents of the <code>proof</code> <a>property</a> are proofs, as described by
-the Linked Data Proofs [[?LD-PROOFS]] specification. The <code>id</code>
+the Linked Data Proofs specification [[?LD-PROOFS]]. The <code>id</code>
 <a>property</a> is optional and MAY be used to provide a unique identifier for
 the presentation. The value associated with the <code>id</code> property MUST
 be a <a>URI</a>.
@@ -1626,32 +1637,32 @@ be a <a>URI</a>.
 
         <p>
 Some zero-knowledge cryptography schemes might enable <a>holders</a> to
-indirectly prove they hold a <a>credential</a> without revealing the
-<a>credential</a> itself. In these schemes, the original attribute, such as
-date of birth, might be translated into another value, such as "over the age
-of 15", which is cryptographically asserted such that a <a>verifier</a> can
+indirectly prove they hold a <a>verifiable credential</a> without revealing the
+<a>verifiable credential</a> itself. In these schemes, the original attribute,
+such as date of birth, might be translated into another value, such as "over the
+age of 15", which is cryptographically asserted such that a <a>verifier</a> can
 trust the value if they trust the <a>issuer</a>.
         </p>
 
         <p class="note">
-For an example of a ZKP-style verifiable presentation that contains
-derived data instead of directly embedded verifiable credentials, please
-see Section <a href="#zero-knowledge-proofs"></a>.
+For an example of a ZKP-style <a>verifiable presentation</a> containing
+derived data instead of directly embedded <a>verifiable credentials</a>, see
+Section <a href="#zero-knowledge-proofs"></a>.
         </p>
 
         <p>
-If a <a>presentation</a> supports <a>derived predicates</a>, a <a>claim</a>
-about birthdate in a <a>credential</a> can become the basis of proof that at a
-given point in time, the age of a <a>subject</a> did or will fall within a
-specified range. Selective disclosure schemes using zero-knowledge proofs
-can use <a>claims</a> expressed in this model to prove additional statements
-about those <a>claims</a>. For example, a <a>claim</a> specifying a
-<a>subject's</a> date of birth can be used as a predicate to prove the
-<a>subject's</a> age is within a given range, and therefore prove the
+If a <a>verifiable presentation</a> supports <a>derived predicates</a>, a
+<a>claim</a> about birthdate in a <a>verifiable credential</a> can become the
+basis of proof that at a given point in time, the age of a <a>subject</a> did or
+will fall within a specified range. Selective disclosure schemes using
+zero-knowledge proofs can use <a>claims</a> expressed in this model to prove
+additional statements about those <a>claims</a>. For example, a <a>claim</a>
+specifying a <a>subject's</a> date of birth can be used as a predicate to prove
+the <a>subject's</a> age is within a given range, and therefore prove the
 <a>subject</a> qualifies for age-related discounts, without actually revealing
 the <a>subject's</a> birthdate. The <a>holder</a> has the flexibility to use
 the <a>claim</a> in any way that is applicable to the desired
-<a>presentation</a>.
+<a>verifiable presentation</a>.
         </p>
 
         <figure>
