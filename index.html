@@ -1737,7 +1737,7 @@ Directly applicable to steps 2, 3, 4, 5, and 6.
           </li>
           <li>
 Not sufficient on its own for steps 1, 7, and 8 because an authorization
-framework is needed as well.
+framework is also needed.
           </li>
         </ul>
 
@@ -1775,20 +1775,20 @@ The <a>verifiable credentials</a> trust model is as follows:
 
         <ul>
           <li>
-The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a>
-that it received. To establish this trust, a <a>credential</a> is
-expected to either:
+The <a>verifier</a> trusts the <a>issuer</a> to issue the
+<a>verifiable credential</a> that it received. To establish this trust, a
+<a>verifiable credential</a> is expected to either:
             <ul>
               <li>
 Include a <a href="#proofs-signatures">proof</a> establishing that the
-<a>issuer</a> generated the <a>credential</a> (that is, it is a
+<a>issuer</a> generated the <a>verifiable credential</a> (that is, it is a
 <a>verifiable credential</a>), or
               </li>
               <li>
-have been transmitted in a way clearly establishing that the <a>issuer</a>
-generated the <a>credential</a> and that the <a>credential</a> was not
-tampered with in transit or storage. This trust could be weakened depending
-on the risk assessment of the <a>verifier</a>.
+Have been transmitted in a way clearly establishing that the <a>issuer</a>
+generated the <a>verifiable credential</a> and that the
+<a>verifiable credential</a> was not tampered with in transit or storage. This
+trust could be weakened depending on the risk assessment of the <a>verifier</a>.
               </li>
             </ul>
           </li>
@@ -1799,13 +1799,13 @@ tamper-evident and to be a correct record of which data is controlled by which
           </li>
           <li>
 The <a>subject</a> and <a>verifier</a> trust the <a>issuer</a> to issue
-true (that is, not false) <a>credentials</a> about the <a>subject</a>, and to
-revoke them quickly when appropriate.
+true (that is, not false) <a>verifiable credential</a> about the <a>subject</a>,
+and to revoke them quickly when appropriate.
           </li>
           <li>
-The <a>holder</a> trusts the <a>repository</a> to store the <a>credentials</a>
-securely, to not release them to anyone other than the <a>holder</a>, and to
-not corrupt or lose them while they are in its care.
+The <a>holder</a> trusts the <a>repository</a> to store the
+<a>verifiable credential</a> securely, to not release them to anyone other than
+the <a>holder</a>, and to not corrupt or lose them while they are in its care.
           </li>
         </ul>
 
@@ -1833,7 +1833,7 @@ that market competition and customer choice is increased.
         <p>
 For more information about how this trust model interacts with various threat
 models studied by the Working Group, see the Verifiable Credentials Use Cases
-[[VC-USECASES]] document.
+document [[VC-USECASES]].
         </p>
 
         <p class="note">
@@ -2105,7 +2105,7 @@ well formed.
 
         <p class="note" >
 For information about linkages to JSON Schema or other optional
-<a>verification</a> mechanisms, please refer to the
+<a>verification</a> mechanisms, see the
 <a href="https://w3c.github.io/vc-imp-guide/">Verifiable Credentials Implementation Guidelines</a>.
         </p>
 
@@ -2174,11 +2174,11 @@ if it is intended for the <a>holder</a> only.
         </p>
         <p>
 Including the refresh reference inside the <a>verifiable presentation</a>
-enables the <a>holder</a> to refresh the <a>credential</a> details before
-creating a <a>presentation</a> to share with a <a>verifier</a>, while
-including the refresh reference inside the <a>verifiable credential</a>
-enables both the <a>holder</a> and the <a>verifier</a> to perform future
-updates of the <a>credential</a>.
+enables the <a>holder</a> to refresh the <a>verifiable credential</a> details
+before creating a <a>verifiable presentation</a> to share with a
+<a>verifier</a>, while including the refresh reference inside the
+<a>verifiable credential</a> enables both the <a>holder</a> and the
+<a>verifier</a> to perform future updates of the <a>verifiable credential</a>.
         </p>
         <p>
 This specification defines the following <a>property</a> for expressing
@@ -2190,12 +2190,12 @@ a refresh service:
           <dd>
 The value of the <code>refreshService</code> <a>property</a> MUST be one or
 more refresh services that provides enough information to the recipient's
-software such that the recipient can refresh the credential. Each
-<code>refreshService</code> value MUST specify its <code>type</code> (for
+software such that the recipient can refresh the <a>verifiable credential</a>.
+Each <code>refreshService</code> value MUST specify its <code>type</code> (for
 example, <code>ManualRefreshService2018</code>) and its
 <code>id</code>, which is the URL of the service. The precise content of each
-refresh service is determined by
-the specific <code>refreshService</code> <a>type</a> definition.
+refresh service is determined by the specific <code>refreshService</code>
+<a>type</a> definition.
           </dd>
         </dl>
 
@@ -2244,11 +2244,12 @@ for the feature.
 Terms of use can be utilized by an <a>issuer</a> or a <a>holder</a> to
 communicate the terms under which a <a>verifiable credential</a> or
 <a>verifiable presentation</a> was issued. The <a>issuer</a> places their terms
-of use inside the <a>credential</a>. The <a>holder</a> places their terms of use
-inside a <a>presentation</a>.  The value of this property tells the
-<a>verifier</a> what actions it must perform (an <em>obligation</em>), must not
-perform (a <em>prohibition</em>), or may perform (a <em>permission</em>) if it
-is to accept the <a>verifiable credential</a> or <a>verifiable presentation</a>.
+of use inside the <a>verifiable credential</a>. The <a>holder</a> places their
+terms of use inside a <a>verifiable presentation</a>. The value of this property
+tells the <a>verifier</a> what actions it must perform (an <em>obligation</em>),
+must not perform (a <em>prohibition</em>), or may perform (a
+<em>permission</em>) if it is to accept the <a>verifiable credential</a> or
+<a>verifiable presentation</a>.
         </p>
 
         <p class="note">
@@ -2271,11 +2272,11 @@ terms of use:
           <dd>
 The value of the <code>termsOfUse</code> <a>property</a> MUST
 specify one or more terms of use policies under which the creator issued the
-<a>credential</a> or <a>presentation</a>. If the recipient (a <a>holder</a> or
-<a>verifier</a>) is not willing to adhere to the specified terms of use, then
-they do so on their own responsibility and might incur legal liability if they
-violate the stated terms of use. Each <code>termsOfUse</code> value MUST
-specify its <a>type</a>, for example, <code>IssuerPolicy</code>, and
+<a>verifiable credential</a> or <a>verifiable presentation</a>. If the recipient
+(a <a>holder</a> or <a>verifier</a>) is not willing to adhere to the specified
+terms of use, then they do so on their own responsibility and might incur legal
+liability if they violate the stated terms of use. Each <code>termsOfUse</code>
+value MUST specify its <a>type</a>, for example, <code>IssuerPolicy</code>, and
 MAY specify its instance <code>id</code>. The precise contents of each term of
 use is determined by the specific <code>termsOfUse</code> <a>type</a>
 definition.
@@ -2364,7 +2365,7 @@ also the <a>subject</a>, expressed a term of use prohibiting the <a>verifier</a>
 using the information provided to correlate the <a>holder</a> or <a>subject</a>
 using a third-party service. If the <a>verifier</a> were to use a third-party
 service for correlation, they would violate the terms under which the
-</a>holder</a> created the presentation.
+</a>holder</a> created the <a>verifiable presentation</a>.
         </p>
 
         <p class="issue atrisk">
@@ -2387,9 +2388,9 @@ relies on the claims in the <a>verifiable credential</a>.
         <p>
 For example, an <a>issuer</a> could check physical documentation provided by the
 <a>subject</a> or perform a set of background checks before issuing the
-<a>credential</a>. In certain scenarios, this information is useful to the
-<a>verifier</a> when determining the risk associated with relying on a given
-<a>credential</a>.
+<a>verifiable credential</a>. In certain scenarios, this information is useful
+to the <a>verifier</a> when determining the risk associated with relying on a
+given <a>verifiable credential</a>.
         </p>
 
         <p>
@@ -2403,18 +2404,18 @@ evidence information:
 The value of the <code>evidence</code> <a>property</a> MUST be one or more
 evidence schemes providing enough information for a <a>verifier</a> to determine
 whether the evidence gathered by the <a>issuer</a> meets its confidence
-requirements for relying on the <a>credential</a>. Each evidence scheme is
-identified by its <a>type</a>. The <code>id</code> property is optional, but
-if present, SHOULD contain a URL that points to where more information about
-this instance of evidence can be found. The precise content of each evidence
-scheme is determined by the specific <code>evidence</code> <a>type</a>
-definition.
+requirements for relying on the <a>verifiable credential</a>. Each evidence
+scheme is identified by its <a>type</a>. The <code>id</code> property is
+optional, but if present, SHOULD contain a URL that points to where more
+information about this instance of evidence can be found. The precise content of
+each evidence scheme is determined by the specific <code>evidence</code>
+<a>type</a> definition.
           </dd>
         </dl>
 
         <p class="note">
 For information on how attachments and references to credentials and
-non-credential data may be supported by the specification, please refer to the
+non-credential data may be supported by the specification, see the
 <a href="https://w3c.github.io/vc-imp-guide/">Verifiable Credentials Implementation Guidelines</a>.
         </p>
 
@@ -2459,9 +2460,10 @@ The <code>evidence</code> <a>property</a> provides different and complimentary
 information to the <a href="#proofs-signatures"><code>proof</code></a>
 <a>property</a>. The <code>evidence</code> <a>property</a> is used to express
 supporting information, such as documentary evidence, related to the integrity
-of the <a>credential</a>. In contrast, the <code>proof</code> <a>property</a>
-is used to express machine-verifiable mathematical proofs related to the
-authenticity of the <a>issuer</a> and integrity of the <a>credential</a>.
+of the <a>verifiable credential</a>. In contrast, the <code>proof</code>
+<a>property</a> is used to express machine-verifiable mathematical proofs
+related to the authenticity of the <a>issuer</a> and integrity of the
+<a>verifiable credential</a>.
         </p>
 
         <p class="issue atrisk">
@@ -2478,73 +2480,76 @@ by implementers.
         <p>
 A zero-knowledge proof is a cryptographic method where an entity can prove
 to another entity that they know a certain value without disclosing the
-actual value. A real world example is proving that an accredited university
+actual value. A real-world example is proving that an accredited university
 has granted a degree to you without revealing your identity or any other
 personally identifiable information contained on the degree.
         </p>
         <p>
-The key capabilities introduced by zero-knowledge proof mechanisms are:
+The key capabilities introduced by zero-knowledge proof mechanisms are the
+ability of a <a>holder</a> to:
         </p>
-        <ol>
+
+        <ul>
           <li>
-The ability of a <a>holder</a> to combine multiple <a>verifiable credentials</a>
-from multiple <a>issuers</a> into a single presentation without revealing
-<a>credential</a> or <a>subject</a> identifiers to the <a>verifier</a>. This
-makes it more difficult for the <a>verifier</a> to collude with any of the
-issuers regarding the issued <a>credentials</a>.
+Combine multiple <a>verifiable credentials</a> from multiple <a>issuers</a> into
+a single <a>verifiable presentation</a> without revealing
+<a>verifiable credential</a> or <a>subject</a> identifiers to the
+<a>verifier</a>. This makes it more difficult for the <a>verifier</a> to collude
+with any of the issuers regarding the issued <a>verifiable credentials</a>.
           </li>
           <li>
-The ability of a <a>holder</a> to selectively disclose the claims in a <a>credential</a>
-to a <a>verifier</a> without requiring the issuance of multiple atomic <a>credentials</a>.
-This allows a <a>holder</a> to provide a <a>verifier</a> with precisely the information
-they need and nothing more.
+Selectively disclose the claims in a <a>verifiable credential</a> to a
+<a>verifier</a> without requiring the issuance of multiple atomic
+<a>verifiable credentials</a>. This allows a <a>holder</a> to provide a
+<a>verifier</a> with precisely the information they need and nothing more.
           </li>
           <li>
-The ability of a <a>holder</a> to produce a derived <a>credential</a> that is formatted
-according to the <a>verifier</a>'s data schema rather than the <a>issuer</a>'s, without
-needing to involve the <a>issuer</a> after <a>credential</a> issuance. This provides
-a great deal of flexibility for <a>holders</a> to use the <a>credentials</a> they have
-been issued.
+Produce a derived <a>verifiable credential</a> that is formatted according to
+the <a>verifier's</a> data schema rather than the <a>issuer's</a>, without
+needing to involve the <a>issuer</a> after <a>verifiable credential</a>
+issuance. This provides a great deal of flexibility for <a>holders</a> to use
+the <a>verifiable credentials</a> they were issued with.
           </li>
         </ol>
+
         <p>
-This specification describes a data model that supports zero-knowledge proof mechanisms.
-The examples below highlight how the data model may be used to issue,
-present, and verify zero-knowledge <a>verifiable credentials</a>.
+This specification describes a data model that supports zero-knowledge proof
+mechanisms. The examples below highlight how the data model may be used to
+issue, present, and <a>verify</a> zero-knowledge <a>verifiable credentials</a>.
         </p>
 
         <p>
 To use zero-knowledge <a>verifiable credentials</a> the <a>issuer</a> must
 issue a <a>verifiable credential</a> in a manner that enables the <a>holder</a>
 to present the information to a <a>verifier</a> in a privacy-enhancing manner.
-This implies that the <a>holder</a> will be able to prove the validity of the
-issuer's signature without revealing the values that were signed, or when only
-revealing certain selected values. The standard practice is to do so by
+This implies that the <a>holder</a> can prove the validity of the
+<a>issuer's</a> signature without revealing the values that were signed, or when
+only revealing certain selected values. The standard practice is to do so by
 proving knowledge of the signature, without revealing the signature itself.
 There are two requirements for <a>verifiable credentials</a> when they are
-to be used in zero-knowledge proof systems:
+to be used in zero-knowledge proof systems. The <a>verifiable credential</a>
+MUST contain a:
         </p>
 
         <ul>
           <li>
-The <a>verifiable credential</a> MUST contain a credential definition that
-may be used by all parties to perform various cryptographic operations
-in zero-knowledge.
+<a>Verifiable credential</a> definition that can be used by all parties to
+perform various cryptographic operations in zero-knowledge.
           </li>
           <li>
-The <a>verifiable credential</a> MUST contain a proof that enables
-<a>presentations</a> to be derived that prove information contained in the
-original <a>verifiable credential</a> in zero-knowledge. The zero-knowledge
-<a>presentation</a> must not reveal any information not intended to be
-revealed by the <a>holder</a>.
+Proof that enables <a>verifiable presentations</a> to be derived that prove
+information contained in the original <a>verifiable credential</a> in
+zero-knowledge. The zero-knowledge <a>verifiable presentation</a> must not
+reveal any information not intended to be revealed by the <a>holder</a>.
           </li>
         </ul>
 
         <p>
-The following example shows one method of using <a>verifiable credential</a>s
+The following example shows one method of using <a>verifiable credentials</a>
 in zero-knowledge. It makes use of a CL Signature, which allows the presentation
 of the <a>verifiable credential</a> in a way that supports the privacy of the
-<a>holder</a> and <a>subject</a> through the use of selective disclosure of the credential values.
+<a>holder</a> and <a>subject</a> through the use of selective disclosure of the
+<a>verifiable credential</a> values.
         </p>
 
         <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
@@ -2579,8 +2584,8 @@ of the <a>verifiable credential</a> in a way that supports the privacy of the
         </pre>
 
         <p>
-The example above provides the <a>credential</a> definition by using the
-<code>credentialSchema</code> <a>property</a> and a specific proof that is
+The example above provides the <a>verifiable credential</a> definition by using
+the <code>credentialSchema</code> <a>property</a> and a specific proof that is
 usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
         </p>
 
@@ -2588,20 +2593,20 @@ usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
 The next example utilizes the <a>verifiable credential</a> above to generate a
 new derived <a>verifiable credential</a> with a privacy-preserving proof. The
 derived <a>verifiable credential</a> is then placed in a
-<a>verifiable presentation</a> that further proves that the entire assertion is
-valid. There are three requirements of most <a>verifiable presentations</a>
+<a>verifiable presentation</a>, which further proves that the entire assertion
+is valid. There are three requirements of most <a>verifiable presentations</a>
 when they are to be used in zero-knowledge systems:
         </p>
 
         <ul>
           <li>
 All derived <a>verifiable credentials</a> MUST contain a reference to the
-<a>credential</a> definition used to generate the derived proof.
+<a>verifiable credential</a> definition used to generate the derived proof.
           </li>
           <li>
 All derived proofs in <a>verifiable credentials</a> MUST NOT leak information
 that would enable the <a>verifier</a> to correlate the <a>holder</a> presenting
-the credential.
+the <a>verifiable credential</a>.
           </li>
           <li>
 The <a>verifiable presentation</a> MUST contain a proof enabling the
@@ -2682,12 +2687,13 @@ A visual example of the relationship between credentials and derived
 credentials in a ZKP <a>presentation</a>.
           </figcaption>
         </figure>
+
         <p class="note">
-Important details regarding the format for the <a>credential</a> definition and
-of the proofs are omitted on purpose because they are outside of the scope of
-this document. The purpose of this section is to guide implementers wanting to
-extend <a>verifiable credentials</a> and <a>verifiable presentations</a> to
-support zero-knowledge proof systems.
+Important details regarding the format for the <a>verifiable credential</a>
+definition and of the proofs are omitted on purpose because they are outside of
+the scope of this document. The purpose of this section is to guide implementers
+wanting to extend <a>verifiable credentials</a> and
+<a>verifiable presentations</a> to support zero-knowledge proof systems.
         </p>
 
         <p class="issue atrisk">
@@ -2703,7 +2709,7 @@ Recommendation phase.
 
         <p>
 There are at least two different cases to consider for an <a>entity</a>
-wanting to dispute a <a>credential</a> issued by an <a>issuer</a>:
+wanting to dispute a <a>verifiable credential</a> issued by an <a>issuer</a>:
         </p>
 
         <ul>
@@ -2729,19 +2735,19 @@ an attacker falsely disputes a true claim.
 
         <p>
 The mechanism for issuing a <code>DisputeCredential</code> is the same as
-for a regular <a>credential</a> except that the <code>credentialSubject</code>
-identifier in the <code>DisputeCredential</code> property is the identifier of
-the disputed <a>credential</a>.
+for a regular <a>verifiable credential</a> except that the
+<code>credentialSubject</code> identifier in the <code>DisputeCredential</code>
+property is the identifier of the disputed <a>verifiable credential</a>.
         </p>
 
         <p>
-For example, if a <a>credential</a> with an identifier of
+For example, if a <a>verifiable credential</a> with an identifier of
 <code>https://example.org/credentials/245</code> is disputed, an <a>entity</a>
-can issue one of the <a>credentials</a> shown below. In the first example, the
-<a>subject</a> might present this to the <a>verifier</a> along with the
-disputed <a>credential</a>. In the second example, the <a>entity</a> might
-publish the <code>DisputeCredential</code> in a public venue to make it known
-that the <a>credential</a> is disputed.
+can issue one of the <a>verifiable credentials</a> shown below. In the first
+example, the <a>subject</a> might present this to the <a>verifier</a> along with
+the disputed <a>verifiable credential</a>. In the second example, the
+<a>entity</a> might publish the <code>DisputeCredential</code> in a public venue
+to make it known that the <a>credential</a> is disputed.
         </p>
 
         <pre class="example nohighlight" title="A subject disputes a credential">
@@ -2790,16 +2796,16 @@ that the <a>credential</a> is disputed.
 }
         </pre>
 
-<p> In the above <a>credential</a> the <a>issuer</a> is claiming that the
-address in the disputed <a>credential</a> is wrong. For example, the
-<a>subject</a> might wrongly be claiming to have the same address as that of
+<p> In the above <a>verifiable credential</a> the <a>issuer</a> is claiming that
+the address in the disputed <a>verifiable credential</a> is wrong. For example,
+the <a>subject</a> might wrongly be claiming to have the same address as that of
 the <a>issuer</a>.
 </p>
         <p class="note">
-If a <a>credential</a> does not have an identifier, a content-addressed
-identifier can be used to identify the disputed <a>credential</a>. Similarly,
-content-addressed identifiers can be used to uniquely identify individual
-claims.
+If a <a>verifiable credential</a> does not have an identifier, a
+content-addressed identifier can be used to identify the disputed
+<a>verifiable credential</a>. Similarly, content-addressed identifiers can be
+used to uniquely identify individual claims.
         </p>
 
         <p class="issue atrisk">
