@@ -2848,7 +2848,7 @@ CBOR, that is capable of expressing the data model.
         <h3>JSON</h3>
 
         <p>
-The data model as described in Section <a href="#core-data-model"></a> can be
+The data model, as described in Section <a href="#core-data-model"></a>, can be
 encoded in Javascript Object Notation (JSON) [[!RFC8259]] by mapping property
 values to JSON types as follows:
         </p>
@@ -2885,30 +2885,30 @@ Other values MUST be represented as a String type.
 [[!JSON-LD]] is a JSON-based format used to serialize
 <a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. The
 syntax is designed to easily integrate into deployed systems already using
-JSON, and provides a smooth upgrade path from JSON to JSON-LD. It is primarily
-intended to be a way to use Linked Data in Web-based programming environments,
-to build interoperable Web services, and to store Linked Data in JSON-based
-storage engines.
+JSON, and provides a smooth upgrade path from JSON to [[!JSON-LD]]. It is
+primarily intended to be a way to use Linked Data in Web-based programming
+environments, to build interoperable Web services, and to store Linked Data in
+JSON-based storage engines.
         </p>
 
         <p>
-JSON-LD is useful when extending the data model described in this
-specification. Instances of the data model are encoded in JSON-LD in the same
-way they are encoded in JSON (Section <a href="#json"></a>), with the addition
-of the <code>@context</code> <a>property</a>. The
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD Context</a>
+[[!JSON-LD]] is useful when extending the data model described in this
+specification. Instances of the data model are encoded in [[!JSON-LD]] in the
+same way they are encoded in JSON (Section <a href="#json"></a>), with the
+addition of the <code>@context</code> <a>property</a>. The
+<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
 is described in detail in the [[!JSON-LD]] specification and its use is
 elaborated on in Section <a href="#extensibility"></a>.
         </p>
 
         <p>
 Multiple contexts MAY be used or combined to express any arbitrary information
-about <a>credentials</a> in idiomatic JSON. The JSON-LD
-Context available at <code>https://www.w3.org/2018/credentials/v1</code> is a
-static document that is never updated and can therefore be downloaded and
-cached client side. The associated vocabulary document for the Verifiable
-Credentials Data Model is available at
-<code>https://www.w3.org/2018/credentials</code>.
+about <a>verifiable credentials</a> in idiomatic JSON. The
+<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>,
+available at <code>https://www.w3.org/2018/credentials/v1</code>, is a static
+document that is never updated and can therefore be downloaded and cached client
+side. The associated vocabulary document for the Verifiable Credentials Data
+Model is available at <code>https://www.w3.org/2018/credentials</code>.
         </p>
 
         <section>
@@ -2922,7 +2922,7 @@ this approach is to provide a low barrier to entry while still ensuring global
 interoperability between a heterogeneous set of software systems. This section
 describes some of these approaches, which will likely go unnoticed by most
 developers, but whose details will be of interest to implementers. The most
-noteworthy syntactic sugars provided by JSON-LD are:
+noteworthy syntactic sugars provided by [[!JSON-LD]] are:
           </p>
 
           <ul>
@@ -2946,12 +2946,12 @@ and the one provided by the <a>holder</a> presenting the
 each graph is preserved.
             </li>
             <li>
-The <code>@protected</code> properties feature of JSON-LD 1.1 is used to ensure
-that terms defined by this specification cannot be overridden. This means that
-as long as the same <code>@context</code> declaration is made at the top of a
-<a>verifiable credential</a> or <a>verifiable presentation</a>,
+The <code>@protected</code> properties feature of [[!JSON-LD]] 1.1 is used to
+ensure that terms defined by this specification cannot be overridden. This means
+that as long as the same <code>@context</code> declaration is made at the top of
+a <a>verifiable credential</a> or <a>verifiable presentation</a>,
 interoperability is guaranteed for all terms understood by users of the data
-model whether or not they use a JSON-LD processor.
+model whether or not they use a [[!JSON-LD]] processor.
             </li>
           </ul>
         </section>
@@ -3001,11 +3001,11 @@ feature.
 
             <p>
 This specification defines encoding rules of the Verifiable Credential Data
-Model onto JWT and JWS. It further defines processing rules how and when to
-make use of specific JWT registered <a>claim</a> names and specific JWS
-registered header parameter names to allow systems based on JWT to comply with
-this specification. If these specific <a>claim</a> names and header parameters
-are present, their respective counterpart in the standard
+Model onto JWT and JWS. It further defines processing rules how and when to make
+use of specific JWT-registered <a>claim</a> names and specific JWS-registered
+header parameter names to allow systems based on JWT to comply with this
+specification. If these specific <a>claim</a> names and header parameters are
+present, their respective counterpart in the standard 
 <a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
 to avoid duplication.
             </p>
@@ -3038,15 +3038,16 @@ These objects are enclosed in the JWT payload as follows:
           <section>
             <h4>JWT and JWS Considerations</h4>
 
-            <h5>JWT Encoding</h5>
+            <section>
+              <h5>JWT Encoding</h5>
             <p>
-To encode a <a>verifiable credential</a> as a JWT, specific <a>properties</a>
-introduced by this specification MUST be encoded as standard JOSE header
-parameters, JWT registered <a>claim</a> names, or contained in the JWS
-signature part. If no explicit rule is specified, <a>properties</a> are encoded
-in the same way as with a standard <a>verifiable credential</a>, and are added
-to the <code>vc</code> <a>property</a> of the JWT. The following paragraphs
-describe these encoding rules.
+To encode a <a>verifiable credential</a> as a JWT, specific
+<a>properties</a> introduced by this specification MUST be encoded as standard
+JOSE header parameters, JWT registered <a>claim</a> names, or contained in the
+JWS signature part. If no explicit rule is specified, <a>properties</a> are
+encoded in the same way as with a standard <a>verifiable credential</a>, and are
+added to the <code>vc</code> <a>property</a> of the JWT. The following
+paragraphs describe these encoding rules.
             </p>
 
             <p>
@@ -3091,7 +3092,7 @@ specification. For example, the <code>kid</code> can refer to a key in a
             </ul>
 
             <p>
-For backward compatibility with JWT processors, the following JWT registered
+For backward compatibility with JWT processors, the following JWT-registered
 claim names MUST be used instead of, or in addition to, their respective
 standard <a>verifiable credential</a> counterparts:
             </p>
@@ -3129,7 +3130,7 @@ be added to the <code>credentialSubject</code> <a>property</a> of the JWT.
             </p>
 
             <p>
-This version of the specification defines no JWT specific encoding rules for
+This version of the specification defines no JWT-specific encoding rules for
 the concepts outlined in Section
 <a href="#advanced-concepts">Advanced Concepts</a> (for example,
 <code>refreshService</code>, <code>termsOfUse</code>, and
@@ -3138,7 +3139,11 @@ transformation, and can be added to the <code>vc</code> <a>property</a> of the
 JWT.
             </p>
 
-            <h5>JWT Decoding</h5>
+            </section>
+
+            <section>
+              <h5>JWT Decoding</h5>
+
             <p>
 To decode a JWT to a standard <a>verifiable credential</a>, the following
 transformation MUST be performed:
@@ -3343,6 +3348,7 @@ K4cUyX9v3w60xz3gFivd2W6A0mFRCqUkFUGfMpe4j-hsf6FyPzyXM6m1JNkNHsD86HHT_Xu9xTGHuaLp
 dwapkZcYgpuhxHrzNbofYYS0nIIkZ7dIEHiyGhfLo5XzAEmAIU
             </pre>
 
+            </section>
           </section>
         </section>
 
