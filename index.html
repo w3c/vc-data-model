@@ -3464,10 +3464,10 @@ and de-anonymizing capabilities.
       <p>
 Implementers are strongly advised to warn <a>holders</a> when they share data
 with these kinds of characteristics. <a>Issuers</a> are strongly advised to
-provide privacy-protecting <a>credentials</a> when possible. For example,
-issuing <code>ageOver</code> <a>credentials</a> instead of date of birth
-<a>credentials</a> when a <a>verifier</a> wants to determine if an
-<a>entity</a> is over the age of 18.
+provide privacy-protecting <a>verifiable credentials</a> when possible. For
+example, issuing <code>ageOver</code> <a>verifiable credentials</a> instead of
+date of birth <a>verifiable credentials</a> when a <a>verifier</a> wants to
+determine if an <a>entity</a> is over the age of 18.
       </p>
     </section>
 
@@ -3482,15 +3482,15 @@ identifiers are long-lived or used across more than one web domain.
       </p>
 
       <p>
-Similarly, disclosing the <a>credential</a> identifier
-(<code>credential.id</code>) leads to situations
-where multiple <a>verifiers</a>, or an <a>issuer</a> and a <a>verifier</a>,
-can collude to correlate the <a>holder</a>. If <a>holders</a> want to reduce
-correlation, they should use <a>credential</a> schemes that allow hiding the
-identifier during presentation. Such schemes expect the <a>holder</a> to
+Similarly, disclosing the <a>verifiable credential</a> identifier
+(<code>credential.id</code>) leads to situations where multiple
+<a>verifiers</a>, or an <a>issuer</a> and a <a>verifier</a>, can collude to
+correlate the <a>holder</a>. If <a>holders</a> want to reduce correlation, they
+should use <a>verifiable credential</a> schemes that allow hiding the
+identifier during <a>presentation</a>. Such schemes expect the <a>holder</a> to
 generate the identifier and might even allow hiding the identifier from
 the <a>issuer</a>, while still keeping the identifier embedded and signed in
-the <a>credential</a>.
+the <a>verifiable credential</a>.
       </p>
 
       <p>
@@ -3532,8 +3532,8 @@ third-party pairwise signatures, zero-knowledge proofs, or group signatures.
 
       <p class="note">
 Even when using anti-correlation signatures, information might still be
-contained in a <a>credential</a> that defeats the anti-correlation properties
-of the cryptography used.
+contained in a <a>verifiable credential</a> that defeats the anti-correlation
+properties of the cryptography used.
       </p>
     </section>
 
@@ -3545,14 +3545,15 @@ of the cryptography used.
 be used to correlate individuals. These types of identifiers include
 <a>subject</a> identifiers, email addresses, government-issued identifiers,
 organization-issued identifiers, addresses, healthcare vitals,
-<a>credential</a>-specific JSON-LD contexts, and many other sorts of long-lived
-identifiers.
+<a>verifiable credential</a>-specific JSON-LD contexts, and many other sorts of
+long-lived identifiers.
       </p>
 
       <p>
 Organizations providing software to <a>holders</a> should strive to identify
-fields in <a>credentials</a> containing information that could be used to
-correlate individuals and warn <a>holders</a> when this information is shared.
+fields in <a>verifiable credentials</a> containing information that could be
+used tocorrelate individuals and warn <a>holders</a> when this information is
+shared.
       </p>
     </section>
 
@@ -3587,21 +3588,22 @@ transmit <a>verifiable credentials</a> on behalf of a <a>holder</a>.
 To enable recipients of <a>verifiable credentials</a> to use them in a variety
 of circumstances without revealing more personally identifiable information
 than necessary for transactions, <a>issuers</a> should consider limiting the
-information published in a <a>credential</a> to a minimal set needed for the
-expected purposes. One way to avoid placing personally identifiable information
-in a <a>credential</a> is to use an abstract <a>property</a> that meets the
-needs of <a>verifiers</a> without providing specific information about a
-<a>subject</a>.
+information published in a <a>verifiable credential</a> to a minimal set needed
+for the expected purposes. One way to avoid placing personally identifiable
+information in a <a>verifiable credential</a> is to use an abstract
+<a>property</a> that meets the needs of <a>verifiers</a> without providing
+specific information about a <a>subject</a>.
       </p>
       <p>
 For example, this document uses the <code>ageOver</code> <a>property</a>
 instead of a specific birthdate, which constitutes much stronger personally
 identifiable information. If retailers in a specific market commonly require
 purchasers to be older than a certain age, an <a>issuer</a> trusted in that
-market might choose to offer a <a>credential</a> claiming that <a>subjects</a>
-have met that requirement instead of offering <a>credentials</a> containing
-<a>claims</a> about specific birthdates. This enables individual customers to
-make purchases without revealing specific personally identifiable information.
+market might choose to offer a <a>verifiable credential</a> claiming that
+<a>subjects</a> have met that requirement instead of offering
+<a>verifiable credentials</a> containing <a>claims</a> about specific
+birthdates. This enables individual customers to make purchases without
+revealing specific personally identifiable information.
       </p>
     </section>
 
@@ -3619,8 +3621,8 @@ Act (HIPAA) in the United States and the General Data Protection Regulation
       </p>
       <p>
 With <a>verifiable credentials</a>, data minimization for <a>issuers</a> means
-limiting the content of a <a>credential</a> to the minimum required by
-potential <a>verifiers</a> for expected use. For <a>verifiers</a>, data
+limiting the content of a <a>verifiable credential</a> to the minimum required
+by potential <a>verifiers</a> for expected use. For <a>verifiers</a>, data
 minimization means limiting the scope of the information requested or
 required for accessing services.
       </p>
@@ -3634,17 +3636,17 @@ age.
       <p>
 It is considered best practice for <a>issuers</a> to atomize information or use
 a signature scheme that allows for <a>selective disclosure</a>. For example, an
-<a>issuer</a> of driver's licenses could issue a <a>credential</a> containing
-every attribute that appears on a driver's license, as well as a set of
-<a>credentials</a> where every <a>credential</a> contains only a single
-attribute such as a person's birthday. It could also issue more abstract
-<a>credentials</a> (for example, a <a>credential</a> containing only an
-<code>ageOver</code> attribute). One possible adaptation would be for
-<a>issuers</a> to provide secure HTTP endpoints for retrieving single-use
-bearer <a>credentials</a> that promote the pseudonymous usage of
-<a>credentials</a>. Implementers that find this impractical or unsafe, should
-consider using <a>selective disclosure</a> schemes that eliminate dependence on
-<a>issuers</a> at proving time and reduce temporal correlation risk from
+<a>issuer</a> of driver's licenses could issue a <a>verifiable credential</a>
+containing every attribute that appears on a driver's license, as well as a set
+of <a>verifiable credentials</a> where every <a>verifiable credential</a>
+contains only a single attribute such as a person's birthday. It could also
+issue more abstract <a>verifiable credentials</a> (for example, a
+<a>verifiable credential</a> containing only an <code>ageOver</code> attribute).
+One possible adaptation would be for <a>issuers</a> to provide secure HTTP
+endpoints for retrieving single-use <a>bearer credentials</a> that promote the
+pseudonymous usage of <a>verifiable credentials</a>. Implementers that find this
+impractical or unsafe, should consider using <a>selective disclosure</a> schemes
+that eliminate dependence on <a>issuers</a> at proving time and reduce temporal correlation risk from
 <a>issuers</a>.
       </p>
 
@@ -3678,20 +3680,20 @@ principle in real-world scenarios.
       <h3>Bearer Credentials</h3>
 
       <p>
-A <em>bearer credential</em> is a privacy-enhancing piece of information,
-such as a concert ticket, which entitles the <a>holder</a> of the
-<a>credential</a> to a specific resource without divulging sensitive
-information about the <a>holder</a>. Bearer credentials are often used in
-low-risk use cases where the sharing of the credential is not a concern or
-would not result in large economic or reputational losses.
+A <dfn data-lt="bearer credentials">bearer credential</dfn> is a
+privacy-enhancing piece of information, such as a concert ticket, which entitles
+the <a>holder</a> of the bearer credential to a specific resource without
+divulging sensitive information about the <a>holder</a>. Bearer credentials are
+often used in low-risk use cases where the sharing of the bearer credential is
+not a concern or would not result in large economic or reputational losses.
       </p>
 
       <p>
-<a>Verifiable credentials</a> that are bearer <a>credentials</a> are made
+<a>Verifiable credentials</a> that are <a>bearer credentials</a> are made
 possible by not specifying the <a>subject</a> identifier, expressed using the
 <code>id</code> <a>property</a>, which is nested in the
 <code>credentialSubject</code> <a>property</a>. For example, the following
-<a>verifiable credential</a> is a bearer <a>credential</a>:
+<a>verifiable credential</a> is a <a>bearer credential</a>:
       </p>
 
       <pre class="example nohighlight" title="Usage of issuer properties">
@@ -3716,19 +3718,19 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
       </pre>
 
       <p>
-While bearer <a>credentials</a> can be privacy-enhancing, they must be
+While <a>bearer credentials</a> can be privacy-enhancing, they must be
 carefully crafted so as not accidentally divulge more information than the
-<a>holder</a> of the <a>credential</a> expects. For example, repeated use of
-the same bearer credential across multiple sites enables these sites to
-potentially collude to unduly track or correlate the <a>holder</a>. Likewise,
+<a>holder</a> of the <a>bearer credential</a> expects. For example, repeated use
+of the same <a>bearer credential</a> across multiple sites enables these sites
+to potentially collude to unduly track or correlate the <a>holder</a>. Likewise,
 information that might seem non-identifying, such as a birthdate and postal
 code, can be used to statistically identify an individual when used together in
-the same <a>credential</a> or session.
+the same <a>bearer credential</a> or session.
       </p>
 
       <p>
-<a>Issuers</a> of bearer <a>credentials</a> should ensure that the bearer
-<a>credentials</a> provide privacy-enhancing benefits that:
+<a>Issuers</a> of <a>bearer credentials</a> should ensure that the
+<a>bearer credentials</a> provide privacy-enhancing benefits that:
       </p>
 
       <ul>
@@ -3744,15 +3746,15 @@ Are not unduly correlatable.
       </ul>
 
       <p>
-<a>Holders</a> should be warned by their software if bearer <a>credentials</a>
+<a>Holders</a> should be warned by their software if <a>bearer credentials</a>
 containing sensitive information are issued or requested, or if there is a
-correlation risk when combining two or more bearer <a>credentials</a> across one
+correlation risk when combining two or more <a>bearer credentials</a> across one
 or more sessions. While it might be impossible to detect all correlation risks,
 some might certainly be detectable.
       </p>
 
       <p>
-<a>Verifiers</a> should not request bearer <a>credentials</a> that can be used
+<a>Verifiers</a> should not request <a>bearer credentials</a> that can be used
 to unduly correlate the <a>holder</a>.
       </p>
     </section>
@@ -3761,11 +3763,10 @@ to unduly correlate the <a>holder</a>.
       <h3>Validity Checks</h3>
 
       <p>
-When processing <a>verifiable credentials</a>, <a>verifiers</a> are
-expected to perform many of the checks listed in
-Appendix <a href="#validation"></a> as well as a variety of
-specific business process checks. For example, validity
-checks might include checking:
+When processing <a>verifiable credentials</a>, <a>verifiers</a> are expected to
+perform many of the checks listed in Appendix <a href="#validation"></a> as
+well as a variety of specific business process checks. Validity checks might
+include checking:
       </p>
 
       <ul>
@@ -3790,21 +3791,21 @@ The geolocation information associated with the <a>holder</a>.
       <p>
 The process of performing these checks might result in information leakage that
 leads to a privacy violation of the <a>holder</a>. For example, a simple
-operation like checking a revocation list can notify the <a>issuer</a> that a
+operation such as checking a revocation list can notify the <a>issuer</a> that a
 specific business is likely interacting with the <a>holder</a>. This could
 enable <a>issuers</a> to collude and correlate individuals without their
 knowledge.
       </p>
 
       <p>
-<a>Issuers</a> are urged to not use mechanisms, such as <a>credential</a>
-revocation lists that are unique per <a>credential</a>, during the
-<a>verification</a> process that could lead to privacy violations.
-Organizations providing software to <a>holders</a> should warn when
-<a>credentials</a> include information that could lead to privacy violations
-during the verification process. <a>Verifiers</a> should consider rejecting
-<a>credentials</a> that produce privacy violations or that enable bad privacy
-practices.
+<a>Issuers</a> are urged to not use mechanisms, such as
+<a>verifiable credential</a> revocation lists that are unique per 
+<a>verifiable credential</a>, during the <a>verification</a> process that could
+lead to privacy violations. Organizations providing software to <a>holders</a>
+should warn when <a>verifiable credentials</a> include information that could
+lead to privacy violations during the verification process. <a>Verifiers</a>
+should consider rejecting <a>verifiable credentials</a> that produce privacy
+violations or that enable bad privacy practices.
       </p>
     </section>
 
