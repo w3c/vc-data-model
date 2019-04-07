@@ -1189,7 +1189,7 @@ A valid proof <a>type</a>. For example,<br>
 <a href="#status">credentialStatus</a>&nbsp;object
               </td>
               <td>
-A valid <a>verifiable credential</a> status <a>type</a>. For example,<br>
+A valid <a>credential</a> status <a>type</a>. For example,<br>
 <code>"type": "CredentialStatusList2017"</code>
               </td>
             </tr>
@@ -1218,25 +1218,24 @@ A valid evidence <a>type</a>. For example,<br>
         </table>
 
         <p>
-All <a>verifiable credentials</a>, <a>verifiable presentations</a>, and
-encapsulated objects MUST specify, or be associated with, additional more narrow
-<a>types</a> (like <code>UniversityDegreeCredential</code>, for example) so
-software systems can process this additional information.
+All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
+specify, or be associated with, additional more narrow <a>types</a> (like
+<code>UniversityDegreeCredential</code>, for example) so software systems can
+process this additional information.
         </p>
 
         <p>
 When processing encapsulated objects defined in this specification, (for
-example, objects associated with the <code>credentialSubject</code> object
-or deeply nested therein), software systems SHOULD use the <a>type</a>
-information specified in encapsulating objects higher in the hierarchy.
-Specifically, an encapsulating object, such as a <a>verifiable credential</a>,
-SHOULD convey the associated object <a>types</a> so that <a>verifiers</a> can
-quickly determine the contents of an associated object based on the
-encapsulating object <a>type</a>.
+example, objects associated with the <code>credentialSubject</code> object or
+deeply nested therein), software systems SHOULD use the <a>type</a> information
+specified in encapsulating objects higher in the hierarchy. Specifically, an
+encapsulating object, such as a <a>credential</a>, SHOULD convey the associated
+object <a>types</a> so that <a>verifiers</a> can quickly determine the contents
+of an associated object based on the encapsulating object <a>type</a>.
         </p>
 
         <p>
-For example, a <a>verifiable credential</a> object with the <code>type</code> of
+For example, a <a>credential</a> object with the <code>type</code> of
 <code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that the
 object associated with the <code>credentialSubject</code> property contains the
 identifier for the:
@@ -1342,7 +1341,7 @@ The value of the <code>issuer</code> <a>property</a> MUST either be a
 RECOMMENDED that dereferencing the <a>URI</a>, or the <code>id</code> property,
 results in a document containing machine-readable information about the
 <a>issuer</a> that can be used to <a>verify</a> the information expressed in
-the <a>verifiable credential</a>.
+the <a>credential</a>.
           </dd>
         </dl>
 
@@ -1373,18 +1372,18 @@ the <a>verifiable credential</a>.
 
         <p>
 This specification defines the following <a>property</a> for expressing the
-date and time when the <a>verifiable credential</a> was issued:
+date and time when the <a>credential</a> was issued:
         </p>
 
         <dl>
           <dt><var>issuanceDate</var></dt>
           <dd>
-A <a>verifiable credential</a> MUST have an <code>issuanceDate</code>
-<a>property</a>. The value of the <code>issuanceDate</code> <a>property</a> MUST
-be a string value of an [[!RFC3339]] combined date and time string representing
-the date and time the <a>verifiable credential</a> was issued. Note that this
-date represents the earliest date when the information associated with the
-<code>credentialSubject</code> <a>property</a> became valid.
+A <a>credential</a> MUST have an <code>issuanceDate</code> <a>property</a>. The
+value of the <code>issuanceDate</code> <a>property</a> MUST be a string value of
+an [[!RFC3339]] combined date and time string representing the date and time
+the <a>credential</a> was issued. Note that this date represents the earliest
+date when the information associated with the <code>credentialSubject</code>
+<a>property</a> became valid.
           </dd>
         </dl>
 
@@ -1487,7 +1486,7 @@ No single proof mechanism is currently standardized or recommended for
 
         <p>
 This specification defines the following <a>property</a> for the expression of
-<a>verifiable credential</a> expiration information:
+<a>credential</a> expiration information:
         </p>
 
         <dl>
@@ -1495,7 +1494,7 @@ This specification defines the following <a>property</a> for the expression of
           <dd>
 The value of the <code>expirationDate</code> <a>property</a> MUST be a string
 value of an [[!RFC3339]] combined date and time string representing the date and
-time the <a>verifiable credential</a> ceases to be valid.
+time the <a>credential</a> ceases to be valid.
           </dd>
         </dl>
 
@@ -1541,23 +1540,22 @@ The value of the <code>credentialStatus</code> <a>property</a> MUST include the:
 <code>id</code> <a>property</a>, which MUST be a URL.
               </li>
               <li>
-<code>type</code> <a>property</a>, which expresses the
-<a>verifiable credential</a> status type (also referred to as the
-<a>verifiable credential</a> status method). It is expected that the value will
-provide enough information to determine the current status of the
-<a>verifiable credential</a>. For example, the object could contain a link
-to an external document noting whether or not the <a>verifiable credential</a>
-is suspended or revoked.
+<code>type</code> <a>property</a>, which expresses the <a>credential</a> status
+type (also referred to as the <a>credential</a> status method). It is expected
+that the value will provide enough information to determine the current status
+of the <a>credential</a>. For example, the object could contain a link to an
+external document noting whether or not the <a>credential</a> is suspended or
+revoked.
               </li>
             </ul>
           </dd>
         </dl>
 
         <p>
-The precise contents of the <a>verifiable credential</a> status information is
-determined by the specific <code>credentialStatus</code> <a>type</a> definition,
-and varies depending on factors such as whether it is simple to implement or if
-it is privacy-enhancing.
+The precise contents of the <a>credential</a> status information is determined
+by the specific <code>credentialStatus</code> <a>type</a> definition, and varies
+depending on factors such as whether it is simple to implement or if it is
+privacy-enhancing.
         </p>
 
         <pre class="example nohighlight" title="Usage of the status property">
