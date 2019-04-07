@@ -1775,13 +1775,12 @@ The <a>verifiable credentials</a> trust model is as follows:
 
         <ul>
           <li>
-The <a>verifier</a> trusts the <a>issuer</a> to issue the
-<a>verifiable credential</a> that it received. To establish this trust, a
-<a>verifiable credential</a> is expected to either:
+The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a> that
+it received. To establish this trust, a <a>credential</a> is expected to either:
             <ul>
               <li>
 Include a <a href="#proofs-signatures">proof</a> establishing that the
-<a>issuer</a> generated the <a>verifiable credential</a> (that is, it is a
+<a>issuer</a> generated the <a>credential</a> (that is, it is a
 <a>verifiable credential</a>), or
               </li>
               <li>
@@ -1803,9 +1802,9 @@ true (that is, not false) <a>verifiable credential</a> about the <a>subject</a>,
 and to revoke them quickly when appropriate.
           </li>
           <li>
-The <a>holder</a> trusts the <a>repository</a> to store
-<a>verifiable credentials</a> securely, to not release them to anyone other than
-the <a>holder</a>, and to not corrupt or lose them while they are in its care.
+The <a>holder</a> trusts the <a>repository</a> to store <a>credentials</a>
+securely, to not release them to anyone other than the <a>holder</a>, and to not
+corrupt or lose them while they are in its care.
           </li>
         </ul>
 
@@ -2246,10 +2245,10 @@ communicate the terms under which a <a>verifiable credential</a> or
 <a>verifiable presentation</a> was issued. The <a>issuer</a> places their terms
 of use inside the <a>verifiable credential</a>. The <a>holder</a> places their
 terms of use inside a <a>verifiable presentation</a>. The value of this property
-tells the <a>verifier</a> what actions it must perform (an <em>obligation</em>),
-must not perform (a <em>prohibition</em>), or may perform (a
-<em>permission</em>) if it is to accept the <a>verifiable credential</a> or
-<a>verifiable presentation</a>.
+tells the <a>verifier</a> what actions it is required to perform (an
+<em>obligation</em>), not allowed to perform (a <em>prohibition</em>), or
+allowed perform (a <em>permission</em>) if it is to accept the
+<a>verifiable credential</a> or <a>verifiable presentation</a>.
         </p>
 
         <p class="note">
@@ -2272,14 +2271,13 @@ terms of use:
           <dd>
 The value of the <code>termsOfUse</code> <a>property</a> MUST
 specify one or more terms of use policies under which the creator issued the
-<a>verifiable credential</a> or <a>verifiable presentation</a>. If the recipient
-(a <a>holder</a> or <a>verifier</a>) is not willing to adhere to the specified
-terms of use, then they do so on their own responsibility and might incur legal
-liability if they violate the stated terms of use. Each <code>termsOfUse</code>
-value MUST specify its <a>type</a>, for example, <code>IssuerPolicy</code>, and
-MAY specify its instance <code>id</code>. The precise contents of each term of
-use is determined by the specific <code>termsOfUse</code> <a>type</a>
-definition.
+<a>credential</a> or <a>presentation</a>. If the recipient (a <a>holder</a> or
+<a>verifier</a>) is not willing to adhere to the specified terms of use, then
+they do so on their own responsibility and might incur legal liability if they
+violate the stated terms of use. Each <code>termsOfUse</code> value MUST specify
+its <a>type</a>, for example, <code>IssuerPolicy</code>, and MAY specify its
+instance <code>id</code>. The precise contents of each term of use is determined
+by the specific <code>termsOfUse</code> <a>type</a> definition.
           </dd>
         </dl>
 
@@ -2388,9 +2386,9 @@ relies on the claims in the <a>verifiable credential</a>.
         <p>
 For example, an <a>issuer</a> could check physical documentation provided by the
 <a>subject</a> or perform a set of background checks before issuing the
-<a>verifiable credential</a>. In certain scenarios, this information is useful
-to the <a>verifier</a> when determining the risk associated with relying on a
-given <a>verifiable credential</a>.
+<a>credential</a>. In certain scenarios, this information is useful to the
+<a>verifier</a> when determining the risk associated with relying on a given
+<a>credential</a>.
         </p>
 
         <p>
@@ -2404,12 +2402,11 @@ evidence information:
 The value of the <code>evidence</code> <a>property</a> MUST be one or more
 evidence schemes providing enough information for a <a>verifier</a> to determine
 whether the evidence gathered by the <a>issuer</a> meets its confidence
-requirements for relying on the <a>verifiable credential</a>. Each evidence
-scheme is identified by its <a>type</a>. The <code>id</code> property is
-optional, but if present, SHOULD contain a URL that points to where more
-information about this instance of evidence can be found. The precise content of
-each evidence scheme is determined by the specific <code>evidence</code>
-<a>type</a> definition.
+requirements for relying on the <a>credential</a>. Each evidence scheme is
+identified by its <a>type</a>. The <code>id</code> property is optional, but if
+present, SHOULD contain a URL that points to where more information about this
+instance of evidence can be found. The precise content of each evidence scheme
+is determined by the specific <code>evidence</code> <a>type</a> definition.
           </dd>
         </dl>
 
@@ -2736,19 +2733,19 @@ an attacker falsely disputes a true claim.
 
         <p>
 The mechanism for issuing a <code>DisputeCredential</code> is the same as
-for a regular <a>verifiable credential</a> except that the
-<code>credentialSubject</code> identifier in the <code>DisputeCredential</code>
-property is the identifier of the disputed <a>verifiable credential</a>.
+for a regular <a>credential</a> except that the <code>credentialSubject</code>
+identifier in the <code>DisputeCredential</code> property is the identifier of
+the disputed <a>credential</a>.
         </p>
 
         <p>
-For example, if a <a>verifiable credential</a> with an identifier of
+For example, if a <a>credential</a> with an identifier of
 <code>https://example.org/credentials/245</code> is disputed, an <a>entity</a>
-can issue one of the <a>verifiable credentials</a> shown below. In the first
-example, the <a>subject</a> might present this to the <a>verifier</a> along with
-the disputed <a>verifiable credential</a>. In the second example, the
-<a>entity</a> might publish the <code>DisputeCredential</code> in a public venue
-to make it known that the <a>credential</a> is disputed.
+can issue one of the <a>credentials</a> shown below. In the first example, the
+<a>subject</a> might present this to the <a>verifier</a> along with the disputed
+<a>credential</a>. In the second example, the <a>entity</a> might publish the
+<code>DisputeCredential</code> in a public venue to make it known that the
+<a>credential</a> is disputed.
         </p>
 
         <pre class="example nohighlight" title="A subject disputes a credential">
@@ -2803,10 +2800,10 @@ the <a>subject</a> might wrongly be claiming to have the same address as that of
 the <a>issuer</a>.
 </p>
         <p class="note">
-If a <a>verifiable credential</a> does not have an identifier, a
-content-addressed identifier can be used to identify the disputed
-<a>verifiable credential</a>. Similarly, content-addressed identifiers can be
-used to uniquely identify individual claims.
+If a <a>credential</a> does not have an identifier, a content-addressed
+identifier can be used to identify the disputed <a>credential</a>. Similarly,
+content-addressed identifiers can be used to uniquely identify individual
+claims.
         </p>
 
         <p class="issue atrisk">
