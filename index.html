@@ -2865,6 +2865,38 @@ services can use any other data representation syntax, such as XML, YAML, or
 CBOR, that is capable of expressing the data model.
       </p>
 
+      <p>
+One of the goals of this specification is to provide a flexible data model
+that can be expressed in a variety of syntaxes while also maximizing
+interoperability between the syntaxes. Implementers are advised to pay
+particular attention to the rules for serializing and deserializing data
+expressed in Sections <a href="#basic-concepts"></a> and
+<a href="#advanced-concepts"></a>. For example, while it may seem like
+serializing the <code>issuanceDate</code> value could be accomplished with a
+variety of date-time formats, the reality is that there is exactly one way to
+do so and the specification is explicit about this requirement.
+      </p>
+
+      <p>
+Syntaxes that provide intermediate expressions of the data model, one of which
+is detailed in Section <a href="#json-web-token"></a>, are allowed as long as
+the final syntactic expression that asserts conformance with this
+specification is truly conformant. Intermediate expressions are typically
+documented in a way that explains how one transforms between the
+Verifiable Credentials Data Model and the intermediate expression.
+      </p>
+
+      <p>
+For the avoidance of doubt, implementers are able to determine if their
+intermediate expressions are loss-lessly compatible with the Verifiable
+Credentials Data Model by converting their intermediate expression to JSON-LD
+using a JSON-LD processor and then back into their intermediate form without
+data loss. Note that this does not mean that the implemenation needs to use
+a JSON-LD processor in production systems but rather that a JSON-LD processor
+is one useful tool to use when attempting to determine conformance with
+intermediate expression formats and this specification.
+      </p>
+
       <section>
         <h3>JSON</h3>
 
@@ -3025,7 +3057,7 @@ Model onto JWT and JWS. It further defines processing rules how and when to make
 use of specific JWT-registered <a>claim</a> names and specific JWS-registered
 header parameter names to allow systems based on JWT to comply with this
 specification. If these specific <a>claim</a> names and header parameters are
-present, their respective counterpart in the standard 
+present, their respective counterpart in the standard
 <a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
 to avoid duplication.
             </p>
