@@ -512,7 +512,11 @@ or satisfy <a>derived predicates</a> requested by the <a>verifier</a>. <a>Derive
           </li>
           <li>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> must be
-serializable in one or more interoperable machine-readable data formats.
+serializable in one or more machine-readable data formats. 
+Any serialization of a verifiable credential or verifiable presentation must
+be transformable to the generic data model of this document in a deterministic
+process such that the resulting verifiable credential can be processed
+in an interoperable fashion. 
           </li>
           <li>
 The data model and serialization must be extendable with minimal coordination.
@@ -2856,13 +2860,20 @@ on top of this specification.
       <h2>Syntaxes</h2>
 
       <p>
-Many of the concepts in this document were introduced by example using the
-JSON syntax. This section formalizes how the data model (described in Sections
+
+The data model as described in Sections
 <a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
-<a href="#advanced-concepts"></a>) is realized in JSON and JSON-LD. Although
-syntactic mappings are provided for these two syntaxes only, applications and
-services can use any other data representation syntax, such as XML, YAML, or
-CBOR, that is capable of expressing the data model.
+<a href="#advanced-concepts"></a> is the canonical structural
+representation of a verifiable credential or verifiable presentation. 
+All serializations are representations of that data model in a specific 
+format. This section specifies how the data model is realized in JSON-LD and plain JSON. 
+Although syntactic mappings are provided for these two syntaxes only, applications and
+services can use any other data representation syntax (such as XML, YAML, or
+CBOR) that is capable of expressing the data model. As the verification and 
+validation requirements are defined in terms of the data model, all serialization 
+syntaxes have to be deterministically translated to the data model for processing, 
+validation, or comparison. This specification makes no requirements for support 
+of any specific serialization format.
       </p>
 
       <section>
@@ -2985,7 +2996,13 @@ model whether or not they use a [[!JSON-LD]] processor.
         <p>
 The data model described in this specification is designed to be proof format
 agnostic. This specification does not normatively require any particular digital
-proof or signature format. At the time of publication, at least two proof
+proof or signature format. While the data model is the canonical representation
+of the verifiable credentials document, the proofing mechanisms 
+for the verifiable credentials are often tied to the syntax used 
+in the transmission of the document between parties. As such, each proofing
+mechanism must specify whether the validation of the proof is calculated
+against the state of the document as transmitted, against the transformed
+data model, or another form. At the time of publication, at least two proof
 formats are being actively utilized by implementers and the Working Group felt
 that documenting what these proof formats are and how they are being used would
 be beneficial to implementers. The sections detailing the current proof formats
@@ -3066,8 +3083,11 @@ To encode a <a>verifiable credential</a> as a JWT, specific
 JOSE header parameters, JWT registered <a>claim</a> names, or contained in the
 JWS signature part. If no explicit rule is specified, <a>properties</a> are
 encoded in the same way as with a standard <a>verifiable credential</a>, and are
-added to the <code>vc</code> <a>property</a> of the JWT. The following
-paragraphs describe these encoding rules.
+added to the <code>vc</code> <a>property</a> of the JWT. As with all JWTs,
+the JWS based signature of a verifiable credential in the JWT syntax is
+calculated against the literal JWT as presented across the wire, before any 
+decoding or transformation rules are applied. The following paragraphs describe 
+these encoding rules.
             </p>
 
             <p>
