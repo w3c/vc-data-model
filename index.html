@@ -982,7 +982,18 @@ express context information. It is RECOMMENDED that dereferencing the
 the context.
           </dd>
         </dl>
-
+        <p class="note">
+Though this specification requires that a <code>@context</code> <a>property</a>
+be present, there is no requirement that the value of the <code>@context</code>
+property be processed using JSON-LD. This is to support processing using plain
+JSON libraries such as those that may be used when the
+<a>verifiable credential</a> is encoded as a JWT.
+JSON-LD aware processors can process the <code>@context</code> using full
+JSON-LD processing as expected. For other processors, the only processing
+necessary is to ensure that the order of the values in <code>@context</code>
+is what is expected for the particular application, but no JSON-LD processing
+of those values is required.
+        </p>
         <pre class="example nohighlight" title="Usage of the @context property">
 {
   <span class="highlight">"@context": [
@@ -3497,6 +3508,16 @@ provide privacy-protecting <a>credentials</a> when possible. For example,
 issuing <code>ageOver</code> <a>credentials</a> instead of date of birth
 <a>credentials</a> when a <a>verifier</a> wants to determine if an
 <a>entity</a> is over the age of 18.
+      </p>
+
+      <p>
+Because a <a>verifiable credential</a> often contains PII, implementers are
+strongly advised to use mechanisms while storing and transporting
+<a>verifiable credentials</a> that protect the data from those who should not
+access it. Mechanisms that could be considered include TLS or other means of
+encrypting the data while it is being transported, as well as encryption or data
+access control mechanisms to protect the data in a <a>verifiable credential</a>
+while at rest.
       </p>
     </section>
 
