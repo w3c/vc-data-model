@@ -1639,13 +1639,24 @@ exists for implementers who want to implement <a>credential</a> status checking.
 
         <p>
 <a>Verifiable presentations</a> MAY be used to combine and present
-<a>verifiable credentials</a>.
+<a>verifiable credentials</a>. They are packaged in such a way that the
+authorship of the data is <a>verifiable</a>.
         </p>
 
         <p>
 If <a>verifiable presentations</a> are used, they MUST be constructed from
 <a>verifiable credentials</a> themselves, or of data derived from
 <a>verifiable credentials</a> in a cryptographically <a>verifiable</a> format.
+The <code>id</code> <a>property</a> is optional and MAY be used to provide a
+unique identifier for the presentation. The value associated with the
+<code>id</code> property MUST be a <a>URI</a>.
+        </p>
+
+        <p>
+The data in a <a>presentation</a> is often about the same <a>subject</a>, but
+was issued by multiple <a>issuers</a>. The aggregation of information from
+multiple <a>verifiable credentials</a> is a typical use of
+<a>verifiable presentations</a>.
         </p>
 
         <p>
@@ -1670,19 +1681,25 @@ The example below shows a <a>verifiable presentation</a> that embeds
 The contents of the <code>verifiableCredential</code> <a>property</a> shown
 above are <a>verifiable credentials</a>, as described by this specification. The
 contents of the <code>proof</code> <a>property</a> are proofs, as described by
-the Linked Data Proofs [[?LD-PROOFS]] specification. The <code>id</code>
-<a>property</a> is optional and MAY be used to provide a unique identifier for
-the presentation. The value associated with the <code>id</code> property MUST
-be a <a>URI</a>.
+the Linked Data Proofs [[?LD-PROOFS]] specification.
         </p>
+
+        <h4>Presentations Using Derived Credentials</h4>
 
         <p>
 Some zero-knowledge cryptography schemes might enable <a>holders</a> to
-indirectly prove they hold a <a>credential</a> without revealing the
-<a>credential</a> itself. In these schemes, the original attribute, such as
-date of birth, might be translated into another value, such as "over the age
-of 15", which is cryptographically asserted such that a <a>verifier</a> can
-trust the value if they trust the <a>issuer</a>.
+indirectly prove they hold <a>claims</a> from a <a>verifiable credential</a>
+without revealing the <a>verifiable credential</a> itself. In these schemes, a
+<a>claim</a> from a <a>verifiable credential</a> might be used to derive a
+presented value which is cryptographically asserted such that a <a>verifier</a>
+can trust the value if they trust the <a>issuer</a>.
+        </p>
+        <p>
+For example, a <a>verifiable credential</a> that contains the <a>claim</a>
+<code>date of birth</code> might be used to derive the presented value
+<code>over the age of 15</code> in a manner that is cryptographically
+verifiable, i.e. a <a>verifier</a> can still trust the derived value if they
+trust the <a>issuer</a>.
         </p>
 
         <p class="note">
@@ -1692,10 +1709,7 @@ see Section <a href="#zero-knowledge-proofs"></a>.
         </p>
 
         <p>
-If a <a>presentation</a> supports <a>derived predicates</a>, a <a>claim</a>
-about birthdate in a <a>credential</a> can become the basis of proof that at a
-given point in time, the age of a <a>subject</a> did or will fall within a
-specified range. Selective disclosure schemes using zero-knowledge proofs
+Selective disclosure schemes using zero-knowledge proofs
 can use <a>claims</a> expressed in this model to prove additional statements
 about those <a>claims</a>. For example, a <a>claim</a> specifying a
 <a>subject's</a> date of birth can be used as a predicate to prove the
