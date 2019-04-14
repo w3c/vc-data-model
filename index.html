@@ -4465,10 +4465,10 @@ abilities.
     <p>
 There are a number of internationalization considerations implementers should be
 aware of when publishing data described in this specification. As with any web
-standards or protocols implementation, ignoring internationalization makes
-it difficult for data to be produced and consumed across a disparate set
-of languages and societies, which would limit the applicability of the specification
-and significantly diminish its value as a standard.
+standards or protocols implementation, ignoring internationalization makes it
+difficult for data to be produced and consumed across a disparate set of
+languages and societies, which would limit the applicability of the
+specification and significantly diminish its value as a standard.
     </p>
 
     <p>
@@ -4482,27 +4482,33 @@ account when utilizing this data model.
       <p>
 When expressing human-readable text content in the data model, it is important
 for presentation, accessibility, and further processing to specify the language
-of the text.
+of the text, as follows:
       </p>
 
       <ul>
         <li>
-JSON-LD supports the expression of language information via the
-<code>@language</code> feature, which is described in JSON-LD 1.1,
+[[!JSON-LD]] supports the expression of language information using the
+<code>@language</code> feature, as described in [[!JSON-LD]] 1.1,
 <a href="https://www.w3.org/TR/json-ld11/#string-internationalization">Section 4.2.3: String Internationalization</a>.
         </li>
         <li>
-JSON-LD also supports the expression of language information via the
-<code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
+[[!JSON-LD]] also supports the expression of language information using the
+<code>rdf:HTML</code> string literal type, as described in [[!JSON-LD]] 1.0,
 <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
-This mechanism enables a developer to use the internationalization features
+This mechanism enables developers to use the internationalization features
 present in HTML to express language information. For example, consider the
 following key-value pair:
-<code>"nameHtml": "&lt;span lang="jp">和美&lt;/span>"</code>. If the JSON-LD
-Context expressed that any value associated with the <code>nameHtml</code>
-property as being of type <code>rdf:HTML</code>, then software agents
-rendering the property would be able to deterministically identify the
+
+          <pre>
+"nameHtml": "&lt;span lang="jp">和美&lt;/span>"
+          </pre>
+
+          <p>
+If the JSON-LD Context expressed that any value associated with the
+<code>nameHtml</code> property as being of type <code>rdf:HTML</code>, then
+software agents rendering the property can deterministically identify the
 language in use.
+          </p>
         </li>
       </ul>
     </section>
@@ -4510,47 +4516,53 @@ language in use.
     <section class="informative">
       <h3>Text direction</h3>
 
-  <p>
+      <p>
 When expressing human-readable text content in the data model, it is important
 to be able to explicitly encode the text direction. JSON and its derived formats
 use the UTF-8 encoding of [[Unicode]] for serializing and transmitting text.
 This enables text direction to be directly determined in simple cases,
 but the mechanism is insufficient for general use.
-  </p>
-
-  <p>
-JSON-LD supports the expression of text layout information via the
-<code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
+      </p>  
+    
+      <p>
+[[!JSON-LD]] supports the expression of text layout information using the
+<code>rdf:HTML</code> string literal type, as described in [[!JSON-LD]] 1.0,
 <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
-This mechanism enables a developer to use the internationalization features
+This mechanism enables developers to use the internationalization features
 present in HTML to express language information. For example, consider the
 following key-value pair:
-<code>"nameHtml": "&lt;span dir="rtl" lang="ar">HTML و CSS: تصميم و إنشاء مواقع الويب&lt;/span>"</code>.
-If the JSON-LD Context states that any value associated with the <code>nameHtml</code>
-property is of type <code>rdf:HTML</code>, then software agents
-have sufficient information to deterministically identify the text direction of the language.
-  </p>
 
+      <pre>
+"nameHtml": "&lt;span dir="rtl" lang="ar">HTML و CSS: تصميم و إنشاء مواقع الويب&lt;/span>"
+      </pre>
+
+      <p>
+If the JSON-LD Context states that any value associated with the
+<code>nameHtml</code> property is of type <code>rdf:HTML</code>, then software
+agents have sufficient information to deterministically identify the text
+direction of the language.
+      </p>
+      
     </section>
 
     <section class="informative">
       <h3>Ruby Text</h3>
-  <p>
+      <p>
 In some situations it is common to use
-<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>)
-to ensure that text information is clear and as useful as possible.
-JSON-LD's support for HTML data allows text to be encoded with ruby, supporting
-these cases.
-  </p>
+<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>
+to ensure text information is clear and as useful as possible.
+[[!JSON-LD]] support for HTML data allows text to be encoded with ruby, 
+supporting these cases. 
+      </p>
     </section>
 
     <section class="informative">
-      <h3>Further information</h3>
-  <p>
+      <h3>Further Information</h3>
+      <p>
 The W3C Internationalisation document [[string-meta]] gives more information
 about the need to be able to provide reliable metadata about text to support
-internationalization
-  </p>
+internationalization.
+      </p>
     </section>
 
   </section>
