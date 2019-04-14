@@ -1674,26 +1674,49 @@ status checking.
         <h3>Presentations</h3>
 
         <p>
-<a>Verifiable presentations</a> MAY be used to combine and present
-<a>verifiable credentials</a>. They are packaged in such a way that the
-authorship of the data is <a>verifiable</a>.
+<a>Presentations</a> MAY be used to combine and present <a>credentials</a>.
+They are often packaged in such a way that the authorship of the data is
+<a>verifiable</a>. The data in a <a>presentation</a> is often about the
+same <a>subject</a>, but was issued by multiple <a>issuers</a>.
+The aggregation of information from multiple <a>verifiable credentials</a> is
+a typical use of <a>verifiable presentations</a>.
         </p>
 
         <p>
-If <a>verifiable presentations</a> are used, they MUST be constructed from
-<a>verifiable credentials</a> themselves, or of data derived from
-<a>verifiable credentials</a> in a cryptographically <a>verifiable</a> format.
+A <a>verifiable presentation</a> is typically composed of the following
+properties:
+        </p>
+
+        <dl>
+          <dt><var>id</var></dt>
+          <dd>
 The <code>id</code> <a>property</a> is optional and MAY be used to provide a
-unique identifier for the presentation. The value associated with the
-<code>id</code> property MUST be a <a>URI</a>.
-        </p>
-
-        <p>
-The data in a <a>presentation</a> is often about the same <a>subject</a>, but
-was issued by multiple <a>issuers</a>. The aggregation of information from
-multiple <a>verifiable credentials</a> is a typical use of
-<a>verifiable presentations</a>.
-        </p>
+unique identifier for the presentation.
+See Section <a href="#identifiers"></a> for details related to the use of this
+property.
+          </dd>
+          <dt><var>type</var></dt>
+          <dd>
+The <code>type</code> <a>property</a> is required and expresses the
+type of presentation, such as <code>VerifiablePresentation</code>.
+See Section <a href="#types"></a> for details related to the use of this
+property.
+          </dd>
+          <dt><var>verifiableCredential</var></dt>
+          <dd>
+If present, the value of the <code>verifiableCredential</code> <a>property</a>
+MUST be constructed from one or more <a>verifiable credentials</a>, or of data
+derived from <a>verifiable credentials</a> in a cryptographically
+<a>verifiable</a> format.
+          </dd>
+          <dt><var>proof</var></dt>
+          <dd>
+If present, the value of the <code>proof</code> <a>property</a> ensures that
+the <a>presentation</a> is <a>verifiable</a>. See Section
+<a href="#proofs-signatures"></a> for details related to the use of this
+property.
+          </dd>
+        </dl>
 
         <p>
 The example below shows a <a>verifiable presentation</a> that embeds
@@ -1707,7 +1730,7 @@ The example below shows a <a>verifiable presentation</a> that embeds
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
-  "type": ["VerifiablePresentation"],
+  "type": ["VerifiablePresentation", "CredentialManagerPresentation"],
   <span class="highlight">"verifiableCredential": [{ ... }],
   "proof": [{ ... }]</span>
 }
