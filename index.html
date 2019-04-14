@@ -2242,7 +2242,7 @@ is not enough implementation support.
         <h3>Refreshing</h3>
 
         <p>
-It is useful for systems to enable the manual or automatic refresh of a
+It is useful for systems to enable the manual or automatic refresh of an
 <a href="#expiration">expired</a> <a>verifiable credential</a>. This
 specification enables an <a>issuer</a> to include a link to a refresh service.
         </p>
@@ -2250,15 +2250,24 @@ specification enables an <a>issuer</a> to include a link to a refresh service.
 The <a>issuer</a> can include the refresh service as an element inside the
 <a>verifiable credential</a> if it is intended for either the <a>verifier</a>
 or the <a>holder</a> (or both), or inside the <a>verifiable presentation</a>
-if it is intended for the <a>holder</a> only.
+if it is intended for the <a>holder</a> only. In the latter case, this enables 
+the <a>holder</a> to refresh the <a>verifiable credential</a> before creating 
+a <a>verifiable presentation</a> to share with a <a>verifier</a>. In the former case, 
+including the refresh service inside the <a>verifiable credential</a> enables both 
+the <a>holder</a> and the <a>verifier</a> to perform future updates of the credential.
         </p>
         <p>
-Including the refresh reference inside the <a>verifiable presentation</a>
-enables the <a>holder</a> to refresh the <a>credential</a> details before
-creating a <a>presentation</a> to share with a <a>verifier</a>, while
-including the refresh reference inside the <a>verifiable credential</a>
-enables both the <a>holder</a> and the <a>verifier</a> to perform future
-updates of the <a>credential</a>.
+The refresh service is only expected to be used when either the credential 
+has expired, or when the issuer does not publish credential status information. 
+It is ill advised for issuers to put the <code>refreshService</code> in a 
+<a>verifiable credential</a> that does not contain public information, 
+or whose refresh service is not protected in some way. 
+        </p>
+        <p class="note">
+Placing a <a>refreshService</a> in a <a>verifiable credential</a> so that it is available
+to verifiers can remove control and consent from the holder and allow the 
+<a>verifiable credential</a> to be issued directly to the verifier, thereby
+bypassing the holder.
         </p>
         <p>
 This specification defines the following <a>property</a> for expressing
