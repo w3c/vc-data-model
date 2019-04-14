@@ -4223,8 +4223,8 @@ critical systems using the technology outlined in this specification.
 
       <p>
 Some aspects of the data model described in this specification can be
-protected through the use of cryptography. It is important that Implementers
-understand the cryptography suites and libraries used to create and process
+protected through the use of cryptography. It is important for implementers
+to understand the cryptography suites and libraries used to create and process
 <a>credentials</a> and <a>presentations</a>. Implementing and auditing
 cryptography systems generally requires substantial experience. Effective
 <a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a> can also
@@ -4237,7 +4237,7 @@ new attacks and technology advances. Production quality systems need to take
 this into account and ensure mechanisms exist to easily and proactively upgrade
 expired or broken cryptography suites and libraries, and to invalidate
 and replace existing <a>credentials</a>. Regular monitoring is important to
-ensure the long term viability of systems processing <a>verifiable credentials</a>.
+ensure the long term viability of systems processing <a>credentials</a>.
       </p>
     </section>
 
@@ -4246,8 +4246,8 @@ ensure the long term viability of systems processing <a>verifiable credentials</
 
       <p>
 <a>Verifiable credentials</a> often contain URLs to data that resides
-outside of the <a>credential</a> itself. Content that exists outside a
-<a>verifiable credential</a>, such as links to images, JSON-LD Contexts, and
+outside of the <a>verifiable credential</a> itself. Content that exists outside
+a <a>verifiable credential</a>, such as links to images, JSON-LD Contexts, and
 other machine-readable data, are often not protected against tampering because
 the data resides outside of the protection of the
 <a href="#proofs-signatures">proof</a> on the <a>verifiable credential</a>.
@@ -4273,15 +4273,13 @@ protected and probably should be:
       </pre>
 
       <p>
-While this specification does not recommend any particular content integrity
-protection, document authors that would like to ensure that links to content
-are integrity protected are advised to use URL schemes that enforce content
-integrity. Two such schemes are the
-[[HASHLINK]]
-specification and the [[IPFS]]. The example below transforms the
-example above and adds content integrity protection to the JSON-LD Contexts
-using the Hashlink specification, and content integrity protection to the
-image by using an IPFS link:
+While this specification does not recommend any specific content integrity
+protection, document authors who want to ensure links to content are integrity
+protected are advised to use URL schemes that enforce content integrity. Two
+such schemes are the [[HASHLINK]] specification and the [[IPFS]]. The example
+below transforms the previous example and adds content integrity protection to
+the JSON-LD Contexts using the [[HASHLINK]] specification, and content integrity
+protection to the image by using an [[IPFS]] link.
       </p>
 
         <pre class="example nohighlight" title="Content-integrity protection for links to external data">
@@ -4302,16 +4300,16 @@ image by using an IPFS link:
       </pre>
 
       <p class="note">
-It is debatable whether or not the JSON-LD Contexts above need protection as it
-is expected that production implementations will ship with static copies of
-important JSON-LD Contexts.
+It is debatable whether the JSON-LD Contexts above need protection as it
+is expected production implementations will ship with static copies of important
+JSON-LD Contexts.
       </p>
 
       <p>
 While the example above is one way to achieve content integrity protection,
-there are other solutions that may be better suited for certain applications.
+there are other solutions that might be better suited for certain applications.
 Implementers are urged to understand how links to external machine-readable
-content that are not content-integrity protected may result in successful
+content that are not content-integrity protected could result in successful
 attacks against their applications.
       </p>
 
@@ -4324,7 +4322,7 @@ attacks against their applications.
 This specification allows <a>credentials</a> to be produced that do not contain
 signatures or proofs of any kind. These types of <a>credentials</a> are often
 useful for intermediate storage, or self-asserted information, which is
-analogous to filling out a form on a web page. Implementers should note that
+analogous to filling out a form on a web page. Implementers should be aware that
 these types of <a>credentials</a> are not <a>verifiable</a> because the
 authorship is either not known or cannot be trusted.
       </p>
@@ -4355,16 +4353,16 @@ disclosure. In the case of atomization, if it is not done securely by the
       </p>
 
       <p>
-For example a university might issue two <a>credentials</a> to a person, each
-containing two <a>properties</a>, for example, "Staff Member" in the
-"Department of Computing" and "Post Graduate Student" in the "Department of
-Economics". If these <a>credentials</a> are atomized into separate properties,
-then the university would issue four credentials to the person, each containing
-one of the following properties, "Staff Member", "Post Graduate Student",
-"Department of Computing", and "Department of Economics". The <a>holder</a>
-could then transfer the "Staff Member" and "Department of Economics"
-<a>credentials</a> to a <a>verifier</a>, which together would comprise a false
-claim.
+For example a university might issue two <a>verifiable credentials</a> to a
+person, each containing two <a>properties</a>, for example, "Staff Member" in
+the "Department of Computing", and "Post Graduate Student" in the "Department of
+Economics". If these <a>verifiable credentials</a> are atomized into separate
+properties, then the university would issue four credentials to the person, each
+containing one of the following properties, "Staff Member", "Post Graduate
+Student", "Department of Computing", and "Department of Economics". The
+<a>holder</a> could then transfer the "Staff Member" and "Department of
+Economics" <a>verifiable credentials</a> to a <a>verifier</a>, which together
+would comprise a false claim.
       </p>
     </section>
 
@@ -4374,13 +4372,14 @@ claim.
       <p>
 When <a>verifiable credentials</a> are issued for highly dynamic information,
 implementers should ensure the expiration times are set appropriately.
-Expiration periods longer than the timeframe where the <a>credential</a> is
-valid might create exploitable security vulnerabilities. Expiration periods
-shorter than the timeframe where the information expressed by the
-<a>credential</a> is valid creates a burden on <a>holders</a> and
-<a>verifiers</a>. It is therefore important to set validity periods for
-<a>credentials</a> that are appropriate to the use case and the expected
-lifetime for the information contained in the <a>credential</a>.
+Expiration periods longer than the timeframe where the
+<a>verifiable credential</a> is valid might create exploitable security
+vulnerabilities. Expiration periods shorter than the timeframe where the
+information expressed by the <a>verifiable credential</a> is valid creates a
+burden on <a>holders</a> and <a>verifiers</a>. It is therefore important to set
+validity periods for <a>verifiable credentials</a> that are appropriate to the
+use case and the expected lifetime for the information contained in the
+<a>verifiable credential</a>.
       </p>
     </section>
 
@@ -4401,7 +4400,7 @@ device.
         </li>
         <li>
 Enabling password, biometric, or multi-factor authentication for the
-<a>credential</a> repository.
+<a>credential</a> <a>repository</a>.
         </li>
         <li>
 Enabling password, biometric, or multi-factor authentication when accessing
