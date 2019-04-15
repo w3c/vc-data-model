@@ -66,6 +66,16 @@ var vcwg = {
       status: "CG-DRAFT",
       publisher: "Digital Verification Community Group"
     },
+    "CL-SIGNATURES": {
+      title: "A Signature Scheme with Efficient Protocols",
+      href: "http://groups.csail.mit.edu/cis/pubs/lysyanskaya/cl02b.pdf",
+      authors: [
+        "Jan Camenisch",
+        "Anna Lysyanskaya"
+      ],
+      status: "Peer Reviewed Paper",
+      publisher: "IBM Research"
+    },
     // aliases to known references
     "HTTP-SIGNATURES": {
       aliasOf: "http-signatures"
