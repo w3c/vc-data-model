@@ -511,12 +511,14 @@ or satisfy <a>derived predicates</a> requested by the <a>verifier</a>. <a>Derive
 <a>Issuers</a> can issue revocable <a>verifiable credentials</a>.
           </li>
           <li>
-<a>Verifiable credentials</a> and <a>verifiable presentations</a> must be
-serializable in one or more machine-readable data formats. 
-Any serialization of a verifiable credential or verifiable presentation must
-be transformable to the generic data model of this document in a deterministic
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> has to be
+serializable in one or more machine-readable data formats. The serialization
+and de-serialization process has to be deterministic, bi-directional, and lossless.
+Any serialization of a <a>verifiable credential</a> or <a>verifiable presentation</a> needs to
+be transformable to the generic data model defined in this document in a deterministic
 process such that the resulting verifiable credential can be processed
-in an interoperable fashion. 
+in an interoperable fashion. The serialized form also needs to be able
+to be generated from the data model without loss of data or content.
           </li>
           <li>
 The data model and serialization must be extendable with minimal coordination.
@@ -2864,7 +2866,7 @@ on top of this specification.
 The data model as described in Sections
 <a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
 <a href="#advanced-concepts"></a> is the canonical structural
-representation of a verifiable credential or verifiable presentation. 
+representation of a <a>verifiable credential</a> or <a>verifiable presentation</a>. 
 All serializations are representations of that data model in a specific 
 format. This section specifies how the data model is realized in JSON-LD and plain JSON. 
 Although syntactic mappings are provided for these two syntaxes only, applications and
@@ -2909,8 +2911,8 @@ Other values MUST be represented as a String type.
           </li>
         </ul>
         
-        <p>
-NOTE: as the transformations listed herein have potentially incompatible interpretations,
+        <p class="note">
+As the transformations listed herein have potentially incompatible interpretations,
 additional profiling of the JSON format is required to provide a deterministic
 transformation to the data model.
         </p>
@@ -3004,10 +3006,10 @@ model whether or not they use a [[!JSON-LD]] processor.
 The data model described in this specification is designed to be proof format
 agnostic. This specification does not normatively require any particular digital
 proof or signature format. While the data model is the canonical representation
-of the verifiable credentials document, the proofing mechanisms 
-for the verifiable credentials are often tied to the syntax used 
+of a <a>verifiable credential</a> or <a>verifiable presentation</a>, the proofing mechanisms 
+for these are often tied to the syntax used 
 in the transmission of the document between parties. As such, each proofing
-mechanism must specify whether the validation of the proof is calculated
+mechanism has to specify whether the validation of the proof is calculated
 against the state of the document as transmitted, against the transformed
 data model, or another form. At the time of publication, at least two proof
 formats are being actively utilized by implementers and the Working Group felt
@@ -3091,8 +3093,8 @@ JOSE header parameters, JWT registered <a>claim</a> names, or contained in the
 JWS signature part. If no explicit rule is specified, <a>properties</a> are
 encoded in the same way as with a standard <a>verifiable credential</a>, and are
 added to the <code>vc</code> <a>property</a> of the JWT. As with all JWTs,
-the JWS based signature of a verifiable credential in the JWT syntax is
-calculated against the literal JWT as presented across the wire, before any 
+the JWS based signature of a <a>verifiable credential</a> represented in the JWT syntax is
+calculated against the literal JWT string value as presented across the wire, before any 
 decoding or transformation rules are applied. The following paragraphs describe 
 these encoding rules.
             </p>
