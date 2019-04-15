@@ -338,16 +338,15 @@ Example holders include students, employees, and customers.
           </dd>
           <dt><a>issuer</a></dt>
           <dd>
-A role an <a>entity</a> performs by creating a
-<a>verifiable credential</a>, associating it with a specific <a>subject</a>,
-and transmitting it to a <a>holder</a>. Example issuers include
-corporations, non-profit organizations, trade associations, governments, and
-individuals.
+A role an <a>entity</a> performs by asserting <a>claims</a> about one or
+more <a>subjects</a>, creating a <a>verifiable credential</a> from these
+<a>claims</a>, and transmitting the <a>verifiable credential</a> to a
+<a>holder</a>. Example issuers include corporations, non-profit organizations,
+trade associations, governments, and individuals.
           </dd>
           <dt><a>subject</a></dt>
           <dd>
-A role an <a>entity</a> might perform by having one or more
-<a>verifiable credentials</a> asserted about it. Example subjects include
+An <a>entity</a> about which <a>claims</a> are made. Example subjects include
 human beings, animals, and things. While in many cases the <a>holder</a> of
 a <a>verifiable credential</a> is the subject, in certain cases it is not. For
 example, a parent (the <a>holder</a>) might hold the
@@ -358,21 +357,22 @@ Appendix <a href="#subject-holder-relationships"></a>
           </dd>
           <dt><a>verifier</a></dt>
           <dd>
-A role an <a>entity</a> performs by requesting and receiving a
-<a>verifiable presentation</a> that proves the <a>holder</a> possesses the
-required <a>verifiable credentials</a> with certain characteristics. Example
-verifiers include employers, security personnel, and websites.
+A role an <a>entity</a> performs by receiving one or more
+<a>verifiable credentials</a>, optionally inside a
+<a>verifiable presentation</a>, for processing. Example verifiers include
+employers, security personnel, and websites.
           </dd>
           <dt><a>verifiable data registry</a></dt>
           <dd>
 A role a system might perform by mediating the creation and <a>verification</a>
 of identifiers, keys, and other relevant data, such as
-<a>verifiable credential</a> schemas and revocation registries, which might be
-required to use <a>verifiable credentials</a>. Some configurations might
-require correlatable identifiers for <a>subjects</a>. Example verifiable data
-registries include trusted databases, decentralized databases, government ID
-databases, and distributed ledgers. Often there is more than one type of
-verifiable data registry utilized in an ecosystem.
+<a>verifiable credential</a> schemas, revocation registries, issuer public keys,
+and so on, which might be required to use <a>verifiable credentials</a>. Some
+configurations might require correlatable identifiers for <a>subjects</a>.
+Example verifiable data registries include trusted databases, decentralized
+databases, government ID databases, and distributed ledgers. Often
+there is more than one type of verifiable data registry utilized in an
+ecosystem.
           </dd>
         </dl>
 
@@ -558,6 +558,26 @@ This specification makes no normative statements with regard to the
 conformance of roles in the ecosystem, such as <a>issuers</a>, <a>holders</a>,
 or <a>verifiers</a>, because the conformance of ecosystem roles are highly
 application, use case, and market vertical specific.
+        </p>
+
+        <p>
+Digital proof mechanisms, a subset of which are digital signatures, are required
+to ensure the protection of a <a>verifiable credential</a>. Having and
+validating proofs, which may be dependent on the syntax of the proof
+(for example, using the JWS of a JWT for proofing a key holder), are
+an essential part of processing a <a>verifiable credential</a>. At the time
+of publication, Working Group members had implemented
+<a>verifiable credentials</a> using at least three proof mechanisms:
+JSON Web Tokens [[JWT]], Linked Data Signatures [[?LD-SIGNATURES]], and
+Camenisch-Lysyanskaya Zero-Knowledge Proofs [[?CL-SIGNATURES]]. The group
+expects some of these mechanisms, as well as new ones, to mature independently
+and become standardized in time. Given that there are multiple valid
+proof mechanisms, this specification does not standardize on any
+single digital signature mechanism. One of the goals of this specification is to
+provide a data model that can be protected by a variety of current and future
+digital proof mechanisms. Conformance to this specification does not
+depend on the details of a particular proof mechanism; it requires clearly
+identifying the mechanism a <a>verifiable credential</a> uses.
         </p>
       </section>
 
@@ -985,7 +1005,18 @@ express context information. It is RECOMMENDED that dereferencing the
 the context.
           </dd>
         </dl>
-
+        <p class="note">
+Though this specification requires that a <code>@context</code> <a>property</a>
+be present, there is no requirement that the value of the <code>@context</code>
+property be processed using JSON-LD. This is to support processing using plain
+JSON libraries such as those that may be used when the
+<a>verifiable credential</a> is encoded as a JWT.
+JSON-LD aware processors can process the <code>@context</code> using full
+JSON-LD processing as expected. For other processors, the only processing
+necessary is to ensure that the order of the values in <code>@context</code>
+is what is expected for the particular application, but no JSON-LD processing
+of those values is required.
+        </p>
         <pre class="example nohighlight" title="Usage of the @context property">
 {
   <span class="highlight">"@context": [
@@ -1040,9 +1071,13 @@ URLs or content located at the URLs.
         <p>
 When expressing statements about a specific thing, such as a person, product,
 or organization, it is often useful to use some kind of identifier so that
-others can express statements about the same thing. Identifiers that others
-are expected to use when expressing statements about a specific thing MUST be
-expressed using the <code>id</code> <a>property</a>.
+others can express statements about the same thing. This specification defines
+the <code>id</code> <a>property</a> for identifiers. The <code>id</code>
+<a>property</a> is intended to unambiguously refer to an object such as a person,
+product, or organization. This allows for the expression of statements about
+specific things in the verifiable credential. If present, identifiers that
+others are expected to use when expressing statements about a specific thing
+MUST be expressed using the <code>id</code> <a>property</a>.
         </p>
 
         <p class="note">
@@ -1617,13 +1652,24 @@ status checking.
 
         <p>
 <a>Verifiable presentations</a> MAY be used to combine and present
-<a>verifiable credentials</a>.
+<a>verifiable credentials</a>. They are packaged in such a way that the
+authorship of the data is <a>verifiable</a>.
         </p>
 
         <p>
 If <a>verifiable presentations</a> are used, they MUST be constructed from
 <a>verifiable credentials</a> themselves, or of data derived from
 <a>verifiable credentials</a> in a cryptographically <a>verifiable</a> format.
+The <code>id</code> <a>property</a> is optional and MAY be used to provide a
+unique identifier for the presentation. The value associated with the
+<code>id</code> property MUST be a <a>URI</a>.
+        </p>
+
+        <p>
+The data in a <a>presentation</a> is often about the same <a>subject</a>, but
+was issued by multiple <a>issuers</a>. The aggregation of information from
+multiple <a>verifiable credentials</a> is a typical use of
+<a>verifiable presentations</a>.
         </p>
 
         <p>
@@ -1648,19 +1694,26 @@ The example below shows a <a>verifiable presentation</a> that embeds
 The contents of the <code>verifiableCredential</code> <a>property</a> shown
 above are <a>verifiable credentials</a>, as described by this specification. The
 contents of the <code>proof</code> <a>property</a> are proofs, as described by
-the Linked Data Proofs specification [[?LD-PROOFS]]. The <code>id</code>
-<a>property</a> is optional and MAY be used to provide a unique identifier for
-the presentation. The value associated with the <code>id</code> property MUST
-be a <a>URI</a>.
+the Linked Data Proofs [[?LD-PROOFS]] specification.
         </p>
+
+        <h4>Presentations Using Derived Credentials</h4>
 
         <p>
 Some zero-knowledge cryptography schemes might enable <a>holders</a> to
-indirectly prove they hold a <a>verifiable credential</a> without revealing the
-<a>verifiable credential</a> itself. In these schemes, the original attribute,
-such as date of birth, might be translated into another value, such as "over the
-age of 15", which is cryptographically asserted such that a <a>verifier</a> can
-trust the value if they trust the <a>issuer</a>.
+indirectly prove they hold <a>claims</a> from a <a>verifiable credential</a>
+without revealing the <a>verifiable credential</a> itself. In these schemes, a
+<a>claim</a> from a <a>verifiable credential</a> might be used to derive a
+presented value, which is cryptographically asserted such that a <a>verifier</a>
+can trust the value if they trust the <a>issuer</a>.
+        </p>
+
+        <p>
+For example, a <a>verifiable credential</a> containing the <a>claim</a>
+<code>date of birth</code> might be used to derive the presented value
+<code>over the age of 15</code> in a manner that is cryptographically
+verifiable. That is, a <a>verifier</a> can still trust the derived value if
+they trust the <a>issuer</a>.
         </p>
 
         <p class="note">
@@ -1670,18 +1723,14 @@ Section <a href="#zero-knowledge-proofs"></a>.
         </p>
 
         <p>
-If a <a>verifiable presentation</a> supports <a>derived predicates</a>, a
-<a>claim</a> about birthdate in a <a>verifiable credential</a> can become the
-basis of proof that at a given point in time, the age of a <a>subject</a> did or
-will fall within a specified range. Selective disclosure schemes using
-zero-knowledge proofs can use <a>claims</a> expressed in this model to prove
-additional statements about those <a>claims</a>. For example, a <a>claim</a>
-specifying a <a>subject's</a> date of birth can be used as a predicate to prove
-the <a>subject's</a> age is within a given range, and therefore prove the
-<a>subject</a> qualifies for age-related discounts, without actually revealing
-the <a>subject's</a> birthdate. The <a>holder</a> has the flexibility to use
-the <a>claim</a> in any way that is applicable to the desired
-<a>verifiable presentation</a>.
+Selective disclosure schemes using zero-knowledge proofs can use <a>claims</a>
+expressed in this model to prove additional statements about those <a>claims</a>.
+For example, a <a>claim</a> specifying a <a>subject's</a> date of birth can be
+used as a predicate to prove the <a>subject's</a> age is within a given range,
+and therefore prove the <a>subject</a> qualifies for age-related discounts,
+without actually revealing the <a>subject's</a> birthdate. The <a>holder</a>
+has the flexibility to use the <a>claim</a> in any way that is applicable to
+the desired <a>verifiable presentation</a>.
         </p>
 
         <figure>
@@ -2101,6 +2150,16 @@ specific type definition.
           </dd>
         </dl>
 
+        <p class="note">
+The <code>credentialSchema</code> provides an opportunity to annotate type
+definitions or lock them to specific versions of the vocabulary. Authors of VCs
+can include a static version of their vocabulary via credentialSchema that is
+locked to some content integrity protection mechanism.
+The <code>credentialSchema</code> <a>property</a> also makes it possible to
+perform syntactic checking on the credential and use verification mechanisms
+such as JSON Schema validation.
+        </p>
+
         <pre class="example nohighlight" title="Usage of the credentialSchema property to perform JSON schema validation">
 {
   "@context": [
@@ -2192,7 +2251,7 @@ is not enough implementation support.
         <h3>Refreshing</h3>
 
         <p>
-It is useful for systems to enable the manual or automatic refresh of a
+It is useful for systems to enable the manual or automatic refresh of an
 <a href="#expiration">expired</a> <a>verifiable credential</a>. This
 specification enables an <a>issuer</a> to include a link to a refresh service.
         </p>
@@ -2200,15 +2259,24 @@ specification enables an <a>issuer</a> to include a link to a refresh service.
 The <a>issuer</a> can include the refresh service as an element inside the
 <a>verifiable credential</a> if it is intended for either the <a>verifier</a>
 or the <a>holder</a> (or both), or inside the <a>verifiable presentation</a>
-if it is intended for the <a>holder</a> only.
+if it is intended for the <a>holder</a> only. In the latter case, this enables 
+the <a>holder</a> to refresh the <a>verifiable credential</a> before creating 
+a <a>verifiable presentation</a> to share with a <a>verifier</a>. In the former case, 
+including the refresh service inside the <a>verifiable credential</a> enables both 
+the <a>holder</a> and the <a>verifier</a> to perform future updates of the credential.
         </p>
         <p>
-Including the refresh reference inside the <a>verifiable presentation</a>
-enables the <a>holder</a> to refresh the <a>credential</a> details before
-creating a <a>presentation</a> to share with a <a>verifier</a>, while
-including the refresh reference inside the <a>verifiable credential</a>
-enables both the <a>holder</a> and the <a>verifier</a> to perform future
-updates of the <a>credential</a>.
+The refresh service is only expected to be used when either the credential 
+has expired, or when the issuer does not publish credential status information. 
+It is ill advised for issuers to put the <code>refreshService</code> in a 
+<a>verifiable credential</a> that does not contain public information, 
+or whose refresh service is not protected in some way. 
+        </p>
+        <p class="note">
+Placing a <a>refreshService</a> in a <a>verifiable credential</a> so that it is available
+to verifiers can remove control and consent from the holder and allow the 
+<a>verifiable credential</a> to be issued directly to the verifier, thereby
+bypassing the holder.
         </p>
         <p>
 This specification defines the following <a>property</a> for expressing
@@ -3034,7 +3102,7 @@ Model onto JWT and JWS. It further defines processing rules how and when to make
 use of specific JWT-registered <a>claim</a> names and specific JWS-registered
 header parameter names to allow systems based on JWT to comply with this
 specification. If these specific <a>claim</a> names and header parameters are
-present, their respective counterpart in the standard 
+present, their respective counterpart in the standard
 <a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
 to avoid duplication.
             </p>
@@ -3503,6 +3571,16 @@ provide privacy-protecting <a>credentials</a> when possible. For example,
 issuing <code>ageOver</code> <a>credentials</a> instead of date of birth
 <a>credentials</a> when a <a>verifier</a> wants to determine if an
 <a>entity</a> is over the age of 18.
+      </p>
+
+      <p>
+Because a <a>verifiable credential</a> often contains PII, implementers are
+strongly advised to use mechanisms while storing and transporting
+<a>verifiable credentials</a> that protect the data from those who should not
+access it. Mechanisms that could be considered include TLS or other means of
+encrypting the data while it is being transported, as well as encryption or data
+access control mechanisms to protect the data in a <a>verifiable credential</a>
+while at rest.
       </p>
     </section>
 
@@ -4154,8 +4232,8 @@ critical systems using the technology outlined in this specification.
 
       <p>
 Some aspects of the data model described in this specification can be
-protected through the use of cryptography. It is important that Implementers
-understand the cryptography suites and libraries used to create and process
+protected through the use of cryptography. It is important for implementers
+to understand the cryptography suites and libraries used to create and process
 <a>credentials</a> and <a>presentations</a>. Implementing and auditing
 cryptography systems generally requires substantial experience. Effective
 <a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a> can also
@@ -4168,7 +4246,7 @@ new attacks and technology advances. Production quality systems need to take
 this into account and ensure mechanisms exist to easily and proactively upgrade
 expired or broken cryptography suites and libraries, and to invalidate
 and replace existing <a>credentials</a>. Regular monitoring is important to
-ensure the long term viability of systems processing <a>verifiable credentials</a>.
+ensure the long term viability of systems processing <a>credentials</a>.
       </p>
     </section>
 
@@ -4177,8 +4255,8 @@ ensure the long term viability of systems processing <a>verifiable credentials</
 
       <p>
 <a>Verifiable credentials</a> often contain URLs to data that resides
-outside of the <a>credential</a> itself. Content that exists outside a
-<a>verifiable credential</a>, such as links to images, JSON-LD Contexts, and
+outside of the <a>verifiable credential</a> itself. Content that exists outside
+a <a>verifiable credential</a>, such as links to images, JSON-LD Contexts, and
 other machine-readable data, are often not protected against tampering because
 the data resides outside of the protection of the
 <a href="#proofs-signatures">proof</a> on the <a>verifiable credential</a>.
@@ -4204,15 +4282,13 @@ protected and probably should be:
       </pre>
 
       <p>
-While this specification does not recommend any particular content integrity
-protection, document authors that would like to ensure that links to content
-are integrity protected are advised to use URL schemes that enforce content
-integrity. Two such schemes are the
-[[HASHLINK]]
-specification and the [[IPFS]]. The example below transforms the
-example above and adds content integrity protection to the JSON-LD Contexts
-using the Hashlink specification, and content integrity protection to the
-image by using an IPFS link:
+While this specification does not recommend any specific content integrity
+protection, document authors who want to ensure links to content are integrity
+protected are advised to use URL schemes that enforce content integrity. Two
+such schemes are the [[HASHLINK]] specification and the [[IPFS]]. The example
+below transforms the previous example and adds content integrity protection to
+the JSON-LD Contexts using the [[HASHLINK]] specification, and content integrity
+protection to the image by using an [[IPFS]] link.
       </p>
 
         <pre class="example nohighlight" title="Content-integrity protection for links to external data">
@@ -4233,16 +4309,16 @@ image by using an IPFS link:
       </pre>
 
       <p class="note">
-It is debatable whether or not the JSON-LD Contexts above need protection as it
-is expected that production implementations will ship with static copies of
-important JSON-LD Contexts.
+It is debatable whether the JSON-LD Contexts above need protection as it
+is expected production implementations will ship with static copies of important
+JSON-LD Contexts.
       </p>
 
       <p>
 While the example above is one way to achieve content integrity protection,
-there are other solutions that may be better suited for certain applications.
+there are other solutions that might be better suited for certain applications.
 Implementers are urged to understand how links to external machine-readable
-content that are not content-integrity protected may result in successful
+content that are not content-integrity protected could result in successful
 attacks against their applications.
       </p>
 
@@ -4255,7 +4331,7 @@ attacks against their applications.
 This specification allows <a>credentials</a> to be produced that do not contain
 signatures or proofs of any kind. These types of <a>credentials</a> are often
 useful for intermediate storage, or self-asserted information, which is
-analogous to filling out a form on a web page. Implementers should note that
+analogous to filling out a form on a web page. Implementers should be aware that
 these types of <a>credentials</a> are not <a>verifiable</a> because the
 authorship is either not known or cannot be trusted.
       </p>
@@ -4286,16 +4362,16 @@ disclosure. In the case of atomization, if it is not done securely by the
       </p>
 
       <p>
-For example a university might issue two <a>credentials</a> to a person, each
-containing two <a>properties</a>, for example, "Staff Member" in the
-"Department of Computing" and "Post Graduate Student" in the "Department of
-Economics". If these <a>credentials</a> are atomized into separate properties,
-then the university would issue four credentials to the person, each containing
-one of the following properties, "Staff Member", "Post Graduate Student",
-"Department of Computing", and "Department of Economics". The <a>holder</a>
-could then transfer the "Staff Member" and "Department of Economics"
-<a>credentials</a> to a <a>verifier</a>, which together would comprise a false
-claim.
+For example a university might issue two <a>verifiable credentials</a> to a
+person, each containing two <a>properties</a>, for example, "Staff Member" in
+the "Department of Computing", and "Post Graduate Student" in the "Department of
+Economics". If these <a>verifiable credentials</a> are atomized into separate
+properties, then the university would issue four credentials to the person, each
+containing one of the following properties, "Staff Member", "Post Graduate
+Student", "Department of Computing", and "Department of Economics". The
+<a>holder</a> could then transfer the "Staff Member" and "Department of
+Economics" <a>verifiable credentials</a> to a <a>verifier</a>, which together
+would comprise a false claim.
       </p>
     </section>
 
@@ -4305,13 +4381,14 @@ claim.
       <p>
 When <a>verifiable credentials</a> are issued for highly dynamic information,
 implementers should ensure the expiration times are set appropriately.
-Expiration periods longer than the timeframe where the <a>credential</a> is
-valid might create exploitable security vulnerabilities. Expiration periods
-shorter than the timeframe where the information expressed by the
-<a>credential</a> is valid creates a burden on <a>holders</a> and
-<a>verifiers</a>. It is therefore important to set validity periods for
-<a>credentials</a> that are appropriate to the use case and the expected
-lifetime for the information contained in the <a>credential</a>.
+Expiration periods longer than the timeframe where the
+<a>verifiable credential</a> is valid might create exploitable security
+vulnerabilities. Expiration periods shorter than the timeframe where the
+information expressed by the <a>verifiable credential</a> is valid creates a
+burden on <a>holders</a> and <a>verifiers</a>. It is therefore important to set
+validity periods for <a>verifiable credentials</a> that are appropriate to the
+use case and the expected lifetime for the information contained in the
+<a>verifiable credential</a>.
       </p>
     </section>
 
@@ -4332,7 +4409,7 @@ device.
         </li>
         <li>
 Enabling password, biometric, or multi-factor authentication for the
-<a>credential</a> repository.
+<a>credential</a> <a>repository</a>.
         </li>
         <li>
 Enabling password, biometric, or multi-factor authentication when accessing
@@ -4397,10 +4474,10 @@ abilities.
     <p>
 There are a number of internationalization considerations implementers should be
 aware of when publishing data described in this specification. As with any web
-standards or protocols implementation, ignoring internationalization makes
-it difficult for data to be produced and consumed across a disparate set
-of languages and societies, which would limit the applicability of the specification
-and significantly diminish its value as a standard.
+standards or protocols implementation, ignoring internationalization makes it
+difficult for data to be produced and consumed across a disparate set of
+languages and societies, which would limit the applicability of the
+specification and significantly diminish its value as a standard.
     </p>
 
     <p>
@@ -4414,27 +4491,33 @@ account when utilizing this data model.
       <p>
 When expressing human-readable text content in the data model, it is important
 for presentation, accessibility, and further processing to specify the language
-of the text.
+of the text, as follows:
       </p>
 
       <ul>
         <li>
-JSON-LD supports the expression of language information via the
-<code>@language</code> feature, which is described in JSON-LD 1.1,
+[[!JSON-LD]] supports the expression of language information using the
+<code>@language</code> feature, as described in [[!JSON-LD]] 1.1,
 <a href="https://www.w3.org/TR/json-ld11/#string-internationalization">Section 4.2.3: String Internationalization</a>.
         </li>
         <li>
-JSON-LD also supports the expression of language information via the
-<code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
+[[!JSON-LD]] also supports the expression of language information using the
+<code>rdf:HTML</code> string literal type, as described in [[!JSON-LD]] 1.0,
 <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
-This mechanism enables a developer to use the internationalization features
+This mechanism enables developers to use the internationalization features
 present in HTML to express language information. For example, consider the
 following key-value pair:
-<code>"nameHtml": "&lt;span lang="jp">和美&lt;/span>"</code>. If the JSON-LD
-Context expressed that any value associated with the <code>nameHtml</code>
-property as being of type <code>rdf:HTML</code>, then software agents
-rendering the property would be able to deterministically identify the
+
+          <pre>
+"nameHtml": "&lt;span lang="jp">和美&lt;/span>"
+          </pre>
+
+          <p>
+If the JSON-LD Context expressed that any value associated with the
+<code>nameHtml</code> property as being of type <code>rdf:HTML</code>, then
+software agents rendering the property can deterministically identify the
 language in use.
+          </p>
         </li>
       </ul>
     </section>
@@ -4442,47 +4525,53 @@ language in use.
     <section class="informative">
       <h3>Text direction</h3>
 
-  <p>
+      <p>
 When expressing human-readable text content in the data model, it is important
 to be able to explicitly encode the text direction. JSON and its derived formats
 use the UTF-8 encoding of [[Unicode]] for serializing and transmitting text.
 This enables text direction to be directly determined in simple cases,
 but the mechanism is insufficient for general use.
-  </p>
-
-  <p>
-JSON-LD supports the expression of text layout information via the
-<code>rdf:HTML</code> string literal type, which is described in JSON-LD 1.0,
+      </p>  
+    
+      <p>
+[[!JSON-LD]] supports the expression of text layout information using the
+<code>rdf:HTML</code> string literal type, as described in [[!JSON-LD]] 1.0,
 <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
-This mechanism enables a developer to use the internationalization features
+This mechanism enables developers to use the internationalization features
 present in HTML to express language information. For example, consider the
 following key-value pair:
-<code>"nameHtml": "&lt;span dir="rtl" lang="ar">HTML و CSS: تصميم و إنشاء مواقع الويب&lt;/span>"</code>.
-If the JSON-LD Context states that any value associated with the <code>nameHtml</code>
-property is of type <code>rdf:HTML</code>, then software agents
-have sufficient information to deterministically identify the text direction of the language.
-  </p>
 
+      <pre>
+"nameHtml": "&lt;span dir="rtl" lang="ar">HTML و CSS: تصميم و إنشاء مواقع الويب&lt;/span>"
+      </pre>
+
+      <p>
+If the JSON-LD Context states that any value associated with the
+<code>nameHtml</code> property is of type <code>rdf:HTML</code>, then software
+agents have sufficient information to deterministically identify the text
+direction of the language.
+      </p>
+      
     </section>
 
     <section class="informative">
       <h3>Ruby Text</h3>
-  <p>
+      <p>
 In some situations it is common to use
-<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>)
-to ensure that text information is clear and as useful as possible.
-JSON-LD's support for HTML data allows text to be encoded with ruby, supporting
-these cases.
-  </p>
+<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>
+to ensure text information is clear and as useful as possible.
+[[!JSON-LD]] support for HTML data allows text to be encoded with ruby, 
+supporting these cases. 
+      </p>
     </section>
 
     <section class="informative">
-      <h3>Further information</h3>
-  <p>
+      <h3>Further Information</h3>
+      <p>
 The W3C Internationalisation document [[string-meta]] gives more information
 about the need to be able to provide reliable metadata about text to support
-internationalization
-  </p>
+internationalization.
+      </p>
     </section>
 
   </section>
