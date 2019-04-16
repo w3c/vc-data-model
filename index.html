@@ -656,7 +656,7 @@ A basic claim expressing that Pat is an alumni of "Example University".
         <p>
 Individual <a>claims</a> can be merged together to express a <a>graph</a> of
 information about a <a>subject</a>. The example shown in
-<a href="#mulitple-claims"></a> below extends the previous <a>claim</a> by
+<a href="#multiple-claims"></a> below extends the previous <a>claim</a> by
 adding the <a>claims</a> that Pat knows Sam and that Sam is employed as a
 professor.
         </p>
@@ -2279,24 +2279,24 @@ specification enables an <a>issuer</a> to include a link to a refresh service.
 The <a>issuer</a> can include the refresh service as an element inside the
 <a>verifiable credential</a> if it is intended for either the <a>verifier</a>
 or the <a>holder</a> (or both), or inside the <a>verifiable presentation</a>
-if it is intended for the <a>holder</a> only. In the latter case, this enables 
-the <a>holder</a> to refresh the <a>verifiable credential</a> before creating 
-a <a>verifiable presentation</a> to share with a <a>verifier</a>. In the former case, 
-including the refresh service inside the <a>verifiable credential</a> enables both 
+if it is intended for the <a>holder</a> only. In the latter case, this enables
+the <a>holder</a> to refresh the <a>verifiable credential</a> before creating
+a <a>verifiable presentation</a> to share with a <a>verifier</a>. In the former case,
+including the refresh service inside the <a>verifiable credential</a> enables both
 the <a>holder</a> and the <a>verifier</a> to perform future updates of the credential.
         </p>
         <p>
-The refresh service is only expected to be used when either the <a>credential</a> 
+The refresh service is only expected to be used when either the <a>credential</a>
 has expired, or when the <a>issuer</a> does not publish <a>credential</a> status
 information. <a>Issuers</a> are advised not to put the <code>refreshService</code>
 in a <a>verifiable credential</a> that does not contain public information, or
-whose refresh service is not protected in some way. 
+whose refresh service is not protected in some way.
         </p>
         <p class="note">
-Placing a <a>refreshService</a> in a <a>verifiable credential</a> so that it is
-available to <a>verifiers</a> can remove control and consent from the <a>holder</a>
-and allow the <a>verifiable credential</a> to be issued directly to the
-<a>verifier</a>, thereby bypassing the <a>holder</a>.
+Placing a <code>refreshService</code> in a <a>verifiable credential</a> so that
+it is available to <a>verifiers</a> can remove control and consent from the
+<a>holder</a> and allow the <a>verifiable credential</a> to be issued directly
+to the <a>verifier</a>, thereby bypassing the <a>holder</a>.
         </p>
         <p>
 This specification defines the following <a>property</a> for expressing
@@ -2631,8 +2631,7 @@ their issued <a>verifiable credentials</a>.
         <p>
 This specification describes a data model that supports zero-knowledge proof
 mechanisms. The examples below highlight how the data model can be used to
-<a>issue</a>, <a>present</a>, and <a>verify</a> zero-knowledge
-<a>verifiable credentials</a>.
+issue, present, and verify zero-knowledge <a>verifiable credentials</a>.
         </p>
 
         <p>
@@ -2962,15 +2961,15 @@ on top of this specification.
 The data model as described in Sections
 <a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
 <a href="#advanced-concepts"></a> is the canonical structural
-representation of a <a>verifiable credential</a> or <a>verifiable presentation</a>. 
-All serializations are representations of that data model in a specific 
-format. This section specifies how the data model is realized in JSON-LD and plain JSON. 
+representation of a <a>verifiable credential</a> or <a>verifiable presentation</a>.
+All serializations are representations of that data model in a specific
+format. This section specifies how the data model is realized in JSON-LD and plain JSON.
 Although syntactic mappings are provided for only these two syntaxes, applications and
 services can use any other data representation syntax (such as XML, YAML, or
-CBOR) that is capable of expressing the data model. As the verification and 
-validation requirements are defined in terms of the data model, all serialization 
-syntaxes have to be deterministically translated to the data model for processing, 
-validation, or comparison. This specification makes no requirements for support 
+CBOR) that is capable of expressing the data model. As the verification and
+validation requirements are defined in terms of the data model, all serialization
+syntaxes have to be deterministically translated to the data model for processing,
+validation, or comparison. This specification makes no requirements for support
 of any specific serialization format.
       </p>
 
@@ -3006,13 +3005,13 @@ Empty values SHOULD be represented as a null value.
 Other values MUST be represented as a String type.
           </li>
         </ul>
-        
+
         <p class="note">
 As the transformations listed herein have potentially incompatible interpretations,
 additional profiling of the JSON format is required to provide a deterministic
 transformation to the data model.
         </p>
-        
+
       </section>
 
       <section>
@@ -3102,8 +3101,8 @@ model whether or not they use a [[!JSON-LD]] processor.
 The data model described in this specification is designed to be proof format
 agnostic. This specification does not normatively require any particular digital
 proof or signature format. While the data model is the canonical representation
-of a <a>verifiable credential</a> or <a>verifiable presentation</a>, the proofing mechanisms 
-for these are often tied to the syntax used 
+of a <a>verifiable credential</a> or <a>verifiable presentation</a>, the proofing mechanisms
+for these are often tied to the syntax used
 in the transmission of the document between parties. As such, each proofing
 mechanism has to specify whether the validation of the proof is calculated
 against the state of the document as transmitted, against the transformed
@@ -3190,8 +3189,8 @@ JWS signature part. If no explicit rule is specified, <a>properties</a> are
 encoded in the same way as with a standard <a>verifiable credential</a>, and are
 added to the <code>vc</code> <a>property</a> of the JWT. As with all JWTs,
 the JWS-based signature of a <a>verifiable credential</a> represented in the JWT syntax is
-calculated against the literal JWT string value as presented across the wire, before any 
-decoding or transformation rules are applied. The following paragraphs describe 
+calculated against the literal JWT string value as presented across the wire, before any
+decoding or transformation rules are applied. The following paragraphs describe
 these encoding rules.
             </p>
 
@@ -3807,7 +3806,7 @@ One possible adaptation would be for <a>issuers</a> to provide secure HTTP
 endpoints for retrieving single-use <a>bearer credentials</a> that promote the
 pseudonymous usage of <a>verifiable credentials</a>. Implementers that find this
 impractical or unsafe, should consider using <a>selective disclosure</a> schemes
-that eliminate dependence on <a>issuers</a> at proving time and reduce temporal 
+that eliminate dependence on <a>issuers</a> at proving time and reduce temporal
 correlation risk from <a>issuers</a>.
       </p>
 
@@ -3963,7 +3962,7 @@ knowledge.
 <a>credential</a> revocation lists that are unique per <a>credential</a>, during
 the <a>verification</a> process that could lead to privacy violations.
 Organizations providing software to <a>holders</a> should warn when
-<a>credentials</a> include information that could lead to privacy violations 
+<a>credentials</a> include information that could lead to privacy violations
 during the verification process. <a>Verifiers</a> should consider rejecting
 <a>credentials</a> that produce privacy violations or that enable bad privacy
 practices.
@@ -4582,8 +4581,8 @@ to be able to explicitly encode the text direction. JSON and its derived formats
 use the UTF-8 encoding of [[Unicode]] for serializing and transmitting text.
 This enables text direction to be directly determined in simple cases,
 but the mechanism is insufficient for general use.
-      </p>  
-    
+      </p>
+
       <p>
 [[!JSON-LD]] supports the expression of text layout information using the
 <code>rdf:HTML</code> string literal type, as described in [[!JSON-LD]] 1.0,
@@ -4602,7 +4601,7 @@ If the JSON-LD Context states that any value associated with the
 agents have sufficient information to deterministically identify the text
 direction of the language.
       </p>
-      
+
     </section>
 
     <section class="informative">
@@ -4611,8 +4610,8 @@ direction of the language.
 In some situations it is common to use
 <a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>
 to ensure text information is clear and as useful as possible.
-[[!JSON-LD]] support for HTML data allows text to be encoded with ruby, 
-supporting these cases. 
+[[!JSON-LD]] support for HTML data allows text to be encoded with ruby,
+supporting these cases.
       </p>
     </section>
 
