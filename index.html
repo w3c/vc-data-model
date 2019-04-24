@@ -2105,20 +2105,17 @@ with implementations, or enabling aggressive caching of contexts.
           <h4>Semantic Interoperability</h4>
 
           <p>
-This specification endeavors to enable both the JSON and JSON-LD syntaxes to
-be semantically compatible with one another without the JSON implementations
-needing to process the document using JSON-LD processors. To achieve this, the
-specification imposes the following additional requirements on both syntaxes:
+This specification ensures that "plain" JSON and JSON-LD syntaxes are
+semantically compatible without requiring JSON implementations to use a
+JSON-LD processor. To achieve this, the specification imposes the following
+additional requirements on both syntaxes:
           </p>
 
           <ul>
             <li>
 JSON-based processors MUST process the <code>@context</code> <a>property</a>,
 ensuring the expected values exist in the expected order for the
-<a>credential</a> type being processed. It is advised that the expected order
-of values of the <code>@context</code> <a>property</a> should be defined by
-at least a human-readable extension specification and preferably by a
-machine-readable specification as well.
+<a>credential</a> type being processed.
             </li>
             <li>
 JSON-LD-based processors MUST produce an error when a JSON-LD context
@@ -2132,15 +2129,24 @@ Authors that are interested in this feature should read about the
           </ul>
 
           <p>
-If implementers follow the requirements above, they are guaranteed semantic
-interoperability between JSON and JSON-LD syntaxes for terms defined by the
-<code>@context</code> mechanism. This is because the exact terms used in
-document are explicitly stated in a globally unique way through the use and
-processing of the <code>@context</code> property. In other words, the context
-in which the data exchange happens is explicitly stated as opposed to implicitly
-assumed such as if the context were to be hard coded into a software
-implementation. With respect to JSON-based processors, this is achieved in a
-lightweight manner, without having to use JSON-LD processing libraries.
+A human-readable document describing the expected order of values for the
+<code>@context</code> <a>property</a> is expected to be published by any
+implementer seeking interoperability. A machine-readable description
+(i.e., a normal JSON-LD Context document) is expected to be published
+at the URL specified in the <code>@context</code> <a>property</a> by
+JSON-LD implementers seeking interoperability.
+          </p>
+
+          <p>
+The requirements above guarantee semantic interoperability between JSON and
+JSON-LD for terms defined by the <code>@context</code> mechanism. While JSON-LD
+processors will use the specific mechanism provided and can verify that all
+terms are correctly specified, JSON-based processors implicitly accept the same
+set of terms without testing that they are correct. In other words, the context
+in which the data exchange happens is explicitly stated for both JSON and
+JSON-LD by using the same mechanism. With respect to JSON-based processors,
+this is achieved in a lightweight manner, without having to use JSON-LD
+processing libraries.
         </section>
       </section>
 
