@@ -83,7 +83,7 @@ cases outlined below. The data exchanged differs depending on the roles
 participating, but is fundamentally composed of claims, credentials, and
 presentations.
 
-A *claim* is statement about a subject, expressed as a subject-property-value
+A *claim* is a statement about a subject, expressed as a subject-property-value
 relationship.
 
 <a href="https://w3c.github.io/vc-data-model/">
@@ -312,12 +312,12 @@ the terms of use for verifiable credentials and verifiable presentations.
 
 ### Proof Format Agility
 
-Currently there are at least four different proof formats actively being
-used by participants in the VCWG, including JSON Web Signatures,
+Currently there are at least four different proof formats in active 
+use by participants in the VCWG, including JSON Web Signatures,
 Zero-Knowledge Proofs using CL signatures, Common Binary Object Representation Object Signing and
 Encryption, and Linked Data Proofs. It was challenging for the VCWG to select
 one format because there are a number of benefits and drawbacks provided by
-each approach. The result of this challenge was to ensure that the Verifiable
+each approach. In addressing this challenge, the VCWG has ensured that the Verifiable
 Credentials Data Model is flexible enough to be compatible with each signature
 format with no changes needed to the core data model.
 
@@ -353,7 +353,7 @@ Of course we will continue to recruit for additional implementations.
 ## Implementations and Reviews
 
 The VCWG has begun the process of horizontal review. Feedback from APA and
-PING is, or is in the process of, being incorporated.
+PING has been, or is in the process of being, incorporated.
 
 This data model has numerous successful implementations, including governments,
 universities, major technology organizations, and not-for-profit organizations.
