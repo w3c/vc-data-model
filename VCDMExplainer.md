@@ -25,8 +25,8 @@ creation, storage, transmission, and verification of digital credentials.
 
 ## Goals
 
-The mission of the Verifiable Claims Working Group (VCWG)is to make expressing,
-exchanging, and verifying claims easier and more secure. The
+The mission of the Verifiable Claims Working Group (VCWG) is to make 
+expressing, exchanging, and verifying claims easier and more secure. The
 data model outlines core concepts, such as claims, credentials, and
 presentations, that form the foundation of the Specification.
 
