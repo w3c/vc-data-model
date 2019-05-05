@@ -27,9 +27,9 @@ var vcwg = {
       status: "NOTE",
       publisher: "Verifiable Claims Working Group"
     },
-    "VC-STATUS-REGISTRY": {
-      title: "Verifiable Credentials Status Scheme Registry",
-      href: "https://w3c-ccg.github.io/vc-status-registry/",
+    "VC-EXTENSION-REGISTRY": {
+      title: "Verifiable Credentials Extension Registry",
+      href: "https://w3c-ccg.github.io/vc-extension-registry/",
       authors: [
         "Manu Sporny"
       ],
