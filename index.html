@@ -589,7 +589,7 @@ validating proofs, which may be dependent on the syntax of the proof
 an essential part of processing a <a>verifiable credential</a>. At the time
 of publication, Working Group members had implemented
 <a>verifiable credentials</a> using at least three proof mechanisms:
-JSON Web Tokens [[JWT]], Linked Data Signatures [[?LD-SIGNATURES]], and
+JSON Web Tokens [[RFC7519]], Linked Data Signatures [[?LD-SIGNATURES]], and
 Camenisch-Lysyanskaya Zero-Knowledge Proofs [[?CL-SIGNATURES]]. The group
 expects some of these mechanisms, as well as new ones, to mature independently
 and become standardized in time. Given that there are multiple valid
@@ -917,6 +917,7 @@ university that will be stored in Pat's digital wallet.
     "alumniOf": "&lt;span lang='en'>Example University&lt;/span>"
   },
   <span class='comment'>// digital proof that makes the credential tamper-evident</span>
+  <span class='comment'>// see the NOTE at end of this section for more detail</span>
   "proof": {
     <span class='comment'>// the cryptographic signature suite that was used to generate the signature</span>
     "type": "RsaSignature2018",
@@ -988,6 +989,17 @@ which is then composed into a <a>verifiable presentation</a>. The
   }
 }
         </pre>
+
+        <p class="note">
+Implementers that are interested in understanding more about the
+<code>proof</code> mechanism used above can learn more in
+Section <a href="#proofs-signatures"></a> and by reading the
+following specifications: Linked Data Proofs [[LD-PROOFS]], Linked Data
+Signatures [[LD-SIGNATURES]], 2018 RSA Signature Suite [[LDS-RSA2018]], and
+JSON Web Signature (JWS) Unencoded Payload Option [[RFC7797]]. A current list
+of available proof mechanisms is available in the Verifiable Credentials
+Extension Registry [[VC-EXTENSION-REGISTRY]].
+        </p>
       </section>
     </section>
 
@@ -1571,7 +1583,14 @@ the signing date. The example below uses RSA digital signatures.
 
         <p class="note">
 No single proof mechanism is currently standardized or recommended for
-<a>verifiable credentials</a>.
+<a>verifiable credentials</a>. Implementers that are interested in
+understanding more about the <code>proof</code> mechanism can
+learn more by reading the following specifications:
+Linked Data Proofs [[LD-PROOFS]], Linked Data Signatures [[LD-SIGNATURES]],
+2018 RSA Signature Suite [[LDS-RSA2018]], and JSON Web Signature (JWS)
+Unencoded Payload Option [[RFC7797]]. A current list of available proof
+mechanisms is available in the Verifiable Credentials Extension Registry
+[[VC-EXTENSION-REGISTRY]].
         </p>
 
       </section>
@@ -3187,7 +3206,7 @@ of the Verifiable Credentials Data Model for JWT allows existing systems and
 libraries to participate in the ecosystem described in Section
 <a href="#ecosystem-overview"></a>. A JWT encodes a set of <a>claims</a> as a
 JSON object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
-[[!RFC7516]]. For this specification, the use of JWE is out of scope.
+[[?RFC7516]]. For this specification, the use of JWE is out of scope.
           </p>
 
           <p class="issue atrisk">
