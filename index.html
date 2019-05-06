@@ -2166,9 +2166,13 @@ additional requirements on both syntaxes:
 
           <ul>
             <li>
-JSON-based processors MUST process the <code>@context</code> <a>property</a>,
+JSON-based processors MUST process the <code>@context</code> key,
 ensuring the expected values exist in the expected order for the
-<a>credential</a> type being processed.
+<a>credential</a> type being processed. The order is important because
+keys used in a <a>credential</a>, which are defined via the
+values associated with <code>@context</code>, are defined using a
+"first defined wins" mechanism and changing the order might result in a
+different key definition "winning".
             </li>
             <li>
 JSON-LD-based processors MUST produce an error when a JSON-LD context
