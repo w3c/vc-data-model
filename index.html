@@ -748,10 +748,9 @@ usually a digital signature.
 	       credentialSubject of Pat, who has an alumniOf property
 	       with value of Example University.  The Proof Graph has
 	       Signature 456 with 5 properties: 'type' of
-	       RsaSignature2018, 'creator' of Example University
-	       Public Key 7, 'created' of 2017-06-18T21:19:10Z,
-	       'nonce' of 348dj239dsj328, and 'signatureValue' of
-	       BavEll0...3JT24=">
+	       RsaSignature2018, 'verificationMethod' of Example University
+	       Public Key 7, 'created' of 2017-06-18T21:19:10Z, and 'jws'
+         of 'BavEll0...3JT24='">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable credential.
           </figcaption>
@@ -840,10 +839,10 @@ which is usually a digital signature.
 	       'termsOfUse' of value Do Not Archive, and
 	       'verifiableCredential' whose value is Figure 6.  The
 	       Presentation Proof Graph has Signature 8910 with 5
-	       properties: 'type' of RsaSignature2018, 'creator' of
-	       Example Presenter Public Key 11, 'created' of
-	       2018-01-15T12:43:56Z, 'nonce' of d28348djsj3239, and
-	       'signatureValue' of p2KaZ...8Fj3K=">
+	       properties: 'type' of RsaSignature2018, 'verificationMethod'
+	       of Example Presenter Public Key 11, 'created' of
+	       2018-01-15T12:43:56Z, 'challenge' of d28348djsj3239, and
+	       'jws' of 'p2KaZ...8Fj3K='">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable presentation.
           </figcaption>
@@ -926,8 +925,10 @@ university that will be stored in Pat's digital wallet.
     "type": "RsaSignature2018",
     <span class='comment'>// the date the signature was created</span>
     "created": "2017-06-18T21:19:10Z",
-    <span class='comment'>// the public key identifier that created the signature</span>
-    "creator": "https://example.edu/issuers/keys/1",
+    <span class='comment'>// purpose of this proof</span>
+    "proofPurpose": "assertionMethod",
+    <span class='comment'>// the identifier of the public key that can verify the signature</span>
+    "verificationMethod": "https://example.edu/issuers/keys/1",
     <span class='comment'>// the digital signature value</span>
     "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
       sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
@@ -969,7 +970,8 @@ which is then composed into a <a>verifiable presentation</a>. The
     "proof": {
       "type": "RsaSignature2018",
       "created": "2017-06-18T21:19:10Z",
-      "creator": "https://example.edu/issuers/keys/1",
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "https://example.edu/issuers/keys/1",
       "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
         sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
         X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
@@ -981,9 +983,10 @@ which is then composed into a <a>verifiable presentation</a>. The
   "proof": {
     "type": "RsaSignature2018",
     "created": "2018-09-14T21:19:10Z",
-    "creator": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
-    <span class='comment'>// 'nonce' and 'domain' protect against replay attacks</span>
-    "nonce": "1f44d55f-f161-4938-a659-f8026467f126",
+    "proofPurpose": "authentication",
+    "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
+    <span class='comment'>// 'challenge' and 'domain' protect against replay attacks</span>
+    "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
     "domain": "4jt78h47fh47",
     "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..kTCYt5
       XsITJX1CxPCT8yAV-TVIw5WEuts01mq-pQy7UJiN5mgREEMGlv50aqzpqh4Qq_PbChOMqs
@@ -1020,10 +1023,10 @@ document.
 
         <p>
 When two software systems need to exchange data, they need to use terminology that both
-systems understand. 
+systems understand.
 As an analogy, consider how two people communicate. Both people must use the same
 language and the words they use must mean the same thing to each other. This may be
-referred to as "the context of a conversation". 
+referred to as "the context of a conversation".
         </p>
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> have many
@@ -1098,8 +1101,8 @@ the conversation is about examples.
         <p class="note">
 This document uses the example context <a>URI</a>
 (<code>https://www.w3.org/2018/credentials/examples/v1</code>) for the purposes
-of demonstrating examples. As with any such example document or data, the 
-example context <a>URI</a> SHOULD NOT be used for any other purpose, such 
+of demonstrating examples. As with any such example document or data, the
+example context <a>URI</a> SHOULD NOT be used for any other purpose, such
 as in pilot or production systems.
         </p>
 
@@ -1538,10 +1541,10 @@ date when the information associated with the <code>credentialSubject</code>
         <h3>Proofs (Signatures)</h3>
 
         <p>
-At least one proof mechanism, and the details necessary to evaluate that proof, 
-MUST be expressed for a <a>credential</a> or <a>presentation</a> to be a 
-<a>verifiable credential</a> or <a>verifiable presentation</a>, i.e., to be 
-<em>verifiable.</em> This specification 
+At least one proof mechanism, and the details necessary to evaluate that proof,
+MUST be expressed for a <a>credential</a> or <a>presentation</a> to be a
+<a>verifiable credential</a> or <a>verifiable presentation</a>, i.e., to be
+<em>verifiable.</em> This specification
 identifies two classes of proof mechanisms: external proofs and embedded proofs. An
 <dfn>external proof</dfn> is one that wraps an expression of this data model,
 such as a JSON Web Token, which is elaborated upon in Section
@@ -1592,11 +1595,15 @@ the signing date. The example below uses RSA digital signatures.
   <span class="highlight">"proof": {
     "type": "RsaSignature2018",
     "created": "2018-06-18T21:19:10Z",
+    "proofPurpose": "assertionMethod",
     "verificationMethod": "https://example.com/jdoe/keys/1",
-    "signatureValue": "BavEll0/I1zpYw8XNi1bgVg/sCneO4Jugez8RwDg/+
-      MCRVpjOboDoe4SxxKjkCOvKiCHGDvc4krqi6Z1n0UfqzxGfmatCuFibcC1wps
-      PRdW+gGsutPTLzvueMWmFhwYmfIFpbBu95t501+rSLHIEuujM/+PXr9Cky6Ed
-      +W3JT24="
+    "jws": "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19
+      ..DJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMB
+      Bn2h9hfcGZrvnC1b6PgWmukzFJ1IiH1dWgnDIS81BH-IxXnPkbuYDeySorc4
+      QU9MJxdVkY5EL4HYbcIfwKj6X4LBQ2_ZHZIu1jdqLcRZqHcsDF5KKylKc1TH
+      n5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-
+      Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeR
+      ogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw"
   }</span>
 }
         </pre>
@@ -1619,15 +1626,15 @@ in the Verifiable Credentials Extension Registry [[VC-EXTENSION-REGISTRY]].
         <h3>Expiration</h3>
 
         <p>
-This specification defines the following optional <a>property</a> for the expression 
+This specification defines the following optional <a>property</a> for the expression
 of <a>credential</a> expiration information:
         </p>
 
         <dl>
           <dt><var>expirationDate</var></dt>
           <dd>
-If present, the value of the <code>expirationDate</code> <a>property</a> MUST be 
-a string value of an [[!RFC3339]] combined date and time string representing the 
+If present, the value of the <code>expirationDate</code> <a>property</a> MUST be
+a string value of an [[!RFC3339]] combined date and time string representing the
 date and time the <a>credential</a> ceases to be valid.
           </dd>
         </dl>
@@ -3383,7 +3390,7 @@ JSON Web Token Claim Registry</a> for multi-subject JWT claim names or the
 <a href="https://tools.ietf.org/html/draft-yusef-oauth-nested-jwt-00">
 Nested JSON Web Token</a> specification.
             </p>
-            
+
             </section>
 
             <section>
@@ -3781,8 +3788,8 @@ The contents of <a>verifiable credentials</a> are secured using the
 <code>credential.proof</code> field. The <a>properties</a> in this field
 create a greater risk of correlation when the same values are used across more
 than one session or domain and the value does not change. Examples include the
-<code>creator</code>, <code>created</code>, <code>domain</code> (for very
-specific domains), <code>nonce</code>, and <code>signatureValue</code> fields.
+<code>verificationMethod</code>, <code>created</code>,
+<code>proofPurpose</code>, and <code>jws</code> fields.
       </p>
 
       <p>
@@ -4838,7 +4845,7 @@ The cryptographic signature is expected to verify.
           <li>
 If the cryptographic suite expects a <code>proofPurpose</code> <a>property</a>,
 it is expected to exist and be a valid value, such as
-<code>credentialIssuance</code>).
+<code>assertionMethod</code>).
           </li>
         </ul>
 
@@ -4847,12 +4854,15 @@ The digital signature provides a number of protections, other than tamper
 resistance, that are not immediately obvious. For example, a Linked Data
 Signature <code>created</code> <a>property</a> establishes a date and time
 before which the <a>credential</a> should not be considered <a>verified</a>. The
-<code>creator</code> <a>property</a> enables the ability to dynamically
-discover information about the <a>entity</a> who created the data to ensure
-that the public key is not revoked or expired. The <code>proofPurpose</code>
-<a>property</a> ensures the reason the entity created the signature, such as
-for authentication or creating a <a>verifiable credential</a>, is clear and
-protected in the signature.
+<code>verificationMethod</code> <a>property</a> specifies, for example, the
+public key that can be used to verify the digital signature. Dereferencing a
+public key URL reveals information about the controller of the key which can
+be checked against the issuer of the <a>credential</a>. The
+<code>proofPurpose</code> <a>property</a> clearly expresses the purpose for
+the proof and ensures that this information is protected by the signature. A
+proof is typically attached to a <a>verifiable presentation</a> for
+authentication purposes and to a <a>verifiable credential</a> as a method
+of assertion.
         </p>
       </section>
 
@@ -5261,17 +5271,19 @@ verifiable credential that was passed to it by the subject">
       "proof": {
         "type": "RsaSignature2018",
         "created": "2018-06-17T10:03:48Z",
-        "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234",
-        "signatureValue": "pYw8XNi1..Cky6Ed="
+        "proofPurpose": "assertionMethod",
+        "jws": "pYw8XNi1..Cky6Ed=",
+        "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21/keys/234"
       }
     }
   ],
   "proof": [{
     "type": "RsaSignature2018",
     "created": "2018-06-18T21:19:10Z",
+    "proofPurpose": "authentication",
     "verificationMethod": "did:example:76e12ec21ebhyu1f712ebc6f1z2/keys/2",
-    "nonce": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
-    "signatureValue": "BavEll0/I1..W3JT24="
+    "challenge": "c0ae1c8e-c7e7-469f-b252-86e6a0e7387e",
+    "jws": "BavEll0/I1..W3JT24="
   }]
 }
       </pre>
@@ -5337,8 +5349,9 @@ the subject of the credential, but who has a relationship with the issuer">
   "proof": {
     "type": "RsaSignature2018",
     "created": "2018-06-17T10:03:48Z",
+    "proofPurpose": "assertionMethod",
     "verificationMethod": "https://example.edu/issuers/14/keys/234",
-    "signatureValue": "pY9...Cky6Ed = "
+    "jws": "pY9...Cky6Ed = "
   }
 }
         </pre>
