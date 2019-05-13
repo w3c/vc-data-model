@@ -1864,73 +1864,73 @@ Building on the concepts introduced in Section <a href="#basic-concepts"></a>,
 this section explores more complex topics about <a>verifiable credentials</a>.
       </p>
 
-      <section class="informative">
-        <h3>Lifecycle Details</h3>
-
-        <p>
 Section <a href="#ecosystem-overview"></a> provided an overview of the
 <a>verifiable credential</a> ecosystem. This section provides more detail about
-how the ecosystem is envisaged to operate, as follows:
+how the ecosystem is envisaged to operate:
         </p>
 
-        <ol>
+        <figure id="life-cycle-details">
+          <img style="margin: auto; display: block; width: 85%;"
+         src="diagrams/ecosystemdetail.svg" alt="diagram showing how
+         credentials flow from issuer to holder, from holder to holders, and
+         presentations flow from holder to verifier, where
+         three parties can use information from a logical
+         verifiable data registry">
+          <figcaption style="text-align: center;">
+            The roles and information flows for this specification.
+          </figcaption>
+        </figure>
+
+        <ul>
           <li>
-The <a>verifier</a> defines its policies for accepting
-<a>verifiable credentials</a> from <a>holders</a> for its supported actions.
+An <a>issuer</a> issues a <a>verifiable credential</a> to a <a>holder</a>.
+Issuance must occur before any other actions involving this credential can occur. 
           </li>
           <li>
-The <a>issuer</a> issues a <a>verifiable credential</a> to the <a>holder</a>.
+A <a>holder</a> might transfer one or more of its <a>verifiable credentials</a>
+to another <a>holder</a>.
           </li>
           <li>
-The <a>holder</a> might pass on its <a>verifiable credentials</a> to another
-<a>holder</a>.
+A <a>holder</a> presents one or more of its <a>verifiable credentials</a> to a
+<a>verifier</a> in a <a>verifiable presentation</a>.
           </li>
           <li>
-The final <a>holder</a> presents its <a>verifiable credentials</a> to the
-<a>verifier</a> in a <a>verifiable presentation</a>, requesting a supported
-action.
-          </li>
-          <li>
-The <a>verifier</a> <a>verifies</a> the authenticity of the
+A <a>verifier</a> <a>verifies</a> the authenticity of the
 <a>verifiable presentation</a> and <a>verifiable credentials</a>.
+This should include checking the <a>credential status</a> for revocation
+of <a>verifiable credentials</a>. Verification occurs some time after a
+<a>verifiable presentation</a>.
+          </li>
+         <li>
+An <a>issuer</a> <a>revokes</a> a <a>verifiable credential</a>.
           </li>
           <li>
-The <a>verifier</a> <a>verifies</a> that the <a>holder</a> possesses the
-<a>verifiable credentials</a>.
+A <a>holder</a> deletes a <a>verifiable credential</a>.
           </li>
-          <li>
-The <a>verifier</a> decides whether to accept the <a>verifiable credentials</a>
-for the requested action, taking into account its policy, the <a>holder</a>,
-and the contents of the <a>verifiable credentials</a>.
-          </li>
-          <li>
-The <a>verifier</a> either performs the requested action or rejects the
-request.
-          </li>
-        </ol>
+        </ul>
 
         <p class="note">
-The order of the steps above is not fixed, and some steps might be taken
-more than once. Such step-recurrence may be immediate or at any later
-point in the sequence as performed.
+The order of the actions above is not fixed, and some actions might be taken
+more than once. Such action-recurrence may be immediate or at any later
+point.
         </p>
-
+        
+        <p>
+The simplest useful sequence of actions envisioned would be <a>issue</a>, 
+<a>present</a>, and <a>verify</a>.
         <p>
 This specification does not define any protocol for transfering
 <a>verifiable credentials</a> or <a>verifiable presentations</a>, but assuming
 other specifications do specify how they are transferred between entities, then
-this Verifiable Credential Data Model is:
+this Verifiable Credential Data Model is directly applicable.
         </p>
-
-        <ul>
-          <li>
-Directly applicable to steps 2, 3, 4, 5, and 6.
-          </li>
-          <li>
-Not sufficient on its own for steps 1, 7, and 8 because an authorization
-framework is also needed.
-          </li>
-        </ul>
+        <p>
+This specification does not define an authorization framework or the
+decisions that a <a>verifier</a> might make after <a>verifying</a> a 
+<a>verifiable presentation</a>, taking into account the <a>holder</a>,
+the <a>issuers</a> of the <a>verifiable credentials</a>,
+the contents of the <a>verifiable credentials</a>, and its own policies.
+        </p>
 
         <p>
 In particular, Sections <a href="#terms-of-use"></a> and
