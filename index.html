@@ -2962,15 +2962,6 @@ security number for an <a>entity</a>.
         </ul>
 
         <p>
-Only a <a>subject</a> of a <a>verifiable credential</a> is entitled to issue
-a <code>DisputeCredential</code>. A <code>DisputeCredential</code> issued by
-anyone other than the <a>subject</a> should be disregarded by the
-<a>verifier</a>, unless the <a>verifier</a> has some other way of determining
-the truth of the dispute. This is to prevent denial of service attacks whereby
-an attacker falsely disputes a true claim.
-        </p>
-
-        <p>
 The mechanism for issuing a <code>DisputeCredential</code> is the same as
 for a regular <a>credential</a> except that the <code>credentialSubject</code>
 identifier in the <code>DisputeCredential</code> property is the identifier of
@@ -2979,12 +2970,9 @@ the disputed <a>credential</a>.
 
         <p>
 For example, if a <a>credential</a> with an identifier of
-<code>https://example.org/credentials/245</code> is disputed, an <a>entity</a>
-can issue one of the <a>credentials</a> shown below. In the first example, the
-<a>subject</a> might present this to the <a>verifier</a> along with the disputed
-<a>credential</a>. In the second example, the <a>entity</a> might publish the
-<code>DisputeCredential</code> in a public venue to make it known that the
-<a>credential</a> is disputed.
+<code>https://example.org/credentials/245</code> is disputed, the <a>subject</a>
+can issue the <a>credential</a> shown below and present it to the <a>verifier</a>
+along with the disputed <a>credential</a>. 
         </p>
 
         <pre class="example nohighlight" title="A subject disputes a credential">
@@ -3009,42 +2997,21 @@ can issue one of the <a>credentials</a> shown below. In the first example, the
 }
         </pre>
 
-
-        <pre class="example nohighlight" title="Another entity disputes a credential">
-{
-  "@context": "https://w3id.org/credentials/v1",
-  "id": "http://example.com/credentials/321",
-  "type": ["VerifiableCredential", "DisputeCredential"],
-  <span class="highlight">"credentialSubject": {
-    "id": "http://example.com/credentials/245",
-    "currentStatus": "Disputed",
-    "statusReason": {
-      "@value": "Credential contains disputed statements",
-      "@language": "en"
-    },
-    "disputedClaim": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "address": "Is Wrong"
-    }
-  }</span>,
-  "issuer": "https://example.com/people#me",
-  "issuanceDate": "2017-12-05T14:27:42Z",
-  "proof": { ... }
-}
-        </pre>
-
 <p> In the above <a>verifiable credential</a> the <a>issuer</a> is claiming that
-the address in the disputed <a>verifiable credential</a> is wrong. For example,
-the <a>subject</a> might wrongly be claiming to have the same address as that of
-the <a>issuer</a>.
-</p>
+the address in the disputed <a>verifiable credential</a> is wrong. 
+       </p>
         <p class="note">
 If a <a>credential</a> does not have an identifier, a content-addressed
 identifier can be used to identify the disputed <a>credential</a>. Similarly,
 content-addressed identifiers can be used to uniquely identify individual
 claims.
         </p>
-
+ <p class="note">
+This particular area of study is rapidly evolving and developers that are interested in
+publishing <a>credentials</a> that dispute the veracity of other <a>credentials</a> are
+urged to read the section related to disputes in the Verifiable Credentials
+Implementation Guidance [[!VC-IMP-GUIDE]]. 
+       </p>
         <p class="issue atrisk">
 The dispute feature may change significantly during the W3C Candidate
 Recommendation process including possibly being removed if there is not enough
