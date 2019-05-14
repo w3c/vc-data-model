@@ -126,7 +126,10 @@ cryptographically secure, privacy respecting, and machine-verifiable.
 
     <section id='sotd'>
       <p>
-Comments regarding this document are welcome. Please file issues
+Comments regarding this document are welcome, but readers should be aware that
+the Candidate Recommendation comment period has ended and the Working Group is
+unlikley to make substantive modifications to the specification at this stage.
+Please file issues
 directly on <a href="https://github.com/w3c/vc-data-model/issues/">GitHub</a>,
 or send them to
 <a href="mailto:public-vc-comments@w3.org">public-vc-comments@w3.org</a>
@@ -589,7 +592,7 @@ validating proofs, which may be dependent on the syntax of the proof
 an essential part of processing a <a>verifiable credential</a>. At the time
 of publication, Working Group members had implemented
 <a>verifiable credentials</a> using at least three proof mechanisms:
-JSON Web Tokens [[JWT]], Linked Data Signatures [[?LD-SIGNATURES]], and
+JSON Web Tokens [[RFC7519]], Linked Data Signatures [[?LD-SIGNATURES]], and
 Camenisch-Lysyanskaya Zero-Knowledge Proofs [[?CL-SIGNATURES]]. The group
 expects some of these mechanisms, as well as new ones, to mature independently
 and become standardized in time. Given that there are multiple valid
@@ -917,6 +920,7 @@ university that will be stored in Pat's digital wallet.
     "alumniOf": "&lt;span lang='en'>Example University&lt;/span>"
   },
   <span class='comment'>// digital proof that makes the credential tamper-evident</span>
+  <span class='comment'>// see the NOTE at end of this section for more detail</span>
   "proof": {
     <span class='comment'>// the cryptographic signature suite that was used to generate the signature</span>
     "type": "RsaSignature2018",
@@ -951,7 +955,7 @@ which is then composed into a <a>verifiable presentation</a>. The
     "https://www.w3.org/2018/credentials/v1",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
-  "type": "VerifiablePresentation",
+  "type": ["VerifiablePresentation", "CredentialManagerPresentation"],
   <span class='comment'>// the verifiable credential issued in the previous example</span>
   "verifiableCredential": [{
     "id": "http://example.edu/credentials/1872",
@@ -988,6 +992,17 @@ which is then composed into a <a>verifiable presentation</a>. The
   }
 }
         </pre>
+
+        <p class="note">
+Implementers that are interested in understanding more about the
+<code>proof</code> mechanism used above can learn more in
+Section <a href="#proofs-signatures"></a> and by reading the
+following specifications: Linked Data Proofs [[LD-PROOFS]], Linked Data
+Signatures [[LD-SIGNATURES]], 2018 RSA Signature Suite [[LDS-RSA2018]], and
+JSON Web Signature (JWS) Unencoded Payload Option [[RFC7797]]. A list
+of proof mechanisms is available in the Verifiable Credentials
+Extension Registry [[VC-EXTENSION-REGISTRY]].
+        </p>
       </section>
     </section>
 
@@ -1004,16 +1019,29 @@ document.
         <h3>Contexts</h3>
 
         <p>
-When two software systems need to exchange data, they must use terminology and
-a protocol that both systems understand. As an analogy, consider how two
-people communicate. Both people must use the same language and the words they
-use must mean the same thing to each other. This is often referred to as
-"the context in which a conversation happens". This specification defines the
-use of the <code>@context</code> <a>property</a> when communicating information
-related to specific <a>verifiable credentials</a> or
-<a>verifiable presentations</a>.
+When two software systems need to exchange data, they need to use terminology that both
+systems understand. 
+As an analogy, consider how two people communicate. Both people must use the same
+language and the words they use must mean the same thing to each other. This may be
+referred to as "the context of a conversation". 
         </p>
-
+        <p>
+<a>Verifiable credentials</a> and <a>verifiable presentations</a> have many
+attributes and values which are identified by <a>URIs</a>. However, those <a>URIs</a>
+can be long and not very human-friendly. In such cases, short-form human-friendly
+aliases can be more helpful. This specification uses
+the <code>@context</code> <a>property</a> to map such short-form aliases to the URIs
+required by specific <a>verifiable credentials</a> and <a>verifiable presentations</a>.
+       </p>
+  <p class="note">
+In JSON-LD, the <code>@context</code> <a>property</a> can also be used
+to communicate various other details (datatype information, language
+information, transformation rules, etc.) which are beyond the needs of
+this specification, but may be useful in the future or to related work.
+Interested readers may wish to review
+<a href="https://www.w3.org/TR/json-ld11/#the-context">Section 3.1: The Context</a>
+of the [[JSON-LD]] specification.
+        </p>
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST include a
 <code>@context</code> <a>property</a>.
@@ -1025,7 +1053,7 @@ related to specific <a>verifiable credentials</a> or
 The value of the <code>@context</code> <a>property</a> MUST be an ordered set
 where the first item is a <a>URI</a> with the value
 <code>https://www.w3.org/2018/credentials/v1</code>. Subsequent items in the
-array MUST express context information and be composed of any combination 
+array MUST express context information and be composed of any combination
 of <a>URIs</a> and/or objects. It is RECOMMENDED that each <a>URI</a> in the
 <code>@context</code> be one which, if dereferenced, results in a document
 containing machine-readable information about the <code>@context</code>.
@@ -1068,10 +1096,11 @@ the conversation is about examples.
         </p>
 
         <p class="note">
-This document uses the examples context <a>URI</a>
+This document uses the example context <a>URI</a>
 (<code>https://www.w3.org/2018/credentials/examples/v1</code>) for the purposes
-of demonstrating examples. The examples context <a>URI</a> must not be used for
-any other purpose, such as in pilot or production systems.
+of demonstrating examples. As with any such example document or data, the 
+example context <a>URI</a> SHOULD NOT be used for any other purpose, such 
+as in pilot or production systems.
         </p>
 
         <p>
@@ -1101,8 +1130,8 @@ others can express statements about the same thing. This specification defines
 the <code>id</code> <a>property</a> for such identifiers. The <code>id</code>
 <a>property</a> is intended to unambiguously refer to an object such as a person,
 product, or organization. This allows for the expression of statements about
-specific things in the verifiable credential. If the <code>id</code>
-<a>property</a> is present:
+specific things in the verifiable credential. The <code>id</code>
+<a>property</a> MAY be present; if so:
         </p>
 	<ul>
 	  <li>
@@ -1467,7 +1496,7 @@ The value of the <code>issuer</code> property may also be a JWK, e.g.,
 
         <p>
 This specification defines the following <a>property</a> for expressing the
-date and time when the <a>credential</a> was issued:
+date and time when the <a>credential</a> becomes valid:
         </p>
 
         <dl>
@@ -1476,9 +1505,10 @@ date and time when the <a>credential</a> was issued:
 A <a>credential</a> MUST have an <code>issuanceDate</code> <a>property</a>. The
 value of the <code>issuanceDate</code> <a>property</a> MUST be a string value of
 an [[!RFC3339]] combined date and time string representing the date and time
-the <a>credential</a> was issued. Note that this date represents the earliest
+the <a>credential</a> becomes valid, which could be a date and time in the future. 
+Note that this date represents the earliest
 date when the information associated with the <code>credentialSubject</code>
-<a>property</a> became valid.
+<a>property</a> becomes valid.
           </dd>
         </dl>
 
@@ -1508,9 +1538,11 @@ date when the information associated with the <code>credentialSubject</code>
         <h3>Proofs (Signatures)</h3>
 
         <p>
-For a <a>credential</a> or <a>presentation</a> to be <a>verifiable</a>, at
-least one proof mechanism MUST be expressed. This specification identifies
-two classes of proof mechanisms: external proofs and embedded proofs. An
+At least one proof mechanism, and the details necessary to evaluate that proof, 
+MUST be expressed for a <a>credential</a> or <a>presentation</a> to be a 
+<a>verifiable credential</a> or <a>verifiable presentation</a>, i.e., to be 
+<em>verifiable.</em> This specification 
+identifies two classes of proof mechanisms: external proofs and embedded proofs. An
 <dfn>external proof</dfn> is one that wraps an expression of this data model,
 such as a JSON Web Token, which is elaborated upon in Section
 <a href="#json-web-token"></a>. An <dfn>embedded proof</dfn> is a mechanism
@@ -1571,8 +1603,14 @@ the signing date. The example below uses RSA digital signatures.
 
         <p class="note">
 As discussed in Section <a href="#conformance"></a>, there are multiple viable 
-proof mechanisms, and this specification does not standardize nor recommend 
-any single proof mechanism for use with <a>verifiable credentials</a>.
+proof mechanisms, and this specification does not standardize nor recommend any
+single proof mechanism for use with <a>verifiable credentials</a>. Implementers 
+that are interested in understanding more about the <code>proof</code> 
+mechanism can learn more by reading the following specifications:
+Linked Data Proofs [[LD-PROOFS]], Linked Data Signatures [[LD-SIGNATURES]],
+2018 RSA Signature Suite [[LDS-RSA2018]], and JSON Web Signature (JWS)
+Unencoded Payload Option [[RFC7797]]. A list of proof mechanisms is available
+in the Verifiable Credentials Extension Registry [[VC-EXTENSION-REGISTRY]].
         </p>
 
       </section>
@@ -1581,16 +1619,16 @@ any single proof mechanism for use with <a>verifiable credentials</a>.
         <h3>Expiration</h3>
 
         <p>
-This specification defines the following <a>property</a> for the expression of
-<a>credential</a> expiration information:
+This specification defines the following optional <a>property</a> for the expression 
+of <a>credential</a> expiration information:
         </p>
 
         <dl>
           <dt><var>expirationDate</var></dt>
           <dd>
-The value of the <code>expirationDate</code> <a>property</a> MUST be a string
-value of an [[!RFC3339]] combined date and time string representing the date and
-time the <a>credential</a> ceases to be valid.
+If present, the value of the <code>expirationDate</code> <a>property</a> MUST be 
+a string value of an [[!RFC3339]] combined date and time string representing the 
+date and time the <a>credential</a> ceases to be valid.
           </dd>
         </dl>
 
@@ -2230,6 +2268,13 @@ binary format used in a zero-knowledge proof.
         </ul>
 
         <p>
+It is important to understand that data schemas serve a different purpose from
+the <code>@context</code> property, which does not enforce data structure or
+data syntax, nor does it enable the definition of arbitrary encodings to
+alternate representation formats.
+        </p>
+
+        <p>
 This specification defines the following <a>property</a> for the expression of
 a data schema:
         </p>
@@ -2522,7 +2567,7 @@ in an archive.
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": "VerifiablePresentation",
+  "type": ["VerifiablePresentation", "CredentialManagerPresentation"],
   "verifiableCredential": [{
     "id": "http://example.edu/credentials/3732",
     "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -2816,7 +2861,7 @@ intend to share.
     "https://www.w3.org/2018/credentials/v1",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
-  "type": "VerifiablePresentation",
+  "type": ["VerifiablePresentation", "CredentialManagerPresentation"],
   "verifiableCredential": [
     {
         "@context": [
@@ -3205,7 +3250,7 @@ of the Verifiable Credentials Data Model for JWT allows existing systems and
 libraries to participate in the ecosystem described in Section
 <a href="#ecosystem-overview"></a>. A JWT encodes a set of <a>claims</a> as a
 JSON object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
-[[!RFC7516]]. For this specification, the use of JWE is out of scope.
+[[?RFC7516]]. For this specification, the use of JWE is out of scope.
           </p>
 
           <p class="issue atrisk">
@@ -3361,6 +3406,17 @@ transformation, and can be added to the <code>vc</code> <a>property</a> of the
 JWT.
             </p>
 
+            <p class="note">
+Implementers are warned that JWTs are not capable of encoding multiple
+<a>subjects</a> and are thus not capable of encoding a
+<a>verifiable credential</a> with more than one <a>subject</a>. JWTs might
+support multiple subjects in the future and implementers are advised to refer
+to the <a href="https://www.iana.org/assignments/jwt/">
+JSON Web Token Claim Registry</a> for multi-subject JWT claim names or the
+<a href="https://tools.ietf.org/html/draft-yusef-oauth-nested-jwt-00">
+Nested JSON Web Token</a> specification.
+            </p>
+            
             </section>
 
             <section>
@@ -3512,7 +3568,7 @@ header parameter.
       "https://www.w3.org/2018/credentials/v1",
       "https://www.w3.org/2018/credentials/examples/v1"
     ],
-    "type": ["VerifiablePresentation"],
+    "type": ["VerifiablePresentation", "CredentialManagerPresentation"],
     <span class="comment">// base64url-encoded JWT as string</span>
     "verifiableCredential": ["..."]
   }
@@ -5201,7 +5257,7 @@ verifiable credential that was passed to it by the subject">
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
-  "type": ["VerifiablePresentation"],
+  "type": ["VerifiablePresentation", "CredentialManagerPresentation"],
   "credential": [
     {
      "@context": [
