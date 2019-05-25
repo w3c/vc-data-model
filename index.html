@@ -1222,9 +1222,9 @@ expression of type information.
 
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST have a
-<code>type</code> <a>property</a>; in other words, any <a>credential</a> or 
-<a>presentation</a> that lacks a <code>type</code> <a>property</a> <em>is not 
-verifiable<em>, so is not a <a>verifiable credential</a> nor a 
+<code>type</code> <a>property</a>; in other words, any <a>credential</a> or
+<a>presentation</a> that lacks a <code>type</code> <a>property</a> <em>is not
+verifiable</em>, so is not a <a>verifiable credential</a> nor a
 <a>verifiable presentation</a>.
         </p>
 
@@ -1234,8 +1234,8 @@ verifiable<em>, so is not a <a>verifiable credential</a> nor a
 The value of the <code>type</code> <a>property</a> MUST be, or map to (via
 interpretation of the <code>@context</code> property), one or more <a>URIs</a>.
 If more than one <a>URI</a> is provided, the <a>URIs</a> MUST be interpreted
-as an unordered set. Syntactic conveniences SHOULD be used to ease developer usage; 
-such conveniences may include JSON-LD terms. It is RECOMMENDED that each <a>URI</a> 
+as an unordered set. Syntactic conveniences SHOULD be used to ease developer usage;
+such conveniences may include JSON-LD terms. It is RECOMMENDED that each <a>URI</a>
 in the <code>type</code> be one which, if dereferenced, results in a document
 containing machine-readable information about the <code>type</code>.
           </dd>
@@ -1421,8 +1421,6 @@ representation.
 
       </section>
 
-
-
       <section>
         <h3>Credential Subject</h3>
 
@@ -1533,8 +1531,8 @@ date and time when the <a>credential</a> becomes valid:
 A <a>credential</a> MUST have an <code>issuanceDate</code> <a>property</a>. The
 value of the <code>issuanceDate</code> <a>property</a> MUST be a string value of
 an [[!RFC3339]] combined date and time string representing the date and time
-the <a>credential</a> becomes valid, which could be a date and time in the future. 
-Note that this value represents the earliest point in time at which the information 
+the <a>credential</a> becomes valid, which could be a date and time in the future.
+Note that this value represents the earliest point in time at which the information
 associated with the <code>credentialSubject</code> <a>property</a> becomes valid.
           </dd>
         </dl>
@@ -1633,10 +1631,10 @@ the signing date. The example below uses RSA digital signatures.
         </pre>
 
         <p class="note">
-As discussed in Section <a href="#conformance"></a>, there are multiple viable 
+As discussed in Section <a href="#conformance"></a>, there are multiple viable
 proof mechanisms, and this specification does not standardize nor recommend any
-single proof mechanism for use with <a>verifiable credentials</a>. Implementers 
-that are interested in understanding more about the <code>proof</code> 
+single proof mechanism for use with <a>verifiable credentials</a>. Implementers
+that are interested in understanding more about the <code>proof</code>
 mechanism can learn more by reading the following specifications:
 Linked Data Proofs [[LD-PROOFS]], Linked Data Signatures [[LD-SIGNATURES]],
 2018 RSA Signature Suite [[LDS-RSA2018]], and JSON Web Signature (JWS)
@@ -1902,7 +1900,7 @@ how the ecosystem is envisaged to operate:
         <figure id="life-cycle-details">
           <img style="margin: auto; display: block; width: 85%;"
          src="diagrams/ecosystemdetail.svg" alt="diagram showing how
-         credentials flow from issuer to holder, and optionally 
+         credentials flow from issuer to holder, and optionally
          from one holder to another; and how
          presentations flow from holder to verifier, where
          all parties can use information from a logical
@@ -1914,28 +1912,33 @@ how the ecosystem is envisaged to operate:
 
         <ul>
           <li>
-An <a>issuer</a> <a>issues</a> a <a>verifiable credential</a> to a <a>holder</a>.
-Issuance always occurs before any other actions involving a credential. 
+An <a>issuer</a> <dfn data-lt="issue">issues</dfn> a
+<a>verifiable credential</a> to a <a>holder</a>. Issuance always occurs before
+any other actions involving a credential.
           </li>
           <li>
-A <a>holder</a> might transfer one or more of its <a>verifiable credentials</a>
-to another <a>holder</a>.
+A <a>holder</a> might <dfn data-lt="transfers">transfer</dfn> one or more of
+its <a>verifiable credentials</a> to another <a>holder</a>.
           </li>
           <li>
-A <a>holder</a> presents one or more of its <a>verifiable credentials</a> to a
-<a>verifier</a>, optionally inside a <a>verifiable presentation</a>.
+A <a>holder</a> <dfn data-lt="present">presents</dfn> one or more of its
+<a>verifiable credentials</a> to a <a>verifier</a>, optionally inside a
+<a>verifiable presentation</a>.
           </li>
           <li>
-A <a>verifier</a> <a>verifies</a> the authenticity of the presented
-<a>verifiable presentation</a> and/or <a>verifiable credentials</a>.
-This should include checking the <a>credential status</a> for revocation
+A <a>verifier</a> <a>verifies</a> the authenticity of
+the presented <a>verifiable presentation</a> and/or
+<a>verifiable credentials</a>. This should include checking the
+<a href="#status">credential status</a> for revocation
 of the <a>verifiable credentials</a>.
           </li>
          <li>
-An <a>issuer</a> may <a>revoke</a> a <a>verifiable credential</a>.
+An <a>issuer</a> may <dfn data-lt="revoke">revoke</dfn> a
+<a>verifiable credential</a>.
           </li>
           <li>
-A <a>holder</a> may delete a <a>verifiable credential</a>.
+A <a>holder</a> may <dfn data-lt="delete">delete</dfn> a
+<a>verifiable credential</a>.
           </li>
         </ul>
 
@@ -1944,12 +1947,12 @@ The order of the actions above is not fixed, and some actions might be taken
 more than once. Such action-recurrence may be immediate or at any later
 point.
         </p>
-        
+
         <p>
 The most comon sequence of actions is envisioned to be
-<a>issuer</a> <a>issues</a> to <a>subject</a>, 
-<a>subject</a> <a>presents</a> to <a>verifier</a>, and 
-<a>verifier</a> <a>verifies</a>.
+<a>issuer</a> <a href="#lifecycle-details">issues</a> to <a>subject</a>,
+<a>subject</a> <a href="#lifecycle-details">presents</a> to <a>verifier</a>, and
+<a>verifier</a> <a href="#lifecycle-details">verifies</a>.
         <p>
 This specification does not define any protocol for transfering
 <a>verifiable credentials</a> or <a>verifiable presentations</a>, but assuming
@@ -1958,7 +1961,7 @@ this Verifiable Credential Data Model is directly applicable.
         </p>
         <p>
 This specification does not define an authorization framework nor the
-decisions that a <a>verifier</a> might make after <a>verifying</a> a 
+decisions that a <a>verifier</a> might make after <a>verifying</a> a
 <a>verifiable credential</a> or <a>verifiable presentation</a>,
 taking into account the <a>holder</a>,
 the <a>issuers</a> of the <a>verifiable credentials</a>,
@@ -3017,7 +3020,7 @@ the disputed <a>credential</a>.
 For example, if a <a>credential</a> with an identifier of
 <code>https://example.org/credentials/245</code> is disputed, the <a>subject</a>
 can issue the <a>credential</a> shown below and present it to the <a>verifier</a>
-along with the disputed <a>credential</a>. 
+along with the disputed <a>credential</a>.
         </p>
 
         <pre class="example nohighlight" title="A subject disputes a credential">
@@ -3043,7 +3046,7 @@ along with the disputed <a>credential</a>.
         </pre>
 
 <p> In the above <a>verifiable credential</a> the <a>issuer</a> is claiming that
-the address in the disputed <a>verifiable credential</a> is wrong. 
+the address in the disputed <a>verifiable credential</a> is wrong.
        </p>
         <p class="note">
 If a <a>credential</a> does not have an identifier, a content-addressed
@@ -3055,7 +3058,7 @@ claims.
 This particular area of study is rapidly evolving and developers that are interested in
 publishing <a>credentials</a> that dispute the veracity of other <a>credentials</a> are
 urged to read the section related to disputes in the Verifiable Credentials
-Implementation Guidance [[!VC-IMP-GUIDE]]. 
+Implementation Guidance [[VC-IMP-GUIDE]].
        </p>
         <p class="issue atrisk">
 The dispute feature may change significantly during the W3C Candidate
@@ -3640,7 +3643,7 @@ suVIM8wtqOw0CIzdvrhMgJgfqFjhPJCuM7Vds
             </section>
           </section>
         </section>
-          
+
         <section>
           <h3>Linked Data Proofs</h3>
 
