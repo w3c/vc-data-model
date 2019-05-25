@@ -27,9 +27,9 @@ var vcwg = {
       status: "NOTE",
       publisher: "Verifiable Claims Working Group"
     },
-    "VC-STATUS-REGISTRY": {
-      title: "Verifiable Credentials Status Scheme Registry",
-      href: "https://w3c-ccg.github.io/vc-status-registry/",
+    "VC-EXTENSION-REGISTRY": {
+      title: "Verifiable Credentials Extension Registry",
+      href: "https://w3c-ccg.github.io/vc-extension-registry/",
       authors: [
         "Manu Sporny"
       ],
@@ -59,6 +59,16 @@ var vcwg = {
     "LD-SIGNATURES": {
       title: "Linked Data Signatures",
       href: "https://w3c-dvcg.github.io/ld-signatures/",
+      authors: [
+        "Manu Sporny",
+        "Dave Longley"
+      ],
+      status: "CG-DRAFT",
+      publisher: "Digital Verification Community Group"
+    },
+    "LDS-RSA2018": {
+      title: "The 2018 RSA Linked Data Signature Suite",
+      href: "https://w3c-dvcg.github.io/lds-rsa2018/",
       authors: [
         "Manu Sporny",
         "Dave Longley"
