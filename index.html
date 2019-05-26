@@ -3110,8 +3110,8 @@ along with the disputed <a>credential</a>.
     "id": "http://example.com/credentials/245",
     "currentStatus": "Disputed",
     "statusReason": {
-      "@value": "Address is out of date",
-      "@language": "en"
+      "value": "Address is out of date.",
+      "language": "en"
     },
   }</span>,
   "issuer": "https://example.com/people#me",
@@ -4807,13 +4807,21 @@ language using a right-to-left text layout:
 }
       </pre>
 
-      <p class="note">
-Utilization of the design pattern above assumes that the
-The JSON-LD <a href="#extensibility">extension</a> associated with the
-<a>property</a> utilizes the <code>@scoped</code> feature of JSON-LD to
+      <p>
+Utilization of the design pattern above assumes that the JSON-LD
+<a href="#extensibility">extension</a> associated with the
+<a>property</a> utilizes the Scoped Context feature of JSON-LD to
 alias the <code>@language</code> and <code>@value</code> keywords to
-<code>language</code> and <code>value</code>, respectively.
+<code>language</code> and <code>value</code>, respectively. An example of
+a JSON-LD Context snippet doing so is shown below:
       </p>
+
+      <pre class="example nohighlight" title="Specifying scoped aliasing for language information.">
+"statusReason": {
+  <span class="highlight">"@context": {"value": "@value", "language": "@language"}</span>,
+  "@id": "https://www.w3.org/2018/credentials/examples#statusReason"
+}
+      </pre>
 
     </section>
 
