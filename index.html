@@ -4753,6 +4753,15 @@ specification and significantly diminish its value as a global standard.
     </p>
 
     <p>
+Implementers are strongly advised to read the Requirements for
+Language and Direction Metadata in Data Formats [[STRING-META]] published by
+the W3C Internationalization Activity as it elaborates upon the
+need to provide reliable metadata about text in order to support
+internationalization. Implementers are also urged to read the Implementation
+Guidance [[VC-IMP-GUIDE]] for the latest information related to this topic.
+    </p>
+
+    <p>
 This section outlines general internationalization considerations to take into
 account when utilizing this data model.
     </p>
@@ -4762,11 +4771,13 @@ account when utilizing this data model.
 
       <p>
 Data publishers are strongly encouraged to use the design pattern described
-in this section when expressing simple internationalized strings in
+in this section when expressing natural language strings in
 JSON, JSON-LD, or similar data formats to ensure the broadest interoperability
 across syntaxes. The design pattern is a result of extensive collaboration
 between the W3C Internationalization Activity, the Linked Data Community, and
-developers that primarily utilize JSON and CBOR to publish information.
+developers that primarily utilize JSON and CBOR to publish information. The
+pattern is useful for the vast majority of language and base direction use
+cases that implementers of this specification will need to support.
       </p>
 
       <p>
@@ -4775,10 +4786,10 @@ expressing a text string that is tagged with a language and, optionally, a
 specific text direction:
       </p>
 
-      <pre class="example nohighlight" title="Design pattern for internationalized text strings">
+      <pre class="example nohighlight" title="Design pattern for natural language strings">
 "<a>property</a>": {
   "value": "<span class="highlight">The string value</span>",
-  "language: "<code>LANGUAGE</code>-x-d-<code>DIRECTION</code>"
+  "language: "<code>LANGUAGE</code>-x-dir-<code>DIRECTION</code>"
 }
       </pre>
 
@@ -4797,13 +4808,13 @@ text direction:
 
       <p>
 The next example expresses the human-readable text "revoked" in the Arabic
-language using a right-to-left text layout:
+language with a base direction of right-to-left:
       </p>
 
-      <pre class="example nohighlight" title="Internationalized Arabic text with a right-to-left layout">
+      <pre class="example nohighlight" title="Arabic text with a base direction of right-to-left">
 "statusReason": {
   "value": "<span class="highlight">إلغاء</span>",
-  "language: "<code>ar</code>-x-d-<code>rtl</code>"
+  "language: "<code>ar</code>-x-dir-<code>rtl</code>"
 }
       </pre>
 
@@ -4816,7 +4827,7 @@ alias the <code>@language</code> and <code>@value</code> keywords to
 a JSON-LD Context snippet doing so is shown below:
       </p>
 
-      <pre class="example nohighlight" title="Specifying scoped aliasing for language information.">
+      <pre class="example nohighlight" title="Specifying scoped aliasing for language information">
 "statusReason": {
   <span class="highlight">"@context": {"value": "@value", "language": "@language"}</span>,
   "@id": "https://www.w3.org/2018/credentials/examples#statusReason"
@@ -4826,86 +4837,80 @@ a JSON-LD Context snippet doing so is shown below:
     </section>
 
     <section class="informative">
-      <h3>Multiple Languages</h3>
+       <h3>Complex Language Markup</h3>
 
-      <p>
-When multiple languages are utilized in the same value, a more complex
-mechanism is required. [[!JSON-LD]] also supports the expression of language
-information using the <code>rdf:HTML</code> string literal type, as described
-in [[!JSON-LD]],
+       <p>
+When multiple languages, base directions, and annotations are used in a single
+natural language string, more complex mechanisms are typically required.
+[[!JSON-LD]] supports the expression of language information using the
+<code>rdf:HTML</code> string literal type, as described in [[!JSON-LD]],
 <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
 This mechanism enables developers to use the internationalization features
-present in HTML to express language information. For example, consider the
-following key-value pair:
+present in HTML to express a variety of language and base direction information.
+For example, consider the following key-value pair that expresses two languages
+in the same natural language text string:
 
-          <pre class="example nohighlight" title="Expressing multiple languages in single text string">
+       <pre class="example nohighlight" title="Expressing multiple languages in a single natural language text string">
 "nameHtml": "&lt;span <span class="highlight">lang="en"</span>>Kazumi&lt;/span> (&lt;span <span class="highlight">lang="jp"</span>>和美&lt;/span>)"
-          </pre>
+       </pre>
 
-          <p>
+       <p>
 If the JSON-LD Context expressed that any value associated with the
 <code>nameHtml</code> property as being of type <code>rdf:HTML</code>, then
 software agents rendering the property can deterministically identify the
 various languages in use. JSON implementations following the
 <code>@context</code> ordering requirements in this specification will also be
 able to benefit from this feature.
-          </p>
-        </li>
-      </ul>
-    </section>
+       </p>
 
-    <section class="informative">
-      <h3>Varied Text Directions</h3>
+       <p>
+This feature is also useful when mixing languages and base direction in a
+single natural language string:
+       </p>
 
-      <p>
-When multiple text directions are utilized in the same value, a more
-complex markup mechanism is required. [[!JSON-LD]] supports the expression of
-text layout information using the <code>rdf:HTML</code> string literal type,
-as described in [[!JSON-LD]], <a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
-This mechanism enables developers to use the internationalization features
-present in HTML to express text direction information. For example, consider the
-following key-value pair (line breaks added for readability):
-
-      <pre class="example nohighlight" title="Expressing multiple text directions in single text string">
-"descriptionHtml": "&lt;span lang="en"  <span class="highlight">dir="ltr"</span>>The country names include
-                      &lt;span lang="ar" <span class="highlight">dir="rtl"</span>>مصر&lt;/span> and
-                      &lt;span lang="he"  <span class="highlight">dir="rtl"</span>>ישראל&lt;/span>.
+       <pre class="example nohighlight" title="Expressing multiple text directions in single natural language text string">
+"descriptionHtml": "&lt;span <span class="highlight">lang="en" dir="ltr"</span>>The country names include
+                      &lt;span <span class="highlight">lang="ar" dir="rtl"</span>>مصر&lt;/span> and
+                      &lt;span <span class="highlight">lang="he" dir="rtl"</span>>ישראל&lt;/span>.
                     &lt;/span>"
-      </pre>
+       </pre>
 
-      <p>
+       <p>
 If the JSON-LD Context states that any value associated with the
 <code>nameHtml</code> property is of type <code>rdf:HTML</code>, then software
-agents have sufficient information to deterministically identify the text
+agents have sufficient information to deterministically identify the base
 direction of the language, even if the direction changes within the same string.
-JSON implementations following the <code>@context</code> ordering requirements
-in this specification will also be able to benefit from this feature.
       </p>
 
-    </section>
-
-    <section class="informative">
-      <h3>Pronunciation</h3>
       <p>
 In some situations it is common to use
 <a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>
 to ensure text information, such as how to pronounce a particular glyph,
-is clear and as useful as possible. [[!JSON-LD]] support for HTML data,
-as described in Section <a href="#multiple-languages"></a> and
-Section <a href="#varied-text-directions"></a> allows text to be encoded
-utilizing Ruby, supporting these use cases.
+is clear and as useful as possible.
       </p>
-    </section>
 
-    <section class="informative">
-      <h3>Further Information</h3>
+      <pre class="example nohighlight" title="Expressing Ruby markup in a natural language text string">
+"descriptionHtml": "これは<span class="highlight">&lt;ruby>&lt;rb>紙芝居&lt;/rb>&lt;rt>かみしばい&lt;/rt>&lt;/ruby></span>です。"
+      </pre>
+
       <p>
-The W3C Internationalisation document [[string-meta]] gives more information
-about the need to be able to provide reliable metadata about text to support
-internationalization. Implementers are also urged to read the
-Implementation Guidance [[VC-IMP-GUIDE]] for the latest information related
-to this topic.
+The markup above would result in the following rendered string in a
+software system that is capable of rendering Ruby markup:
+これは<ruby><rb>紙芝居</rb><rt>かみしばい</rt></ruby>です。
       </p>
+
+      <p>
+An example of a JSON-LD Context snippet that sets a datatype of
+<code>rdf:HTML</code> is shown below:
+      </p>
+
+      <pre class="example nohighlight" title="Specifying the rdf:HTML datatype">
+"descriptionHtml": {
+  <span class="highlight">"@type": "rdf:HTML",</span>,
+  "@id": "https://www.w3.org/2018/credentials/examples#descriptionHtml"
+}
+      </pre>
+
     </section>
 
   </section>
