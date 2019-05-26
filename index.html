@@ -1466,6 +1466,37 @@ a set of objects that contain one or more properties that are each related to a
 }
         </pre>
 
+        <p>
+It is possible to express information related to multiple <a>subjects</a> in a
+<a>verifiable credential</a>. The example below specifies two subjects,
+the first is a recipient of a Bachelor Degree, the second is the university
+that granted the degree. Note the use of array notation to associate
+multiple subjects with the <code>credentialSubject</code> property.
+        </p>
+
+        <pre class="example nohighlight" title="Specifying multiple subjects in a verifiable credential">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "credentialSubject": <span class="highlight">[{
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "alumniOf": "did:example:c276e12ec21ebfeb1f712ebc6f1",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science And Arts"
+    }
+  }, {
+    "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
+    "name": "Example University"
+  }]</span>,
+  "proof": { ... }
+}
+        </pre>
+
       </section>
 
       <section>
