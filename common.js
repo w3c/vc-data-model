@@ -138,6 +138,13 @@ var vcwg = {
       title: 'InterPlanetary File System (IPFS)',
       href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
       publisher: 'Wikipedia'
+    },
+    'JSON-SCHEMA-2019': {
+      title: 'JSON Schema: A Media Type for Describing JSON Documents',
+      href: 'https://tools.ietf.org/html/draft-handrews-json-schema',
+      authors: ['Austin Wright', 'Henry Andrews'],
+      status: 'Internet-Draft',
+      publisher: 'Internet Engineering Task Force (IETF)'
     }
   }
 };
