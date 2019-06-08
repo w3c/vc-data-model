@@ -139,7 +139,7 @@ var vcwg = {
       href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
       publisher: 'Wikipedia'
     },
-    'JSON-SCHEMA-2019': {
+    'JSON-SCHEMA-2018': {
       title: 'JSON Schema: A Media Type for Describing JSON Documents',
       href: 'https://tools.ietf.org/html/draft-handrews-json-schema',
       authors: ['Austin Wright', 'Henry Andrews'],
