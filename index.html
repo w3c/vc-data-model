@@ -4848,7 +4848,7 @@ text direction:
       <pre class="example nohighlight" title="Expressing natural language text as English">
 "statusReason": {
   "value": "<span class="highlight">Revoked</span>",
-  "language: "<code>en</code>"
+  "lang: "<code>en</code>"
 }
       </pre>
 
@@ -4885,80 +4885,35 @@ doing so is shown below:
     </section>
 
     <section class="informative">
-       <h3>Complex Language Markup</h3>
+      <h3>Complex Language Markup</h3>
 
-       <p>
+      <p>
 When multiple languages, base directions, and annotations are used in a single
 natural language string, more complex mechanisms are typically required.
-[[!JSON-LD]] supports the expression of language information using the
-<code>rdf:HTML</code> string literal type, as described in [[!JSON-LD]],
-<a href="https://www.w3.org/TR/json-ld11/#typed-values">Section 4.2.1: Typed Values</a>.
-This mechanism enables developers to use the internationalization features
-present in HTML to express a variety of language and base direction information.
-For example, consider the following key-value pair that expresses two languages
-in the same natural language text string:
-
-       <pre class="example nohighlight" title="Expressing multiple languages in a single natural language text string">
-"nameHtml": "&lt;span <span class="highlight">lang="en"</span>>Kazumi&lt;/span> (&lt;span <span class="highlight">lang="jp"</span>>和美&lt;/span>)"
-       </pre>
-
-       <p>
-If the JSON-LD Context expressed that any value associated with the
-<code>nameHtml</code> property as being of type <code>rdf:HTML</code>, then
-software agents rendering the property can deterministically identify the
-various languages in use. JSON and CBOR implementations following the
-<code>@context</code> ordering requirements in this specification will also be
-able to benefit from this feature.
-       </p>
-
-       <p>
-This feature is also useful when mixing languages and base direction in a
-single natural language string:
-       </p>
-
-       <pre class="example nohighlight" title="Expressing multiple text directions in single natural language text string">
-"descriptionHtml": "&lt;span <span class="highlight">lang="en" dir="ltr"</span>>The country names include
-                      &lt;span <span class="highlight">lang="ar" dir="rtl"</span>>مصر&lt;/span> and
-                      &lt;span <span class="highlight">lang="he" dir="rtl"</span>>ישראל&lt;/span>.
-                    &lt;/span>"
-       </pre>
-
-       <p>
-If the JSON-LD Context states that any value associated with the
-<code>nameHtml</code> property is of type <code>rdf:HTML</code>, then software
-agents have sufficient information to deterministically identify the base
-direction of the language, even if the direction changes within the same string.
+It is possible to utilize markup languages, such as HTML, to encode
+text with multiple language and base directions. It is also
+possible to use the <code>rdf:HTML</code> datatype to encode such values
+accurately in JSON-LD.
       </p>
 
       <p>
-In some situations it is common to use
-<a href="https://en.wikipedia.org/wiki/Ruby_character">Ruby characters</a>
-to ensure text information, such as how to pronounce a particular glyph,
-is clear and as useful as possible.
-      </p>
-
-      <pre class="example nohighlight" title="Expressing Ruby markup in a natural language text string">
-"descriptionHtml": "これは<span class="highlight">&lt;ruby>&lt;rb>紙芝居&lt;/rb>&lt;rt>かみしばい&lt;/rt>&lt;/ruby></span>です。"
-      </pre>
-
-      <p>
-The markup above would result in the following rendered string in a
-software system that is capable of rendering Ruby markup:
-これは<ruby><rb>紙芝居</rb><rt>かみしばい</rt></ruby>です。
+Implementers are strongly discouraged from encoding information as HTML
+because doing so 1) requires some version of an HTML processor, which
+increases the burden of processing language and base direction information,
+and 2) increases the security attack surface when utilizing this data model
+as blindly processing HTML could result in executing a <code>script</code>
+tag that an attacker injected at some point during the data production process.
       </p>
 
       <p>
-An example of a JSON-LD Context snippet that sets a datatype of
-<code>rdf:HTML</code> is shown below:
+Implementers considering the use of HTML to encode complex language and
+base direction information might consider deconstructing the data into a
+format that does not require complex markup, such as an array of elements
+that can use a simpler form of language and base direction expression.
+If such an approach is not possible, implementers are advised to analyze
+how an attacker would use the data to mount injection attacks against a
+consumer of the data and deploy mitigations for the identified attacks.
       </p>
-
-      <pre class="example nohighlight" title="Specifying the rdf:HTML datatype">
-"descriptionHtml": {
-  "@id": "https://www.w3.org/2018/credentials/examples#descriptionHtml"
-  <span class="highlight">"@type": "rdf:HTML",</span>,
-}
-      </pre>
-
     </section>
 
   </section>
