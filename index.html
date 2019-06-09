@@ -4789,52 +4789,53 @@ for people with varying abilities.
     <h2>Internationalization Considerations</h2>
 
     <p>
-There are a number of internationalization considerations implementers should be
-aware of when publishing data described in this specification. As with any web
-standards or protocols implementation, ignoring internationalization makes it
-difficult for data to be produced and consumed across a disparate set of
-languages and societies, which would limit the applicability of the
-specification and significantly diminish its value as a standard.
+There are a number of internationalization considerations implementers
+are advised to be aware of when publishing data described in this specification.
+As with any web standards or protocols implementation, ignoring
+internationalization makes it difficult for data to be produced and consumed
+across a disparate set of languages and societies, which would limit the
+applicability of the specification and significantly diminish its value as
+a standard.
     </p>
 
     <p>
-Implementers are strongly advised to read the Requirements for
-Language and Direction Metadata in Data Formats [[STRING-META]] published by
-the W3C Internationalization Activity as it elaborates upon the
-need to provide reliable metadata about text in order to support
-internationalization. Implementers are also urged to read the Implementation
-Guidance [[VC-IMP-GUIDE]] for the latest information related to this topic.
+Implementers are strongly advised to read the Strings on the Web: Language and
+Direction Metadata document [[STRING-META]] published by the W3C
+Internationalization Activity as it elaborates upon the need to provide
+reliable metadata about text in order to support internationalization.
+Implementers are also urged to read the Implementation Guidance
+[[VC-IMP-GUIDE]] for the latest information related to this topic.
     </p>
 
     <p>
 This section outlines general internationalization considerations to take into
-account when utilizing this data model.
+account when utilizing this data model and is intended to highlight specific
+parts of the Strings on the Web: Language and Direction Metadata document
+[[STRING-META]] that implementers might be interested in perusing.
     </p>
 
     <section class="informative">
-      <h3>Language and Direction</h3>
+      <h3>Language and Base Direction</h3>
 
       <p>
-Data publishers are strongly encouraged to use the design pattern described
-in this section when expressing natural language strings in
-JSON, JSON-LD, or similar data formats to ensure the broadest interoperability
-across syntaxes. The design pattern is a result of extensive collaboration
-between the W3C Internationalization Activity, the Linked Data Community, and
-developers that primarily utilize JSON and CBOR to publish information. The
-pattern is useful for the vast majority of language and base direction use
-cases that implementers of this specification will need to support.
+Data publishers are strongly encouraged to read the section on
+<a href="https://w3c.github.io/string-meta/#cross-syntax-expression">
+Cross-Syntax Expression</a> in order to ensure that the expression of
+language and base direction information is possible across multiple expression
+syntaxes such as [[JSON-LD]], [[JSON]], and CBOR [[?RFC7049]].
       </p>
 
       <p>
 The general design pattern is to use the following markup template when
 expressing a text string that is tagged with a language and, optionally, a
-specific text direction:
+specific base direction:
       </p>
 
       <pre class="example nohighlight" title="Design pattern for natural language strings">
 "<a>property</a>": {
   "value": "<span class="highlight">The string value</span>",
-  "language: "<code>LANGUAGE</code>-x-dir-<code>DIRECTION</code>"
+  "lang: "<code>LANGUAGE</code>"
+  "dir": "<code>DIRECTION</code>"
 }
       </pre>
 
@@ -4859,7 +4860,8 @@ language with a base direction of right-to-left:
       <pre class="example nohighlight" title="Arabic text with a base direction of right-to-left">
 "statusReason": {
   "value": "<span class="highlight">إلغاء</span>",
-  "language: "<code>ar</code>-x-dir-<code>rtl</code>"
+  "lang: "<code>ar</code>"
+  "dir": "<code>rtl</code>"
 }
       </pre>
 
@@ -4867,14 +4869,15 @@ language with a base direction of right-to-left:
 Utilization of the design pattern above assumes that the JSON-LD
 <a href="#extensibility">extension</a> associated with the
 <a>property</a> utilizes the Scoped Context feature of JSON-LD to
-alias the <code>@language</code> and <code>@value</code> keywords to
-<code>language</code> and <code>value</code>, respectively. An example of
-a JSON-LD Context snippet doing so is shown below:
+alias the <code>@value</code>, <code>@language</code>, and
+<code>@direction</code> keywords to <code>value</code>, <code>lang</code>,
+and <code>dir</code>, respectively. An example of a JSON-LD Context snippet
+doing so is shown below:
       </p>
 
       <pre class="example nohighlight" title="Specifying scoped aliasing for language information">
 "statusReason": {
-  <span class="highlight">"@context": {"value": "@value", "language": "@language"}</span>,
+  <span class="highlight">"@context": {"value": "@value", "lang": "@language", "dir": "@direction"}</span>,
   "@id": "https://www.w3.org/2018/credentials/examples#statusReason"
 }
       </pre>
@@ -4903,7 +4906,7 @@ in the same natural language text string:
 If the JSON-LD Context expressed that any value associated with the
 <code>nameHtml</code> property as being of type <code>rdf:HTML</code>, then
 software agents rendering the property can deterministically identify the
-various languages in use. JSON implementations following the
+various languages in use. JSON and CBOR implementations following the
 <code>@context</code> ordering requirements in this specification will also be
 able to benefit from this feature.
        </p>
@@ -4951,8 +4954,8 @@ An example of a JSON-LD Context snippet that sets a datatype of
 
       <pre class="example nohighlight" title="Specifying the rdf:HTML datatype">
 "descriptionHtml": {
-  <span class="highlight">"@type": "rdf:HTML",</span>,
   "@id": "https://www.w3.org/2018/credentials/examples#descriptionHtml"
+  <span class="highlight">"@type": "rdf:HTML",</span>,
 }
       </pre>
 
