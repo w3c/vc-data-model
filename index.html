@@ -4737,7 +4737,7 @@ this topic.
 This section outlines general internationalization considerations to take into
 account when utilizing this data model and is intended to highlight specific
 parts of the <em>Strings on the Web: Language and Direction Metadata</em>
-document [[STRING-META]] that implementers might be interested in perusing.
+document [[STRING-META]] that implementers might be interested in reading.
     </p>
 
     <section class="informative">
@@ -4767,28 +4767,34 @@ specific base direction:
 
       <p>
 An example utilizing the design pattern above is shown below to express the
-human-readable text "revoked" in the English language without specifying a
-text direction:
+title of a book in the English language without specifying a text direction:
       </p>
 
       <pre class="example nohighlight" title="Expressing natural language text as English">
-"statusReason": {
-  "value": "<span class="highlight">Revoked</span>",
+"title": {
+  "value": "<span class="highlight">HTML and CSS: Designing and Creating Websites</span>",
   "lang": "<code>en</code>"
 }
       </pre>
 
       <p>
-The next example uses a term in Arabic with a base direction of right-to-left:
+The next example uses a similar title expressed in the Arabic language with a
+base direction of right-to-left:
       </p>
 
       <pre class="example nohighlight" title="Arabic text with a base direction of right-to-left">
-"statusReason": {
-  "value": "<span class="highlight">إلغاء</span>",
+"title": {
+  "value": "<span class="highlight">HTML و CSS: تصميم و إنشاء مواقع الويب</span>",
   "lang": "<code>ar</code>"
   "dir": "<code>rtl</code>"
 }
       </pre>
+
+      <p class="note">
+The text above would most likley be rendered incorrectly as left to right
+without the explicit expression of language and direction as many systems will
+use the first character of a text string to determine text direction.
+      <p>
 
       <p>
 Utilization of the design pattern above assumes that the JSON-LD
@@ -4801,9 +4807,9 @@ doing so is shown below:
       </p>
 
       <pre class="example nohighlight" title="Specifying scoped aliasing for language information">
-"statusReason": {
+"title": {
   <span class="highlight">"@context": {"value": "@value", "lang": "@language", "dir": "@direction"}</span>,
-  "@id": "https://www.w3.org/2018/credentials/examples#statusReason"
+  "@id": "https://www.w3.org/2018/credentials/examples#title"
 }
       </pre>
 
