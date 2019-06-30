@@ -36,14 +36,14 @@ var vcwg = {
       status: "CG-DRAFT",
       publisher: "Credentials Community Group"
     },
-    "string-meta": {
-      title: "Requirements for Language and Direction Metadata in Data Formats",
-      href: "https://w3c.github.io/string-meta/",
+    "STRING-META": {
+      title: "Strings on the Web: Language and Direction Metadata",
+      href: "https://www.w3.org/TR/string-meta/",
       authors: [
-	"Addison Phillips",
+        "Addison Phillips",
         "Richard Ishida"
       ],
-      status: "Editors-DRAFT",
+      status: "WD",
       publisher: "Internationalization Working Group"
     },
     "LD-PROOFS": {
