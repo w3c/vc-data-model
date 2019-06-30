@@ -1277,7 +1277,7 @@ containing machine-readable information about the <code>type</code>.
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of the type property">
+        <pre class="example nohighlight" title="Usage of the type property in a verifiable credential">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1295,6 +1295,53 @@ containing machine-readable information about the <code>type</code>.
   "proof": { ... }
 }
         </pre>
+
+        <p>
+With respect to this specification, there are at least three different
+categories of type information that implementers are advised to be aware
+of when building solutions. These are:
+        </p>
+
+        <ol>
+          <li>
+The type of the <a>verifiable credential</a>. This signals the top level
+properties that the verifiable credential contains to the <a>verifier</a>.
+The type <code>VerifiableCredential</code> signals all of the properties that
+a basic <a>verifiable credential</a> contains. These properties are all defined
+in this specification and include <code>credentialSubject</code>,
+<code>issuer</code>, <code>proof</code>, and others. If an <a>issuer</a> wants
+to add new top level properties to a <a>verifiable credential</a>, then it
+is strongly advised that the type property be extended with an additional type
+value that indicates that these new properties exist. It is also strongly
+advised that the <code>credentialSchema</code> be utilized to define which of
+these new properties are mandatory and which are optional.
+          </li>
+          <li>
+The type of the credential <a>subject</a>. Since the
+<code>credentialSubject</code> is simply identified by an identifier, the
+type of the <a>subject</a> might not be obvious to a <a>verifier</a>.
+For example, a temperature sensor might be one that reads the temperature of an
+oven, a person, or a refrigerator. Specifying identifier and temperature
+properties only might not allow the verifier to determine whether the sensor
+is operating correctly or not. Specifying the type of sensor will allow the
+<a>verifier</a> to know the expected range of temperature values.
+An <a>issuer</a> is strongly advised to express the type of
+the credential <a>subject</a> unless it might lead to issues such as privacy
+violations of the <a>subject</a>.
+          </li>
+          <li>
+The type that governs the properties of the credential <a>subject</a>.
+For example, a <a>verifiable credential</a> of type <code>UniversityDegree</code>
+might contain the discipline and degree classification, whilst an
+<code>ExtendedUniversityDegree</code> might contain a list of courses studied
+for the degree. An issuer might specify this additional subtype information in
+<code>type</code> property of the <a>verifiable credential</a> or might leave
+the subtype to be implicitly determined by the verifier. For example,
+when the <a>verifier</a> finds additional unexpected properties associated with
+the credential <a>subject</a> in the <a>verifiable credential</a> then it knows
+that the type has been extended.
+          </li>
+        </ol>
 
         <p>
 With respect to this specification, the following table lists the
