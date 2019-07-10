@@ -167,23 +167,20 @@ or send them to
       </p>
 
       <p>
-The Working Group seeks implementation feedback, having set the
-requirement of at least two implementations of each feature as the
-exit criteria for the Candidate Recommendation phase.  The group aims
-to obtain reports from two producers and two consumers for each
-feature if possible.  For details, see
-the <a href="https://github.com/w3c/vc-test-suite/">test suite</a> and
-sample <a href="https://w3c.github.io/vc-test-suite/implementations/">implementation
-report</a>.
+The Working Group seeks implementation feedback, having set the requirement of
+at least two implementations of each feature as the exit criteria for the
+Candidate Recommendation phase. The group aims to obtain reports from two
+producers and two consumers for each feature if possible. For details, see the
+<a href="https://github.com/w3c/vc-test-suite/">test suite</a> and sample
+<a href="https://w3c.github.io/vc-test-suite/implementations/">implementation report</a>.
       </p>
 
       <p>
-The following features are considered at risk of removal due to
-potentially insufficient implementation experience (reports):
-<code>credentialSchema</code> property, <code>refreshService</code>
-property, <code>evidence</code> property, zero-knowledge proof
-support, <code>disputedClaim</code> property, JWT support,
-<code>nonTransferable</code> property.
+The following features are considered at risk of removal due to potentially
+insufficient implementation experience (reports): <code>credentialSchema</code>
+property, <code>refreshService</code> property, <code>evidence</code> property,
+zero-knowledge proof support, <code>disputedClaim</code> property, JWT support,
+and <code>nonTransferable</code> property.
       </p>
 
       <p>
@@ -192,47 +189,51 @@ Changes since the last publication of this document include:
 
       <ul>
         <li>
-Editorial modifications to group similar information together and make
-the document flow easier to navigate.
+Editorial modifications to group similar information together and make the
+document flow easier to navigate.
         </li>
         <li>
-Added a Concrete Lifecycle Example.
+Added a Concrete Lifecycle Example section.
         </li>
         <li>
-Modified conformance statements to ensure that all conformance
-statements are testable.
+Modified conformance statements to ensure that all conformance statements are
+testable.
         </li>
         <li>
-Renamed subject to credentialSubject.
+Renamed the <code>subject</code> property to <code>credentialSubject</code>.
         </li>
         <li>
-Clarified that verifiable credentials and verifiable presentations
-MUST include the @context property and that for a VC or VP to be
-verifiable at least one proof mechanism MUST be expressed: external or
+Clarified that <a>verifiable credentials</a> and <a>verifiable presentations</a>
+MUST include the <code>@context</code> <a>property</a> and that for a
+<a>verifiable credential</a> or <a>verifiable presentation</a> to be
+<a>verifiable</a> at least one proof mechanism MUST be expressed: external or
 embedded.
         </li>
         <li>
-Clarified that a VC MUST contain the issuer and issuanceDate properties.
+Clarified that a <a>verifiable credential</a> MUST contain the
+<code>issuer</code> and <code>issuanceDate</code> properties.
         </li>
         <li>
-Significant clarifying text added for Zero-Knowledge and JWT use.
+Added significant clarifying text for Zero-Knowledge Proof and JSON Web Token
+use.
         </li>
         <li>
-Added section on Proof Formats.
+Added a Proof Formats section.
         </li>
         <li>
-Clarified JSON-LD Context URLs and their cache-ability.
+Clarified JSON-LD Context URLs and their ability to be cached.
         </li>
         <li>
-Refactored Verification section to a non-normative Validation section.
+Refactored the Verification section to a be a non-normative Validation section.
         </li>
         <li>
 Marked a number of features as features at risk and documenting implementation
-details that may change based on feedback from implementers.
+details that might change based on feedback from implementers.
         </li>
         <li>
-Privacy, Security, Accessibility, and (new) Internationalization
-Considerations all promoted to top level.
+Promoted the Privacy Considerations, Security Considerations,
+Accessibility Considerations, and Internationalization Considerations (new)
+sections to the top level.
         </li>
         <li>
 Moved some content out to an Implementation Guidance document.
@@ -319,7 +320,7 @@ Evidence related to how the <a>credential</a> was derived
           </li>
           <li>
 Information related to constraints on the credential (for example, expiration
-date, terms of use).
+date, or terms of use).
           </li>
         </ul>
 
@@ -555,13 +556,14 @@ greater than, less than, equal to, is in set, and so on.
           </li>
           <li>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> have to be
-serializable in one or more machine-readable data formats. The process of serialization
-and/or de-serialization has to be deterministic, bi-directional, and lossless.
-Any serialization of a <a>verifiable credential</a> or <a>verifiable presentation</a> needs to
-be transformable to the generic data model defined in this document in a deterministic
-process such that the resulting <a>verifiable credential</a> can be processed
-in an interoperable fashion. The serialized form also needs to be able
-to be generated from the data model without loss of data or content.
+serializable in one or more machine-readable data formats. The process of
+serialization and/or de-serialization has to be deterministic, bi-directional,
+and lossless. Any serialization of a <a>verifiable credential</a> or
+<a>verifiable presentation</a> needs to be transformable to the generic data
+model defined in this document in a deterministic process such that the
+resulting <a>verifiable credential</a> can be processed in an interoperable
+fashion. The serialized form also needs to be able to be generated from the data
+model without loss of data or content.
           </li>
           <li>
 The data model and serialization must be extendable with minimal coordination.
@@ -595,14 +597,14 @@ Specifically, all relevant normative statements in Sections
 <a href="#basic-concepts"></a>, <a href="#advanced-concepts"></a>, and
 <a href="#syntaxes"></a> of this document MUST be enforced. A serialization
 format for the conforming document MUST be deterministic, bi-directional,
-and lossless as described in <a href="#syntaxes"></a>.
+and lossless as described in Section <a href="#syntaxes"></a>.
 The conforming document MAY be transmitted or stored in any such
 serialization format.
         </p>
 
         <p>
 A <em>conforming processor</em> is any algorithm realized as software and/or
-hardware that generates or consumes a <em>conforming document</em>. Conforming
+hardware that generates or consumes a conforming document. Conforming
 processors MUST produce errors when non-conforming documents are consumed.
         </p>
 
@@ -617,23 +619,35 @@ application, use case, and market vertical specific.
 Digital proof mechanisms, a subset of which are digital signatures, are required
 to ensure the protection of a <a>verifiable credential</a>. Having and
 validating proofs, which may be dependent on the syntax of the proof
-(for example, using the JWS of a JWT for proofing a key holder), are
-an essential part of processing a <a>verifiable credential</a>. At the time
-of publication, Working Group members had implemented
+(for example, using the JSON Web Signature of a JSON Web Token for proofing a
+key holder), are an essential part of processing a <a>verifiable credential</a>.
+At the time of publication, Working Group members had implemented
 <a>verifiable credentials</a> using at least three proof mechanisms:
-JSON Web Tokens [[RFC7519]] secured using JSON Web Signatures [[RFC7515]];
-Linked Data Signatures [[?LD-SIGNATURES]]; and
-Camenisch-Lysyanskaya Zero-Knowledge Proofs [[?CL-SIGNATURES]]. Implementers
-are advised to note that not all proof mechanisms have been standardized as
-of the publication date of this specification.
-The group expects some of these mechanisms, as well as new ones, to mature
-independently and become standardized in time. Given that there are multiple
-valid proof mechanisms, this specification does not standardize on any
-single digital signature mechanism. One of the goals of this specification is to
-provide a data model that can be protected by a variety of current and future
-digital proof mechanisms. Conformance to this specification does not
-depend on the details of a particular proof mechanism; it requires clearly
-identifying the mechanism a <a>verifiable credential</a> uses.
+        </p>
+
+        <ul>
+          <li>
+JSON Web Tokens [[RFC7519]] secured using JSON Web Signatures [[RFC7515]]
+          </li>
+          <li>
+Linked Data Signatures [[?LD-SIGNATURES]]
+          </li>
+          <li>
+Camenisch-Lysyanskaya Zero-Knowledge Proofs [[?CL-SIGNATURES]].
+          </li>
+        </ul>
+
+        <p>
+Implementers are advised to note that not all proof mechanisms are standardized
+as of the publication date of this specification. The group expects some of
+these mechanisms, as well as new ones, to mature independently and become
+standardized in time. Given there are multiple valid proof mechanisms, this
+specification does not standardize on any single digital signature mechanism.
+One of the goals of this specification is to provide a data model that can be
+protected by a variety of current and future digital proof mechanisms.
+Conformance to this specification does not depend on the details of a particular
+proof mechanism; it requires clearly identifying the mechanism a
+<a>verifiable credential</a> uses.
         </p>
       </section>
 
