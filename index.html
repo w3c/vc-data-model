@@ -1302,6 +1302,46 @@ in a document containing machine-readable information about the
         </pre>
 
         <p>
+There are three different classes of type information that can be added to the
+verifiable credential type property. These are:
+        </p>
+
+        <ol>
+          <li>
+The type of verifiable credential. This governs the top level properties that
+the verifiable credential contains. The type “verifiableCredential” specifies
+all the properties that a basic verifiable credential must or may contain, and
+these are all defined in this specification. They include properties such as
+termsOfUse, IssuanceDate, credentialSubject, proof etc. If an issuer wants to
+add new top level properties to a verifiable credential, then the type property
+MUST be extended with an additional type value that indicates that these new
+properties exist. The credentialSchema property SHOULD also be present, to
+define which of these new properties are mandatory and which are optional.
+          </li>
+          <li>
+The type of credentialSubject. Because the credentialSubject is simply
+identified by an ID, then it may not be obvious to a verifier what type of
+credentialSubject this is. For example, a temperature sensor may be one that
+reads the temperature of an oven, a person or a refrigerator. Specifying ID and
+temperature properties only may not allow the verifier to determine whether the
+sensor is operating correctly or not. Specifying the type of sensor will allow
+the verifier to know what the expected range of temperature values is. An
+issuer SHOULD insert the type of credentialSubject in the verifiableCredential
+type property, unless this can be implicitly determined by the verifier.
+          </li>
+          <li>
+The type that governs the properties of the credentialSubject. For example, a
+universityDegree verifiable credential may contain the discipline and degree
+classification, whilst an extendedUniversityDegree verifiable credential may
+contain a list of subjects studied for this degree. An issuer MAY specify this
+additional subtype information in the verifiableCredential type property or may
+leave the subtype to be implicitly determined by the verifier, for example,
+when the verifier finds additional unexpected credentialSubject properties in
+the verifiableCredential then it knows that the type has been extended.
+          </li>
+        </ol>
+
+        <p>
 With respect to this specification, the following table lists the objects that
 MUST have a <a>type</a> specified.
         </p>
@@ -1422,11 +1462,7 @@ of this specification who want to support interoperable extensibility, do.
 All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
 specify, or be associated with, additional more narrow <a>types</a> (like
 <code>UniversityDegreeCredential</code>, for example) so software systems can
-process this additional information. The specification of these additional more
-narrow types could be done in the object within which the additional information
-is found, rather than at a higher level such as the <code>type</code>
-<a>property</a> of the <a>credential</a> or <a>presentation</a>. It is also
-possible for the additional more narrow types to be implicit.
+process this additional information.
         </p>
 
         <p>
