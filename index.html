@@ -3242,27 +3242,28 @@ on top of this specification.
       <h2>Syntaxes</h2>
 
       <p>
-
 The data model as described in Sections
 <a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
-<a href="#advanced-concepts"></a> is the canonical structural
-representation of a <a>verifiable credential</a> or <a>verifiable presentation</a>.
-All serializations are representations of that data model in a specific
-format. This section specifies how the data model is realized in JSON-LD and plain JSON.
-Although syntactic mappings are provided for only these two syntaxes, applications and
-services can use any other data representation syntax (such as XML, YAML, or
-CBOR) that is capable of expressing the data model. As the verification and
-validation requirements are defined in terms of the data model, all serialization
-syntaxes have to be deterministically translated to the data model for processing,
-validation, or comparison. This specification makes no requirements for support
-of any specific serialization format.
+<a href="#advanced-concepts"></a> is the canonical structural representation of
+a <a>verifiable credential</a> or <a>verifiable presentation</a>. All
+serializations are representations of that data model in a specific format. This
+section specifies how the data model is realized in JSON-LD and plain JSON.
+Although syntactic mappings are provided for only these two syntaxes,
+applications and services can use any other data representation syntax (such as
+XML, YAML, or CBOR) that is capable of expressing the data model. As the
+<a>verification</a> and <a>validation</a> requirements are defined in terms of
+the data model, all serialization syntaxes have to be deterministically
+translated to the data model for processing, <a>validation</a>, or comparison.
+This specification makes no requirements for support of any specific
+serialization format.
       </p>
+
       <p>
 The expected arity of the property values in this specification, and the
-resulting datatype which holds those values, can vary depending
-on the property. If present, the following properties are represented as a
-single value:
+resulting datatype which holds those values, can vary depending on the property.
+If present, the following properties are represented as a single value:
       </p>
+
       <ul>
         <li>
 <code>id</code> <a>property</a>
@@ -3274,13 +3275,15 @@ single value:
 <code>issuanceDate</code> <a>property</a>
         </li>
         <li>
-<code>expirationDate</code> <a>property</a>
+<code>expirationDate</code> <a>property</a>.
         </li>
       </ul>
+
       <p>
 All other properties, if present, are represented as either a single value
 or an array of values.
       </p>
+
       <section>
         <h3>JSON</h3>
 
@@ -3315,9 +3318,9 @@ Other values MUST be represented as a String type.
         </ul>
 
         <p class="note">
-As the transformations listed herein have potentially incompatible interpretations,
-additional profiling of the JSON format is required to provide a deterministic
-transformation to the data model.
+As the transformations listed herein have potentially incompatible
+interpretations, additional profiling of the JSON format is required to provide
+a deterministic transformation to the data model.
         </p>
 
       </section>
@@ -3328,11 +3331,11 @@ transformation to the data model.
         <p>
 [[!JSON-LD]] is a JSON-based format used to serialize
 <a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. The
-syntax is designed to easily integrate into deployed systems already using
-JSON, and provides a smooth upgrade path from JSON to [[!JSON-LD]]. It is
-primarily intended to be a way to use Linked Data in Web-based programming
-environments, to build interoperable Web services, and to store Linked Data in
-JSON-based storage engines.
+syntax is designed to easily integrate into deployed systems already using JSON,
+and provides a smooth upgrade path from JSON to [[!JSON-LD]]. It is primarily
+intended to be a way to use Linked Data in Web-based programming environments,
+to build interoperable Web services, and to store Linked Data in JSON-based
+storage engines.
         </p>
 
         <p>
@@ -3409,13 +3412,13 @@ model whether or not they use a [[!JSON-LD]] processor.
 The data model described in this specification is designed to be proof format
 agnostic. This specification does not normatively require any particular digital
 proof or signature format. While the data model is the canonical representation
-of a <a>verifiable credential</a> or <a>verifiable presentation</a>, the proofing mechanisms
-for these are often tied to the syntax used
-in the transmission of the document between parties. As such, each proofing
-mechanism has to specify whether the validation of the proof is calculated
-against the state of the document as transmitted, against the transformed
-data model, or another form. At the time of publication, at least two proof
-formats are being actively utilized by implementers and the Working Group felt
+of a <a>verifiable credential</a> or <a>verifiable presentation</a>, the
+proofing mechanisms for these are often tied to the syntax used in the
+transmission of the document between parties. As such, each proofing mechanism
+has to specify whether the validation of the proof is calculated against the
+state of the document as transmitted, against the transformed data model, or
+another form. At the time of publication, at least two proof formats are being
+actively utilized by implementers and the Working Group felt
 that documenting what these proof formats are and how they are being used would
 be beneficial to implementers. The sections detailing the current proof formats
 being actively utilized to issue <a>verifiable credentials</a> are:
@@ -3483,18 +3486,32 @@ These objects are enclosed in the JWT payload as follows:
 
             <section>
               <h5>JWT Encoding</h5>
+
             <p>
 To encode a <a>verifiable credential</a> as a JWT, specific <a>properties</a>
-introduced by this specification MUST be either 1) encoded as standard JOSE
-header parameters, 2) encoded as registered JWT <a>claim</a> names, or 3)
-contained in the JWS signature part. If no explicit rule is specified,
-<a>properties</a> are encoded in the same way as with a standard
-<a>verifiable credential</a>, and are added to the <code>vc</code>
-<a>property</a> of the JWT. As with all JWTs, the JWS-based signature of
-a <a>verifiable credential</a> represented in the JWT syntax is calculated
-against the literal JWT string value as presented across the wire, before
-any decoding or transformation rules are applied. The following paragraphs
-describe these encoding rules.
+introduced by this specification MUST be either:
+            </p>
+
+            <ul>
+              <li>
+Encoded as standard JOSE header parameters, or
+              </li>
+              <li>
+Encoded as registered JWT <a>claim</a> names, or
+              </li>
+              <li>
+Contained in the JWS signature part.
+              </li>
+            </ul>
+
+            <p>
+If no explicit rule is specified, <a>properties</a> are encoded in the same way
+as with a standard <a>verifiable credential</a>, and are added to the
+<code>vc</code> <a>property</a> of the JWT. As with all JWTs, the JWS-based
+signature of a <a>verifiable credential</a> represented in the JWT syntax is
+calculated against the literal JWT string value as presented across the wire,
+before any decoding or transformation rules are applied. The following
+paragraphs describe these encoding rules.
             </p>
 
             <p>
@@ -3509,23 +3526,22 @@ signed the contained JWT payload and therefore, the <code>proof</code>
             <p>
 If no JWS is present, a <code>proof</code> <a>property</a> MUST be provided.
 The <code>proof</code> <a>property</a> can be used to represent a more complex
-proof, as may be necessary if the creator is different from the <a>issuer</a>, or a
-proof not based on digital signatures, such as Proof of Work. The <a>issuer</a>
-MAY include both a JWS and a <code>proof</code> <a>property</a>. For backward
-compatibility reasons, the issuer MUST use JWS to represent proofs based on a
-digital signature.
+proof, as may be necessary if the creator is different from the <a>issuer</a>,
+or a proof not based on digital signatures, such as Proof of Work. The
+<a>issuer</a> MAY include both a JWS and a <code>proof</code> <a>property</a>.
+For backward compatibility reasons, the issuer MUST use JWS to represent proofs
+based on a digital signature.
             </p>
 
             <p>
-The following rules apply to JOSE headers in the context of this
-specification:
+The following rules apply to JOSE headers in the context of this specification:
             </p>
 
             <ul>
               <li>
 <code>alg</code> MUST be set for digital signatures. If only the
-<code>proof</code> property is needed for the chosen signature
-method (i.e., if there is no choice of algorithm within that method),
+<code>proof</code> <a>property</a> is needed for the chosen signature
+method (that is, if there is no choice of algorithm within that method),
 the <code>alg</code> header MUST be set to <code>none</code>.
               </li>
               <li>
@@ -3547,15 +3563,15 @@ standard <a>verifiable credential</a> counterparts:
 
             <ul>
               <li>
-<code>exp</code> MUST represent <code>expirationDate</code>, encoded as a UNIX
-timestamp (<code>NumericDate</code>).
+<code>exp</code> MUST represent the <code>expirationDate</code> <a>property</a>,
+encoded as a UNIX timestamp (<code>NumericDate</code>).
               </li>
               <li>
 <code>iss</code> MUST represent the <code>issuer</code> <a>property</a>.
               </li>
               <li>
-<code>iat</code> MUST represent <code>issuanceDate</code>, encoded as a UNIX
-timestamp (<code>NumericDate</code>).
+<code>iat</code> MUST represent the <code>issuanceDate</code> <a>property</a>,
+encoded as a UNIX timestamp (<code>NumericDate</code>).
               </li>
               <li>
 <code>jti</code> MUST represent the <code>id</code> <a>property</a> of the
@@ -3566,8 +3582,8 @@ timestamp (<code>NumericDate</code>).
 in the <a>verifiable credential</a> <a>subject</a>.
               </li>
               <li>
-<code>aud</code> MUST represent the <code>subject</code> of the consumer of the
-<a>verifiable presentation</a>.
+<code>aud</code> MUST represent the <code>subject</code> <a>property</a> of the
+consumer of the <a>verifiable presentation</a>.
               </li>
             </ul>
 
@@ -3608,50 +3624,50 @@ To decode a JWT to a standard <a>verifiable credential</a>, the following
 transformation MUST be performed:
             </p>
 
-              <ol>
-                  <li>
+            <ol>
+              <li>
 Create a JSON object.
-                  </li>
-                  <li>
-Add the content from the <code>vc</code> property to the new JSON object.
-                  </li>
-                  <li>
+              </li>
+              <li>
+Add the content from the <code>vc</code> <a>property</a> to the new JSON object.
+              </li>
+              <li>
 Transform the remaining JWT specific headers and <a>claims</a>, and add the
 results to the new JSON object.
-                  </li>
-              </ol>
+              </li>
+            </ol>
 
-              <p>
+            <p>
 To transform the JWT specific headers and <a>claims</a>, the following MUST be
 done:
-              </p>
+            </p>
 
-              <ul>
-                  <li>
+            <ul>
+              <li>
 If <code>exp</code> is present, the UNIX timestamp MUST be converted to an
 [[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
 of the <code>expirationDate</code> <a>property</a> of
 <code>credentialSubject</code> of the new JSON object.
-                  </li>
-                  <li>
+              </li>
+              <li>
 If <code>iss</code> is present, the value MUST be used to set the
 <code>issuer</code> <a>property</a> of the new JSON object.
-                  </li>
-                  <li>
+              </li>
+              <li>
 If <code>iat</code> is present, the UNIX timestamp MUST be converted to an
-[[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
-of the <code>issuanceDate</code> <a>property</a> of the new JSON object.
-                  </li>
-                  <li>
+[[!RFC3339]] <code>date-time</code>, and MUST be used to set the value of the
+<code>issuanceDate</code> <a>property</a> of the new JSON object.
+              </li>
+              <li>
 If <code>sub</code> is present, the value MUST be used to set the value of the
 <code>id</code> <a>property</a> of <code>credentialSubject</code> of the new
 JSON object.
-                  </li>
-                  <li>
+              </li>
+              <li>
 If <code>jti</code> is present, the value MUST be used to set the value of the
-<code>id</code> property of the new JSON object.
-                  </li>
-              </ul>
+<code>id</code> <a>property</a> of the new JSON object.
+              </li>
+            </ul>
 
             <pre class="example nohighlight" title="JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)">
 {
@@ -3839,9 +3855,9 @@ implementation and generating a digital signature.
           </p>
 
           <p class="note">
-Information on the different qualities of the various syntax formats,
-e.g., JSON+JWT, JSON-LD+JWT, and JSON-LD+LD-Proofs may be found in the
-[[VC-IMP-GUIDE]].
+For more information about the different qualities of the various syntax
+formats, for example, JSON+JWT, JSON-LD+JWT, and JSON-LD+LD-Proofs, see the
+Verifiable Credentials Implementation Guidance [[VC-IMP-GUIDE]] document.
           </p>
 
         </section>
