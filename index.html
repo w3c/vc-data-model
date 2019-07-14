@@ -665,9 +665,9 @@ proof mechanism; it requires clearly identifying the mechanism a
       <h2>Core Data Model</h2>
 
       <p>
-The following sections outline core data model concepts, such as
-<a>claims</a>, <a>credentials</a>, and <a>presentations</a>, which form the
-foundation of this specification.
+The following sections outline core data model concepts, such as <a>claims</a>,
+<a>credentials</a>, and <a>presentations</a>, which form the foundation of this
+specification.
       </p>
 
       <section class="informative">
@@ -675,8 +675,7 @@ foundation of this specification.
 
         <p>
 A <a>claim</a> is a statement about a <a>subject</a>. A <a>subject</a> is
-a thing about which <a>claims</a> can be made. <a>Claims</a> are
-expressed using
+a thing about which <a>claims</a> can be made. <a>Claims</a> are expressed using
 <strong><em>subject</em></strong>-<dfn data-lt="property|properties">property</dfn>-<dfn>value</dfn>
 relationships.
         </p>
@@ -691,7 +690,7 @@ The basic structure of a claim.
         </figure>
 
         <p>
-The data model for <a>claims</a>, described in <a href="#basic-structure"></a>
+The data model for <a>claims</a>, illustrated in <a href="#basic-structure"></a>
 above, is powerful and can be used to express a large variety of statements. For
 example, whether someone graduated from a particular university can be expressed
 as shown in <a href="#basic-example"></a> below.
@@ -773,9 +772,9 @@ disclosure scheme that does not reveal the <a>credential</a> identifier.
 <a>verifiable credential</a>, but abstracts the details about how <a>claims</a>
 are organized into information <a>graphs</a>, which are then organized into
 <a>verifiable credentials</a>. <a href="#info-graph-vc"></a> below shows a
-more complete depiction of a <a>verifiable credential</a>,
-which is normally composed of at least two information <a>graphs</a>. The first
-<a>graph</a> expresses the <a>verifiable credential</a> itself, which contains
+more complete depiction of a <a>verifiable credential</a>, which is normally
+composed of at least two information <a>graphs</a>. The first <a>graph</a>
+expresses the <a>verifiable credential</a> itself, which contains
 <span class="color-text" style="color:#d5a6bd;">credential metadata</span> and
 <span class="color-text" style="color:#ffe599;">claims</span>. The second
 <a>graph</a> expresses the
@@ -808,9 +807,10 @@ containing multiple <a>claims</a> about different <a>subjects</a> that are not
 required to be related.
         </p>
         <p class="note">
-It is possible to have a <a>credential</a> that does not contain any claims
-about the entity to which the credential was issued. An example is a credential
-that only contains claims about a specific dog, but is issued to its owner.
+It is possible to have a <a>credential</a> that does not contain any
+<a>claims</a> about the <a>entity</a> to which the <a>credential</a> was issued.
+For example, a <a>credential</a> that only contains <a>claims</a> about a
+specific dog, but is issued to its owner.
         </p>
       </section>
 
@@ -819,9 +819,9 @@ that only contains claims about a specific dog, but is issued to its owner.
 
         <p>
 Enhancing privacy is a key design feature of this specification. Therefore, it
-is important for <a>entities</a> using this technology to be able to
-express only the portions of their persona that are appropriate for a given
-situation. The expression of a subset of one's persona is called a
+is important for <a>entities</a> using this technology to be able to express
+only the portions of their persona that are appropriate for a given situation.
+The expression of a subset of one's persona is called a
 <a>verifiable presentation</a>. Examples of different personas include a
 person's professional persona, their online gaming persona, their
 family persona, or an incognito persona.
@@ -831,7 +831,7 @@ family persona, or an incognito persona.
 A <a>verifiable presentation</a> expresses data from one or more
 <a>verifiable credentials</a>, and is packaged in such a way that the
 authorship of the data is <a>verifiable</a>. If <a>verifiable credentials</a>
-are presented directly, they become a <a>verifiable presentation</a>. Data
+are presented directly, they become <a>verifiable presentations</a>. Data
 formats derived from <a>verifiable credentials</a> that are cryptographically
 <a>verifiable</a>, but do not of themselves contain
 <a>verifiable credentials</a>, might also be <a>verifiable presentations</a>.
@@ -839,8 +839,9 @@ formats derived from <a>verifiable credentials</a> that are cryptographically
 
         <p>
 The data in a <a>presentation</a> is often about the same <a>subject</a>, but
-might have been issued by multiple <a>issuers</a>. The aggregation of this information
-typically expresses an aspect of a person, organization, or <a>entity</a>.
+might have been issued by multiple <a>issuers</a>. The aggregation of this
+information typically expresses an aspect of a person, organization, or
+<a>entity</a>.
         </p>
 
         <figure id="basic-vp">
@@ -935,10 +936,10 @@ Composition of <a>verifiable credentials</a> into a
         </ol>
 
         <p>
-We will use concrete examples to illustrate the lifecycle above by
-demonstrating how to redeem an alumni discount from a university. In the
-example below, Pat receives an alumni <a>verifiable credential</a> from a
-university that will be stored in Pat's digital wallet.
+To illustrate this lifecycle we will use the example of redeeming an alumni
+discount from a university. In the example below, Pat receives an alumni
+<a>verifiable credential</a> from a university and Pat stores the
+<a>verifiable credential</a>in a digital wallet.
         </p>
 
         <pre class="example nohighlight" title="A simple example of a verifiable credential">
@@ -992,18 +993,18 @@ university that will be stored in Pat's digital wallet.
   }
 }
         </pre>
+
         <p>
-Pat then presents the alumni <a>verifiable credential</a> shown above to receive
-a discount. The <a>verifier</a>, a ticket sales system, states that any alumni
-of "Example University" receives a discount on season tickets to sporting
-events. Using a mobile device, Pat starts the process of purchasing a season
-ticket. A step in the process requests an alumni <a>verifiable credential</a>
-and the request is routed to Pat's digital wallet. The digital wallet asks Pat
-if they would like to provide the previously issued
-<a>verifiable credential</a>. Pat selects the <a>verifiable credential</a>,
-which is then composed into a <a>verifiable presentation</a>. The
-<a>verifiable presentation</a> is then sent to the <a>verifier</a> and
-<a>verified</a>.
+Pat then attempts to receive an alumni discount. The <a>verifier</a>, a ticket
+sales system, states that any alumni of "Example University" receives a discount
+on season tickets to sporting events. Using a mobile device, Pat starts the
+process of purchasing a season ticket. A step in this process requests an alumni
+<a>verifiable credential</a> and this request is routed to Pat's digital wallet.
+The digital wallet asks Pat if they would like to provide a previously issued
+<a>verifiable credential</a>. Pat selects the alumni
+<a>verifiable credential</a>, which is then composed into a
+<a>verifiable presentation</a>. The <a>verifiable presentation</a> is sent to
+the <a>verifier</a> and <a>verified</a>.
         </p>
         <pre class="example nohighlight" title="A simple example of a verifiable presentation">
 {
