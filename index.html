@@ -5401,10 +5401,11 @@ is also provided in this section.
       <h3>Subject-Holder Relationships</h3>
 
       <p>
-This section describes the possible relationships between a <a>subject</a>
-and a <a>holder</a> and how the Verifiable Credentials Data Model expresses
-these relationships. The following diagram illustrates the different types of
-relationships covered in the rest of this section.
+This section describes possible relationships between a <a>subject</a> and a
+<a>holder</a> and how the Verifiable Credentials Data Model expresses these
+relationships. The following diagram illustrates these relationships, with the
+subsequent sections describing how each of these relationships are handled in
+the data model.
       </p>
 
       <figure>
@@ -5430,11 +5431,6 @@ Subject-Holder Relationships in Verifiable Credentials.
         </figcaption>
       </figure>
 
-      <p>
-The following sections describe how each of these relationships are handled in
-the data model.
-      </p>
-
       <section class="informative">
         <h4>Subject is the Holder</h4>
 
@@ -5449,8 +5445,8 @@ this case, a <a>verifier</a> can easily deduce that a <a>subject</a> is the
         <p>
 If only the <code>credentialSubject</code> is allowed to insert a
 <a>verifiable credential</a> into a <a>verifiable presentation</a>, the
-<a>issuer</a> may insert the <code>nonTransferable</code> <a>property</a> into the
-<a>verifiable credential</a>, as described below.
+<a>issuer</a> can insert the <code>nonTransferable</code> <a>property</a> into
+the <a>verifiable credential</a>, as described below.
         </p>
 
         <section class="informative">
@@ -5495,11 +5491,12 @@ is invalid.
         <p>
 In this case, the <code>credentialSubject</code> <a>property</a> might contain
 multiple <a>properties</a>, each providing an aspect of a description of the
-<a>subject</a>, which combine together to unambiguously identify the <a>subject</a>.
-Some use cases might not require the <a>holder</a> to be identified at all,
-such as checking to see if a doctor (the <a>subject</a>) is board-certified.
-Other use cases might require the <a>verifier</a> to use out-of-band knowledge
-to determine the relationship between the <a>subject</a> and the <a>holder</a>.
+<a>subject</a>, which combine together to unambiguously identify the
+<a>subject</a>. Some use cases might not require the <a>holder</a> to be
+identified at all, such as checking to see if a doctor (the <a>subject</a>) is
+board-certified. Other use cases might require the <a>verifier</a> to use
+out-of-band knowledge to determine the relationship between the <a>subject</a>
+and the <a>holder</a>.
         </p>
 
         <pre class="example nohighlight" title="A credential uniquely identifying a subject">
@@ -5535,20 +5532,19 @@ address, and birthdate of the individual.
 
         <p>
 Usually <a>verifiable credentials</a> are presented to <a>verifiers</a> by the
-<a>subject</a>. However in some cases, the <a>subject</a> might need to pass
-the whole or part of a <a>verifiable credential</a> to another <a>holder</a>.
-For example, if a patient (the <a>subject</a>) is too ill to take a
-prescription (the <a>verifiable credential</a>) to the pharmacist (the
-<a>verifier</a>), a friend might take the prescription in to pick up the
-medication.
+<a>subject</a>. However in some cases, the <a>subject</a> might need to pass the
+whole or part of a <a>verifiable credential</a> to another <a>holder</a>. For
+example, if a patient (the <a>subject</a>) is too ill to take a prescription
+(the <a>verifiable credential</a>) to the pharmacist (the <a>verifier</a>), a
+friend might take the prescription in to pick up the medication.
         </p>
 
         <p>
-The data model allows for this, by the <a>subject</a> issuing a new
+The data model allows for this by the <a>subject</a> issuing a new
 <a>verifiable credential</a> and giving it to the new <a>holder</a>, who can
 then present both <a>verifiable credentials</a> to the <a>verifier</a>.
 However, the content of this second <a>verifiable credential</a> is likely to
-be application specific, so this specification cannot standardize the contents
+be application-specific, so this specification cannot standardize the contents
 of this second <a>verifiable credential</a>. Nevertheless, a non-normative
 example is provided in Appendix
 <a href="#subject-passes-a-verifiable-credential-to-someone-else"></a>.
@@ -5667,10 +5663,10 @@ provided with any of the child's <a>credentials</a>.
         </pre>
 
         <p>
-In the example above, the child expresses the relationship between the
-child and the parent in a separate <a>credential</a> such that a
-<a>verifier</a> would most likely accept any of the child's <a>credentials</a>
-if the <a>credential</a> above is provided.
+In the example above, the child expresses the relationship between the child and
+the parent in a separate <a>credential</a> such that a <a>verifier</a> would
+most likely accept any of the child's <a>credentials</a> if the
+<a>credential</a> above is provided.
         </p>
 
         <p>
@@ -5685,17 +5681,17 @@ patient prescription pickup.
 
       <p>
 When a <a>subject</a> passes a <a>verifiable credential</a> to another
-<a>holder</a>, the <a>subject</a> might issue a new
-<a>verifiable credential</a> to the <a>holder</a> in which the:
+<a>holder</a>, the <a>subject</a> might issue a new <a>verifiable credential</a>
+to the <a>holder</a> in which the:
       </p>
 
       <ul>
         <li>
-<a>Issuer</a> is the <a>subject</a>
+<a>Issuer</a> is the <a>subject</a>.
         </li>
         <li>
 <a>Subject</a> is the <a>holder</a> to whom the <a>verifiable credential</a> is
-being passed
+being passed.
         </li>
         <li>
 <a>Claim</a> contains the <a>properties</a> being passed on.
@@ -5775,8 +5771,9 @@ verifiable credential that was passed to it by the subject">
 In the above example, a patient (the original <a>subject</a>) passed a
 prescription (the original <a>verifiable credential</a>) to a friend, and
 issued a new <a>verifiable credential</a> to the friend, in which the friend is
-the <a>subject</a>, the original <a>subject</a> is the <a>issuer</a>, and the
-<a>credential</a> is a copy of the original prescription.
+the <a>subject</a>, the <a>subject</a> of the original
+<a>verifiable credential</a> is the <a>issuer</a>, and the <a>credential</a> is
+a copy of the original prescription.
       </p>
     </section>
 
@@ -5785,27 +5782,19 @@ the <a>subject</a>, the original <a>subject</a> is the <a>issuer</a>, and the
 
         <p>
 When an <a>issuer</a> wants to authorize a <a>holder</a> to possess a
-<a>credential</a> that describes a <a>subject</a> who is not the
-<a>holder</a>, and the <a>holder</a> has no known relationship with the
-<a>subject</a>, then the <a>issuer</a> inserts the relationship of the
-<a>holder</a> to itself into the <a>credential</a> for the <a>subject</a>.
-        </p>
-
-    <p class="note">
-Verifiable credentials are not an authorization framework and therefore
-delegation is out of scope for this specification. However, it is understood
-that verifiable credentials are likely to be used to build authorization and
-delegation systems. The following is one approach that may be appropriate for
-some use cases.
-    <p>
-
-    <p>
-When an <a>issuer</a> wants to authorise a <a>holder</a> to possess a
 <a>credential</a> that describes a <a>subject</a> who is not the <a>holder</a>,
 and the <a>holder</a> has no known relationship with the <a>subject</a>, then
 the <a>issuer</a> might insert the relationship of the <a>holder</a> to itself
 into the <a>subject's</a> <a>credential</a>.
-    </p>
+        </p>
+
+    <p class="note">
+Verifiable credentials are not an authorization framework and therefore
+delegation is outside the scope of this specification. However, it is understood
+that verifiable credentials are likely to be used to build authorization and
+delegation systems. The following is one approach that might be appropriate for
+some use cases.
+    <p>
 
         <pre class="example nohighlight" title="A credential issued to a
 holder who is not the (only) subject of the credential, who has no relationship with
