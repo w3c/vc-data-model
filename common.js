@@ -36,14 +36,14 @@ var vcwg = {
       status: "CG-DRAFT",
       publisher: "Credentials Community Group"
     },
-    "string-meta": {
-      title: "Requirements for Language and Direction Metadata in Data Formats",
-      href: "https://w3c.github.io/string-meta/",
+    "STRING-META": {
+      title: "Strings on the Web: Language and Direction Metadata",
+      href: "https://www.w3.org/TR/string-meta/",
       authors: [
-	"Addison Phillips",
+        "Addison Phillips",
         "Richard Ishida"
       ],
-      status: "Editors-DRAFT",
+      status: "WD",
       publisher: "Internationalization Working Group"
     },
     "LD-PROOFS": {
@@ -145,6 +145,13 @@ var vcwg = {
       authors: ['Austin Wright', 'Henry Andrews'],
       status: 'Internet-Draft',
       publisher: 'Internet Engineering Task Force (IETF)'
+    },
+    'JSON-LD': {
+      title: 'JSON-LD 1.1: A JSON-based Serialization for Linked Data',
+      href: 'https://www.w3.org/TR/json-ld11/',
+      authors: ['Gregg Kellogg', 'Manu Sporny', 'Dave Longley', 'Markus Lanthaler', 'Pierre-Antoine Champin', 'Niklas Lindström'],
+      status: 'WD',
+      publisher: 'W3C JSON-LD 1.1 Working Group'
     }
   }
 };
