@@ -3562,9 +3562,18 @@ the Presenter to receive and verify the <a>verifiable presentation</a>).
 
             <p>
 Other JOSE header parameters and <a>claim</a> names not specified herein can be
-used if their use is not explicitly discouraged. Additional <a>verifiable 
-credential</a> <a>claims</a> MUST
-be added to the <code>credentialSubject</code> <a>property</a> of the JWT.
+used if their use is not explicitly discouraged. Implementers should not use JOSE
+claim names for claims about the <code>credentialSubject</code> such as 
+email, birthdate, etc.
+There are no transformation rules for these and they would get lost after
+transformation. Instead, implementers MUST leave claims about the <a>subject</a> in the
+<code>credentialSubject</code> property of the <code>vc</code> claim, and 
+properties of the
+<a>verifiable credential<a> in
+the <code>vc</code> claim. Additional JOSE claim names such as <code>iat</code>,
+<code>nonce</code>, etc. are
+allowed but they will get lost after transformation unless there is an encoding/decoding
+rule defined. 
             </p>
 
             <p>
