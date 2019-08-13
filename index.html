@@ -3478,7 +3478,7 @@ Contained in the JWS signature part.
             <p>
 If no explicit rule is specified, <a>properties</a> are encoded in the same way
 as with a standard <a>verifiable credential</a>, and are added to the
-<code>vc</code> <a>property</a> of the JWT. As with all JWTs, the JWS-based
+<code>vc</code> <a>claim</a> of the JWT. As with all JWTs, the JWS-based
 signature of a <a>verifiable credential</a> represented in the JWT syntax is
 calculated against the literal JWT string value as presented across the wire,
 before any decoding or transformation rules are applied. The following
@@ -3562,18 +3562,11 @@ the Presenter to receive and verify the <a>verifiable presentation</a>).
 
             <p>
 Other JOSE header parameters and <a>claim</a> names not specified herein can be
-used if their use is not explicitly discouraged. Implementers should not use JOSE
+used if their use is not explicitly discouraged. Implementers should not use JWT
 claim names for claims about the <code>credentialSubject</code> such as 
-email, birthdate, etc.
-There are no transformation rules for these and they would get lost after
-transformation. Instead, implementers MUST leave claims about the <a>subject</a> in the
-<code>credentialSubject</code> property of the <code>vc</code> claim, and 
-properties of the
-<a>verifiable credential<a> in
-the <code>vc</code> claim. Additional JOSE claim names such as <code>iat</code>,
-<code>nonce</code>, etc. are
-allowed but they will get lost after transformation unless there is an encoding/decoding
-rule defined. 
+email, birthdate, etc. There are no transformation rules for these and they 
+would get lost after decoding. Instead, implementers MUST add claims about the <a>subject</a> to the <code>credentialSubject</code> property of the JWT
+<code>vc</code> claim. 
             </p>
 
             <p>
@@ -3582,7 +3575,7 @@ the concepts outlined in Section
 <a href="#advanced-concepts">Advanced Concepts</a> (for example,
 <code>refreshService</code>, <code>termsOfUse</code>, and
 <code>evidence</code>). These concepts can be encoded as they are without any
-transformation, and can be added to the <code>vc</code> <a>property</a> of the
+transformation, and can be added to the <code>vc</code> <a>claim</a> of the
 JWT.
             </p>
 
