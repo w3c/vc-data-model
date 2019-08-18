@@ -1611,6 +1611,35 @@ machine-readable information about the <a>issuer</a> that can be used to
 }
         </pre>
 
+        <p>
+It is also possible to express additional information about the issuer by
+associating an object with the issuer property:
+        </p>
+
+        <pre class="example nohighlight" title="Usage of issuer expanded property">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  <span class="highlight">"issuer": {
+    "id": "did:example:76e12ec712ebc6f1c221ebfeb1f",
+    "name": "Example University"
+  }</span>,
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  "proof": { <span class="comment">...</span> }
+}
+        </pre>
+
         <p class="note">
 The value of the <code>issuer</code> <a>property</a> can also be a JWK (for
 example, <code>"https://example.com/keys/foo.jwk"</code>) or a <a>DID</a> (for
