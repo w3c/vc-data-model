@@ -1,3 +1,8 @@
+## [Korean] 검증가능한 크리덴셜 데이터 모델과 표현
+
+이 문서는 SSIMeetup Korea의 주도아래 번역작업이 이루어지고 있습니다.
+번역에 대한 피드백은 언제나 환영입니다.
+
 ## Verifiable Claims Data Model and Representations
 
 This specification describes a data model for a digital entity profile
