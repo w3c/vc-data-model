@@ -1198,51 +1198,33 @@ This concept is further expanded on in Section <a href="#extensibility"></a>.
         <h3>Identifiers</h3>
 
         <p>
-When expressing statements about a specific thing, such as a person, product,
-or organization, it is often useful to use some kind of identifier so that
-others can express statements about the same thing. This specification defines
-the optional <code>id</code> <a>property</a> for such identifiers. The
-<code>id</code> <a>property</a> is intended to unambiguously refer to an object,
-such as a person, product, or organization. Using the <code>id</code>
-<a>property</a> allows for the expression of statements about specific things in
-the <a>verifiable credential</a>.
+사람, 제품, 또는 조직과 같은 특정한 것에 대해 표현할때, 다른 사람들이 동일한 것을 표현할 수 있도록 식별자를 사용하는 것이 유용하다. 이 규격에서는 이러한 식별자들에 대한 선택적 <code>id</code> 속성을 정의한다. <code>id</code> <a>속성</a>은 사람, 제품 또는 조직과 같은 객체를 명확하게 참조하기 위한 것이다. <code>id</code> <a>속성</a>을 사용하면 <a>검증가능한 크리덴셜</a>을 통해 특정한 사물을 표현할 수 있게 된다.
         </p>
 
         <p>
-<em>If</em> the <code>id</code> <a>property</a> is present:
+<em>만약</em> the <code>id</code> <a>속성</a>이 존재한다면:
         </p>
 
         <ul>
           <li>
-The <code>id</code> <a>property</a> MUST express an identifier that others are
-expected to use when expressing statements about a specific thing identified
-by that identifier.
+The <code>id</code> <a>속성</a>을 표현할 때 반드시 다른 사용자들이 특정 사물을 표현할 때 사용할 것으로 예상되는 식별자로 표현해야 한다.
           </li>
           <li>
-The <code>id</code> <a>property</a> MUST NOT have more than one value.
+The <code>id</code> <a>속성</a>은 반드시 하나의 값만 가져야 한다.
           </li>
           <li>
-The value of the <code>id</code> <a>property</a> MUST be a URI.
+<code>id</code> <a>속성</a>의 값은 반드시 URI 이어야 한다
           </li>
         </ul>
 
         <p class="note">
-Developers should remember that identifiers might be harmful in scenarios
-where pseudonymity is required. Developers are encouraged to read Section
-<a href="#identifier-based-correlation"></a> carefully when considering such
-scenarios. There are also other types of correlation mechanisms documented in
-Section <a href="#privacy-considerations"></a> that create privacy concerns.
-Where privacy is a strong consideration, the <code>id</code> <a>property</a>
-MAY be omitted.
+개발자들은 익명성이 요구되는 시나리오에서 식별자가 유해할 수 있다는 것을 기억해야 한다. 그러한 시나리오를 고려할 때 <a href="#identifier-based-correlation"></a> 부분을 주의깊게 읽을 것을 권장한다. 프라이버시 문제를 만들어 내는 다른 유형의 연관메커니즘문서도 <a href="#privacy-considerations"></a>에서 다루어 진다. 프라이버시가 중요한 고려사항인 경우 <code>id</code> <a>속성</a>은 생략 될 수 있다.	
         </p>
 
         <dl>
           <dt><dfn>id</dfn></dt>
           <dd>
-The value of the <code>id</code> <a>property</a> MUST be a single <a>URI</a>.
-It is RECOMMENDED that the <a>URI</a> in the <code>id</code> be one which, if
-dereferenced, results in a document containing machine-readable information
-about the <code>id</code>.
+<code>id</code> <a>속성</a> 값은 반드시 단일 <a>URI</a>여야 한다. 역참조되는 경우 <a>URI</a>는 <code>id</code>에 대한 기계판독가능정보를 포함한 문서를 생성하는 것이 권장됩니다.
           </dd>
         </dl>
 
@@ -1266,24 +1248,11 @@ about the <code>id</code>.
         </pre>
 
         <p>
-The example above uses two types of identifiers. The first identifier is for
-the <a>verifiable credential</a> and uses an HTTP-based URL. The second
-identifier is for the <a>subject</a> of the <a>verifiable credential</a> (the
-thing the <a>claims</a> are about) and uses a <a>decentralized identifier</a>,
-also known as a <a>DID</a>.
+위의 예는 두 가지 유형의 식별자를 사용합니다. 첫 번째는 <a>검증가능한 크리덴셜</a>을 위한 것이며 HTTP 기반 URL을 사용한다. 두 번째는 <a>검증가능한 크리덴셜</a>의 <a>주체</a>(<a>클레임</a>이 관련된 것)를 위한 것이며 <a>DID</a>라고도하는 <a>탈중앙 식별자</a>를 사용한다.
         </p>
 
         <p class="note">
-As of this publication, <a>DIDs</a> are a new type of identifier that are not
-necessary for <a>verifiable credentials</a> to be useful. Specifically,
-<a>verifiable credentials</a> do not depend on <a>DIDs</a> and <a>DIDs</a> do
-not depend on <a>verifiable credentials</a>. However, it is expected that many
-<a>verifiable credentials</a> will use <a>DIDs</a> and that software libraries
-implementing this specification will probably need to resolve <a>DIDs</a>.
-<a>DID</a>-based URLs are used for expressing identifiers associated with
-<a>subjects</a>, <a>issuers</a>, <a>holders</a>, credential status lists,
-cryptographic keys, and other machine-readable information associated with a
-<a>verifiable credential</a>.
+본 간행물에 의하면, <a>DIDs</a>는 편리한 <a>검증가능한 크리덴셜</a>이 필요치 않은 새로운 유형의 식별자 아다. 구체적으로 <a>검증가능한 크리덴셜</a>은 <a>DIDs</a>에 의존하지 않으며, <a>DIDs</a>는 <a>검증가능한 크리덴셜</a>에 의존하지 않는다. 그렇지만 많은 <a>검증가능한 크리덴셜</a>이 <a>DIDs</a>를 사용할 것으로 예상되고, 이 규격을 구현하는 소프트웨어 라이브러리는 <a>DIDs</a>를 구현할 필요가 있을 것이다. <a>DID</a> 기반 URL은 <a>주체</a>, <a>발급자</a>, <a>보유자</a>, 크리덴셜 상태 목록, 암호화 키 그리고 <a>검증가능한 크리덴셜</a>과 관련된 기계 판독 가능 정보를 관련된 식별자로 표현하는 데 사용된다.
         </p>
       </section>
 
@@ -1291,32 +1260,17 @@ cryptographic keys, and other machine-readable information associated with a
         <h3>Types</h3>
 
         <p>
-Software systems that process the kinds of objects specified in this document
-use type information to determine whether or not a provided
-<a>verifiable credential</a> or <a>verifiable presentation</a> is appropriate.
-This specification defines a <code>type</code> <a>property</a> for the
-expression of type information.
+이 문서에 지정된 객체들을 처리하는 소프트웨어 시스템은 제공된 <a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>이 적절한지 여부를 결정하기 위해 <code>type</code>정보를 사용한다. 이 규격은 type정보 표현에 대한 <code>type</code><a>속성</a>을 정의한다.
         </p>
 
         <p>
-<a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST have a
-<code>type</code> <a>property</a>. That is, any <a>credential</a> or
-<a>presentation</a> that does not have <code>type</code> <a>property</a>
-<em>is not <a>verifiable</a></em>, so is neither a <a>verifiable credential</a>
-nor a <a>verifiable presentation</a>.
+<a>검증가능한 크리덴셜</a>과 <a>검증가능한 프레젠테이션</a>에는 반드시 <code>type</code><a>속성</a>이 있어야한다. 따라서 <code>type</code><a>속성</a>이 없는 <a>크리덴셜</a>, 또는 <a>프레젠테이션</a>은 <a>검증</a>을 할수 없으므로 <a>검증가능한 크리덴셜</a>이나 <a>검증가능한 프레젠테이션</a>이 아니다.
         </p>
 
         <dl>
           <dt><dfn data-lt="type|types">type</dfn></dt>
           <dd>
-The value of the <code>type</code> <a>property</a> MUST be, or map to (through
-interpretation of the <code>@context</code> property), one or more <a>URIs</a>.
-If more than one <a>URI</a> is provided, the <a>URIs</a> MUST be interpreted
-as an unordered set. Syntactic conveniences SHOULD be used to ease developer
-usage. Such conveniences might include JSON-LD terms. It is RECOMMENDED that
-each <a>URI</a> in the <code>type</code> be one which, if dereferenced, results
-in a document containing machine-readable information about the
-<code>type</code>.
+<code>type</code><a>속성</a>의 값은 반드시 맵핑된(<code>@context</code> 속성의 해석을 통해), 하나 또는 이상의 <a>URIs</a>입니다. 만약 복수의 <a>URI</a>들이 제공되었다면, <a>URIs</a>는 순서가 없는 집합으로 해석해야 한다. 개발편의를 위해 문법적 편의성을 반드시 사용해야 한다. 이러한 편의성에는 JSON-LD 용어가 포함될 수 있다. <code>type</code>의 각 <a>URI</a>가 역참조되는 경우 <code>type</code>에 대한 기계판독가능정보가 포함된 문서를 생성하는 것이 권장된다.
           </dd>
         </dl>
 
@@ -1340,8 +1294,7 @@ in a document containing machine-readable information about the
         </pre>
 
         <p>
-With respect to this specification, the following table lists the objects that
-MUST have a <a>type</a> specified.
+규격준수에 관련하여, 다음 표에는 객체들이 반드시 가져야 하는 <a>type</a>이 명시되어 있다
         </p>
 
         <table class="simple">
@@ -1443,34 +1396,18 @@ A valid evidence <a>type</a>. For example,<br>
         </table>
 
         <p class="note">
-The <a>type</a> system for the Verifiable Credentials Data Model is the same as
-for [[JSON-LD]] and is detailed in
-<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4:
-Specifying the Type</a> and
-<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD
-Grammar</a>. When using a JSON-LD context (see Section
-<a href="#extensibility"></a>), this specification aliases the
-<code>@type</code> keyword to <code>type</code> to make the JSON-LD documents
-more easily understood. While application developers and document authors do
-not need to understand the specifics of the JSON-LD type system, implementers
-of this specification who want to support interoperable extensibility, do.
+검증가능한 크리덴셜 데이터 모델의 <a>type</a>시스템은 [[JSON-LD]]와 동일하며 <a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4:
+Specifying the Type</a> 그리고 <a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD
+Grammar</a>에 자세히 설명되어 있다. JSON-LD 컨텍스트를 사용할 때 (
+<a href="#extensibility"></a> 참조), 이 규격의 <code>@type</code> 키워드를 다른 이름인 <code>type</code>으로 바꾸면 JSON-LD 문서의 이해가 쉬워질 것이다. 애플리케이션 개발자와 문서 작성자는 JSON-LD type 시스템의 세부사항을 이해할 필요는 없지만, 상호운용 가능한 확장성을 지원하고자 하는 규격의 구현자들은 이해해야 한다.
         </p>
 
         <p>
-All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
-specify, or be associated with, additional more narrow <a>types</a> (like
-<code>UniversityDegreeCredential</code>, for example) so software systems can
-process this additional information.
+모든 <a>크리덴셜</a>, <a>프레젠테이션</a>, 그리고 켑슐화된 객채들은 추가정보를 처리할 수 있도록, 더욱 제한된 <a>type들</a> (예를 들어 <code>UniversityDegreeCredential</code>과 같은)을 반드시 명시하거나 연관시켜야 한다.
         </p>
 
         <p>
-When processing encapsulated objects defined in this specification, (for
-example, objects associated with the <code>credentialSubject</code> object or
-deeply nested therein), software systems SHOULD use the <a>type</a> information
-specified in encapsulating objects higher in the hierarchy. Specifically, an
-encapsulating object, such as a <a>credential</a>, SHOULD convey the associated
-object <a>types</a> so that <a>verifiers</a> can quickly determine the contents
-of an associated object based on the encapsulating object <a>type</a>.
+이 규격에 정의된 캡슐화된 객체(예를 들어 <code>credentialSubject</code>객체와 관련되거나 깊이 중첩된 객체들)들을 처리할 때, 소프트웨어 시스템은 객체를 캡슐화할때 사용된 상위 걔층의<a>type</a> 정보를 사용해야 한다. 구체적으로 <a>크리덴셜</a>과 같은 캡슐화된 객체들은 연관된 객체 <a>type</a>을 전달하여, <a>검증자</a>가 캡슐화 객체의 <a>type</a>에 기초하여 관련 객체의 내용을 신속하게 파악할 수 있어야한다.
         </p>
 
         <p>
@@ -1478,33 +1415,27 @@ For example, a <a>credential</a> object with the <code>type</code> of
 <code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that the
 object associated with the <code>credentialSubject</code> property contains the
 identifier for the:
+예를 들어, <code>UniversityDegreeCredential</code>과 같은 <code>type</code>의 <a>크리덴셜</a> 객체는 다음 항목을 위한 <a>식별자</a>가 <code>credentialSubject</code> 속성에 포함되어 있다는 것을 검증자에게 전송한다:
         </p>
 
         <ul>
           <li>
-<a>Subject</a> in the <code>id</code> property.
+<code>id</code> 속성이 가지고 있는 <a>전공</a>
           </li>
           <li>
-Type of degree in the <code>type</code> property.
+<code>type</code> 속성이 가지고 있는 학점 형식
           </li>
           <li>
-Title of the degree in the <code>name</code> property.
+<code>name</code> 속성이 가지고 있는 학점 타이틀
           </li>
         </ul>
 
         <p>
-This enables implementers to rely on values associated with the
-<code>type</code> property for <a>verification</a> purposes. The expectation of
-<a>types</a> and their associated properties should be documented in at least a
-human-readable specification, and preferably, in an additional machine-readable
-representation.
+이를 통해 구현자는 <a>검증</a>을 목적으로 <code>type</code> 속성과 관련된 값에 의존할 수 있습니다. <a>types</a> 및 관련 속성은 최소한 사람이 읽을 수 있는 규격으로 문서화 할 것을 기대하고, 가급적 기계판독가능한 설명을 추가합니다.
         </p>
 
         <p class="note">
-The type system used in the data model described in this specification allows
-for multiple ways to associate types with data. Implementers and authors are
-urged to read the section on typing in the Verifiable Credentials
-Implementation Guidelines [[?VC-IMP-GUIDE]].
+이 규격에 기술된 데이터 모델에 사용되는 type 시스템은 type과 데이터와 연결하는 여러가지 방법을 허용합니다. 구현자와 작성자는 Verifiable Credentials Implementation Guidelines[[?VC-IMP-GUIDE]]의 typing에 관한 섹션을 읽어야 합니다.
         </p>
 
       </section>
