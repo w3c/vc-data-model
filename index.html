@@ -2943,86 +2943,81 @@ information about the <code>proof</code> <a>property</a>, see Section
       </section>
 
       <section>
-        <h3>Zero-Knowledge Proofs</h3>
+        <h3>영지식 증명</h3>
 
         <p>
-A zero-knowledge proof is a cryptographic method where an entity can prove to
-another entity that they know a certain value without disclosing the actual
-value. A real-world example is proving that an accredited university has granted
-a degree to you without revealing your identity or any other personally
-identifiable information contained on the degree.
+          영지식 증명은 개체가 실제 값을 공개하지 않고 특정 값을 알고 있음을 다른 개체에 증명할 수 있는 암호학적 방법이다. 
+          실제 예를 들면 당신의 신분 또는 학위에 포함된 다른 개인 식별 정보 드러내지 않고, 
+          공인된 대학이 당신에게 학위를 수여했음을 증명하는 것이다.
         </p>
         <p>
-The key capabilities introduced by zero-knowledge proof mechanisms are the
-ability of a <a>holder</a> to:
+          영지식 증명 메커니즘에 의해 도입된 주요 기능은 <a>보유자</a>가 다음을 수행할 수 있게 한다.
+
         </p>
 
         <ul>
           <li>
-Combine multiple <a>verifiable credentials</a> from multiple <a>issuers</a> into
-a single <a>verifiable presentation</a> without revealing
-<a>verifiable credential</a> or <a>subject</a> identifiers to the
-<a>verifier</a>. This makes it more difficult for the <a>verifier</a> to collude
-with any of the issuers regarding the issued <a>verifiable credentials</a>.
+<a>검증가능한 크리덴셜</a> 또는 주체 식별자를 검증자에게 공개하지 않고 
+여러 <a>발급자</a>의 여러 <a>검증가능한 크리덴셜</a>을 
+단일의 <a>검증가능한 프레젠테이션</a>으로 결합 할 수 있는 기능. 
+이로 인해 <a>검증자</a>는 발급된 <a>검증가능한 크리덴셜</a>과 관련해 
+어떤 발급자와도 공모하는 것이 더 어려워진다.
+
           </li>
           <li>
-Selectively disclose the <a>claims</a> in a <a>verifiable credential</a> to a
-<a>verifier</a> without requiring the issuance of multiple atomic
-<a>verifiable credentials</a>. This allows a <a>holder</a> to provide a
-<a>verifier</a> with precisely the information they need and nothing more.
+다수의 원자적 <a>검증가능한 크리덴셜</a>의 발행에 대한 요구 없이 
+<a>검증자</a>에게 <a>검증가능한 크리덴셜</a>의 <a>클레임</a>을 선택적으로 공개하는 기능. 
+이를 통해 <a>보유자</a>는 <a>검증자</a>에게 불필요한 정보제공 없이 필요한 정보만 정확하게 제공할 수 있다.
           </li>
           <li>
-Produce a derived <a>verifiable credential</a> that is formatted according to
-the <a>verifier's</a> data schema instead of the <a>issuer's</a>, without
-needing to involve the <a>issuer</a> after <a>verifiable credential</a>
-issuance. This provides a great deal of flexibility for <a>holders</a> to use
-their issued <a>verifiable credentials</a>.
+검증가능한 크리덴셜을 발급 받고 나면, 
+추가적인 <a>발급자</a>의 관여 없이도 <a>발급자</a>가 아닌 <a>검증자의</a> 데이터 스키마 형식에 따라 
+파생된 <a>검증가능한 크리덴셜</a>을 생성할 수 있는 기능. 
+이를 통해 <a>보유자</a>가 발급 받은 <a>검증가능한 크리덴셜</a>을 사용함에 있어 유연성이 크게 향상된다.
           </li>
         </ul>
 
         <p>
-This specification describes a data model that supports zero-knowledge proof
-mechanisms. The examples below highlight how the data model can be used to
-issue, present, and verify zero-knowledge <a>verifiable credentials</a>.
+이 규격은 영지식 증명 메커니즘을 지원하는 데이터 모델을 설명한다. 
+아래 예는 데이터 모델을 사용하여 영지식 <a>검증가능한 크리덴셜</a>을 발급, 제시 및 검증 하는 방법을 보여준다.
+
         </p>
 
         <p>
-To use zero-knowledge <a>verifiable credentials</a> the <a>issuer</a> must
-issue a <a>verifiable credential</a> in a manner that enables the <a>holder</a>
-to present the information to a <a>verifier</a> in a privacy-enhancing manner.
-This implies that the <a>holder</a> can prove the validity of the
-<a>issuer's</a> signature without revealing the values that were signed, or when
-only revealing certain selected values. The standard practice is to do so by
-proving knowledge of the signature, without revealing the signature itself.
-There are two requirements for <a>verifiable credentials</a> when they are to be
-used in zero-knowledge proof systems. The <a>verifiable credential</a> MUST
-contain a:
+영지식 <a>검증가능한 크리덴셜</a>을 사용하려면 
+<a>발급자</a>는 반드시 <a>보유자</a>가 프라이버시 강화 방식으로 검증자에게 정보 제시가 가능하도록 
+<a>검증가능한 크리덴셜</a>을 발급해야 한다. 
+이는 <a>보유자</a>가 서명된 값을 밝히지 않거나 선택된 특정 값만 밝힐 때에도 
+<a>발급자</a> 서명의 유효성을 입증할 수 있음을 의미한다. 
+표준 관행은 서명 자체를 밝히지 않고, 서명에 대한 지식을 증명함으로써 그렇게 하는 것이다. 
+<a>검증가능한 크리덴셜</a>을 영지식 증명 시스템에서 사용할 때 두 가지 요구 사항이 있다. 
+<a>검증가능한 크리덴셜</a>은 반드시 다음을 포함해야 한다.
+
         </p>
 
         <ul>
           <li>
-<a>Credential</a> definition, using the <code>credentialSchema</code>
-<a>property</a>, that can be used by all parties to perform various
-cryptographic operations in zero-knowledge.
+<code>credentialSchema</code> <a>속성</a>을 사용한 <a>크리덴셜</a>의 정의. 
+모든 당사자가 다양한 영지식 암호화 작업을 수행하는 데 사용할 수 있다.
+
           </li>
           <li>
-Proof, using the <code>proof</code> <a>property</a>, that can be used to derive
-<a>verifiable presentations</a> that present information contained in the
-original <a>verifiable credential</a> in zero-knowledge. The zero-knowledge
-<a>verifiable presentation</a> must not reveal any information not intended to
-be revealed by the <a>holder</a>.
+<code>proof</code> <a>속성</a>을 사용한 프루프. 
+이것은 원본 <a>검증가능한 크리덴셜</a>에 포함 된 정보를 영지식으로 제시하는 
+<a>검증가능한 프레젠테이션</a>을 도출하는데 사용할 수 있다. 
+영지식 <a>검증가능한 프레젠테이션</a>은 <a>보유자</a>가 공개하려 의도하지 않은 정보를 절대 공개해서는 안된다.
+
           </li>
         </ul>
 
         <p>
-The following example shows one method of using <a>verifiable credentials</a> in
-zero-knowledge. It makes use of a CL Signature, which allows the presentation of
-the <a>verifiable credential</a> in a way that supports the privacy of the
-<a>holder</a> and <a>subject</a> through the use of selective disclosure of the
-<a>verifiable credential</a> values.
+다음 예는 영지식 <a>검증가능한 크리덴셜</a>을 사용하는 한 가지 방법을 보여 준다. 
+CL 서명을 사용하여, <a>검증가능한 크리덴셜</a> 값의 선택적 공개를 통해 
+<a>보유자</a>와 <a>주체</a>의 프라이버시를 지원하는 방식으로 <a>검증가능한 크리덴셜</a>을 제시할 수 있다.
+
         </p>
 
-        <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
+        <pre class="example nohighlight" title="CL 서명을 지원하는 검증가능한 크리덴셜">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -3054,42 +3049,39 @@ the <a>verifiable credential</a> in a way that supports the privacy of the
         </pre>
 
         <p>
-The example above provides the <a>verifiable credential</a> definition by using
-the <code>credentialSchema</code> <a>property</a> and a specific proof that is
-usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
+위의 예는 <code>credentialSchema</code> <a>속성</a>과 Camenisch-Lysyanskaya 영지식 증명 시스템에서 사용할 수 있는 
+특정 증명을 이용하여 <a>검증가능한 크리덴셜</a>의 정의를 제공한다.
+
         </p>
 
         <p>
-The next example utilizes the <a>verifiable credential</a> above to generate a
-new derived <a>verifiable credential</a> with a privacy-preserving proof. The
-derived <a>verifiable credential</a> is then placed in a
-<a>verifiable presentation</a>, which further proves that the entire assertion
-is valid. There are three requirements of most <a>verifiable presentations</a>
-when they are to be used in zero-knowledge systems:
+다음 예는 위의 <a>검증가능한 크리덴셜</a>을 사용하여 프라이버시 보호 증명이 포함된 
+새로운 파생 <a>검증가능한 크리덴셜</a>을 생성한다. 
+파생된 <a>검증가능한 크리덴셜</a>은 <a>검증가능한 프레젠테이션</a>에 배치되며, 이는 전체 주장이 유효함을 추가로 입증한다. 
+<a>검증가능한 프레젠테이션</a>을 영지식 시스템에서 사용할 때 세 가지 요구사항이 있다.
         </p>
 
         <ul>
           <li>
-Each derived <a>verifiable credential</a> within a
-<a>verifiable presentation</a> MUST have a <code>credentialSchema</code>
-<a>property</a>. This allows the derived <a>verifiable credential</a> to
-reference the credential definition used to generate the derived proof.
+<a>검증가능한 프레젠테이션</a> 내에 있는 각각의 파생 <a>검증가능한 크리덴셜</a>은 
+반드시 <code>credentialSchema</code> <a>속성</a>이 있어야 한다. 
+이를 통해 파생 <a>검증가능한 크리덴셜</a>이 파생된 증명을 생성하는 데 사용된 크리덴셜의 정의를 참조할 수 있다.
+
           </li>
           <li>
-A <a>verifiable presentation</a> MUST NOT leak information that would enable
-the <a>verifier</a> to correlate the <a>holder</a> across multiple
-<a>verifiable presentations</a>.
+<a>검증가능한 프레젠테이션</a>은 <a>검증자</a>가 여러 개의 <a>검증가능한 프레젠테이션</a>을 통해 
+<a>보유자</a>와 연관시킬 수 있는 정보를 절대 유출해서는 안된다.
+
           </li>
           <li>
-The <a>verifiable presentation</a> MUST contain a <code>proof</code>
-<a>property</a> to enable the <a>verifier</a> to ascertain that all derived
-<a>verifiable credentials</a> in the <a>verifiable presentation</a> were issued
-to the same <a>holder</a> without leaking personally identifiable information
-that the <a>holder</a> did not intend to share.
+<a>검증가능한 프레젠테이션</a>은 <a>검증가능한 프레젠테이션</a>내에 있는 
+모든 파생 <a>검증가능한 크리덴셜</a>이 동일한 <a>보유자</a>에게 발행되었음을 <a>검증자</a>가 확인할 수 있도록 
+<a>보유자</a>가 공유하지 않는 개인 식별 정보 유출 없이 <code>proof</code> <a>속성</a>을 반드시 포함해야 한다.
+
           </li>
         </ul>
 
-        <pre class="example nohighlight" title="A verifiable presentation that supports CL Signatures">
+        <pre class="example nohighlight" title="CL 서명을 지원하는 검증가능한 프레젠테이션">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -3155,17 +3147,16 @@ that the <a>holder</a> did not intend to share.
             Derived Credential 1.  A line links DegreeAwarded in
             Verifiable Credential 2 to Degree in Derived Credential 2.">
           <figcaption style="text-align: center;">
-A visual example of the relationship between credentials and derived
-credentials in a ZKP <a>presentation</a>.
+영지식 <a>프레젠테이션</a>에서 크리덴셜과 파생된 크리덴셜의 관계에 대한 시각적 예
           </figcaption>
         </figure>
 
         <p class="note">
-Important details regarding the format for the <a>credential</a> definition and
-of the proofs are omitted on purpose because they are outside of the scope of
-this document. The purpose of this section is to guide implementers who want to
-extend <a>verifiable credentials</a> and <a>verifiable presentations</a> to
-support zero-knowledge proof systems.
+<a>크리덴셜</a> 정의의 형식 및 프루프에 대한 중요한 세부 정보는 
+이 문서의 범위를 벗어나므로 의도적으로 생략되었다. 
+이 섹션의 목적은 <a>검증가능한 크리덴셜</a>과 <a>검증가능한 프레젠테이션</a>을 확장하여 
+영지식 증명 시스템을 지원하려는 구현자들을 안내하는 것이다.
+
         </p>
 
       </section>
