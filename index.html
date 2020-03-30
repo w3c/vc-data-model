@@ -2186,139 +2186,122 @@ or <a>verifier</a>.
         </ul>
       </section>
 
-      <section class="informative">
-        <h2>Trust Model</h2>
+      <section class="informative" id="trust-model">
+        <h2>신뢰 모델</h2>
 
         <p>
-The <a>verifiable credentials</a> trust model is as follows:
+<a>검증가능한 크리덴셜</a>의 신뢰 모델은 다음과 같다:
         </p>
 
         <ul>
           <li>
-The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a> that
-it received. To establish this trust, a <a>credential</a> is expected to either:
+<a>검증자</a>는 자신이 받은 <a>크리덴셜</a>이 <a>발급자</a>가 발급한 것이 맞다는 것을 신뢰한다. 
+이러한 신뢰를 형성하기 위해서 <a>크리덴셜</a>은 다음 중 하나를 만족해야 한다:
             <ul>
               <li>
-Include a <a href="#proofs-signatures">proof</a> establishing that the
-<a>issuer</a> generated the <a>credential</a> (that is, it is a
-<a>verifiable credential</a>), or
+<a>발급자</a>가 생성한 <a>크리덴셜</a>임을 규명하는 <a href="#proofs-signatures">프루프</a>를 포함하거나, 
+(즉, <a>검증가능한 크리덴셜</a>이거나)
               </li>
               <li>
-Have been transmitted in a way clearly establishing that the <a>issuer</a>
-generated the <a>verifiable credential</a> and that the
-<a>verifiable credential</a> was not tampered with in transit or storage. This
-trust could be weakened depending on the risk assessment of the <a>verifier</a>.
+<a>발급자</a>가 그 <a>검증가능한 크리덴셜</a>을 생성했다는 것과 그 <a>검증가능한 크리덴셜</a>의 전송 및 저장 과정에서 
+훼손되지 않았음을 명확히 규명할 수 있는 방법을 통해 전달되어야 한다. 
+이러한 신뢰는 <a>검증자</a>의 위험 평가 결과에 따라 취약할 수도 있다.
               </li>
             </ul>
           </li>
           <li>
-All <a>entities</a> trust the <a>verifiable data registry</a> to be
-tamper-evident and to be a correct record of which data is controlled by which
-<a>entities</a>.
+모든 <a>개체들</a>은 <a>검증가능한 데이터 레지스트리</a>가 훼손 방지 기능이 있고, 
+어떤 데이터가 어떤 <a>개체</a>에 의해 컨트롤되는지에 대한 올바른 기록을 가지고 있음을 신뢰한다.
           </li>
           <li>
-The <a>holder</a> and <a>verifier</a> trust the <a>issuer</a> to issue
-true (that is, not false) <a>credentials</a> about the <a>subject</a>, and to
-revoke them quickly when appropriate.
+<a>보유자</a>와 <a>검증자</a>는 <a>발급자</a>가 <a>주체</a>에 대해 
+사실 관계가 올바른 (즉, 거짓이 아닌) <a>크리덴셜</a>을 발급했다는 것과 
+도용시 빠르게 그 <a>크리덴셜</a>을 폐기한다는 것을 신뢰한다.
           </li>
           <li>
-The <a>holder</a> trusts the <a>repository</a> to store <a>credentials</a>
-securely, to not release them to anyone other than the <a>holder</a>, and to not
-corrupt or lose them while they are in its care.
+<a>보유자</a>는 <a>저장소</a>가 <a>크리덴셜</a>을 안전하게 저장한다는 것과 
+<a>보유자</a>가 아닌 다른 누구에게도 그 <a>크리덴셜</a>을 내보내지 않는다는 것, 
+그리고 <a>저장소</a>가 관리하고 있는 한 오류나 손실이 없다는 것을 신뢰한다.
           </li>
         </ul>
 
         <p>
-This trust model differentiates itself from other trust models by ensuring
-the:
+이 신뢰 모델은 다음 사항을 보장함으로써 다른 신뢰 모델과 차별점을 갖는다:
         </p>
 
         <ul>
           <li>
-<a>Issuer</a> and the <a>verifier</a> do not need to trust the
-<a>repository</a>
+<a>발급자</a>와 <a>검증자</a>는 <a>저장소</a>를 신뢰할 필요가 없다.
           </li>
           <li>
-<a>Issuer</a> does not need to know or trust the <a>verifier</a>.
+<a>발급자</a>는 <a>검증자</a>를 알아야 할 필요도 없고, 믿어야 할 필요도 없다.
           </li>
         </ul>
 
         <p>
-By decoupling the trust between the <a>identity provider</a> and the
-<a>relying party</a> a more flexible and dynamic trust model is created such
-that market competition and customer choice is increased.
+<a>신원 제공자</a>와 <a>신뢰 당사자</a>간의 신뢰 결합을 제거함으로써 더 유연하고 동적인 신뢰 모델이 생성되고, 
+그로 인해 시장 경쟁이 치열해지고 고객 선택의 폭이 증가한다.
         </p>
 
         <p>
-For more information about how this trust model interacts with various threat
-models studied by the Working Group, see the Verifiable Credentials Use Cases
-document [[VC-USECASES]].
+워킹 그룹에서 연구한 이 신뢰 모델이 어떻게 다양한 위협 모델과 상호작용하는가에 대한 
+더 많은 정보는 검증가능한 크리덴셜 유즈케이스 문서 참조. [[VC-USECASES]]
         </p>
 
         <p class="note">
-The data model detailed in this specification does not imply a transitive trust
-model, such as that provided by more traditional Certificate Authority trust
-models. In the Verifiable Credentials Data Model, a <a>verifier</a> either
-directly trusts or does not trust an <a>issuer</a>. While it is possible to
-build transitive trust models using the Verifiable Credentials Data Model,
-implementers are urged to
-<a href="https://tools.ietf.org/html/draft-housley-web-pki-problems">learn
-about the security weaknesses</a> introduced by
-<a href="https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">broadly
-delegating trust</a> in the manner adopted by Certificate Authority systems.
+이 규격에서 설명하고 있는 데이터 모델은 전통적인 인증 기관의 신뢰 모델에서 제공하는 것과 같은 
+전이 가능한(transitive) 신뢰 모델을 내포하지는 않는다. 
+검증가능한 크리덴셜 데이터 모델에서 <a>검증자</a>는 <a>발급자</a>를 직접 믿을 수도 있고 믿지 않을 수도 있다. 
+검증가능한 크리덴셜 데이터 모델을 이용하는 전이 가능한 신뢰 모델을 구축하는 것이 가능함에도 불구하고, 
+구현자는 인증 기관 시스템에서 채택했던 것과 마찬가지로 
+<a href="https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">광범위 위임 신뢰(broadly delegating trust)</a>에서 소개된 
+<a href="https://tools.ietf.org/html/draft-housley-web-pki-problems">보안 취약점에 대해 공부</a>해야 한다. 
         </p>
       </section>
 
-      <section>
-        <h3>Extensibility</h3>
+      <section id="extensibility">
+        <h3>확장성</h3>
 
         <p>
-One of the goals of the Verifiable Credentials Data Model is to enable
-permissionless innovation. To achieve this, the data model needs to be
-extensible in a number of different ways. The data model is required to:
+검증가능한 크리덴셜 데이터 모델의 목표 중 하나는 비허가형 방식의 혁신을 활성화하는데 있다. 
+이러한 목표를 달성하기 위하여, 이 데이터 모델은 수많은 다른 방법으로 확장가능할 필요가 있다. 
+이 데이터 모델에 요구되는 것은:
         </p>
 
         <ul>
           <li>
-Model complex multi-entity relationships through the use of a <a>graph</a>-based
-data model.
+<a>그래프</a>기반 데이터 모델을 사용하여 복잡한 다중-개체 관계 모형을 만든다.
           </li>
           <li>
-Extend the machine-readable vocabularies used to describe information in the
-data model, without the use of a centralized system for doing so, through the
-use of [[?LINKED-DATA]].
+[[?LINKED-DATA]]의 사용을 통하여, 중앙화된 시스템 없이도, 
+데이터 모델 안에 있는 정보를 기술하는데 사용되는 기계 판독 가능 어휘 목록을 확장한다.
           </li>
           <li>
-Support multiple types of cryptographic proof formats through the use of Linked
-Data Proofs [[?LD-PROOFS]], Linked Data Signatures [[?LD-SIGNATURES]], and a
-variety of signature suites.
+연결 데이터 프루프(Linked Data Proofs, [[?LD-PROOFS]]) 및 연결 데이터 서명(Linked Data Signatures, [[?LD-SIGNATURES]]) 
+그리고 다양한 서명 제품군(signature suites)의 사용을 통해 여러 유형의 암호학적 프루프 형식을 지원한다.
           </li>
           <li>
-Provide all of the extensibility mechanisms outlined above in a data format that
-is popular with software developers and web page authors, and is enabled through
-the use of [[JSON-LD]].
+소프트웨어 개발자 및 웹 페이지 제작자들에게 자주 쓰이고, 
+[[JSON-LD]]의 사용을 통해 활성화 된 데이터 형식에서 상술한 모든 확장 메커니즘을 제공한다.
           </li>
         </ul>
 
         <p>
-This approach to data modeling is often called an
-<em>open world assumption</em>, meaning that any entity can say anything about
-any other entity. While this approach seems to conflict with building simple and
-predictable software systems, balancing extensibility with program correctness
-is always more challenging with an open world assumption than with closed
-software systems.
+데이터 모델링에 대한 이러한 접근 방식은 종종 <em>“열린 세계 가정 (open world assumption)"</em>이라고하며, 
+이는 누구나 다른 누군가에 대해 말할 수 있다는 것을 의미한다. 
+이러한 접근 방식이 간단하고 예측 가능한 소프트웨어 시스템을 구축하는 것과 충돌하는 것처럼 보일 수 있음에도 불구하고, 
+프로그램의 정확성과 확장성 간에 균형을 맞추는 것은 폐쇄형 소프트웨어 시스템보다 열린 세계 가정에서 항상 더 도전적인 과제이다.
         </p>
 
         <p>
-The rest of this section describes, through a series of examples, how both
-extensibility and program correctness are achieved.
+이 섹션의 나머지 부분에서는 여러 예제들을 통해 확장성과 프로그램 정확성을 모두 달성하는 방법에 대해 설명한다.
         </p>
 
         <p>
-Let us assume we start with the <a>verifiable credential</a> shown below.
+다음과 같은 <a>검증가능한 크리덴셜</a>로 시작한다고 간주해보자.
         </p>
 
-        <pre class="example nohighlight" title="A simple credential">
+        <pre class="example nohighlight" title="간단한 크리덴셜">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2337,23 +2320,22 @@ Let us assume we start with the <a>verifiable credential</a> shown below.
         </pre>
 
         <p>
-This <a>verifiable credential</a> states that the <a>entity</a> associated with
-<code>did:example:abcdef1234567</code> has a <code>name</code> with a value of
-<code>Jane Doe</code>.
+이 <a>검증가능한 크리덴셜</a>이 나타내는 것은 
+이 <a>개체</a>가 <code>name</code> 속성의 값이 <code>Jane Doe</code>라는 값을 가진 
+<code>did:example:abcdef1234567</code>과 관련있다는 것이다.
         </p>
 
         <p>
-Now let us assume a developer wants to extend the <a>verifiable credential</a>
-to store two additional pieces of information: an internal corporate reference
-number, and Jane's favorite food.
+이제 어떤 개발자가 이 <a>검증가능한 크리덴셜</a>을 확장해서 
+두 개의 추가적인 정보를 저장하고 싶다고 해보자: 
+내부 기업 참조 번호와 Jane이 가장 좋아하는 음식.
         </p>
 
         <p>
-The first thing to do is to create a JSON-LD context containing two new terms,
-as shown below.
+첫 번째로 해야할 일은 아래와 같이 두 개의 새로운 용어가 포함된 JSON-LD 컨텍스트를 생성하는 것이다.
         </p>
 
-        <pre class="example nohighlight" title="A JSON-LD context">
+        <pre class="example nohighlight" title="JSON-LD 컨텍스트">
 {
   "@context": {
     "referenceNumber": "https://example.com/vocab#referenceNumber",
@@ -2363,16 +2345,15 @@ as shown below.
         </pre>
 
         <p>
-After this JSON-LD context is created, the developer publishes it somewhere so
-it is accessible to <a>verifiers</a> who will be processing the
-<a>verifiable credential</a>. Assuming the above JSON-LD context is published at
-<code>https://example.com/contexts/mycontext.jsonld</code>, we can extend this
-example by including the context and adding the new <a>properties</a> and
-<a>credential</a> <a>type</a> to the <a>verifiable credential</a>.
+이 JSON-LD 컨텍스트가 생성된 이후에, 
+그 개발자는 생성한 것을 어딘가에 발행해서 이 <a>검증가능한 크리덴셜</a>을 처리할 <a>검증자</a>가 접근할 수 있도록 만든다. 
+위의 JSON-LD 컨텍스트가 <code>https://example.com/contexts/mycontext.jsonld</code>에 발행되었다고 가정하면, 
+우리는 이 <a>검증가능한 크리덴셜</a>에 컨텍스트를 포함하고 
+새로운 <a>속성</a> 및 <a>크리덴셜</a> <a>타입</a>을 추가함으로써 이 예제를 확장할 수 있게 된다.
         </p>
 
         <pre class="example nohighlight"
-          title="A verifiable credential with a custom extension">
+          title="사용자 지정 확장된 검증가능한 크리덴셜">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2393,28 +2374,25 @@ example by including the context and adding the new <a>properties</a> and
         </pre>
 
         <p>
-This example demonstrates extending the Verifiable Credentials Data Model in a
-permissionless and decentralized way. The mechanism shown also ensures that
-<a>verifiable credentials</a> created in this way provide a mechanism to prevent
-namespace conflicts and semantic ambiguity.
+이 예제는 검증가능한 크리덴셜 데이터 모델이 비허가형이고 탈중화된 방식으로 확장되는 것을 보여준다. 
+이 메커니즘은 또한, 이런 방식으로 생성된 <a>검증가능한 크리덴셜</a>이 네임스페이스 충돌 및 의미 중의성을 방지하기 위한 
+메커니즘을 제공한다는 것을 확실히 보여준다.
         </p>
 
         <p>
-A dynamic extensibility model such as this does increase the implementation
-burden. Software written for such a system has to determine whether
-<a>verifiable credentials</a> with extensions are acceptable based on the risk
-profile of the application. Some applications might accept only certain
-extensions while highly secure environments might not accept any extensions.
-These decisions are up to the developers of these applications and are
-specifically not the domain of this specification.
+이러한 동적 확장성 모델은 구현 부담을 분명히 증가시킨다. 
+이런 시스템용으로 작성된 소프트웨어는, 
+응용 프로그램의 위험 프로파일을 기반으로 확장된 <a>검증가능 크리덴셜</a>을 받아들일지 여부를 결정해야한다. 
+어떤 응용 프로그램은 특정 확장을 허용하면서도 높은 보안성이 요구되는 환경에서는 
+모든 확장을 허용하지 않을 수 있다. 
+이러한 결정은 응용 프로그램 개발자에게 달려 있으며 이 규격에서 구체적으로 다루는 영역이 아니다.
         </p>
 
         <p>
-Developers are urged to ensure that extension JSON-LD contexts are highly
-available. Implementations that cannot fetch a context will produce an error.
-Strategies for ensuring that extension JSON-LD contexts are always available
-include using content-addressed URLs for contexts, bundling context documents
-with implementations, or enabling aggressive caching of contexts.
+개발자는 확장된 JSON-LD 컨텍스트의 가용성을 높이기 위해 노력해야 한다. 
+컨텍스트를 가져올 수 없는 구현물은 오류를 발생 시킬 것이다. 
+컨텍스트를 위한 내용 지정 URL들의 사용, 컨텍스트 문서와 구현물의 번들링, 
+또는 컨텍스트의 적극적인 캐싱 활성화를 포함하여 확장 JSON-LD 컨텍스트를 보장하는 전략은 언제나 유효하다.
         </p>
 
         <p>
@@ -2426,6 +2404,15 @@ specification does not define concrete implementations for those extension
 points, the Verifiable Credentials Extension Registry [[?VC-EXTENSION-REGISTRY]]
 provides an unofficial, curated list of extensions that developers can use from
 these extension points.
+
+구현자는 <a href="#proofs-signatures"></a>,
+<a href="#status"></a>, <a href="#data-schemas"></a>, <a href="#refreshing"></a>,
+<a href="#terms-of-use"></a>, <a href="#evidence"></a>
+에서 
+설명하고 있는 확장 기능에 대단히 주의를 기울여야 한다. 
+비록 이 규격이 확장 기능과 관련한 구체적인 구현에 대해 정의하고 있진 않지만, 
+검증가능한 크리덴셜 확장 레지스트리[VC-EXTENSION-REGISTRY]는 
+개발자가 활용할 수 있도록 비공식적인 확장 기능 목록을 제공한다.
         </p>
 
         <section>
