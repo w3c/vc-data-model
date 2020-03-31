@@ -1510,18 +1510,16 @@ Implementation Guidelines [[?VC-IMP-GUIDE]].
       </section>
 
       <section>
-        <h3>Credential Subject</h3>
+        <h3>자격 주체</h3>
 
         <p>
-A <a>verifiable credential</a> contains <a>claims</a> about one or more
-<a>subjects</a>. This specification defines a <code>credentialSubject</code>
-<a>property</a> for the expression of <a>claims</a> about one or more
-<a>subjects</a>.
+<a>검증 가능한 크리덴셜</a> 에는 하나 이상의 <a>주체들</a>에 대한 <a>클레임이</a> 포함된다. 
+이 규격은 하나이상의 <a>주체들</a>에 대한 <a>클레임</a>의 <a>표현</a>의 <code>credentialSubject</code> 
+속성을 정의한다.
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
-<a>property</a>.
+<a>검증 가능한 크리덴셜</a>에는 무조건 <code>credentialSubject</code> <a>속성</a>이 있어야 한다.
         </p>
 
         <dl>
@@ -1531,10 +1529,13 @@ The value of the <code>credentialSubject</code> <a>property</a> is defined as
 a set of objects that contain one or more properties that are each related to a
 <a>subject</a> of the <a>verifiable credential</a>. Each object MAY contain an
 <code>id</code>, as described in Section <a href="#identifiers"></a>.
+<code>credentialSubject</code> <a>속성</a>의 값은 <a>검증 가능한 크리덴셜</a>의 <a>주체</a>와 각각 관련된 하나 이상의 특성을 포함하는 
+		  객체 세트로 정의된다. <a href="#식별자들"></a>에 설명 된대로 각 객체에는 <code>id</code>가 포함될 수도 있다.
+
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of the credentialSubject property">
+        <pre class="example nohighlight" title="credentialSubject 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1554,13 +1555,12 @@ a set of objects that contain one or more properties that are each related to a
         </pre>
 
         <p>
-It is possible to express information related to multiple <a>subjects</a> in a
-<a>verifiable credential</a>. The example below specifies two <a>subjects</a>
-who are spouses. Note the use of array notation to associate multiple
-<a>subjects</a> with the <code>credentialSubject</code> property.
+<a>검증 가능한 크리덴셜</a>로 여러 <a>주체</a>와 관련된 정보를 표현할 수 있다. 
+아래의 예는 배우자 관계인 두 <a>주체</a>를 지정한다. 
+여러 <a>주체</a>를 <code>credentialSubject</code> 특성과 연관시키기 위해 배열 표기법을 사용한다.
         </p>
 
-        <pre class="example nohighlight" title="Specifying multiple subjects in a verifiable credential">
+        <pre class="example nohighlight" title="검증 가능한 크리덴셜로 여러 주체 지정">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1584,30 +1584,26 @@ who are spouses. Note the use of array notation to associate multiple
       </section>
 
       <section>
-        <h3>Issuer</h3>
+        <h3>발급자</h3>
 
         <p>
-This specification defines a property for expressing the <a>issuer</a> of
-a <a>verifiable credential</a>.
+이 규격은 <a>검증 가능한 크리덴셜</a>의 <a>발급자</a>를 표현하기 위한 속성을 정의한다.
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have an <code>issuer</code> <a>property</a>.
+<a>검증 가능한 크리덴셜</a>은 무조건 <code>issuer</code> <a>속성</a>이 있어야 한다.
         </p>
 
         <dl>
           <dt><var>issuer</var></dt>
           <dd>
-The value of the <code>issuer</code> <a>property</a> MUST be either a
-<a>URI</a> or an object containing an <code>id</code> <a>property</a>. It is
-RECOMMENDED that the <a>URI</a> in the <code>issuer</code> or its
-<code>id</code> be one which, if dereferenced, results in a document containing
-machine-readable information about the <a>issuer</a> that can be used to
-<a>verify</a> the information expressed in the <a>credential</a>.
+<code>issuer</code> <a>속성</a> 값은 무조건 <a>URI</a>이거나 <code>id</code> <a>속성</a>을 포함하는 객체여야한다. 
+<code>issuer</code> 또는 해당 <code>id</code>의 <a>URI</a>는 역 참조 된 경우 <a>크리덴셜</a>에 표시된 정보를 <a>검증</a>하는 데 사용할 수 있는 
+<a>issuer</a>에 대한 machine-readable 정보를 포함하는 문서를 생성하는 URI 여야 한다.
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of issuer property">
+        <pre class="example nohighlight" title="발급자 특성의 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1629,11 +1625,10 @@ machine-readable information about the <a>issuer</a> that can be used to
         </pre>
 
         <p>
-It is also possible to express additional information about the issuer by
-associating an object with the issuer property:
+객체를 발급자 특성과 연관시켜 발급자에 대한 추가 정보를 표현 할 수도 있다.
         </p>
 
-        <pre class="example nohighlight" title="Usage of issuer expanded property">
+        <pre class="example nohighlight" title="발급자 확장형 특성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1661,6 +1656,8 @@ associating an object with the issuer property:
 The value of the <code>issuer</code> <a>property</a> can also be a JWK (for
 example, <code>"https://example.com/keys/foo.jwk"</code>) or a <a>DID</a> (for
 example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
+	issuer 특성값은 JWK (for example, "https://example.com/keys/foo.jwk") 
+		또는 a DID (for example, "did:example:abfe13f712120431c276e12ecab")이 될 수 있다.	
         </p>
 
       </section>
