@@ -3247,12 +3247,12 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
 
       </section>
 
-      <section class="informative">
+      <section class="informative" id="authorization">
         <h3>승인</h3>
 
         <p>
 <a>검증가능한 크리덴셜</a>은 <a>주체</a>에 대한 신뢰할 수 있는 신원증명의 수단으로 만들어졌다. 
-역할 기반 접근 제어(RBACs)와 속성 기반 접근 제어(ABACs)는 <a>주체</a>가 자원에 접근하는 것을 
+역할 기반 접근 제어(Role Based Access Controls, RBACs)와 속성 기반 접근 제어(Attribute Based Access Controls, ABACs)는 <a>주체</a>가 자원에 접근하는 것을 
 승인하는 수단으로써 이 신원인증에 의존하는 것으로 인식되지만, 이 사양은 RBAC 
 또는 ABAC를 위한 완전한 해결책을 제공하지는 않는다. 승인의 경우 승인 프레임워크 없이 
 본 사양을 사용하는 것은 적절치 않다.
@@ -3265,12 +3265,12 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
       </section>
     </section>
 
-    <section>
+    <section id="syntaxes">
       <h2>구문</h2>
 
       <p>
-<a href="#core-data-model">코어 데이터 모델</a>, <a href="#basic-concepts">기본개념</a> 
-그리고 <a href="#advanced-concepts">고급 개념</a>에서 설명한 데이터 모델은 <a>검증가능한 크리덴셜</a> 
+<a href="#core-data-model"></a>, <a href="#basic-concepts"></a> 
+그리고 <a href="#advanced-concepts"></a>에서 설명한 데이터 모델은 <a>검증가능한 크리덴셜</a> 
 또는 <a>검증가능한 프레젠테이션</a>의 규범적 구조적 표현이다. 모든 직렬화는 
 특정 형식의 데이터 모델의 표현이다. 본 섹션에서는 데이터 모델이 JSON-LD와 일반 JSON에서 
 실현되는 방식을 명시한다. 비록 이 두 구문에서만 구문적 매핑이 제공되지만, 데이터 모델을 
@@ -3308,7 +3308,7 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
         <h3>JSON</h3>
 
         <p>
-섹션 3. <a href="#core-data-model">코어 데이터 모델</a> 에서 설명한 것과 같이 데이터 
+섹션 3. <a href="#core-data-model"></a> 에서 설명한 것과 같이 데이터 
 모델은 속성 값을 다음과 같은 JSON 타입에 매핑함으로써 Javascript Object Notation (JSON) 
 [[!RFC8259]]으로 인코딩할 수 있다.
         </p>
@@ -3358,16 +3358,17 @@ IEEE754로 표현할 수 있는 숫자 값은 숫자 타입으로 표현해야�
 
         <p>
 [[!JSON-LD]]는 본 사양에서 설명한 데이터 모델을 확장할 때 유용하다. 데이터 모델의 
-인스턴스는 <code>@context</code> <a>속성</a>의 추가를 통해, JSON(섹션 <a href="#json">JSON</a>)으로 인코딩되는 방식과 동일하게 
+인스턴스는 <code>@context</code> <a>속성</a>의 추가를 통해, JSON(섹션 <a href="#json"></a>)으로 인코딩되는 방식과 동일하게 
 [[!JSON-LD]]로 인코딩된다. <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD 컨텍스트</a>는 
 [[!JSON-LD]] 사양에서 상세하게 설명되어 있고, 
-그것의 사용은 섹션 <a href="#extensibility">확장성</a>에서 상술하고 있다.  
+그것의 사용은 섹션 <a href="#extensibility"></a>에서 상술하고 있다.  
         </p>
 
         <p>
 관용적 JSON에서의 <a>검증가능한 크리덴셜</a>에 대한 임의의 정보를 표현하기 위해 다수의 
-컨텍스트가 사용 혹은 결합될 수 있다. <code>https://www.w3.org/2018/credentials/v1</code> 
-에서 확인할 수 있는 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD 컨텍스트</a>는 고정 문서로써 절대 업데이트 되지 않는다. 
+컨텍스트가 사용되거나 결합될 수 있다. <code>https://www.w3.org/2018/credentials/v1</code> 
+에서 확인할 수 있는 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD 컨텍스트</a>는 
+고정 문서로서 절대 업데이트 되지 않는다. 
 따라서 클라이언트 사이드에 캐시하거나 다운로드 할 수 있다. 검증가능한 크리덴셜 데이터 모델에 
 대한 연계된 용어 문서는 <code>https://www.w3.org/2018/credentials</code>에서 확인할 수 있다.
         </p>
@@ -3377,7 +3378,11 @@ IEEE754로 표현할 수 있는 숫자 값은 숫자 타입으로 표현해야�
 
           <p>
 일반적으로, 본 문서에서 설명하고있는 데이터 모델 및 구문은 개발자가 사례를 복사, 
-붙여넣기 함으로써 자신의 소프트웨어 시스템에 <a>검증가능한 크리덴셜</a>을 포함할 수 있도록 설계되었다. 이러한 접근의 디자인 목표는 이기종 소프트웨어 시스템 간 글로벌 상호 운용성을 보장하는 동시에 진입장벽을 낮추는 것이다. 본 섹션에서는 대부분의 개발자가 눈치채지 못할 수 있지만 구현하는 사람에게는 관심이 있을 접근방식들에 대해 설명한다. 
+붙여넣기 함으로써 자신의 소프트웨어 시스템에 <a>검증가능한 크리덴셜</a>을 포함할 수 있도록 설계되었다. 
+이러한 접근의 디자인 목표는 이기종 소프트웨어 시스템 간 글로벌 상호 운용성을 보장하는 동시에 
+진입장벽을 낮추는 것이다. 
+본 섹션에서는 대부분의 개발자가 눈치채지 못할 수 있지만 
+구현하는 사람에게는 관심이 있을 접근방식들에 대해 설명한다. 
 [[!JSON-LD]]에서 가장 주목할만한 신택틱 슈거(Syntatic Sugars)는 아래와 같다.
           </p>
 
@@ -3389,10 +3394,20 @@ IEEE754로 표현할 수 있는 숫자 값은 숫자 타입으로 표현해야�
 정수, 날짜, 측정단위, URL과 같은 데이터 타입은 자동으로 입력되어 그것을 필요로 하는 사용 사례(Use Case)를 위한 강력한 타입 보장을 제공한다.
             </li>
             <li>
-<code>verifiableCredential</code>과 <code>proof</code> <a>속성</a>은 <em>그래프 컨테이너(Graph Containers)</em>로 처리된다. 이는 다른 개체가 주장하는 데이터 집합을 분리하는데 사용되는 메커니즘이다. 이것은 각 <a>발행자</a>가 제공한 데이터 그래프와 각 그래프에 대한 유래를 보장하기 위해 <a>검증가능한 크리덴셜</a>을 제시하는 <a>보유자</a>가 제공하는 정보 간의 적절한 암호학적 구분을 보장한다.
+<code>verifiableCredential</code>과 <code>proof</code> <a>속성</a>은 
+<em>그래프 컨테이너(Graph Containers)</em>로 처리된다. 
+이는 다른 개체가 주장하는 데이터 집합을 분리하는데 사용되는 메커니즘이다. 
+이것은 각 <a>발행자</a>가 제공한 데이터 그래프와 각 그래프에 대한 유래를 보장하기 위해 
+<a>검증가능한 크리덴셜</a>을 제시하는 <a>보유자</a>가 제공하는 정보 간의 
+적절한 암호학적 구분을 보장한다.
             </li>
             <li>
-[[!JSON-LD]] 1.1의 <code>@protected</code> 속성 기능은 본 규격에서 정의한 용어를 재정의할 수 없도록 하는데 사용된다. 이는 동일한 <code>@context</code> 선언이 <a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>의 상단에서 이루어지는한, [[!JSON-LD]] 프로세서의 사용 여부와 상관없이 사용자가 이해한 모든 용어에 대한 상호운용성을 보장한다는 의미이다.
+[[!JSON-LD]] 1.1의 <code>@protected</code> 속성 기능은 
+본 규격에서 정의한 용어를 재정의할 수 없도록 하는데 사용된다. 
+이는 동일한 <code>@context</code> 선언이 
+<a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>의 상단에서 이루어지는 한, 
+[[!JSON-LD]] 프로세서의 사용 여부와 상관없이 
+사용자가 이해한 모든 용어에 대한 상호운용성을 보장한다는 의미이다.
             </li>
           </ul>
         </section>
