@@ -3926,107 +3926,95 @@ privacy.
     </section>
 
     <section class="informative">
-      <h3>Personally Identifiable Information</h3>
+      <h3>개인식별정보</h3>
 
       <p>
-Data associated with <a>verifiable credentials</a> stored in the
-<code>credential.credentialSubject</code> field is susceptible to privacy
-violations when shared with <a>verifiers</a>. Personally identifying data, such
-as a government-issued identifier, shipping address, and full name, can be
-easily used to determine, track, and correlate an <a>entity</a>. Even
-information that does not seem personally identifiable, such as the
-combination of a birthdate and a postal code, has very powerful correlation
-and de-anonymizing capabilities.
+<code>credential.credentialSubject</code> 필드에 저장된 <a>검증가능한 크리덴셜</a> 관련 데이터는 
+<a>검증자</a>와 공유할 경우 프라이버시 침해를 허용할 수 있다. 정부에서 발행한 식별자, 
+배송지 주소, 성명 등과 같은 개인식별정보는 <a>개체</a>를 특정하거나 추적하고 상관관계를 
+확인하는데 쉽게 사용될 수 있다. 비록 생일과 우편번호의 조합 같이 개인을 식별별하는데 
+쓸 수 없을 것 같은 정보라도 매우 강력한 상관관계 및 재식별화(De-anonymizing)의 
+가능성을 가지고 있다.
       </p>
 
       <p>
-Implementers are strongly advised to warn <a>holders</a> when they share data
-with these kinds of characteristics. <a>Issuers</a> are strongly advised to
-provide privacy-protecting <a>verifiable credentials</a> when possible. For
-example, issuing <code>ageOver</code> <a>verifiable credentials</a> instead of
-date of birth <a>verifiable credentials</a> when a <a>verifier</a> wants to
-determine if an <a>entity</a> is over the age of 18.
+구현자는 이러한 종류의 특성을 가진 데이터를 공유할 경우 <a>보유자</a>에게 경고할 것을 강력하게 
+권고한다. <a>발행자</a>는 가능하면 프라이버시를 보호하는 <a>검증가능한 크리덴셜</a>을 제공할 것을 
+강력하게 권고한다. 예를들면, <a>검증자</a>가 <a>개체</a>의 성인 여부를 확인하고자 하면, 생년월일을 
+담은 <a>검증가능한 크리덴셜</a>을 발행하는 대신 <code>ageOver</code> <a>검증가능한 크리덴셜</a>을 발행하는 것이다.
       </p>
 
       <p>
-Because a <a>verifiable credential</a> often contains personally identifiable
-information (PII), implementers are strongly advised to use mechanisms while
-storing and transporting <a>verifiable credentials</a> that protect the data
-from those who should not access it. Mechanisms that could be considered include
-Transport Layer Security (TLS) or other means of encrypting the data while in
-transit, as well as encryption or data access control mechanisms to protect
-the data in a <a>verifiable credential</a> while at rest.
+<a>검증가능한 크리덴셜</a>은 종종 개인식별정보(PII)를 포함하고 있기 때문에, 구현자는 
+<a>검증가능한 크리덴셜</a>을 저장하고 전송하는 과정에서 접근하지 말아야 할 사람들로부터 
+데이터를 보호하기 위한 메커니즘을 사용하도록 해야 한다. 고려할 수 있는 매커니즘은 
+전송계층보안(TLS, Transport Layer Security) 또는 그 외에 데이터 전송시에는 데이터를 
+암호화하고 전송 중이 아니더라도 <a>검증가능한 크리덴셜</a>의 데이터를 암호화하거나 접근 
+제어하는 수단이 있을 수 있다.
       </p>
     </section>
 
     <section class="informative">
-      <h3>Identifier-Based Correlation</h3>
+      <h3>식별자 기반 상관관계</h3>
 
       <p>
-<a>Subjects</a> of <a>verifiable credentials</a> are identified using the
-<code>credential.credentialSubject.id</code> field. The identifiers used to
-identify a <a>subject</a> create a greater risk of correlation when the
-identifiers are long-lived or used across more than one web domain.
+<a>검증가능한 크리덴셜</a>의 <a>주체</a>는 <code>credential.credentialSubject.id</code> 필드를 사용하여 
+식별된다. <a>주체</a>를 식별하기 위해 사용되는 식별자는 식별자의 수명이 길고 하나 이상의 
+웹 도메인을 넘나들며 사용될 경우 더 큰 상관관계의 위험을 야기한다.
       </p>
 
       <p>
-Similarly, disclosing the <a>credential</a> identifier
-(<code>credential.id</code>) leads to situations where multiple
-<a>verifiers</a>, or an <a>issuer</a> and a <a>verifier</a>, can collude to
-correlate the <a>holder</a>. If <a>holders</a> want to reduce correlation, they
-should use <a>verifiable credential</a> schemes that allow hiding the
-identifier during <a>verifiable presentation</a>. Such schemes expect the
-<a>holder</a> to generate the identifier and might even allow hiding the
-identifier from the <a>issuer</a>, while still keeping the identifier embedded
-and signed in the <a>verifiable credential</a>.
+유사하게, <a>크리덴셜</a> 식별자(<code>credential.id</code>)를 공개하는 것은러 <a>검증자</a>가 결탁하거나 
+혹은 <a>발급자</a>와 <a>검증자</a>가 결탁하여 <a>보유자</a>와의 상관관계를 파악할 수 있는 상황으로 이끌 
+수 있다. 만약 <a>보유자</a>가 상관관계를 줄이고 싶다면, <a>검증가능한 프레젠테이션</a>을 하는 동안 
+식별자를 숨기는 <a>검증가능한 크리덴셜</a> 스킴을 사용해야 한다. 그러한 스킴은 <a>보유자</a>가 
+식별자를 생성하고 사용자로부터 식별자를 숨기는 것을 허용하는 한편 식별자를 <a>검증가능한 크리덴셜</a> 
+안에 포함하고 서명할 수 있도록 유지한다.
       </p>
 
       <p>
-If strong anti-correlation properties are a requirement in a
-<a>verifiable credentials</a> system, it is strongly advised that identifiers
-are either:
+만약 강력한 상관관계 방지 속성이 요구되는 <a>검증가능한 크리덴셜</a> 체계인 경우, 식별자는 
+다음 중 하나를 만족하도록 강력히 권고된다:
       </p>
 
       <ul>
         <li>
-Bound to a single origin
+단일 기원(Single origin)으로 향함
+        </li>P
+        <li>
+단일 사용(Single use)
         </li>
         <li>
-Single-use
-        </li>
-        <li>
-Not used at all, but instead replaced by short-lived, single-use bearer tokens.
+한번도 사용되지 않았지만 짧은 수명의 단일 사용 전달자 토큰으로 교체됨
         </li>
       </ul>
     </section>
 
     <section class="informative">
-      <h3>Signature-Based Correlation</h3>
+      <h3>서명 기반의 상관관계</h3>
 
       <p>
-The contents of <a>verifiable credentials</a> are secured using the
-<code>credential.proof</code> field. The <a>properties</a> in this field
-create a greater risk of correlation when the same values are used across more
-than one session or domain and the value does not change. Examples include the
-<code>verificationMethod</code>, <code>created</code>,
-<code>proofPurpose</code>, and <code>jws</code> fields.
+<a>검증가능한 크리덴셜</a>의 내용은 <code>credential.proof</code> 필드를 사용하여 보호한다. 이 필드의 
+<a>속성</a>들은 같은 값이 하나 이상의 세션 혹은 도메인에서 사용되고 그 값이 변하지 않을 경우 
+더 큰 상관관계의 위험을 만들 수 있다. <code>verificationMethod</code>, <code>create</code>, <code>proofPurpose</code>, 
+<code>jws</code> 필드가 이에 속한다.
       </p>
 
       <p>
-If strong anti-correlation properties are required, it is advised that
-signature values and metadata are regenerated each time using technologies like
-third-party pairwise signatures, zero-knowledge proofs, or group signatures.
+만약 강력한 상관관계 방지(Anti-Correlation) 속성이 필요할 경우, 제3자 쌍 서명, 
+영지식증명 또는 집단 서명 등의 기술을 사용하여 매번 서명값과 메타데이터를 재생성하는 
+것을 권장한다.
+
       </p>
 
       <p class="note">
-Even when using anti-correlation signatures, information might still be
-contained in a <a>verifiable credential</a> that defeats the anti-correlation
-properties of the cryptography used.
+비록 상관관계 방지용 서명을 사용하더라도, <a>검증가능한 크리덴셜</a>에는 사용된 암호 기술의 
+상관관계 방지 속성을 무력화시킬 수 있는 정보가 여전히 포함될 수 있다
       </p>
     </section>
 
     <section class="informative">
-      <h3>Long-Lived Identifier-Based Correlation</h3>
+      <h3>수명이 긴 식별자 기반의 상관관계</h3>
 
       <p>
 <a>Verifiable credentials</a> might contain long-lived identifiers that could
@@ -4035,61 +4023,55 @@ be used to correlate individuals. These types of identifiers include
 organization-issued identifiers, addresses, healthcare vitals,
 <a>verifiable credential</a>-specific JSON-LD contexts, and many other sorts of
 long-lived identifiers.
+<a>검증가능한 크리덴셜</a>은 개인의 상관관계를 파악하는데 사용될 수 있는 수명이 긴 식별자를 
+포함할 수 있다. 이러한 종류의 식별자에는 <a>주체</a> 식별자, 이메일 주소, 정부 발행 식별자, 
+조직 발행 식별자, 주소, 헬스케어 바이탈, <a>검증가능한 크리덴셜</a> 특화 JSON-LD 컨텍스트, 
+그리고 수 많은 종류의 수명이 긴 식별자가 포함된다. 
       </p>
 
       <p>
-Organizations providing software to <a>holders</a> should strive to identify
-fields in <a>verifiable credentials</a> containing information that could be
-used to correlate individuals and warn <a>holders</a> when this information is
-shared.
-      </p>
-    </section>
-
-    <section class="informative">
-      <h3>Device Fingerprinting</h3>
-
-      <p>
-There are mechanisms external to <a>verifiable credentials</a> that are used to
-track and correlate individuals on the Internet and the Web. Some of these
-mechanisms include Internet protocol (IP) address tracking, web browser
-fingerprinting, evercookies, advertising network trackers, mobile network
-position information, and in-application Global Positioning System (GPS) APIs.
-Using <a>verifiable credentials</a> cannot prevent the use of these other
-tracking technologies. Also, when these technologies are used in conjunction
-with <a>verifiable credentials</a>, new correlatable information could be
-discovered. For example, a birthday coupled with a GPS position can be used to
-strongly correlate an individual across multiple websites.
-      </p>
-
-      <p>
-It is recommended that privacy-respecting systems prevent the use of these
-other tracking technologies when <a>verifiable credentials</a> are being used.
-In some cases, tracking technologies might need to be disabled on devices that
-transmit <a>verifiable credentials</a> on behalf of a <a>holder</a>.
+<a>보유자</a>에게 소프트웨어를 제공하는 조직은 개인의 상관관계를 파악하는데 사용되는 정보가 
+함된 <a>검증가능한 크리덴셜</a>의 필드를 식별하여, 이 정보가 공유될 때 <a>보유자</a>에게 경고해야 한다
       </p>
     </section>
 
     <section class="informative">
-      <h3>Favor Abstract Claims</h3>
+      <h3>디바이스 핑거프린팅</h3>
 
       <p>
-To enable recipients of <a>verifiable credentials</a> to use them in a variety
-of circumstances without revealing more PII than necessary for transactions,
-<a>issuers</a> should consider limiting the information published in a
-<a>credential</a> to a minimal set needed for the expected purposes. One way to
-avoid placing PII in a <a>credential</a> is to use an abstract <a>property</a>
-that meets the needs of <a>verifiers</a> without providing specific information
-about a <a>subject</a>.
+인터넷과 웹상에서 개인을 추적하고 상관관계를 파악하는데 사용되는 <a>검증가능한 크리덴셜</a> 
+외부의 메커니즘들이 있다. 이러한 메커니즘은 인터넷 프로토콜(IP) 주소 추적, 
+웹 브라우저 핑거프린팅, 에버쿠키(evercookie), 광고 네트워크 추적기, 
+모바일 네트워크 위치 정보, 인앱 GPS API 등을 포함한다. <a>검증가능한 크리덴셜</a>을 
+사용하는 것이 이러한 기술을 사용하는 것을 막지는 못한다. 또한, 이러한 기술들이 
+<a>검증가능한 크리덴셜</a>과 결합되어 사용되면 새로운 상관관계를 파악할 수 있는 
+정보들을 발견할 수도 있다. 예를 들어, 생일과 GPS 위치를 결합하면 다수의 
+웹사이트에서 개인에 대한 강력한 상관관계를 파악하는데 사용될 수 있다. 
+      </p>
+
+      <p>
+개인정보보호를 중요하게 여기는 시스템에서 <a>검증가능한 크리덴셜</a>을 사용하는 경우, 
+이러한 추적 기술들의 사용을 방지하도록 하는 것이 권장한다. 경우에 따라서는 <a>보유자</a>를 
+대신하여 <a>검증가능한 크리덴셜</a>을 전송하는 기기에서 추적 기술들이 비활성화 하는 것도 요구될 수 있다.
+      </p>
+    </section>
+
+    <section class="informative">
+      <h3>추상 클레임 선호(Flavor Abstract Claim</h3>
+
+      <p>
+<a>검증가능한 크리덴셜</a>을 받는 사람이 필요 이상으로 개인식별정보를 노출하지 않으면서도 
+다양한 상황에서 활용할 수 있도록 하기 위해 <a>발행자</a>는 <a>크리덴셜</a>의 정보를 예상되는 목적에 
+필요한 최소한의 정보로 제한하는 것을 고려해야 한다. 개인식별정보를 <a>크리덴셜</a>에 포함하지 
+않도록 하는 방법 중 하나는 <a>주체</a>에 대한 특정한 정보를 제공하지 않으면서도 <a>검증자</a>의 
+요구를 만족시키는 추상 <a>속성</a>을 사용하는 것이다.
       </p>
       <p>
-For example, this document uses the <code>ageOver</code> <a>property</a>
-instead of a specific birthdate, which constitutes much stronger PII. If
-retailers in a specific market commonly require purchasers to be older than a
-certain age, an <a>issuer</a> trusted in that market might choose to offer a
-<a>verifiable credential</a> claiming that <a>subjects</a> have met that
-requirement instead of offering <a>verifiable credentials</a> containing
-<a>claims</a> about specific birthdates. This enables individual customers to
-make purchases without revealing specific PII.
+예를 들면, 본 문서는 강력한 개인식별정보인 생일을 사용하는 대신 <code>ageOver</code> <a>속성</a>을 사용한다. 
+만약 특정 시장의 소매업자가 일반적으로 구매자에게 특정 나이 이상을 요구하는 경우, 
+그 시장에서 신뢰받는 <a>발행자</a>는 <a>주체</a>의 생일에 대한 <a>클레임</a>을 포함하는 <a>검증가능한 크리덴셜</a>을 
+제공하기 보다는 <a>주체</a>가 그 조건을 만족한다고 주장하는 <a>검증가능한 크리덴셜</a>을 제공하는 것을 
+선택할 것이다. 이로인해 개인 소비자가 특정 개인식별정보를 드러내지 않으면서도 구매를 할 수 있게 된다.
       </p>
     </section>
 
