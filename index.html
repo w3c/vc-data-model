@@ -2830,11 +2830,11 @@ the <a>verifier</a> to <code>https://example.edu/refresh/3732</code>.
         </p>
 
         <p>
-이 기능은 정부에서 발행한 <a>검증 가능한 크리덴셜</a>에 의해 사용되어 전자 지갑이 
+이 기능은 정부에서 발행한 <a>검증가능한 크리덴셜</a>에 의해 사용되어 전자 지갑이 
 시민들의 민감한 데이터를 예기치 않게 사용되는 것을 막기 위하여 유사한 정부 기관으로의 
 사용을 제한하도록 지시한다. 유사하게 민간 산업에서 발행한 
-<a>검증 가능한 크리덴셜</a>은 조직, 부서 내 또는 업무 시간동안 사용을 제한할 
-것으로 예상된다. 구현자는 검증 가능한 크리덴셜 구현 지침 [[?VC-IMP-GUIDE]] 문서의 
+<a>검증가능한 크리덴셜</a>은 조직, 부서 내 또는 업무 시간동안 사용을 제한할 
+것으로 예상된다. 구현자는 검증가능한 크리덴셜 구현 지침 [[?VC-IMP-GUIDE]] 문서의 
 적합한 장에서 빠르게 발전하는 기능에 대하여 자세히 읽어야 한다.
         </p>
 
@@ -2844,9 +2844,9 @@ the <a>verifier</a> to <code>https://example.edu/refresh/3732</code>.
         <h3>증거</h3>
 
         <p>
-<a>발급자</a>는 <a>검증자</a>에게 <a>검증 가능한 크리덴셜</a>에 추가 지원 정보를 
+<a>발급자</a>는 <a>검증자</a>에게 <a>검증가능한 크리덴셜</a>에 추가 지원 정보를 
 제공하기 위하여 증거가 포함될 수 있다. 이것은 <a>검증자</a>에 의해 
-<a>검증 가능한 크리덴셜</a>의 요구에 의존하는 신뢰를 설정하기 위해 사용될 수 있다.
+<a>검증가능한 크리덴셜</a>의 요구에 의존하는 신뢰를 설정하기 위해 사용될 수 있다.
         </p>
         <p>
 예를 들어, <a>발급자</a>는 <a>크리덴셜</a>을 발급하기 전에 <a>주체</a>가 제공한 
@@ -3218,7 +3218,7 @@ support zero-knowledge proof systems.
 
         <p class="note">
 본 연구 영역은 빠르게 발전하고 있으며, 다른 <a>크리덴셜</a>의 정확성에 대해 이의를 
-제기하는 <a>크리덴셜</a>을 발행하는데 관심이 있는 개발자는 검증가능한 크리덴셜 
+제기하는 <a>크리덴셜</a>을 발행하는데 관심이 있는 구현자는 검증가능한 크리덴셜 
 구현 지침 [[VC-IMP-GUIDE]] 문서에서 분쟁과 관련된 부분을 읽어야 한다.
        </p>
 
@@ -4106,95 +4106,81 @@ make purchases without revealing specific PII.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>The Principle of Data Minimization</h3>
+    <section class="informative" id="the-principle-of-data-minimization">
+      <h3>데이터 최소화 원칙</h3>
 
       <p>
-Privacy violations occur when information divulged in one context leaks into
-another. Accepted best practice for preventing such violations is to limit the
-information requested, and received, to the absolute minimum necessary. This
-data minimization approach is required by regulation in multiple jurisdictions,
-including the Health Insurance Portability and Accountability Act (HIPAA) in the
-United States and the General Data Protection Regulation (GDPR) in the European
-Union.
+한 컨텍스트에서 유출된 정보가 다른 컨텍스트로 유출되면 개인정보보호 위반이 발생한다. 
+이러한 위반을 방지하기 위해 허용되는 모범 사례는 요청 및 수신한 정보를 최소한으로 
+제한하는 것 이다. 데이터 최소화 접근법은 미국의 
+HIPAA (Health Insurance Portability and Accountability Act) 및 EU의 
+General Data Protection Regulation (GDPR)을 포함한 여러 관할권의 규정에 의해 
+요구된다.
       </p>
       <p>
-With <a>verifiable credentials</a>, data minimization for <a>issuers</a> means
-limiting the content of a <a>verifiable credential</a> to the minimum required
-by potential <a>verifiers</a> for expected use. For <a>verifiers</a>, data
-minimization means limiting the scope of the information requested or
-required for accessing services.
+<a>발급자</a>를 위한 데이터 최소화가 뜻하는 것은 <a>검증가능한 크리덴셜</a>의 사용을 
+예상하여 잠재적 <a>검증자</a>가 요구하는 최소값으로 제한하는 것을 의미한다. 
+<a>검증자</a>의 경우 데이터 최소화는 서비스 접근에 요구 또는 정보의 범위를 제한하는 
+것을 의미한다.
       </p>
       <p>
-For example, a driver's license containing a driver's ID number, height, weight,
-birthday, and home address is a <a>credential</a> containing more information
-than is necessary to establish that the person is above a certain age.
+예를 들어, 면허 번호, 키, 몸무게, 생일, 주소가 포함된 운전 면허증은 개인이 특정 연령 
+이상임을 확인하는데 필요한 것보다 많은 정보가 포함된 <a>크리덴셜</a>이다.
       </p>
 
       <p>
-It is considered best practice for <a>issuers</a> to atomize information or use
-a signature scheme that allows for <a>selective disclosure</a>. For example, an
-<a>issuer</a> of driver's licenses could issue a <a>verifiable credential</a>
-containing every attribute that appears on a driver's license, as well as a set
-of <a>verifiable credentials</a> where every <a>verifiable credential</a>
-contains only a single attribute, such as a person's birthday. It could also
-issue more abstract <a>verifiable credentials</a> (for example, a
-<a>verifiable credential</a> containing only an <code>ageOver</code> attribute).
-One possible adaptation would be for <a>issuers</a> to provide secure HTTP
-endpoints for retrieving single-use <a>bearer credentials</a> that promote the
-pseudonymous usage of <a>verifiable credentials</a>. Implementers that find this
-impractical or unsafe, should consider using <a>selective disclosure</a> schemes
-that eliminate dependence on <a>issuers</a> at proving time and reduce temporal
-correlation risk from <a>issuers</a>.
+<a>발급자</a>가 정보를 원자화하거나 <a>선택적 공개</a>를 허용하는 서명 체계를 사용하는
+ 것이 가장 좋은 사례이다. 예를 들어, 운전면허 <a>발급자</a>는 운전 면허에 나타나는 
+모든 속성이 포함된 <a>검증가능한 크리덴셜</a>과 개인의 생일과 같은 단일 속성만 
+포함되는 <a>검증가능한 크리덴셜</a> 집합을 발급할 수 있다. 또한, 더 추상적인 
+<a>검증가능한 크리덴셜</a>을 발행할 수 있다 (예 : <code>ageOver</code> 특성만 
+포함하는 <a>검증가능한 크리덴셜</a>). 한 가지 가능한 적용 방법은 <a>발급자</a>가 
+<a>검증가능한 크리덴셜</a>의 익명 사용을 촉진하는 일회용 <a>무기명 크리덴셜</a>을 
+검색하기 위한 보안 HTTP 엔드포인트를 제공하는 것이다. 부적절하거나 위험을 발견한 
+구현자는 <a>선택적 공개</a>를 사용하여 <a>발급자</a>에 대한 의존성을 제거하고 
+<a>발급자</a>의 일시적인 상관 위험을 줄여야 한다.
       </p>
 
       <p>
-<a>Verifiers</a> are urged to only request information that is absolutely
-necessary for a specific transaction to occur. This is important for at least
-two reasons. It:
+<a>검증자</a>는 특정 트랜젝션이 발생하는데 꼭 필요한 정보만 요청해야 한다. 
+이는 두 종류의 이유로 중요하다:
       </p>
 
       <ul>
         <li>
-Reduces the liability on the <a>verifier</a> for handling highly sensitive
-information that it does not need to.
+불필요한 매우 민감한 정보를 처리하는 <a>검증자</a>의 책임을 줄임
         </li>
         <li>
-Enhances the privacy of the individual by only asking for information required
-for a specific transaction.
+특정 트랜젝션에 필요한 정보만 요구함으로써 개인의 프라이버시를 향상
         </li>
       </ul>
 
       <p class="note">
-While it is possible to practice the principle of minimum disclosure, it might
-be impossible to avoid the strong identification of an individual for
-specific use cases during a single session or over multiple sessions. The
-authors of this document cannot stress how difficult it is to meet this
-principle in real-world scenarios.
+최소 공개 원칙을 실행하는 것은 가능하지만, 단일 또는 다중 세션 동안 특정 사례에서 
+개인의 강력한 식별을 피하는 것은 불가능할 수 있다. 본 표준의 저자는 실제 시나리오에서 
+원칙을 달성하는 것은 어려울 수 있다고 강요하지 않는다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Bearer Credentials</h3>
+    <section class="informative" id="bearer-credentials">
+      <h3>무기명 크리덴셜</h3>
 
       <p>
-A <dfn data-lt="bearer credentials">bearer credential</dfn> is a
-privacy-enhancing piece of information, such as a concert ticket, which entitles
-the <a>holder</a> of the bearer credential to a specific resource without
-divulging sensitive information about the <a>holder</a>. Bearer credentials are
-often used in low-risk use cases where the sharing of the bearer credential is
-not a concern or would not result in large economic or reputational losses.
+<dfn data-lt="bearer credentials">무기명 크리덴셜</dfn>은 콘서트 티켓과 같은 
+개인정보보호 강화 정보로, <a>보유자</a>에게는 자신에 대한 민감한 정보를 공개하지 
+않고도 특정 자원에 대한 크리덴셜을 부여 할 수 있다. 무기명 크리덴셜은 종종 
+무기명 크리덴셜 공유가 문제가 되지 않거나 경제적 또는 평판의 손실이 크지 않은 
+저 위험 사례에서 사용된다.
       </p>
 
       <p>
-<a>Verifiable credentials</a> that are <a>bearer credentials</a> are made
-possible by not specifying the <a>subject</a> identifier, expressed using the
-<code>id</code> <a>property</a>, which is nested in the
-<code>credentialSubject</code> <a>property</a>. For example, the following
-<a>verifiable credential</a> is a <a>bearer credential</a>:
+<a>무기명 크리덴셜</a>인 <a>검증가능한 크리덴셜</a>은 
+<code>credentialSubject</code> <a>속성</a>에 중첩된 <code>id</code> <a>속성</a>을 
+사용하여 표현된 <a>주체</a> 식별자를 지정하지 않으면 가능하다. 
+예를 들어 다음과 같은 <a>검증가능한 크리덴셜</a>은 <a>무기명 크리덴셜</a>이다:
       </p>
 
-      <pre class="example nohighlight" title="Usage of issuer properties">
+      <pre class="example nohighlight" title="발급자 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -4205,7 +4191,7 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2017-10-22T12:23:48Z",
   "credentialSubject": {
-    <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
+    <span class="comment">// 무기명 크리덴셜에 ‘id’ 속성이 지정되어 있지 않음</span>
     "degree": {
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
@@ -4216,93 +4202,84 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
       </pre>
 
       <p>
-While <a>bearer credentials</a> can be privacy-enhancing, they must be carefully
-crafted so as not accidentally divulge more information than the <a>holder</a>
-of the <a>bearer credential</a> expects. For example, repeated use of the same
-<a>bearer credential</a> across multiple sites enables these sites to
-potentially collude to unduly track or correlate the <a>holder</a>. Likewise,
-information that might seem non-identifying, such as a birthdate and postal
-code, can be used to statistically identify an individual when used together in
-the same <a>bearer credential</a> or session.
+<a>무기명 크리덴셜</a>은 개인정보보호를 강화할 수 있지만, <a>무기명 크리덴셜</a> 
+<a>보유자</a>가 예상한 것보다 더 많은 정보를 실수로 공개하지 않도록 신중하게 만들어야 
+한다. 예를 들어, 다수의 사이트에서 동일한 <a>무기명 크리덴셜</a>을 반복적으로 사용하면 
+사이트들이 담합하여 잠재적으로 <a>보유자</a>를 추적하거나 연동시킬 수 있다. 
+또한 생년월일 및 우편 번호와 같이 식별할 수 없는 것처럼 보이는 정보를 사용하여 동일한 
+<a>무기명 크리덴셜</a> 또는 세션에서 함께 사용될 경우, 개인을 통계적으로 식별할 수 있다.
       </p>
 
       <p>
-<a>Issuers</a> of <a>bearer credentials</a> should ensure that the
-<a>bearer credentials</a> provide privacy-enhancing benefits that:
+<a>무기명 크리덴셜</a> <a>발급자</a>는 <a>무기명 크리덴셜</a>이 다음과 같은 
+개인정보보호 강화를 제공하는지 확인해야 한다:
       </p>
 
       <ul>
         <li>
-Are single-use, where possible.
+가능하면 일회용
         </li>
         <li>
-Do not contain personally identifying information.
+개인 식별정보를 포함하지 않음
         </li>
         <li>
-Are not unduly correlatable.
+과도하게 상관되지 않음
         </li>
       </ul>
 
       <p>
-<a>Holders</a> should be warned by their software if <a>bearer credentials</a>
-containing sensitive information are issued or requested, or if there is a
-correlation risk when combining two or more <a>bearer credentials</a> across one
-or more sessions. While it might be impossible to detect all correlation risks,
-some might certainly be detectable.
+민감한 정보가 포함된 <a>무기명 크리덴셜</a>이 발행, 요청되거나 하나 이상의 세션에서 
+두 가지 이상의 <a>무기명 크리덴셜</a>을 결합되거나 상관 관계 위험이 있는 경우, 
+소프트웨어는 <a>보유자</a>에게 경고해야 한다. 모든 상관 관계 위험을 감지하는 것은 
+불가능하지만 일부는 확실하게 감지할 수 있다.
       </p>
 
       <p>
-<a>Verifiers</a> should not request <a>bearer credentials</a> that can be used
-to unduly correlate the <a>holder</a>.
+<a>검증자</a>는 <a>보유자</a>와의 상관 관계를 파악하는데 사용할 수 있는 <a>무기명 크리덴셜</a>을 요청하지 말아야 한다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Validity Checks</h3>
+    <section class="informative" id="validity-checks">
+      <h3>유효성 검사</h3>
 
       <p>
-When processing <a>verifiable credentials</a>, <a>verifiers</a> are expected to
-perform many of the checks listed in Appendix <a href="#validation"></a> as
-well as a variety of specific business process checks. Validity checks might
-include checking:
+<a>검증가능한 크리덴셜</a>을 처리할 때 <a>검증자</a>는 <a href="#validation"></a>의 
+유효성 검증 및 다양한 특정 비즈니스 프로세스 점검에 나열된 검사를 수행해야 한다. 
+유효성 검사는 아래 항목이 포함된다:
       </p>
 
       <ul>
         <li>
-The professional licensure status of the <a>holder</a>.
+<a>보유자</a>의 전문 라이센스 상태.
         </li>
         <li>
-A date of license renewal or revocation.
+라이센스 갱신 또는 폐기 날짜.
         </li>
         <li>
-The sub-qualifications of an individual.
+개인의 하위 자격.
         </li>
         <li>
-If a relationship exists between the <a>holder</a> and the <a>entity</a>
-with whom the <a>holder</a> is attempting to interact.
+<a>보유자</a>와 상호 작용을 시도하는 <a>개체</a>와 관계가 있는 경우.
         </li>
         <li>
-The geolocation information associated with the <a>holder</a>.
+<a>보유자</a>와 관련된 지리적 위치 정보.
         </li>
       </ul>
 
       <p>
-The process of performing these checks might result in information leakage that
-leads to a privacy violation of the <a>holder</a>. For example, a simple
-operation such as checking a revocation list can notify the <a>issuer</a> that a
-specific business is likely interacting with the <a>holder</a>. This could
-enable <a>issuers</a> to collude and correlate individuals without their
-knowledge.
+이러한 검사를 수행하면 정보 유출로 인해 <a>보유자</a>의 개인정보보호 위반이 
+발생할 수 있다. 예를 들어 폐기 목록 확인과 같은 간단한 조작으로 특정 비즈니스가 
+<a>보유자</a>와 상호작용 한다는 것을 <a>발급자</a>에게 알릴 수 있다. 
+이는 <a>발급자</a>들은 담합과 연동을 개인들에 대한 정보 없이 할 수 있다.
       </p>
 
       <p>
-<a>Issuers</a> are urged to not use mechanisms, such as <a>credential</a>
-revocation lists that are unique per <a>credential</a>, during the
-<a>verification</a> process that could lead to privacy violations. Organizations
-providing software to <a>holders</a> should warn when <a>credentials</a> include
-information that could lead to privacy violations during the verification
-process. <a>Verifiers</a> should consider rejecting <a>credentials</a> that
-produce privacy violations or that enable bad privacy practices.
+<a>발급자</a>는 <a>크리덴셜</a>마다 <a>검증</a>과정에서 개인정보보호 위반이 발생할 
+수 있는 구간에 <a>크리덴셜</a>마다 고유한 폐기 목록과 같은 메커니즘을 사용하지 
+않아야 한다. <a>보유자</a>에게 소프트웨어를 제공하는 조직은 <a>크리덴셜</a> 검증 과정 
+중에 개인정보보호 위반으로 이어질 수 있는 정보가 포함된 경우 경고해야 한다. 
+<a>검증자</a>는 개인정보 침해를 유발하거나 개인정보보호 정책을 위반하는 
+<a>크리덴셜</a>을 거부해야 한다.
       </p>
     </section>
 
