@@ -4591,18 +4591,11 @@ ensure the long term viability of systems processing <a>credentials</a>.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="content-integrity-protection" class="informative">
       <h3>Content Integrity Protection</h3>
 
       <p>
-<a>Verifiable credentials</a> often contain URLs to data that resides outside of
-the <a>verifiable credential</a> itself. Linked content that exists outside a
-<a>verifiable credential</a>, such as images, JSON-LD Contexts, and other
-machine-readable data, are often not protected against tampering because the
-data resides outside of the protection of the
-<a href="#proofs-signatures">proof</a> on the <a>verifiable credential</a>. For
-example, the following highlighted links are not content-integrity protected but
-probably should be:
+<a>검증가능한 크리덴셜</a>에는 외부에서 자신을 검증하기 위한 <a>검증가능한 크리덴셜</a>을 가르키는 URL들이 종종 포함되어 있다. 외부에 존재하는 이미지, JSON-LD 컨택스트 및 기계판독가능데이터들과 같은 링크된 컨텐츠는 <a>검증가능한 크리덴셜</a>의 <a href="#proofs-signatures">증명</a>을 통한 보호에서 벗어나 있기 때문에, 변조로 부터 종종 보호되지 않는다. 예를 들어 다음과 같이 강조표시된 링크들은 컨탠츠 무결성이 보호되지 않지만, 아마도 다음과 같을 것이다.
       </p>
 
       <pre class="example nohighlight" title="Non-content-integrity protected links">
@@ -4632,13 +4625,7 @@ probably should be:
       </pre>
 
       <p>
-While this specification does not recommend any specific content integrity
-protection, document authors who want to ensure links to content are integrity
-protected are advised to use URL schemes that enforce content integrity. Two
-such schemes are the [[HASHLINK]] specification and the [[IPFS]]. The example
-below transforms the previous example and adds content integrity protection to
-the JSON-LD Contexts using the [[HASHLINK]] specification, and content integrity
-protection to the image by using an [[IPFS]] link.
+이 규격에서 컨텐츠 무결성 보호를 위해 특정한 방법을 권장하지 않지만, 링크된 컨탠츠의 무결성 보호를 원하는 작성자는 컨탠츠 무결성을 강화하는 URL체계를 사용할 것을 권장한다. 이러한 2가치 체계는 [[HASHLINK]]규격과 [[IPFS]]이다. 다음의 예제는 이전의 예를 변형해서 [[HASHLINK]]규격을 이용해 JSON-LD 컨텍스트에 콘텐츠 무결성 보호를 추가하고, [[IPFS]] 링크를 사용하여 이미지에 콘텐츠 무결성 보호를 추가하였다.
       </p>
 
         <pre class="example nohighlight" title="Content-integrity protection for links to external data">
@@ -4668,88 +4655,48 @@ protection to the image by using an [[IPFS]] link.
       </pre>
 
       <p class="note">
-It is debatable whether the JSON-LD Contexts above need protection because
-production implementations are expected to ship with static copies of important
-JSON-LD Contexts.
+프로덕션 구현에는 중요한 JSON-LD 컨텍스트의 정적 사본이 제공 될 것으로 예상되므로, 위의 JSON-LD 컨텍스트에 보호가 필요한지 여부는 논란의 여지가 있다.
       </p>
 
       <p>
-While the example above is one way to achieve content integrity protection,
-there are other solutions that might be better suited for certain applications.
-Implementers are urged to understand how links to external machine-readable
-content that are not content-integrity protected could result in successful
-attacks against their applications.
+위의 예는 컨텐츠 무결성 보호를 달성하는 한 가지 방법이지만 특정 애플리케이션들에 더 적합한 다른 솔루션들이 있습니다. 구현자들은 컨텐츠 무결성으로 보호되지 않는 외부의 기계판독가능한 컨텐츠들에 대한 링크가 어떻게 그들의 어플리케이션에 대한 성공적인 공격을 만들어 낼 수 있는지 이해해야 합니다.
       </p>
 
       </section>
 
-    <section class="informative">
+    <section id="unsigned-claims" class="informative">
       <h3>Unsigned Claims</h3>
 
       <p>
-This specification allows <a>credentials</a> to be produced that do not contain
-signatures or proofs of any kind. These types of <a>credentials</a> are often
-useful for intermediate storage, or self-asserted information, which is
-analogous to filling out a form on a web page. Implementers should be aware that
-these types of <a>credentials</a> are not <a>verifiable</a> because the
-authorship either is not known or cannot be trusted.
+이 규격은 어떠한 서명이나 증명도 포함하지 않은 <a>크리덴셜</a>을 만들 수 있도록 한다. 이러한 유형의 <a>크리덴셜</a>은 웹 페이지에서 양식을 작성하는 것과 유사한 자가증명, 중간 저장소에 종종 유용하다. 구현자는 이러한 종류의 <a>크리덴셜</a>들은 작성자가 알려지 있지 않거나, 신뢰할 수 없기 떄문에 <a>검증</a>할 수 없다는걸 알아야 한다.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="token-binding" class="informative">
       <h3>Token Binding</h3>
 
       <p>
-A <a>verifier</a> might need to ensure it is the intended recipient of a
-<a>verifiable presentation</a> and not the target of a
-<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>.
-Approaches such as token binding [[RFC8471]], which ties the request for a
-<a>verifiable presentation</a> to the response, can secure the protocol.
-Any unsecured protocol is susceptible to man-in-the-middle attacks.
+<a>검증자</a>는 이것이 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">중간자 공격</a>의 목표가 아닌 <a>검증가능한 프레젠테이션</a>의 수신자인지 확인해야 할 수도 있다. 요청에 의해서 <a>검증가능한 프레젠테이션</a> 응답을 묶은 토큰바인딩 [[RFC8471]]과 같은 접근 방법으로 프로토콩을 보호할 수 있다. 보안되지 않은 모든 프로토콜은 중간자 공격에 취약하다.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="bundling-dependent-claims" class="informative">
       <h3>Bundling Dependent Claims</h3>
 
       <p>
-It is considered best practice for <a>issuers</a> to atomize information in a
-<a>credential</a>, or use a signature scheme that allows for selective
-disclosure. In the case of atomization, if it is not done securely by the
-<a>issuer</a>, the <a>holder</a> might bundle together different
-<a>credentials</a> in a way that was not intended by the <a>issuer</a>.
+<a>발급자</a>가 <a>크리덴셜</a>의 정보를 원자화하거나, 선택정공개를 허용하는 서명체계를 이용하는 것이 가장 좋다. 원자화의 경우에, 만약 <a>발급자</a>에 의해 안전하게 완료되지 않았다면, <a>발급자</a>가 의도하지 않은 방식으로 <a>보유자</a>의 다른 <a>크리덴셜</a>과 묶일 수 있다.
       </p>
 
       <p>
-For example, a university might issue two <a>verifiable credentials</a> to a
-person, each containing two <a>properties</a>, which must be taken together to
-to designate the "role" of that person in a given "department", such as "Staff
-Member" in the "Department of Computing", or "Post Graduate Student" in the
-"Department of Economics". If these <a>verifiable credentials</a> are atomized
-to put only one of these <a>properties</a> into each <a>credential</a> , then
-the university would issue four <a>credentials</a> to the person, each
-containing one of the following designations: "Staff Member", "Post Graduate
-Student", "Department of Computing", and "Department of Economics". The
-<a>holder</a> might then transfer the "Staff Member" and "Department of
-Economics" <a>verifiable credentials</a> to a <a>verifier</a>, which together
-would comprise a false <a>claim</a>.
+예를 들어, 대학은 한사람에게 2종류의 <a>검증가능한 크리덴셜</a>을 발급할 수 있는데, 각 자격증에는 "컴퓨터 부서"의 "담당자" 또는 "경제학과"의 "대학원생"과 같이 주어진 "부서"와 "역할"의 2가지 <a>속성</a>이 각각 포함되어 있습니다. 만약 이러한 속성들 중 단지 하나만이 <a>크리덴셜</a>에 포함되어 원자화된다면, 대학은 한사람에게 4개의 <a>크리덴셜</a>을 발급해야 합니다. 각각의 <a>크리덴셜</a>들은 "직원", "대학원생", "컴퓨터 부서", "경제학과"가 될 것이다. <a>보유자</a>는 <a>검증자</a>에게 "직원"과 "경제학과"의 <a>검증가능한 크리덴셜</a>을 전송할 수 있으며, 이는 잘못된 <a>클레임</a>이 된다.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="highly-dynamic-information" class="informative">
       <h3>Highly Dynamic Information</h3>
 
       <p>
-When <a>verifiable credentials</a> are issued for highly dynamic information,
-implementers should ensure the expiration times are set appropriately.
-Expiration periods longer than the timeframe where the
-<a>verifiable credential</a> is valid might create exploitable security
-vulnerabilities. Expiration periods shorter than the timeframe where the
-information expressed by the <a>verifiable credential</a> is valid creates a
-burden on <a>holders</a> and <a>verifiers</a>. It is therefore important to set
-validity periods for <a>verifiable credentials</a> that are appropriate to the
-use case and the expected lifetime for the information contained in the
-<a>verifiable credential</a>.
+높은 동적인 정보에 대한 <a>검증가능한 크리덴셜</a>을 발급하는 경우, 구현자는 만료기간을 적절하게 설정해야합니다. <a>검증가능한 크리덴셜</a>의 유효기간보다 만료기간이 더 길다면 악용가능한 보안취약성이 발생할 수 있다. <a>검증가능한 크리덴셜</a>을 통해 표현되는 정보의 만료기간이 유효기간보다 짧으면 <a>보유</a>자와 <a>검증자</a>에게 부담을 줍니다. 따라서 사용사례와 <a>검증가능한 크리덴셜</a>에 포함된 정보의 예상 수명에 유효기간의 적절한 설정은 중요하다.
       </p>
     </section>
 
@@ -4757,74 +4704,49 @@ use case and the expected lifetime for the information contained in the
       <h3>Device Theft and Impersonation</h3>
 
       <p>
-When <a>verifiable credentials</a> are stored on a device and that
-device is lost or stolen, it might be possible for an attacker to gain access
-to systems using the victim's <a>verifiable credentials</a>. Ways to mitigate
-this type of attack include:
+<a>검증가능한 크리덴셜</a>이 저장된 장치가 분실되거나 도난당했을 때, 공갹자가 피해자의 <a>검증가능한 크리덴셜</a>을 사용하여 시스템에 접속할 수 있다. 이러한 유형의 공격을 완화하는 방법:
       </p>
 
       <ul>
         <li>
-Enabling password, pin, pattern, or biometric screen unlock protection on the
-device.
+장치에서 암호, 핀, 패턴 또는 생체 인식 화면 잠금 해제 보호 활성화.
         </li>
         <li>
-Enabling password, biometric, or multi-factor authentication for the
-<a>credential</a> <a>repository</a>.
+<a>크리덴셜 정보 저장소</a>에 암호, 생체 인식 또는 다중 인증 활성화.
         </li>
         <li>
-Enabling password, biometric, or multi-factor authentication when accessing
-cryptographic keys.
+암호 키에 액세스할 때 암호, 생체 인식 또는 다중 인증 활성화.
         </li>
         <li>
-Using a separate hardware-based signature device.
+별도의 하드웨어 기반 서명 장치 사용.
         </li>
         <li>
-All or any combination of the above.
+상기의 전부 또는 임의의 조합.
         </li>
       </ul>
     </section>
   </section>
 
-  <section class="informative">
+  <section id="accessibility-considerations" class="informative">
     <h2>Accessibility Considerations</h2>
 
     <p>
-There are a number of accessibility considerations implementers should be
-aware of when processing data described in this specification. As with
-implementation of any web standard or protocol, ignoring accessibility issues
-makes this information unusable by a large subset of the population. It is
-important to follow accessibility guidelines and standards, such as [[WCAG21]],
-to ensure that all people, regardless of ability, can make use of this data.
-This is especially important when establishing systems utilizing cryptography,
-which have historically created problems for assistive technologies.
+구현자가 이 규격에 기술된 데이터를 처리할 때 알아야할 많은 접근성에 대한 고려사항이 있다. 모든 웹표준 또는 프로토콜의 구현과 마찬가지로 접근성 문제에 대한 무시하게 되면 모집단의 상당부분에서 이 정보를 이용할수 없게 된다. [[WCAG21]]과 같은 접근성 가이드라인과 표준을 지켜 모든 사람들이 능력에 개의치 않고 이 정보를 사용할 수 있게 만드는 것은 매우 중요하다. 역사적으로 보조기술에 문제를 야기한 암호학을 이용한 시스템을 구축할 때 이것은 특별히 중요하다.
     </p>
 
     <p>
-This section details the general accessibility considerations to take into
-account when utilizing this data model.
+이 절에서는 이 데이터 모델을 활용할 때 고려해야 할 일반적인 접근성에 대한 고려사항을 자세히 설명한다.
     </p>
 
-    <section class="informative">
+    <section id="data-first-approaches" class="informative">
       <h3>Data First Approaches</h3>
 
       <p>
-Many physical <a>credentials</a> in use today, such as government identification
-cards, have poor accessibility characteristics, including, but not limited to,
-small print, reliance on small and high-resolution images, and no affordances
-for people with vision impairments.
+정부에서 발행한 신분증과 같이 오늘날 사용하고 있는 많은 물리적인 <a>인증</a>들은 인쇄가 너무 작거나, 작지만 고해상도의 이미지에 의존하거나, 시각적 장애를 가진 사람들에게 제공할 수 없는 등의 제약이 포함되어 있는 특징들에 의해 접근성이 매우 열악하다.
       </p>
 
       <p>
-When utilizing this data model to create <a>verifiable credentials</a>, it is
-suggested that data model designers use a <em>data first</em> approach. For
-example, given the choice of using data or a graphical image to depict a
-<a>credential</a>, designers should express every element of the image, such as
-the name of an institution or the professional <a>credential</a>, in a
-machine-readable way instead of relying on a viewer's interpretation of the
-image to convey this information. Using a data first approach is preferred
-because it provides the foundational elements of building different interfaces
-for people with varying abilities.
+데이터모델을 이용해 <a>검증가능한 크리덴셜</a>을 만들때, 데이터 모델 디자이너는 <em>데이터 우선 접근</em> 방식을 사용하는 것이 좋습니다. 예를 들어, <a>크리덴셜</a>을 묘사하기 위해 데이터 또는 그래픽 이미지를 사용하기로 선택한 경우, 디자이너는 기관의 이름 또는 전문 자격과 같은 이미지의 모든 요소를 시청자의 해석에 의존하지 말고 기계판독이 가능한 방식으로 표현해야합니다. 데이터 우선 접근 방식은 다양한 능력을 가진 사람들을 위해 서로 다른 인터페이스를 구축을 위한 기본 요소를 제공하기 때문에 선호됩니다.
       </p>
     </section>
   </section>
