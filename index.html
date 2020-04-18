@@ -1653,37 +1653,31 @@ a set of objects that contain one or more properties that are each related to a
         </pre>
 
         <p class="note">
-The value of the <code>issuer</code> <a>property</a> can also be a JWK (for
-example, <code>"https://example.com/keys/foo.jwk"</code>) or a <a>DID</a> (for
-example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
-	issuer 특성값은 JWK (for example, "https://example.com/keys/foo.jwk") 
-		또는 a DID (for example, "did:example:abfe13f712120431c276e12ecab")이 될 수 있다.	
+<code>issuer</code> <a>특성</a>값은 JWK (for example, <code>"https://example.com/keys/foo.jwk"</code>) 
+또는 a <a>DID</a> (for example, <code>"did:example:abfe13f712120431c276e12ecab"</code>)이 될 수 있다.	
         </p>
 
       </section>
 
       <section>
-        <h3>Issuance Date</h3>
+        <h3>발급 날짜</h3>
 
         <p>
-This specification defines the <code>issuanceDate</code> <a>property</a> for
-expressing the date and time when a <a>credential</a> becomes valid.
+이 규격은 <a>크리덴셜</a>이 유효한 날짜 및 시간을 표현하기 위한 <code>issuanceDate</code> <a>속성</a>을 정의한다.
         </p>
 
         <dl>
           <dt><var>issuanceDate</var></dt>
           <dd>
-A <a>credential</a> MUST have an <code>issuanceDate</code> <a>property</a>. The
-value of the <code>issuanceDate</code> <a>property</a> MUST be a string value of
-an [[!RFC3339]] combined date and time string representing the date and time the
-<a>credential</a> becomes valid, which could be a date and time in the future.
-Note that this value represents the earliest point in time at which the
-information associated with the <code>credentialSubject</code> <a>property</a>
-becomes valid.
+<a>크리덴셜</a>은 무조건 <code>issuanceDate</code> <a>속성</a>을 가져야 한다. 
+<code>issuanceDate</code> <a>속성</a>의 값은 <a>크리덴셜</a>이 유효한 날짜와 시간을 나타내는 [RFC3339] 결합 날짜 및 시간 
+문자열의 문자열 값이어야하며 이는 미래의 날짜와 시간 일 수 있습니다. 이 값은 <code>credentialSubject</code> 
+<a>특성</a>과 연관된 정보가 유효 해지는 가장 빠른 시점을 나타냅니다.
+
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of issuanceDate property">
+        <pre class="example nohighlight" title="issuanceDate 특성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1705,25 +1699,24 @@ becomes valid.
         </pre>
 
         <p class="note">
-It is expected that the next version of this specification will add the
-<code>validFrom</code> <a>property</a> and will deprecate the
-<code>issuanceDate</code> <a>property</a> in favor of a new <code>issued</code>
-<a>property</a>. The range of values for both properties are expected to remain
-as [[?RFC3339]] combined date and time strings. Implementers are advised that
-the <code>validFrom</code> and <code>issued</code> <a>properties</a> are
-reserved and use for any other purpose is discouraged.
+이 스펙의 다음 버전은 <code>validFrom</code> <a>특성</a>을 추가하고 새로운 <code>issued</code> 된 <a>특성</a>을 위해 <code>issuanceDate</code> <a>특성</a>을 
+더 이상 사용하지 않을 것으로 예상된다. 두 속성의 값 범위는 [RFC3339] 결합 날짜 및 시간 문자열로 유지 
+될 것으로 예상한다. 구현자는 <code>validFrom</code> 및 <code>issued</code> <a>속성</a>을 예약하고 다른 목적으로 사용하지 않는 것이 좋다.
         </p>
 
       </section>
 
       <section>
-        <h3>Proofs (Signatures)</h3>
+        <h3>증명들 (시그니쳐들)</h3>
 
         <p>
 At least one proof mechanism, and the details necessary to evaluate that proof,
 MUST be expressed for a <a>credential</a> or <a>presentation</a> to be a
 <a>verifiable credential</a> or <a>verifiable presentation</a>; that is, to be
 <a>verifiable</a>.
+		자격 또는 프레젠테이션이 검증 가능한 크리덴셜 또는 프레젠테이션이 되도록 최소한 하나의 증명 메커니즘과 
+		그 증거를 평가하는데 필요한 세부 사항을 표현해야 한다. 증, 검증 할 수 있어야 한다.
+
         </p>
 
         <p>
