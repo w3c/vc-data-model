@@ -3450,35 +3450,31 @@ being actively utilized to issue <a>verifiable credentials</a> are:
           <li>Section <a href="#linked-data-proofs"></a>.</li>
         </ul>
 
-        <section>
+        <section id="json-web-token">
           <h3>JSON Web Token</h3>
 
           <p>
-JSON Web Token (JWT) [[!RFC7519]] is still a widely used means to express
-<a>claims</a> to be transferred between two parties. Providing a representation
-of the Verifiable Credentials Data Model for JWT allows existing systems and
-libraries to participate in the ecosystem described in Section
-<a href="#ecosystem-overview"></a>. A JWT encodes a set of <a>claims</a> as a
-JSON object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
-[[?RFC7516]]. For this specification, the use of JWE is out of scope.
-          </p>
+            JSON Web Token (JWT) [RFC7519]은 여전히 두 당사자 간에 전달되는 <a>클레임</a>을 표현하기 위해 
+            널리 사용되는 수단이다.JWT에 대한 검증 가능한 크리덴셜 데이터 모델을 제공함으로써 
+            기존 시스템과 라이브러리가 섹션 <a href="#ecosystem-overview"></a>에 설명된 생태계에 참여할 수 있다. 
+            JWT는 일련의 <a>클레임</a> JSON Web Signature (JWS) [RFC7515] 또는 JWE [RFC7516]에 
+            포함된 JSON 개체로 인코딩한다. 이 규격에서 JWE의 사용은 범위를 벗어나므로 다루지 않는다.
+                      </p>
 
-          <section>
+          <section id="relation-to-the-verifiable-credentials-data-model">
             <h4>Relation to the Verifiable Credentials Data Model</h4>
 
             <p>
-This specification defines encoding rules of the Verifiable Credential Data
-Model onto JWT and JWS. It further defines processing rules how and when to make
-use of specific JWT-registered <a>claim</a> names and specific JWS-registered
-header parameter names to allow systems based on JWT to comply with this
-specification. If these specific <a>claim</a> names and header parameters are
-present, their respective counterpart in the standard
-<a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
-to avoid duplication.
+              이 규격은 검증 가능한 크리덴셜 데이터 모델의 인코딩 규칙을 JWT 및 JWS에 정의한다. 
+              또한 JWT에 기초한 시스템이 이 규격을 준수할 수 있도록 특정 JWT 형식에 
+              등록된 <a>클레임</a>의 이름과 특정 JWS 등록 헤더 파라미터 이름을
+              언제 어떻게 사용하는지를 정의한다. 
+              이러한 특정 <a>클레임</a>의 이름과 헤더 파라미터가 존재하는 경우, 
+              그에 대응되는 표준 <a>검증가능한 크리덴셜</a>과 <a>검증가능한 프리젠테이션</a>은 중복 방지를 위해 생략될 수 있다.
             </p>
           </section>
 
-          <section>
+          <section id="json-web-token-extentions">
             <h4>JSON Web Token Extensions</h4>
 
             <p>
@@ -3486,223 +3482,227 @@ This specification introduces two new registered <a>claim</a> names, which
 contain those parts of the standard <a>verifiable credentials</a> and
 <a>verifiable presentations</a> where no explicit encoding rules for JWT exist.
 These objects are enclosed in the JWT payload as follows:
+이 규격은 JWT에 대한 명시적 인코딩 규칙이 존재하지 않는 
+표준 <a>검증가능한 크리덴셜</a> 및 <a>검증가능한 프리젠테이션</a>의 일부를 포함하는 
+새로 등록된 두 개의 <a>클레임</a>의 이름에 대해 소개한다. 
+이러한 객체들은 다음과 같이 JWT 전송 데이터에 포함되어있다
+
             </p>
 
             <ul>
               <li>
-<code>vc</code>: JSON object, which MUST be present in a JWT
-<a>verifiable credential</a>. The object contains the
-<a>verifiable credential</a> according to this specification.
+<code>vc</code>: JWT 형식의 <a>검증가능한 크리덴셜</a>에 반드시 있어야 하는 JSON 개체. 
+객체는 이 규격을 따른 <a>검증가능한 크리덴셜</a>을 포함한다.
+
               </li>
               <li>
-<code>vp</code>: JSON object, which MUST be present in a JWT
-<a>verifiable presentation</a>. The object contains the
-<a>verifiable presentation</a> according to this specification.
+<code>vp</code>: JWT <a>검증가능한 프리젠테이션</a>에 반드시 있어야 하는 JSON 객체. 
+객체는 이 규격에 따라 <a>검증가능한 프리젠테이션</a>을 포함한다
               </li>
             </ul>
           </section>
 
-          <section>
+          <section id="jwt-and-jws-considerations">
             <h4>JWT and JWS Considerations</h4>
 
-            <section>
+            <section id="jwt-encoding">
               <h5>JWT Encoding</h5>
 
             <p>
-To encode a <a>verifiable credential</a> as a JWT, specific <a>properties</a>
-introduced by this specification MUST be either:
+              <a>검증가능한 크리덴셜</a>을 JWT로 인코딩하려면 
+              이 규격에 의해 명시된 특정 <a>속성</a>은 다음 중 한가지 조건을 만족해야 한다.
             </p>
 
             <ul>
               <li>
-Encoded as standard JOSE header parameters, or
+                표준 JOSE 헤더 파라미터로 인코딩, 또는
               </li>
               <li>
-Encoded as registered JWT <a>claim</a> names, or
+                등록된 JWT <a>클레임</a> 이름으로 인코딩, 또는
               </li>
               <li>
-Contained in the JWS signature part.
+                JWS 서명 부분에 포함
               </li>
             </ul>
 
             <p>
-If no explicit rule is specified, <a>properties</a> are encoded in the same way
-as with a standard <a>verifiable credential</a>, and are added to the
-<code>vc</code> <a>claim</a> of the JWT. As with all JWTs, the JWS-based
-signature of a <a>verifiable credential</a> represented in the JWT syntax is
-calculated against the literal JWT string value as presented across the wire,
-before any decoding or transformation rules are applied. The following
-paragraphs describe these encoding rules.
+
+명시적 규칙이 지정되지 않은 경우 <a>속성</a>들은 표준 <a>검증가능한 크리덴셜</a>과 동일한 방식으로 인코딩되며 
+JWT의 <code>vc</code> <a>클레임</a>에 추가된다. 모든 JWT와 마찬가지로, JWT 구문에 표시된 <a>검증가능한 크리덴셜</a>의 
+JWS 기반 서명은 디코딩 또는 변환 규칙 적용 전의 JWT 문자열 값에 대해 계산된다. 
+다음 단락은 이러한 인코딩 규칙을 설명한다.
+
             </p>
 
             <p>
-If a JWS is present, the digital signature either refers to the <a>issuer</a>
-of the <a>verifiable credential</a>, or in the case of a
-<a>verifiable presentation</a>, the <a>holder</a> of the
-<a>verifiable credential</a>. The JWS proves that the <a>issuer</a> of the JWT
-signed the contained JWT payload and therefore, the <code>proof</code>
-<a>property</a> can be omitted.
+
+              JWS가 존재하는 경우, 디지털 서명은 <a>검증가능한 크리덴셜</a>의 <a>발급자</a>를 입증하거나, 
+              <a>검증가능한 프레젠테이션</a>의 경우, <a>검증가능한 크리덴셜</a>의 <a>보유자</a>를 입증한다. 
+              JWS는 JWT의 <a>발급자</a>가 JWT 페이로드에 서명했음을 증명한다. 따라서 <code>proof</code> <a>속성</a>은 생략될 수 있다.
+   
             </p>
 
             <p>
-If no JWS is present, a <code>proof</code> <a>property</a> MUST be provided.
-The <code>proof</code> <a>property</a> can be used to represent a more complex
-proof, as may be necessary if the creator is different from the <a>issuer</a>,
-or a proof not based on digital signatures, such as Proof of Work. The
-<a>issuer</a> MAY include both a JWS and a <code>proof</code> <a>property</a>.
-For backward compatibility reasons, the issuer MUST use JWS to represent proofs
-based on a digital signature.
+              JWS가 없는 경우 반드시 <code>proof</code> <a>속성</a>을 제공해야 한다. 
+              <code>proof</code> <a>속성</a>은 작성자가 <a>발급자</a>와 다른 경우에 필요할 수 있고, 
+              작업 증명과 같은 디지털 서명에 근거하지 않은 증명을 나타내기 위해 사용될 수 있다. 
+              <a>발급자</a>는 <a>검증가능한 크리덴셜</a>에 JWS와 <code>proof</code> <a>속성</a>을 모두 포함할 수 있다. 
+              하지만 역호환성을 고려한다면 발급자는 JWS를 사용하여 디지털 서명에 기반한 증명을 나타내야 한다.
             </p>
 
             <p>
-The following rules apply to JOSE headers in the context of this specification:
+              다음 규칙은 이 규격의 context에서 JOSE 헤더에 적용된다.</p>
+
+            <ul>
+              <li>
+<code>alg</code>는 디지털 서명을 위해 반드시 설정되어야 한다. 
+선택한 서명 방법에 <code>proof</code> <a>속성</a>만 필요한 경우(즉, 해당 메소드 내에 선택한 알고리즘이 없는경우) 
+<code>alg</code> 헤더를 <code>none</code>으로 설정해야 한다.
+              </li>
+
+              <li>
+                JWT <a>발급자</a>와 관련된 키가 여러 개 있는 경우 <code>kid</code>를 사용할 수 있다. 
+                주요 과정은 이 규격의 범위를 벗어난다. 
+                예를 들어, <code>kid</code>는 <a>DID 문서</a>의 키를 참조하거나 JWKS 내부의 키 식별자가 될 수 있다.
+
+              </li>
+              <li>
+                <code>typ</code>가 있는 경우 <code>JWT</code>로 설정해야 함
+
+              </li>
+            </ul>
+
+            <p>
+JWT 프로세서와의 역호환성을 위해, 
+다음의 JWT 형식에 등록된 클레임 명칭은 반드시 각각에 대응되는 표준 <a>검증가능한 크리덴셜</a> 대신, 
+또는 추가로 사용되어야 한다.
+
             </p>
 
             <ul>
               <li>
-<code>alg</code> MUST be set for digital signatures. If only the
-<code>proof</code> <a>property</a> is needed for the chosen signature
-method (that is, if there is no choice of algorithm within that method),
-the <code>alg</code> header MUST be set to <code>none</code>.
+<code>exp</code>는 <code>expirationDate</code> <a>속성</a>을 나타내야 하고 
+UNIX 타임스탬프(<code>NumericDate</code>)로 인코딩되어야 한다.
               </li>
               <li>
-<code>kid</code> MAY be used if there are multiple keys associated with the
-<a>issuer</a> of the JWT. The key discovery is out of the scope of this
-specification. For example, the <code>kid</code> can refer to a key in a
-<a>DID document</a>, or can be the identifier of a key inside a JWKS.
+<code>iss</code>는 반드시 <a>검증가능한 크리덴셜</a>의 <code>issuer</code> <a>속성</a> 
+또는 <a>검증가능한 프레젠테이션</a>의 <code>holder</code> <a>속성</a>을 나타내야 한다.
+
               </li>
               <li>
-<code>typ</code>, if present, MUST be set to <code>JWT</code>.
+<code>nbf</code>는 반드시 <code>issuanceDate</code>를 나타내야하고, 
+UNIX 타임스탬프(<code>NumericDate</code>)로 인코딩되어야 한다.
+
+              </li>
+              <li>
+<code>jti</code>는 반드시 <a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>의 
+<code>id</code> <a>속성</a>을 나타내야 한다.
+
+              </li>
+              <li>
+<code>sub</code>는 반드시 <a>검증가능한 크리덴셜</a> <a>주체</a>에 포함된 <code>id</code> <a>속성</a>을 나타내야 한다.
+
+              </li>
+              <li>
+<code>aud</code>는 반드시 <a>검증가능한 프레젠테이션</a>의 의도된 대상
+(즉, 프레젠테이션 보유자가 <a>검증가능한 프레젠테이션</a>을 수신하고 검증하도록 의도된 <a>검증자</a>)을 
+나타내야 한다.(즉, 식별하다) 
               </li>
             </ul>
 
             <p>
-For backward compatibility with JWT processors, the following JWT-registered
-claim names MUST be used instead of, or in addition to, their respective
-standard <a>verifiable credential</a> counterparts:
-            </p>
+명시적으로 사용이 금지되어있지 않다면 
+본 문서에 명시되지 않은 다른 JOSE 헤더 매개변수 및 JWT 클레임 이름을 사용할 수 있다. 
+추가적인 <a>검증가능한 크리덴셜</a> <a>클레임</a>은 JWT의 <code>credentialSubject</code> 속성에 추가되어야 한다.
 
-            <ul>
-              <li>
-<code>exp</code> MUST represent the <code>expirationDate</code> <a>property</a>,
-encoded as a UNIX timestamp (<code>NumericDate</code>).
-              </li>
-              <li>
-<code>iss</code> MUST represent the <code>issuer</code> <a>property</a> of a
-verifiable credential or the <code>holder</code> <a>property</a> of a
-verifiable presentation.
-              </li>
-              <li>
-<code>nbf</code> MUST represent <code>issuanceDate</code>, encoded as a UNIX
-timestamp (<code>NumericDate</code>).
-              </li>
-              <li>
-<code>jti</code> MUST represent the <code>id</code> <a>property</a> of the
-<a>verifiable credential</a> or <a>verifiable presentation</a>.
-              </li>
-              <li>
-<code>sub</code> MUST represent the <code>id</code> <a>property</a> contained
-in the <a>verifiable credential</a> <a>subject</a>.
-              </li>
-              <li>
-<code>aud</code> MUST represent (i.e., identify) the intended audience
-of the <a>verifiable presentation</a> (i.e., the <a>verifier</a> intended by
-the presenting <a>holder</a> to receive and verify the
-<a>verifiable presentation</a>).
-              </li>
-            </ul>
-
-            <p>
-Other JOSE header parameters and JWT claim names not specified herein can be
-used if their use is not explicitly discouraged. Additional
-<a>verifiable credential</a> <a>claims</a> MUST be added to the
-<code>credentialSubject</code> property of the JWT.
             </p>
 
             <p>
-For more information about using JOSE header parameters and/or JWT
-claim names not specified herein, see the Verifiable Credentials Implementation
-Guidelines [[?VC-IMP-GUIDE]] document.
+여기에 지정되지 않은 JOSE 헤더 매개 변수 및/또는 JWT 클레임 이름 사용에 대한 
+자세한 내용은 검증 가능한 크리덴셜 구현 지침 [[?VC-IMP-GUIDE]] 문서를 참조하시오.
             </p>
 
             <p>
-This version of the specification defines no JWT-specific encoding rules for
-the concepts outlined in Section
-<a href="#advanced-concepts">Advanced Concepts</a> (for example,
-<code>refreshService</code>, <code>termsOfUse</code>, and
-<code>evidence</code>). These concepts can be encoded as they are without any
-transformation, and can be added to the <code>vc</code> <a>claim</a> of the
-JWT.
+
+이 규격 버전은 섹션 <a href="#advanced-concepts">고급 개념</a>
+(예: <code>refreshService</code>, <code>termsOfUse</code> 및 <code>evidence</code>)에 요약된 개념에 대한 
+JWT별 인코딩 규칙을 정의하지 않는다. 
+이러한 개념은 별도의 변환 없이 그대로 인코딩할 수 있으며, 
+JWT의 <code>vc</code> <a>클레임</a>에 추가될 수 있다.
             </p>
 
             <p class="note">
-Implementers are warned that JWTs are not capable of encoding multiple
-<a>subjects</a> and are thus not capable of encoding a
-<a>verifiable credential</a> with more than one <a>subject</a>. JWTs might
-support multiple subjects in the future and implementers are advised to refer
-to the <a href="https://www.iana.org/assignments/jwt/">
-JSON Web Token Claim Registry</a> for multi-subject JWT claim names or the
-<a href="https://tools.ietf.org/html/draft-yusef-oauth-nested-jwt-00">
-Nested JSON Web Token</a> specification.
+
+구현자는 JWT가 복수의 <a>주체</a>들을 인코딩할 수 없고, 
+따라서 <a>검증가능한 크리덴셜</a>을 둘 이상의 <a>주체</a>와 인코딩할 수 없다는 경고를 받는다. 
+JWT는 향후 여러 주제를 지원할 수 있으며, 
+구현자는 다중 주체 JWT 클레임 명칭에 대한 <a href="https://www.iana.org/assignments/jwt/">
+  JSON Web Token Claim Registry</a>
+또는 <a href="https://tools.ietf.org/html/draft-yusef-oauth-nested-jwt-00">
+  Nested JSON Web Token</a> 규격을 참조할 것을 권고한다.
+
             </p>
 
             </section>
 
-            <section>
+            <section id="jwt-decoding">
               <h5>JWT Decoding</h5>
 
             <p>
-To decode a JWT to a standard <a>verifiable credential</a>, the following
-transformation MUST be performed:
+JWT를 표준 <a>검증가능한 크리덴셜</a>으로 디코딩하려면 다음 변환을 수행해야 한다.
             </p>
 
             <ol>
               <li>
-Create a JSON object.
+JSON 객체를 생성하십시오.
               </li>
               <li>
-Add the content from the <code>vc</code> <a>claim</a> to the new JSON object.
+<code>vc</code> <a>클레임</a>의 내용을 새 JSON 객체에 추가하십시오.
+
               </li>
               <li>
-Transform the remaining JWT specific headers and <a>claims</a>, and add the
-results to the new JSON object.
+나머지 JWT 특정 헤더 및 <a>클레임</a>을 변환하고 결과를 새 JSON 객체에 추가하십시오.
               </li>
             </ol>
 
             <p>
-To transform the JWT specific headers and <a>claims</a>, the following MUST be
-done:
+JWT 특정 헤더 및 <a>클레임</a>을 변환하려면 반드시 다음 작업을 수행하십시오.
+
             </p>
 
             <ul>
               <li>
-If <code>exp</code> is present, the UNIX timestamp MUST be converted to an
-[[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
-of the <code>expirationDate</code> <a>property</a> of
-<code>credentialSubject</code> of the new JSON object.
+
+<code>exp</code>의 경우 UNIX 타임스탬프는 [[!RFC3339]] <code>date-time</code>으로 변환해야 하며, 
+새 JSON 객체의 <code>credentialSubject</code> <code>expirationDate</code> <a>속성</a> 값을 설정하는 데 사용해야 한다.
+
+
               </li>
               <li>
-If <code>iss</code> is present, the value MUST be used to set the
-<code>issuer</code> <a>property</a> of the new verifiable credential JSON object
- or the <code>holder</code> <a>property</a> of the new verifiable presentation JSON object.
+ <code>iss</code>의 경우, 
+ 새로운 검증가능한 크리덴셜 JSON 개체의 <code>issuer</code> <a>속성</a>이나 
+ 새로운 검증 가능한 프레젠테이션 JSON 개체의 <code>holder</code> <a>속성</a>을 설정하는 데 이 값을 사용해야 한다.
+
                   </li>
                   <li>
-If <code>nbf</code> is present, the UNIX timestamp MUST be converted to an
-[[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
-of the <code>issuanceDate</code> <a>property</a> of the new JSON object.
+
+<code>nbf</code>의 경우 UNIX 타임스탬프는 [[!RFC3339]] <code>date-time</code>으로 변환해야 하며, 
+새로운 JSON 개체의 <code>issuanceDate</code> <a>속성</a> 값을 설정하는 데 사용해야 한다.
+
                   </li>
                   <li>
-If <code>sub</code> is present, the value MUST be used to set the value of the
-<code>id</code> <a>property</a> of <code>credentialSubject</code> of the new
-JSON object.
+<code>sub</code>의 경우 이 값을 사용하여 새 JSON 개체의 
+<code>credentialSubject</code>의 <code>id</code> <a>속성</a> 값을 설정해야 한다.
+
+
               </li>
               <li>
-If <code>jti</code> is present, the value MUST be used to set the value of the
-<code>id</code> <a>property</a> of the new JSON object.
+
+<code>jti</code>의 경우 값은 반드시 새 JSON 객체의 <code>id</code> <a>속성</a> 값을 설정하여 사용해야 한다.
               </li>
             </ul>
 
-            <pre class="example nohighlight" title="JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            <pre class="example nohighlight" title="JWS를 증명으로 사용하는 JWT 기반 검증가능한 크리덴셜의 JWT 헤더 (비표준)">
 {
     "alg": "RS256",
     "typ": "JWT",
@@ -3711,13 +3711,13 @@ If <code>jti</code> is present, the value MUST be used to set the value of the
             </pre>
 
             <p>
-In the example above, the <a>verifiable credential</a> uses a
-<code>proof</code> based on <code>JWS</code> digital signatures, and the
-corresponding <a>verification</a> key can be obtained using the <code>kid</code>
-header parameter.
+
+위의 예에서 <a>검증가능한 크리덴셜</a>은 <code>JWS</code> 전자 서명을 기반으로 하는 <code>proof</code>를 사용하며, 
+해당 <a>검증</a> 키는 <code>kid</code> 헤더 매개변수를 사용하여 얻을 수 있다.
+
             </p>
 
-            <pre class="example nohighlight" title="JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            <pre class="example nohighlight" title="JWS를 증명으로 사용하는 JWT 기반 검증가능한 크리덴셜의 JWT 페이로드 (비표준)">
 {
   "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "jti": "http://example.edu/credentials/3732",
@@ -3743,14 +3743,14 @@ header parameter.
             </pre>
 
             <p>
-In the example above, <code>vc</code> does not contain the <code>id</code>
-<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
-attribute to represent a unique identifier. The <code>sub</code> attribute
-encodes the information represented by the <code>id</code> <a>property</a> of
-<code>credentialSubject</code>.
+위의 예시에서 <code>JWT</code> 인코딩은 고유한 식별자를 나타내기 위해 
+<code>jti</code> 속성을 사용하기 때문에 <code>vc</code>는 <code>id</code>
+<a>속성</a>을 포함하지 않는다. 
+<code>sub</code> 속성은 <code>credentialSubject</code>의 <code>id</code> <a>속성</a>으로 표시되는 정보를 인코딩한다.
+
             </p>
 
-            <pre class="example nohighlight" title="Verifiable credential using JWT compact serialization (non-normative)">
+            <pre class="example nohighlight" title="JWT 콤팩트 직렬화를 사용한 검증가능한 크리덴셜 (비표준)">
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOmFiZmUxM2Y3MTIxMjA0
 MzFjMjc2ZTEyZWNhYiNrZXlzLTEifQ.<span class="highlight">eyJzdWIiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxY
 zI3NmUxMmVjMjEiLCJqdGkiOiJodHRwOi8vZXhhbXBsZS5lZHUvY3JlZGVudGlhbHMvMzczMiIsImlzc
@@ -3768,7 +3768,7 @@ txJy6M1-lD7a5HTzanYTWBPAUHDZGyGKXdJw-W_x0IWChBzI8t3kpG253fg6V3tPgHeKXE94fz_QpYfg
 --7kLsyBAfQGbg
             </pre>
 
-            <pre class="example nohighlight" title="JWT header of a JWT based verifiable presentation (non-normative)">
+            <pre class="example nohighlight" title="JWT기반 검증가능한 프레젠테이션의 JWT 헤더 (비표준)">
 {
   "alg": "RS256",
   "typ": "JWT",
@@ -3777,13 +3777,13 @@ txJy6M1-lD7a5HTzanYTWBPAUHDZGyGKXdJw-W_x0IWChBzI8t3kpG253fg6V3tPgHeKXE94fz_QpYfg
             </pre>
 
             <p>
-In the example above, the <a>verifiable presentation</a> uses a
-<code>proof</code> based on <code>JWS</code> digital signatures, and the
-corresponding <a>verification</a> key can be obtained using the <code>kid</code>
-header parameter.
+위의 예시에서 <a>검증가능한 프리젠테이션</a>은 
+<code>JWS</code> 디지털 서명에 기초한 <code>proof</code>를 사용하며, 
+해당 <a>검증</a> 키는 <code>kid</code> 헤더 매개변수를 사용하여 얻을 수 있다.
+
             </p>
 
-            <pre class="example nohighlight" title="JWT payload of a JWT based verifiable presentation (non-normative)">
+            <pre class="example nohighlight" title="JWT기반 검증가능한 프레젠테이션의 JWT 페이로드 (비표준)">
 {
   "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "jti": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
@@ -3805,14 +3805,15 @@ header parameter.
             </pre>
 
             <p>
-In the example above, <code>vp</code> does not contain the <code>id</code>
-<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
-attribute to represent a unique identifier. <code>verifiableCredential</code>
-contains a string array of <a>verifiable credentials</a> using
-<code>JWT</code> compact serialization.
+
+위의 예시 에서 <code>JWT</code> 인코딩은 고유한 식별자를 나타내기 위해 
+<code>jti</code> 속성을 사용하기 때문에 <code>vp</code>는 <code>id</code>
+<a>속성</a>을 포함하지 않는다. 
+<code>verifiableCredential</code>에는 <code>JWT</code> 콤팩트 직렬화를 사용하는 
+<a>검증가능한 크리덴셜</a>의 문자열이 포함되어 있다.
             </p>
 
-            <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
+            <pre class="example nohighlight" title="JWT 콤팩트 직렬화를 사용한 검증가능한 프레젠테이션 (비표준)">
 
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOjB4YWJjI2tleTEifQ.<span class="highlight">e
 yJpc3MiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJqdGkiOiJ1cm46d
@@ -3852,37 +3853,35 @@ BjYgP62KvhIvW8BbkGUelYMetA
           </section>
         </section>
 
-        <section>
+        <section id="linked-data-proofs">
           <h3>Linked Data Proofs</h3>
 
           <p>
-This specification utilizes Linked Data to publish information on the Web
-using standards, such as URLs and JSON-LD, to identify <a>subjects</a> and
-their associated properties. When information is presented in this manner,
-other related information can be easily discovered and new information can be
-easily merged into the existing graph of knowledge. Linked Data is
-extensible in a decentralized way, greatly reducing barriers to large scale
-integration. The data model in this specification works well with the
-<a href="https://w3c-dvcg.github.io/ld-proofs/">Linked Data Proofs</a>,
-<a href="https://w3c-dvcg.github.io/ld-signatures/">Linked Data Signatures</a>,
-and the associated
-<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suites</a>,
-which are designed to protect the data model as described by this specification.
+이 규격은 Linked Data를 이용하여 URL, JSON-LD와 같은 표준을 사용하여 
+웹에 정보를 게시하여 <a>주체</a>와 관련 속성을 식별한다. 
+이러한 방식으로 정보를 제시하면 다른 관련 정보를 쉽게 발견할 수 있고 
+새로운 정보를 기존의 지식 그래프로 쉽게 통합할 수 있다. 
+Linked Data는 분산된 방식으로 확장 가능하여 대규모 통합에 대한 장벽을 크게 줄인다. 
+이 규격의 데이터 모델은 이 규격에 설명된 대로 데이터 모델을 보호하도록 설계된 
+<a href="https://w3c-dvcg.github.io/ld-proofs/">Linked Data Proofs</a>, 
+<a href="https://w3c-dvcg.github.io/ld-signatures/">Linked Data Signatures</a> 및 
+관련 <a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suites</a>와 잘 작동한다.
+
+
           </p>
 
           <p>
-Unlike the use of JSON Web Token, no extra pre- or post-processing is necessary.
-The Linked Data Proofs format was designed to simply and easily protect
-<a>verifiable credentials</a> and <a>verifiable presentations</a>. Protecting
-a <a>verifiable credential</a> or <a>verifiable presentation</a> is as simple
-as passing a valid example in this specification to a Linked Data Signatures
-implementation and generating a digital signature.
+JSON Web Token의 사용과 달리 별도의 사전 또는 후처리는 필요하지 않다. 
+Linked Data Proofs 형식은 <a>검증가능한 크리덴셜</a>과 <a>검증가능한 프레젠테이션</a>을 
+간단하고 쉽게 보호하도록 설계되었다. <a>검증가능한 크리덴셜</a> 또는 
+<a>검증가능한 프레젠테이션</a>을 보호하는 것은 이 규격의 유효한 예를 
+Linked Data Signatures 구현에 전달하고 디지털 서명을 생성하는 것만큼 간단하다.
+
           </p>
 
           <p class="note">
-For more information about the different qualities of the various syntax
-formats (for example, JSON+JWT, JSON-LD+JWT, or JSON-LD+LD-Proofs), see the
-Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
+다양한 syntax 형식(예: JSON+JWT, JSON-LD+JWT 또는 JSON-LD+LD-Proofs)의 다양한 품질에 대한 자세한 내용은 
+검증 가능한 크리덴셜 구현 지침 [[VC-IMP-GUIDE]] 문서를 참조하십시오.
           </p>
 
         </section>
@@ -3891,23 +3890,23 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
     </section>
   </section>
 
-  <section class="informative">
+  <section class="informative" id="privacy-considerations">
     <h2>Privacy Considerations</h2>
 
     <p>
-This section details the general privacy considerations and specific privacy
-implications of deploying the Verifiable Credentials Data Model into production
-environments.
+      이 섹션에서는 검증가능한 크리덴셜 데이터 모델을 
+      프로덕션 환경에 배포할 때의 
+      일반적인 프라이버시 고려사항 및 특정 프라이버시 관련 영향에 대해 자세히 설명한다.
+
     </p>
 
-    <section class="informative">
+    <section class="informative" id="spectrum-of-privacy">
       <h3>Spectrum of Privacy</h3>
 
       <p>
-It is important to recognize there is a spectrum of privacy ranging from
-pseudonymous to strongly identified. Depending on the use case, people have
-different comfort levels about what information they are willing to provide
-and what information can be derived from what is provided.
+
+익명부터 강하게 식별되는 범위에 이르는 프라이버시의 범주가 있음을 인지하는 것은 중요하다. 
+사례에 의하면, 사람들은 제공하고자하는 정보와 제공되는 정보에서 파생된 정보에 대해 서로 다른 안도감의 단계를 가지고 있다
       </p>
 
       <figure>
@@ -3921,34 +3920,20 @@ and what information can be derived from what is provided.
           code'.  The green has the text 'Non-correlatable
           (pseudonyms), e.g., age over 21'.">
         <figcaption style="text-align: center;">
-Privacy spectrum ranging from pseudonymous to fully identified.
+          익명부터 완전히 식별되는 범위에 이르는 프라이버시의 범주
         </figcaption>
       </figure>
 
       <p>
-For example, most people probably want to remain anonymous when purchasing
-alcohol because the regulatory check required is solely based on whether a
-person is above a specific age. Alternatively, for medical prescriptions
-written by a doctor for a patient, the pharmacy fulfilling the prescription is
-required to more strongly identify the medical professional and the patient.
-Therefore there is not one approach to privacy that works for all use cases.
-Privacy solutions are use case specific.
+        예를 들어, 대부분의 사람들은 주류를 구입할 때 익명을 유지하기를 원하는데 그 이유는 필요한 규제 확인은 전적으로 그 사람이 특정 연령 이상인지 여부에 달려있기 때문이다. 그 대신, 의사가 환자를 위해 작성한 의료 처방전의 경우, 처방을 이행하는 약국은 의료 전문자와 환자를 강하게 식별해야 한다. 따라서 모든 사례에 적합한 하나의 프라이버시 접근법은 없다. 프라이버시 해결책은 사례에 따라 다르다.
       </p>
 
       <p class="note">
-Even for those wanting to remain anonymous when purchasing alcohol, photo
-identification might still be required to provide appropriate assurance to the
-merchant. The merchant might not need to know your name or other details (other
-than that you are over a specific age), but in many cases just proof of age
-might still be insufficient to meet regulations.
+        주류를 구입할 때 익명을 유지하려는 경우에도, 상인에게 적절한 보증을 제공하기 위해 사진 신분증이 필요할 수 있다. 상인은 (당신이 특정 연령 이상이라는 것 이외에) 당신의 이름이나 다른 세부 정보를 알 필요가 없지만, 많은 경우 나이 증명은 규정을 충족하기에 아직 불충분하다.
       </p>
 
       <p>
-The Verifiable Credentials Data Model strives to support the full privacy
-spectrum and does not take philosophical positions on the correct level of
-anonymity for any specific transaction. The following sections provide guidance
-for implementers who want to avoid specific scenarios that are hostile to
-privacy.
+        검증가능한 크리덴셜 데이터 모델은 전체 프라이버시 범주를 지원하기 위해 노력하고 있으며, 어떤 특정 트랜잭션에 대해서도 올바른 수준의 익명성에 대한 철학적 입장을 취하지 않는다. 다음 섹션은 프라이버시에 적대적인 특정 시나리오들을 피하려는 구현자들을 위한 지침을 제공한다.
       </p>
     </section>
 
