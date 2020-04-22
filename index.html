@@ -3191,51 +3191,43 @@ CL 서명을 사용하여, <a>검증가능한 크리덴셜</a> 값의 선택적 
 
       </section>
 
-      <section class="informative">
-        <h3>Authorization</h3>
+      <section class="informative" id="authorization">
+        <h3>승인</h3>
 
         <p>
-<a>Verifiable credentials</a> are intended as a means of reliably identifying
-<a>subjects</a>. While it is recognized that Role Based Access Controls (RBACs)
-and Attribute Based Access Controls (ABACs) rely on this identification as a
-means of authorizing <a>subjects</a> to access resources, this specification
-does not provide a complete solution for RBAC or ABAC. Authorization is not an
-appropriate use for this specification without an accompanying authorization
-framework.
+<a>검증가능한 크리덴셜</a>은 <a>주체</a>에 대한 신뢰할 수 있는 신원증명의 수단으로 만들어졌다. 
+역할 기반 접근 제어(Role Based Access Controls, RBACs)와 속성 기반 접근 제어(Attribute Based Access Controls, ABACs)는 
+<a>주체</a>가 자원에 접근하는 것을 
+승인하는 수단으로써 이 신원인증에 의존하는 것으로 인식되지만, 이 사양은 RBAC 
+또는 ABAC를 위한 완전한 해결책을 제공하지는 않는다. 승인의 경우 승인 프레임워크 없이 
+본 사양을 사용하는 것은 적절치 않다.
         </p>
 
         <p>
-The Working Group did consider authorization use cases during the creation of
-this specification and is pursuing that work as an architectural layer built
-on top of this specification.
+워킹 그룹은 본 규격의 작성과정에서 인증의 사용 사례를 고려하였으며, 본 규격 위에 
+구축된 구조적 계층으로서의 작업을 추구하고 있다.
         </p>
       </section>
     </section>
 
-    <section>
-      <h2>Syntaxes</h2>
+    <section id="syntaxes">
+      <h2>구문</h2>
 
       <p>
-The data model as described in Sections
-<a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
-<a href="#advanced-concepts"></a> is the canonical structural representation of
-a <a>verifiable credential</a> or <a>verifiable presentation</a>. All
-serializations are representations of that data model in a specific format. This
-section specifies how the data model is realized in JSON-LD and plain JSON.
-Although syntactic mappings are provided for only these two syntaxes,
-applications and services can use any other data representation syntax (such as
-XML, YAML, or CBOR) that is capable of expressing the data model. As the
-<a>verification</a> and <a>validation</a> requirements are defined in terms of
-the data model, all serialization syntaxes have to be deterministically
-translated to the data model for processing, <a>validation</a>, or comparison.
-This specification makes no requirements for support of any specific
-serialization format.
+<a href="#core-data-model"></a>, <a href="#basic-concepts"></a> 
+그리고 <a href="#advanced-concepts"></a>에서 설명한 데이터 모델은 <a>검증가능한 크리덴셜</a> 
+또는 <a>검증가능한 프레젠테이션</a>의 규범적 구조적 표현이다. 모든 직렬화는 
+특정 형식의 데이터 모델의 표현이다. 본 섹션에서는 데이터 모델이 JSON-LD와 일반 JSON에서 
+실현되는 방식을 명시한다. 비록 이 두 구문에서만 구문적 매핑이 제공되지만, 데이터 모델을 
+표현할 수 있는 기타 데이터 표현 구문(XML, YAML 또는 CBOR)도 사용할 수 있다. <a>검증</a>과 <a>확인</a> 
+필요사항이 데이터 모델의 관점에서 정의되므로, 모든 직렬화 구문은 결정적으로 처리, <a>검증</a> 
+또는 비교를 위한 데이터 모델로 변환되어야 한다. 본 사양은 어떠한 특정 직렬화 형식을 
+지원하기 위한 요구사항을 만들지 않는다.
       </p>
 
       <p>
-The expected arity of the property values in this specification, and the
-resulting datatype which holds those values, can vary depending on the property.
-If present, the following properties are represented as a single value:
+본 사양에서 속성 값의 예상되는 아리티 및 그러한 값을 가지는 결과 데이터 타입은 속성에 
+따라 변동될 수 있다. 만약 존재하는 경우, 다음과 같은 속성들은 단일 값으로 표현된다.
       </p>
 
       <ul>
@@ -3254,47 +3246,45 @@ If present, the following properties are represented as a single value:
       </ul>
 
       <p>
-All other properties, if present, are represented as either a single value
-or an array of values.
+다른 모든 속성들은, 만약 존재할 경우, 단일 값 또는 값의 배열로 표현된다.
       </p>
 
       <section>
         <h3>JSON</h3>
 
         <p>
-The data model, as described in Section <a href="#core-data-model"></a>, can be
-encoded in Javascript Object Notation (JSON) [[!RFC8259]] by mapping property
-values to JSON types as follows:
+섹션 3. <a href="#core-data-model"></a>에서 설명한 것과 같이 데이터 
+모델은 속성 값을 다음과 같은 JSON 타입에 매핑함으로써 Javascript Object Notation (JSON) 
+[[!RFC8259]]으로 인코딩할 수 있다.
         </p>
 
         <ul>
           <li>
-Numeric values representable as IEEE754 SHOULD be represented as a Number type.
+IEEE754로 표현할 수 있는 숫자 값은 숫자 타입으로 표현해야만 한다.
           </li>
           <li>
-Boolean values SHOULD be represented as a Boolean type.
+불리언 값은 불리언 타입으로 표현해야만 한다.
           </li>
           <li>
-Sequence value SHOULD be represented as an Array type.
+시퀀스 값은 배열 타입으로 표현해야만 한다.
           </li>
           <li>
-Unordered sets of values SHOULD be represented as an Array type.
+순서가 없는 값의 집합은 배열 타입으로 표현해야만 한다.
           </li>
           <li>
-Sets of <a>properties</a> SHOULD be represented as an Object type.
+<a>속성</a>들의 집합은 오브젝트 타입으로 표현해야만 한다.
           </li>
           <li>
-Empty values SHOULD be represented as a null value.
+빈 값은 널(null) 값으로 표현해야만 한다.
           </li>
           <li>
-Other values MUST be represented as a String type.
+다른 값들은 문자열 타입으로 표현해야만 한다.
           </li>
         </ul>
 
         <p class="note">
-As the transformations listed herein have potentially incompatible
-interpretations, additional profiling of the JSON format is required to provide
-a deterministic transformation to the data model.
+여기 나열된 변환은 잠재적으로 양립할 수 없는 해석을 가지고 있으므로, 데이터 모델의 
+결정론적 변환을 제공할 수 있으려면 추가적인 JSON 형식의 프로파일링이 필요하다.
         </p>
 
       </section>
@@ -3303,76 +3293,69 @@ a deterministic transformation to the data model.
         <h3>JSON-LD</h3>
 
         <p>
-[[!JSON-LD]] is a JSON-based format used to serialize
-<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. The
-syntax is designed to easily integrate into deployed systems already using JSON,
-and provides a smooth upgrade path from JSON to [[!JSON-LD]]. It is primarily
-intended to be a way to use Linked Data in Web-based programming environments,
-to build interoperable Web services, and to store Linked Data in JSON-based
-storage engines.
+[[!JSON-LD]]는 <a href="http://www.w3.org/TR/ld-glossary/#linked-data">연결된 데이터</a>를 
+직렬화하기 위해 사용되는 JSON기반의 형식이다. 해당 구문은 
+이미 JSON을 사용하는 것으로 배포된 시스템에 쉽게 통합할 수 있도록 설계되었으며, JSON에서 
+[[!JSON-LD]]로 부드럽게 업그레이드 할 수 있는 길을 제공한다. 이는 주로 웹 기반 프로그래밍 
+환경에서 연결된 데이터를 사용하고, 상호 운용 가능한 웹 서비스를 구축하며, JSON 기반 
+저장소 엔진에서 연결된 데이터를 저장하는 방식으로 사용한다.
         </p>
 
         <p>
-[[!JSON-LD]] is useful when extending the data model described in this
-specification. Instances of the data model are encoded in [[!JSON-LD]] in the
-same way they are encoded in JSON (Section <a href="#json"></a>), with the
-addition of the <code>@context</code> <a>property</a>. The
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
-is described in detail in the [[!JSON-LD]] specification and its use is
-elaborated on in Section <a href="#extensibility"></a>.
+[[!JSON-LD]]는 본 사양에서 설명한 데이터 모델을 확장할 때 유용하다. 데이터 모델의 
+인스턴스는 <code>@context</code> <a>속성</a>의 추가를 통해, JSON(섹션 <a href="#json"></a>)으로 인코딩되는 방식과 동일하게 
+[[!JSON-LD]]로 인코딩된다. <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD 컨텍스트</a>는 
+[[!JSON-LD]] 사양에서 상세하게 설명되어 있고, 
+그것의 사용은 섹션 <a href="#extensibility"></a>에서 상술하고 있다.  
         </p>
 
         <p>
-Multiple contexts MAY be used or combined to express any arbitrary information
-about <a>verifiable credentials</a> in idiomatic JSON. The
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>,
-available at <code>https://www.w3.org/2018/credentials/v1</code>, is a static
-document that is never updated and can therefore be downloaded and cached client
-side. The associated vocabulary document for the Verifiable Credentials Data
-Model is available at <code>https://www.w3.org/2018/credentials</code>.
+관용적 JSON에서의 <a>검증가능한 크리덴셜</a>에 대한 임의의 정보를 표현하기 위해 다수의 
+컨텍스트가 사용되거나 결합될 수 있다. <code>https://www.w3.org/2018/credentials/v1</code> 
+에서 확인할 수 있는 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD 컨텍스트</a>는 
+고정 문서로서 절대 업데이트 되지 않는다. 
+따라서 클라이언트 사이드에 캐시하거나 다운로드 할 수 있다. 검증가능한 크리덴셜 데이터 모델에 
+대한 연계된 용어 문서는 <code>https://www.w3.org/2018/credentials</code>에서 확인할 수 있다.
         </p>
 
-        <section>
-          <h3>Syntactic Sugar</h3>
+        <section id="syntactic-sugar">
+          <h3>신택틱 슈거(Syntactic Sugar)</h3>
 
           <p>
-In general, the data model and syntaxes described in this document are
-designed such that developers can copy and paste examples to incorporate
-<a>verifiable credentials</a> into their software systems. The design goal of
-this approach is to provide a low barrier to entry while still ensuring global
-interoperability between a heterogeneous set of software systems. This section
-describes some of these approaches, which will likely go unnoticed by most
-developers, but whose details will be of interest to implementers. The most
-noteworthy syntactic sugars provided by [[!JSON-LD]] are:
+일반적으로, 본 문서에서 설명하고있는 데이터 모델 및 구문은 개발자가 사례를 복사, 
+붙여넣기 함으로써 자신의 소프트웨어 시스템에 <a>검증가능한 크리덴셜</a>을 포함할 수 있도록 설계되었다. 
+이러한 접근의 디자인 목표는 이기종 소프트웨어 시스템 간 글로벌 상호 운용성을 보장하는 동시에 
+진입장벽을 낮추는 것이다. 
+본 섹션에서는 대부분의 개발자가 눈치채지 못할 수 있지만 
+구현하는 사람에게는 관심이 있을 접근방식들에 대해 설명한다. 
+[[!JSON-LD]]에서 가장 주목할만한 신택틱 슈거(Syntatic Sugars)는 아래와 같다.
           </p>
 
           <ul>
             <li>
-The <code>@id</code> and <code>@type</code> keywords are aliased to
-<code>id</code> and <code>type</code> respectively, enabling developers to use
-this specification as idiomatic JSON.
+<code>@id</code>와 <code>@type</code> 키워드는 
+각각 <code>id</code>와 <code>type</code>으로 구분되어, 
+개발자가 이 규격을 관용적 JSON으로 사용할 수 있도록 한다.
             </li>
             <li>
-Data types, such as integers, dates, units of measure, and URLs, are
-automatically typed to provide stronger type guarantees for use cases that
-require them.
+정수, 날짜, 측정단위, URL과 같은 데이터 타입은 자동으로 입력되어 
+그것을 필요로 하는 사용 사례(Use Case)를 위한 강력한 타입 보장을 제공한다.
             </li>
             <li>
-The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
-are treated as <em>graph containers</em>. That is, mechanisms used to isolate
-sets of data asserted by different entities. This ensures, for example, proper
-cryptographic separation between the data graph provided by each <a>issuer</a>
-and the one provided by the <a>holder</a> presenting the
-<a>verifiable credential</a> to ensure the provenance of the information for
-each graph is preserved.
+<code>verifiableCredential</code>과 <code>proof</code> <a>속성</a>은 
+<em>그래프 컨테이너(Graph Containers)</em>로 처리된다. 
+이는 다른 개체가 주장하는 데이터 집합을 분리하는데 사용되는 메커니즘이다. 
+이것은 각 <a>발행자</a>가 제공한 데이터 그래프와 각 그래프에 대한 유래를 보장하기 위해 
+<a>검증가능한 크리덴셜</a>을 제시하는 <a>보유자</a>가 제공하는 정보 간의 
+적절한 암호학적 구분을 보장한다.
             </li>
             <li>
-The <code>@protected</code> properties feature of [[!JSON-LD]] 1.1 is used to
-ensure that terms defined by this specification cannot be overridden. This means
-that as long as the same <code>@context</code> declaration is made at the top of
-a <a>verifiable credential</a> or <a>verifiable presentation</a>,
-interoperability is guaranteed for all terms understood by users of the data
-model whether or not they use a [[!JSON-LD]] processor.
+[[!JSON-LD]] 1.1의 <code>@protected</code> 속성 기능은 
+본 규격에서 정의한 용어를 재정의할 수 없도록 하는데 사용된다. 
+이는 동일한 <code>@context</code> 선언이 
+<a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>의 상단에서 이루어지는 한, 
+[[!JSON-LD]] 프로세서의 사용 여부와 상관없이 
+사용자가 이해한 모든 용어에 대한 상호운용성을 보장한다는 의미이다.
             </li>
           </ul>
         </section>
@@ -3890,108 +3873,96 @@ Linked Data Signatures 구현에 전달하고 디지털 서명을 생성하는 �
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Personally Identifiable Information</h3>
+    <section class="informative" id="personally-identifiable-information">
+      <h3>개인식별정보</h3>
 
       <p>
-Data associated with <a>verifiable credentials</a> stored in the
-<code>credential.credentialSubject</code> field is susceptible to privacy
-violations when shared with <a>verifiers</a>. Personally identifying data, such
-as a government-issued identifier, shipping address, and full name, can be
-easily used to determine, track, and correlate an <a>entity</a>. Even
-information that does not seem personally identifiable, such as the
-combination of a birthdate and a postal code, has very powerful correlation
-and de-anonymizing capabilities.
+<code>credential.credentialSubject</code> 필드에 저장된 <a>검증가능한 크리덴셜</a> 관련 데이터는 
+<a>검증자</a>와 공유할 경우 프라이버시 침해를 허용할 수 있다. 정부에서 발행한 식별자, 
+배송지 주소, 성명 등과 같은 개인식별정보는 <a>개체</a>를 특정하거나 추적하고 상관관계를 
+확인하는데 쉽게 사용될 수 있다. 비록 생일과 우편번호의 조합 같이 개인을 식별별하는데 
+쓸 수 없을 것 같은 정보라도 매우 강력한 상관관계 및 재식별화(De-anonymizing)의 
+가능성을 가지고 있다.
       </p>
 
       <p>
-Implementers are strongly advised to warn <a>holders</a> when they share data
-with these kinds of characteristics. <a>Issuers</a> are strongly advised to
-provide privacy-protecting <a>verifiable credentials</a> when possible. For
-example, issuing <code>ageOver</code> <a>verifiable credentials</a> instead of
-date of birth <a>verifiable credentials</a> when a <a>verifier</a> wants to
-determine if an <a>entity</a> is over the age of 18.
+구현자는 이러한 종류의 특성을 가진 데이터를 공유할 경우 <a>보유자</a>에게 경고할 것을 강력하게 
+권고한다. <a>발행자</a>는 가능하면 프라이버시를 보호하는 <a>검증가능한 크리덴셜</a>을 제공할 것을 
+강력하게 권고한다. 예를들면, <a>검증자</a>가 <a>개체</a>의 성인 여부를 확인하고자 하면, 생년월일을 
+담은 <a>검증가능한 크리덴셜</a>을 발행하는 대신 <code>ageOver</code> <a>검증가능한 크리덴셜</a>을 발행하는 것이다.
       </p>
 
       <p>
-Because a <a>verifiable credential</a> often contains personally identifiable
-information (PII), implementers are strongly advised to use mechanisms while
-storing and transporting <a>verifiable credentials</a> that protect the data
-from those who should not access it. Mechanisms that could be considered include
-Transport Layer Security (TLS) or other means of encrypting the data while in
-transit, as well as encryption or data access control mechanisms to protect
-the data in a <a>verifiable credential</a> while at rest.
+<a>검증가능한 크리덴셜</a>은 종종 개인식별정보(PII)를 포함하고 있기 때문에, 구현자는 
+<a>검증가능한 크리덴셜</a>을 저장하고 전송하는 과정에서 접근하지 말아야 할 사람들로부터 
+데이터를 보호하기 위한 메커니즘을 사용하도록 해야 한다. 고려할 수 있는 매커니즘은 
+전송계층보안(TLS, Transport Layer Security) 또는 그 외에 데이터 전송시에는 데이터를 
+암호화하고 전송 중이 아니더라도 <a>검증가능한 크리덴셜</a>의 데이터를 암호화하거나 접근 
+제어하는 수단이 있을 수 있다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Identifier-Based Correlation</h3>
+    <section class="informative" id="identifier-based-correlation">
+      <h3>식별자 기반 상관관계</h3>
 
       <p>
-<a>Subjects</a> of <a>verifiable credentials</a> are identified using the
-<code>credential.credentialSubject.id</code> field. The identifiers used to
-identify a <a>subject</a> create a greater risk of correlation when the
-identifiers are long-lived or used across more than one web domain.
+<a>검증가능한 크리덴셜</a>의 <a>주체</a>는 <code>credential.credentialSubject.id</code> 필드를 사용하여 
+식별된다. <a>주체</a>를 식별하기 위해 사용되는 식별자는 식별자의 수명이 길고 하나 이상의 
+웹 도메인을 넘나들며 사용될 경우 더 큰 상관관계의 위험을 야기한다.
       </p>
 
       <p>
-Similarly, disclosing the <a>credential</a> identifier
-(<code>credential.id</code>) leads to situations where multiple
-<a>verifiers</a>, or an <a>issuer</a> and a <a>verifier</a>, can collude to
-correlate the <a>holder</a>. If <a>holders</a> want to reduce correlation, they
-should use <a>verifiable credential</a> schemes that allow hiding the
-identifier during <a>verifiable presentation</a>. Such schemes expect the
-<a>holder</a> to generate the identifier and might even allow hiding the
-identifier from the <a>issuer</a>, while still keeping the identifier embedded
-and signed in the <a>verifiable credential</a>.
+유사하게, <a>크리덴셜</a> 식별자(<code>credential.id</code>)를 공개하는 것은러 <a>검증자</a>가 결탁하거나 
+혹은 <a>발급자</a>와 <a>검증자</a>가 결탁하여 <a>보유자</a>와의 상관관계를 파악할 수 있는 상황으로 이끌 
+수 있다. 만약 <a>보유자</a>가 상관관계를 줄이고 싶다면, <a>검증가능한 프레젠테이션</a>을 하는 동안 
+식별자를 숨기는 <a>검증가능한 크리덴셜</a> 스킴을 사용해야 한다. 그러한 스킴은 <a>보유자</a>가 
+식별자를 생성하고 사용자로부터 식별자를 숨기는 것을 허용하는 한편 식별자를 <a>검증가능한 크리덴셜</a> 
+안에 포함하고 서명할 수 있도록 유지한다.
       </p>
 
       <p>
-If strong anti-correlation properties are a requirement in a
-<a>verifiable credentials</a> system, it is strongly advised that identifiers
-are either:
+만약 강력한 상관관계 방지 속성이 요구되는 <a>검증가능한 크리덴셜</a> 체계인 경우, 식별자는 
+다음 중 하나를 만족하도록 강력히 권고된다:
       </p>
 
       <ul>
         <li>
-Bound to a single origin
+단일 기원(Single origin)으로 향함
+        </li>P
+        <li>
+단일 사용(Single use)
         </li>
         <li>
-Single-use
-        </li>
-        <li>
-Not used at all, but instead replaced by short-lived, single-use bearer tokens.
+한번도 사용되지 않았지만 짧은 수명의 단일 사용 전달자 토큰으로 교체됨
         </li>
       </ul>
     </section>
 
-    <section class="informative">
-      <h3>Signature-Based Correlation</h3>
+    <section class="informative" id="signature-based-correlation">
+      <h3>서명 기반의 상관관계</h3>
 
       <p>
-The contents of <a>verifiable credentials</a> are secured using the
-<code>credential.proof</code> field. The <a>properties</a> in this field
-create a greater risk of correlation when the same values are used across more
-than one session or domain and the value does not change. Examples include the
-<code>verificationMethod</code>, <code>created</code>,
-<code>proofPurpose</code>, and <code>jws</code> fields.
+<a>검증가능한 크리덴셜</a>의 내용은 <code>credential.proof</code> 필드를 사용하여 보호한다. 이 필드의 
+<a>속성</a>들은 같은 값이 하나 이상의 세션 혹은 도메인에서 사용되고 그 값이 변하지 않을 경우 
+더 큰 상관관계의 위험을 만들 수 있다. <code>verificationMethod</code>, <code>create</code>, <code>proofPurpose</code>, 
+<code>jws</code> 필드가 이에 속한다.
       </p>
 
       <p>
-If strong anti-correlation properties are required, it is advised that
-signature values and metadata are regenerated each time using technologies like
-third-party pairwise signatures, zero-knowledge proofs, or group signatures.
+만약 강력한 상관관계 방지(Anti-Correlation) 속성이 필요할 경우, 제3자 쌍 서명, 
+영지식증명 또는 집단 서명 등의 기술을 사용하여 매번 서명값과 메타데이터를 재생성하는 
+것을 권장한다.
+
       </p>
 
       <p class="note">
-Even when using anti-correlation signatures, information might still be
-contained in a <a>verifiable credential</a> that defeats the anti-correlation
-properties of the cryptography used.
+비록 상관관계 방지용 서명을 사용하더라도, <a>검증가능한 크리덴셜</a>에는 사용된 암호 기술의 
+상관관계 방지 속성을 무력화시킬 수 있는 정보가 여전히 포함될 수 있다
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Long-Lived Identifier-Based Correlation</h3>
+    <section class="informative" id="long-lived-identifier-based-correlation">
+      <h3>수명이 긴 식별자 기반의 상관관계</h3>
 
       <p>
 <a>Verifiable credentials</a> might contain long-lived identifiers that could
@@ -4000,61 +3971,55 @@ be used to correlate individuals. These types of identifiers include
 organization-issued identifiers, addresses, healthcare vitals,
 <a>verifiable credential</a>-specific JSON-LD contexts, and many other sorts of
 long-lived identifiers.
+<a>검증가능한 크리덴셜</a>은 개인의 상관관계를 파악하는데 사용될 수 있는 수명이 긴 식별자를 
+포함할 수 있다. 이러한 종류의 식별자에는 <a>주체</a> 식별자, 이메일 주소, 정부 발행 식별자, 
+조직 발행 식별자, 주소, 헬스케어 바이탈, <a>검증가능한 크리덴셜</a> 특화 JSON-LD 컨텍스트, 
+그리고 수 많은 종류의 수명이 긴 식별자가 포함된다. 
       </p>
 
       <p>
-Organizations providing software to <a>holders</a> should strive to identify
-fields in <a>verifiable credentials</a> containing information that could be
-used to correlate individuals and warn <a>holders</a> when this information is
-shared.
-      </p>
-    </section>
-
-    <section class="informative">
-      <h3>Device Fingerprinting</h3>
-
-      <p>
-There are mechanisms external to <a>verifiable credentials</a> that are used to
-track and correlate individuals on the Internet and the Web. Some of these
-mechanisms include Internet protocol (IP) address tracking, web browser
-fingerprinting, evercookies, advertising network trackers, mobile network
-position information, and in-application Global Positioning System (GPS) APIs.
-Using <a>verifiable credentials</a> cannot prevent the use of these other
-tracking technologies. Also, when these technologies are used in conjunction
-with <a>verifiable credentials</a>, new correlatable information could be
-discovered. For example, a birthday coupled with a GPS position can be used to
-strongly correlate an individual across multiple websites.
-      </p>
-
-      <p>
-It is recommended that privacy-respecting systems prevent the use of these
-other tracking technologies when <a>verifiable credentials</a> are being used.
-In some cases, tracking technologies might need to be disabled on devices that
-transmit <a>verifiable credentials</a> on behalf of a <a>holder</a>.
+<a>보유자</a>에게 소프트웨어를 제공하는 조직은 개인의 상관관계를 파악하는데 사용되는 정보가 
+포함된 <a>검증가능한 크리덴셜</a>의 필드를 식별하여, 이 정보가 공유될 때 <a>보유자</a>에게 경고해야 한다
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Favor Abstract Claims</h3>
+    <section class="informative" id="device-fingerprinting">
+      <h3>디바이스 핑거프린팅</h3>
 
       <p>
-To enable recipients of <a>verifiable credentials</a> to use them in a variety
-of circumstances without revealing more PII than necessary for transactions,
-<a>issuers</a> should consider limiting the information published in a
-<a>credential</a> to a minimal set needed for the expected purposes. One way to
-avoid placing PII in a <a>credential</a> is to use an abstract <a>property</a>
-that meets the needs of <a>verifiers</a> without providing specific information
-about a <a>subject</a>.
+인터넷과 웹상에서 개인을 추적하고 상관관계를 파악하는데 사용되는 <a>검증가능한 크리덴셜</a> 
+외부의 메커니즘들이 있다. 이러한 메커니즘은 인터넷 프로토콜(IP) 주소 추적, 
+웹 브라우저 핑거프린팅, 에버쿠키(evercookie), 광고 네트워크 추적기, 
+모바일 네트워크 위치 정보, 인앱 GPS API 등을 포함한다. <a>검증가능한 크리덴셜</a>을 
+사용하는 것이 이러한 기술을 사용하는 것을 막지는 못한다. 또한, 이러한 기술들이 
+<a>검증가능한 크리덴셜</a>과 결합되어 사용되면 새로운 상관관계를 파악할 수 있는 
+정보들을 발견할 수도 있다. 예를 들어, 생일과 GPS 위치를 결합하면 다수의 
+웹사이트에서 개인에 대한 강력한 상관관계를 파악하는데 사용될 수 있다. 
+      </p>
+
+      <p>
+개인정보보호를 중요하게 여기는 시스템에서 <a>검증가능한 크리덴셜</a>을 사용하는 경우, 
+이러한 추적 기술들의 사용을 방지하도록 하는 것이 권장한다. 경우에 따라서는 <a>보유자</a>를 
+대신하여 <a>검증가능한 크리덴셜</a>을 전송하는 기기에서 추적 기술들이 비활성화 하는 것도 요구될 수 있다.
+      </p>
+    </section>
+
+    <section class="informative" id="favor-abstract-claims">
+      <h3>추상 클레임 선호(Flavor Abstract Claim</h3>
+
+      <p>
+<a>검증가능한 크리덴셜</a>을 받는 사람이 필요 이상으로 개인식별정보를 노출하지 않으면서도 
+다양한 상황에서 활용할 수 있도록 하기 위해 <a>발행자</a>는 <a>크리덴셜</a>의 정보를 예상되는 목적에 
+필요한 최소한의 정보로 제한하는 것을 고려해야 한다. 개인식별정보를 <a>크리덴셜</a>에 포함하지 
+않도록 하는 방법 중 하나는 <a>주체</a>에 대한 특정한 정보를 제공하지 않으면서도 <a>검증자</a>의 
+요구를 만족시키는 추상 <a>속성</a>을 사용하는 것이다.
       </p>
       <p>
-For example, this document uses the <code>ageOver</code> <a>property</a>
-instead of a specific birthdate, which constitutes much stronger PII. If
-retailers in a specific market commonly require purchasers to be older than a
-certain age, an <a>issuer</a> trusted in that market might choose to offer a
-<a>verifiable credential</a> claiming that <a>subjects</a> have met that
-requirement instead of offering <a>verifiable credentials</a> containing
-<a>claims</a> about specific birthdates. This enables individual customers to
-make purchases without revealing specific PII.
+예를 들면, 본 문서는 강력한 개인식별정보인 생일을 사용하는 대신 <code>ageOver</code> <a>속성</a>을 사용한다. 
+만약 특정 시장의 소매업자가 일반적으로 구매자에게 특정 나이 이상을 요구하는 경우, 
+그 시장에서 신뢰받는 <a>발행자</a>는 <a>주체</a>의 생일에 대한 <a>클레임</a>을 포함하는 <a>검증가능한 크리덴셜</a>을 
+제공하기 보다는 <a>주체</a>가 그 조건을 만족한다고 주장하는 <a>검증가능한 크리덴셜</a>을 제공하는 것을 
+선택할 것이다. 이로인해 개인 소비자가 특정 개인식별정보를 드러내지 않으면서도 구매를 할 수 있게 된다.
       </p>
     </section>
 
