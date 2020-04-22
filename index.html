@@ -1516,22 +1516,20 @@ Implementation Guidelines [[?VC-IMP-GUIDE]].
 <a>검증가능한 크리덴셜</a> 에는 하나 이상의 <a>주체들</a>에 대한 <a>클레임이</a> 포함된다. 
 이 규격은 하나 이상의 <a>주체들</a>에 대한 <a>클레임</a>을 <a>표현</a>하기 위한 항목인
 <code>credentialSubject</code> 
-속성을 정의한다.
+<a>속성</a>을 정의한다.
         </p>
 
         <p>
-<a>검증 가능한 크리덴셜</a>에는 무조건 <code>credentialSubject</code> <a>속성</a>이 있어야 한다.
+<a>검증가능한 크리덴셜</a>에는 무조건 <code>credentialSubject</code> <a>속성</a>이 있어야 한다.
         </p>
 
         <dl>
           <dt>credentialSubject</dt>
           <dd>
 The value of the <code>credentialSubject</code> <a>property</a> is defined as
-a set of objects that contain one or more properties that are each related to a
-<a>subject</a> of the <a>verifiable credential</a>. Each object MAY contain an
-<code>id</code>, as described in Section <a href="#identifiers"></a>.
-<code>credentialSubject</code> <a>속성</a>의 값은 <a>검증 가능한 크리덴셜</a>의 <a>주체</a>와 각각 관련된 하나 이상의 특성을 포함하는 
-		  객체 세트로 정의된다. <a href="#식별자들"></a>에 설명 된대로 각 객체에는 <code>id</code>가 포함될 수도 있다.
+<code>credentialSubject</code> <a>속성</a>의 값은 <a>검증가능한 크리덴셜</a>의 <a>주체</a>와 
+각각 관련된 하나 이상의 특성을 포함하는 
+객체 세트로 정의된다. <a href="#identifiers"></a>에 설명 된대로 각 객체에는 <code>id</code>가 포함될 수도 있다.
 
           </dd>
         </dl>
@@ -1584,23 +1582,24 @@ a set of objects that contain one or more properties that are each related to a
 
       </section>
 
-      <section>
+      <section id="issuer">
         <h3>발급자</h3>
 
         <p>
-이 규격은 <a>검증 가능한 크리덴셜</a>의 <a>발급자</a>를 표현하기 위한 속성을 정의한다.
+이 규격은 <a>검증가능한 크리덴셜</a>의 <a>발급자</a>를 표현하기 위한 속성을 정의한다.
         </p>
 
         <p>
-<a>검증 가능한 크리덴셜</a>은 무조건 <code>issuer</code> <a>속성</a>이 있어야 한다.
+<a>검증가능한 크리덴셜</a>은 무조건 <code>issuer</code> <a>속성</a>이 있어야 한다.
         </p>
 
         <dl>
           <dt><var>issuer</var></dt>
           <dd>
 <code>issuer</code> <a>속성</a> 값은 무조건 <a>URI</a>이거나 <code>id</code> <a>속성</a>을 포함하는 객체여야한다. 
-<code>issuer</code> 또는 해당 <code>id</code>의 <a>URI</a>는 역 참조 된 경우 <a>크리덴셜</a>에 표시된 정보를 <a>검증</a>하는 데 사용할 수 있는 
-<a>issuer</a>에 대한 machine-readable 정보를 포함하는 문서를 생성하는 URI 여야 한다.
+<code>issuer</code> 또는 해당 <code>id</code>의 <a>URI</a>는 역 참조 된 경우 
+<a>크리덴셜</a>에 표시된 정보를 <a>검증</a>하는 데 사용할 수 있는 
+<a>issuer</a>에 대한 기계판독 가능한 정보를 포함하는 문서를 생성하는 URI 여야 한다.
           </dd>
         </dl>
 
@@ -1660,7 +1659,7 @@ a set of objects that contain one or more properties that are each related to a
 
       </section>
 
-      <section>
+      <section id="issuance-date">
         <h3>발급 날짜</h3>
 
         <p>
@@ -1671,14 +1670,15 @@ a set of objects that contain one or more properties that are each related to a
           <dt><var>issuanceDate</var></dt>
           <dd>
 <a>크리덴셜</a>은 무조건 <code>issuanceDate</code> <a>속성</a>을 가져야 한다. 
-<code>issuanceDate</code> <a>속성</a>의 값은 <a>크리덴셜</a>이 유효한 날짜와 시간을 나타내는 [RFC3339] 결합 날짜 및 시간 
+<code>issuanceDate</code> <a>속성</a>의 값은 
+<a>크리덴셜</a>이 유효한 날짜와 시간을 나타내는 [[!RFC3339]] 결합 날짜 및 시간 
 문자열의 문자열 값이어야하며 이는 미래의 날짜와 시간 일 수 있습니다. 이 값은 <code>credentialSubject</code> 
 <a>특성</a>과 연관된 정보가 유효 해지는 가장 빠른 시점을 나타냅니다.
 
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="issuanceDate 특성 사용">
+        <pre class="example nohighlight" title="issuanceDate 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1700,14 +1700,16 @@ a set of objects that contain one or more properties that are each related to a
         </pre>
 
         <p class="note">
-이 스펙의 다음 버전은 <code>validFrom</code> <a>특성</a>을 추가하고 새로운 <code>issued</code> 된 <a>특성</a>을 위해 <code>issuanceDate</code> <a>특성</a>을 
-더 이상 사용하지 않을 것으로 예상된다. 두 속성의 값 범위는 [RFC3339] 결합 날짜 및 시간 문자열로 유지 
-될 것으로 예상한다. 구현자는 <code>validFrom</code> 및 <code>issued</code> <a>속성</a>을 예약하고 다른 목적으로 사용하지 않는 것이 좋다.
+이 스펙의 다음 버전은 <code>validFrom</code> <a>속성</a>을 추가하고 
+새로운 <code>issued</code> 된 <a>속성</a>을 위해 <code>issuanceDate</code> <a>속성</a>을 
+더 이상 사용하지 않을 것으로 예상된다. 두 속성의 값 범위는 [[?RFC3339]] 결합 날짜 및 시간 문자열로 유지 
+될 것으로 예상한다. 구현자는 <code>validFrom</code> 및 <code>issued</code> <a>속성</a>을 예약하고 
+다른 목적으로 사용하지 않는 것이 좋다.
         </p>
 
       </section>
 
-      <section>
+      <section id="proofs-signatures">
         <h3>프루프들 (시그니쳐들)</h3>
 
         <p>
@@ -1789,11 +1791,11 @@ Unencoded Payload Option [[RFC7797]]. 프루프메커니즘 목록은 Verifiable
 
       </section>
 
-      <section>
+      <section id="expiration">
         <h3>만료</h3>
 
         <p>
-이 사양에서는 <a>크리덴셜</a> 만료 정보 표현을위한 <code>expirationDate</code> <a>속성</a>을 정의합니다.
+이 사양에서는 <a>크리덴셜</a> 만료 정보 표현을위한 <code>expirationDate</code> <a>속성</a>을 정의한다.
 
         </p>
 
@@ -1801,7 +1803,7 @@ Unencoded Payload Option [[RFC7797]]. 프루프메커니즘 목록은 Verifiable
           <dt><var>expirationDate</var></dt>
           <dd>
 존재하는 경우, <code>expirationDate</code> <a>속성</a>의 값은 무조건 <a>크리덴셜</a>이 유효하지 않은 날짜와 시간을 
-나타내는 [[!RFC3339]] 결합 날짜 및 시간 문자열의 문자열 값이어야합니다.
+나타내는 [[!RFC3339]] 결합 날짜 및 시간 문자열의 문자열 값이어야 합니다.
           </dd>
         </dl>
 
@@ -4873,7 +4875,7 @@ for people with varying abilities.
     </section>
   </section>
 
-  <section class="informative">
+  <section class="informative" id="internationalization-considerations">
     <h2>국제화 고려 사항</h2>
 
     <p>
@@ -4888,7 +4890,7 @@ for people with varying abilities.
 이 섹션에서는이 데이터 모델을 사용할 때 고려해야 할 일반적인 국제화 고려 사항에 대해 간략하게 설명하고 있으며 구현자가 관심 있을 <em>웹에서 문자열 : 언어 및 방향 메타 데이터</em> 문서 [[STRING-META]]의 특정 부분을 강조하기 위해 구현되었다.
     </p>
 
-    <section class="informative">
+    <section class="informative" id="language-and-base-direction">
       <h3>언어와 기본 방향</h3>
 
       <p>
@@ -4939,10 +4941,7 @@ Implementers utilizing JSON-LD are strongly urged to
 <a href="#extensibility">extend</a> the JSON-LD Context defining the
 internationalized <a>property</a> and use the Scoped Context feature of JSON-LD
 to alias the <code>@value</code>, <code>@language</code>, and
-<code>@direction</code> keywords to <code>value</code>, <code>lang</code>,
-and <code>dir</code>, respectively. An example of a JSON-LD Context snippet
-doing this is shown below.
-	      JSON-LD를 사용하는 구현자는 국제화 된 <a>특성</a>을 정의하는 JSON-LD 컨텍스트를 <a href="#extensibility">extend</a>하고 JSON-LD의 범위 
+	      JSON-LD를 사용하는 구현자는 국제화 된 <a>속성</a>을 정의하는 JSON-LD 컨텍스트를 <a href="#extensibility">extend</a>하고 JSON-LD의 범위 
 	      지정된 컨텍스트 기능을 사용하여 <code>@value</code>, <code>@language</code> 및 <code>@direction</code> 키워드를 <code>value</code>, <code>lang</code> 및 <code>dir</code>로 별명 
 	      지정해야한다. 각기. 이를 수행하는 JSON-LD 컨텍스트 스니펫의 예는 다음과 같다.
       </p>
@@ -4984,7 +4983,7 @@ doing this is shown below.
 
   </section>
 
-  <section class="appendix informative">
+  <section class="appendix informative" id="validation">
       <h2>검증</h2>
 
       <p>
@@ -4994,7 +4993,7 @@ doing this is shown below.
 대화를 공유(capture)한다.
       </p>
 
-      <section class="informative">
+      <section class="informative" id="credential-subject">
         <h3>크리덴셜 주체</h3>
 
         <p>
@@ -5011,7 +5010,7 @@ doing this is shown below.
 
       </section>
 
-      <section class="informative">
+      <section class="informative" id="issuer">
         <h3>발급자</h3>
 
         <p>
@@ -5025,7 +5024,7 @@ doing this is shown below.
         </p>
       </section>
 
-      <section class="informative">
+     <section class="informative" id="issuance-date">
         <h3>발급 날짜</h3>
 
         <p>
