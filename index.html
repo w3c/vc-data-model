@@ -1835,44 +1835,37 @@ preserves backwards compatability with the <code>expirationDate</code>
 
       </section>
 
-      <section>
-        <h3>Status</h3>
+      <section id="status">
+        <h3>상태</h3>
 
         <p>
-This specification defines the following <code>credentialStatus</code>
-<a>property</a> for the discovery of information about the current status of a
-<a>verifiable credential</a>, such as whether it is suspended or revoked.
+이 규격은 <a>검증가능한 크리덴셜</a>의 현재 상태(예를들어 일시중지 또는 취소)에 대한 정보를 검색하기 위해 
+다음 <code>credentialStatus</code><a>속성</a>을 정의한다.
         </p>
 
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>
-The value of the <code>credentialStatus</code> <a>property</a> MUST include the:
-
+            <code>credentialStatus</code> <a>속성</a>의 값은 무조건 다음 사항들을 포함해야 한다.
             <ul>
               <li>
-<code>id</code> <a>property</a>, which MUST be a URL.
+<code>id</code> <a>속성</a>은 무조건 URL이여야 한다.
               </li>
               <li>
-<code>type</code> <a>property</a>, which expresses the <a>credential</a> status
-type (also referred to as the <a>credential</a> status method). It is expected
-that the value will provide enough information to determine the current status
-of the <a>credential</a>. For example, the object could contain a link to an
-external document noting whether or not the <a>credential</a> is suspended or
-revoked.
+<code>type</code> <a>속성</a>은 <a>크리덴셜</a> 상태 유형(<a>크리덴셜</a> 상태 메소드라고도 함)을 나타낸다. 
+이 값은 <a>크리덴셜</a>의 현재 상태를 판별하기에 충분한 정보를 제공해야 한다. 
+예를 들어, <a>크리덴셜</a>의 일시 중지 여부에 대한 외부 문서 링크가 포함될 수 있다.
               </li>
             </ul>
           </dd>
         </dl>
-
         <p>
-The precise contents of the <a>credential</a> status information is determined
-by the specific <code>credentialStatus</code> <a>type</a> definition, and varies
-depending on factors such as whether it is simple to implement or if it is
-privacy-enhancing.
+<a>크리덴셜</a> 상태 정보의 정확한 내용은 
+특정 <code>credentialStatus</code><a>유형</a> 정의에 의해 결정되며 
+구현이 간단한지 또는 개인정보 보안강화 여부와 같은 요소에 따라 다르다.
         </p>
 
-        <pre class="example nohighlight" title="Usage of the status property">
+        <pre class="example nohighlight" title="상태 속성 사용예시">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1898,72 +1891,59 @@ privacy-enhancing.
         </pre>
 
         <p>
-Defining the data model, formats, and protocols for status schemes are out of
-scope for this specification. A Verifiable Credential Extension Registry
-[[?VC-EXTENSION-REGISTRY]] exists that contains available status schemes
-for implementers who want to implement <a>verifiable credential</a>
-status checking.
+상태 체계에 대한 데이터 모델, 형식 및 프로토콜 정의는 이 사양에서 다루지 않는다.
+a>검증가능한 크리덴셜</a> 상태 확인의 구현을 원하는 개발자가 사용할 수 있는 
+상태 스키마를 포함하는 Verifiable Credentials Extension Registry [[?VC-EXTENSION-REGISTRY]]가 존재한다.
         </p>
       </section>
 
-      <section>
-        <h3>Presentations</h3>
+      <section id="presentations">
+        <h3>프레젠테이션</h3>
 
         <p>
-<a>Presentations</a> MAY be used to combine and present <a>credentials</a>.
-They can be packaged in such a way that the authorship of the data is
-<a>verifiable</a>. The data in a <a>presentation</a> is often all about the same
-<a>subject</a>, but there is no limit to the number of <a>subjects</a> or
-<a>issuers</a> in the data. The aggregation of information from multiple
-<a>verifiable credentials</a> is a typical use of
-<a>verifiable presentations</a>.
+<a>프레젠테이션</a>들은 <a>크리덴셜</a>들을 결합하고 제시하는데 사용될 수 있다. 
+이들은 데이터의 소유권을 <a>검증가능한</a> 방식으로 결합될 수 있다. 
+<a>프레젠테이션</a>의 데이터는 대부분 동일한 <a>주체</a>에 관한 것이지만, 데이터의 <a>주체</a>나 <a>발급자</a> 수에는 제한이 없다. 
+여러 <a>검증가능한 크리덴셜</a>에서 정보를 합치는것은 일반적인 <a>검증가능한 프레젠테이션</a>의 사용법이다.
         </p>
 
         <p>
-A <a>verifiable presentation</a> is typically composed of the following
-properties:
+          <a>검증가능한 프레젠테이션</a>은 보통 다음과 같은 속성들로 구성되어있다.
         </p>
 
         <dl>
           <dt><var>id</var></dt>
           <dd>
-The <code>id</code> <a>property</a> is optional and MAY be used to provide a
-unique identifier for the <a>presentation</a>. For details related to the use of
-this property, see Section <a href="#identifiers"></a>.
+<code>id</code><a>속성</a>은 선택적이고 <a>프레젠테이션</a>의 고유한 식별자로 사용될 수 있다.
+ 이 속성에 관한 자세한 사항은 <a href="#identifiers"></a>에서 볼 수 있다.
           </dd>
           <dt><var>type</var></dt>
           <dd>
-The <code>type</code> <a>property</a> is required and expresses the
-type of <a>presentation</a>, such as <code>VerifiablePresentation</code>. For
-details related to the use of this property, see Section <a href="#types"></a>.
+<code>type</code><a>속성</a>은 필수적이고 <code>VerifiablePresentation</code> 같이 <a>프레젠테이션</a>의 유형을 표현한다.
+이 속성에 관한 자세한 사항은 <a href="#types"></a>에서 볼 수 있다.
           </dd>
           <dt><var>verifiableCredential</var></dt>
           <dd>
-If present, the value of the <code>verifiableCredential</code> <a>property</a>
-MUST be constructed from one or more <a>verifiable credentials</a>, or of data
-derived from <a>verifiable credentials</a> in a cryptographically
-<a>verifiable</a> format.
+만약 <code>verifiableCredential</code><a>속성</a>이 존재한다면, 
+최소 한개 이상의 <a>검증가능한 프레젠테이션</a>이나 
+암호학적으로 <a>검증가능한</a> 형태의 <a>검증가능한 크리덴셜</a>의 데이터로 무조건 구성되어야 한다.
           </dd>
           <dt><var>holder</var></dt>
           <dd>
-If present, the value of the <code>holder</code> <a>property</a>
-is expected to be a <a>URI</a> for the entity that is generating the
-<a>presentation</a>.
+만약 <code>holder</code><a>속성</a>이 존재한다면, 이 <a>프레젠테이션</a>을 생성하는 엔터티의 <a>URI</a>여야 한다.
           </dd>
           <dt><var>proof</var></dt>
           <dd>
-If present, the value of the <code>proof</code> <a>property</a> ensures that
-the <a>presentation</a> is <a>verifiable</a>. For details related to the use of
-this property, see Section <a href="#proofs-signatures"></a>.
+만약 <code>proof</code><a>속성</a>이 존재한다면, <code>proof</code>의 값이 <a>프레젠테이션</a>이 <a>검증가능한</a>것임을 보장한다.
+이 속성에 관한 자세한 사항은 <a href="#proofs-signatures"></a>에서 볼 수 있다.
           </dd>
         </dl>
 
         <p>
-The example below shows a <a>verifiable presentation</a> that embeds
-<a>verifiable credentials</a>.
+아래 예제는 <a>검증가능한 크리덴셜</a>들을 포함하고 있는 <a>검증가능한 프레젠테이션</a>을 보여준다.
         </p>
 
-        <pre class="example nohighlight" title="Basic structure of a presentation">
+        <pre class="example nohighlight" title="프레젠테이션의 기본 구조">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1977,48 +1957,40 @@ The example below shows a <a>verifiable presentation</a> that embeds
         </pre>
 
         <p>
-The contents of the <code>verifiableCredential</code> <a>property</a> shown
-above are <a>verifiable credentials</a>, as described by this specification. The
-contents of the <code>proof</code> <a>property</a> are proofs, as described by
-the Linked Data Proofs [[?LD-PROOFS]] specification. An example of a
-<a>verifiable presentation</a> using the JWT proof mechanism is given in section
-<a href="#json-web-token"></a>.
+위에 표시된 <code>verifiableCredential</code><a>속성</a>의 내용은 이 사양에 설명 된대로 <a>검증가능한 크리덴셜</a>이다. 
+<code>proof</code><a>속성</a>의 내용은 Linked Data Proofs [[?LD-PROOFS]] 사양에 설명 된 증명방법이다. 
+JWT 증명 방법을 이용한 <a>검증가능한 프레젠테이션</a> 예시는 <a href="#json-web-token"></a>에서 볼 수있다.
         </p>
 
-        <h4>Presentations Using Derived Credentials</h4>
+        <h4>파생된 크리덴셜들로 만드는 프레젠테이션</h4>
 
         <p>
-Some zero-knowledge cryptography schemes might enable <a>holders</a> to
-indirectly prove they hold <a>claims</a> from a <a>verifiable credential</a>
-without revealing the <a>verifiable credential</a> itself. In these schemes, a
-<a>claim</a> from a <a>verifiable credential</a> might be used to derive a
-presented value, which is cryptographically asserted such that a <a>verifier</a>
-can trust the value if they trust the <a>issuer</a>.
+일부 영지식 증명 체계는 <a>보유자</a>가 <a>검증가능한 크리덴셜</a> 자체를 밝히지 않고 
+<a>검증가능한 크리덴셜</a>으로부터 <a>클레임</a>들을 보유하고 있음을 간접적으로 입증 할 수있도록 해준다. 
+이러한 방식에서, <a>검증가능한 크리덴셜</a>의 <a>클레임</a>들은 
+제시된 값을 도출한는데 사용될 수 있으며, 
+이는 <a>검증자</a>가 <a>발급자</a>를 신뢰하는 경우, 암호학적으로 그 값을 보장할 수 있다.
         </p>
 
         <p>
-For example, a <a>verifiable credential</a> containing the <a>claim</a>
-<code>date of birth</code> might be used to derive the presented value
-<code>over the age of 15</code> in a manner that is cryptographically
-<a>verifiable</a>. That is, a <a>verifier</a> can still trust the derived value
-if they trust the <a>issuer</a>.
+예를 들어, <code>생년월일</code> <a>클레임</a>이 포함된 <a>검증가능한 크리덴셜</a>을 사용하여 
+<code>15세 이상</code>의 제시된 값을 암호학적으로 <a>검증가능한</a>방식으로 도출할 수 있다. 
+즉, <a>검증자</a>는 <a>발행자</a>를 신뢰하는 경우 파생된 값을 계속 신회할 수 있다.
         </p>
 
         <p class="note">
-For an example of a ZKP-style <a>verifiable presentation</a> containing
-derived data instead of directly embedded <a>verifiable credentials</a>, see
-Section <a href="#zero-knowledge-proofs"></a>.
+<a>검증가능한 크리덴셜</a>에서 데이터를 직접 내포하지 않고 추출해서 사용하는 
+ZKP 스타일의 <a>검증가능한 프레젠테이션</a> 예시를 보고싶다면 
+<a href="#zero-knowledge-proofs"></a>를 참조.
         </p>
 
         <p>
-Selective disclosure schemes using zero-knowledge proofs can use <a>claims</a>
-expressed in this model to prove additional statements about those <a>claims</a>.
-For example, a <a>claim</a> specifying a <a>subject's</a> date of birth can be
-used as a predicate to prove the <a>subject's</a> age is within a given range,
-and therefore prove the <a>subject</a> qualifies for age-related discounts,
-without actually revealing the <a>subject's</a> birthdate. The <a>holder</a>
-has the flexibility to use the <a>claim</a> in any way that is applicable to
-the desired <a>verifiable presentation</a>.
+영지식 증명을 사용하는 선택적 공개 체계에서는 이 모델에 포현된 <a>클레임</a>들을 사용하여 
+해당 <a>클레임</a>에 대한 추가적인 주장들을 만들어낼 수 있다. 
+예를 들어, 어떤 <a>주체</a>의 생년월일을 나타내는 <a>클레임</a>은 
+해당 주체의 나이가 주어진 범위 안에 있음을 증명하는데 사용될 수 있고, 
+따라서 대상이 나이 관련 할인을 받을 수 있음을 실제로 <a>주체</a>의 생년월일을 밝히지 않고 증명할 수 있다. 
+<a>보유자</a>는 원하는 <a>검증가능한 프레젠테이션</a>에 적용할 수 있는 방식으로 <a>클레임</a>을 사용할 수 있는 유연성을 가지게 된다.
         </p>
 
         <figure>
@@ -2026,8 +1998,7 @@ the desired <a>verifiable presentation</a>.
             src="diagrams/claim-example-2.svg" alt="Pat has a property
             dateOfBirth whose value is 2010-01-01T19:73:24Z">
           <figcaption style="text-align: center;">
-A basic claim expressing that Pat's date of birth is 2010-01-01T19:23:24Z. Date
-encoding would be determined by the schema.
+            Pat의 생년월일이 2010-01-01T19:23:24Z라는걸 나타내는 기본적인 클레임. 시간 인코딩은 스키마에따라 결정된다.
           </figcaption>
         </figure>
 
@@ -4950,8 +4921,8 @@ expiration date of a <a>verifiable credential</a> is not in the past.
         </p>
       </section>
 
-      <section class="informative">
-        <h3>Status</h3>
+      <section class="informative" id="status">
+        <h3>상태</h3>
 
         <p>
 If the <code>credentialStatus</code> property is available, the status of a
