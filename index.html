@@ -1194,55 +1194,48 @@ This concept is further expanded on in Section <a href="#extensibility"></a>.
 
       </section>
 
-      <section>
-        <h3>Identifiers</h3>
+      <section id="identifiers">
+        <h3>식별자</h3>
 
         <p>
-When expressing statements about a specific thing, such as a person, product,
-or organization, it is often useful to use some kind of identifier so that
-others can express statements about the same thing. This specification defines
-the optional <code>id</code> <a>property</a> for such identifiers. The
-<code>id</code> <a>property</a> is intended to unambiguously refer to an object,
-such as a person, product, or organization. Using the <code>id</code>
-<a>property</a> allows for the expression of statements about specific things in
-the <a>verifiable credential</a>.
+사람, 제품, 또는 조직과 같은 특정한 것에 대해 표현할때, 
+다른 사람들이 동일한 것을 표현할 수 있도록 식별자를 사용하는 것이 유용하다. 
+이 규격에서는 이러한 식별자들에 대한 선택적 <code>id</code> 속성을 정의한다. 
+<code>id</code> <a>속성</a>은 사람, 제품 또는 조직과 같은 객체를 명확하게 참조하기 위한 것이다. 
+<code>id</code> <a>속성</a>을 사용하면 
+<a>검증가능한 크리덴셜</a>을 통해 특정한 사물을 표현할 수 있게 된다.
         </p>
 
         <p>
-<em>If</em> the <code>id</code> <a>property</a> is present:
+<em>만약</em> <code>id</code> <a>속성</a>이 존재한다면:
         </p>
 
         <ul>
           <li>
-The <code>id</code> <a>property</a> MUST express an identifier that others are
-expected to use when expressing statements about a specific thing identified
-by that identifier.
+<code>id</code> <a>속성</a>을 표현할 때 반드시 다른 사용자들이 특정 사물을 표현할 때 사용할 것으로 예상되는 식별자로 표현해야 한다.
           </li>
           <li>
-The <code>id</code> <a>property</a> MUST NOT have more than one value.
+<code>id</code> <a>속성</a>은 반드시 하나의 값만 가져야 한다.
           </li>
           <li>
-The value of the <code>id</code> <a>property</a> MUST be a URI.
+<code>id</code> <a>속성</a>의 값은 반드시 URI 이어야 한다
           </li>
         </ul>
 
         <p class="note">
-Developers should remember that identifiers might be harmful in scenarios
-where pseudonymity is required. Developers are encouraged to read Section
-<a href="#identifier-based-correlation"></a> carefully when considering such
-scenarios. There are also other types of correlation mechanisms documented in
-Section <a href="#privacy-considerations"></a> that create privacy concerns.
-Where privacy is a strong consideration, the <code>id</code> <a>property</a>
-MAY be omitted.
+개발자들은 익명성이 요구되는 시나리오에서 식별자가 유해할 수 있다는 것을 기억해야 한다. 
+그러한 시나리오를 고려할 때 <a href="#identifier-based-correlation"></a> 부분을 주의깊게 읽을 것을 권장한다. 
+프라이버시 문제를 만들어 내는 다른 유형의 연관메커니즘문서도 
+<a href="#privacy-considerations"></a>에서 다룬다. 
+프라이버시가 중요한 고려사항인 경우 <code>id</code> <a>속성</a>은 생략 될 수 있다.	
         </p>
 
         <dl>
           <dt><dfn>id</dfn></dt>
           <dd>
-The value of the <code>id</code> <a>property</a> MUST be a single <a>URI</a>.
-It is RECOMMENDED that the <a>URI</a> in the <code>id</code> be one which, if
-dereferenced, results in a document containing machine-readable information
-about the <code>id</code>.
+<code>id</code> <a>속성</a> 값은 반드시 단일 <a>URI</a>여야 한다. 
+역참조되는 경우 <a>URI</a>는 <code>id</code>에 대한 
+기계판독가능정보를 포함한 문서를 생성하는 것이 권장된다.
           </dd>
         </dl>
 
@@ -1266,57 +1259,51 @@ about the <code>id</code>.
         </pre>
 
         <p>
-The example above uses two types of identifiers. The first identifier is for
-the <a>verifiable credential</a> and uses an HTTP-based URL. The second
-identifier is for the <a>subject</a> of the <a>verifiable credential</a> (the
-thing the <a>claims</a> are about) and uses a <a>decentralized identifier</a>,
-also known as a <a>DID</a>.
+위의 예는 두 가지 유형의 식별자를 사용한다. 
+첫 번째는 <a>검증가능한 크리덴셜</a>을 위한 것이며 HTTP 기반 URL을 사용한다. 
+두 번째는 <a>검증가능한 크리덴셜</a>의 <a>주체</a>(<a>클레임</a>이 관련된 것)를 위한 것이며 
+<a>DID</a>라고도하는 <a>탈중앙 식별자</a>를 사용한다.
         </p>
 
         <p class="note">
-As of this publication, <a>DIDs</a> are a new type of identifier that are not
-necessary for <a>verifiable credentials</a> to be useful. Specifically,
-<a>verifiable credentials</a> do not depend on <a>DIDs</a> and <a>DIDs</a> do
-not depend on <a>verifiable credentials</a>. However, it is expected that many
-<a>verifiable credentials</a> will use <a>DIDs</a> and that software libraries
-implementing this specification will probably need to resolve <a>DIDs</a>.
-<a>DID</a>-based URLs are used for expressing identifiers associated with
-<a>subjects</a>, <a>issuers</a>, <a>holders</a>, credential status lists,
-cryptographic keys, and other machine-readable information associated with a
-<a>verifiable credential</a>.
+본 간행물에 의하면, <a>DIDs</a>는  새로운 유형의 식별자이지만 
+<a>검증가능한 크리덴셜</a>의 유용성에 필수는 아니다. 
+구체적으로 <a>검증가능한 크리덴셜</a>은 <a>DIDs</a>에 의존하지 않으며, 
+<a>DIDs</a>는 <a>검증가능한 크리덴셜</a>에 의존하지 않는다. 
+그렇지만 많은 <a>검증가능한 크리덴셜</a>이 <a>DIDs</a>를 사용할 것으로 예상되고, 
+이 규격을 구현하는 소프트웨어 라이브러리는 <a>DIDs</a>를 구현할 필요가 있을 것이다. 
+<a>DID</a> 기반 URL은 <a>주체</a>, <a>발급자</a>, <a>보유자</a>, 크리덴셜 상태 목록, 암호화 키 
+그리고 <a>검증가능한 크리덴셜</a>과 관련된 기계 판독 가능 정보를 관련된 식별자로 표현하는 데 사용된다.
         </p>
       </section>
 
-      <section>
-        <h3>Types</h3>
+      <section id="types">
+        <h3>타입</h3>
 
         <p>
-Software systems that process the kinds of objects specified in this document
-use type information to determine whether or not a provided
-<a>verifiable credential</a> or <a>verifiable presentation</a> is appropriate.
-This specification defines a <code>type</code> <a>property</a> for the
-expression of type information.
+이 문서에 지정된 객체들을 처리하는 소프트웨어 시스템은 제공된 
+<a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>이 적절한지 여부를 결정하기 위해 
+<code>type</code>정보를 사용한다. 
+이 규격은 타입 정보 표현에 대한 <code>type</code><a>속성</a>을 정의한다.
         </p>
 
         <p>
-<a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST have a
-<code>type</code> <a>property</a>. That is, any <a>credential</a> or
-<a>presentation</a> that does not have <code>type</code> <a>property</a>
-<em>is not <a>verifiable</a></em>, so is neither a <a>verifiable credential</a>
-nor a <a>verifiable presentation</a>.
+<a>검증가능한 크리덴셜</a>과 <a>검증가능한 프레젠테이션</a>에는 
+반드시 <code>type</code><a>속성</a>이 있어야 한다. 
+따라서 <code>type</code><a>속성</a>이 없는 <a>크리덴셜</a>, 또는 <a>프레젠테이션</a>은 
+<a>검증</a>을 할수 없으므로 <a>검증가능한 크리덴셜</a>이나 <a>검증가능한 프레젠테이션</a>이 아니다.
         </p>
 
         <dl>
           <dt><dfn data-lt="type|types|타입">type</dfn></dt>
           <dd>
-The value of the <code>type</code> <a>property</a> MUST be, or map to (through
-interpretation of the <code>@context</code> property), one or more <a>URIs</a>.
-If more than one <a>URI</a> is provided, the <a>URIs</a> MUST be interpreted
-as an unordered set. Syntactic conveniences SHOULD be used to ease developer
-usage. Such conveniences might include JSON-LD terms. It is RECOMMENDED that
-each <a>URI</a> in the <code>type</code> be one which, if dereferenced, results
-in a document containing machine-readable information about the
-<code>type</code>.
+<code>type</code><a>속성</a>의 값은 반드시 맵핑된(<code>@context</code> 속성의 해석을 통해), 
+하나 또는 이상의 <a>URIs</a>다. 
+만약 복수의 <a>URI</a>들이 제공되었다면, <a>URIs</a>는 순서가 없는 집합으로 해석해야 한다. 
+개발편의를 위해 문법적 편의성을 반드시 사용해야 한다. 
+이러한 편의성에는 JSON-LD 용어가 포함될 수 있다. 
+<code>type</code>의 각 <a>URI</a>가 역참조되는 경우 
+<code>type</code>에 대한 기계판독가능정보가 포함된 문서를 생성하는 것이 권장된다.
           </dd>
         </dl>
 
@@ -1340,8 +1327,7 @@ in a document containing machine-readable information about the
         </pre>
 
         <p>
-With respect to this specification, the following table lists the objects that
-MUST have a <a>type</a> specified.
+규격준수와 관련하여, 다음 표에는 객체들이 반드시 가져야 하는 <a>타입</a>이 명시되어 있다
         </p>
 
         <table class="simple">
@@ -1443,68 +1429,58 @@ A valid evidence <a>type</a>. For example,<br>
         </table>
 
         <p class="note">
-The <a>type</a> system for the Verifiable Credentials Data Model is the same as
-for [[JSON-LD]] and is detailed in
-<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 5.4:
-Specifying the Type</a> and
-<a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 8: JSON-LD
-Grammar</a>. When using a JSON-LD context (see Section
-<a href="#extensibility"></a>), this specification aliases the
-<code>@type</code> keyword to <code>type</code> to make the JSON-LD documents
-more easily understood. While application developers and document authors do
-not need to understand the specifics of the JSON-LD type system, implementers
-of this specification who want to support interoperable extensibility, do.
+검증가능한 크리덴셜 데이터 모델의 <a>타입</a>시스템은 [[JSON-LD]]와 동일하며 
+<a href="https://www.w3.org/TR/json-ld/#specifying-the-type">섹션 5.4:
+Specifying the Type</a> 그리고 <a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">섹션 8: JSON-LD
+Grammar</a>에 자세히 설명되어 있다. JSON-LD 컨텍스트를 사용할 때 (
+<a href="#extensibility"></a> 참조), 
+이 규격의 <code>@type</code> 키워드를 다른 이름인 <code>type</code>으로 바꾸면 
+JSON-LD 문서의 이해가 쉬워질 것이다. 
+애플리케이션 개발자와 문서 작성자는 JSON-LD 타입 시스템의 세부사항을 이해할 필요는 없지만, 
+상호운용 가능한 확장성을 지원하려는 이 규격의 구현자들은 그 내용을 이해해야 한다.
         </p>
 
         <p>
-All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
-specify, or be associated with, additional more narrow <a>types</a> (like
-<code>UniversityDegreeCredential</code>, for example) so software systems can
-process this additional information.
+모든 <a>크리덴셜</a>, <a>프레젠테이션</a>, 그리고 캡슐화된 객채들은 추가정보를 처리할 수 있도록, 
+더욱 제한된 <a>타입</a>들(예를 들어 <code>UniversityDegreeCredential</code>과 같은)을 
+반드시 명시하거나 연관시켜야 한다.
         </p>
 
         <p>
-When processing encapsulated objects defined in this specification, (for
-example, objects associated with the <code>credentialSubject</code> object or
-deeply nested therein), software systems SHOULD use the <a>type</a> information
-specified in encapsulating objects higher in the hierarchy. Specifically, an
-encapsulating object, such as a <a>credential</a>, SHOULD convey the associated
-object <a>types</a> so that <a>verifiers</a> can quickly determine the contents
-of an associated object based on the encapsulating object <a>type</a>.
+이 규격에 정의된 캡슐화된 객체
+(예를 들어 <code>credentialSubject</code>객체와 관련되거나 깊이 중첩된 객체들)들을 처리할 때, 
+소프트웨어 시스템은 객체를 캡슐화할때 사용된 상위 계층의<a>타입</a> 정보를 사용해야 한다. 
+구체적으로 <a>크리덴셜</a>과 같은 캡슐화된 객체들은 연관된 객체 <a>타입</a>을 전달하여, 
+<a>검증자</a>가 캡슐화 객체의 <a>타입</a>에 기초하여 관련 객체의 내용을 신속하게 파악할 수 있어야한다.
         </p>
 
         <p>
-For example, a <a>credential</a> object with the <code>type</code> of
-<code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that the
-object associated with the <code>credentialSubject</code> property contains the
-identifier for the:
+예를 들어, <code>UniversityDegreeCredential</code>과 같은 <code>type</code>의 <a>크리덴셜</a> 객체는 
+다음 항목을 위한 <a>식별자</a>가 <code>credentialSubject</code> 속성에 포함되어 있다는 것을 
+검증자에게 전송한다:
         </p>
 
         <ul>
           <li>
-<a>Subject</a> in the <code>id</code> property.
+<code>id</code> 속성이 가지고 있는 <a>주체</a>
           </li>
           <li>
-Type of degree in the <code>type</code> property.
+<code>type</code> 속성이 가지고 있는 학위 형식
           </li>
           <li>
-Title of the degree in the <code>name</code> property.
+<code>name</code> 속성이 가지고 있는 학위 타이틀
           </li>
         </ul>
 
         <p>
-This enables implementers to rely on values associated with the
-<code>type</code> property for <a>verification</a> purposes. The expectation of
-<a>types</a> and their associated properties should be documented in at least a
-human-readable specification, and preferably, in an additional machine-readable
-representation.
+이를 통해 구현자는 <a>검증</a>을 목적으로 <code>type</code> 속성과 관련된 값에 의존할 수 있다. 
+<a>타입</a> 및 관련 속성은 최소한 사람이 읽을 수 있는 규격으로 문서화하는 것과 함께,
+가급적 기계판독가능한 설명을 추가해야 한다.
         </p>
 
         <p class="note">
-The type system used in the data model described in this specification allows
-for multiple ways to associate types with data. Implementers and authors are
-urged to read the section on typing in the Verifiable Credentials
-Implementation Guidelines [[?VC-IMP-GUIDE]].
+이 규격에 기술된 데이터 모델에 사용되는 타입 시스템은 타입과 데이터를 연결하는 여러가지 방법을 허용한다. 
+구현자와 작성자는 검증가능한 크리덴셜 구현 가이드[[?VC-IMP-GUIDE]]의 타이핑에 관한 섹션을 읽어야 한다.
         </p>
 
       </section>
@@ -1859,44 +1835,37 @@ preserves backwards compatability with the <code>expirationDate</code>
 
       </section>
 
-      <section>
-        <h3>Status</h3>
+      <section id="status">
+        <h3>상태</h3>
 
         <p>
-This specification defines the following <code>credentialStatus</code>
-<a>property</a> for the discovery of information about the current status of a
-<a>verifiable credential</a>, such as whether it is suspended or revoked.
+이 규격은 <a>검증가능한 크리덴셜</a>의 현재 상태(예를들어 일시중지 또는 취소)에 대한 정보를 검색하기 위해 
+다음 <code>credentialStatus</code><a>속성</a>을 정의한다.
         </p>
 
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>
-The value of the <code>credentialStatus</code> <a>property</a> MUST include the:
-
+            <code>credentialStatus</code> <a>속성</a>의 값은 무조건 다음 사항들을 포함해야 한다.
             <ul>
               <li>
-<code>id</code> <a>property</a>, which MUST be a URL.
+<code>id</code> <a>속성</a>은 무조건 URL이여야 한다.
               </li>
               <li>
-<code>type</code> <a>property</a>, which expresses the <a>credential</a> status
-type (also referred to as the <a>credential</a> status method). It is expected
-that the value will provide enough information to determine the current status
-of the <a>credential</a>. For example, the object could contain a link to an
-external document noting whether or not the <a>credential</a> is suspended or
-revoked.
+<code>type</code> <a>속성</a>은 <a>크리덴셜</a> 상태 유형(<a>크리덴셜</a> 상태 메소드라고도 함)을 나타낸다. 
+이 값은 <a>크리덴셜</a>의 현재 상태를 판별하기에 충분한 정보를 제공해야 한다. 
+예를 들어, <a>크리덴셜</a>의 일시 중지 여부에 대한 외부 문서 링크가 포함될 수 있다.
               </li>
             </ul>
           </dd>
         </dl>
-
         <p>
-The precise contents of the <a>credential</a> status information is determined
-by the specific <code>credentialStatus</code> <a>type</a> definition, and varies
-depending on factors such as whether it is simple to implement or if it is
-privacy-enhancing.
+<a>크리덴셜</a> 상태 정보의 정확한 내용은 
+특정 <code>credentialStatus</code><a>유형</a> 정의에 의해 결정되며 
+구현이 간단한지 또는 개인정보 보안강화 여부와 같은 요소에 따라 다르다.
         </p>
 
-        <pre class="example nohighlight" title="Usage of the status property">
+        <pre class="example nohighlight" title="상태 속성 사용예시">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1922,72 +1891,59 @@ privacy-enhancing.
         </pre>
 
         <p>
-Defining the data model, formats, and protocols for status schemes are out of
-scope for this specification. A Verifiable Credential Extension Registry
-[[?VC-EXTENSION-REGISTRY]] exists that contains available status schemes
-for implementers who want to implement <a>verifiable credential</a>
-status checking.
+상태 체계에 대한 데이터 모델, 형식 및 프로토콜 정의는 이 사양에서 다루지 않는다.
+a>검증가능한 크리덴셜</a> 상태 확인의 구현을 원하는 개발자가 사용할 수 있는 
+상태 스키마를 포함하는 Verifiable Credentials Extension Registry [[?VC-EXTENSION-REGISTRY]]가 존재한다.
         </p>
       </section>
 
-      <section>
-        <h3>Presentations</h3>
+      <section id="presentations">
+        <h3>프레젠테이션</h3>
 
         <p>
-<a>Presentations</a> MAY be used to combine and present <a>credentials</a>.
-They can be packaged in such a way that the authorship of the data is
-<a>verifiable</a>. The data in a <a>presentation</a> is often all about the same
-<a>subject</a>, but there is no limit to the number of <a>subjects</a> or
-<a>issuers</a> in the data. The aggregation of information from multiple
-<a>verifiable credentials</a> is a typical use of
-<a>verifiable presentations</a>.
+<a>프레젠테이션</a>들은 <a>크리덴셜</a>들을 결합하고 제시하는데 사용될 수 있다. 
+이들은 데이터의 소유권을 <a>검증가능한</a> 방식으로 결합될 수 있다. 
+<a>프레젠테이션</a>의 데이터는 대부분 동일한 <a>주체</a>에 관한 것이지만, 데이터의 <a>주체</a>나 <a>발급자</a> 수에는 제한이 없다. 
+여러 <a>검증가능한 크리덴셜</a>에서 정보를 합치는것은 일반적인 <a>검증가능한 프레젠테이션</a>의 사용법이다.
         </p>
 
         <p>
-A <a>verifiable presentation</a> is typically composed of the following
-properties:
+          <a>검증가능한 프레젠테이션</a>은 보통 다음과 같은 속성들로 구성되어있다.
         </p>
 
         <dl>
           <dt><var>id</var></dt>
           <dd>
-The <code>id</code> <a>property</a> is optional and MAY be used to provide a
-unique identifier for the <a>presentation</a>. For details related to the use of
-this property, see Section <a href="#identifiers"></a>.
+<code>id</code><a>속성</a>은 선택적이고 <a>프레젠테이션</a>의 고유한 식별자로 사용될 수 있다.
+ 이 속성에 관한 자세한 사항은 <a href="#identifiers"></a>에서 볼 수 있다.
           </dd>
           <dt><var>type</var></dt>
           <dd>
-The <code>type</code> <a>property</a> is required and expresses the
-type of <a>presentation</a>, such as <code>VerifiablePresentation</code>. For
-details related to the use of this property, see Section <a href="#types"></a>.
+<code>type</code><a>속성</a>은 필수적이고 <code>VerifiablePresentation</code> 같이 <a>프레젠테이션</a>의 유형을 표현한다.
+이 속성에 관한 자세한 사항은 <a href="#types"></a>에서 볼 수 있다.
           </dd>
           <dt><var>verifiableCredential</var></dt>
           <dd>
-If present, the value of the <code>verifiableCredential</code> <a>property</a>
-MUST be constructed from one or more <a>verifiable credentials</a>, or of data
-derived from <a>verifiable credentials</a> in a cryptographically
-<a>verifiable</a> format.
+만약 <code>verifiableCredential</code><a>속성</a>이 존재한다면, 
+최소 한개 이상의 <a>검증가능한 프레젠테이션</a>이나 
+암호학적으로 <a>검증가능한</a> 형태의 <a>검증가능한 크리덴셜</a>의 데이터로 무조건 구성되어야 한다.
           </dd>
           <dt><var>holder</var></dt>
           <dd>
-If present, the value of the <code>holder</code> <a>property</a>
-is expected to be a <a>URI</a> for the entity that is generating the
-<a>presentation</a>.
+만약 <code>holder</code><a>속성</a>이 존재한다면, 이 <a>프레젠테이션</a>을 생성하는 엔터티의 <a>URI</a>여야 한다.
           </dd>
           <dt><var>proof</var></dt>
           <dd>
-If present, the value of the <code>proof</code> <a>property</a> ensures that
-the <a>presentation</a> is <a>verifiable</a>. For details related to the use of
-this property, see Section <a href="#proofs-signatures"></a>.
+만약 <code>proof</code><a>속성</a>이 존재한다면, <code>proof</code>의 값이 <a>프레젠테이션</a>이 <a>검증가능한</a>것임을 보장한다.
+이 속성에 관한 자세한 사항은 <a href="#proofs-signatures"></a>에서 볼 수 있다.
           </dd>
         </dl>
 
         <p>
-The example below shows a <a>verifiable presentation</a> that embeds
-<a>verifiable credentials</a>.
+아래 예제는 <a>검증가능한 크리덴셜</a>들을 포함하고 있는 <a>검증가능한 프레젠테이션</a>을 보여준다.
         </p>
 
-        <pre class="example nohighlight" title="Basic structure of a presentation">
+        <pre class="example nohighlight" title="프레젠테이션의 기본 구조">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2001,48 +1957,40 @@ The example below shows a <a>verifiable presentation</a> that embeds
         </pre>
 
         <p>
-The contents of the <code>verifiableCredential</code> <a>property</a> shown
-above are <a>verifiable credentials</a>, as described by this specification. The
-contents of the <code>proof</code> <a>property</a> are proofs, as described by
-the Linked Data Proofs [[?LD-PROOFS]] specification. An example of a
-<a>verifiable presentation</a> using the JWT proof mechanism is given in section
-<a href="#json-web-token"></a>.
+위에 표시된 <code>verifiableCredential</code><a>속성</a>의 내용은 이 사양에 설명 된대로 <a>검증가능한 크리덴셜</a>이다. 
+<code>proof</code><a>속성</a>의 내용은 Linked Data Proofs [[?LD-PROOFS]] 사양에 설명 된 증명방법이다. 
+JWT 증명 방법을 이용한 <a>검증가능한 프레젠테이션</a> 예시는 <a href="#json-web-token"></a>에서 볼 수있다.
         </p>
 
-        <h4>Presentations Using Derived Credentials</h4>
+        <h4>파생된 크리덴셜들로 만드는 프레젠테이션</h4>
 
         <p>
-Some zero-knowledge cryptography schemes might enable <a>holders</a> to
-indirectly prove they hold <a>claims</a> from a <a>verifiable credential</a>
-without revealing the <a>verifiable credential</a> itself. In these schemes, a
-<a>claim</a> from a <a>verifiable credential</a> might be used to derive a
-presented value, which is cryptographically asserted such that a <a>verifier</a>
-can trust the value if they trust the <a>issuer</a>.
+일부 영지식 증명 체계는 <a>보유자</a>가 <a>검증가능한 크리덴셜</a> 자체를 밝히지 않고 
+<a>검증가능한 크리덴셜</a>으로부터 <a>클레임</a>들을 보유하고 있음을 간접적으로 입증 할 수있도록 해준다. 
+이러한 방식에서, <a>검증가능한 크리덴셜</a>의 <a>클레임</a>들은 
+제시된 값을 도출한는데 사용될 수 있으며, 
+이는 <a>검증자</a>가 <a>발급자</a>를 신뢰하는 경우, 암호학적으로 그 값을 보장할 수 있다.
         </p>
 
         <p>
-For example, a <a>verifiable credential</a> containing the <a>claim</a>
-<code>date of birth</code> might be used to derive the presented value
-<code>over the age of 15</code> in a manner that is cryptographically
-<a>verifiable</a>. That is, a <a>verifier</a> can still trust the derived value
-if they trust the <a>issuer</a>.
+예를 들어, <code>생년월일</code> <a>클레임</a>이 포함된 <a>검증가능한 크리덴셜</a>을 사용하여 
+<code>15세 이상</code>의 제시된 값을 암호학적으로 <a>검증가능한</a>방식으로 도출할 수 있다. 
+즉, <a>검증자</a>는 <a>발행자</a>를 신뢰하는 경우 파생된 값을 계속 신회할 수 있다.
         </p>
 
         <p class="note">
-For an example of a ZKP-style <a>verifiable presentation</a> containing
-derived data instead of directly embedded <a>verifiable credentials</a>, see
-Section <a href="#zero-knowledge-proofs"></a>.
+<a>검증가능한 크리덴셜</a>에서 데이터를 직접 내포하지 않고 추출해서 사용하는 
+ZKP 스타일의 <a>검증가능한 프레젠테이션</a> 예시를 보고싶다면 
+<a href="#zero-knowledge-proofs"></a>를 참조.
         </p>
 
         <p>
-Selective disclosure schemes using zero-knowledge proofs can use <a>claims</a>
-expressed in this model to prove additional statements about those <a>claims</a>.
-For example, a <a>claim</a> specifying a <a>subject's</a> date of birth can be
-used as a predicate to prove the <a>subject's</a> age is within a given range,
-and therefore prove the <a>subject</a> qualifies for age-related discounts,
-without actually revealing the <a>subject's</a> birthdate. The <a>holder</a>
-has the flexibility to use the <a>claim</a> in any way that is applicable to
-the desired <a>verifiable presentation</a>.
+영지식 증명을 사용하는 선택적 공개 체계에서는 이 모델에 포현된 <a>클레임</a>들을 사용하여 
+해당 <a>클레임</a>에 대한 추가적인 주장들을 만들어낼 수 있다. 
+예를 들어, 어떤 <a>주체</a>의 생년월일을 나타내는 <a>클레임</a>은 
+해당 주체의 나이가 주어진 범위 안에 있음을 증명하는데 사용될 수 있고, 
+따라서 대상이 나이 관련 할인을 받을 수 있음을 실제로 <a>주체</a>의 생년월일을 밝히지 않고 증명할 수 있다. 
+<a>보유자</a>는 원하는 <a>검증가능한 프레젠테이션</a>에 적용할 수 있는 방식으로 <a>클레임</a>을 사용할 수 있는 유연성을 가지게 된다.
         </p>
 
         <figure>
@@ -2050,8 +1998,7 @@ the desired <a>verifiable presentation</a>.
             src="diagrams/claim-example-2.svg" alt="Pat has a property
             dateOfBirth whose value is 2010-01-01T19:73:24Z">
           <figcaption style="text-align: center;">
-A basic claim expressing that Pat's date of birth is 2010-01-01T19:23:24Z. Date
-encoding would be determined by the schema.
+            Pat의 생년월일이 2010-01-01T19:23:24Z라는걸 나타내는 기본적인 클레임. 시간 인코딩은 스키마에따라 결정된다.
           </figcaption>
         </figure>
 
@@ -2684,53 +2631,49 @@ the <a>verifier</a> to <code>https://example.edu/refresh/3732</code>.
 
       </section>
 
-      <section>
-        <h3>Terms of Use</h3>
+      <section id="terms-of-use">
+        <h3>이용약관</h3>
 
         <p>
-Terms of use can be utilized by an <a>issuer</a> or a <a>holder</a> to
-communicate the terms under which a <a>verifiable credential</a> or
-<a>verifiable presentation</a> was issued. The <a>issuer</a> places their terms
-of use inside the <a>verifiable credential</a>. The <a>holder</a> places their
-terms of use inside a <a>verifiable presentation</a>. This specification defines
-a <code>termsOfUse</code> <a>property</a> for expressing terms of use
-information.
+이용약관은 <a>발급자</a> 또는 <a>보유자</a>가 <a>검증가능한 크리덴셜</a> 또는 
+<a>검증가능한 프레젠테이션</a>이 발급 된 조건을 전달하기 위해 사용될 수 있다. 
+<a>발급자</a>는 이용약관을 <a>검증가능한 크리덴셜</a>에 배치한다. 
+<a>보유자</a>는 이용약관을 <a>검증가능한 프레젠테이션</a>에 배치한다. 
+본 명세서에서는 이용약관 정보를 표현하기 위한 <code>termsOfUse</code> <a>속성</a>을 정의한다.
         </p>
 
         <p>
-The value of the <code>termsOfUse</code> <a>property</a> tells the
-<a>verifier</a> what actions it is required to perform (an <em>obligation</em>),
-not allowed to perform (a <em>prohibition</em>), or allowed to perform (a
-<em>permission</em>) if it is to accept the <a>verifiable credential</a> or
-<a>verifiable presentation</a>.
+<code>termsOfUse</code> <a>속성</a>의 값은 <a>검증자</a>에게 
+<a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>을 
+승인할 경우 수행해야 하는 조치 (<em>의무</em>), 수행이 허용되지 않거나 
+(<em>금지</em>) 또는 수행이 허용되는 (<em>허가</em>) 조치를 
+<a>검증자</a>에게 전한다.
         </p>
 
         <p class="note">
-Further study is required to determine how a <a>subject</a> who is not a
-<a>holder</a> places terms of use on their <a>verifiable credentials</a>. One
-way could be for the <a>subject</a> to request the <a>issuer</a> to place the
-terms of use inside the issued <a>verifiable credentials</a>. Another way
-could be for the <a>subject</a> to delegate a <a>verifiable credential</a> to a
-<a>holder</a> and place terms of use restrictions on the delegated
-<a>verifiable credential</a>.
+<a>보유자</a>가 아닌 <a>주체</a>가 <a>검증가능한 크리덴셜</a>에 
+이용약관을 배치하는 방법을 결정하기 위해서 추가 연구가 필요하다. 
+한가지 방법은 <a>주체</a>가 <a>발급자</a>에게 발급된 
+<a>검증가능한 크리덴셜</a> 내에 이용 약관을 배치하도록 요청할 수 있다. 
+다른 방법은 <a>주체</a>가 <a>검증가능한 크리덴셜</a>을 <a>보유자</a>에게 
+위임하고 위임된 <a>검증가능한 크리덴셜</a>에 이용 약관 제한을 설정할 수 있다.
         </p>
 
         <dl>
           <dt><var>termsOfUse</var></dt>
           <dd>
-The value of the <code>termsOfUse</code> <a>property</a> MUST specify one or
-more terms of use policies under which the creator issued the <a>credential</a>
-or <a>presentation</a>. If the recipient (a <a>holder</a> or
-<a>verifier</a>) is not willing to adhere to the specified terms of use, then
-they do so on their own responsibility and might incur legal liability if they
-violate the stated terms of use. Each <code>termsOfUse</code> value MUST specify
-its <a>type</a>, for example, <code>IssuerPolicy</code>, and MAY specify its
-instance <code>id</code>. The precise contents of each term of use is determined
-by the specific <code>termsOfUse</code> <a>type</a> definition.
+<code>termsOfUse</code> <a>속성</a>의 값은 무조건 작성자가 <a>크리덴셜</a> 또는 
+<a>프레젠테이션</a>을 발행 한 하나 이상의 이용 약관 정책을 지정해야만 한다. 
+수령자 (<a>보유자</a> 또는 <a>검증자</a>)가 지정된 이용 약관을 준수하지 않을 경우, 
+책임을 지고 명시된 이용 약관을 위반할 경우 법적 책임을 질 수 있다. 
+각 <code>termsOfUse</code> 값은 <a>타입</a>을 지정해야 하고 
+(예: <code>IssuerPolicy</code>), 인스턴스 <code>id</code>를 지정할 수 있다. 
+각 이용 약관의 정확한 내용은 특정 code>termsOfUse</code> <a>타입</a> 정의에 의해 
+결정된다.
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of the termsOfUse property by an issuer">
+        <pre class="example nohighlight" title="발급자에 의한 termsOfUse 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2763,12 +2706,11 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
         </pre>
 
         <p>
-In the example above, the <a>issuer</a> (the <code>assigner</code>) is
-prohibiting <a>verifiers</a> (the <code>assignee</code>) from storing the data
-in an archive.
+위의 예에서 <a>발급자</a>(<code>assigner</code>, 양도자)는 
+<a>검증자</a>(<code>assignee</code>, 양수자)가 데이터를 아카이브에 저장하지 못하도록 금지한다.          
         </p>
 
-        <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
+        <pre class="example nohighlight" title="보유자에 의한 termsOfUse 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2810,73 +2752,62 @@ in an archive.
         </pre>
 
         <p>
-In the example above, the <a>holder</a> (the <code>assigner</code>), who is
-also the <a>subject</a>, expressed a term of use prohibiting the <a>verifier</a>
-(the <code>assignee</code>, <code>https://wineonline.example.org</code>) from
-using the information provided to correlate the <a>holder</a> or <a>subject</a>
-using a third-party service. If the <a>verifier</a> were to use a third-party
-service for correlation, they would violate the terms under which the
-</a>holder</a> created the <a>presentation</a>.
+위의 예에서, <a>주체</a>인 <a>보유자</a>(<code>assigner</code>, 양도자)는 
+<a>검증자</a>(<code>assignee</code>, 양수자, <code>https://wineonline.example.org</code>)가 
+제 3자 서비스를 사용하여 <a>보유자</a> 또는 <a>주체</a>의 상관관계를 표현하기 위해 
+제공된 정보를 사용하는 것을 금지하는 사용 기간을 명시한다. 
+<a>검증자</a>가 상관관계를 위해 제 3자 서비스를 사용하는 경우, 
+<a>보유자</a>는 <a>프리젠테이션</a>을 작성하는 조건을 위반한다.
         </p>
 
         <p>
-This feature is also expected to be used by government-issued
-<a>verifiable credentials</a> to instruct digital wallets to limit their use to
-similar government organizations in an attempt to protect citizens from
-unexpected usage of sensitive data. Similarly, some
-<a>verifiable credentials</a> issued by private industry are expected to limit
-usage to within departments inside the organization, or during business hours.
-Implementers are urged to read more about this rapidly evolving feature in the
-appropriate section of the Verifiable Credentials Implementation Guidelines
-[[?VC-IMP-GUIDE]] document.
+이 기능은 정부에서 발행한 <a>검증가능한 크리덴셜</a>에 의해 사용되어 전자 지갑이 
+시민들의 민감한 데이터를 예기치 않게 사용되는 것을 막기 위하여 유사한 정부 기관으로의 
+사용을 제한하도록 지시한다. 유사하게 민간 산업에서 발행한 
+<a>검증가능한 크리덴셜</a>은 조직, 부서 내 또는 업무 시간동안 사용을 제한할 
+것으로 예상된다. 구현자는 검증가능한 크리덴셜 구현 지침 [[?VC-IMP-GUIDE]] 문서의 
+적합한 장에서 빠르게 발전하는 기능에 대하여 자세히 읽어야 한다.
         </p>
 
       </section>
 
-      <section>
-        <h3>Evidence</h3>
+      <section id="evidence">
+        <h3>증거</h3>
 
         <p>
-Evidence can be included by an <a>issuer</a> to provide the <a>verifier</a> with
-additional supporting information in a <a>verifiable credential</a>. This could
-be used by the <a>verifier</a> to establish the confidence with which it relies
-on the claims in the <a>verifiable credential</a>.
+<a>발급자</a>는 <a>검증자</a>에게 <a>검증가능한 크리덴셜</a>에 추가 지원 정보를 
+제공하기 위하여 증거가 포함될 수 있다. 이것은 <a>검증자</a>에 의해 
+<a>검증가능한 크리덴셜</a>의 요구에 의존하는 신뢰를 설정하기 위해 사용될 수 있다.
         </p>
         <p>
-For example, an <a>issuer</a> could check physical documentation provided by the
-<a>subject</a> or perform a set of background checks before issuing the
-<a>credential</a>. In certain scenarios, this information is useful to the
-<a>verifier</a> when determining the risk associated with relying on a given
-<a>credential</a>.
+예를 들어, <a>발급자</a>는 <a>크리덴셜</a>을 발급하기 전에 <a>주체</a>가 제공한 
+실제 문서를 확인하거나 사전 검사를 수행할 수 있다. 특정 시나리오에서 이 정보는 주어진 
+<a>크리덴셜</a>에 의존하는 것과 관련된 위험을 결정할 때 <a>검증자</a>에게 유용하다.
         </p>
 
         <p>
-This specification defines the <code>evidence</code> <a>property</a> for
-expressing evidence information.
+본 명세서는 증거 정보를 표현하기위한 <code>evidence</code> <a>속성</a>을 정의한다.
         </p>
 
         <dl>
           <dt><var>evidence</var></dt>
           <dd>
-The value of the <code>evidence</code> <a>property</a> MUST be one or more
-evidence schemes providing enough information for a <a>verifier</a> to determine
-whether the evidence gathered by the <a>issuer</a> meets its confidence
-requirements for relying on the <a>credential</a>. Each evidence scheme is
-identified by its <a>type</a>. The <code>id</code> <a>property</a> is optional,
-but if present, SHOULD contain a URL that points to where more information about
-this instance of evidence can be found. The precise content of each evidence
-scheme is determined by the specific <code>evidence</code> <a>type</a>
-definition.
+<code>evidence</code> <a>속성</a>의 값은 무조건 <a>검증자</a>가 <a>발급자</a>에 
+의해 수집한 증거가 <a>크리덴셜</a>에 의존하기 위한 신뢰 요구 사항을 충족하는지 여부를 
+판단할 수 있는 충분한 정보를 제공하는 하나 이상의 증거 체계이어야만 한다. 
+각 증거 체계는 <a>타입</a>별로 식별된다.
+<code>id</code> <a>속성</a>은 선택 사항이지만 존재한다면, 이 증거 인스턴스에 대한 
+추가 정보를 찾을 수 있는 URL을 포함해야 한다. 각 증거 체계의 정확한 내용은 특정 
+<code>evidence</code> <a>타입</a> 정의에 의해 결정된다.
           </dd>
         </dl>
 
         <p class="note">
-For information about how attachments and references to <a>credentials</a> and
-non-credential data might be supported by the specification, see the
-Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
+명세서에서 <a>크리덴셜</a> 및 크리덴셜이 아닌 데이터에 대한 첨부 및 참조를 지원하는 
+방법에 대한 자세한 내용은 검증가능한 크리덴셜 구현 지침 [[VC-IMP-GUIDE]] 문서를 참조.
         </p>
 
-        <pre class="example nohighlight" title="Usage of the evidence property">
+        <pre class="example nohighlight" title="증거 속성의 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2913,100 +2844,93 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
         </pre>
 
         <p class="note">
-The <code>evidence</code> <a>property</a> provides different and complementary
-information to the <code>proof</code> <a>property</a>. The <code>evidence</code>
-<a>property</a> is used to express supporting information, such as documentary
-evidence, related to the integrity of the <a>verifiable credential</a>. In
-contrast, the <code>proof</code> <a>property</a> is used to express
-machine-verifiable mathematical proofs related to the authenticity of the
-<a>issuer</a> and integrity of the <a>verifiable credential</a>. For more
-information about the <code>proof</code> <a>property</a>, see Section
-<a href="#proofs-signatures"></a>.
+<code>evidence</code> <a>속성</a>은 <code>proof</code> <a>속성</a>에 대하여 
+서로 다른 보완 정보를 제공한다. <code>evidence</code> <a>속성</a>은 
+<a>검증가능한 크리덴셜</a>의 무결성과 관련된 문서 증거와 같은 지원 정보를 표현하는 데 
+사용된다. 반면에 <code>proof</code> <a>속성</a>은 <a>발급자</a>의 진위 및 
+<a>검증가능한 크리덴셜</a>의 무결성과 관련된 기계-검증가능한 수학적 증명을 
+표현하는 데 사용된다. <code>proof</code> <a>속성</a>에 대한 자세한 내용은 
+<a href="#proofs-signatures">을 참조.
         </p>
 
       </section>
 
-      <section>
-        <h3>Zero-Knowledge Proofs</h3>
+      <section id="zero-knowledge-proofs">
+        <h3>영지식 증명</h3>
 
         <p>
-A zero-knowledge proof is a cryptographic method where an entity can prove to
-another entity that they know a certain value without disclosing the actual
-value. A real-world example is proving that an accredited university has granted
-a degree to you without revealing your identity or any other personally
-identifiable information contained on the degree.
+          영지식 증명은 개체가 실제 값을 공개하지 않고 특정 값을 알고 있음을 다른 개체에 증명할 수 있는 암호학적 방법이다. 
+          실제 예를 들면 당신의 신분 또는 학위에 포함된 다른 개인 식별 정보 드러내지 않고, 
+          공인된 대학이 당신에게 학위를 수여했음을 증명하는 것이다.
         </p>
         <p>
-The key capabilities introduced by zero-knowledge proof mechanisms are the
-ability of a <a>holder</a> to:
+          영지식 증명 메커니즘에 의해 도입된 주요 기능은 <a>보유자</a>가 다음을 수행할 수 있게 한다.
+
         </p>
 
         <ul>
           <li>
-Combine multiple <a>verifiable credentials</a> from multiple <a>issuers</a> into
-a single <a>verifiable presentation</a> without revealing
-<a>verifiable credential</a> or <a>subject</a> identifiers to the
-<a>verifier</a>. This makes it more difficult for the <a>verifier</a> to collude
-with any of the issuers regarding the issued <a>verifiable credentials</a>.
+<a>검증가능한 크리덴셜</a> 또는 주체 식별자를 검증자에게 공개하지 않고 
+여러 <a>발급자</a>의 여러 <a>검증가능한 크리덴셜</a>을 
+단일의 <a>검증가능한 프레젠테이션</a>으로 결합 할 수 있는 기능. 
+이로 인해 <a>검증자</a>는 발급된 <a>검증가능한 크리덴셜</a>과 관련해 
+어떤 발급자와도 공모하는 것이 더 어려워진다.
+
           </li>
           <li>
-Selectively disclose the <a>claims</a> in a <a>verifiable credential</a> to a
-<a>verifier</a> without requiring the issuance of multiple atomic
-<a>verifiable credentials</a>. This allows a <a>holder</a> to provide a
-<a>verifier</a> with precisely the information they need and nothing more.
+다수의 원자적 <a>검증가능한 크리덴셜</a>의 발행에 대한 요구 없이 
+<a>검증자</a>에게 <a>검증가능한 크리덴셜</a>의 <a>클레임</a>을 선택적으로 공개하는 기능. 
+이를 통해 <a>보유자</a>는 <a>검증자</a>에게 불필요한 정보제공 없이 필요한 정보만 정확하게 제공할 수 있다.
           </li>
           <li>
-Produce a derived <a>verifiable credential</a> that is formatted according to
-the <a>verifier's</a> data schema instead of the <a>issuer's</a>, without
-needing to involve the <a>issuer</a> after <a>verifiable credential</a>
-issuance. This provides a great deal of flexibility for <a>holders</a> to use
-their issued <a>verifiable credentials</a>.
+검증가능한 크리덴셜을 발급 받고 나면, 
+추가적인 <a>발급자</a>의 관여 없이도 <a>발급자</a>가 아닌 <a>검증자의</a> 데이터 스키마 형식에 따라 
+파생된 <a>검증가능한 크리덴셜</a>을 생성할 수 있는 기능. 
+이를 통해 <a>보유자</a>가 발급 받은 <a>검증가능한 크리덴셜</a>을 사용함에 있어 유연성이 크게 향상된다.
           </li>
         </ul>
 
         <p>
-This specification describes a data model that supports zero-knowledge proof
-mechanisms. The examples below highlight how the data model can be used to
-issue, present, and verify zero-knowledge <a>verifiable credentials</a>.
+이 규격은 영지식 증명 메커니즘을 지원하는 데이터 모델을 설명한다. 
+아래 예는 데이터 모델을 사용하여 영지식 <a>검증가능한 크리덴셜</a>을 발급, 제시 및 검증 하는 방법을 보여준다.
+
         </p>
 
         <p>
-To use zero-knowledge <a>verifiable credentials</a> the <a>issuer</a> must
-issue a <a>verifiable credential</a> in a manner that enables the <a>holder</a>
-to present the information to a <a>verifier</a> in a privacy-enhancing manner.
-This implies that the <a>holder</a> can prove the validity of the
-<a>issuer's</a> signature without revealing the values that were signed, or when
-only revealing certain selected values. The standard practice is to do so by
-proving knowledge of the signature, without revealing the signature itself.
-There are two requirements for <a>verifiable credentials</a> when they are to be
-used in zero-knowledge proof systems. The <a>verifiable credential</a> MUST
-contain a:
+영지식 <a>검증가능한 크리덴셜</a>을 사용하려면 
+<a>발급자</a>는 반드시 <a>보유자</a>가 프라이버시 강화 방식으로 검증자에게 정보 제시가 가능하도록 
+<a>검증가능한 크리덴셜</a>을 발급해야 한다. 
+이는 <a>보유자</a>가 서명된 값을 밝히지 않거나 선택된 특정 값만 밝힐 때에도 
+<a>발급자</a> 서명의 유효성을 입증할 수 있음을 의미한다. 
+표준 관행은 서명 자체를 밝히지 않고, 서명에 대한 지식을 증명함으로써 그렇게 하는 것이다. 
+<a>검증가능한 크리덴셜</a>을 영지식 증명 시스템에서 사용할 때 두 가지 요구 사항이 있다. 
+<a>검증가능한 크리덴셜</a>은 반드시 다음을 포함해야 한다.
+
         </p>
 
         <ul>
           <li>
-<a>Credential</a> definition, using the <code>credentialSchema</code>
-<a>property</a>, that can be used by all parties to perform various
-cryptographic operations in zero-knowledge.
+<code>credentialSchema</code> <a>속성</a>을 사용한 <a>크리덴셜</a>의 정의. 
+모든 당사자가 다양한 영지식 암호화 작업을 수행하는 데 사용할 수 있다.
+
           </li>
           <li>
-Proof, using the <code>proof</code> <a>property</a>, that can be used to derive
-<a>verifiable presentations</a> that present information contained in the
-original <a>verifiable credential</a> in zero-knowledge. The zero-knowledge
-<a>verifiable presentation</a> must not reveal any information not intended to
-be revealed by the <a>holder</a>.
+<code>proof</code> <a>속성</a>을 사용한 프루프. 
+이것은 원본 <a>검증가능한 크리덴셜</a>에 포함 된 정보를 영지식으로 제시하는 
+<a>검증가능한 프레젠테이션</a>을 도출하는데 사용할 수 있다. 
+영지식 <a>검증가능한 프레젠테이션</a>은 <a>보유자</a>가 공개하려 의도하지 않은 정보를 절대 공개해서는 안된다.
+
           </li>
         </ul>
 
         <p>
-The following example shows one method of using <a>verifiable credentials</a> in
-zero-knowledge. It makes use of a CL Signature, which allows the presentation of
-the <a>verifiable credential</a> in a way that supports the privacy of the
-<a>holder</a> and <a>subject</a> through the use of selective disclosure of the
-<a>verifiable credential</a> values.
+다음 예는 영지식 <a>검증가능한 크리덴셜</a>을 사용하는 한 가지 방법을 보여 준다. 
+CL 서명을 사용하여, <a>검증가능한 크리덴셜</a> 값의 선택적 공개를 통해 
+<a>보유자</a>와 <a>주체</a>의 프라이버시를 지원하는 방식으로 <a>검증가능한 크리덴셜</a>을 제시할 수 있다.
+
         </p>
 
-        <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
+        <pre class="example nohighlight" title="CL 서명을 지원하는 검증가능한 크리덴셜">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -3038,42 +2962,39 @@ the <a>verifiable credential</a> in a way that supports the privacy of the
         </pre>
 
         <p>
-The example above provides the <a>verifiable credential</a> definition by using
-the <code>credentialSchema</code> <a>property</a> and a specific proof that is
-usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
+위의 예는 <code>credentialSchema</code> <a>속성</a>과 Camenisch-Lysyanskaya 영지식 증명 시스템에서 사용할 수 있는 
+특정 증명을 이용하여 <a>검증가능한 크리덴셜</a>의 정의를 제공한다.
+
         </p>
 
         <p>
-The next example utilizes the <a>verifiable credential</a> above to generate a
-new derived <a>verifiable credential</a> with a privacy-preserving proof. The
-derived <a>verifiable credential</a> is then placed in a
-<a>verifiable presentation</a>, which further proves that the entire assertion
-is valid. There are three requirements of most <a>verifiable presentations</a>
-when they are to be used in zero-knowledge systems:
+다음 예는 위의 <a>검증가능한 크리덴셜</a>을 사용하여 프라이버시 보호 증명이 포함된 
+새로운 파생 <a>검증가능한 크리덴셜</a>을 생성한다. 
+파생된 <a>검증가능한 크리덴셜</a>은 <a>검증가능한 프레젠테이션</a>에 배치되며, 이는 전체 주장이 유효함을 추가로 입증한다. 
+<a>검증가능한 프레젠테이션</a>을 영지식 시스템에서 사용할 때 세 가지 요구사항이 있다.
         </p>
 
         <ul>
           <li>
-Each derived <a>verifiable credential</a> within a
-<a>verifiable presentation</a> MUST have a <code>credentialSchema</code>
-<a>property</a>. This allows the derived <a>verifiable credential</a> to
-reference the credential definition used to generate the derived proof.
+<a>검증가능한 프레젠테이션</a> 내에 있는 각각의 파생 <a>검증가능한 크리덴셜</a>은 
+반드시 <code>credentialSchema</code> <a>속성</a>이 있어야 한다. 
+이를 통해 파생 <a>검증가능한 크리덴셜</a>이 파생된 증명을 생성하는 데 사용된 크리덴셜의 정의를 참조할 수 있다.
+
           </li>
           <li>
-A <a>verifiable presentation</a> MUST NOT leak information that would enable
-the <a>verifier</a> to correlate the <a>holder</a> across multiple
-<a>verifiable presentations</a>.
+<a>검증가능한 프레젠테이션</a>은 <a>검증자</a>가 여러 개의 <a>검증가능한 프레젠테이션</a>을 통해 
+<a>보유자</a>와 연관시킬 수 있는 정보를 절대 유출해서는 안된다.
+
           </li>
           <li>
-The <a>verifiable presentation</a> MUST contain a <code>proof</code>
-<a>property</a> to enable the <a>verifier</a> to ascertain that all derived
-<a>verifiable credentials</a> in the <a>verifiable presentation</a> were issued
-to the same <a>holder</a> without leaking personally identifiable information
-that the <a>holder</a> did not intend to share.
+<a>검증가능한 프레젠테이션</a>은 <a>검증가능한 프레젠테이션</a>내에 있는 
+모든 파생 <a>검증가능한 크리덴셜</a>이 동일한 <a>보유자</a>에게 발행되었음을 <a>검증자</a>가 확인할 수 있도록 
+<a>보유자</a>가 공유하지 않는 개인 식별 정보 유출 없이 <code>proof</code> <a>속성</a>을 반드시 포함해야 한다.
+
           </li>
         </ul>
 
-        <pre class="example nohighlight" title="A verifiable presentation that supports CL Signatures">
+        <pre class="example nohighlight" title="CL 서명을 지원하는 검증가능한 프레젠테이션">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -3139,56 +3060,52 @@ that the <a>holder</a> did not intend to share.
             Derived Credential 1.  A line links DegreeAwarded in
             Verifiable Credential 2 to Degree in Derived Credential 2.">
           <figcaption style="text-align: center;">
-A visual example of the relationship between credentials and derived
-credentials in a ZKP <a>presentation</a>.
+영지식 <a>프레젠테이션</a>에서 크리덴셜과 파생된 크리덴셜의 관계에 대한 시각적 예
           </figcaption>
         </figure>
 
         <p class="note">
-Important details regarding the format for the <a>credential</a> definition and
-of the proofs are omitted on purpose because they are outside of the scope of
-this document. The purpose of this section is to guide implementers who want to
-extend <a>verifiable credentials</a> and <a>verifiable presentations</a> to
-support zero-knowledge proof systems.
+<a>크리덴셜</a> 정의의 형식 및 프루프에 대한 중요한 세부 정보는 
+이 문서의 범위를 벗어나므로 의도적으로 생략되었다. 
+이 섹션의 목적은 <a>검증가능한 크리덴셜</a>과 <a>검증가능한 프레젠테이션</a>을 확장하여 
+영지식 증명 시스템을 지원하려는 구현자들을 안내하는 것이다.
+
         </p>
 
       </section>
 
-      <section>
-        <h3>Disputes</h3>
+      <section id="disputes">
+        <h3>분쟁</h3>
 
         <p>
-There are at least two different cases to consider for an <a>entity</a>
-wanting to dispute a <a>credential</a> issued by an <a>issuer</a>:
+<a>발급자</a>가 발급한 <a>크리덴셜</a>에 이의를 제기하려는 <a>개체</a>에 대하여 최소 
+두 가지 경우를 고려해야한다:
         </p>
 
         <ul>
           <li>
-A <a>subject</a> disputes a claim made by the <a>issuer</a>. For example, the
-<code>address</code> <a>property</a> is incorrect or out of date.
+<a>주체</a>가 <a>발급자</a>가 발급한 크리덴셜에 대해 이의를 제기한다. 
+예를 들어, <code>address</code> <a>속성</a>이 맞지 않거나 기한이 지났다.
           </li>
           <li>
-An <a>entity</a> disputes a potentially false claim made by the <a>issuer</a>
-about a different <a>subject</a>. For example, an imposter claims the social
-security number for an <a>entity</a>.
+<a>개체</a>는 다른 주체에 대하여 <a>발급자</a>가 발급한 잠재적 허위 크리덴셜에 대해 
+이의를 제기한다. 예를 들어, 공격자는 <a>개체</a>의 사회 보장 번호를 요구한다.
           </li>
         </ul>
 
         <p>
-The mechanism for issuing a <code>DisputeCredential</code> is the same as
-for a regular <a>credential</a> except that the <code>credentialSubject</code>
-identifier in the <code>DisputeCredential</code> <a>property</a> is the
-identifier of the disputed <a>credential</a>.
+<code>DisputeCredential</code>을 발급하는 메커니즘은 <code>DisputeCredential</code> 
+<a>속성</a>의 <code>credentialSubject</code> 식별자가 이의를 제기하는 
+<a>크리덴셜</a>의 식별자만 제외하면 일반 <a>크리덴셜</a>과 동일하다.
         </p>
 
         <p>
-For example, if a <a>credential</a> with an identifier of
-<code>https://example.org/credentials/245</code> is disputed, the <a>subject</a>
-can issue the <a>credential</a> shown below and present it to the
-<a>verifier</a> along with the disputed <a>credential</a>.
+예를 들어, 식별자가 <code>https://example.org/credentials/245</code>인 
+<a>크리덴셜</a>에 이의가 있는 경우에 <a>주체</a>는 아래에 표시된 <a>크리덴셜</a>을 
+발급하고, 이 <a>크리덴셜</a>의 이의를 제기한 <a>크리덴셜</a>과 함께 <a>검증자</a>에게 제시할 수 있다.
         </p>
 
-        <pre class="example nohighlight" title="A subject disputes a credential">
+        <pre class="example nohighlight" title="주체가 크리덴셜에 이의를 제기함">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -3211,71 +3128,61 @@ can issue the <a>credential</a> shown below and present it to the
         </pre>
 
         <p>
-In the above <a>verifiable credential</a> the <a>issuer</a> is claiming that
-the address in the disputed <a>verifiable credential</a> is wrong.
+위의 <a>검증가능한 크리덴셜</a>에서 <a>발급자</a>는 이의 제기 가능한 
+<a>검증가능한 크리덴셜</a>의 주소가 틀렸다고 주장한다.
        </p>
 
         <p class="note">
-If a <a>credential</a> does not have an identifier, a content-addressed
-identifier can be used to identify the disputed <a>credential</a>. Similarly,
-content-addressed identifiers can be used to uniquely identify individual
-claims.
+<a>크리덴셜</a>에 식별자가 없는 경우 content-addressed 식별자를 사용하여 이의를 
+제기한 <a>크리덴셜</a>을 식별할 수 있다. 유사하게 content-addressed 식별자는 개별 
+요구사항을 고유하게 식별하는데 사용될 수 있다.
         </p>
 
         <p class="note">
-This area of study is rapidly evolving and developers that are interested in
-publishing <a>credentials</a> that dispute the veracity of other
-<a>credentials</a> are urged to read the section related to disputes in the
-Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
+본 연구 영역은 빠르게 발전하고 있으며, 다른 <a>크리덴셜</a>의 정확성에 대해 이의를 
+제기하는 <a>크리덴셜</a>을 발행하는데 관심이 있는 구현자는 검증가능한 크리덴셜 
+구현 지침 [[VC-IMP-GUIDE]] 문서에서 분쟁과 관련된 부분을 읽어야 한다.
        </p>
 
       </section>
 
-      <section class="informative">
-        <h3>Authorization</h3>
+      <section class="informative" id="authorization">
+        <h3>승인</h3>
 
         <p>
-<a>Verifiable credentials</a> are intended as a means of reliably identifying
-<a>subjects</a>. While it is recognized that Role Based Access Controls (RBACs)
-and Attribute Based Access Controls (ABACs) rely on this identification as a
-means of authorizing <a>subjects</a> to access resources, this specification
-does not provide a complete solution for RBAC or ABAC. Authorization is not an
-appropriate use for this specification without an accompanying authorization
-framework.
+<a>검증가능한 크리덴셜</a>은 <a>주체</a>에 대한 신뢰할 수 있는 신원증명의 수단으로 만들어졌다. 
+역할 기반 접근 제어(Role Based Access Controls, RBACs)와 속성 기반 접근 제어(Attribute Based Access Controls, ABACs)는 
+<a>주체</a>가 자원에 접근하는 것을 
+승인하는 수단으로써 이 신원인증에 의존하는 것으로 인식되지만, 이 사양은 RBAC 
+또는 ABAC를 위한 완전한 해결책을 제공하지는 않는다. 승인의 경우 승인 프레임워크 없이 
+본 사양을 사용하는 것은 적절치 않다.
         </p>
 
         <p>
-The Working Group did consider authorization use cases during the creation of
-this specification and is pursuing that work as an architectural layer built
-on top of this specification.
+워킹 그룹은 본 규격의 작성과정에서 인증의 사용 사례를 고려하였으며, 본 규격 위에 
+구축된 구조적 계층으로서의 작업을 추구하고 있다.
         </p>
       </section>
     </section>
 
-    <section>
-      <h2>Syntaxes</h2>
+    <section id="syntaxes">
+      <h2>구문</h2>
 
       <p>
-The data model as described in Sections
-<a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
-<a href="#advanced-concepts"></a> is the canonical structural representation of
-a <a>verifiable credential</a> or <a>verifiable presentation</a>. All
-serializations are representations of that data model in a specific format. This
-section specifies how the data model is realized in JSON-LD and plain JSON.
-Although syntactic mappings are provided for only these two syntaxes,
-applications and services can use any other data representation syntax (such as
-XML, YAML, or CBOR) that is capable of expressing the data model. As the
-<a>verification</a> and <a>validation</a> requirements are defined in terms of
-the data model, all serialization syntaxes have to be deterministically
-translated to the data model for processing, <a>validation</a>, or comparison.
-This specification makes no requirements for support of any specific
-serialization format.
+<a href="#core-data-model"></a>, <a href="#basic-concepts"></a> 
+그리고 <a href="#advanced-concepts"></a>에서 설명한 데이터 모델은 <a>검증가능한 크리덴셜</a> 
+또는 <a>검증가능한 프레젠테이션</a>의 규범적 구조적 표현이다. 모든 직렬화는 
+특정 형식의 데이터 모델의 표현이다. 본 섹션에서는 데이터 모델이 JSON-LD와 일반 JSON에서 
+실현되는 방식을 명시한다. 비록 이 두 구문에서만 구문적 매핑이 제공되지만, 데이터 모델을 
+표현할 수 있는 기타 데이터 표현 구문(XML, YAML 또는 CBOR)도 사용할 수 있다. <a>검증</a>과 <a>확인</a> 
+필요사항이 데이터 모델의 관점에서 정의되므로, 모든 직렬화 구문은 결정적으로 처리, <a>검증</a> 
+또는 비교를 위한 데이터 모델로 변환되어야 한다. 본 사양은 어떠한 특정 직렬화 형식을 
+지원하기 위한 요구사항을 만들지 않는다.
       </p>
 
       <p>
-The expected arity of the property values in this specification, and the
-resulting datatype which holds those values, can vary depending on the property.
-If present, the following properties are represented as a single value:
+본 사양에서 속성 값의 예상되는 아리티 및 그러한 값을 가지는 결과 데이터 타입은 속성에 
+따라 변동될 수 있다. 만약 존재하는 경우, 다음과 같은 속성들은 단일 값으로 표현된다.
       </p>
 
       <ul>
@@ -3294,47 +3201,45 @@ If present, the following properties are represented as a single value:
       </ul>
 
       <p>
-All other properties, if present, are represented as either a single value
-or an array of values.
+다른 모든 속성들은, 만약 존재할 경우, 단일 값 또는 값의 배열로 표현된다.
       </p>
 
       <section>
         <h3>JSON</h3>
 
         <p>
-The data model, as described in Section <a href="#core-data-model"></a>, can be
-encoded in Javascript Object Notation (JSON) [[!RFC8259]] by mapping property
-values to JSON types as follows:
+섹션 3. <a href="#core-data-model"></a>에서 설명한 것과 같이 데이터 
+모델은 속성 값을 다음과 같은 JSON 타입에 매핑함으로써 Javascript Object Notation (JSON) 
+[[!RFC8259]]으로 인코딩할 수 있다.
         </p>
 
         <ul>
           <li>
-Numeric values representable as IEEE754 SHOULD be represented as a Number type.
+IEEE754로 표현할 수 있는 숫자 값은 숫자 타입으로 표현해야만 한다.
           </li>
           <li>
-Boolean values SHOULD be represented as a Boolean type.
+불리언 값은 불리언 타입으로 표현해야만 한다.
           </li>
           <li>
-Sequence value SHOULD be represented as an Array type.
+시퀀스 값은 배열 타입으로 표현해야만 한다.
           </li>
           <li>
-Unordered sets of values SHOULD be represented as an Array type.
+순서가 없는 값의 집합은 배열 타입으로 표현해야만 한다.
           </li>
           <li>
-Sets of <a>properties</a> SHOULD be represented as an Object type.
+<a>속성</a>들의 집합은 오브젝트 타입으로 표현해야만 한다.
           </li>
           <li>
-Empty values SHOULD be represented as a null value.
+빈 값은 널(null) 값으로 표현해야만 한다.
           </li>
           <li>
-Other values MUST be represented as a String type.
+다른 값들은 문자열 타입으로 표현해야만 한다.
           </li>
         </ul>
 
         <p class="note">
-As the transformations listed herein have potentially incompatible
-interpretations, additional profiling of the JSON format is required to provide
-a deterministic transformation to the data model.
+여기 나열된 변환은 잠재적으로 양립할 수 없는 해석을 가지고 있으므로, 데이터 모델의 
+결정론적 변환을 제공할 수 있으려면 추가적인 JSON 형식의 프로파일링이 필요하다.
         </p>
 
       </section>
@@ -3343,76 +3248,69 @@ a deterministic transformation to the data model.
         <h3>JSON-LD</h3>
 
         <p>
-[[!JSON-LD]] is a JSON-based format used to serialize
-<a href="http://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. The
-syntax is designed to easily integrate into deployed systems already using JSON,
-and provides a smooth upgrade path from JSON to [[!JSON-LD]]. It is primarily
-intended to be a way to use Linked Data in Web-based programming environments,
-to build interoperable Web services, and to store Linked Data in JSON-based
-storage engines.
+[[!JSON-LD]]는 <a href="http://www.w3.org/TR/ld-glossary/#linked-data">연결된 데이터</a>를 
+직렬화하기 위해 사용되는 JSON기반의 형식이다. 해당 구문은 
+이미 JSON을 사용하는 것으로 배포된 시스템에 쉽게 통합할 수 있도록 설계되었으며, JSON에서 
+[[!JSON-LD]]로 부드럽게 업그레이드 할 수 있는 길을 제공한다. 이는 주로 웹 기반 프로그래밍 
+환경에서 연결된 데이터를 사용하고, 상호 운용 가능한 웹 서비스를 구축하며, JSON 기반 
+저장소 엔진에서 연결된 데이터를 저장하는 방식으로 사용한다.
         </p>
 
         <p>
-[[!JSON-LD]] is useful when extending the data model described in this
-specification. Instances of the data model are encoded in [[!JSON-LD]] in the
-same way they are encoded in JSON (Section <a href="#json"></a>), with the
-addition of the <code>@context</code> <a>property</a>. The
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
-is described in detail in the [[!JSON-LD]] specification and its use is
-elaborated on in Section <a href="#extensibility"></a>.
+[[!JSON-LD]]는 본 사양에서 설명한 데이터 모델을 확장할 때 유용하다. 데이터 모델의 
+인스턴스는 <code>@context</code> <a>속성</a>의 추가를 통해, JSON(섹션 <a href="#json"></a>)으로 인코딩되는 방식과 동일하게 
+[[!JSON-LD]]로 인코딩된다. <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD 컨텍스트</a>는 
+[[!JSON-LD]] 사양에서 상세하게 설명되어 있고, 
+그것의 사용은 섹션 <a href="#extensibility"></a>에서 상술하고 있다.  
         </p>
 
         <p>
-Multiple contexts MAY be used or combined to express any arbitrary information
-about <a>verifiable credentials</a> in idiomatic JSON. The
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>,
-available at <code>https://www.w3.org/2018/credentials/v1</code>, is a static
-document that is never updated and can therefore be downloaded and cached client
-side. The associated vocabulary document for the Verifiable Credentials Data
-Model is available at <code>https://www.w3.org/2018/credentials</code>.
+관용적 JSON에서의 <a>검증가능한 크리덴셜</a>에 대한 임의의 정보를 표현하기 위해 다수의 
+컨텍스트가 사용되거나 결합될 수 있다. <code>https://www.w3.org/2018/credentials/v1</code> 
+에서 확인할 수 있는 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD 컨텍스트</a>는 
+고정 문서로서 절대 업데이트 되지 않는다. 
+따라서 클라이언트 사이드에 캐시하거나 다운로드 할 수 있다. 검증가능한 크리덴셜 데이터 모델에 
+대한 연계된 용어 문서는 <code>https://www.w3.org/2018/credentials</code>에서 확인할 수 있다.
         </p>
 
-        <section>
-          <h3>Syntactic Sugar</h3>
+        <section id="syntactic-sugar">
+          <h3>신택틱 슈거(Syntactic Sugar)</h3>
 
           <p>
-In general, the data model and syntaxes described in this document are
-designed such that developers can copy and paste examples to incorporate
-<a>verifiable credentials</a> into their software systems. The design goal of
-this approach is to provide a low barrier to entry while still ensuring global
-interoperability between a heterogeneous set of software systems. This section
-describes some of these approaches, which will likely go unnoticed by most
-developers, but whose details will be of interest to implementers. The most
-noteworthy syntactic sugars provided by [[!JSON-LD]] are:
+일반적으로, 본 문서에서 설명하고있는 데이터 모델 및 구문은 개발자가 사례를 복사, 
+붙여넣기 함으로써 자신의 소프트웨어 시스템에 <a>검증가능한 크리덴셜</a>을 포함할 수 있도록 설계되었다. 
+이러한 접근의 디자인 목표는 이기종 소프트웨어 시스템 간 글로벌 상호 운용성을 보장하는 동시에 
+진입장벽을 낮추는 것이다. 
+본 섹션에서는 대부분의 개발자가 눈치채지 못할 수 있지만 
+구현하는 사람에게는 관심이 있을 접근방식들에 대해 설명한다. 
+[[!JSON-LD]]에서 가장 주목할만한 신택틱 슈거(Syntatic Sugars)는 아래와 같다.
           </p>
 
           <ul>
             <li>
-The <code>@id</code> and <code>@type</code> keywords are aliased to
-<code>id</code> and <code>type</code> respectively, enabling developers to use
-this specification as idiomatic JSON.
+<code>@id</code>와 <code>@type</code> 키워드는 
+각각 <code>id</code>와 <code>type</code>으로 구분되어, 
+개발자가 이 규격을 관용적 JSON으로 사용할 수 있도록 한다.
             </li>
             <li>
-Data types, such as integers, dates, units of measure, and URLs, are
-automatically typed to provide stronger type guarantees for use cases that
-require them.
+정수, 날짜, 측정단위, URL과 같은 데이터 타입은 자동으로 입력되어 
+그것을 필요로 하는 사용 사례(Use Case)를 위한 강력한 타입 보장을 제공한다.
             </li>
             <li>
-The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
-are treated as <em>graph containers</em>. That is, mechanisms used to isolate
-sets of data asserted by different entities. This ensures, for example, proper
-cryptographic separation between the data graph provided by each <a>issuer</a>
-and the one provided by the <a>holder</a> presenting the
-<a>verifiable credential</a> to ensure the provenance of the information for
-each graph is preserved.
+<code>verifiableCredential</code>과 <code>proof</code> <a>속성</a>은 
+<em>그래프 컨테이너(Graph Containers)</em>로 처리된다. 
+이는 다른 개체가 주장하는 데이터 집합을 분리하는데 사용되는 메커니즘이다. 
+이것은 각 <a>발행자</a>가 제공한 데이터 그래프와 각 그래프에 대한 유래를 보장하기 위해 
+<a>검증가능한 크리덴셜</a>을 제시하는 <a>보유자</a>가 제공하는 정보 간의 
+적절한 암호학적 구분을 보장한다.
             </li>
             <li>
-The <code>@protected</code> properties feature of [[!JSON-LD]] 1.1 is used to
-ensure that terms defined by this specification cannot be overridden. This means
-that as long as the same <code>@context</code> declaration is made at the top of
-a <a>verifiable credential</a> or <a>verifiable presentation</a>,
-interoperability is guaranteed for all terms understood by users of the data
-model whether or not they use a [[!JSON-LD]] processor.
+[[!JSON-LD]] 1.1의 <code>@protected</code> 속성 기능은 
+본 규격에서 정의한 용어를 재정의할 수 없도록 하는데 사용된다. 
+이는 동일한 <code>@context</code> 선언이 
+<a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>의 상단에서 이루어지는 한, 
+[[!JSON-LD]] 프로세서의 사용 여부와 상관없이 
+사용자가 이해한 모든 용어에 대한 상호운용성을 보장한다는 의미이다.
             </li>
           </ul>
         </section>
@@ -3443,35 +3341,31 @@ being actively utilized to issue <a>verifiable credentials</a> are:
           <li>Section <a href="#linked-data-proofs"></a>.</li>
         </ul>
 
-        <section>
+        <section id="json-web-token">
           <h3>JSON Web Token</h3>
 
           <p>
-JSON Web Token (JWT) [[!RFC7519]] is still a widely used means to express
-<a>claims</a> to be transferred between two parties. Providing a representation
-of the Verifiable Credentials Data Model for JWT allows existing systems and
-libraries to participate in the ecosystem described in Section
-<a href="#ecosystem-overview"></a>. A JWT encodes a set of <a>claims</a> as a
-JSON object that is contained in a JSON Web Signature (JWS) [[!RFC7515]] or JWE
-[[?RFC7516]]. For this specification, the use of JWE is out of scope.
-          </p>
+            JSON Web Token (JWT) [RFC7519]은 여전히 두 당사자 간에 전달되는 <a>클레임</a>을 표현하기 위해 
+            널리 사용되는 수단이다.JWT에 대한 검증 가능한 크리덴셜 데이터 모델을 제공함으로써 
+            기존 시스템과 라이브러리가 섹션 <a href="#ecosystem-overview"></a>에 설명된 생태계에 참여할 수 있다. 
+            JWT는 일련의 <a>클레임</a> JSON Web Signature (JWS) [RFC7515] 또는 JWE [RFC7516]에 
+            포함된 JSON 개체로 인코딩한다. 이 규격에서 JWE의 사용은 범위를 벗어나므로 다루지 않는다.
+                      </p>
 
-          <section>
+          <section id="relation-to-the-verifiable-credentials-data-model">
             <h4>Relation to the Verifiable Credentials Data Model</h4>
 
             <p>
-This specification defines encoding rules of the Verifiable Credential Data
-Model onto JWT and JWS. It further defines processing rules how and when to make
-use of specific JWT-registered <a>claim</a> names and specific JWS-registered
-header parameter names to allow systems based on JWT to comply with this
-specification. If these specific <a>claim</a> names and header parameters are
-present, their respective counterpart in the standard
-<a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
-to avoid duplication.
+              이 규격은 검증 가능한 크리덴셜 데이터 모델의 인코딩 규칙을 JWT 및 JWS에 정의한다. 
+              또한 JWT에 기초한 시스템이 이 규격을 준수할 수 있도록 특정 JWT 형식에 
+              등록된 <a>클레임</a>의 이름과 특정 JWS 등록 헤더 파라미터 이름을
+              언제 어떻게 사용하는지를 정의한다. 
+              이러한 특정 <a>클레임</a>의 이름과 헤더 파라미터가 존재하는 경우, 
+              그에 대응되는 표준 <a>검증가능한 크리덴셜</a>과 <a>검증가능한 프리젠테이션</a>은 중복 방지를 위해 생략될 수 있다.
             </p>
           </section>
 
-          <section>
+          <section id="json-web-token-extentions">
             <h4>JSON Web Token Extensions</h4>
 
             <p>
@@ -3479,223 +3373,227 @@ This specification introduces two new registered <a>claim</a> names, which
 contain those parts of the standard <a>verifiable credentials</a> and
 <a>verifiable presentations</a> where no explicit encoding rules for JWT exist.
 These objects are enclosed in the JWT payload as follows:
+이 규격은 JWT에 대한 명시적 인코딩 규칙이 존재하지 않는 
+표준 <a>검증가능한 크리덴셜</a> 및 <a>검증가능한 프리젠테이션</a>의 일부를 포함하는 
+새로 등록된 두 개의 <a>클레임</a>의 이름에 대해 소개한다. 
+이러한 객체들은 다음과 같이 JWT 전송 데이터에 포함되어있다
+
             </p>
 
             <ul>
               <li>
-<code>vc</code>: JSON object, which MUST be present in a JWT
-<a>verifiable credential</a>. The object contains the
-<a>verifiable credential</a> according to this specification.
+<code>vc</code>: JWT 형식의 <a>검증가능한 크리덴셜</a>에 반드시 있어야 하는 JSON 개체. 
+객체는 이 규격을 따른 <a>검증가능한 크리덴셜</a>을 포함한다.
+
               </li>
               <li>
-<code>vp</code>: JSON object, which MUST be present in a JWT
-<a>verifiable presentation</a>. The object contains the
-<a>verifiable presentation</a> according to this specification.
+<code>vp</code>: JWT <a>검증가능한 프리젠테이션</a>에 반드시 있어야 하는 JSON 객체. 
+객체는 이 규격에 따라 <a>검증가능한 프리젠테이션</a>을 포함한다
               </li>
             </ul>
           </section>
 
-          <section>
+          <section id="jwt-and-jws-considerations">
             <h4>JWT and JWS Considerations</h4>
 
-            <section>
+            <section id="jwt-encoding">
               <h5>JWT Encoding</h5>
 
             <p>
-To encode a <a>verifiable credential</a> as a JWT, specific <a>properties</a>
-introduced by this specification MUST be either:
+              <a>검증가능한 크리덴셜</a>을 JWT로 인코딩하려면 
+              이 규격에 의해 명시된 특정 <a>속성</a>은 다음 중 한가지 조건을 만족해야 한다.
             </p>
 
             <ul>
               <li>
-Encoded as standard JOSE header parameters, or
+                표준 JOSE 헤더 파라미터로 인코딩, 또는
               </li>
               <li>
-Encoded as registered JWT <a>claim</a> names, or
+                등록된 JWT <a>클레임</a> 이름으로 인코딩, 또는
               </li>
               <li>
-Contained in the JWS signature part.
+                JWS 서명 부분에 포함
               </li>
             </ul>
 
             <p>
-If no explicit rule is specified, <a>properties</a> are encoded in the same way
-as with a standard <a>verifiable credential</a>, and are added to the
-<code>vc</code> <a>claim</a> of the JWT. As with all JWTs, the JWS-based
-signature of a <a>verifiable credential</a> represented in the JWT syntax is
-calculated against the literal JWT string value as presented across the wire,
-before any decoding or transformation rules are applied. The following
-paragraphs describe these encoding rules.
+
+명시적 규칙이 지정되지 않은 경우 <a>속성</a>들은 표준 <a>검증가능한 크리덴셜</a>과 동일한 방식으로 인코딩되며 
+JWT의 <code>vc</code> <a>클레임</a>에 추가된다. 모든 JWT와 마찬가지로, JWT 구문에 표시된 <a>검증가능한 크리덴셜</a>의 
+JWS 기반 서명은 디코딩 또는 변환 규칙 적용 전의 JWT 문자열 값에 대해 계산된다. 
+다음 단락은 이러한 인코딩 규칙을 설명한다.
+
             </p>
 
             <p>
-If a JWS is present, the digital signature either refers to the <a>issuer</a>
-of the <a>verifiable credential</a>, or in the case of a
-<a>verifiable presentation</a>, the <a>holder</a> of the
-<a>verifiable credential</a>. The JWS proves that the <a>issuer</a> of the JWT
-signed the contained JWT payload and therefore, the <code>proof</code>
-<a>property</a> can be omitted.
+
+              JWS가 존재하는 경우, 디지털 서명은 <a>검증가능한 크리덴셜</a>의 <a>발급자</a>를 입증하거나, 
+              <a>검증가능한 프레젠테이션</a>의 경우, <a>검증가능한 크리덴셜</a>의 <a>보유자</a>를 입증한다. 
+              JWS는 JWT의 <a>발급자</a>가 JWT 페이로드에 서명했음을 증명한다. 따라서 <code>proof</code> <a>속성</a>은 생략될 수 있다.
+   
             </p>
 
             <p>
-If no JWS is present, a <code>proof</code> <a>property</a> MUST be provided.
-The <code>proof</code> <a>property</a> can be used to represent a more complex
-proof, as may be necessary if the creator is different from the <a>issuer</a>,
-or a proof not based on digital signatures, such as Proof of Work. The
-<a>issuer</a> MAY include both a JWS and a <code>proof</code> <a>property</a>.
-For backward compatibility reasons, the issuer MUST use JWS to represent proofs
-based on a digital signature.
+              JWS가 없는 경우 반드시 <code>proof</code> <a>속성</a>을 제공해야 한다. 
+              <code>proof</code> <a>속성</a>은 작성자가 <a>발급자</a>와 다른 경우에 필요할 수 있고, 
+              작업 증명과 같은 디지털 서명에 근거하지 않은 증명을 나타내기 위해 사용될 수 있다. 
+              <a>발급자</a>는 <a>검증가능한 크리덴셜</a>에 JWS와 <code>proof</code> <a>속성</a>을 모두 포함할 수 있다. 
+              하지만 역호환성을 고려한다면 발급자는 JWS를 사용하여 디지털 서명에 기반한 증명을 나타내야 한다.
             </p>
 
             <p>
-The following rules apply to JOSE headers in the context of this specification:
+              다음 규칙은 이 규격의 context에서 JOSE 헤더에 적용된다.</p>
+
+            <ul>
+              <li>
+<code>alg</code>는 디지털 서명을 위해 반드시 설정되어야 한다. 
+선택한 서명 방법에 <code>proof</code> <a>속성</a>만 필요한 경우(즉, 해당 메소드 내에 선택한 알고리즘이 없는경우) 
+<code>alg</code> 헤더를 <code>none</code>으로 설정해야 한다.
+              </li>
+
+              <li>
+                JWT <a>발급자</a>와 관련된 키가 여러 개 있는 경우 <code>kid</code>를 사용할 수 있다. 
+                주요 과정은 이 규격의 범위를 벗어난다. 
+                예를 들어, <code>kid</code>는 <a>DID 문서</a>의 키를 참조하거나 JWKS 내부의 키 식별자가 될 수 있다.
+
+              </li>
+              <li>
+                <code>typ</code>가 있는 경우 <code>JWT</code>로 설정해야 함
+
+              </li>
+            </ul>
+
+            <p>
+JWT 프로세서와의 역호환성을 위해, 
+다음의 JWT 형식에 등록된 클레임 명칭은 반드시 각각에 대응되는 표준 <a>검증가능한 크리덴셜</a> 대신, 
+또는 추가로 사용되어야 한다.
+
             </p>
 
             <ul>
               <li>
-<code>alg</code> MUST be set for digital signatures. If only the
-<code>proof</code> <a>property</a> is needed for the chosen signature
-method (that is, if there is no choice of algorithm within that method),
-the <code>alg</code> header MUST be set to <code>none</code>.
+<code>exp</code>는 <code>expirationDate</code> <a>속성</a>을 나타내야 하고 
+UNIX 타임스탬프(<code>NumericDate</code>)로 인코딩되어야 한다.
               </li>
               <li>
-<code>kid</code> MAY be used if there are multiple keys associated with the
-<a>issuer</a> of the JWT. The key discovery is out of the scope of this
-specification. For example, the <code>kid</code> can refer to a key in a
-<a>DID document</a>, or can be the identifier of a key inside a JWKS.
+<code>iss</code>는 반드시 <a>검증가능한 크리덴셜</a>의 <code>issuer</code> <a>속성</a> 
+또는 <a>검증가능한 프레젠테이션</a>의 <code>holder</code> <a>속성</a>을 나타내야 한다.
+
               </li>
               <li>
-<code>typ</code>, if present, MUST be set to <code>JWT</code>.
+<code>nbf</code>는 반드시 <code>issuanceDate</code>를 나타내야하고, 
+UNIX 타임스탬프(<code>NumericDate</code>)로 인코딩되어야 한다.
+
+              </li>
+              <li>
+<code>jti</code>는 반드시 <a>검증가능한 크리덴셜</a> 또는 <a>검증가능한 프레젠테이션</a>의 
+<code>id</code> <a>속성</a>을 나타내야 한다.
+
+              </li>
+              <li>
+<code>sub</code>는 반드시 <a>검증가능한 크리덴셜</a> <a>주체</a>에 포함된 <code>id</code> <a>속성</a>을 나타내야 한다.
+
+              </li>
+              <li>
+<code>aud</code>는 반드시 <a>검증가능한 프레젠테이션</a>의 의도된 대상
+(즉, 프레젠테이션 보유자가 <a>검증가능한 프레젠테이션</a>을 수신하고 검증하도록 의도된 <a>검증자</a>)을 
+나타내야 한다.(즉, 식별하다) 
               </li>
             </ul>
 
             <p>
-For backward compatibility with JWT processors, the following JWT-registered
-claim names MUST be used instead of, or in addition to, their respective
-standard <a>verifiable credential</a> counterparts:
-            </p>
+명시적으로 사용이 금지되어있지 않다면 
+본 문서에 명시되지 않은 다른 JOSE 헤더 매개변수 및 JWT 클레임 이름을 사용할 수 있다. 
+추가적인 <a>검증가능한 크리덴셜</a> <a>클레임</a>은 JWT의 <code>credentialSubject</code> 속성에 추가되어야 한다.
 
-            <ul>
-              <li>
-<code>exp</code> MUST represent the <code>expirationDate</code> <a>property</a>,
-encoded as a UNIX timestamp (<code>NumericDate</code>).
-              </li>
-              <li>
-<code>iss</code> MUST represent the <code>issuer</code> <a>property</a> of a
-verifiable credential or the <code>holder</code> <a>property</a> of a
-verifiable presentation.
-              </li>
-              <li>
-<code>nbf</code> MUST represent <code>issuanceDate</code>, encoded as a UNIX
-timestamp (<code>NumericDate</code>).
-              </li>
-              <li>
-<code>jti</code> MUST represent the <code>id</code> <a>property</a> of the
-<a>verifiable credential</a> or <a>verifiable presentation</a>.
-              </li>
-              <li>
-<code>sub</code> MUST represent the <code>id</code> <a>property</a> contained
-in the <a>verifiable credential</a> <a>subject</a>.
-              </li>
-              <li>
-<code>aud</code> MUST represent (i.e., identify) the intended audience
-of the <a>verifiable presentation</a> (i.e., the <a>verifier</a> intended by
-the presenting <a>holder</a> to receive and verify the
-<a>verifiable presentation</a>).
-              </li>
-            </ul>
-
-            <p>
-Other JOSE header parameters and JWT claim names not specified herein can be
-used if their use is not explicitly discouraged. Additional
-<a>verifiable credential</a> <a>claims</a> MUST be added to the
-<code>credentialSubject</code> property of the JWT.
             </p>
 
             <p>
-For more information about using JOSE header parameters and/or JWT
-claim names not specified herein, see the Verifiable Credentials Implementation
-Guidelines [[?VC-IMP-GUIDE]] document.
+여기에 지정되지 않은 JOSE 헤더 매개 변수 및/또는 JWT 클레임 이름 사용에 대한 
+자세한 내용은 검증 가능한 크리덴셜 구현 지침 [[?VC-IMP-GUIDE]] 문서를 참조하시오.
             </p>
 
             <p>
-This version of the specification defines no JWT-specific encoding rules for
-the concepts outlined in Section
-<a href="#advanced-concepts">Advanced Concepts</a> (for example,
-<code>refreshService</code>, <code>termsOfUse</code>, and
-<code>evidence</code>). These concepts can be encoded as they are without any
-transformation, and can be added to the <code>vc</code> <a>claim</a> of the
-JWT.
+
+이 규격 버전은 섹션 <a href="#advanced-concepts">고급 개념</a>
+(예: <code>refreshService</code>, <code>termsOfUse</code> 및 <code>evidence</code>)에 요약된 개념에 대한 
+JWT별 인코딩 규칙을 정의하지 않는다. 
+이러한 개념은 별도의 변환 없이 그대로 인코딩할 수 있으며, 
+JWT의 <code>vc</code> <a>클레임</a>에 추가될 수 있다.
             </p>
 
             <p class="note">
-Implementers are warned that JWTs are not capable of encoding multiple
-<a>subjects</a> and are thus not capable of encoding a
-<a>verifiable credential</a> with more than one <a>subject</a>. JWTs might
-support multiple subjects in the future and implementers are advised to refer
-to the <a href="https://www.iana.org/assignments/jwt/">
-JSON Web Token Claim Registry</a> for multi-subject JWT claim names or the
-<a href="https://tools.ietf.org/html/draft-yusef-oauth-nested-jwt-00">
-Nested JSON Web Token</a> specification.
+
+구현자는 JWT가 복수의 <a>주체</a>들을 인코딩할 수 없고, 
+따라서 <a>검증가능한 크리덴셜</a>을 둘 이상의 <a>주체</a>와 인코딩할 수 없다는 경고를 받는다. 
+JWT는 향후 여러 주제를 지원할 수 있으며, 
+구현자는 다중 주체 JWT 클레임 명칭에 대한 <a href="https://www.iana.org/assignments/jwt/">
+  JSON Web Token Claim Registry</a>
+또는 <a href="https://tools.ietf.org/html/draft-yusef-oauth-nested-jwt-00">
+  Nested JSON Web Token</a> 규격을 참조할 것을 권고한다.
+
             </p>
 
             </section>
 
-            <section>
+            <section id="jwt-decoding">
               <h5>JWT Decoding</h5>
 
             <p>
-To decode a JWT to a standard <a>verifiable credential</a>, the following
-transformation MUST be performed:
+JWT를 표준 <a>검증가능한 크리덴셜</a>으로 디코딩하려면 다음 변환을 수행해야 한다.
             </p>
 
             <ol>
               <li>
-Create a JSON object.
+JSON 객체를 생성하십시오.
               </li>
               <li>
-Add the content from the <code>vc</code> <a>claim</a> to the new JSON object.
+<code>vc</code> <a>클레임</a>의 내용을 새 JSON 객체에 추가하십시오.
+
               </li>
               <li>
-Transform the remaining JWT specific headers and <a>claims</a>, and add the
-results to the new JSON object.
+나머지 JWT 특정 헤더 및 <a>클레임</a>을 변환하고 결과를 새 JSON 객체에 추가하십시오.
               </li>
             </ol>
 
             <p>
-To transform the JWT specific headers and <a>claims</a>, the following MUST be
-done:
+JWT 특정 헤더 및 <a>클레임</a>을 변환하려면 반드시 다음 작업을 수행하십시오.
+
             </p>
 
             <ul>
               <li>
-If <code>exp</code> is present, the UNIX timestamp MUST be converted to an
-[[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
-of the <code>expirationDate</code> <a>property</a> of
-<code>credentialSubject</code> of the new JSON object.
+
+<code>exp</code>의 경우 UNIX 타임스탬프는 [[!RFC3339]] <code>date-time</code>으로 변환해야 하며, 
+새 JSON 객체의 <code>credentialSubject</code> <code>expirationDate</code> <a>속성</a> 값을 설정하는 데 사용해야 한다.
+
+
               </li>
               <li>
-If <code>iss</code> is present, the value MUST be used to set the
-<code>issuer</code> <a>property</a> of the new verifiable credential JSON object
- or the <code>holder</code> <a>property</a> of the new verifiable presentation JSON object.
+ <code>iss</code>의 경우, 
+ 새로운 검증가능한 크리덴셜 JSON 개체의 <code>issuer</code> <a>속성</a>이나 
+ 새로운 검증 가능한 프레젠테이션 JSON 개체의 <code>holder</code> <a>속성</a>을 설정하는 데 이 값을 사용해야 한다.
+
                   </li>
                   <li>
-If <code>nbf</code> is present, the UNIX timestamp MUST be converted to an
-[[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
-of the <code>issuanceDate</code> <a>property</a> of the new JSON object.
+
+<code>nbf</code>의 경우 UNIX 타임스탬프는 [[!RFC3339]] <code>date-time</code>으로 변환해야 하며, 
+새로운 JSON 개체의 <code>issuanceDate</code> <a>속성</a> 값을 설정하는 데 사용해야 한다.
+
                   </li>
                   <li>
-If <code>sub</code> is present, the value MUST be used to set the value of the
-<code>id</code> <a>property</a> of <code>credentialSubject</code> of the new
-JSON object.
+<code>sub</code>의 경우 이 값을 사용하여 새 JSON 개체의 
+<code>credentialSubject</code>의 <code>id</code> <a>속성</a> 값을 설정해야 한다.
+
+
               </li>
               <li>
-If <code>jti</code> is present, the value MUST be used to set the value of the
-<code>id</code> <a>property</a> of the new JSON object.
+
+<code>jti</code>의 경우 값은 반드시 새 JSON 객체의 <code>id</code> <a>속성</a> 값을 설정하여 사용해야 한다.
               </li>
             </ul>
 
-            <pre class="example nohighlight" title="JWT header of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            <pre class="example nohighlight" title="JWS를 증명으로 사용하는 JWT 기반 검증가능한 크리덴셜의 JWT 헤더 (비표준)">
 {
     "alg": "RS256",
     "typ": "JWT",
@@ -3704,13 +3602,13 @@ If <code>jti</code> is present, the value MUST be used to set the value of the
             </pre>
 
             <p>
-In the example above, the <a>verifiable credential</a> uses a
-<code>proof</code> based on <code>JWS</code> digital signatures, and the
-corresponding <a>verification</a> key can be obtained using the <code>kid</code>
-header parameter.
+
+위의 예에서 <a>검증가능한 크리덴셜</a>은 <code>JWS</code> 전자 서명을 기반으로 하는 <code>proof</code>를 사용하며, 
+해당 <a>검증</a> 키는 <code>kid</code> 헤더 매개변수를 사용하여 얻을 수 있다.
+
             </p>
 
-            <pre class="example nohighlight" title="JWT payload of a JWT-based verifiable credential using JWS as a proof (non-normative)">
+            <pre class="example nohighlight" title="JWS를 증명으로 사용하는 JWT 기반 검증가능한 크리덴셜의 JWT 페이로드 (비표준)">
 {
   "sub": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "jti": "http://example.edu/credentials/3732",
@@ -3736,14 +3634,14 @@ header parameter.
             </pre>
 
             <p>
-In the example above, <code>vc</code> does not contain the <code>id</code>
-<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
-attribute to represent a unique identifier. The <code>sub</code> attribute
-encodes the information represented by the <code>id</code> <a>property</a> of
-<code>credentialSubject</code>.
+위의 예시에서 <code>JWT</code> 인코딩은 고유한 식별자를 나타내기 위해 
+<code>jti</code> 속성을 사용하기 때문에 <code>vc</code>는 <code>id</code>
+<a>속성</a>을 포함하지 않는다. 
+<code>sub</code> 속성은 <code>credentialSubject</code>의 <code>id</code> <a>속성</a>으로 표시되는 정보를 인코딩한다.
+
             </p>
 
-            <pre class="example nohighlight" title="Verifiable credential using JWT compact serialization (non-normative)">
+            <pre class="example nohighlight" title="JWT 콤팩트 직렬화를 사용한 검증가능한 크리덴셜 (비표준)">
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOmFiZmUxM2Y3MTIxMjA0
 MzFjMjc2ZTEyZWNhYiNrZXlzLTEifQ.<span class="highlight">eyJzdWIiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxY
 zI3NmUxMmVjMjEiLCJqdGkiOiJodHRwOi8vZXhhbXBsZS5lZHUvY3JlZGVudGlhbHMvMzczMiIsImlzc
@@ -3761,7 +3659,7 @@ txJy6M1-lD7a5HTzanYTWBPAUHDZGyGKXdJw-W_x0IWChBzI8t3kpG253fg6V3tPgHeKXE94fz_QpYfg
 --7kLsyBAfQGbg
             </pre>
 
-            <pre class="example nohighlight" title="JWT header of a JWT based verifiable presentation (non-normative)">
+            <pre class="example nohighlight" title="JWT기반 검증가능한 프레젠테이션의 JWT 헤더 (비표준)">
 {
   "alg": "RS256",
   "typ": "JWT",
@@ -3770,13 +3668,13 @@ txJy6M1-lD7a5HTzanYTWBPAUHDZGyGKXdJw-W_x0IWChBzI8t3kpG253fg6V3tPgHeKXE94fz_QpYfg
             </pre>
 
             <p>
-In the example above, the <a>verifiable presentation</a> uses a
-<code>proof</code> based on <code>JWS</code> digital signatures, and the
-corresponding <a>verification</a> key can be obtained using the <code>kid</code>
-header parameter.
+위의 예시에서 <a>검증가능한 프리젠테이션</a>은 
+<code>JWS</code> 디지털 서명에 기초한 <code>proof</code>를 사용하며, 
+해당 <a>검증</a> 키는 <code>kid</code> 헤더 매개변수를 사용하여 얻을 수 있다.
+
             </p>
 
-            <pre class="example nohighlight" title="JWT payload of a JWT based verifiable presentation (non-normative)">
+            <pre class="example nohighlight" title="JWT기반 검증가능한 프레젠테이션의 JWT 페이로드 (비표준)">
 {
   "iss": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "jti": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
@@ -3798,14 +3696,15 @@ header parameter.
             </pre>
 
             <p>
-In the example above, <code>vp</code> does not contain the <code>id</code>
-<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
-attribute to represent a unique identifier. <code>verifiableCredential</code>
-contains a string array of <a>verifiable credentials</a> using
-<code>JWT</code> compact serialization.
+
+위의 예시 에서 <code>JWT</code> 인코딩은 고유한 식별자를 나타내기 위해 
+<code>jti</code> 속성을 사용하기 때문에 <code>vp</code>는 <code>id</code>
+<a>속성</a>을 포함하지 않는다. 
+<code>verifiableCredential</code>에는 <code>JWT</code> 콤팩트 직렬화를 사용하는 
+<a>검증가능한 크리덴셜</a>의 문자열이 포함되어 있다.
             </p>
 
-            <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
+            <pre class="example nohighlight" title="JWT 콤팩트 직렬화를 사용한 검증가능한 프레젠테이션 (비표준)">
 
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRpZDpleGFtcGxlOjB4YWJjI2tleTEifQ.<span class="highlight">e
 yJpc3MiOiJkaWQ6ZXhhbXBsZTplYmZlYjFmNzEyZWJjNmYxYzI3NmUxMmVjMjEiLCJqdGkiOiJ1cm46d
@@ -3845,37 +3744,35 @@ BjYgP62KvhIvW8BbkGUelYMetA
           </section>
         </section>
 
-        <section>
+        <section id="linked-data-proofs">
           <h3>Linked Data Proofs</h3>
 
           <p>
-This specification utilizes Linked Data to publish information on the Web
-using standards, such as URLs and JSON-LD, to identify <a>subjects</a> and
-their associated properties. When information is presented in this manner,
-other related information can be easily discovered and new information can be
-easily merged into the existing graph of knowledge. Linked Data is
-extensible in a decentralized way, greatly reducing barriers to large scale
-integration. The data model in this specification works well with the
-<a href="https://w3c-dvcg.github.io/ld-proofs/">Linked Data Proofs</a>,
-<a href="https://w3c-dvcg.github.io/ld-signatures/">Linked Data Signatures</a>,
-and the associated
-<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suites</a>,
-which are designed to protect the data model as described by this specification.
+이 규격은 Linked Data를 이용하여 URL, JSON-LD와 같은 표준을 사용하여 
+웹에 정보를 게시하여 <a>주체</a>와 관련 속성을 식별한다. 
+이러한 방식으로 정보를 제시하면 다른 관련 정보를 쉽게 발견할 수 있고 
+새로운 정보를 기존의 지식 그래프로 쉽게 통합할 수 있다. 
+Linked Data는 분산된 방식으로 확장 가능하여 대규모 통합에 대한 장벽을 크게 줄인다. 
+이 규격의 데이터 모델은 이 규격에 설명된 대로 데이터 모델을 보호하도록 설계된 
+<a href="https://w3c-dvcg.github.io/ld-proofs/">Linked Data Proofs</a>, 
+<a href="https://w3c-dvcg.github.io/ld-signatures/">Linked Data Signatures</a> 및 
+관련 <a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suites</a>와 잘 작동한다.
+
+
           </p>
 
           <p>
-Unlike the use of JSON Web Token, no extra pre- or post-processing is necessary.
-The Linked Data Proofs format was designed to simply and easily protect
-<a>verifiable credentials</a> and <a>verifiable presentations</a>. Protecting
-a <a>verifiable credential</a> or <a>verifiable presentation</a> is as simple
-as passing a valid example in this specification to a Linked Data Signatures
-implementation and generating a digital signature.
+JSON Web Token의 사용과 달리 별도의 사전 또는 후처리는 필요하지 않다. 
+Linked Data Proofs 형식은 <a>검증가능한 크리덴셜</a>과 <a>검증가능한 프레젠테이션</a>을 
+간단하고 쉽게 보호하도록 설계되었다. <a>검증가능한 크리덴셜</a> 또는 
+<a>검증가능한 프레젠테이션</a>을 보호하는 것은 이 규격의 유효한 예를 
+Linked Data Signatures 구현에 전달하고 디지털 서명을 생성하는 것만큼 간단하다.
+
           </p>
 
           <p class="note">
-For more information about the different qualities of the various syntax
-formats (for example, JSON+JWT, JSON-LD+JWT, or JSON-LD+LD-Proofs), see the
-Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
+다양한 syntax 형식(예: JSON+JWT, JSON-LD+JWT 또는 JSON-LD+LD-Proofs)의 다양한 품질에 대한 자세한 내용은 
+검증 가능한 크리덴셜 구현 지침 [[VC-IMP-GUIDE]] 문서를 참조하십시오.
           </p>
 
         </section>
@@ -3884,23 +3781,23 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
     </section>
   </section>
 
-  <section class="informative">
+  <section class="informative" id="privacy-considerations">
     <h2>Privacy Considerations</h2>
 
     <p>
-This section details the general privacy considerations and specific privacy
-implications of deploying the Verifiable Credentials Data Model into production
-environments.
+      이 섹션에서는 검증가능한 크리덴셜 데이터 모델을 
+      프로덕션 환경에 배포할 때의 
+      일반적인 프라이버시 고려사항 및 특정 프라이버시 관련 영향에 대해 자세히 설명한다.
+
     </p>
 
-    <section class="informative">
+    <section class="informative" id="spectrum-of-privacy">
       <h3>Spectrum of Privacy</h3>
 
       <p>
-It is important to recognize there is a spectrum of privacy ranging from
-pseudonymous to strongly identified. Depending on the use case, people have
-different comfort levels about what information they are willing to provide
-and what information can be derived from what is provided.
+
+익명부터 강하게 식별되는 범위에 이르는 프라이버시의 범주가 있음을 인지하는 것은 중요하다. 
+사례에 의하면, 사람들은 제공하고자하는 정보와 제공되는 정보에서 파생된 정보에 대해 서로 다른 안도감의 단계를 가지고 있다
       </p>
 
       <figure>
@@ -3914,139 +3811,113 @@ and what information can be derived from what is provided.
           code'.  The green has the text 'Non-correlatable
           (pseudonyms), e.g., age over 21'.">
         <figcaption style="text-align: center;">
-Privacy spectrum ranging from pseudonymous to fully identified.
+          익명부터 완전히 식별되는 범위에 이르는 프라이버시의 범주
         </figcaption>
       </figure>
 
       <p>
-For example, most people probably want to remain anonymous when purchasing
-alcohol because the regulatory check required is solely based on whether a
-person is above a specific age. Alternatively, for medical prescriptions
-written by a doctor for a patient, the pharmacy fulfilling the prescription is
-required to more strongly identify the medical professional and the patient.
-Therefore there is not one approach to privacy that works for all use cases.
-Privacy solutions are use case specific.
+        예를 들어, 대부분의 사람들은 주류를 구입할 때 익명을 유지하기를 원하는데 그 이유는 필요한 규제 확인은 전적으로 그 사람이 특정 연령 이상인지 여부에 달려있기 때문이다. 그 대신, 의사가 환자를 위해 작성한 의료 처방전의 경우, 처방을 이행하는 약국은 의료 전문자와 환자를 강하게 식별해야 한다. 따라서 모든 사례에 적합한 하나의 프라이버시 접근법은 없다. 프라이버시 해결책은 사례에 따라 다르다.
       </p>
 
       <p class="note">
-Even for those wanting to remain anonymous when purchasing alcohol, photo
-identification might still be required to provide appropriate assurance to the
-merchant. The merchant might not need to know your name or other details (other
-than that you are over a specific age), but in many cases just proof of age
-might still be insufficient to meet regulations.
+        주류를 구입할 때 익명을 유지하려는 경우에도, 상인에게 적절한 보증을 제공하기 위해 사진 신분증이 필요할 수 있다. 상인은 (당신이 특정 연령 이상이라는 것 이외에) 당신의 이름이나 다른 세부 정보를 알 필요가 없지만, 많은 경우 나이 증명은 규정을 충족하기에 아직 불충분하다.
       </p>
 
       <p>
-The Verifiable Credentials Data Model strives to support the full privacy
-spectrum and does not take philosophical positions on the correct level of
-anonymity for any specific transaction. The following sections provide guidance
-for implementers who want to avoid specific scenarios that are hostile to
-privacy.
+        검증가능한 크리덴셜 데이터 모델은 전체 프라이버시 범주를 지원하기 위해 노력하고 있으며, 어떤 특정 트랜잭션에 대해서도 올바른 수준의 익명성에 대한 철학적 입장을 취하지 않는다. 다음 섹션은 프라이버시에 적대적인 특정 시나리오들을 피하려는 구현자들을 위한 지침을 제공한다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Personally Identifiable Information</h3>
+    <section class="informative" id="personally-identifiable-information">
+      <h3>개인식별정보</h3>
 
       <p>
-Data associated with <a>verifiable credentials</a> stored in the
-<code>credential.credentialSubject</code> field is susceptible to privacy
-violations when shared with <a>verifiers</a>. Personally identifying data, such
-as a government-issued identifier, shipping address, and full name, can be
-easily used to determine, track, and correlate an <a>entity</a>. Even
-information that does not seem personally identifiable, such as the
-combination of a birthdate and a postal code, has very powerful correlation
-and de-anonymizing capabilities.
+<code>credential.credentialSubject</code> 필드에 저장된 <a>검증가능한 크리덴셜</a> 관련 데이터는 
+<a>검증자</a>와 공유할 경우 프라이버시 침해를 허용할 수 있다. 정부에서 발행한 식별자, 
+배송지 주소, 성명 등과 같은 개인식별정보는 <a>개체</a>를 특정하거나 추적하고 상관관계를 
+확인하는데 쉽게 사용될 수 있다. 비록 생일과 우편번호의 조합 같이 개인을 식별별하는데 
+쓸 수 없을 것 같은 정보라도 매우 강력한 상관관계 및 재식별화(De-anonymizing)의 
+가능성을 가지고 있다.
       </p>
 
       <p>
-Implementers are strongly advised to warn <a>holders</a> when they share data
-with these kinds of characteristics. <a>Issuers</a> are strongly advised to
-provide privacy-protecting <a>verifiable credentials</a> when possible. For
-example, issuing <code>ageOver</code> <a>verifiable credentials</a> instead of
-date of birth <a>verifiable credentials</a> when a <a>verifier</a> wants to
-determine if an <a>entity</a> is over the age of 18.
+구현자는 이러한 종류의 특성을 가진 데이터를 공유할 경우 <a>보유자</a>에게 경고할 것을 강력하게 
+권고한다. <a>발행자</a>는 가능하면 프라이버시를 보호하는 <a>검증가능한 크리덴셜</a>을 제공할 것을 
+강력하게 권고한다. 예를들면, <a>검증자</a>가 <a>개체</a>의 성인 여부를 확인하고자 하면, 생년월일을 
+담은 <a>검증가능한 크리덴셜</a>을 발행하는 대신 <code>ageOver</code> <a>검증가능한 크리덴셜</a>을 발행하는 것이다.
       </p>
 
       <p>
-Because a <a>verifiable credential</a> often contains personally identifiable
-information (PII), implementers are strongly advised to use mechanisms while
-storing and transporting <a>verifiable credentials</a> that protect the data
-from those who should not access it. Mechanisms that could be considered include
-Transport Layer Security (TLS) or other means of encrypting the data while in
-transit, as well as encryption or data access control mechanisms to protect
-the data in a <a>verifiable credential</a> while at rest.
+<a>검증가능한 크리덴셜</a>은 종종 개인식별정보(PII)를 포함하고 있기 때문에, 구현자는 
+<a>검증가능한 크리덴셜</a>을 저장하고 전송하는 과정에서 접근하지 말아야 할 사람들로부터 
+데이터를 보호하기 위한 메커니즘을 사용하도록 해야 한다. 고려할 수 있는 매커니즘은 
+전송계층보안(TLS, Transport Layer Security) 또는 그 외에 데이터 전송시에는 데이터를 
+암호화하고 전송 중이 아니더라도 <a>검증가능한 크리덴셜</a>의 데이터를 암호화하거나 접근 
+제어하는 수단이 있을 수 있다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Identifier-Based Correlation</h3>
+    <section class="informative" id="identifier-based-correlation">
+      <h3>식별자 기반 상관관계</h3>
 
       <p>
-<a>Subjects</a> of <a>verifiable credentials</a> are identified using the
-<code>credential.credentialSubject.id</code> field. The identifiers used to
-identify a <a>subject</a> create a greater risk of correlation when the
-identifiers are long-lived or used across more than one web domain.
+<a>검증가능한 크리덴셜</a>의 <a>주체</a>는 <code>credential.credentialSubject.id</code> 필드를 사용하여 
+식별된다. <a>주체</a>를 식별하기 위해 사용되는 식별자는 식별자의 수명이 길고 하나 이상의 
+웹 도메인을 넘나들며 사용될 경우 더 큰 상관관계의 위험을 야기한다.
       </p>
 
       <p>
-Similarly, disclosing the <a>credential</a> identifier
-(<code>credential.id</code>) leads to situations where multiple
-<a>verifiers</a>, or an <a>issuer</a> and a <a>verifier</a>, can collude to
-correlate the <a>holder</a>. If <a>holders</a> want to reduce correlation, they
-should use <a>verifiable credential</a> schemes that allow hiding the
-identifier during <a>verifiable presentation</a>. Such schemes expect the
-<a>holder</a> to generate the identifier and might even allow hiding the
-identifier from the <a>issuer</a>, while still keeping the identifier embedded
-and signed in the <a>verifiable credential</a>.
+유사하게, <a>크리덴셜</a> 식별자(<code>credential.id</code>)를 공개하는 것은러 <a>검증자</a>가 결탁하거나 
+혹은 <a>발급자</a>와 <a>검증자</a>가 결탁하여 <a>보유자</a>와의 상관관계를 파악할 수 있는 상황으로 이끌 
+수 있다. 만약 <a>보유자</a>가 상관관계를 줄이고 싶다면, <a>검증가능한 프레젠테이션</a>을 하는 동안 
+식별자를 숨기는 <a>검증가능한 크리덴셜</a> 스킴을 사용해야 한다. 그러한 스킴은 <a>보유자</a>가 
+식별자를 생성하고 사용자로부터 식별자를 숨기는 것을 허용하는 한편 식별자를 <a>검증가능한 크리덴셜</a> 
+안에 포함하고 서명할 수 있도록 유지한다.
       </p>
 
       <p>
-If strong anti-correlation properties are a requirement in a
-<a>verifiable credentials</a> system, it is strongly advised that identifiers
-are either:
+만약 강력한 상관관계 방지 속성이 요구되는 <a>검증가능한 크리덴셜</a> 체계인 경우, 식별자는 
+다음 중 하나를 만족하도록 강력히 권고된다:
       </p>
 
       <ul>
         <li>
-Bound to a single origin
+단일 기원(Single origin)으로 향함
+        </li>P
+        <li>
+단일 사용(Single use)
         </li>
         <li>
-Single-use
-        </li>
-        <li>
-Not used at all, but instead replaced by short-lived, single-use bearer tokens.
+한번도 사용되지 않았지만 짧은 수명의 단일 사용 전달자 토큰으로 교체됨
         </li>
       </ul>
     </section>
 
-    <section class="informative">
-      <h3>Signature-Based Correlation</h3>
+    <section class="informative" id="signature-based-correlation">
+      <h3>서명 기반의 상관관계</h3>
 
       <p>
-The contents of <a>verifiable credentials</a> are secured using the
-<code>credential.proof</code> field. The <a>properties</a> in this field
-create a greater risk of correlation when the same values are used across more
-than one session or domain and the value does not change. Examples include the
-<code>verificationMethod</code>, <code>created</code>,
-<code>proofPurpose</code>, and <code>jws</code> fields.
+<a>검증가능한 크리덴셜</a>의 내용은 <code>credential.proof</code> 필드를 사용하여 보호한다. 이 필드의 
+<a>속성</a>들은 같은 값이 하나 이상의 세션 혹은 도메인에서 사용되고 그 값이 변하지 않을 경우 
+더 큰 상관관계의 위험을 만들 수 있다. <code>verificationMethod</code>, <code>create</code>, <code>proofPurpose</code>, 
+<code>jws</code> 필드가 이에 속한다.
       </p>
 
       <p>
-If strong anti-correlation properties are required, it is advised that
-signature values and metadata are regenerated each time using technologies like
-third-party pairwise signatures, zero-knowledge proofs, or group signatures.
+만약 강력한 상관관계 방지(Anti-Correlation) 속성이 필요할 경우, 제3자 쌍 서명, 
+영지식증명 또는 집단 서명 등의 기술을 사용하여 매번 서명값과 메타데이터를 재생성하는 
+것을 권장한다.
+
       </p>
 
       <p class="note">
-Even when using anti-correlation signatures, information might still be
-contained in a <a>verifiable credential</a> that defeats the anti-correlation
-properties of the cryptography used.
+비록 상관관계 방지용 서명을 사용하더라도, <a>검증가능한 크리덴셜</a>에는 사용된 암호 기술의 
+상관관계 방지 속성을 무력화시킬 수 있는 정보가 여전히 포함될 수 있다
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Long-Lived Identifier-Based Correlation</h3>
+    <section class="informative" id="long-lived-identifier-based-correlation">
+      <h3>수명이 긴 식별자 기반의 상관관계</h3>
 
       <p>
 <a>Verifiable credentials</a> might contain long-lived identifiers that could
@@ -4055,153 +3926,133 @@ be used to correlate individuals. These types of identifiers include
 organization-issued identifiers, addresses, healthcare vitals,
 <a>verifiable credential</a>-specific JSON-LD contexts, and many other sorts of
 long-lived identifiers.
+<a>검증가능한 크리덴셜</a>은 개인의 상관관계를 파악하는데 사용될 수 있는 수명이 긴 식별자를 
+포함할 수 있다. 이러한 종류의 식별자에는 <a>주체</a> 식별자, 이메일 주소, 정부 발행 식별자, 
+조직 발행 식별자, 주소, 헬스케어 바이탈, <a>검증가능한 크리덴셜</a> 특화 JSON-LD 컨텍스트, 
+그리고 수 많은 종류의 수명이 긴 식별자가 포함된다. 
       </p>
 
       <p>
-Organizations providing software to <a>holders</a> should strive to identify
-fields in <a>verifiable credentials</a> containing information that could be
-used to correlate individuals and warn <a>holders</a> when this information is
-shared.
-      </p>
-    </section>
-
-    <section class="informative">
-      <h3>Device Fingerprinting</h3>
-
-      <p>
-There are mechanisms external to <a>verifiable credentials</a> that are used to
-track and correlate individuals on the Internet and the Web. Some of these
-mechanisms include Internet protocol (IP) address tracking, web browser
-fingerprinting, evercookies, advertising network trackers, mobile network
-position information, and in-application Global Positioning System (GPS) APIs.
-Using <a>verifiable credentials</a> cannot prevent the use of these other
-tracking technologies. Also, when these technologies are used in conjunction
-with <a>verifiable credentials</a>, new correlatable information could be
-discovered. For example, a birthday coupled with a GPS position can be used to
-strongly correlate an individual across multiple websites.
-      </p>
-
-      <p>
-It is recommended that privacy-respecting systems prevent the use of these
-other tracking technologies when <a>verifiable credentials</a> are being used.
-In some cases, tracking technologies might need to be disabled on devices that
-transmit <a>verifiable credentials</a> on behalf of a <a>holder</a>.
+<a>보유자</a>에게 소프트웨어를 제공하는 조직은 개인의 상관관계를 파악하는데 사용되는 정보가 
+포함된 <a>검증가능한 크리덴셜</a>의 필드를 식별하여, 이 정보가 공유될 때 <a>보유자</a>에게 경고해야 한다
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Favor Abstract Claims</h3>
+    <section class="informative" id="device-fingerprinting">
+      <h3>디바이스 핑거프린팅</h3>
 
       <p>
-To enable recipients of <a>verifiable credentials</a> to use them in a variety
-of circumstances without revealing more PII than necessary for transactions,
-<a>issuers</a> should consider limiting the information published in a
-<a>credential</a> to a minimal set needed for the expected purposes. One way to
-avoid placing PII in a <a>credential</a> is to use an abstract <a>property</a>
-that meets the needs of <a>verifiers</a> without providing specific information
-about a <a>subject</a>.
+인터넷과 웹상에서 개인을 추적하고 상관관계를 파악하는데 사용되는 <a>검증가능한 크리덴셜</a> 
+외부의 메커니즘들이 있다. 이러한 메커니즘은 인터넷 프로토콜(IP) 주소 추적, 
+웹 브라우저 핑거프린팅, 에버쿠키(evercookie), 광고 네트워크 추적기, 
+모바일 네트워크 위치 정보, 인앱 GPS API 등을 포함한다. <a>검증가능한 크리덴셜</a>을 
+사용하는 것이 이러한 기술을 사용하는 것을 막지는 못한다. 또한, 이러한 기술들이 
+<a>검증가능한 크리덴셜</a>과 결합되어 사용되면 새로운 상관관계를 파악할 수 있는 
+정보들을 발견할 수도 있다. 예를 들어, 생일과 GPS 위치를 결합하면 다수의 
+웹사이트에서 개인에 대한 강력한 상관관계를 파악하는데 사용될 수 있다. 
       </p>
+
       <p>
-For example, this document uses the <code>ageOver</code> <a>property</a>
-instead of a specific birthdate, which constitutes much stronger PII. If
-retailers in a specific market commonly require purchasers to be older than a
-certain age, an <a>issuer</a> trusted in that market might choose to offer a
-<a>verifiable credential</a> claiming that <a>subjects</a> have met that
-requirement instead of offering <a>verifiable credentials</a> containing
-<a>claims</a> about specific birthdates. This enables individual customers to
-make purchases without revealing specific PII.
+개인정보보호를 중요하게 여기는 시스템에서 <a>검증가능한 크리덴셜</a>을 사용하는 경우, 
+이러한 추적 기술들의 사용을 방지하도록 하는 것이 권장한다. 경우에 따라서는 <a>보유자</a>를 
+대신하여 <a>검증가능한 크리덴셜</a>을 전송하는 기기에서 추적 기술들이 비활성화 하는 것도 요구될 수 있다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>The Principle of Data Minimization</h3>
+    <section class="informative" id="favor-abstract-claims">
+      <h3>추상 클레임 선호(Flavor Abstract Claim</h3>
 
       <p>
-Privacy violations occur when information divulged in one context leaks into
-another. Accepted best practice for preventing such violations is to limit the
-information requested, and received, to the absolute minimum necessary. This
-data minimization approach is required by regulation in multiple jurisdictions,
-including the Health Insurance Portability and Accountability Act (HIPAA) in the
-United States and the General Data Protection Regulation (GDPR) in the European
-Union.
+<a>검증가능한 크리덴셜</a>을 받는 사람이 필요 이상으로 개인식별정보를 노출하지 않으면서도 
+다양한 상황에서 활용할 수 있도록 하기 위해 <a>발행자</a>는 <a>크리덴셜</a>의 정보를 예상되는 목적에 
+필요한 최소한의 정보로 제한하는 것을 고려해야 한다. 개인식별정보를 <a>크리덴셜</a>에 포함하지 
+않도록 하는 방법 중 하나는 <a>주체</a>에 대한 특정한 정보를 제공하지 않으면서도 <a>검증자</a>의 
+요구를 만족시키는 추상 <a>속성</a>을 사용하는 것이다.
       </p>
       <p>
-With <a>verifiable credentials</a>, data minimization for <a>issuers</a> means
-limiting the content of a <a>verifiable credential</a> to the minimum required
-by potential <a>verifiers</a> for expected use. For <a>verifiers</a>, data
-minimization means limiting the scope of the information requested or
-required for accessing services.
+예를 들면, 본 문서는 강력한 개인식별정보인 생일을 사용하는 대신 <code>ageOver</code> <a>속성</a>을 사용한다. 
+만약 특정 시장의 소매업자가 일반적으로 구매자에게 특정 나이 이상을 요구하는 경우, 
+그 시장에서 신뢰받는 <a>발행자</a>는 <a>주체</a>의 생일에 대한 <a>클레임</a>을 포함하는 <a>검증가능한 크리덴셜</a>을 
+제공하기 보다는 <a>주체</a>가 그 조건을 만족한다고 주장하는 <a>검증가능한 크리덴셜</a>을 제공하는 것을 
+선택할 것이다. 이로인해 개인 소비자가 특정 개인식별정보를 드러내지 않으면서도 구매를 할 수 있게 된다.
+      </p>
+    </section>
+
+    <section class="informative" id="the-principle-of-data-minimization">
+      <h3>데이터 최소화 원칙</h3>
+
+      <p>
+한 컨텍스트에서 유출된 정보가 다른 컨텍스트로 유출되면 개인정보보호 위반이 발생한다. 
+이러한 위반을 방지하기 위해 허용되는 모범 사례는 요청 및 수신한 정보를 최소한으로 
+제한하는 것 이다. 데이터 최소화 접근법은 미국의 
+HIPAA (Health Insurance Portability and Accountability Act) 및 EU의 
+GDPR (General Data Protection Regulation)을 포함한 여러 관할권의 규정에 의해 
+요구된다.
       </p>
       <p>
-For example, a driver's license containing a driver's ID number, height, weight,
-birthday, and home address is a <a>credential</a> containing more information
-than is necessary to establish that the person is above a certain age.
+<a>발급자</a>를 위한 데이터 최소화가 뜻하는 것은 <a>검증가능한 크리덴셜</a>의 사용을 
+예상하여 잠재적 <a>검증자</a>가 요구하는 최소값으로 제한하는 것을 의미한다. 
+<a>검증자</a>의 경우 데이터 최소화는 서비스 접근에 요구 또는 정보의 범위를 제한하는 
+것을 의미한다.
+      </p>
+      <p>
+예를 들어, 면허 번호, 키, 몸무게, 생일, 주소가 포함된 운전 면허증은 개인이 특정 연령 
+이상임을 확인하는데 필요한 것보다 많은 정보가 포함된 <a>크리덴셜</a>이다.
       </p>
 
       <p>
-It is considered best practice for <a>issuers</a> to atomize information or use
-a signature scheme that allows for <a>selective disclosure</a>. For example, an
-<a>issuer</a> of driver's licenses could issue a <a>verifiable credential</a>
-containing every attribute that appears on a driver's license, as well as a set
-of <a>verifiable credentials</a> where every <a>verifiable credential</a>
-contains only a single attribute, such as a person's birthday. It could also
-issue more abstract <a>verifiable credentials</a> (for example, a
-<a>verifiable credential</a> containing only an <code>ageOver</code> attribute).
-One possible adaptation would be for <a>issuers</a> to provide secure HTTP
-endpoints for retrieving single-use <a>bearer credentials</a> that promote the
-pseudonymous usage of <a>verifiable credentials</a>. Implementers that find this
-impractical or unsafe, should consider using <a>selective disclosure</a> schemes
-that eliminate dependence on <a>issuers</a> at proving time and reduce temporal
-correlation risk from <a>issuers</a>.
+<a>발급자</a>가 정보를 원자화하거나 <a>선택적 공개</a>를 허용하는 서명 체계를 사용하는
+ 것이 가장 좋은 사례이다. 예를 들어, 운전면허 <a>발급자</a>는 운전 면허에 나타나는 
+모든 속성이 포함된 <a>검증가능한 크리덴셜</a>과 개인의 생일과 같은 단일 속성만 
+포함되는 <a>검증가능한 크리덴셜</a> 집합을 발급할 수 있다. 또한, 더 추상적인 
+<a>검증가능한 크리덴셜</a>을 발행할 수 있다 (예 : <code>ageOver</code> 특성만 
+포함하는 <a>검증가능한 크리덴셜</a>). 한 가지 가능한 적용 방법은 <a>발급자</a>가 
+<a>검증가능한 크리덴셜</a>의 익명 사용을 촉진하는 일회용 <a>무기명 크리덴셜</a>을 
+검색하기 위한 보안 HTTP 엔드포인트를 제공하는 것이다. 부적절하거나 위험을 발견한 
+구현자는 <a>선택적 공개</a>를 사용하여 <a>발급자</a>에 대한 의존성을 제거하고 
+<a>발급자</a>의 일시적인 상관 위험을 줄여야 한다.
       </p>
 
       <p>
-<a>Verifiers</a> are urged to only request information that is absolutely
-necessary for a specific transaction to occur. This is important for at least
-two reasons. It:
+<a>검증자</a>는 특정 트랜젝션이 발생하는데 꼭 필요한 정보만 요청해야 한다. 
+이는 두 종류의 이유로 중요하다:
       </p>
 
       <ul>
         <li>
-Reduces the liability on the <a>verifier</a> for handling highly sensitive
-information that it does not need to.
+불필요한 매우 민감한 정보를 처리하는 <a>검증자</a>의 책임을 줄임
         </li>
         <li>
-Enhances the privacy of the individual by only asking for information required
-for a specific transaction.
+특정 트랜젝션에 필요한 정보만 요구함으로써 개인의 프라이버시를 향상
         </li>
       </ul>
 
       <p class="note">
-While it is possible to practice the principle of minimum disclosure, it might
-be impossible to avoid the strong identification of an individual for
-specific use cases during a single session or over multiple sessions. The
-authors of this document cannot stress how difficult it is to meet this
-principle in real-world scenarios.
+최소 공개 원칙을 실행하는 것은 가능하지만, 단일 또는 다중 세션 동안 특정 사례에서 
+개인의 강력한 식별을 피하는 것은 불가능할 수 있다. 본 표준의 저자는 실제 시나리오에서 
+원칙을 달성하는 것은 어려울 수 있다고 강요하지 않는다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Bearer Credentials</h3>
+    <section class="informative" id="bearer-credentials">
+      <h3>무기명 크리덴셜</h3>
 
       <p>
-A <dfn data-lt="bearer credentials">bearer credential</dfn> is a
-privacy-enhancing piece of information, such as a concert ticket, which entitles
-the <a>holder</a> of the bearer credential to a specific resource without
-divulging sensitive information about the <a>holder</a>. Bearer credentials are
-often used in low-risk use cases where the sharing of the bearer credential is
-not a concern or would not result in large economic or reputational losses.
+<dfn data-lt="bearer credentials">무기명 크리덴셜</dfn>은 콘서트 티켓과 같은 
+개인정보보호 강화 정보로, <a>보유자</a>에게는 자신에 대한 민감한 정보를 공개하지 
+않고도 특정 자원에 대한 크리덴셜을 부여 할 수 있다. 무기명 크리덴셜은 종종 
+무기명 크리덴셜 공유가 문제가 되지 않거나 경제적 또는 평판의 손실이 크지 않은 
+저 위험 사례에서 사용된다.
       </p>
 
       <p>
-<a>Verifiable credentials</a> that are <a>bearer credentials</a> are made
-possible by not specifying the <a>subject</a> identifier, expressed using the
-<code>id</code> <a>property</a>, which is nested in the
-<code>credentialSubject</code> <a>property</a>. For example, the following
-<a>verifiable credential</a> is a <a>bearer credential</a>:
+<a>무기명 크리덴셜</a>인 <a>검증가능한 크리덴셜</a>은 
+<code>credentialSubject</code> <a>속성</a>에 중첩된 <code>id</code> <a>속성</a>을 
+사용하여 표현된 <a>주체</a> 식별자를 지정하지 않으면 가능하다. 
+예를 들어 다음과 같은 <a>검증가능한 크리덴셜</a>은 <a>무기명 크리덴셜</a>이다:
       </p>
 
-      <pre class="example nohighlight" title="Usage of issuer properties">
+      <pre class="example nohighlight" title="발급자 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -4212,7 +4063,7 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2017-10-22T12:23:48Z",
   "credentialSubject": {
-    <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
+    <span class="comment">// 무기명 크리덴셜에 ‘id’ 속성이 지정되어 있지 않음</span>
     "degree": {
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
@@ -4223,93 +4074,84 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
       </pre>
 
       <p>
-While <a>bearer credentials</a> can be privacy-enhancing, they must be carefully
-crafted so as not accidentally divulge more information than the <a>holder</a>
-of the <a>bearer credential</a> expects. For example, repeated use of the same
-<a>bearer credential</a> across multiple sites enables these sites to
-potentially collude to unduly track or correlate the <a>holder</a>. Likewise,
-information that might seem non-identifying, such as a birthdate and postal
-code, can be used to statistically identify an individual when used together in
-the same <a>bearer credential</a> or session.
+<a>무기명 크리덴셜</a>은 개인정보보호를 강화할 수 있지만, <a>무기명 크리덴셜</a> 
+<a>보유자</a>가 예상한 것보다 더 많은 정보를 실수로 공개하지 않도록 신중하게 만들어야 
+한다. 예를 들어, 다수의 사이트에서 동일한 <a>무기명 크리덴셜</a>을 반복적으로 사용하면 
+사이트들이 담합하여 잠재적으로 <a>보유자</a>를 추적하거나 연동시킬 수 있다. 
+또한 생년월일 및 우편 번호와 같이 식별할 수 없는 것처럼 보이는 정보를 사용하여 동일한 
+<a>무기명 크리덴셜</a> 또는 세션에서 함께 사용될 경우, 개인을 통계적으로 식별할 수 있다.
       </p>
 
       <p>
-<a>Issuers</a> of <a>bearer credentials</a> should ensure that the
-<a>bearer credentials</a> provide privacy-enhancing benefits that:
+<a>무기명 크리덴셜</a> <a>발급자</a>는 <a>무기명 크리덴셜</a>이 다음과 같은 
+개인정보보호 강화를 제공하는지 확인해야 한다:
       </p>
 
       <ul>
         <li>
-Are single-use, where possible.
+가능하면 일회용
         </li>
         <li>
-Do not contain personally identifying information.
+개인 식별정보를 포함하지 않음
         </li>
         <li>
-Are not unduly correlatable.
+과도하게 상관되지 않음
         </li>
       </ul>
 
       <p>
-<a>Holders</a> should be warned by their software if <a>bearer credentials</a>
-containing sensitive information are issued or requested, or if there is a
-correlation risk when combining two or more <a>bearer credentials</a> across one
-or more sessions. While it might be impossible to detect all correlation risks,
-some might certainly be detectable.
+민감한 정보가 포함된 <a>무기명 크리덴셜</a>이 발행, 요청되거나 하나 이상의 세션에서 
+두 가지 이상의 <a>무기명 크리덴셜</a>을 결합되거나 상관 관계 위험이 있는 경우, 
+소프트웨어는 <a>보유자</a>에게 경고해야 한다. 모든 상관 관계 위험을 감지하는 것은 
+불가능하지만 일부는 확실하게 감지할 수 있다.
       </p>
 
       <p>
-<a>Verifiers</a> should not request <a>bearer credentials</a> that can be used
-to unduly correlate the <a>holder</a>.
+<a>검증자</a>는 <a>보유자</a>와의 상관 관계를 파악하는데 사용할 수 있는 <a>무기명 크리덴셜</a>을 요청하지 말아야 한다.
       </p>
     </section>
 
-    <section class="informative">
-      <h3>Validity Checks</h3>
+    <section class="informative" id="validity-checks">
+      <h3>유효성 검사</h3>
 
       <p>
-When processing <a>verifiable credentials</a>, <a>verifiers</a> are expected to
-perform many of the checks listed in Appendix <a href="#validation"></a> as
-well as a variety of specific business process checks. Validity checks might
-include checking:
+<a>검증가능한 크리덴셜</a>을 처리할 때 <a>검증자</a>는 <a href="#validation"></a>의 
+유효성 검증 및 다양한 특정 비즈니스 프로세스 점검에 나열된 검사를 수행해야 한다. 
+유효성 검사는 아래 항목이 포함된다:
       </p>
 
       <ul>
         <li>
-The professional licensure status of the <a>holder</a>.
+<a>보유자</a>의 전문 라이센스 상태.
         </li>
         <li>
-A date of license renewal or revocation.
+라이센스 갱신 또는 폐기 날짜.
         </li>
         <li>
-The sub-qualifications of an individual.
+개인의 하위 자격.
         </li>
         <li>
-If a relationship exists between the <a>holder</a> and the <a>entity</a>
-with whom the <a>holder</a> is attempting to interact.
+<a>보유자</a>와 상호 작용을 시도하는 <a>개체</a>와 관계가 있는 경우.
         </li>
         <li>
-The geolocation information associated with the <a>holder</a>.
+<a>보유자</a>와 관련된 지리적 위치 정보.
         </li>
       </ul>
 
       <p>
-The process of performing these checks might result in information leakage that
-leads to a privacy violation of the <a>holder</a>. For example, a simple
-operation such as checking a revocation list can notify the <a>issuer</a> that a
-specific business is likely interacting with the <a>holder</a>. This could
-enable <a>issuers</a> to collude and correlate individuals without their
-knowledge.
+이러한 검사를 수행하면 정보 유출로 인해 <a>보유자</a>의 개인정보보호 위반이 
+발생할 수 있다. 예를 들어 폐기 목록 확인과 같은 간단한 조작으로 특정 비즈니스가 
+<a>보유자</a>와 상호작용 한다는 것을 <a>발급자</a>에게 알릴 수 있다. 
+이는 <a>발급자</a>들은 담합과 연동을 개인들에 대한 정보 없이 할 수 있다.
       </p>
 
       <p>
-<a>Issuers</a> are urged to not use mechanisms, such as <a>credential</a>
-revocation lists that are unique per <a>credential</a>, during the
-<a>verification</a> process that could lead to privacy violations. Organizations
-providing software to <a>holders</a> should warn when <a>credentials</a> include
-information that could lead to privacy violations during the verification
-process. <a>Verifiers</a> should consider rejecting <a>credentials</a> that
-produce privacy violations or that enable bad privacy practices.
+<a>발급자</a>는 <a>크리덴셜</a>마다 <a>검증</a>과정에서 개인정보보호 위반이 발생할 
+수 있는 구간에 <a>크리덴셜</a>마다 고유한 폐기 목록과 같은 메커니즘을 사용하지 
+않아야 한다. <a>보유자</a>에게 소프트웨어를 제공하는 조직은 <a>크리덴셜</a> 검증 과정 
+중에 개인정보보호 위반으로 이어질 수 있는 정보가 포함된 경우 경고해야 한다. 
+<a>검증자</a>는 개인정보 침해를 유발하거나 개인정보보호 정책을 위반하는 
+<a>크리덴셜</a>을 거부해야 한다.
       </p>
     </section>
 
@@ -4555,8 +4397,7 @@ correlation arises from the presentation of <a>credentials</a>.
 <a>검증자</a>는 공개 요구사항을 만족하는 정보만을 기록하고, 공개된 정보 중 나머지 민감한 정보는 저장하지 않는다. 
 많은 경우에 규제적인 부담과 같은 우선순위의 경쟁으로 인해 이런 이상적인 시스템을 채택하는 것이 쉽지 않다. 
 다른 경우는, 수명이 긴 식별자가 일회성을 저해한다. 
-그러나 모든 <a>검증가능한 크리덴셜</a> 생태계의 설계는 
-가능할 때마다 일회용 <a>검증가능한 크리덴셜</a>을 선호함으로써 사생활을 존중하기 위해 노력해야 한다.
+그러나 모든 <a>검증가능한 크리덴셜</a> 생태계의 설계는 가능할 때마다 일회용 <a>검증가능한 크리덴셜</a>을 선호함으로써 사생활을 존중하기 위해 노력해야 한다.
       </p>
 
       <p>
@@ -4619,18 +4460,11 @@ correlation arises from the presentation of <a>credentials</a>.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="content-integrity-protection" class="informative">
       <h3>Content Integrity Protection</h3>
 
       <p>
-<a>Verifiable credentials</a> often contain URLs to data that resides outside of
-the <a>verifiable credential</a> itself. Linked content that exists outside a
-<a>verifiable credential</a>, such as images, JSON-LD Contexts, and other
-machine-readable data, are often not protected against tampering because the
-data resides outside of the protection of the
-<a href="#proofs-signatures">proof</a> on the <a>verifiable credential</a>. For
-example, the following highlighted links are not content-integrity protected but
-probably should be:
+<a>검증가능한 크리덴셜</a>에는 외부에서 자신을 검증하기 위한 <a>검증가능한 크리덴셜</a>을 가르키는 URL들이 종종 포함되어 있다. 외부에 존재하는 이미지, JSON-LD 컨택스트 및 기계판독가능데이터들과 같은 링크된 컨텐츠는 <a>검증가능한 크리덴셜</a>의 <a href="#proofs-signatures">증명</a>을 통한 보호에서 벗어나 있기 때문에, 변조로 부터 종종 보호되지 않는다. 예를 들어 다음과 같이 강조표시된 링크들은 컨탠츠 무결성이 보호되지 않지만, 아마도 다음과 같을 것이다.
       </p>
 
       <pre class="example nohighlight" title="Non-content-integrity protected links">
@@ -4660,13 +4494,7 @@ probably should be:
       </pre>
 
       <p>
-While this specification does not recommend any specific content integrity
-protection, document authors who want to ensure links to content are integrity
-protected are advised to use URL schemes that enforce content integrity. Two
-such schemes are the [[HASHLINK]] specification and the [[IPFS]]. The example
-below transforms the previous example and adds content integrity protection to
-the JSON-LD Contexts using the [[HASHLINK]] specification, and content integrity
-protection to the image by using an [[IPFS]] link.
+이 규격에서 컨텐츠 무결성 보호를 위해 특정한 방법을 권장하지 않지만, 링크된 컨탠츠의 무결성 보호를 원하는 작성자는 컨탠츠 무결성을 강화하는 URL체계를 사용할 것을 권장한다. 이러한 2가치 체계는 [[HASHLINK]]규격과 [[IPFS]]이다. 다음의 예제는 이전의 예를 변형해서 [[HASHLINK]]규격을 이용해 JSON-LD 컨텍스트에 콘텐츠 무결성 보호를 추가하고, [[IPFS]] 링크를 사용하여 이미지에 콘텐츠 무결성 보호를 추가하였다.
       </p>
 
         <pre class="example nohighlight" title="Content-integrity protection for links to external data">
@@ -4696,88 +4524,48 @@ protection to the image by using an [[IPFS]] link.
       </pre>
 
       <p class="note">
-It is debatable whether the JSON-LD Contexts above need protection because
-production implementations are expected to ship with static copies of important
-JSON-LD Contexts.
+프로덕션 구현에는 중요한 JSON-LD 컨텍스트의 정적 사본이 제공 될 것으로 예상되므로, 위의 JSON-LD 컨텍스트에 보호가 필요한지 여부는 논란의 여지가 있다.
       </p>
 
       <p>
-While the example above is one way to achieve content integrity protection,
-there are other solutions that might be better suited for certain applications.
-Implementers are urged to understand how links to external machine-readable
-content that are not content-integrity protected could result in successful
-attacks against their applications.
+위의 예는 컨텐츠 무결성 보호를 달성하는 한 가지 방법이지만 특정 애플리케이션들에 더 적합한 다른 솔루션들이 있습니다. 구현자들은 컨텐츠 무결성으로 보호되지 않는 외부의 기계판독가능한 컨텐츠들에 대한 링크가 어떻게 그들의 어플리케이션에 대한 성공적인 공격을 만들어 낼 수 있는지 이해해야 합니다.
       </p>
 
       </section>
 
-    <section class="informative">
+    <section id="unsigned-claims" class="informative">
       <h3>Unsigned Claims</h3>
 
       <p>
-This specification allows <a>credentials</a> to be produced that do not contain
-signatures or proofs of any kind. These types of <a>credentials</a> are often
-useful for intermediate storage, or self-asserted information, which is
-analogous to filling out a form on a web page. Implementers should be aware that
-these types of <a>credentials</a> are not <a>verifiable</a> because the
-authorship either is not known or cannot be trusted.
+이 규격은 어떠한 서명이나 증명도 포함하지 않은 <a>크리덴셜</a>을 만들 수 있도록 한다. 이러한 유형의 <a>크리덴셜</a>은 웹 페이지에서 양식을 작성하는 것과 유사한 자가증명, 중간 저장소에 종종 유용하다. 구현자는 이러한 종류의 <a>크리덴셜</a>들은 작성자가 알려지 있지 않거나, 신뢰할 수 없기 떄문에 <a>검증</a>할 수 없다는걸 알아야 한다.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="token-binding" class="informative">
       <h3>Token Binding</h3>
 
       <p>
-A <a>verifier</a> might need to ensure it is the intended recipient of a
-<a>verifiable presentation</a> and not the target of a
-<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>.
-Approaches such as token binding [[RFC8471]], which ties the request for a
-<a>verifiable presentation</a> to the response, can secure the protocol.
-Any unsecured protocol is susceptible to man-in-the-middle attacks.
+<a>검증자</a>는 이것이 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">중간자 공격</a>의 목표가 아닌 <a>검증가능한 프레젠테이션</a>의 수신자인지 확인해야 할 수도 있다. 요청에 의해서 <a>검증가능한 프레젠테이션</a> 응답을 묶은 토큰바인딩 [[RFC8471]]과 같은 접근 방법으로 프로토콩을 보호할 수 있다. 보안되지 않은 모든 프로토콜은 중간자 공격에 취약하다.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="bundling-dependent-claims" class="informative">
       <h3>Bundling Dependent Claims</h3>
 
       <p>
-It is considered best practice for <a>issuers</a> to atomize information in a
-<a>credential</a>, or use a signature scheme that allows for selective
-disclosure. In the case of atomization, if it is not done securely by the
-<a>issuer</a>, the <a>holder</a> might bundle together different
-<a>credentials</a> in a way that was not intended by the <a>issuer</a>.
+<a>발급자</a>가 <a>크리덴셜</a>의 정보를 원자화하거나, 선택정공개를 허용하는 서명체계를 이용하는 것이 가장 좋다. 원자화의 경우에, 만약 <a>발급자</a>에 의해 안전하게 완료되지 않았다면, <a>발급자</a>가 의도하지 않은 방식으로 <a>보유자</a>의 다른 <a>크리덴셜</a>과 묶일 수 있다.
       </p>
 
       <p>
-For example, a university might issue two <a>verifiable credentials</a> to a
-person, each containing two <a>properties</a>, which must be taken together to
-to designate the "role" of that person in a given "department", such as "Staff
-Member" in the "Department of Computing", or "Post Graduate Student" in the
-"Department of Economics". If these <a>verifiable credentials</a> are atomized
-to put only one of these <a>properties</a> into each <a>credential</a> , then
-the university would issue four <a>credentials</a> to the person, each
-containing one of the following designations: "Staff Member", "Post Graduate
-Student", "Department of Computing", and "Department of Economics". The
-<a>holder</a> might then transfer the "Staff Member" and "Department of
-Economics" <a>verifiable credentials</a> to a <a>verifier</a>, which together
-would comprise a false <a>claim</a>.
+예를 들어, 대학은 한사람에게 2종류의 <a>검증가능한 크리덴셜</a>을 발급할 수 있는데, 각 자격증에는 "컴퓨터 부서"의 "담당자" 또는 "경제학과"의 "대학원생"과 같이 주어진 "부서"와 "역할"의 2가지 <a>속성</a>이 각각 포함되어 있습니다. 만약 이러한 속성들 중 단지 하나만이 <a>크리덴셜</a>에 포함되어 원자화된다면, 대학은 한사람에게 4개의 <a>크리덴셜</a>을 발급해야 합니다. 각각의 <a>크리덴셜</a>들은 "직원", "대학원생", "컴퓨터 부서", "경제학과"가 될 것이다. <a>보유자</a>는 <a>검증자</a>에게 "직원"과 "경제학과"의 <a>검증가능한 크리덴셜</a>을 전송할 수 있으며, 이는 잘못된 <a>클레임</a>이 된다.
       </p>
     </section>
 
-    <section class="informative">
+    <section id="highly-dynamic-information" class="informative">
       <h3>Highly Dynamic Information</h3>
 
       <p>
-When <a>verifiable credentials</a> are issued for highly dynamic information,
-implementers should ensure the expiration times are set appropriately.
-Expiration periods longer than the timeframe where the
-<a>verifiable credential</a> is valid might create exploitable security
-vulnerabilities. Expiration periods shorter than the timeframe where the
-information expressed by the <a>verifiable credential</a> is valid creates a
-burden on <a>holders</a> and <a>verifiers</a>. It is therefore important to set
-validity periods for <a>verifiable credentials</a> that are appropriate to the
-use case and the expected lifetime for the information contained in the
-<a>verifiable credential</a>.
+높은 동적인 정보에 대한 <a>검증가능한 크리덴셜</a>을 발급하는 경우, 구현자는 만료기간을 적절하게 설정해야합니다. <a>검증가능한 크리덴셜</a>의 유효기간보다 만료기간이 더 길다면 악용가능한 보안취약성이 발생할 수 있다. <a>검증가능한 크리덴셜</a>을 통해 표현되는 정보의 만료기간이 유효기간보다 짧으면 <a>보유</a>자와 <a>검증자</a>에게 부담을 줍니다. 따라서 사용사례와 <a>검증가능한 크리덴셜</a>에 포함된 정보의 예상 수명에 유효기간의 적절한 설정은 중요하다.
       </p>
     </section>
 
@@ -4785,74 +4573,49 @@ use case and the expected lifetime for the information contained in the
       <h3>Device Theft and Impersonation</h3>
 
       <p>
-When <a>verifiable credentials</a> are stored on a device and that
-device is lost or stolen, it might be possible for an attacker to gain access
-to systems using the victim's <a>verifiable credentials</a>. Ways to mitigate
-this type of attack include:
+<a>검증가능한 크리덴셜</a>이 저장된 장치가 분실되거나 도난당했을 때, 공갹자가 피해자의 <a>검증가능한 크리덴셜</a>을 사용하여 시스템에 접속할 수 있다. 이러한 유형의 공격을 완화하는 방법:
       </p>
 
       <ul>
         <li>
-Enabling password, pin, pattern, or biometric screen unlock protection on the
-device.
+장치에서 암호, 핀, 패턴 또는 생체 인식 화면 잠금 해제 보호 활성화.
         </li>
         <li>
-Enabling password, biometric, or multi-factor authentication for the
-<a>credential</a> <a>repository</a>.
+<a>크리덴셜 정보 저장소</a>에 암호, 생체 인식 또는 다중 인증 활성화.
         </li>
         <li>
-Enabling password, biometric, or multi-factor authentication when accessing
-cryptographic keys.
+암호 키에 액세스할 때 암호, 생체 인식 또는 다중 인증 활성화.
         </li>
         <li>
-Using a separate hardware-based signature device.
+별도의 하드웨어 기반 서명 장치 사용.
         </li>
         <li>
-All or any combination of the above.
+상기의 전부 또는 임의의 조합.
         </li>
       </ul>
     </section>
   </section>
 
-  <section class="informative">
+  <section id="accessibility-considerations" class="informative">
     <h2>Accessibility Considerations</h2>
 
     <p>
-There are a number of accessibility considerations implementers should be
-aware of when processing data described in this specification. As with
-implementation of any web standard or protocol, ignoring accessibility issues
-makes this information unusable by a large subset of the population. It is
-important to follow accessibility guidelines and standards, such as [[WCAG21]],
-to ensure that all people, regardless of ability, can make use of this data.
-This is especially important when establishing systems utilizing cryptography,
-which have historically created problems for assistive technologies.
+구현자가 이 규격에 기술된 데이터를 처리할 때 알아야할 많은 접근성에 대한 고려사항이 있다. 모든 웹표준 또는 프로토콜의 구현과 마찬가지로 접근성 문제에 대한 무시하게 되면 모집단의 상당부분에서 이 정보를 이용할수 없게 된다. [[WCAG21]]과 같은 접근성 가이드라인과 표준을 지켜 모든 사람들이 능력에 개의치 않고 이 정보를 사용할 수 있게 만드는 것은 매우 중요하다. 역사적으로 보조기술에 문제를 야기한 암호학을 이용한 시스템을 구축할 때 이것은 특별히 중요하다.
     </p>
 
     <p>
-This section details the general accessibility considerations to take into
-account when utilizing this data model.
+이 절에서는 이 데이터 모델을 활용할 때 고려해야 할 일반적인 접근성에 대한 고려사항을 자세히 설명한다.
     </p>
 
-    <section class="informative">
+    <section id="data-first-approaches" class="informative">
       <h3>Data First Approaches</h3>
 
       <p>
-Many physical <a>credentials</a> in use today, such as government identification
-cards, have poor accessibility characteristics, including, but not limited to,
-small print, reliance on small and high-resolution images, and no affordances
-for people with vision impairments.
+정부에서 발행한 신분증과 같이 오늘날 사용하고 있는 많은 물리적인 <a>인증</a>들은 인쇄가 너무 작거나, 작지만 고해상도의 이미지에 의존하거나, 시각적 장애를 가진 사람들에게 제공할 수 없는 등의 제약이 포함되어 있는 특징들에 의해 접근성이 매우 열악하다.
       </p>
 
       <p>
-When utilizing this data model to create <a>verifiable credentials</a>, it is
-suggested that data model designers use a <em>data first</em> approach. For
-example, given the choice of using data or a graphical image to depict a
-<a>credential</a>, designers should express every element of the image, such as
-the name of an institution or the professional <a>credential</a>, in a
-machine-readable way instead of relying on a viewer's interpretation of the
-image to convey this information. Using a data first approach is preferred
-because it provides the foundational elements of building different interfaces
-for people with varying abilities.
+데이터모델을 이용해 <a>검증가능한 크리덴셜</a>을 만들때, 데이터 모델 디자이너는 <em>데이터 우선 접근</em> 방식을 사용하는 것이 좋습니다. 예를 들어, <a>크리덴셜</a>을 묘사하기 위해 데이터 또는 그래픽 이미지를 사용하기로 선택한 경우, 디자이너는 기관의 이름 또는 전문 자격과 같은 이미지의 모든 요소를 시청자의 해석에 의존하지 말고 기계판독이 가능한 방식으로 표현해야합니다. 데이터 우선 접근 방식은 다양한 능력을 가진 사람들을 위해 서로 다른 인터페이스를 구축을 위한 기본 요소를 제공하기 때문에 선호됩니다.
       </p>
     </section>
   </section>
@@ -5141,8 +4904,8 @@ expiration date of a <a>verifiable credential</a> is not in the past.
         </p>
       </section>
 
-      <section class="informative">
-        <h3>Status</h3>
+      <section class="informative" id="status">
+        <h3>상태</h3>
 
         <p>
 If the <code>credentialStatus</code> property is available, the status of a
