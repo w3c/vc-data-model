@@ -1483,34 +1483,34 @@ JSON-LD 문서의 이해가 쉬워질 것이다.
 구현자와 작성자는 검증가능한 크리덴셜 구현 가이드[[?VC-IMP-GUIDE]]의 타이핑에 관한 섹션을 읽어야 한다.
         </p>
 
-      </section>
+      <section id="credential-subject">
 
-      <section>
-        <h3>Credential Subject</h3>
+      <section id="credential-subject">
+        <h3>자격 주체</h3>
 
         <p>
-A <a>verifiable credential</a> contains <a>claims</a> about one or more
-<a>subjects</a>. This specification defines a <code>credentialSubject</code>
-<a>property</a> for the expression of <a>claims</a> about one or more
-<a>subjects</a>.
+<a>검증가능한 크리덴셜</a> 에는 하나 이상의 <a>주체들</a>에 대한 <a>클레임이</a> 포함된다. 
+이 규격은 하나 이상의 <a>주체들</a>에 대한 <a>클레임</a>을 <a>표현</a>하기 위한 항목인
+<code>credentialSubject</code> 
+<a>속성</a>을 정의한다.
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
-<a>property</a>.
+<a>검증가능한 크리덴셜</a>에는 무조건 <code>credentialSubject</code> <a>속성</a>이 있어야 한다.
         </p>
 
         <dl>
           <dt>credentialSubject</dt>
           <dd>
 The value of the <code>credentialSubject</code> <a>property</a> is defined as
-a set of objects that contain one or more properties that are each related to a
-<a>subject</a> of the <a>verifiable credential</a>. Each object MAY contain an
-<code>id</code>, as described in Section <a href="#identifiers"></a>.
+<code>credentialSubject</code> <a>속성</a>의 값은 <a>검증가능한 크리덴셜</a>의 <a>주체</a>와 
+각각 관련된 하나 이상의 특성을 포함하는 
+객체 세트로 정의된다. <a href="#identifiers"></a>에 설명 된대로 각 객체에는 <code>id</code>가 포함될 수도 있다.
+
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of the credentialSubject property">
+        <pre class="example nohighlight" title="credentialSubject 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1530,13 +1530,12 @@ a set of objects that contain one or more properties that are each related to a
         </pre>
 
         <p>
-It is possible to express information related to multiple <a>subjects</a> in a
-<a>verifiable credential</a>. The example below specifies two <a>subjects</a>
-who are spouses. Note the use of array notation to associate multiple
-<a>subjects</a> with the <code>credentialSubject</code> property.
+<a>검증 가능한 크리덴셜</a>로 여러 <a>주체</a>와 관련된 정보를 표현할 수 있다. 
+아래의 예는 배우자 관계인 두 <a>주체</a>를 지정한다. 
+여러 <a>주체</a>를 <code>credentialSubject</code> 특성과 연관시키기 위해 배열 표기법을 사용한다.
         </p>
 
-        <pre class="example nohighlight" title="Specifying multiple subjects in a verifiable credential">
+        <pre class="example nohighlight" title="검증 가능한 크리덴셜로 여러 주체 지정">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1559,31 +1558,28 @@ who are spouses. Note the use of array notation to associate multiple
 
       </section>
 
-      <section>
-        <h3>Issuer</h3>
+      <section id="issuer">
+        <h3>발급자</h3>
 
         <p>
-This specification defines a property for expressing the <a>issuer</a> of
-a <a>verifiable credential</a>.
+이 규격은 <a>검증가능한 크리덴셜</a>의 <a>발급자</a>를 표현하기 위한 속성을 정의한다.
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have an <code>issuer</code> <a>property</a>.
+<a>검증가능한 크리덴셜</a>은 무조건 <code>issuer</code> <a>속성</a>이 있어야 한다.
         </p>
 
         <dl>
           <dt><var>issuer</var></dt>
           <dd>
-The value of the <code>issuer</code> <a>property</a> MUST be either a
-<a>URI</a> or an object containing an <code>id</code> <a>property</a>. It is
-RECOMMENDED that the <a>URI</a> in the <code>issuer</code> or its
-<code>id</code> be one which, if dereferenced, results in a document containing
-machine-readable information about the <a>issuer</a> that can be used to
-<a>verify</a> the information expressed in the <a>credential</a>.
+<code>issuer</code> <a>속성</a> 값은 무조건 <a>URI</a>이거나 <code>id</code> <a>속성</a>을 포함하는 객체여야한다. 
+<code>issuer</code> 또는 해당 <code>id</code>의 <a>URI</a>는 역 참조 된 경우 
+<a>크리덴셜</a>에 표시된 정보를 <a>검증</a>하는 데 사용할 수 있는 
+<a>issuer</a>에 대한 기계판독 가능한 정보를 포함하는 문서를 생성하는 URI 여야 한다.
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of issuer property">
+        <pre class="example nohighlight" title="발급자 특성의 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1605,11 +1601,10 @@ machine-readable information about the <a>issuer</a> that can be used to
         </pre>
 
         <p>
-It is also possible to express additional information about the issuer by
-associating an object with the issuer property:
+객체를 발급자 특성과 연관시켜 발급자에 대한 추가 정보를 표현 할 수도 있다.
         </p>
 
-        <pre class="example nohighlight" title="Usage of issuer expanded property">
+        <pre class="example nohighlight" title="발급자 확장형 특성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1634,35 +1629,32 @@ associating an object with the issuer property:
         </pre>
 
         <p class="note">
-The value of the <code>issuer</code> <a>property</a> can also be a JWK (for
-example, <code>"https://example.com/keys/foo.jwk"</code>) or a <a>DID</a> (for
-example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
+<code>issuer</code> <a>특성</a>값은 JWK (예를 들어, <code>"https://example.com/keys/foo.jwk"</code>) 
+또는 a <a>DID</a> (예를 들어, <code>"did:example:abfe13f712120431c276e12ecab"</code>)이 될 수 있다.	
         </p>
 
       </section>
 
-      <section>
-        <h3>Issuance Date</h3>
+      <section id="issuance-date">
+        <h3>발급 날짜</h3>
 
         <p>
-This specification defines the <code>issuanceDate</code> <a>property</a> for
-expressing the date and time when a <a>credential</a> becomes valid.
+이 규격은 <a>크리덴셜</a>이 유효한 날짜 및 시간을 표현하기 위한 <code>issuanceDate</code> <a>속성</a>을 정의한다.
         </p>
 
         <dl>
           <dt><var>issuanceDate</var></dt>
           <dd>
-A <a>credential</a> MUST have an <code>issuanceDate</code> <a>property</a>. The
-value of the <code>issuanceDate</code> <a>property</a> MUST be a string value of
-an [[!RFC3339]] combined date and time string representing the date and time the
-<a>credential</a> becomes valid, which could be a date and time in the future.
-Note that this value represents the earliest point in time at which the
-information associated with the <code>credentialSubject</code> <a>property</a>
-becomes valid.
+<a>크리덴셜</a>은 무조건 <code>issuanceDate</code> <a>속성</a>을 가져야 한다. 
+<code>issuanceDate</code> <a>속성</a>의 값은 
+<a>크리덴셜</a>이 유효한 날짜와 시간을 나타내는 [[!RFC3339]] 결합 날짜 및 시간 
+문자열의 문자열 값이어야하며 이는 미래의 날짜와 시간 일 수 있습니다. 이 값은 <code>credentialSubject</code> 
+<a>특성</a>과 연관된 정보가 유효 해지는 가장 빠른 시점을 나타냅니다.
+
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of issuanceDate property">
+        <pre class="example nohighlight" title="issuanceDate 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1684,62 +1676,55 @@ becomes valid.
         </pre>
 
         <p class="note">
-It is expected that the next version of this specification will add the
-<code>validFrom</code> <a>property</a> and will deprecate the
-<code>issuanceDate</code> <a>property</a> in favor of a new <code>issued</code>
-<a>property</a>. The range of values for both properties are expected to remain
-as [[?RFC3339]] combined date and time strings. Implementers are advised that
-the <code>validFrom</code> and <code>issued</code> <a>properties</a> are
-reserved and use for any other purpose is discouraged.
+이 스펙의 다음 버전은 <code>validFrom</code> <a>속성</a>을 추가하고 
+새로운 <code>issued</code> 된 <a>속성</a>을 위해 <code>issuanceDate</code> <a>속성</a>을 
+더 이상 사용하지 않을 것으로 예상된다. 두 속성의 값 범위는 [[?RFC3339]] 결합 날짜 및 시간 문자열로 유지 
+될 것으로 예상한다. 구현자는 <code>validFrom</code> 및 <code>issued</code> <a>속성</a>을 예약하고 
+다른 목적으로 사용하지 않는 것이 좋다.
         </p>
 
       </section>
 
-      <section>
-        <h3>Proofs (Signatures)</h3>
+      <section id="proofs-signatures">
+        <h3>프루프들 (시그니쳐들)</h3>
 
         <p>
-At least one proof mechanism, and the details necessary to evaluate that proof,
-MUST be expressed for a <a>credential</a> or <a>presentation</a> to be a
-<a>verifiable credential</a> or <a>verifiable presentation</a>; that is, to be
-<a>verifiable</a>.
+<a>크리덴셜</a> 또는 <a>프레젠테이션</a>이 <a>검증 가능한 크리덴셜</a> 또는 <a>검증 가능한 프레젠테이션</a>이 되도록 최소한 하나의 증명 메커니즘과 
+그 증거를 평가하는데 필요한 세부 사항을 표현해야 한다. 즉, <a>검증</a> 할 수 있어야 한다.
+
         </p>
 
         <p>
-This specification identifies two classes of proof mechanisms: external proofs
-and embedded proofs. An <dfn>external proof</dfn> is one that wraps an
-expression of this data model, such as a JSON Web Token, which is elaborated on
-in Section <a href="#json-web-token"></a>. An <dfn>embedded proof</dfn> is a
-mechanism where the proof is included in the data, such as a Linked Data
-Signature, which is elaborated upon in Section <a href="#linked-data-proofs"></a>.
+이 규격은 두가지 종류의 메커니즘을 식별한다: 외부 증명과 내장된 증명. 
+<dfn>외부 프루프</dfn>은 <a href="#json-web-token"></a>섹션에 자세히 
+설명되어 있는 JSON 웹 토큰과 같은 데이터 모델의 표현을 감싸는 것이다.<dfn>내장 된 프루프</dfn>는 <a href="#linked-data-proofs"></a> 
+섹션에 자세히 설명된 linked data signature과 같은 데이터에 증명이 포함되는 메커니즘이다.
+
         </p>
 
         <p>
-When embedding a proof, the <code>proof</code> <a>property</a> MUST be used.
+프루프을 포함 할 때는 <code>proof</code> <a>속성</a>을 무조건 사용해야 한다.
+
         </p>
 
         <dl>
           <dt><var>proof</var></dt>
           <dd>
-One or more cryptographic proofs that can be used to detect tampering and
-verify the authorship of a <a>credential</a> or <a>presentation</a>. The
-specific method used for an <a>embedded proof</a> MUST be included using the
-<code>type</code> <a>property</a>.
+변조를 감지하고 <a>크리덴셜</a> 또는 <a>프레젠테이션</a>의 소유권을 확인하는 데 사용할 수 있는 하나 
+이상의 암호화 프루프이다. <a>내장 된 프루프</a>에 사용되는 특정 방법은 무조건 <code>type</code> <a>속성</a>을 사용하여 포함해야한다.
+
           </dd>
         </dl>
 
         <p>
-Because the method used for a mathematical proof varies by representation
-language and the technology used, the set of name-value pairs that is expected
-as the value of the <code>proof</code> <a>property</a> will vary accordingly.
-For example, if digital signatures are used for the proof mechanism, the
-<code>proof</code> <a>property</a> is expected to have name-value pairs that
-include a signature, a reference to the signing entity, and a representation of
-the signing date. The example below uses RSA digital signatures.
+수학적 증명에 사용되는 방법은 표현 언어와 사용 된 기술에 따라 다르므로 <code>proof</code> <a>속성</a>의 값으로 예상되는 
+이름-값 쌍 세트는 그에 따라 달라진다. 예를 들어, 프루프 메커니즘에 디지털 서명이 사용되는 경우 <code>proof</code> 
+<a>속성</a>에는 서명, 서명 엔터티에 대한 참조 및 서명 날짜 표시가 포함 된 이름-값 쌍이 있어야한다. 아래 예는 RSA 
+디지털 서명을 사용한다.
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of the proof property on a verifiable credential">
+          title="검증 가능한 크리덴셜에 프루프 속성 사용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1773,37 +1758,33 @@ the signing date. The example below uses RSA digital signatures.
         </pre>
 
         <p class="note">
-As discussed in Section <a href="#conformance"></a>, there are multiple viable
-proof mechanisms, and this specification does not standardize nor recommend any
-single proof mechanism for use with <a>verifiable credentials</a>. For more
-information about the <code>proof</code> mechanism, see the following
-specifications: Linked Data Proofs [[LD-PROOFS]], Linked Data Signatures
-[[LD-SIGNATURES]], 2018 RSA Signature Suite [[LDS-RSA2018]], and JSON Web
-Signature (JWS) Unencoded Payload Option [[RFC7797]]. A list of proof mechanisms
-is available in the Verifiable Credentials Extension Registry
-[[VC-EXTENSION-REGISTRY]].
+<a href="#conformance"></a>에서 논의 된 바와 같이, 여러 가지 가능한 증명 메커니즘이 있으며, 
+이 사양은 <a>검증가능한 크리덴셜</a>과 함께 사용하기위한 단일 증명 메커니즘을 표준화하거나 권장하지 않는다. 
+<code>proof</code> 메커니즘에 대한 자세한 내용은 다음 사양을 참조하시오. Linked Data Proofs [[LD-PROOFS]], 
+Linked Data Signatures [[LD-SIGNATURES]], 2018 RSA Signature Suite [[LDS-RSA2018]] 및 JSON Web Signature(JWS) 
+Unencoded Payload Option [[RFC7797]]. 프루프메커니즘 목록은 Verifiable Credentials Extension Registry 
+[[VC-EXTENSION-REGISTRY]]에서 찾을 수 있다.
         </p>
 
       </section>
 
-      <section>
-        <h3>Expiration</h3>
+      <section id="expiration">
+        <h3>만료</h3>
 
         <p>
-This specification defines the <code>expirationDate</code> <a>property</a> for
-the expression of <a>credential</a> expiration information.
+이 사양에서는 <a>크리덴셜</a> 만료 정보 표현을위한 <code>expirationDate</code> <a>속성</a>을 정의한다.
+
         </p>
 
         <dl>
           <dt><var>expirationDate</var></dt>
           <dd>
-If present, the value of the <code>expirationDate</code> <a>property</a> MUST be
-a string value of an [[!RFC3339]] combined date and time string representing the
-date and time the <a>credential</a> ceases to be valid.
+존재하는 경우, <code>expirationDate</code> <a>속성</a>의 값은 무조건 <a>크리덴셜</a>이 유효하지 않은 날짜와 시간을 
+나타내는 [[!RFC3339]] 결합 날짜 및 시간 문자열의 문자열 값이어야 한다.
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of the expirationDate property">
+        <pre class="example nohighlight" title="expirationDate 속성의 이용">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1826,11 +1807,10 @@ date and time the <a>credential</a> ceases to be valid.
         </pre>
 
         <p class="note">
-It is expected that the next version of this specification will add the
-<code>validUntil</code> <a>property</a> in a way that deprecates, but
-preserves backwards compatability with the <code>expirationDate</code>
-<a>property</a>. Implementers are advised that the <code>validUntil</code>
-<a>property</a> is reserved and its use for any other purpose is discouraged.
+이 규격의 다음 버전에서는 사용되지 않는 방식으로 <code>validUntil</code> <a>속성</a>을 추가하지만 <code>expirationDate</code> 
+<a>속성</a>과의 호환성을 유지해야한다. 
+구현자는 <code>validUntil</code> <a>속성</a>이 이미 용도결정이 되어 있고 
+다른 용도로 사용하지 않는 것이 좋다.
         </p>
 
       </section>
@@ -4620,54 +4600,45 @@ correlation arises from the presentation of <a>credentials</a>.
     </section>
   </section>
 
-  <section class="informative">
-    <h2>Internationalization Considerations</h2>
+  <section class="informative" id="internationalization-considerations">
+    <h2>국제화 고려 사항</h2>
 
     <p>
-Implementers are advised to be aware of a number of internationalization
-considerations when publishing data described in this specification.
-As with any web standards or protocols implementation, ignoring
-internationalization makes it difficult for data to be produced and consumed
-across a disparate set of languages and societies, which limits the
-applicability of the specification and significantly diminishes its value as a
-standard.
+구현자는 이 사양에 설명 된 데이터를 게시 할 때 여러 국제화 고려 사항을 알고 있어야 한다. 
+웹 표준 또는 프로토콜 구현과 마찬가지로 국제화를 무시하면 
+데이터의 다른 언어와 사회에서 데이터를 생성하고 소비하기가 어려워지므로 
+사양의 적용 가능성이 제한되고 표준으로서의 가치가 크게 떨어진다.
     </p>
 
     <p>
-Implementers are strongly advised to read the
-<em>Strings on the Web: Language and Direction Metadata</em> document
-[[STRING-META]], published by the W3C Internationalization Activity, which
-elaborates on the need to provide reliable metadata about text to support
-internationalization. For the latest information on internationalization
-considerations, implementers are also urged to read the Verifiable Credentials
-Implementation Guidelines [[VC-IMP-GUIDE]] document.
+구현자는 국제화를 지원하기 위해 텍스트에 대한 신뢰할 수 있는 메타 데이터를 제공하는 
+W3C 국제화 활동에서 발행 한 
+<em>웹에서 문자열 : 언어 및 방향 메타 데이터</em> 문서 [[STRING-META]] 읽기를 권장한다. 
+국제화 고려 사항에 대한 최신 정보를 얻으려면 
+구현자는 확인 가능한 자격 증명 구현 지침 [[VC-IMP-GUIDE]] 문서를 읽어야한다.
     </p>
 
     <p>
-This section outlines general internationalization considerations to take into
-account when utilizing this data model and is intended to highlight specific
-parts of the <em>Strings on the Web: Language and Direction Metadata</em>
-document [[STRING-META]] that implementers might be interested in reading.
+이 섹션에서는이 데이터 모델을 사용할 때 고려해야 할 일반적인 국제화 고려 사항에 대해 간략하게 설명하고 있으며 
+구현자가 관심 있을 <em>웹에서 문자열 : 언어 및 방향 메타 데이터</em> 문서 [[STRING-META]]의 
+특정 부분을 강조하기 위해 구현되었다.
     </p>
 
-    <section class="informative">
-      <h3>Language and Base Direction</h3>
+    <section class="informative" id="language-and-base-direction">
+      <h3>언어와 기본 방향</h3>
 
       <p>
-Data publishers are strongly encouraged to read the section on
-Cross-Syntax Expression in the <em>Strings on the Web: Language and Direction
-Metadata</em> document [[STRING-META]] to ensure that the expression of
-language and base direction information is possible across multiple expression
-syntaxes, such as [[JSON-LD]], [[JSON]], and CBOR [[?RFC7049]].
+데이터 퍼블리셔는 <em>웹에서 문자열 : 언어 및 방향 메타 데이터</em> 문서 [[STRING-META]]의 
+교차 구문 표현식 섹션을 읽고 [[JSON-LD]], [[JSON]] 및 CBOR [[?RFC7049]]와 같이 여러 표현식 구문에서 
+언어 및 기본 방향 정보를 표현할 수 있도록 하는 것이 좋다.
       </p>
 
       <p>
-The general design pattern is to use the following markup template when
-expressing a text string that is tagged with a language and, optionally, a
-specific base direction.
+일반적인 디자인 패턴은 언어 및 선택적으로 특정 기준 방향으로 
+태그가 지정된 텍스트 문자열을 표현할 때 다음 마크 업 템플릿을 사용하는 것이다.
       </p>
 
-      <pre class="example nohighlight" title="Design pattern for natural language strings">
+      <pre class="example nohighlight" title="자연어 문자열의 디자인 패턴">
 "<a>property</a>": {
   "value": "<span class="highlight">The string value</span>",
   "lang": "<code>LANGUAGE</code>"
@@ -4676,11 +4647,10 @@ specific base direction.
       </pre>
 
       <p>
-Using the design pattern above, the following example expresses the title of a
-book in the English language without specifying a text direction.
+위의 디자인 패턴을 사용하여 다음 예제는 텍스트 방향을 지정하지 않고 책 제목을 영어로 표현한다.
       </p>
 
-      <pre class="example nohighlight" title="Expressing natural language text as English">
+      <pre class="example nohighlight" title="자연어 텍스트를 영어로 표현">
 "title": {
   "value": "<span class="highlight">HTML and CSS: Designing and Creating Websites</span>",
   "lang": "<code>en</code>"
@@ -4688,11 +4658,10 @@ book in the English language without specifying a text direction.
       </pre>
 
       <p>
-The next example uses a similar title expressed in the Arabic language with a
-base direction of right-to-left.
+다음 예는 오른쪽에서 왼쪽으로 기본 방향으로 아랍어로 표현 된 유사한 제목을 사용한다.
       </p>
 
-      <pre class="example nohighlight" title="Arabic text with a base direction of right-to-left">
+      <pre class="example nohighlight" title="기본 방향이 오른쪽에서 왼쪽 인 아랍어 텍스트">
 "title": {
   "value": "<span class="highlight">HTML و CSS: تصميم و إنشاء مواقع الويب</span>",
   "lang": "<code>ar</code>"
@@ -4701,22 +4670,21 @@ base direction of right-to-left.
       </pre>
 
       <p class="note">
-The text above would most likley be rendered incorrectly as left-to-right
-without the explicit expression of language and direction because many systems
-use the first character of a text string to determine text direction.
+많은 시스템에서 텍스트 문자열의 첫 번째 문자를 사용하여 텍스트 방향을 결정하므로 
+위의 텍스트는 언어와 방향을 명시적으로 표현하지 않고 왼쪽에서 오른쪽으로 잘못 표시된다.
       <p>
 
       <p>
-Implementers utilizing JSON-LD are strongly urged to
-<a href="#extensibility">extend</a> the JSON-LD Context defining the
-internationalized <a>property</a> and use the Scoped Context feature of JSON-LD
-to alias the <code>@value</code>, <code>@language</code>, and
-<code>@direction</code> keywords to <code>value</code>, <code>lang</code>,
-and <code>dir</code>, respectively. An example of a JSON-LD Context snippet
-doing this is shown below.
+JSON-LD를 사용하는 구현자는 
+국제화 된 <a>속성</a>을 정의하는 JSON-LD 컨텍스트를 <a href="#extensibility">extend</a>하고 
+JSON-LD의 범위 
+지정된 컨텍스트 기능을 사용하여 
+<code>@value</code>, <code>@language</code> 및 <code>@direction</code> 키워드를 
+<code>value</code>, <code>lang</code> 및 <code>dir</code>로 별명 
+지정해야한다. 각기. 이를 수행하는 JSON-LD 컨텍스트 스니펫의 예는 다음과 같다.
       </p>
 
-      <pre class="example nohighlight" title="Specifying scoped aliasing for language information">
+      <pre class="example nohighlight" title="언어 정보에 대한 범위 별명 지정">
 "title": {
   <span class="highlight">"@context": {"value": "@value", "lang": "@language", "dir": "@direction"}</span>,
   "@id": "https://www.w3.org/2018/credentials/examples#title"
@@ -4729,103 +4697,86 @@ doing this is shown below.
       <h3>Complex Language Markup</h3>
 
       <p>
-When multiple languages, base directions, and annotations are used in a single
-natural language string, more complex mechanisms are typically required. It is
-possible to use markup languages, such as HTML, to encode text with multiple
-languages and base directions. It is also possible to use the
-<code>rdf:HTML</code> datatype to encode such values accurately in JSON-LD.
+여러 언어, 기본 방향 및 주석이 단일 자연 언어 문자열로 사용되는 경우 
+일반적으로 더 복잡한 메커니즘이 필요하다. 
+HTML과 같은 마크 업 언어를 사용하여 여러 언어와 기본 방향으로 텍스트를 인코딩 할 수 있다. 
+<code>rdf : HTML</code> 데이터 유형을 사용하여 이러한 값을 JSON-LD로 정확하게 인코딩 할 수도 있다.
+
       </p>
 
       <p>
-Despite the ability to encode information as HTML, implementers are strongly
-discouraged from doing this because it:
+정보를 HTML로 인코딩하는 기능에도 불구하고 구현자는 다음과 같은 이유로 이 작업을 수행하지 않는 것이 좋다.
       </p>
 
       <ul>
         <li>
-Requires some version of an HTML processor, which increases the burden of
-processing language and base direction information.
+일부 버전의 HTML 프로세서가 필요하므로 언어 및 기본 방향 정보 처리 부담이 증가한다.
         </li>
         <li>
-Increases the security attack surface when utilizing this data model because
-blindly processing HTML could result in executing a <code>script</code> tag that
-an attacker injected at some point during the data production process.
+HTML을 맹목적으로 처리하면 데이터 생성 프로세스 중 공격자가 어느 시점에 삽입 한 
+<code>script</code> 태그가 실행될 수 있으므로 이 데이터 모델을 사용할 때 보안 공격 영역이 증가한다.
         </li>
       </ul>
 
       <p>
-If implementers feel they must use HTML, or other markup languages capable of
-containing executable scripts, to address a specific use case, they are advised
-to analyze how an attacker would use the markup to mount injection attacks
-against a consumer of the markup and then deploy mitigations against the
-identified attacks.
+구현자가 특정 사용 사례를 해결하기 위해 
+HTML 또는 실행 가능한 스크립트를 포함 할 수있는 다른 마크 업 언어를 사용해야한다고 생각하는 경우, 
+구현자는 공격자가 어떻게 마크 업을 사용하여 마크 업 소비자에 대한 인젝션 공격을 마운트 하는지 분석 후 
+식별된 공격에 대한 완화를 배포 한다. 
       </p>
     </section>
 
   </section>
 
-  <section class="appendix informative">
-      <h2>Validation</h2>
+  <section class="appendix informative" id="validation">
+      <h2>검증</h2>
 
       <p>
-While this specification does not provide conformance criteria for the process
-of the <a>validation</a> of <a>verifiable credentials</a> or
-<a>verifiable presentations</a>, readers might be curious about how the
-information in this data model is expected to be utilized by <a>verifiers</a>
-during the process of <a>validation</a>. This section captures a selection of
-conversations held by the Working Group related to the expected usage of the
-data fields in this specification by <a>verifiers</a>.
+이 사양은 <a>검증 가능한 크리덴셜</a> 또는 <a>검증 가능한 프레젠테이션</a>의 <a>검증</a> 프로세스에 대한 적합성 기준을 
+제공하지는 않지만 독자는 <a>검증 과정</a>에서 <a>검증자</a>가이 데이터 모델의 정보를 어떻게 활용할지 궁금 할 것이다. 
+이 섹션에서는 <a>검증자</a>가이 사양에서 예상되는 데이터 필드 사용과 관련하여 실무 그룹(working group)이 보유한 
+대화를 공유(capture)한다.
       </p>
 
-      <section class="informative">
-        <h3>Credential Subject</h3>
+      <section class="informative" id="credential-subject">
+        <h3>크리덴셜 주체</h3>
 
         <p>
-In the <a>verifiable credentials</a> presented by a <a>holder</a>, the value
-associated with the <code>id</code> <a>property</a> for each
-<code>credentialSubject</code> is expected to identify a <a>subject</a> to the
-<a>verifier</a>. If the <a>holder</a> is also the <a>subject</a>, then
-the <a>verifier</a> could authenticate the <a>holder</a> if they have
-public key metadata related to the <a>holder</a>. The <a>verifier</a> could then
-authenticate the <a>holder</a> using a signature generated by the <a>holder</a>
-contained in the <a>verifiable presentation</a>. The <code>id</code>
-<a>property</a> is optional. <a>Verifiers</a> could use other <a>properties</a>
-in a <a>verifiable credential</a> to uniquely identify a <a>subject</a>.
+<a>보유자</a>가 제시 한 <a>검증 가능한 크리덴셜</a>에서 
+각 <code>credentialSubject</code>의 <a>id</a> <a>특성</a>과 연관된 값은 <a>검증자</a>에게 
+<a>주체</a>를 식별해야 한다. <a>보유자</a>가 <a>주체</a>인 경우, <a>검증자</a>는 <a>보유자</a>와 관련된 공개 키 메타 데이터가있는 경우 
+<a>보유자</a>를 인증 할 수 있다. <a>검증자</a>는 <a>검증 가능한 프리젠테이션</a>에 포함 된 <a>보유자</a>에 의해 생성 된 서명을 
+사용하여 <a>보유자</a>를 인증 할 수있다. <a>id</a> <a>속성</a>은 선택 사항이다. <a>검증자</a>는 <a>검증 가능한 크리덴셜</a>에서 다른 
+<a>속성들</a>을 사용하여 <a>주체</a>를 고유하게 식별 할 수 있다.
         </p>
 
         <p class="note">
-For information on how authentication and WebAuthn might work with
-<a>verifiable credentials</a>, see the Verifiable Credentials Implementation
-Guidelines [[VC-IMP-GUIDE]] document.
+인증 및 WebAuthn이 <a>검증 가능한 크리덴셜</a>로 작동하는 방법에 대한 자세한 내용은 
+검증 가능한 크리덴셜 구현 지침 [[VC-IMP-GUIDE]] 문서를 참조.
         </p>
 
       </section>
 
-      <section class="informative">
-        <h3>Issuer</h3>
+      <section class="informative" id="issuer">
+        <h3>발급자</h3>
 
         <p>
-The value associated with the <code>issuer</code> <a>property</a> is expected
-to identify an <a>issuer</a> that is known to and trusted by the
-<a>verifier</a>.
+<code>issuer</code> <a>속성</a>과 관련된 값은 <a>검증자</a>에게 알려지고 신뢰할 수있는 <a>발급자</a>를 식별해야한다.
         </p>
 
         <p>
-Relevant metadata about the <code>issuer</code> <a>property</a> is expected
-to be available to the <a>verifier</a>. For example, an <a>issuer</a> can
-publish information containing the public keys it uses to digitally sign
-<a>verifiable credentials</a> that it issued. This metadata is relevant when
-checking the proofs on the <a>verifiable credentials</a>.
+<code>issuer</code> <a>속성</a>에 대한 관련 메타 데이터가 <a>검증자</a>에게 제공 될 것으로 예상된다. 
+예를 들어, <a>발급자</a>는 발급 한 <a>검증 가능한 크리덴셜</a>을 디지털 서명하는 데 사용하는 공개 키가 
+포함 된 정보를 게시 할 수 있다. 이 메타 데이터는 <a>검증 가능한 크리덴셜</a>에서 증명을 확인할 때 관련이 있다.
         </p>
       </section>
 
-      <section class="informative">
-        <h3>Issuance Date</h3>
+     <section class="informative" id="issuance-date">
+        <h3>발급 날짜</h3>
 
         <p>
-The <code>issuanceDate</code> is expected to be within an expected range for the
-<a>verifier</a>. For example, a <a>verifier</a> can check that the issuance date
-of a <a>verifiable credential</a> is not in the future.
+<code>issuanceDate</code>는 <a>검증자</a>의 예상 범위 내에 있어야한다. 
+예를 들어, <a>검증자</a>는 <a>검증 가능한 크리덴셜</a>의 발급 날짜가 미래에 있지 않은지 확인할 수 있다.
         </p>
       </section>
 
