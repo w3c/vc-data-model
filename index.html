@@ -4893,6 +4893,1730 @@ franchise. Policy information expressed by the <a>issuer</a> in the
 
   </section>
 
+  <section id="advanced-concepts">
+    <h2 id="x5-advanced-concepts">
+      Advanced Concepts<a class="self-link" aria-label="§" href=
+      "#advanced-concepts"></a></h2>
+    <p>Building on the concepts introduced in Section <a href=
+      "#basic-concepts" class="sec-ref">§&nbsp;<bdi class=
+      "secno">4.</bdi> Basic Concepts</a>, this section explores more
+      complex topics about <a href="#dfn-verifiable-credentials"
+      class="internalDFN" data-link-type="dfn">verifiable
+      credentials</a>.</p>
+      <section class="informative" id="lifecycle-details">
+        <h3 id="x5-1-lifecycle-details"><bdi class="secno">5.1</bdi>
+        Lifecycle Details<a class="self-link" aria-label="§" href=
+        "#lifecycle-details"></a></h3>
+        <p><em>This section is non-normative.</em></p>
+        <p>Section <a href="#ecosystem-overview" class=
+        "sec-ref">§&nbsp;<bdi class="secno">1.2</bdi> Ecosystem
+        Overview</a> provided an overview of the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> ecosystem.
+        This section provides more detail about how the ecosystem is
+        envisaged to operate.</p>
+        <figure id="life-cycle-details">
+          <img style="margin: auto; display: block; width: 85%;" src=
+          "diagrams/ecosystemdetail.svg" alt=
+          "diagram showing how credentials flow from issuer to holder, and optionally from one holder to another; and how presentations flow from holder to verifier, where all parties can use information from a logical verifiable data registry"
+          height="150" width="200">
+          <figcaption style="text-align: center;">
+            Figure <bdi class="figno">10</bdi> <span class=
+            "fig-title">The roles and information flows for this
+            specification.</span>
+          </figcaption>
+        </figure>
+        <p>The roles and information flows in the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> ecosystem are
+        as follows:</p>
+        <ul>
+          <li>An <a href="#dfn-issuers" class="internalDFN"
+          data-link-type="dfn">issuer</a> <dfn data-lt="issue|issues"
+            data-dfn-type="dfn" id="dfn-issue">issues</dfn> a
+            <a href="#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credential</a> to a
+            <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a>. Issuance always occurs
+            before any other actions involving a <a href=
+            "#dfn-credential" class="internalDFN" data-link-type=
+            "dfn">credential</a>.
+          </li>
+          <li>A <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a> might <dfn data-lt=
+          "transfers|transfer" data-dfn-type="dfn" id=
+          "dfn-transfers">transfer</dfn> one or more of its
+            <a href="#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credentials</a> to
+            another <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a>.
+          </li>
+          <li>A <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a> <dfn data-lt=
+          "present|presents" data-dfn-type="dfn" id=
+          "dfn-present">presents</dfn> one or more of its <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credentials</a> to a
+          <a href="#dfn-verifier" class="internalDFN"
+            data-link-type="dfn">verifier</a>, optionally inside a
+            <a href="#dfn-verifiable-presentations" class=
+            "internalDFN" data-link-type="dfn">verifiable
+            presentation</a>.
+          </li>
+          <li>A <a href="#dfn-verifier" class="internalDFN"
+          data-link-type="dfn">verifier</a> <a href="#dfn-verify"
+          class="internalDFN" data-link-type="dfn">verifies</a> the
+          authenticity of the presented <a href=
+          "#dfn-verifiable-presentations" class="internalDFN"
+          data-link-type="dfn">verifiable presentation</a> and
+          <a href="#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credentials</a>. This
+          should include checking the <a href="#status">credential
+          status</a> for revocation of the <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credentials</a>.
+          </li>
+          <li>An <a href="#dfn-issuers" class="internalDFN"
+          data-link-type="dfn">issuer</a> might <dfn data-lt=
+          "revoke|revoke" data-dfn-type="dfn" id=
+          "dfn-revoke">revoke</dfn> a <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a>.
+          </li>
+          <li>A <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a> might <dfn data-lt=
+          "delete|delete" data-dfn-type="dfn" id=
+          "dfn-delete">delete</dfn> a <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a>.
+          </li>
+        </ul>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-17">
+          <div role="heading" class="note-title marker" id=
+          "h-note-17" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">The order of the actions above is not fixed,
+          and some actions might be taken more than once. Such
+          action-recurrence might be immediate or at any later
+          point.</p>
+        </div>
+        <p>The most comon sequence of actions is envisioned to
+        be:</p>
+        <ol>
+          <li>An <a href="#dfn-issuers" class="internalDFN"
+          data-link-type="dfn">issuer</a> <a href=
+          "#lifecycle-details">issues</a> to a <a href="#dfn-holders"
+            class="internalDFN" data-link-type="dfn">holder</a>.
+          </li>
+          <li>The <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a> <a href=
+          "#lifecycle-details">presents</a> to a <a href=
+          "#dfn-verifier" class="internalDFN" data-link-type=
+          "dfn">verifier</a>.
+          </li>
+          <li>The <a href="#dfn-verifier" class="internalDFN"
+          data-link-type="dfn">verifier</a> <a href=
+          "#lifecycle-details">verifies</a>.
+          </li>
+        </ol>
+        <p>This specification does not define any protocol for
+        transfering <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credentials</a>
+        or <a href="#dfn-verifiable-presentations" class=
+        "internalDFN" data-link-type="dfn">verifiable
+        presentations</a>, but assuming other specifications do
+        specify how they are transferred between entities, then this
+        Verifiable Credential Data Model is directly applicable.</p>
+        <p>This specification also does not define an authorization
+        framework nor the decisions that a <a href="#dfn-verifier"
+        class="internalDFN" data-link-type="dfn">verifier</a> might
+        make after <a href="#dfn-verify" class="internalDFN"
+        data-link-type="dfn">verifying</a> a <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> or <a href=
+        "#dfn-verifiable-presentations" class="internalDFN"
+        data-link-type="dfn">verifiable presentation</a>, taking into
+        account the <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a>, the <a href="#dfn-issuers"
+        class="internalDFN" data-link-type="dfn">issuers</a> of the
+        <a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credentials</a>, the contents
+        of the <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable
+        credentials</a>, and its own policies.</p>
+        <p>In particular, Sections <a href="#terms-of-use" class=
+        "sec-ref">§&nbsp;<bdi class="secno">5.6</bdi> Terms of
+        Use</a> and <a href="#subject-holder-relationships" class=
+        "sec-ref">§&nbsp;<bdi class="secno">C.</bdi> Subject-Holder
+        Relationships</a> specify how a <a href="#dfn-verifier"
+        class="internalDFN" data-link-type="dfn">verifier</a> can
+        determine:</p>
+        <ul>
+          <li>Whether the <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a> is a <a href=
+            "#dfn-subjects" class="internalDFN" data-link-type=
+            "dfn">subject</a> of a <a href=
+            "#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credential</a>.
+          </li>
+          <li>The relationship between the <a href="#dfn-subjects"
+          class="internalDFN" data-link-type="dfn">subject</a> and
+          the <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a>.
+          </li>
+          <li>Whether the original <a href="#dfn-holders" class=
+          "internalDFN" data-link-type="dfn">holder</a> passed a
+          <a href="#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a> to a
+          subsequent <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a>.
+          </li>
+          <li>Any restrictions using the <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credentials</a> by the
+          <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a> or <a href=
+            "#dfn-verifier" class="internalDFN" data-link-type=
+            "dfn">verifier</a>.
+          </li>
+        </ul>
+      </section>
+      <section class="informative" id="trust-model">
+        <h3 id="x5-2-trust-model"><bdi class="secno">5.2</bdi> Trust
+        Model<a class="self-link" aria-label="§" href=
+        "#trust-model"></a></h3>
+        <p><em>This section is non-normative.</em></p>
+        <p>The <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credentials</a>
+        trust model is as follows:</p>
+        <ul>
+          <li>The <a href="#dfn-verifier" class="internalDFN"
+          data-link-type="dfn">verifier</a> trusts the <a href=
+          "#dfn-issuers" class="internalDFN" data-link-type=
+          "dfn">issuer</a> to issue the <a href="#dfn-credential"
+          class="internalDFN" data-link-type="dfn">credential</a>
+          that it received. To establish this trust, a <a href=
+          "#dfn-credential" class="internalDFN" data-link-type="dfn">
+            credential</a> is expected to either:
+            <ul>
+              <li>Include a <a href="#proofs-signatures">proof</a>
+              establishing that the <a href="#dfn-issuers" class=
+              "internalDFN" data-link-type="dfn">issuer</a> generated
+              the <a href="#dfn-credential" class="internalDFN"
+              data-link-type="dfn">credential</a> (that is, it is a
+              <a href="#dfn-verifiable-credentials" class=
+              "internalDFN" data-link-type="dfn">verifiable
+              credential</a>), or
+              </li>
+              <li>Have been transmitted in a way clearly establishing
+              that the <a href="#dfn-issuers" class="internalDFN"
+              data-link-type="dfn">issuer</a> generated the
+                <a href="#dfn-verifiable-credentials" class=
+                "internalDFN" data-link-type="dfn">verifiable
+                credential</a> and that the <a href=
+                "#dfn-verifiable-credentials" class="internalDFN"
+                data-link-type="dfn">verifiable credential</a> was
+                not tampered with in transit or storage. This trust
+                could be weakened depending on the risk assessment of
+                the <a href="#dfn-verifier" class="internalDFN"
+                data-link-type="dfn">verifier</a>.
+              </li>
+            </ul>
+          </li>
+          <li>All <a href="#dfn-entities" class="internalDFN"
+          data-link-type="dfn">entities</a> trust the <a href=
+          "#dfn-verifiable-data-registries" class="internalDFN"
+          data-link-type="dfn">verifiable data registry</a> to be
+          tamper-evident and to be a correct record of which data is
+          controlled by which <a href="#dfn-entities" class=
+          "internalDFN" data-link-type="dfn">entities</a>.
+          </li>
+          <li>The <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a> and <a href="#dfn-verifier"
+            class="internalDFN" data-link-type="dfn">verifier</a>
+            trust the <a href="#dfn-issuers" class="internalDFN"
+            data-link-type="dfn">issuer</a> to issue true (that is,
+            not false) <a href="#dfn-credential" class="internalDFN"
+            data-link-type="dfn">credentials</a> about the <a href=
+            "#dfn-subjects" class="internalDFN" data-link-type=
+            "dfn">subject</a>, and to revoke them quickly when
+            appropriate.
+          </li>
+          <li>The <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a> trusts the <a href=
+          "#dfn-credential-repository" class="internalDFN"
+          data-link-type="dfn">repository</a> to store <a href=
+          "#dfn-credential" class="internalDFN" data-link-type="dfn">
+            credentials</a> securely, to not release them to anyone
+            other than the <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a>, and to not corrupt or
+            lose them while they are in its care.
+          </li>
+        </ul>
+        <p>This trust model differentiates itself from other trust
+        models by ensuring the:</p>
+        <ul>
+          <li>
+            <a href="#dfn-issuers" class="internalDFN"
+            data-link-type="dfn">Issuer</a> and the <a href=
+            "#dfn-verifier" class="internalDFN" data-link-type=
+            "dfn">verifier</a> do not need to trust the <a href=
+            "#dfn-credential-repository" class="internalDFN"
+            data-link-type="dfn">repository</a>
+          </li>
+          <li>
+            <a href="#dfn-issuers" class="internalDFN"
+            data-link-type="dfn">Issuer</a> does not need to know or
+            trust the <a href="#dfn-verifier" class="internalDFN"
+            data-link-type="dfn">verifier</a>.
+          </li>
+        </ul>
+        <p>By decoupling the trust between the <a href=
+        "#dfn-identity-providers" class="internalDFN" data-link-type=
+        "dfn">identity provider</a> and the <a href=
+        "#dfn-relying-parties" class="internalDFN" data-link-type=
+        "dfn">relying party</a> a more flexible and dynamic trust
+        model is created such that market competition and customer
+        choice is increased.</p>
+        <p>For more information about how this trust model interacts
+        with various threat models studied by the Working Group, see
+        the Verifiable Credentials Use Cases document
+        [<cite><a class="bibref" href="#bib-vc-usecases" title=
+        "Verifiable Claims Use Cases" data-link-type=
+        "biblio">VC-USECASES</a></cite>].</p>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-18">
+          <div role="heading" class="note-title marker" id=
+          "h-note-18" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">The data model detailed in this specification
+          does not imply a transitive trust model, such as that
+          provided by more traditional Certificate Authority trust
+          models. In the Verifiable Credentials Data Model, a
+          <a href="#dfn-verifier" class="internalDFN" data-link-type=
+          "dfn">verifier</a> either directly trusts or does not trust
+          an <a href="#dfn-issuers" class="internalDFN"
+          data-link-type="dfn">issuer</a>. While it is possible to
+          build transitive trust models using the Verifiable
+          Credentials Data Model, implementers are urged to <a href=
+          "https://tools.ietf.org/html/draft-housley-web-pki-problems">
+          learn about the security weaknesses</a> introduced by
+          <a href=
+          "https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">
+          broadly delegating trust</a> in the manner adopted by
+          Certificate Authority systems.</p>
+        </div>
+      </section>
+      <section id="extensibility">
+        <h3 id="x5-3-extensibility"><bdi class="secno">5.3</bdi>
+        Extensibility<a class="self-link" aria-label="§" href=
+        "#extensibility"></a></h3>
+        <p>One of the goals of the Verifiable Credentials Data Model
+        is to enable permissionless innovation. To achieve this, the
+        data model needs to be extensible in a number of different
+        ways. The data model is required to:</p>
+        <ul>
+          <li>Model complex multi-entity relationships through the
+          use of a <a href="#dfn-graphs" class="internalDFN"
+          data-link-type="dfn">graph</a>-based data model.
+          </li>
+          <li>Extend the machine-readable vocabularies used to
+          describe information in the data model, without the use of
+          a centralized system for doing so, through the use of
+          [<cite><a class="bibref" href="#bib-linked-data" title=
+          "Linked Data Design Issues" data-link-type=
+          "biblio">LINKED-DATA</a></cite>].</li>
+          <li>Support multiple types of cryptographic proof formats
+          through the use of Linked Data Proofs [<cite><a class=
+          "bibref" href="#bib-ld-proofs" title="Linked Data Proofs"
+          data-link-type="biblio">LD-PROOFS</a></cite>], Linked Data
+          Signatures [<cite><a class="bibref" href=
+          "#bib-ld-signatures" title="Linked Data Signatures"
+          data-link-type="biblio">LD-SIGNATURES</a></cite>], and a
+          variety of signature suites.</li>
+          <li>Provide all of the extensibility mechanisms outlined
+          above in a data format that is popular with software
+          developers and web page authors, and is enabled through the
+          use of [<cite><a class="bibref" href="#bib-json-ld" title=
+          "JSON-LD 1.1: A JSON-based Serialization for Linked Data"
+          data-link-type="biblio">JSON-LD</a></cite>].</li>
+        </ul>
+        <p>This approach to data modeling is often called an <em>open
+        world assumption</em>, meaning that any entity can say
+        anything about any other entity. While this approach seems to
+        conflict with building simple and predictable software
+        systems, balancing extensibility with program correctness is
+        always more challenging with an open world assumption than
+        with closed software systems.</p>
+        <p>The rest of this section describes, through a series of
+        examples, how both extensibility and program correctness are
+        achieved.</p>
+        <p>Let us assume we start with the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> shown
+        below.</p>
+        <div class="example" id="example-15-a-simple-credential">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-15-a-simple-credential">Example
+            <bdi>15</bdi></a><span class="example-title">: A simple
+            credential</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "http://example.com/credentials/4643",
+    "type": ["VerifiableCredential"],
+    "issuer": "https://example.com/issuers/14",
+    "issuanceDate": "2018-02-24T05:28:04Z",
+    "credentialSubject": {
+      "id": "did:example:abcdef1234567",
+      "name": "Jane Doe"
+    },
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <p>This <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credential</a>
+        states that the <a href="#dfn-entities" class="internalDFN"
+        data-link-type="dfn">entity</a> associated with
+        <code>did:example:abcdef1234567</code> has a
+        <code>name</code> with a value of <code>Jane Doe</code>.</p>
+        <p>Now let us assume a developer wants to extend the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> to store two
+        additional pieces of information: an internal corporate
+        reference number, and Jane's favorite food.</p>
+        <p>The first thing to do is to create a JSON-LD context
+        containing two new terms, as shown below.</p>
+        <div class="example" id="example-16-a-json-ld-context">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-16-a-json-ld-context">Example
+            <bdi>16</bdi></a><span class="example-title">: A JSON-LD
+            context</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": {
+      "referenceNumber": "https://example.com/vocab#referenceNumber",
+      "favoriteFood": "https://example.com/vocab#favoriteFood"
+    }
+  }</pre>
+        </div>
+        <p>After this JSON-LD context is created, the developer
+        publishes it somewhere so it is accessible to <a href=
+        "#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifiers</a> who will be processing the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a>. Assuming the
+        above JSON-LD context is published at
+        <code>https://example.com/contexts/mycontext.jsonld</code>,
+        we can extend this example by including the context and
+        adding the new <a href="#dfn-property" class="internalDFN"
+        data-link-type="dfn">properties</a> and <a href=
+        "#dfn-credential" class="internalDFN" data-link-type=
+        "dfn">credential</a> <a href="#dfn-type" class="internalDFN"
+        data-link-type="dfn">type</a> to the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a>.</p>
+        <div class="example" id=
+        "example-17-a-verifiable-credential-with-a-custom-extension">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-17-a-verifiable-credential-with-a-custom-extension">
+            Example <bdi>17</bdi></a><span class="example-title">: A
+            verifiable credential with a custom extension</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      <span class=
+  "highlight">"https://example.com/contexts/mycontext.jsonld"</span>
+    ],
+    "id": "http://example.com/credentials/4643",
+    "type": ["VerifiableCredential", "CustomExt12"],
+    "issuer": "https://example.com/issuers/14",
+    "issuanceDate": "2018-02-24T05:28:04Z",
+    <span class="highlight">"referenceNumber": 83294847,</span>
+    "credentialSubject": {
+      "id": "did:example:abcdef1234567",
+      "name": "Jane Doe",
+      <span class="highlight">"favoriteFood": "Papaya"</span>
+    },
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <p>This example demonstrates extending the Verifiable
+        Credentials Data Model in a permissionless and decentralized
+        way. The mechanism shown also ensures that <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credentials</a> created in
+        this way provide a mechanism to prevent namespace conflicts
+        and semantic ambiguity.</p>
+        <p>A dynamic extensibility model such as this does increase
+        the implementation burden. Software written for such a system
+        has to determine whether <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credentials</a> with
+        extensions are acceptable based on the risk profile of the
+        application. Some applications might accept only certain
+        extensions while highly secure environments might not accept
+        any extensions. These decisions are up to the developers of
+        these applications and are specifically not the domain of
+        this specification.</p>
+        <p>Developers are urged to ensure that extension JSON-LD
+        contexts are highly available. Implementations that cannot
+        fetch a context will produce an error. Strategies for
+        ensuring that extension JSON-LD contexts are always available
+        include using content-addressed URLs for contexts, bundling
+        context documents with implementations, or enabling
+        aggressive caching of contexts.</p>
+        <p>Implementers are advised to pay close attention to the
+        extension points in this specification, such as in Sections
+        <a href="#proofs-signatures" class=
+        "sec-ref">§&nbsp;<bdi class="secno">4.7</bdi> Proofs
+        (Signatures)</a>, <a href="#status" class=
+        "sec-ref">§&nbsp;<bdi class="secno">4.9</bdi> Status</a>,
+        <a href="#data-schemas" class="sec-ref">§&nbsp;<bdi class=
+        "secno">5.4</bdi> Data Schemas</a>,<a href="#refreshing"
+        class="sec-ref">§&nbsp;<bdi class="secno">5.5</bdi>
+        Refreshing</a>, <a href="#terms-of-use" class=
+        "sec-ref">§&nbsp;<bdi class="secno">5.6</bdi> Terms of
+        Use</a>, and <a href="#evidence" class=
+        "sec-ref">§&nbsp;<bdi class="secno">5.7</bdi> Evidence</a>.
+        While this specification does not define concrete
+        implementations for those extension points, the Verifiable
+        Credentials Extension Registry [<cite><a class="bibref" href=
+        "#bib-vc-extension-registry" title=
+        "Verifiable Credentials Extension Registry" data-link-type=
+        "biblio">VC-EXTENSION-REGISTRY</a></cite>] provides an
+        unofficial, curated list of extensions that developers can
+        use from these extension points.</p>
+        <section id="semantic-interoperability">
+          <h4 id="x5-3-1-semantic-interoperability">Semantic Interoperability<a class=
+          "self-link" aria-label="§" href=
+          "#semantic-interoperability"></a></h4>
+          <p>This specification ensures that "plain" JSON and JSON-LD
+          syntaxes are semantically compatible without requiring JSON
+          implementations to use a JSON-LD processor. To achieve
+          this, the specification imposes the following additional
+          requirements on both syntaxes:</p>
+          <ul>
+            <li>JSON-based processors <em class="rfc2119" title=
+            "MUST">MUST</em> process the <code>@context</code> key,
+            ensuring the expected values exist in the expected order
+            for the <a href="#dfn-credential" class="internalDFN"
+            data-link-type="dfn">credential</a> type being processed.
+            The order is important because keys used in a <a href=
+            "#dfn-credential" class="internalDFN" data-link-type=
+            "dfn">credential</a>, which are defined using the values
+            associated with <code>@context</code>, are defined using
+            a "first defined wins" mechanism and changing the order
+            might result in a different key definition "winning".
+            </li>
+            <li>JSON-LD-based processors <em class="rfc2119" title=
+            "MUST">MUST</em> produce an error when a JSON-LD context
+            redefines any term in the <a href=
+            "https://www.w3.org/TR/json-ld/#dfn-active-context">active
+            context</a>. The only way to change the definition of
+            existing terms is to introduce a new term that clears the
+            active context within the scope of that new term. Authors
+            that are interested in this feature should read about the
+            <code>@protected</code> feature in the JSON-LD 1.1
+            specification.
+            </li>
+          </ul>
+          <p>A human-readable document describing the expected order
+          of values for the <code>@context</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a> is expected to be published by any
+          implementer seeking interoperability. A machine-readable
+          description (that is, a normal JSON-LD Context document) is
+          expected to be published at the URL specified in the
+          <code>@context</code> <a href="#dfn-property" class=
+          "internalDFN" data-link-type="dfn">property</a> by JSON-LD
+          implementers seeking interoperability.</p>
+          <p>The requirements above guarantee semantic
+          interoperability between JSON and JSON-LD for terms defined
+          by the <code>@context</code> mechanism. While JSON-LD
+          processors will use the specific mechanism provided and can
+          verify that all terms are correctly specified, JSON-based
+          processors implicitly accept the same set of terms without
+          testing that they are correct. In other words, the context
+          in which the data exchange happens is explicitly stated for
+          both JSON and JSON-LD by using the same mechanism. With
+          respect to JSON-based processors, this is achieved in a
+          lightweight manner, without having to use JSON-LD
+          processing libraries.</p>
+        </section>
+      </section>
+      <section id="data-schemas">
+        <h3 id="x5-4-data-schemas"><bdi class="secno">5.4</bdi> Data
+        Schemas<a class="self-link" aria-label="§" href=
+        "#data-schemas"></a></h3>
+        <p>Data schemas are useful when enforcing a specific
+        structure on a given collection of data. There are at least
+        two types of data schemas that this specification
+        considers:</p>
+        <ul>
+          <li>Data verification schemas, which are used to <a href=
+          "#dfn-verify" class="internalDFN" data-link-type=
+          "dfn">verify</a> that the structure and contents of a
+          <a href="#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a> conform to a
+          published schema.
+          </li>
+          <li>Data encoding schemas, which are used to map the
+          contents of a <a href="#dfn-verifiable-credentials"
+            class="internalDFN" data-link-type="dfn">verifiable
+            credential</a> to an alternative representation format,
+            such as a binary format used in a zero-knowledge proof.
+          </li>
+        </ul>
+        <p>It is important to understand that data schemas serve a
+        different purpose from the <code>@context</code> property,
+        which neither enforces data structure or data syntax, nor
+        enables the definition of arbitrary encodings to alternate
+        representation formats.</p>
+        <p>This specification defines the following <a href=
+        "#dfn-property" class="internalDFN" data-link-type=
+        "dfn">property</a> for the expression of a data schema:</p>
+        <dl>
+          <dt><var>credentialSchema</var></dt>
+          <dd>
+            The value of the <code>credentialSchema</code> <a href=
+            "#dfn-property" class="internalDFN" data-link-type=
+            "dfn">property</a> <em class="rfc2119" title=
+            "MUST">MUST</em> be one or more data schemas that provide
+            <a href="#dfn-verifier" class="internalDFN"
+            data-link-type="dfn">verifiers</a> with enough
+            information to determine if the provided data conforms to
+            the provided schema. Each <code>credentialSchema</code>
+            <em class="rfc2119" title="MUST">MUST</em> specify its
+            <code>type</code> (for example,
+            <code>JsonSchemaValidator2018</code>), and an
+            <code>id</code> <a href="#dfn-property" class=
+            "internalDFN" data-link-type="dfn">property</a> that
+            <em class="rfc2119" title="MUST">MUST</em> be a <a href=
+            "#dfn-uri" class="internalDFN" data-link-type=
+            "dfn">URI</a> identifying the schema file. The precise
+            contents of each data schema is determined by the
+            specific type definition.
+          </dd>
+        </dl>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-19">
+          <div role="heading" class="note-title marker" id=
+          "h-note-19" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">The <code>credentialSchema</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a> provides an opportunity to annotate type
+          definitions or lock them to specific versions of the
+          vocabulary. Authors of <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credentials</a> can include
+          a static version of their vocabulary using
+          <code>credentialSchema</code> that is locked to some
+          content integrity protection mechanism. The
+          <code>credentialSchema</code> <a href="#dfn-property"
+          class="internalDFN" data-link-type="dfn">property</a> also
+          makes it possible to perform syntactic checking on the
+          <a href="#dfn-credential" class="internalDFN"
+          data-link-type="dfn">credential</a> and to use <a href=
+          "#dfn-verify" class="internalDFN" data-link-type=
+          "dfn">verification</a> mechanisms such as JSON Schema
+          [<cite><a class="bibref" href="#bib-json-schema-2018"
+          title="JSON Schema: A Media Type for Describing JSON Documents"
+          data-link-type="biblio">JSON-SCHEMA-2018</a></cite>]
+          validation.</p>
+        </div>
+        <div class="example" id=
+        "example-18-usage-of-the-credentialschema-property-to-perform-json-schema-validation">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-18-usage-of-the-credentialschema-property-to-perform-json-schema-validation">
+            Example <bdi>18</bdi></a><span class="example-title">:
+            Usage of the credentialSchema property to perform JSON
+            schema validation</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "http://example.edu/credentials/3732",
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "issuer": "https://example.edu/issuers/14",
+    "issuanceDate": "2010-01-01T19:23:24Z",
+    "credentialSubject": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science and Arts"
+      }
+    },
+    <span class="highlight">"credentialSchema": {
+      "id": "https://example.org/examples/degree.json",
+      "type": "JsonSchemaValidator2018"
+    }</span>,
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <p>In the example above, the <a href="#dfn-issuers" class=
+        "internalDFN" data-link-type="dfn">issuer</a> is specifying a
+        <code>credentialSchema</code>, which points to a
+        [<cite><a class="bibref" href="#bib-json-schema-2018" title=
+        "JSON Schema: A Media Type for Describing JSON Documents"
+        data-link-type="biblio">JSON-SCHEMA-2018</a></cite>] file
+        that can be used by a <a href="#dfn-verifier" class=
+        "internalDFN" data-link-type="dfn">verifier</a> to determine
+        if the <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credential</a>
+        is well formed.</p>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-20">
+          <div role="heading" class="note-title marker" id=
+          "h-note-20" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">For information about linkages to JSON Schema
+          [<cite><a class="bibref" href="#bib-json-schema-2018"
+          title="JSON Schema: A Media Type for Describing JSON Documents"
+          data-link-type="biblio">JSON-SCHEMA-2018</a></cite>] or
+          other optional <a href="#dfn-verify" class="internalDFN"
+          data-link-type="dfn">verification</a> mechanisms, see the
+          Verifiable Credentials Implementation Guidelines
+          [<cite><a class="bibref" href="#bib-vc-imp-guide" title=
+          "Verifiable Credentials Implementation Guidelines 1.0"
+          data-link-type="biblio">VC-IMP-GUIDE</a></cite>]
+          document.</p>
+        </div>
+        <p>Data schemas can also be used to specify mappings to other
+        binary formats, such as those used to perform zero-knowledge
+        proofs. For more information on using the
+        <code>credentialSchema</code> <a href="#dfn-property" class=
+        "internalDFN" data-link-type="dfn">property</a> with
+        zero-knowledge proofs, see Section <a href=
+        "#zero-knowledge-proofs" class="sec-ref">§&nbsp;<bdi class=
+        "secno">5.8</bdi> Zero-Knowledge Proofs</a>.</p>
+        <div class="example" id=
+        "example-19-usage-of-the-credentialschema-property-to-perform-zero-knowledge-validation">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-19-usage-of-the-credentialschema-property-to-perform-zero-knowledge-validation">
+            Example <bdi>19</bdi></a><span class="example-title">:
+            Usage of the credentialSchema property to perform
+            zero-knowledge validation</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "http://example.edu/credentials/3732",
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "issuer": "https://example.edu/issuers/14",
+    "issuanceDate": "2010-01-01T19:23:24Z",
+    "credentialSubject": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science and Arts"
+      }
+    },
+    <span class="highlight">"credentialSchema": {
+      "id": "https://example.org/examples/degree.zkp",
+      "type": "ZkpExampleSchema2018"
+    }</span>,
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <p>In the example above, the <a href="#dfn-issuers" class=
+        "internalDFN" data-link-type="dfn">issuer</a> is specifying a
+        <code>credentialSchema</code> pointing to a zero-knowledge
+        packed binary data format that is capable of transforming the
+        input data into a format, which can then be used by a
+        <a href="#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifier</a> to determine if the proof provided with
+        the <a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> is valid.</p>
+      </section>
+      <section id="refreshing">
+        <h3 id="x5-5-refreshing"><bdi class="secno">5.5</bdi>
+        Refreshing<a class="self-link" aria-label="§" href=
+        "#refreshing"></a></h3>
+        <p>It is useful for systems to enable the manual or automatic
+        refresh of an expired <a href="#dfn-verifiable-credentials"
+        class="internalDFN" data-link-type="dfn">verifiable
+        credential</a>. For more information about expired <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credentials</a>, see Section
+        <a href="#expiration" class="sec-ref">§&nbsp;<bdi class=
+        "secno">4.8</bdi> Expiration</a>. This specification defines
+        a <code>refreshService</code> <a href="#dfn-property" class=
+        "internalDFN" data-link-type="dfn">property</a>, which
+        enables an <a href="#dfn-issuers" class="internalDFN"
+        data-link-type="dfn">issuer</a> to include a link to a
+        refresh service.</p>
+        <p>The <a href="#dfn-issuers" class="internalDFN"
+        data-link-type="dfn">issuer</a> can include the refresh
+        service as an element inside the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> if it is
+        intended for either the <a href="#dfn-verifier" class=
+        "internalDFN" data-link-type="dfn">verifier</a> or the
+        <a href="#dfn-holders" class="internalDFN" data-link-type=
+        "dfn">holder</a> (or both), or inside the <a href=
+        "#dfn-verifiable-presentations" class="internalDFN"
+        data-link-type="dfn">verifiable presentation</a> if it is
+        intended for the <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a> only. In the latter case,
+        this enables the <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a> to refresh the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> before
+        creating a <a href="#dfn-verifiable-presentations" class=
+        "internalDFN" data-link-type="dfn">verifiable
+        presentation</a> to share with a <a href="#dfn-verifier"
+        class="internalDFN" data-link-type="dfn">verifier</a>. In the
+        former case, including the refresh service inside the
+        <a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> enables either
+        the <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a> or the <a href=
+        "#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifier</a> to perform future updates of the <a href=
+        "#dfn-credential" class="internalDFN" data-link-type=
+        "dfn">credential</a>.</p>
+        <p>The refresh service is only expected to be used when
+        either the <a href="#dfn-credential" class="internalDFN"
+        data-link-type="dfn">credential</a> has expired or the
+        <a href="#dfn-issuers" class="internalDFN" data-link-type=
+        "dfn">issuer</a> does not publish <a href="#dfn-credential"
+        class="internalDFN" data-link-type="dfn">credential</a>
+        status information. <a href="#dfn-issuers" class=
+        "internalDFN" data-link-type="dfn">Issuers</a> are advised
+        not to put the <code>refreshService</code> <a href=
+        "#dfn-property" class="internalDFN" data-link-type=
+        "dfn">property</a> in a <a href="#dfn-verifiable-credentials"
+        class="internalDFN" data-link-type="dfn">verifiable
+        credential</a> that does not contain public information or
+        whose refresh service is not protected in some way.</p>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-21">
+          <div role="heading" class="note-title marker" id=
+          "h-note-21" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">Placing a <code>refreshService</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a> in a <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a> so that it
+          is available to <a href="#dfn-verifier" class="internalDFN"
+          data-link-type="dfn">verifiers</a> can remove control and
+          consent from the <a href="#dfn-holders" class="internalDFN"
+          data-link-type="dfn">holder</a> and allow the <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a> to be issued
+          directly to the <a href="#dfn-verifier" class="internalDFN"
+          data-link-type="dfn">verifier</a>, thereby bypassing the
+          <a href="#dfn-holders" class="internalDFN" data-link-type=
+          "dfn">holder</a>.</p>
+        </div>
+        <dl>
+          <dt><var>refreshService</var></dt>
+          <dd>
+            The value of the <code>refreshService</code> <a href=
+            "#dfn-property" class="internalDFN" data-link-type=
+            "dfn">property</a> <em class="rfc2119" title=
+            "MUST">MUST</em> be one or more refresh services that
+            provides enough information to the recipient's software
+            such that the recipient can refresh the <a href=
+            "#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credential</a>. Each
+            <code>refreshService</code> value <em class="rfc2119"
+            title="MUST">MUST</em> specify its <code>type</code> (for
+            example, <code>ManualRefreshService2018</code>) and its
+            <code>id</code>, which is the URL of the service. The
+            precise content of each refresh service is determined by
+            the specific <code>refreshService</code> <a href=
+            "#dfn-type" class="internalDFN" data-link-type=
+            "dfn">type</a> definition.
+          </dd>
+        </dl>
+        <div class="example" id=
+        "example-20-usage-of-the-refreshservice-property-by-an-issuer">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-20-usage-of-the-refreshservice-property-by-an-issuer">
+            Example <bdi>20</bdi></a><span class="example-title">:
+            Usage of the refreshService property by an issuer</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "http://example.edu/credentials/3732",
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "issuer": "https://example.edu/issuers/14",
+    "issuanceDate": "2010-01-01T19:23:24Z",
+    "credentialSubject": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science and Arts"
+      }
+    },
+    <span class="highlight">"refreshService": {
+      "id": "https://example.edu/refresh/3732"
+      "type": "ManualRefreshService2018",
+    }</span>,
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <p>In the example above, the <a href="#dfn-issuers" class=
+        "internalDFN" data-link-type="dfn">issuer</a> specifies a
+        manual <code>refreshService</code> that can be used by
+        directing the <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a> or the <a href=
+        "#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifier</a> to
+        <code>https://example.edu/refresh/3732</code>.</p>
+      </section>
+      <section id="terms-of-use">
+        <h3 id="x5-6-terms-of-use"><bdi class="secno">5.6</bdi> Terms
+        of Use<a class="self-link" aria-label="§" href=
+        "#terms-of-use"></a></h3>
+        <p>Terms of use can be utilized by an <a href="#dfn-issuers"
+        class="internalDFN" data-link-type="dfn">issuer</a> or a
+        <a href="#dfn-holders" class="internalDFN" data-link-type=
+        "dfn">holder</a> to communicate the terms under which a
+        <a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> or <a href=
+        "#dfn-verifiable-presentations" class="internalDFN"
+        data-link-type="dfn">verifiable presentation</a> was issued.
+        The <a href="#dfn-issuers" class="internalDFN"
+        data-link-type="dfn">issuer</a> places their terms of use
+        inside the <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credential</a>.
+        The <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a> places their terms of use
+        inside a <a href="#dfn-verifiable-presentations" class=
+        "internalDFN" data-link-type="dfn">verifiable
+        presentation</a>. This specification defines a
+        <code>termsOfUse</code> <a href="#dfn-property" class=
+        "internalDFN" data-link-type="dfn">property</a> for
+        expressing terms of use information.</p>
+        <p>The value of the <code>termsOfUse</code> <a href=
+        "#dfn-property" class="internalDFN" data-link-type=
+        "dfn">property</a> tells the <a href="#dfn-verifier" class=
+        "internalDFN" data-link-type="dfn">verifier</a> what actions
+        it is required to perform (an <em>obligation</em>), not
+        allowed to perform (a <em>prohibition</em>), or allowed to
+        perform (a <em>permission</em>) if it is to accept the
+        <a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> or <a href=
+        "#dfn-verifiable-presentations" class="internalDFN"
+        data-link-type="dfn">verifiable presentation</a>.</p>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-22">
+          <div role="heading" class="note-title marker" id=
+          "h-note-22" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">Further study is required to determine how a
+          <a href="#dfn-subjects" class="internalDFN" data-link-type=
+          "dfn">subject</a> who is not a <a href="#dfn-holders"
+          class="internalDFN" data-link-type="dfn">holder</a> places
+          terms of use on their <a href="#dfn-verifiable-credentials"
+          class="internalDFN" data-link-type="dfn">verifiable
+          credentials</a>. One way could be for the <a href=
+          "#dfn-subjects" class="internalDFN" data-link-type=
+          "dfn">subject</a> to request the <a href="#dfn-issuers"
+          class="internalDFN" data-link-type="dfn">issuer</a> to
+          place the terms of use inside the issued <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credentials</a>. Another
+          way could be for the <a href="#dfn-subjects" class=
+          "internalDFN" data-link-type="dfn">subject</a> to delegate
+          a <a href="#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a> to a
+          <a href="#dfn-holders" class="internalDFN" data-link-type=
+          "dfn">holder</a> and place terms of use restrictions on the
+          delegated <a href="#dfn-verifiable-credentials" class=
+          "internalDFN" data-link-type="dfn">verifiable
+          credential</a>.</p>
+        </div>
+        <dl>
+          <dt><var>termsOfUse</var></dt>
+          <dd>
+            The value of the <code>termsOfUse</code> <a href=
+            "#dfn-property" class="internalDFN" data-link-type=
+            "dfn">property</a> <em class="rfc2119" title=
+            "MUST">MUST</em> specify one or more terms of use
+            policies under which the creator issued the <a href=
+            "#dfn-credential" class="internalDFN" data-link-type=
+            "dfn">credential</a> or <a href="#dfn-presentations"
+            class="internalDFN" data-link-type=
+            "dfn">presentation</a>. If the recipient (a <a href=
+            "#dfn-holders" class="internalDFN" data-link-type=
+            "dfn">holder</a> or <a href="#dfn-verifier" class=
+            "internalDFN" data-link-type="dfn">verifier</a>) is not
+            willing to adhere to the specified terms of use, then
+            they do so on their own responsibility and might incur
+            legal liability if they violate the stated terms of use.
+            Each <code>termsOfUse</code> value <em class="rfc2119"
+            title="MUST">MUST</em> specify its <a href="#dfn-type"
+            class="internalDFN" data-link-type="dfn">type</a>, for
+            example, <code>IssuerPolicy</code>, and <em class=
+            "rfc2119" title="MAY">MAY</em> specify its instance
+            <code>id</code>. The precise contents of each term of use
+            is determined by the specific <code>termsOfUse</code>
+            <a href="#dfn-type" class="internalDFN" data-link-type=
+            "dfn">type</a> definition.
+          </dd>
+        </dl>
+        <div class="example" id=
+        "example-21-usage-of-the-termsofuse-property-by-an-issuer">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-21-usage-of-the-termsofuse-property-by-an-issuer">
+            Example <bdi>21</bdi></a><span class="example-title">:
+            Usage of the termsOfUse property by an issuer</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "http://example.edu/credentials/3732",
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "issuer": "https://example.edu/issuers/14",
+    "issuanceDate": "2010-01-01T19:23:24Z",
+    "credentialSubject": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science and Arts"
+      }
+    },
+    <span class="highlight">"termsOfUse": [{
+      "type": "IssuerPolicy",
+      "id": "http://example.com/policies/credential/4",
+      "profile": "http://example.com/profiles/credential",
+      "prohibition": [{
+        "assigner": "https://example.edu/issuers/14",
+        "assignee": "AllVerifiers",
+        "target": "http://example.edu/credentials/3732",
+        "action": ["Archival"]
+      }]
+    }</span>,
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <p>In the example above, the <a href="#dfn-issuers" class=
+        "internalDFN" data-link-type="dfn">issuer</a> (the
+        <code>assigner</code>) is prohibiting <a href="#dfn-verifier"
+        class="internalDFN" data-link-type="dfn">verifiers</a> (the
+        <code>assignee</code>) from storing the data in an
+        archive.</p>
+        <div class="example" id=
+        "example-22-usage-of-the-termsofuse-property-by-a-holder">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-22-usage-of-the-termsofuse-property-by-a-holder">
+            Example <bdi>22</bdi></a><span class="example-title">:
+            Usage of the termsOfUse property by a holder</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "type": ["VerifiablePresentation"],
+    "verifiableCredential": [{
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1"
+      ],
+      "id": "http://example.edu/credentials/3732",
+      "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+      "issuer": "https://example.edu/issuers/14",
+      "issuanceDate": "2010-01-01T19:23:24Z",
+      "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science and Arts"
+      }
+      },
+      "proof": { <span class="comment">...</span> }
+    }],
+    <span class="highlight">"termsOfUse": [{
+      "type": "HolderPolicy",
+      "id": "http://example.com/policies/credential/6",
+      "profile": "http://example.com/profiles/credential",
+      "prohibition": [{
+        "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "assignee": "https://wineonline.example.org/",
+        "target": "http://example.edu/credentials/3732",
+        "action": ["3rdPartyCorrelation"]
+      }]
+    }</span>,
+    "proof": [ ... ]
+  }</pre>
+        </div>
+        <p>In the example above, the <a href="#dfn-holders" class=
+        "internalDFN" data-link-type="dfn">holder</a> (the
+        <code>assigner</code>), who is also the <a href=
+        "#dfn-subjects" class="internalDFN" data-link-type=
+        "dfn">subject</a>, expressed a term of use prohibiting the
+        <a href="#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifier</a> (the <code>assignee</code>,
+        <code>https://wineonline.example.org</code>) from using the
+        information provided to correlate the <a href="#dfn-holders"
+        class="internalDFN" data-link-type="dfn">holder</a> or
+        <a href="#dfn-subjects" class="internalDFN" data-link-type=
+        "dfn">subject</a> using a third-party service. If the
+        <a href="#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifier</a> were to use a third-party service for
+        correlation, they would violate the terms under which the
+        holder created the <a href="#dfn-presentations" class=
+        "internalDFN" data-link-type="dfn">presentation</a>.</p>
+        <p>This feature is also expected to be used by
+        government-issued <a href="#dfn-verifiable-credentials"
+        class="internalDFN" data-link-type="dfn">verifiable
+        credentials</a> to instruct digital wallets to limit their
+        use to similar government organizations in an attempt to
+        protect citizens from unexpected usage of sensitive data.
+        Similarly, some <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credentials</a>
+        issued by private industry are expected to limit usage to
+        within departments inside the organization, or during
+        business hours. Implementers are urged to read more about
+        this rapidly evolving feature in the appropriate section of
+        the Verifiable Credentials Implementation Guidelines
+        [<cite><a class="bibref" href="#bib-vc-imp-guide" title=
+        "Verifiable Credentials Implementation Guidelines 1.0"
+        data-link-type="biblio">VC-IMP-GUIDE</a></cite>]
+        document.</p>
+      </section>
+      <section id="evidence">
+        <h3 id="x5-7-evidence"><bdi class="secno">5.7</bdi>
+        Evidence<a class="self-link" aria-label="§" href=
+        "#evidence"></a></h3>
+        <p>Evidence can be included by an <a href="#dfn-issuers"
+        class="internalDFN" data-link-type="dfn">issuer</a> to
+        provide the <a href="#dfn-verifier" class="internalDFN"
+        data-link-type="dfn">verifier</a> with additional supporting
+        information in a <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credential</a>.
+        This could be used by the <a href="#dfn-verifier" class=
+        "internalDFN" data-link-type="dfn">verifier</a> to establish
+        the confidence with which it relies on the claims in the
+        <a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a>.</p>
+        <p>For example, an <a href="#dfn-issuers" class="internalDFN"
+        data-link-type="dfn">issuer</a> could check physical
+        documentation provided by the <a href="#dfn-subjects" class=
+        "internalDFN" data-link-type="dfn">subject</a> or perform a
+        set of background checks before issuing the <a href=
+        "#dfn-credential" class="internalDFN" data-link-type=
+        "dfn">credential</a>. In certain scenarios, this information
+        is useful to the <a href="#dfn-verifier" class="internalDFN"
+        data-link-type="dfn">verifier</a> when determining the risk
+        associated with relying on a given <a href="#dfn-credential"
+        class="internalDFN" data-link-type="dfn">credential</a>.</p>
+        <p>This specification defines the <code>evidence</code>
+        <a href="#dfn-property" class="internalDFN" data-link-type=
+        "dfn">property</a> for expressing evidence information.</p>
+        <dl>
+          <dt><var>evidence</var></dt>
+          <dd>
+            The value of the <code>evidence</code> <a href=
+            "#dfn-property" class="internalDFN" data-link-type=
+            "dfn">property</a> <em class="rfc2119" title=
+            "MUST">MUST</em> be one or more evidence schemes
+            providing enough information for a <a href=
+            "#dfn-verifier" class="internalDFN" data-link-type=
+            "dfn">verifier</a> to determine whether the evidence
+            gathered by the <a href="#dfn-issuers" class=
+            "internalDFN" data-link-type="dfn">issuer</a> meets its
+            confidence requirements for relying on the <a href=
+            "#dfn-credential" class="internalDFN" data-link-type=
+            "dfn">credential</a>. Each evidence scheme is identified
+            by its <a href="#dfn-type" class="internalDFN"
+            data-link-type="dfn">type</a>. The <code>id</code>
+            <a href="#dfn-property" class="internalDFN"
+            data-link-type="dfn">property</a> is optional, but if
+            present, <em class="rfc2119" title="SHOULD">SHOULD</em>
+            contain a URL that points to where more information about
+            this instance of evidence can be found. The precise
+            content of each evidence scheme is determined by the
+            specific <code>evidence</code> <a href="#dfn-type" class=
+            "internalDFN" data-link-type="dfn">type</a> definition.
+          </dd>
+        </dl>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-23">
+          <div role="heading" class="note-title marker" id=
+          "h-note-23" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">For information about how attachments and
+          references to <a href="#dfn-credential" class="internalDFN"
+          data-link-type="dfn">credentials</a> and non-credential
+          data might be supported by the specification, see the
+          Verifiable Credentials Implementation Guidelines
+          [<cite><a class="bibref" href="#bib-vc-imp-guide" title=
+          "Verifiable Credentials Implementation Guidelines 1.0"
+          data-link-type="biblio">VC-IMP-GUIDE</a></cite>]
+          document.</p>
+        </div>
+        <div class="example" id=
+        "example-23-usage-of-the-evidence-property">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-23-usage-of-the-evidence-property">Example
+            <bdi>23</bdi></a><span class="example-title">: Usage of
+            the evidence property</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "http://example.edu/credentials/3732",
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "issuer": "https://example.edu/issuers/14",
+    "issuanceDate": "2010-01-01T19:23:24Z",
+    "credentialSubject": {
+      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+      "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science and Arts"
+      }
+    },
+    <span class="highlight">"evidence": [{
+      "id": "https://example.edu/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+      "type": ["DocumentVerification"],
+      "verifier": "https://example.edu/issuers/14",
+      "evidenceDocument": "DriversLicense",
+      "subjectPresence": "Physical",
+      "documentPresence": "Physical"
+    },{
+      "id": "https://example.edu/evidence/f2aeec97-fc0d-42bf-8ca7-0548192dxyzab",
+      "type": ["SupportingActivity"],
+      "verifier": "https://example.edu/issuers/14",
+      "evidenceDocument": "Fluid Dynamics Focus",
+      "subjectPresence": "Digital",
+      "documentPresence": "Digital"
+    }]</span>,
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-24">
+          <div role="heading" class="note-title marker" id=
+          "h-note-24" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">The <code>evidence</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a> provides different and complementary
+          information to the <code>proof</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a>. The <code>evidence</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a> is used to express supporting
+          information, such as documentary evidence, related to the
+          integrity of the <a href="#dfn-verifiable-credentials"
+          class="internalDFN" data-link-type="dfn">verifiable
+          credential</a>. In contrast, the <code>proof</code>
+          <a href="#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a> is used to express machine-verifiable
+          mathematical proofs related to the authenticity of the
+          <a href="#dfn-issuers" class="internalDFN" data-link-type=
+          "dfn">issuer</a> and integrity of the <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a>. For more
+          information about the <code>proof</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a>, see Section <a href=
+          "#proofs-signatures" class="sec-ref">§&nbsp;<bdi class=
+          "secno">4.7</bdi> Proofs (Signatures)</a>.</p>
+        </div>
+      </section>
+      <section id="zero-knowledge-proofs">
+        <h3 id="x5-8-zero-knowledge-proofs"><bdi class=
+        "secno">5.8</bdi> Zero-Knowledge Proofs<a class="self-link"
+        aria-label="§" href="#zero-knowledge-proofs"></a></h3>
+        <p>A zero-knowledge proof is a cryptographic method where an
+        entity can prove to another entity that they know a certain
+        value without disclosing the actual value. A real-world
+        example is proving that an accredited university has granted
+        a degree to you without revealing your identity or any other
+        personally identifiable information contained on the
+        degree.</p>
+        <p>The key capabilities introduced by zero-knowledge proof
+        mechanisms are the ability of a <a href="#dfn-holders" class=
+        "internalDFN" data-link-type="dfn">holder</a> to:</p>
+        <ul>
+          <li>Combine multiple <a href="#dfn-verifiable-credentials"
+            class="internalDFN" data-link-type="dfn">verifiable
+            credentials</a> from multiple <a href="#dfn-issuers"
+            class="internalDFN" data-link-type="dfn">issuers</a> into
+            a single <a href="#dfn-verifiable-presentations" class=
+            "internalDFN" data-link-type="dfn">verifiable
+            presentation</a> without revealing <a href=
+            "#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credential</a> or
+            <a href="#dfn-subjects" class="internalDFN"
+            data-link-type="dfn">subject</a> identifiers to the
+            <a href="#dfn-verifier" class="internalDFN"
+            data-link-type="dfn">verifier</a>. This makes it more
+            difficult for the <a href="#dfn-verifier" class=
+            "internalDFN" data-link-type="dfn">verifier</a> to
+            collude with any of the issuers regarding the issued
+            <a href="#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credentials</a>.
+          </li>
+          <li>Selectively disclose the <a href="#dfn-claims" class=
+          "internalDFN" data-link-type="dfn">claims</a> in a
+            <a href="#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credential</a> to a
+            <a href="#dfn-verifier" class="internalDFN"
+            data-link-type="dfn">verifier</a> without requiring the
+            issuance of multiple atomic <a href=
+            "#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credentials</a>. This
+            allows a <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a> to provide a <a href=
+            "#dfn-verifier" class="internalDFN" data-link-type=
+            "dfn">verifier</a> with precisely the information they
+            need and nothing more.
+          </li>
+          <li>Produce a derived <a href="#dfn-verifiable-credentials"
+            class="internalDFN" data-link-type="dfn">verifiable
+            credential</a> that is formatted according to the
+            <a href="#dfn-verifier" class="internalDFN"
+            data-link-type="dfn">verifier's</a> data schema instead
+            of the <a href="#dfn-issuers" class="internalDFN"
+            data-link-type="dfn">issuer's</a>, without needing to
+            involve the <a href="#dfn-issuers" class="internalDFN"
+            data-link-type="dfn">issuer</a> after <a href=
+            "#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credential</a> issuance.
+            This provides a great deal of flexibility for <a href=
+            "#dfn-holders" class="internalDFN" data-link-type=
+            "dfn">holders</a> to use their issued <a href=
+            "#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credentials</a>.
+          </li>
+        </ul>
+        <p>This specification describes a data model that supports
+        zero-knowledge proof mechanisms. The examples below highlight
+        how the data model can be used to issue, present, and verify
+        zero-knowledge <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable
+        credentials</a>.</p>
+        <p>To use zero-knowledge <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credentials</a> the <a href=
+        "#dfn-issuers" class="internalDFN" data-link-type=
+        "dfn">issuer</a> must issue a <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> in a manner
+        that enables the <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a> to present the information to
+        a <a href="#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifier</a> in a privacy-enhancing manner. This
+        implies that the <a href="#dfn-holders" class="internalDFN"
+        data-link-type="dfn">holder</a> can prove the validity of the
+        <a href="#dfn-issuers" class="internalDFN" data-link-type=
+        "dfn">issuer's</a> signature without revealing the values
+        that were signed, or when only revealing certain selected
+        values. The standard practice is to do so by proving
+        knowledge of the signature, without revealing the signature
+        itself. There are two requirements for <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credentials</a> when they are
+        to be used in zero-knowledge proof systems. The <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> <em class=
+        "rfc2119" title="MUST">MUST</em> contain a:</p>
+        <ul>
+          <li>
+            <a href="#dfn-credential" class="internalDFN"
+            data-link-type="dfn">Credential</a> definition, using the
+            <code>credentialSchema</code> <a href="#dfn-property"
+            class="internalDFN" data-link-type="dfn">property</a>,
+            that can be used by all parties to perform various
+            cryptographic operations in zero-knowledge.
+          </li>
+          <li>Proof, using the <code>proof</code> <a href=
+          "#dfn-property" class="internalDFN" data-link-type=
+          "dfn">property</a>, that can be used to derive <a href=
+          "#dfn-verifiable-presentations" class="internalDFN"
+          data-link-type="dfn">verifiable presentations</a> that
+          present information contained in the original <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credential</a> in
+          zero-knowledge. The zero-knowledge <a href=
+          "#dfn-verifiable-presentations" class="internalDFN"
+          data-link-type="dfn">verifiable presentation</a> must not
+          reveal any information not intended to be revealed by the
+          <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a>.
+          </li>
+        </ul>
+        <p>The following example shows one method of using <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credentials</a> in
+        zero-knowledge. It makes use of a CL Signature, which allows
+        the presentation of the <a href="#dfn-verifiable-credentials"
+        class="internalDFN" data-link-type="dfn">verifiable
+        credential</a> in a way that supports the privacy of the
+        <a href="#dfn-holders" class="internalDFN" data-link-type=
+        "dfn">holder</a> and <a href="#dfn-subjects" class=
+        "internalDFN" data-link-type="dfn">subject</a> through the
+        use of selective disclosure of the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> values.</p>
+        <div class="example" id=
+        "example-24-a-verifiable-credential-that-supports-cl-signatures">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-24-a-verifiable-credential-that-supports-cl-signatures">
+            Example <bdi>24</bdi></a><span class="example-title">: A
+            verifiable credential that supports CL Signatures</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    <span class="highlight">"credentialSchema": {
+      "id": "did:example:cdf:35LB7w9ueWbagPL94T9bMLtyXDj9pX5o",
+      "type": "did:example:schema:22KpkXgecryx9k7N6XN1QoN3gXwBkSU8SfyyYQG"
+    }</span>,
+    "issuer": "did:example:Wz4eUg7SetGfaUVCn8U9d62oDYrUJLuUtcy619",
+    "credentialSubject": {
+      "givenName": "Jane",
+      "familyName": "Doe",
+      "degree": {
+        "type": "BachelorDegree",
+        "name": "Bachelor of Science and Arts",
+        "college": "College of Engineering"
+      }
+    },
+    <span class="highlight">"proof": {
+      "type": "CLSignature2019",
+      "issuerData": "5NQ4TgzNfSQxoLzf2d5AV3JNiCdMaTgm...BXiX5UggB381QU7ZCgqWivUmy4D",
+      "attributes": "pPYmqDvwwWBDPNykXVrBtKdsJDeZUGFA...tTERiLqsZ5oxCoCSodPQaggkDJy",
+      "signature": "8eGWSiTiWtEA8WnBwX4T259STpxpRKuk...kpFnikqqSP3GMW7mVxC4chxFhVs",
+      "signatureCorrectnessProof": "SNQbW3u1QV5q89qhxA1xyVqFa6jCrKwv...dsRypyuGGK3RhhBUvH1tPEL8orH"
+    }</span>
+  }</pre>
+        </div>
+        <p>The example above provides the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> definition by
+        using the <code>credentialSchema</code> <a href=
+        "#dfn-property" class="internalDFN" data-link-type=
+        "dfn">property</a> and a specific proof that is usable in the
+        Camenisch-Lysyanskaya Zero-Knowledge Proof system.</p>
+        <p>The next example utilizes the <a href=
+        "#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> above to
+        generate a new derived <a href="#dfn-verifiable-credentials"
+        class="internalDFN" data-link-type="dfn">verifiable
+        credential</a> with a privacy-preserving proof. The derived
+        <a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">verifiable credential</a> is then placed
+        in a <a href="#dfn-verifiable-presentations" class=
+        "internalDFN" data-link-type="dfn">verifiable
+        presentation</a>, which further proves that the entire
+        assertion is valid. There are three requirements of most
+        <a href="#dfn-verifiable-presentations" class="internalDFN"
+        data-link-type="dfn">verifiable presentations</a> when they
+        are to be used in zero-knowledge systems:</p>
+        <ul>
+          <li>Each derived <a href="#dfn-verifiable-credentials"
+          class="internalDFN" data-link-type="dfn">verifiable
+          credential</a> within a <a href=
+          "#dfn-verifiable-presentations" class="internalDFN"
+          data-link-type="dfn">verifiable presentation</a>
+            <em class="rfc2119" title="MUST">MUST</em> have a
+            <code>credentialSchema</code> <a href="#dfn-property"
+            class="internalDFN" data-link-type="dfn">property</a>.
+            This allows the derived <a href=
+            "#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn">verifiable credential</a> to
+            reference the credential definition used to generate the
+            derived proof.
+          </li>
+          <li>A <a href="#dfn-verifiable-presentations" class=
+          "internalDFN" data-link-type="dfn">verifiable
+          presentation</a> <em class="rfc2119" title="MUST NOT">MUST
+          NOT</em> leak information that would enable the <a href=
+          "#dfn-verifier" class="internalDFN" data-link-type=
+          "dfn">verifier</a> to correlate the <a href="#dfn-holders"
+            class="internalDFN" data-link-type="dfn">holder</a>
+            across multiple <a href="#dfn-verifiable-presentations"
+            class="internalDFN" data-link-type="dfn">verifiable
+            presentations</a>.
+          </li>
+          <li>The <a href="#dfn-verifiable-presentations" class=
+          "internalDFN" data-link-type="dfn">verifiable
+          presentation</a> <em class="rfc2119" title="MUST">MUST</em>
+          contain a <code>proof</code> <a href="#dfn-property"
+            class="internalDFN" data-link-type="dfn">property</a> to
+            enable the <a href="#dfn-verifier" class="internalDFN"
+            data-link-type="dfn">verifier</a> to ascertain that all
+            derived <a href="#dfn-verifiable-credentials" class=
+            "internalDFN" data-link-type="dfn">verifiable
+            credentials</a> in the <a href=
+            "#dfn-verifiable-presentations" class="internalDFN"
+            data-link-type="dfn">verifiable presentation</a> were
+            issued to the same <a href="#dfn-holders" class=
+            "internalDFN" data-link-type="dfn">holder</a> without
+            leaking personally identifiable information that the
+            <a href="#dfn-holders" class="internalDFN"
+            data-link-type="dfn">holder</a> did not intend to share.
+          </li>
+        </ul>
+        <div class="example" id=
+        "example-25-a-verifiable-presentation-that-supports-cl-signatures">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-25-a-verifiable-presentation-that-supports-cl-signatures">
+            Example <bdi>25</bdi></a><span class="example-title">: A
+            verifiable presentation that supports CL
+            Signatures</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "type": "VerifiablePresentation",
+    "verifiableCredential": [
+      {
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.w3.org/2018/credentials/examples/v1"
+        ],
+        "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+        <span class="highlight">"credentialSchema": {
+          "id": "did:example:cdf:35LB7w9ueWbagPL94T9bMLtyXDj9pX5o",
+          "type": "did:example:schema:22KpkXgecryx9k7N6XN1QoN3gXwBkSU8SfyyYQG"
+        }</span>,
+        "issuer": "did:example:Wz4eUg7SetGfaUVCn8U9d62oDYrUJLuUtcy619",
+        "credentialSubject": {
+          "degreeType": "BachelorDegree",
+          "degreeSchool": "College of Engineering"
+        },
+        <span class="highlight">"proof": {
+          "type": "AnonCredDerivedCredentialv1",
+          "primaryProof": "cg7wLNSi48K5qNyAVMwdYqVHSMv1Ur8i...Fg2ZvWF6zGvcSAsym2sgSk737",
+          "nonRevocationProof": "mu6fg24MfJPU1HvSXsf3ybzKARib4WxG...RSce53M6UwQCxYshCuS3d2h"
+        }</span>
+    }],
+    <span class="highlight">"proof": {
+      "type": "AnonCredPresentationProofv1",
+      "proofValue": "DgYdYMUYHURJLD7xdnWRinqWCEY5u5fK...j915Lt3hMzLHoPiPQ9sSVfRrs1D"
+    }</span>
+  }</pre>
+        </div>
+        <figure id=
+        "fig-a-visual-example-of-the-relationship-between-credentials-and-derived-credentials-in-a-zkp-presentation">
+          <img style="margin: auto; display: block; width: 75%;" src=
+          "diagrams/zkp-cred-pres.svg" alt=
+          "Verifiable Credential 1 and Verifiable Credential 2 on the left map to Derived Credential 1 and Derived Credential 2 inside a Presentation on the right. Verifiable Credential 1 contains Context, Type, ID, Issuer, Issue Date, Expiration Date, CredentialSubject, and Proof, where CredentialSubject contains GivenName, FamilyName, and Birthdate and Proof contains Signature, Proof of Correctness, and Attributes. Verifiable Credential 2 contains Context, Type, ID, Issuer, Issue Date, Expiration Date, CredentialSubject, and Proof, where CredentialSubject contains University, which contains Department, which contains DegreeAwarded, and Proof contains Signature, Proof of Correctness, and Attributes. The Presentation diagram on the right contains Context, Type, ID, VerifiableCredential, and Proof, where VerifiableCredential contains Derived Credential 1 and Derived Credential 2 and Proof contains Common Link Secret. Derived Credential 1 contains Context, Type, ID, Issuer, Issue Date, CredentialSubject, and Proof, where CredentialSubject contains AgeOver18 and Proof contains Knowledge of Signature. Derived Credential 2 contains Context, Type, ID, Issuer, Issue Date, CredentialSubject, and Proof, where CredentialSubject contains Degree and Proof contains Knowledge of Signature. A line links Birthdate in Verifiable Credential 1 to AgeOver18 in Derived Credential 1. A line links DegreeAwarded in Verifiable Credential 2 to Degree in Derived Credential 2."
+          height="150" width="154">
+          <figcaption style="text-align: center;">
+            Figure <bdi class="figno">11</bdi> <span class=
+            "fig-title">A visual example of the relationship between
+            credentials and derived credentials in a ZKP <a href=
+            "#dfn-presentations" class="internalDFN" data-link-type=
+            "dfn">presentation</a>.</span>
+          </figcaption>
+        </figure>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-25">
+          <div role="heading" class="note-title marker" id=
+          "h-note-25" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">Important details regarding the format for the
+          <a href="#dfn-credential" class="internalDFN"
+          data-link-type="dfn">credential</a> definition and of the
+          proofs are omitted on purpose because they are outside of
+          the scope of this document. The purpose of this section is
+          to guide implementers who want to extend <a href=
+          "#dfn-verifiable-credentials" class="internalDFN"
+          data-link-type="dfn">verifiable credentials</a> and
+          <a href="#dfn-verifiable-presentations" class="internalDFN"
+          data-link-type="dfn">verifiable presentations</a> to
+          support zero-knowledge proof systems.</p>
+        </div>
+      </section>
+      <section id="disputes">
+        <h3 id="x5-9-disputes"><bdi class="secno">5.9</bdi>
+        Disputes<a class="self-link" aria-label="§" href=
+        "#disputes"></a></h3>
+        <p>There are at least two different cases to consider for an
+        <a href="#dfn-entities" class="internalDFN" data-link-type=
+        "dfn">entity</a> wanting to dispute a <a href=
+        "#dfn-credential" class="internalDFN" data-link-type=
+        "dfn">credential</a> issued by an <a href="#dfn-issuers"
+        class="internalDFN" data-link-type="dfn">issuer</a>:</p>
+        <ul>
+          <li>A <a href="#dfn-subjects" class="internalDFN"
+          data-link-type="dfn">subject</a> disputes a claim made by
+          the <a href="#dfn-issuers" class="internalDFN"
+          data-link-type="dfn">issuer</a>. For example, the
+          <code>address</code> <a href="#dfn-property" class=
+          "internalDFN" data-link-type="dfn">property</a> is
+          incorrect or out of date.
+          </li>
+          <li>An <a href="#dfn-entities" class="internalDFN"
+          data-link-type="dfn">entity</a> disputes a potentially
+          false claim made by the <a href="#dfn-issuers" class=
+          "internalDFN" data-link-type="dfn">issuer</a> about a
+          different <a href="#dfn-subjects" class="internalDFN"
+          data-link-type="dfn">subject</a>. For example, an imposter
+          claims the social security number for an <a href=
+          "#dfn-entities" class="internalDFN" data-link-type=
+          "dfn">entity</a>.
+          </li>
+        </ul>
+        <p>The mechanism for issuing a <code>DisputeCredential</code>
+        is the same as for a regular <a href="#dfn-credential" class=
+        "internalDFN" data-link-type="dfn">credential</a> except that
+        the <code>credentialSubject</code> identifier in the
+        <code>DisputeCredential</code> <a href="#dfn-property" class=
+        "internalDFN" data-link-type="dfn">property</a> is the
+        identifier of the disputed <a href="#dfn-credential" class=
+        "internalDFN" data-link-type="dfn">credential</a>.</p>
+        <p>For example, if a <a href="#dfn-credential" class=
+        "internalDFN" data-link-type="dfn">credential</a> with an
+        identifier of
+        <code>https://example.org/credentials/245</code> is disputed,
+        the <a href="#dfn-subjects" class="internalDFN"
+        data-link-type="dfn">subject</a> can issue the <a href=
+        "#dfn-credential" class="internalDFN" data-link-type=
+        "dfn">credential</a> shown below and present it to the
+        <a href="#dfn-verifier" class="internalDFN" data-link-type=
+        "dfn">verifier</a> along with the disputed <a href=
+        "#dfn-credential" class="internalDFN" data-link-type=
+        "dfn">credential</a>.</p>
+        <div class="example" id=
+        "example-26-a-subject-disputes-a-credential">
+          <div class="marker">
+            <a class="self-link" href=
+            "#example-26-a-subject-disputes-a-credential">Example
+            <bdi>26</bdi></a><span class="example-title">: A subject
+            disputes a credential</span>
+          </div>
+          <pre class="nohighlight">{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1"
+    ],
+    "id": "http://example.com/credentials/123",
+    "type": ["VerifiableCredential", "DisputeCredential"],
+    <span class="highlight">"credentialSubject": {
+      "id": "http://example.com/credentials/245",
+      "currentStatus": "Disputed",
+      "statusReason": {
+        "value": "Address is out of date.",
+        "lang": "en"
+      },
+    }</span>,
+    "issuer": "https://example.com/people#me",
+    "issuanceDate": "2017-12-05T14:27:42Z",
+    "proof": { <span class="comment">...</span> }
+  }</pre>
+        </div>
+        <p>In the above <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credential</a>
+        the <a href="#dfn-issuers" class="internalDFN"
+        data-link-type="dfn">issuer</a> is claiming that the address
+        in the disputed <a href="#dfn-verifiable-credentials" class=
+        "internalDFN" data-link-type="dfn">verifiable credential</a>
+        is wrong.</p>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-26">
+          <div role="heading" class="note-title marker" id=
+          "h-note-26" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">If a <a href="#dfn-credential" class=
+          "internalDFN" data-link-type="dfn">credential</a> does not
+          have an identifier, a content-addressed identifier can be
+          used to identify the disputed <a href="#dfn-credential"
+          class="internalDFN" data-link-type="dfn">credential</a>.
+          Similarly, content-addressed identifiers can be used to
+          uniquely identify individual claims.</p>
+        </div>
+        <div class="note" role="note" id=
+        "issue-container-generatedID-27">
+          <div role="heading" class="note-title marker" id=
+          "h-note-27" aria-level="4">
+            <span>Note</span>
+          </div>
+          <p class="">This area of study is rapidly evolving and
+          developers that are interested in publishing <a href=
+          "#dfn-credential" class="internalDFN" data-link-type=
+          "dfn">credentials</a> that dispute the veracity of other
+          <a href="#dfn-credential" class="internalDFN"
+          data-link-type="dfn">credentials</a> are urged to read the
+          section related to disputes in the Verifiable Credentials
+          Implementation Guidelines [<cite><a class="bibref" href=
+          "#bib-vc-imp-guide" title=
+          "Verifiable Credentials Implementation Guidelines 1.0"
+          data-link-type="biblio">VC-IMP-GUIDE</a></cite>]
+          document.</p>
+        </div>
+      </section>
+      <section class="informative" id="authorization">
+        <h3 id="x5-10-authorization"><bdi class="secno">5.10</bdi>
+        Authorization<a class="self-link" aria-label="§" href=
+        "#authorization"></a></h3>
+        <p><em>This section is non-normative.</em></p>
+        <p><a href="#dfn-verifiable-credentials" class="internalDFN"
+        data-link-type="dfn">Verifiable credentials</a> are intended
+        as a means of reliably identifying <a href="#dfn-subjects"
+        class="internalDFN" data-link-type="dfn">subjects</a>. While
+        it is recognized that Role Based Access Controls (RBACs) and
+        Attribute Based Access Controls (ABACs) rely on this
+        identification as a means of authorizing <a href=
+        "#dfn-subjects" class="internalDFN" data-link-type=
+        "dfn">subjects</a> to access resources, this specification
+        does not provide a complete solution for RBAC or ABAC.
+        Authorization is not an appropriate use for this
+        specification without an accompanying authorization
+        framework.</p>
+        <p>The Working Group did consider authorization use cases
+        during the creation of this specification and is pursuing
+        that work as an architectural layer built on top of this
+        specification.</p>
+      </section>
+  </section>
+
   <section class="appendix informative">
       <h2>Base Context</h2>
 
