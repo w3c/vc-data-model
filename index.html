@@ -1480,6 +1480,88 @@ Implementation Guidelines [[?VC-IMP-GUIDE]].
       </section>
 
       <section>
+        <h3>Name</h3>
+
+        <p>
+This specification defines the <code>name</code> <a>property</a> for
+expressing the human readable name for a <a>credential</a>.
+        </p>
+
+        <dl>
+          <dt><var>name</var></dt>
+          <dd>
+A <a>credential</a> MAY have a <code>name</code> <a>property</a>. The
+value of the <code>name</code> <a>property</a> MUST be a string value 
+representing the human readable name for the <a>credential</a>
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of name property">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v2",
+    "https://www.w3.org/2018/credentials/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  <span class="highlight">"name": "University Degree Credential"</span>,
+  "description": "A university degree from example.edu",
+  "issuer": "https://example.edu/issuers/14",
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  "proof": { <span class="comment">...</span> }
+}
+        </pre>
+      </section>
+
+      <section>
+        <h3>Description</h3>
+
+        <p>
+This specification defines the <code>description</code> <a>property</a> for
+expressing a human readable rescription for a <a>credential</a>.
+        </p>
+
+        <dl>
+          <dt><var>description</var></dt>
+          <dd>
+A <a>credential</a> MAY have a <code>description</code> <a>property</a>. The
+value of the <code>description</code> <a>property</a> MUST be a string value 
+representing a human readable description for the <a>credential</a>
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight" title="Usage of name property">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v2",
+    "https://www.w3.org/2018/credentials/examples/v1"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  <span class="highlight">"description": "A university degree from example.edu"</span>,
+  "issuer": "https://example.edu/issuers/14",
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  "proof": { <span class="comment">...</span> }
+}
+        </pre>
+      </section>
+
+      <section>
         <h3>Credential Subject</h3>
 
         <p>
@@ -1507,11 +1589,13 @@ a set of objects that contain one or more properties that are each related to a
         <pre class="example nohighlight" title="Usage of the credentialSubject property">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   <span class="highlight">"credentialSubject"</span>: {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1533,11 +1617,13 @@ who are spouses. Note the use of array notation to associate multiple
         <pre class="example nohighlight" title="Specifying multiple subjects in a verifiable credential">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "credentialSubject": <span class="highlight">[{
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "name": "Jayden Doe",
@@ -1580,11 +1666,13 @@ machine-readable information about the <a>issuer</a> that can be used to
         <pre class="example nohighlight" title="Usage of issuer property">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   <span class="highlight">"issuer": "https://example.edu/issuers/14"</span>,
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -1606,11 +1694,13 @@ associating an object with the issuer property:
         <pre class="example nohighlight" title="Usage of issuer expanded property">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   <span class="highlight">"issuer": {
     "id": "did:example:76e12ec712ebc6f1c221ebfeb1f",
     "name": "Example University"
@@ -1659,11 +1749,13 @@ becomes valid.
         <pre class="example nohighlight" title="Usage of issuanceDate property">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   <span class="highlight">"issuanceDate": "2010-01-01T19:23:24Z"</span>,
   "credentialSubject": {
@@ -1736,11 +1828,13 @@ the signing date. The example below uses RSA digital signatures.
           title="Usage of the proof property on a verifiable credential">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.gov/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu",
   "issuanceDate": "2010-01-01T19:73:24Z",
   "credentialSubject": {
@@ -1800,11 +1894,13 @@ date and time the <a>credential</a> ceases to be valid.
         <pre class="example nohighlight" title="Usage of the expirationDate property">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   <span class="highlight">"expirationDate": "2020-01-01T19:23:24Z"</span>,
@@ -1869,11 +1965,13 @@ privacy-enhancing.
         <pre class="example nohighlight" title="Usage of the status property">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -1960,7 +2058,7 @@ The example below shows a <a>verifiable presentation</a> that embeds
         <pre class="example nohighlight" title="Basic structure of a presentation">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
@@ -2345,11 +2443,13 @@ example by including the context and adding the new <a>properties</a> and
           title="A verifiable credential with a custom extension">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     <span class="highlight">"https://example.com/contexts/mycontext.jsonld"</span>
   ],
   "id": "http://example.com/credentials/4643",
   "type": ["VerifiableCredential", "CustomExt12"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.com/issuers/14",
   "issuanceDate": "2018-02-24T05:28:04Z",
   <span class="highlight">"referenceNumber": 83294847,</span>
@@ -2510,11 +2610,13 @@ integrity protection mechanism. The <code>credentialSchema</code>
         <pre class="example nohighlight" title="Usage of the credentialSchema property to perform JSON schema validation">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -2555,11 +2657,13 @@ see Section <a href="#zero-knowledge-proofs"></a>.
         <pre class="example nohighlight" title="Usage of the credentialSchema property to perform zero-knowledge validation">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -2640,11 +2744,13 @@ determined by the specific <code>refreshService</code> <a>type</a> definition.
         <pre class="example nohighlight" title="Usage of the refreshService property by an issuer">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -2719,11 +2825,13 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
         <pre class="example nohighlight" title="Usage of the termsOfUse property by an issuer">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -2757,18 +2865,20 @@ in an archive.
         <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "type": ["VerifiablePresentation"],
   "verifiableCredential": [{
     "@context": [
-      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/v2",
       "https://www.w3.org/2018/credentials/examples/v1"
     ],
     "id": "http://example.edu/credentials/3732",
     "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+    "name": "University Degree Credential",
+    "description": "A university degree from example.edu",
     "issuer": "https://example.edu/issuers/14",
     "issuanceDate": "2010-01-01T19:23:24Z",
     "credentialSubject": {
@@ -2865,11 +2975,13 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
         <pre class="example nohighlight" title="Usage of the evidence property">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   "issuer": "https://example.edu/issuers/14",
   "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -2995,10 +3107,12 @@ the <a>verifiable credential</a> in a way that supports the privacy of the
         <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "name": "University Degree Credential",
+  "description": "A university degree from example.edu",
   <span class="highlight">"credentialSchema": {
     "id": "did:example:cdf:35LB7w9ueWbagPL94T9bMLtyXDj9pX5o",
     "type": "did:example:schema:22KpkXgecryx9k7N6XN1QoN3gXwBkSU8SfyyYQG"
@@ -3069,7 +3183,7 @@ that the <a>holder</a> did not intend to share.
   "verifiableCredential": [
     {
       "@context": [
-        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/v2",
         "https://www.w3.org/2018/credentials/examples/v1"
       ],
       "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -3177,7 +3291,7 @@ can issue the <a>credential</a> shown below and present it to the
         <pre class="example nohighlight" title="A subject disputes a credential">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.com/credentials/123",
@@ -3707,7 +3821,7 @@ header parameter.
   "nonce": "660!6345FSer",
   "vc": {
     "@context": [
-      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/v2",
       "https://www.w3.org/2018/credentials/examples/v1"
     ],
     "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -3773,7 +3887,7 @@ header parameter.
   "nonce": "343s$FSFDa-",
   "vp": {
     "@context": [
-      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/v2",
       "https://www.w3.org/2018/credentials/examples/v1"
     ],
     "type": ["VerifiablePresentation"],
@@ -4190,7 +4304,7 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
       <pre class="example nohighlight" title="Usage of issuer properties">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v2",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "id": "http://example.edu/credentials/temporary/28934792387492384",
@@ -4647,7 +4761,7 @@ probably should be:
       <pre class="example nohighlight" title="Non-content-integrity protected links">
 {
   "@context": [
-    <span class="highlight">"https://www.w3.org/2018/credentials/v1"</span>,
+    <span class="highlight">"https://www.w3.org/2018/credentials/v2"</span>,
     <span class="highlight">"https://www.w3.org/2018/credentials/examples/v1"</span>
   ],
   "id": "http://example.edu/credentials/58473",
@@ -4683,7 +4797,7 @@ protection to the image by using an [[IPFS]] link.
         <pre class="example nohighlight" title="Content-integrity protection for links to external data">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1<span class="highlight">?hl=z3aq31uzgnZBuWNzUB</span>",
+    "https://www.w3.org/2018/credentials/v2<span class="highlight">?hl=z3aq31uzgnZBuWNzUB</span>",
     "https://www.w3.org/2018/credentials/examples/v1<span class="highlight">?hl=z8guWNzUBnZBu3aq31</span>"
   ],
   "id": "http://example.edu/credentials/58473",
@@ -5219,12 +5333,11 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "cred": "https://www.w3.org/2018/credentials#",
-        "sec": "https://w3id.org/security#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "name": {"@id": "https://www.w3.org/2018/credentials#name", "@type": "@id"},
+        "description": {"id": "https://www.w3.org/2018/credentials#description", "@type": "@id"},
 
         "credentialSchema": {
-          "@id": "cred:credentialSchema",
+          "@id": "https://www.w3.org/2018/credentials#credentialSchema",
           "@type": "@id",
           "@context": {
             "@version": 1.1,
@@ -5235,20 +5348,20 @@ is also provided in this section.
 
             "cred": "https://www.w3.org/2018/credentials#",
 
-            "JsonSchemaValidator2018": "cred:JsonSchemaValidator2018"
+            "JsonSchemaValidator2018": "https://www.w3.org/2018/credentials#JsonSchemaValidator2018"
           }
         },
-        "credentialStatus": {"@id": "cred:credentialStatus", "@type": "@id"},
-        "credentialSubject": {"@id": "cred:credentialSubject", "@type": "@id"},
-        "evidence": {"@id": "cred:evidence", "@type": "@id"},
-        "expirationDate": {"@id": "cred:expirationDate", "@type": "xsd:dateTime"},
-        "holder": {"@id": "cred:holder", "@type": "@id"},
-        "issued": {"@id": "cred:issued", "@type": "xsd:dateTime"},
-        "issuer": {"@id": "cred:issuer", "@type": "@id"},
-        "issuanceDate": {"@id": "cred:issuanceDate", "@type": "xsd:dateTime"},
-        "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"},
+        "credentialStatus": {"@id": "https://www.w3.org/2018/credentials#credentialStatus", "@type": "@id"},
+        "credentialSubject": {"@id": "https://www.w3.org/2018/credentials#credentialSubject", "@type": "@id"},
+        "evidence": {"@id": "https://www.w3.org/2018/credentials#evidence", "@type": "@id"},
+        "expirationDate": {"@id": "https://www.w3.org/2018/credentials#expirationDate", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "holder": {"@id": "https://www.w3.org/2018/credentials#holder", "@type": "@id"},
+        "issued": {"@id": "https://www.w3.org/2018/credentials#issued", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "issuer": {"@id": "https://www.w3.org/2018/credentials#issuer", "@type": "@id"},
+        "issuanceDate": {"@id": "https://www.w3.org/2018/credentials#issuanceDate", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "proof": {"@id": "https://w3id.org/security#proof", "@type": "@id", "@container": "@graph"},
         "refreshService": {
-          "@id": "cred:refreshService",
+          "@id": "https://www.w3.org/2018/credentials#refreshService",
           "@type": "@id",
           "@context": {
             "@version": 1.1,
@@ -5259,12 +5372,12 @@ is also provided in this section.
 
             "cred": "https://www.w3.org/2018/credentials#",
 
-            "ManualRefreshService2018": "cred:ManualRefreshService2018"
+            "ManualRefreshService2018": "https://www.w3.org/2018/credentials#ManualRefreshService2018"
           }
         },
-        "termsOfUse": {"@id": "cred:termsOfUse", "@type": "@id"},
-        "validFrom": {"@id": "cred:validFrom", "@type": "xsd:dateTime"},
-        "validUntil": {"@id": "cred:validUntil", "@type": "xsd:dateTime"}
+        "termsOfUse": {"@id": "https://www.w3.org/2018/credentials#termsOfUse", "@type": "@id"},
+        "validFrom": {"@id": "https://www.w3.org/2018/credentials#validFrom", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "validUntil": {"@id": "https://www.w3.org/2018/credentials#validUntil", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"}
       }
     },
 
@@ -5277,12 +5390,9 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "cred": "https://www.w3.org/2018/credentials#",
-        "sec": "https://w3id.org/security#",
-
-        "holder": {"@id": "cred:holder", "@type": "@id"},
-        "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"},
-        "verifiableCredential": {"@id": "cred:verifiableCredential", "@type": "@id", "@container": "@graph"}
+        "holder": {"@id": "https://www.w3.org/2018/credentials#holder", "@type": "@id"},
+        "proof": {"@id": "https://w3id.org/security#proof", "@type": "@id", "@container": "@graph"},
+        "verifiableCredential": {"@id": "https://www.w3.org/2018/credentials#verifiableCredential", "@type": "@id", "@container": "@graph"}
       }
     },
 
@@ -5295,17 +5405,14 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "sec": "https://w3id.org/security#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-
-        "challenge": "sec:challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
-        "domain": "sec:domain",
-        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
-        "jws": "sec:jws",
-        "nonce": "sec:nonce",
+        "challenge": "https://w3id.org/security#challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "domain": "https://w3id.org/security#domain",
+        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "jws": "https://w3id.org/security#jws",
+        "nonce": "https://w3id.org/security#nonce",
         "proofPurpose": {
-          "@id": "sec:proofPurpose",
+          "@id": "https://w3id.org/security#proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5314,14 +5421,12 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "sec": "https://w3id.org/security#",
-
-            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
+            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "sec:proofValue",
-        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
+        "proofValue": "https://w3id.org/security#proofValue",
+        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
       }
     },
 
@@ -5334,17 +5439,14 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "sec": "https://w3id.org/security#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-
-        "challenge": "sec:challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
-        "domain": "sec:domain",
-        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
-        "jws": "sec:jws",
-        "nonce": "sec:nonce",
+        "challenge": "https://w3id.org/security#challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "domain": "https://w3id.org/security#domain",
+        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "jws": "https://w3id.org/security#jws",
+        "nonce": "https://w3id.org/security#nonce",
         "proofPurpose": {
-          "@id": "sec:proofPurpose",
+          "@id": "https://w3id.org/security#proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5353,14 +5455,12 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "sec": "https://w3id.org/security#",
-
-            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
+            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "sec:proofValue",
-        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
+        "proofValue": "https://w3id.org/security#proofValue",
+        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
       }
     },
 
@@ -5373,17 +5473,14 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "sec": "https://w3id.org/security#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-
-        "challenge": "sec:challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
-        "domain": "sec:domain",
-        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
-        "jws": "sec:jws",
-        "nonce": "sec:nonce",
+        "challenge": "https://w3id.org/security#challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "domain": "https://w3id.org/security#domain",
+        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "jws": "https://w3id.org/security#jws",
+        "nonce": "https://w3id.org/security#nonce",
         "proofPurpose": {
-          "@id": "sec:proofPurpose",
+          "@id": "https://w3id.org/security#proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5392,14 +5489,12 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "sec": "https://w3id.org/security#",
-
-            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
+            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "sec:proofValue",
-        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
+        "proofValue": "https://w3id.org/security#proofValue",
+        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
       }
     },
 
@@ -5409,14 +5504,14 @@ is also provided in this section.
         "@version": 1.1,
         "@protected": true,
 
-        "challenge": "sec:challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
-        "domain": "sec:domain",
-        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
-        "jws": "sec:jws",
-        "nonce": "sec:nonce",
+        "challenge": "https://w3id.org/security#challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "domain": "https://w3id.org/security#domain",
+        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+        "jws": "https://w3id.org/security#jws",
+        "nonce": "https://w3id.org/security#nonce",
         "proofPurpose": {
-          "@id": "sec:proofPurpose",
+          "@id": "https://w3id.org/security#proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5425,20 +5520,18 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "sec": "https://w3id.org/security#",
-
-            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
+            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "sec:proofValue",
-        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
+        "proofValue": "https://w3id.org/security#proofValue",
+        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
       }
     },
 
     "proof": {"@id": "https://w3id.org/security#proof", "@type": "@id", "@container": "@graph"}
   }
-}
+}  
 </pre>
 
   </section>
