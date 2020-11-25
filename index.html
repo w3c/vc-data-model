@@ -5333,11 +5333,12 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "name": {"@id": "https://www.w3.org/2018/credentials#name", "@type": "@id"},
-        "description": {"id": "https://www.w3.org/2018/credentials#description", "@type": "@id"},
+        "cred": "https://www.w3.org/2018/credentials#",
+        "sec": "https://w3id.org/security#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
 
         "credentialSchema": {
-          "@id": "https://www.w3.org/2018/credentials#credentialSchema",
+          "@id": "cred:credentialSchema",
           "@type": "@id",
           "@context": {
             "@version": 1.1,
@@ -5348,20 +5349,20 @@ is also provided in this section.
 
             "cred": "https://www.w3.org/2018/credentials#",
 
-            "JsonSchemaValidator2018": "https://www.w3.org/2018/credentials#JsonSchemaValidator2018"
+            "JsonSchemaValidator2018": "cred:JsonSchemaValidator2018"
           }
         },
-        "credentialStatus": {"@id": "https://www.w3.org/2018/credentials#credentialStatus", "@type": "@id"},
-        "credentialSubject": {"@id": "https://www.w3.org/2018/credentials#credentialSubject", "@type": "@id"},
-        "evidence": {"@id": "https://www.w3.org/2018/credentials#evidence", "@type": "@id"},
-        "expirationDate": {"@id": "https://www.w3.org/2018/credentials#expirationDate", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "holder": {"@id": "https://www.w3.org/2018/credentials#holder", "@type": "@id"},
-        "issued": {"@id": "https://www.w3.org/2018/credentials#issued", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "issuer": {"@id": "https://www.w3.org/2018/credentials#issuer", "@type": "@id"},
-        "issuanceDate": {"@id": "https://www.w3.org/2018/credentials#issuanceDate", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "proof": {"@id": "https://w3id.org/security#proof", "@type": "@id", "@container": "@graph"},
+        "credentialStatus": {"@id": "cred:credentialStatus", "@type": "@id"},
+        "credentialSubject": {"@id": "cred:credentialSubject", "@type": "@id"},
+        "evidence": {"@id": "cred:evidence", "@type": "@id"},
+        "expirationDate": {"@id": "cred:expirationDate", "@type": "xsd:dateTime"},
+        "holder": {"@id": "cred:holder", "@type": "@id"},
+        "issued": {"@id": "cred:issued", "@type": "xsd:dateTime"},
+        "issuer": {"@id": "cred:issuer", "@type": "@id"},
+        "issuanceDate": {"@id": "cred:issuanceDate", "@type": "xsd:dateTime"},
+        "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"},
         "refreshService": {
-          "@id": "https://www.w3.org/2018/credentials#refreshService",
+          "@id": "cred:refreshService",
           "@type": "@id",
           "@context": {
             "@version": 1.1,
@@ -5372,12 +5373,12 @@ is also provided in this section.
 
             "cred": "https://www.w3.org/2018/credentials#",
 
-            "ManualRefreshService2018": "https://www.w3.org/2018/credentials#ManualRefreshService2018"
+            "ManualRefreshService2018": "cred:ManualRefreshService2018"
           }
         },
-        "termsOfUse": {"@id": "https://www.w3.org/2018/credentials#termsOfUse", "@type": "@id"},
-        "validFrom": {"@id": "https://www.w3.org/2018/credentials#validFrom", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "validUntil": {"@id": "https://www.w3.org/2018/credentials#validUntil", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"}
+        "termsOfUse": {"@id": "cred:termsOfUse", "@type": "@id"},
+        "validFrom": {"@id": "cred:validFrom", "@type": "xsd:dateTime"},
+        "validUntil": {"@id": "cred:validUntil", "@type": "xsd:dateTime"}
       }
     },
 
@@ -5390,9 +5391,12 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "holder": {"@id": "https://www.w3.org/2018/credentials#holder", "@type": "@id"},
-        "proof": {"@id": "https://w3id.org/security#proof", "@type": "@id", "@container": "@graph"},
-        "verifiableCredential": {"@id": "https://www.w3.org/2018/credentials#verifiableCredential", "@type": "@id", "@container": "@graph"}
+        "cred": "https://www.w3.org/2018/credentials#",
+        "sec": "https://w3id.org/security#",
+
+        "holder": {"@id": "cred:holder", "@type": "@id"},
+        "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"},
+        "verifiableCredential": {"@id": "cred:verifiableCredential", "@type": "@id", "@container": "@graph"}
       }
     },
 
@@ -5405,14 +5409,17 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "challenge": "https://w3id.org/security#challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "domain": "https://w3id.org/security#domain",
-        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "jws": "https://w3id.org/security#jws",
-        "nonce": "https://w3id.org/security#nonce",
+        "sec": "https://w3id.org/security#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+        "challenge": "sec:challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
+        "domain": "sec:domain",
+        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
+        "jws": "sec:jws",
+        "nonce": "sec:nonce",
         "proofPurpose": {
-          "@id": "https://w3id.org/security#proofPurpose",
+          "@id": "sec:proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5421,12 +5428,14 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
+            "sec": "https://w3id.org/security#",
+
+            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "https://w3id.org/security#proofValue",
-        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
+        "proofValue": "sec:proofValue",
+        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
       }
     },
 
@@ -5439,14 +5448,17 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "challenge": "https://w3id.org/security#challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "domain": "https://w3id.org/security#domain",
-        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "jws": "https://w3id.org/security#jws",
-        "nonce": "https://w3id.org/security#nonce",
+        "sec": "https://w3id.org/security#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+        "challenge": "sec:challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
+        "domain": "sec:domain",
+        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
+        "jws": "sec:jws",
+        "nonce": "sec:nonce",
         "proofPurpose": {
-          "@id": "https://w3id.org/security#proofPurpose",
+          "@id": "sec:proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5455,12 +5467,14 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
+            "sec": "https://w3id.org/security#",
+
+            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "https://w3id.org/security#proofValue",
-        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
+        "proofValue": "sec:proofValue",
+        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
       }
     },
 
@@ -5473,14 +5487,17 @@ is also provided in this section.
         "id": "@id",
         "type": "@type",
 
-        "challenge": "https://w3id.org/security#challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "domain": "https://w3id.org/security#domain",
-        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "jws": "https://w3id.org/security#jws",
-        "nonce": "https://w3id.org/security#nonce",
+        "sec": "https://w3id.org/security#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+        "challenge": "sec:challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
+        "domain": "sec:domain",
+        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
+        "jws": "sec:jws",
+        "nonce": "sec:nonce",
         "proofPurpose": {
-          "@id": "https://w3id.org/security#proofPurpose",
+          "@id": "sec:proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5489,12 +5506,14 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
+            "sec": "https://w3id.org/security#",
+
+            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "https://w3id.org/security#proofValue",
-        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
+        "proofValue": "sec:proofValue",
+        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
       }
     },
 
@@ -5504,14 +5523,14 @@ is also provided in this section.
         "@version": 1.1,
         "@protected": true,
 
-        "challenge": "https://w3id.org/security#challenge",
-        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "domain": "https://w3id.org/security#domain",
-        "expires": {"@id": "https://w3id.org/security#expiration", "@type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-        "jws": "https://w3id.org/security#jws",
-        "nonce": "https://w3id.org/security#nonce",
+        "challenge": "sec:challenge",
+        "created": {"@id": "http://purl.org/dc/terms/created", "@type": "xsd:dateTime"},
+        "domain": "sec:domain",
+        "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
+        "jws": "sec:jws",
+        "nonce": "sec:nonce",
         "proofPurpose": {
-          "@id": "https://w3id.org/security#proofPurpose",
+          "@id": "sec:proofPurpose",
           "@type": "@vocab",
           "@context": {
             "@version": 1.1,
@@ -5520,18 +5539,20 @@ is also provided in this section.
             "id": "@id",
             "type": "@type",
 
-            "assertionMethod": {"@id": "https://w3id.org/security#assertionMethod", "@type": "@id", "@container": "@set"},
-            "authentication": {"@id": "https://w3id.org/security#authenticationMethod", "@type": "@id", "@container": "@set"}
+            "sec": "https://w3id.org/security#",
+
+            "assertionMethod": {"@id": "sec:assertionMethod", "@type": "@id", "@container": "@set"},
+            "authentication": {"@id": "sec:authenticationMethod", "@type": "@id", "@container": "@set"}
           }
         },
-        "proofValue": "https://w3id.org/security#proofValue",
-        "verificationMethod": {"@id": "https://w3id.org/security#verificationMethod", "@type": "@id"}
+        "proofValue": "sec:proofValue",
+        "verificationMethod": {"@id": "sec:verificationMethod", "@type": "@id"}
       }
     },
 
     "proof": {"@id": "https://w3id.org/security#proof", "@type": "@id", "@container": "@graph"}
   }
-}  
+}    
 </pre>
 
   </section>
