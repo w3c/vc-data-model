@@ -1,9 +1,12 @@
 ## Verifiable Credentials Data Model and Representations
 
-This specification describes a data model for a digital entity profile
-and a collection of digital entity credentials that assert verifiable
-claims about that entity profile. It also describes how to express
-that data model in JSON and JSON-LD.
+Credentials are a part of our daily lives; driver's licenses are 
+used to assert that we are capable of operating a motor vehicle, 
+university degrees can be used to assert our level of education, 
+and government-issued passports enable us to travel between countries. 
+This specification provides a mechanism to express these sorts of 
+credentials on the Web in a way that is cryptographically secure, 
+privacy respecting, and machine-verifiable.
 
 We encourage contributions meeting the [Contribution
 Guidelines](CONTRIBUTING.md).  While we prefer the creation of issues
@@ -16,7 +19,8 @@ mailing list as well.
 * Group page: [https://www.w3.org/2017/vc/WG/](https://www.w3.org/2017/vc/WG/)
 * charter: [https://www.w3.org/2017/vc/WG/charter.html](https://www.w3.org/2017/vc/WG/charter.html)
 * Chairs
-  * Dan Burnett @burnburn
+  * Brent Zundel - @brentzundel
+  * Wayne Chang - @wyc
 
 ### Verifiable Credentials github repos
 * [Data Model](https://github.com/w3c/vc-data-model)
