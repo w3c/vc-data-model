@@ -29,3 +29,34 @@ mailing list as well.
 
 ### Other useful links
 * [Public group email archive](https://lists.w3.org/Archives/Public/public-vc-wg/)
+
+## Process Overview for VC Data Model Pull Requests
+1. For now, we will focus only on merging new errata PRs into this repository,
+but encourage activity related to new features.
+2. Once a PR is opened, chairs and editors make judgement call on whether
+changes are substantive or editorial.
+```
+Editorial   => mark with "editorial" tag
+               would be merged into branch "v1.1"
+Substantive => mark with "substantial" tag
+    Bugfix       |=> goes into separate branch "v1.2"
+    New Features |=> stays as an open PR?
+```
+3. W3C CCG is notified of PRs that will be merged in the next 14 days if there
+are no objections.
+4. When it's determined a new reccomendation should go out, the W3C Verifiable
+Credentials Working Group members meet, review all the PRs that have been
+merged, and make a formal recommendation if agreement is reached.
+
+### Roadmap for 2021
+- 1 editorial update (v1.1?)
+- 1 substantive update (v1.2?)
+- VC Test Suite Refactoring
+- Start planning VC v2 Work, request a rechartering 3-6 months before end of
+  year to keep VC WG functioning.
+
+### Focus areas
+- [v1] Fixing a specific bug
+- [v1] Update examples in the spec to make them modern
+- [v2] VC @context needs updating, possibly with security vocab modularized
+  into smaller components instead of all included into a large context file.
