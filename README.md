@@ -58,5 +58,5 @@ merged, and make a formal recommendation if agreement is reached.
 ### Focus areas
 - [v1] Fixing a specific bug
 - [v1] Update examples in the spec to make them modern
-- [v2] VC @context needs updating, possibly with security vocab modularized
+- [v2] VC `@context` needs updating, possibly with security vocab modularized
   into smaller components instead of all included into a large context file.
