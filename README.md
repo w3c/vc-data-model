@@ -35,13 +35,12 @@ mailing list as well.
 but encourage activity related to new features.
 2. Once a PR is opened, chairs and editors make judgement call on whether
 changes are substantive or editorial.
-```
-Editorial   => mark with "editorial" tag
-               would be merged into branch "v1.1"
-Substantive => mark with "substantial" tag
-    Bugfix       |=> goes into separate branch "v1.2"
-    New Features |=> stays as an open PR?
-```
+<dl>
+  <dt>Editorial</dt>
+  <dd>Mark with "editorial" tag, merge into branch "v1.1"</dd>
+  <dt>Substantive</dt>
+  <dd>Mark with "substantial" tag. Bugfixes are merged into separate branch "v1.2". New Features stay around as an open PR.</dd>
+</dl>
 3. W3C CCG is notified of PRs that will be merged in the next 14 days if there
 are no objections.
 4. When it's determined a new reccomendation should go out, the W3C Verifiable
