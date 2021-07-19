@@ -4,6 +4,7 @@ cred,prefix,,https://w3.org/2018/credentials#,,,,,
 odrl,prefix,,http://www.w3.org/ns/odrl/2/,,,,,
 xsd,prefix,,http://www.w3.org/2001/XMLSchema#,,,,,
 ,rdfs:seeAlso,,https://www.w3.org/TR/vc-data-model/,,,,,
+CredentialGraph,rdfs:Class,Credential graph labels,,,,,,"Instances of this class serve as labels for RDF Graphs. Any Graph labeled by these instances must include exactly one Resource of type VerifiableCredential."
 JsonSchemaValidator2018,rdfs:Class,,,,,,,A type of validator that can be used to syntactically validate JSON documents using the JSON Schema language.
 ManualRefreshService2018,rdfs:Class,,cred:RefreshService,,,,,A type of refresh service that must be interacted with in a manual fashion.
 RefreshService,rdfs:Class,Refresh Service,,,,,,A refresh service is a mechanism that can be utilized by software agents to retrieve an updated copy of a `verifiable credential`.
@@ -19,4 +20,4 @@ issuer,rdf:Property,issuer,,VerifiableCredential,,@id,,The value of the issuer p
 refreshService,rdf:Property,refresh service,,VerifiableCredential,cred:RefreshService,@id,,The value of the refreshService property MUST be one or more refresh services that provides enough information to the holder's software such that the holder can refresh the credential.
 serviceEndpoint,rdf:Property,service endpoint,,RefreshService,,@id,,The value of the serviceEndpoint property MUST be a URL to the service endpoint associated with the subject.
 termsOfUse,rdf:Property,terms of use,,VerifiableCredential,odrl:Policy,@id,,"If specified, the value of the termsOfUse property MUST specify one or more terms of use policies under which the creator issued the credential or presentation. If the recipient (a holder or verifier) is not willing to adhere to the specified terms of use, then they do so on their own responsibility and might incur legal liability if they violate the stated Terms of Use. Each termsOfUse MUST specify its type, for example, IssuerPolicy, and optionally, its instance id. The precise contents of each term of use is determined by the specific TermsOfUse type definition."
-verifiableCredential,rdf:Property,verifiable credential,,VerifiablePresentation,cred:VerifiableCredential,@id,@graph,The value of the verifiableCredential property MUST describe a VerifiableCredential.
+verifiableCredential,rdf:Property,verifiable credential,,VerifiablePresentation,cred:CredentialGraph,@id,@graph,The value of the verifiableCredential property MUST describe a graph containing a VerifiableCredential.
