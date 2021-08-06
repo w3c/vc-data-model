@@ -128,6 +128,8 @@ can be used to assert our level of education, and government-issued passports
 enable us to travel between countries. This specification provides a mechanism
 to express these sorts of <a>credentials</a> on the Web in a way that is
 cryptographically secure, privacy respecting, and machine-verifiable.
+Credentials can also be used to represent business documents such as purchase orders,
+invoices, waybills, and delivery confirmations.
       </p>
     </section>
 
@@ -214,6 +216,11 @@ continues to be elusive.
       </p>
 
       <p>
+Credentials can also be used to represent business documents such as purchase orders,
+invoices, waybills, and delivery confirmations.
+      </p>
+
+      <p>
 Currently it is difficult to express education qualifications, healthcare
 data, financial account details, and other sorts of third-party <a>verified</a>
 machine-readable personal information on the Web. The difficulty of expressing
@@ -281,6 +288,9 @@ Evidence related to how the <a>credential</a> was derived
 Information related to constraints on the credential (for example, expiration
 date, or terms of use).
           </li>
+          <li>
+Information used to describe all types of business documents (for example, purchase orders, invoices, waybills, and delivery confirmations)
+          </li>
         </ul>
 
         <p>
@@ -291,7 +301,17 @@ more trustworthy than their physical counterparts.
         </p>
 
         <p>
-<a>Holders</a> of <a>verifiable credentials</a> can generate
+There are 2 broad categories of <a>verifiable credentials</a>: <a>bound credentials</a> and <a>unbound credentials</a>. 
+<a>Bound credentials</a> are bound a specific credential <a>subject</a>. 
+<a>Unbound credentials</a> are not bound to a <a>subject</a>. 
+As such, <a>unbound credentials</a> cannot be used to create <a>verifiable presentations</a> -
+they are simply "data that has been signed by an <a>Issuer</a> and held by any <a>Holder</a>".
+<a>Unbound credentials</a> are easily issued to and exchanged between groups of two or more <a>Holders</a>. 
+The most common use case for <a>unbound credentials</a> is to represent all types of business documents like invoices and purchase orders 
+(that are not simple extensions or representations of a single subject).
+
+        <p>
+<a>Holders</a> of <a>bound verifiable credentials</a> can generate
 <a>verifiable presentations</a> and then share these
 <a>verifiable presentations</a> with <a>verifiers</a> to prove they possess
 <a>verifiable credentials</a> with certain characteristics.
@@ -870,6 +890,32 @@ often, but not required to be, related.
         </p>
 
     </section>
+
+    <section class="informative">
+      <h3>Bound Credentials and Unbound Credentials</h3>
+
+      <p>
+        There are 2 broad categories of <a>verifiable credentials</a>: <a>bound credentials</a> and <a>unbound credentials</a>. 
+        <a>Bound credentials</a> are bound a specific credential <a>subject</a>. 
+        <a>Unbound credentials</a> are not bound to a <a>subject</a>. 
+        As such, <a>unbound credentials</a> cannot be used to create <a>verifiable presentations</a> -
+        they are simply "data that has been signed by an <a>Issuer</a> and held by any <a>Holder</a>".
+        <a>Unbound credentials</a> are easily issued to and exchanged between groups of two or more <a>Holders</a>. 
+        The most common use case for <a>unbound credentials</a> is to represent all types of business documents like invoices and purchase orders 
+        (that are not simple extensions or representations of a single subject).
+      </p>
+      <p>
+        <a>Bound credentials</a> contain a <a>subject</a> id element inside the credentialSubject element 
+      (which binds the credential to a subject and enables the <a>Holder</a> of the <a>credentential</a> 
+      to derive <a>verifiable presentations</a> from the <a>bound credential</a>).
+      </p>
+      <p>
+        <a>Unbound credentials</a> do not contain a <a>subject</a> id element inside the credentialSubject element.
+        An <a>unbound credential</a> is "like signed data issued to a <a>Holder</a>". 
+        A specific <a>unbound credential</a> can be held by 2 more <a>Holders</a> at the same time. For example, an invoice
+        can be held simulataneously by a supplier and a purchaser - including multiple parties at each of the supplier and purchaser
+        organizations.
+      </p>
 
     <section  class="informative">
         <h3>Concrete Lifecycle Example</h3>
