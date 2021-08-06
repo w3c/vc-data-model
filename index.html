@@ -2758,10 +2758,21 @@ in an archive.
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://www.w3.org/2018/credentials/examples/v1"
+    "https://www.w3.org/2018/credentials/examples/v1",
+    {
+        "VerifiablePresentationExtension": {
+          "@id": "https://www.w3.org/2018/credentials#VerifiablePresentationExtension",
+          "@context": {
+            "termsOfUse": {
+              "@id": "cred:termsOfUse",
+              "@type": "@id"
+            }
+          }
+        }
+    }
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiablePresentation"],
+  "type": ["VerifiablePresentation", "VerifiablePresentationExtension"],
   "verifiableCredential": [{
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -2778,9 +2789,11 @@ in an archive.
       "name": "Bachelor of Science and Arts"
     }
     },
-    "proof": { <span class="comment">...</span> }
+    "proof": { 
+
+  }
   }],
-  <span class="highlight">"termsOfUse": [{
+  "termsOfUse": [{
     "type": "HolderPolicy",
     "id": "http://example.com/policies/credential/6",
     "profile": "http://example.com/profiles/credential",
@@ -2790,10 +2803,21 @@ in an archive.
       "target": "http://example.edu/credentials/3732",
       "action": ["3rdPartyCorrelation"]
     }]
-  }</span>,
-  "proof": [ ... ]
+  }],
+  "proof": {} 
 }
         </pre>
+
+        <p class="note">
+Warning: The <code>termsOfUse</code> property is improperly defined within the
+<code>VerifiablePresentation</code> scoped context. This is a bug with the
+version 1 context and will be fixed in the version 2 context. In the meantime,
+implementors who wish to use this feature will be required to extend the context
+of the <a>verifiable presentation</a> with an additional term that defines the
+<code>termsOfUse</code> property which can be used along side the <a>verifiable
+  presentation</a> type property in order for the term to be semantically recognized in a
+JSON-LD processor.
+        </p>
 
         <p>
 In the example above, the <a>holder</a> (the <code>assigner</code>), who is
