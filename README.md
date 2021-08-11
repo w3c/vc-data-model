@@ -50,6 +50,7 @@ mailing list as well.
 ### Roadmap for 2021
 - one editorial update (v1.1?)
 - one substantive update (v1.2?)
+
 - VC Test Suite Refactoring
 - Start planning VC v2 Work, request a rechartering 3-6 months before end of
   year to keep VC WG functioning.
