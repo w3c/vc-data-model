@@ -335,6 +335,9 @@ specification:
 A role an <a>entity</a> might perform by possessing one or more
 <a>verifiable credentials</a> and generating <a>verifiable presentations</a>
 from them. Example holders include students, employees, and customers.
+Issuers can bind a <a>verifiable credential</a> to the holder to which it is issued,
+and the holder can prove that binding using the <code>proof</code> property of a 
+<a>verifiable presentation</a>.
           </dd>
           <dt><a>issuer</a></dt>
           <dd>
@@ -444,6 +447,10 @@ a tamper-evident and privacy-respecting manner.
 different <a>issuers</a> into a single artifact, a
 <a>verifiable presentation</a>.
           </li>
+          <li>
+<a>Verifiable credentials</a> are often bound by the <a>issuer</a> to a specific
+<a>holder</a> at issuance time.
+          </li>           
           <li>
 <a>Issuers</a> can issue <a>verifiable credentials</a> about any <a>subject</a>.
           </li>
@@ -1032,7 +1039,15 @@ the <a>verifier</a> and <a>verified</a>.
   }
 }
         </pre>
-
+        <p>
+In this example, the <a>issuer</a> has bound the <a>verifiable credential</a> to
+the <a>holder</a> (Pat) using the
+<code>credentialSubject.id</code> property (rather than using the
+<code>holder.id</code> property). The second <code>proof</code> property in the
+<a>verifiable presentation</a> (with <code>proofPurpose</code> of
+<code>"authentication"</code>) is used by Pat to prove their relationship to the
+<a>credentialSubject.id</a> and thus, that they are the intended <a>holder</a>.
+        </p> 
         <p class="note">
 Implementers that are interested in understanding more about the
 <code>proof</code> mechanism used above can learn more in
@@ -1946,9 +1961,13 @@ is expected to be a <a>URI</a> for the entity that is generating the
           </dd>
           <dt><var>proof</var></dt>
           <dd>
-If present, the value of the <code>proof</code> <a>property</a> ensures that
-the <a>presentation</a> is <a>verifiable</a>. For details related to the use of
-this property, see Section <a href="#proofs-signatures"></a>.
+If present, the value of the <code>proof</code> <a>property</a> ensures that the
+<a>presentation</a> is <a>verifiable</a>. Where the issuer has bound the
+<a>verifiable credential</a> being presented to a specific <a>holder</a>, the
+<code>proof</code> <a>property</a>
+contains <a>verifiable</a> data to prove the indicated <a>holder</a> is
+presenting the proof. For details related to the use of this property, see
+Section <a href="#proofs-signatures"></a>.
           </dd>
         </dl>
 
@@ -2070,6 +2089,10 @@ An <a>issuer</a> <dfn data-lt="issue">issues</dfn> a
 any other actions involving a <a>credential</a>.
           </li>
           <li>
+In some cases, a <a>holder</a> might transfer to another <a>holder</a> one or more of its
+<a>verifiable credentials</a> that have not been bound by the <a>issuer</a> to that <a>holder</a>.
+          </li>
+          <li>
 A <a>holder</a> might <dfn data-lt="transfers">transfer</dfn> one or more of
 its <a>verifiable credentials</a> to another <a>holder</a>.
           </li>
@@ -2185,6 +2208,13 @@ trust could be weakened depending on the risk assessment of the <a>verifier</a>.
 All <a>entities</a> trust the <a>verifiable data registry</a> to be
 tamper-evident and to be a correct record of which data is controlled by which
 <a>entities</a>.
+          </li>
+          <li>
+In many cases, the <a>verifier</a> trusts the <a>issuer</a> to issue each
+<a>verifiable credential</a> to its intended <a>holder</a> (often the
+<a>subject</a>) and, where appropriate, to provide a <a>verifiable</a> binding
+in the
+<a>verifiable credential</a> to that <a>holder</a>.
           </li>
           <li>
 The <a>holder</a> and <a>verifier</a> trust the <a>issuer</a> to issue
@@ -2931,7 +2961,7 @@ ability of a <a>holder</a> to:
           <li>
 Combine multiple <a>verifiable credentials</a> from multiple <a>issuers</a> into
 a single <a>verifiable presentation</a> without revealing
-<a>verifiable credential</a> or <a>subject</a> identifiers to the
+<a>verifiable credential</a> or <a>holder</a> identifiers to the
 <a>verifier</a>. This makes it more difficult for the <a>verifier</a> to collude
 with any of the issuers regarding the issued <a>verifiable credentials</a>.
           </li>
@@ -3970,9 +4000,11 @@ the data in a <a>verifiable credential</a> while at rest.
 
       <p>
 <a>Subjects</a> of <a>verifiable credentials</a> are identified using the
-<code>credential.credentialSubject.id</code> field. The identifiers used to
-identify a <a>subject</a> create a greater risk of correlation when the
-identifiers are long-lived or used across more than one web domain.
+<code>credential.credentialSubject.id</code> field. <a>Holders</a> of
+<a>verifiable credentials</a> are identified using the
+<code>credential.holder.id</code> field. The identifiers used to identify a
+<a>subject</a> and/or <a>holder</a> create a greater risk of correlation when
+the identifiers are long-lived or used across more than one web domain.
       </p>
 
       <p>
@@ -4035,10 +4067,10 @@ properties of the cryptography used.
       <h3>Long-Lived Identifier-Based Correlation</h3>
 
       <p>
-<a>Verifiable credentials</a> might contain long-lived identifiers that could
-be used to correlate individuals. These types of identifiers include
-<a>subject</a> identifiers, email addresses, government-issued identifiers,
-organization-issued identifiers, addresses, healthcare vitals,
+<a>Verifiable credentials</a> might contain long-lived identifiers that could be
+used to correlate individuals. These types of identifiers include
+<a>subject</a> and <a>holder</a> identifiers, email addresses, government-issued
+identifiers, organization-issued identifiers, addresses, healthcare vitals,
 <a>verifiable credential</a>-specific JSON-LD contexts, and many other sorts of
 long-lived identifiers.
       </p>
@@ -4181,9 +4213,8 @@ not a concern or would not result in large economic or reputational losses.
 
       <p>
 <a>Verifiable credentials</a> that are <a>bearer credentials</a> are made
-possible by not specifying the <a>subject</a> identifier, expressed using the
-<code>id</code> <a>property</a>, which is nested in the
-<code>credentialSubject</code> <a>property</a>. For example, the following
+possible by not specifying either the <code>subjectCredential.id</code> or
+<code>holder.id</code> identifiers. For example, the following
 <a>verifiable credential</a> is a <a>bearer credential</a>:
       </p>
 
@@ -4405,8 +4436,8 @@ A <a>subject</a> identifier of a <a>credential</a> refers to the same
 <a>subject</a> across multiple <a>presentations</a> or <a>verifiers</a>. Even
 when different <a>credentials</a> are presented, if the <a>subject</a>
 identifier is the same, <a>verifiers</a> (and those with access to
-<a>verifier</a> logs) could infer that the <a>holder</a> of the
-<a>credential</a> is the same person.
+<a>verifier</a> logs) could infer that the <a>subject</a> of the
+<a>credential</a> is the same person. Likewise for <a>holder</a> identifiers.
         </li>
         <li>
 The underlying information in a <a>credential</a> can be used to identify an
@@ -4435,8 +4466,8 @@ by:
 
       <ul>
         <li>
-Using a globally-unique identifier as the <a>subject</a> for any given
-<a>credential</a> and never re-use that <a>credential</a>.
+Using a globally-unique identifier as the <a>subject</a> and/or <a>holder</a>
+for any given <a>credential</a> and never re-use that <a>credential</a>.
         </li>
         <li>
 If the <a>credential</a> supports revocation, using a globally-distributed
@@ -5026,25 +5057,43 @@ data fields in this specification by <a>verifiers</a>.
       </p>
 
       <section class="informative">
-        <h3>Credential Subject</h3>
+        <h3>Holder</h3>
 
         <p>
-In the <a>verifiable credentials</a> presented by a <a>holder</a>, the value
-associated with the <code>id</code> <a>property</a> for each
-<code>credentialSubject</code> is expected to identify a <a>subject</a> to the
-<a>verifier</a>. If the <a>holder</a> is also the <a>subject</a>, then
-the <a>verifier</a> could authenticate the <a>holder</a> if they have
-public key metadata related to the <a>holder</a>. The <a>verifier</a> could then
-authenticate the <a>holder</a> using a signature generated by the <a>holder</a>
-contained in the <a>verifiable presentation</a>. The <code>id</code>
-<a>property</a> is optional. <a>Verifiers</a> could use other <a>properties</a>
-in a <a>verifiable credential</a> to uniquely identify a <a>subject</a>.
+An <a>issuer</a> may indicate that a <a>verifiable credential</a> has been
+issued to a specific <a>holder</a> using the <code>holder</code>
+<a>property</a>. Alternatively, when the <a>holder</a> is the <a>subject</a>,
+the <code>credentialSubject.id</code> <a>property</a> could be used for the same
+purpose, ideally paired with the <code>nonTransferable</code> <a>property</a>.
+When such <a>verifiable credentials</a> are used to produce a <a>verifiable
+presentation</a>, the
+<a>verifier</a> may authenticate the <a>holder</a> (or holder <a>subject</a>)
+using a holder-generated signature in the <code>proof</code> <a>property</a> of
+the <a>verifiable presentation</a>.
+
+Where there is no <a>issuer</a>-designated <a>holder</a> the <a>verifiable
+credential</a> can be transferred to other <a>holders</a>, and no <a>holder</a>
+authentication is necessary by the <a>verifier</a>.
         </p>
 
         <p class="note">
 For information on how authentication and WebAuthn might work with
 <a>verifiable credentials</a>, see the Verifiable Credentials Implementation
 Guidelines [[VC-IMP-GUIDE]] document.
+        </p>
+
+      </section>
+
+      <section class="informative">
+        <h3>Credential Subject</h3>
+
+        <p>
+In the <a>verifiable credentials</a> presented by a <a>holder</a>, the value
+associated with the <code>id</code> property for each
+<code>credentialSubject</code> is expected to identify a <a>subject</a> to the
+<a>verifier</a>. The <code>id</code> property is optional. <a>Verifiers</a>
+could use other properties in a <a>verifiable credential</a> to uniquely
+identify a subject.
         </p>
 
       </section>
