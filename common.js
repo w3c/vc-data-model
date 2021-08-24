@@ -78,7 +78,7 @@ var vcwg = {
     },
     "CL-SIGNATURES": {
       title: "A Signature Scheme with Efficient Protocols",
-      href: "http://groups.csail.mit.edu/cis/pubs/lysyanskaya/cl02b.pdf",
+      href: "https://www.researchgate.net/publication/220922101_A_Signature_Scheme_with_Efficient_Protocols",
       authors: [
         "Jan Camenisch",
         "Anna Lysyanskaya"
