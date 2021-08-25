@@ -1,237 +1,181 @@
-<svg version="1.1" viewBox="0 0 860 960" fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <style>
-            rect {
-                stroke-width: 1;
-                stroke: #000
-            }
+<svg version="1.1" viewBox="0 0 860 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+  	<style>
+      rect { stroke-width: 1 ; stroke: #000}
+		  .graph { stroke-width: 2; stroke-dasharray: 8,6; fill-opacity: 0.2}
+			.graph-label {font-family: serif ; font-style: italic }
+			line, .arcs { stroke: #000 ; stroke-width: 2; marker-end: url(#arrow) }
+  		text { fill: #000; font-size: 12 ; font-family: sans-serif }
+			.presentation > rect { fill: #bad}
+			.credential > rect { fill: #dab}
+			.credential-proof > rect { fill: #bda}
+			.presentation-proof > rect { fill: #acf}
+			.claim > rect { fill: #fe9}
+		  .background { stroke: none; fill: #fff}
 
-            .graph {
-                stroke-width: 2;
-                stroke-dasharray: 8, 6;
-                fill-opacity: 0.2
-            }
+  	</style>
+		<marker id="arrow" viewBox="0 0 6 4" refX="6" refY="2" fill="#000"
+      markerWidth="6" markerHeight="4" orient="auto">
+    <path d="M0 0v4l6 -2z" />
+    </marker>
+	</defs>
 
-            .graph-label {
-                font-family: serif;
-                font-style: italic
-            }
+	<rect class="background" width="864" height="958"/><!-- Background -->
 
-            line,
-            .arcs {
-                stroke: #000;
-                stroke-width: 2;
-                marker-end: url(#arrow)
-            }
+<g class="presentation"><title>Presentation Graph</title>
+<text class="graph-label" x="660" y="35">Presentation Graph</text>
+<rect x="20" y="40" rx="30" width="840" height="660" class="graph"/>
+<desc>An example verifiable presentation presented schematically. There are two major components:
+  A verifiable presentation, and its proof.
 
-            text {
-                fill: #000;
-                font-size: 12;
-                font-family: sans-serif
-            }
+The presentation consists of some metadata (here, terms of use),
+and a verifiable credential with its proof.
+The credential also has metadata, including a date of issue and an issuer, and a claim,
+in this case that "Pat" is an alumnus of "Example University"
+(which is also the issuer of the credential).
 
-            .presentation>rect {
-                fill: #bad
-            }
-
-            .credential>rect {
-                fill: #dab
-            }
-
-            .credential-proof>rect {
-                fill: #bda
-            }
-
-            .presentation-proof>rect {
-                fill: #acf
-            }
-
-            .claim>rect {
-                fill: #fe9
-            }
-
-            .background {
-                stroke: none;
-                fill: #fff
-            }
-        </style>
-        <marker id="arrow" viewBox="0 0 6 4" refX="6" refY="2" fill="#000"
-            markerWidth="6" markerHeight="4" orient="auto">
-            <path d="M0 0v4l6 -2z" />
-        </marker>
-    </defs>
-
-    <rect class="background" width="864" height="958" /><!-- Background -->
-
-    <g class="presentation">
-        <title>Presentation Graph</title>
-        <text class="graph-label" x="660" y="35">Presentation Graph</text>
-        <rect x="20" y="40" rx="30" width="840" height="660" class="graph" />
-        <desc>
-An example verifiable presentation presented schematically. There are two major
-components: A verifiable presentation, and its proof. The presentation consists
-of some metadata (here, terms of use) and a verifiable credential with its
-proof. The credential also has metadata, including a date of issue and an
-issuer, and a claim, in this case that "Pat" is an alumnus of "Example
-University" (which is also the issuer of the credential). The proof of the
-credential and the proof of the presentation have similar structure: A signature
-with a nonce, date, algorithm used, and a public key for the proof's creator.
-        </desc>
-
-        <rect x="370" y="60" rx="60" width="120" ry="25" height="45" />
-        <text x="388" y="82">Presentation
-            <tspan x="410" dy="15">ABC</tspan></text>
-
-        <line x1="370" y1="80" x2="250" y2="80" />
-        <text x="300" y="75">type</text>
-        <rect x="60" y="60" width="190" height="40" />
-        <text x="80" y="85">VerifiablePresentation</text>
-
-        <line x1="490" y1="80" x2="620" y2="80" />
-        <text x="510" y="75">termsOfUse</text>
-        <rect x="620" y="60" rx="70" ry="25" width="140" height="45" />
-        <text x="660" y="80">Do Not
-            <tspan x="660" dy="15">Archive</tspan></text>
-    </g>
-
-    <line x1="425" y1="105" x2="425" y2="160" />
-    <text x="440" y="135">verifiableCredential</text>
-
-    <g>
-        <title>A credential and its proof</title>
-        <!-- see also credential.svg -->
-
-        <g class="credential">
-            <title>Credential Graph</title>
-            <text class="graph-label" x="660" y="155">Credential Graph</text>
-            <rect x="40" y="160" rx="20" width="780" height="260"
-                class="graph" />
-
-            <rect x="350" y="260" rx="80" width="160" ry="25" height="45" />
-            <text x="385" y="290">Credential 123</text>
-
-            <line x1="350" y1="282" x2="250" y2="282" />
-            <text x="265" y="265">issuanceDate</text>
-            <rect x="60" y="265" width="190" height="40" />
-            <text x="80" y="290">2010-01-01T19:37.24Z</text>
-
-            <line x1="425" y1="260" x2="425" y2="215" />
-            <text x="435" y="245">type</text>
-            <rect x="330" y="175" width="190" height="40" />
-            <text x="370" y="200">AlumniCredential</text>
-
-            <line x1="510" y1="282" x2="670" y2="282" />
-            <text x="500" y="260">credentialSubject</text>
-
-            <g class="claim">
-                <rect x="630" y="260" width="180" height="155" class="graph"
-                    rx="15" />
-                <text x="750" y="255" class="graph-label">Claim</text>
-                <rect x="670" y="265" width="100" height="40" rx="50" ry="20" />
-                <text x="710" y="290">Pat</text>
-                <line x1="720" y1="305" x2="720" y2="365" />
-                <text x="730" y="335">AlumniOf</text>
-                <rect x="640" y="365" width="160" height="40" />
-                <text x="655" y="390" fill="#000">Example University</text>
-            </g>
-
-            <line x1="425" y1="305" x2="425" y2="360" />
-            <text x="435" y="330">issuer</text>
-            <rect x="340" y="360" rx="90" width="180" ry="25" height="45" />
-            <text x="400" y="380">Example
-                <tspan x="395" dy="15">University</tspan></text>
-        </g>
-
-        <line x1="425" y1="420" x2="425" y2="510" />
-        <text x="435" y="455">proof</text>
-
-        <g class="credential-proof">
-            <title>Credential Proof Graph</title>
-            <text class="graph-label" x="640" y="460">Credential Proof
-                Graph</text>
-            <rect x="40" y="465" rx="20" width="780" height="205"
-                class="graph" />
-
-            <rect x="350" y="510" width="160" height="45" rx="80" ry="25" />
-            <text x="385" y="535">Signature 456</text>
-
-            <path class="arcs"
-                d="m375 516c0 0 -4 -9 -33 -15c0 0 -2 -3 -30 -4c-6 0 -13 -1 -25 -1h-30" />
-            <text x="280" y="490">type</text>
-            <rect x="65" y="480" height="40" width="190" />
-            <text x="90" y="505">RsaSignature2018</text>
-
-            <path class="arcs"
-                d="m375 550c0 0 -4 9 -33 15c0 0 -2 3 -30 4c-6 0 -13 1 -25 1h-30" />
-            <text x="280" y="585">created</text>
-            <rect x="65" y="550" width="190" height="40" />
-            <text x="85" y="575">2017-06-18T21:19:10Z</text>
-
-            <path class="arcs"
-                d="m490 518c0 0 4 -9 33 -15c0 0 2 -3 30 -4c6 0 13 -1 25 -1h30" />
-            <text x="535" y="490">nonce</text>
-            <rect x="610" y="480" width="170" height="40" />
-            <text x="630" y="505">34dj239dsj328</text>
-
-            <path class="arcs"
-                d="m490 550c0 0 4 9 33 15c0 0 2 3 30 4c6 0 13 1 25 1h30" />
-            <text x="485" y="590">signatureValue</text>
-            <rect x="610" y="550" width="170" height="40" />
-            <text x="630" y="575">BavE110...3JT24=</text>
-
-            <line x1="425" y1="555" x2="425" y2="620" />
-            <text x="370" y="600">creator</text>
-            <rect x="340" y="620" rx="90" width="180" ry="25" height="45" />
-            <text x="368" y="642">Example University
-                <tspan x="389" dy="16">Public Key 7</tspan></text>
-        </g>
-
-    </g>
-
-    <g class="presentation-proof">
-        <title>Presentation Proof Graph</title>
-        <text class="graph-label" x="625" y="730">Presentation Proof
-            Graph</text>
-        <rect class="graph" x="30" y="735" rx="30" width="810" height="205" />
+The proof of the credential and the proof of the presentation have similar structure:
+A signature with a nonce, date, algorithm used, and a public key for the proof's creator.
+</desc>
 
 
-        <line x1="425" y1="700" x2="425" y2="780" />
-        <text x="435" y="725">proof</text>
+  <rect x="370" y="60" rx="60" width="120" ry="25" height="45"/>
+    <text x="388" y="82">Presentation
+      <tspan x="410" dy="15">ABC</tspan></text>
 
-        <rect x="335" y="780" rx="85" ry="25" width="180" height="45" />
-        <text x="380" y="810">Signature 8910</text>
+	<line x1="370" y1="80" x2="250" y2="80"/>
+	  <text x="300" y="75">type</text>
+    <rect x="60" y="60" width="190" height="40" />
+      <text x="80" y="85">VerifiablePresentation</text>
 
-        <path class="arcs"
-            d="m368 785c0 0 -4 -9 -33 -15c0 0 -2 -3 -33 -4c-6 0 -13 -1 -25 -1h-25" />
-        <text x="285" y="760">type</text>
-        <rect x="60" y="750" width="190" height="40" />
-        <text x="80" y="775">RsaSignature2018</text>
+	<line x1="490" y1="80" x2="620" y2="80"/>
+  	<text x="510" y="75">termsOfUse</text>
+	  <rect x="620" y="60" rx="70" ry="25" width="140" height="45"/>
+	    <text x="660" y="80">Do Not
+		    <tspan x="660" dy="15">Archive</tspan></text>
+</g>
 
-        <path class="arcs"
-            d="m368 820c0 0 -4 9 -33 15c0 0 -2 3 -33 4c6 0 -13 1 -25 1h-25" />
-        <!--path d="m368 820c0 5 -13 9 -33 15c-10 2 -22 4 -34 5c0 0 -13 1 -24 1h-25" class="arcs"/-->
-        <text x="280" y="855">created</text>
-        <rect x="60" y="820" width="190" height="40" />
-        <text x="80" y="845">2018-01-15T12:43:56Z</text>
+    <line x1="425" y1="105" x2="425" y2="160"/>
+	    <text x="440" y="135">verifiableCredential</text>
 
-        <path class="arcs"
-            d="m490 785c0 0 4 -9 35 -15c0 0 2 -3 33 -4c6 0 13 -1 25 -1h32" />
-        <text x="535" y="760">nonce</text>
-        <rect x="615" y="750" width="170" height="40" />
-        <text x="640" y="775">d28348djsj3239</text>
+<g><title>A credential and its proof</title>
+<!-- see also credential.svg -->
 
-        <path class="arcs"
-            d="m490 820c0 0 4 9 35 15c0 0 2 3 33 4c6 0 13 1 25 1h32" />
-        <text x="485" y="855">signatureValue</text>
-        <rect x="615" y="820" width="170" height="40" />
+  <g class="credential"><title>Credential Graph</title>
+	  <text class="graph-label" x="660" y="155">Credential Graph</text>
+	  <rect x="40" y="160" rx="20" width="780" height="260" class="graph"/>
+
+			<rect x="350" y="260" rx="80" width="160"  ry="25" height="45"/>
+		    <text x="385" y="290">Credential 123</text>
+
+		  <line x1="350" y1="282" x2="250" y2="282" />
+		  	<text x="265" y="265">issuanceDate</text>
+		    <rect x="60" y="265" width="190" height="40" />
+		      <text x="80" y="290">2010-01-01T19:37.24Z</text>
+
+      <line x1="425" y1="260" x2="425" y2="215" />
+	  	  <text x="435" y="245">type</text>
+        <rect x="330" y="175" width="190" height="40" />
+    	  	<text x="370" y="200">AlumniCredential</text>
+
+      <line x1="510" y1="282" x2="670" y2="282" />
+    		<text x="500" y="260">credentialSubject</text>
+
+      	<g class="claim">
+			  <rect x="630" y="260" width="180" height="155" class="graph" rx="15"/>
+				<text x="750" y="255" class="graph-label">Claim</text>
+					<rect x="670" y="265" width="100" height="40" rx="50" ry="20"/>
+		      <text x="710" y="290">Pat</text>
+      		<line x1="720" y1="305" x2="720" y2="365"/>
+	        	<text x="730" y="335">AlumniOf</text>
+        		<rect x="640" y="365" width="160" height="40"/>
+	      	  <text x="655" y="390" fill="#000">Example University</text>
+	      </g>
+
+      <line x1="425" y1="305" x2="425" y2="360" />
+  			<text x="435" y="330">issuer</text>
+				<rect x="340" y="360" rx="90" width="180"  ry="25" height="45"/>
+					<text x="400" y="380">Example
+						<tspan x="395" dy="15">University</tspan></text>
+			</g>
+
+	<line x1="425" y1="420" x2="425" y2="510" />
+  	<text x="435" y="455">proof</text>
+
+    <g class="credential-proof"><title>Credential Proof Graph</title>
+      <text class="graph-label" x="640" y="460">Credential Proof Graph</text>
+      <rect x="40" y="465" rx="20" width="780" height="205" class="graph"/>
+
+		<rect x="350" y="510" width="160" height="45" rx="80" ry="25" />
+		  <text x="385" y="535">Signature 456</text>
+
+			<path class="arcs" d="m375 516c0 0 -4 -9 -33 -15c0 0 -2 -3 -30 -4c-6 0 -13 -1 -25 -1h-30"/>
+			<text x="280" y="490">type</text>
+		<rect x="65" y="480" height="40" width="190" />
+		  <text x="90" y="505">RsaSignature2018</text>
+
+			<path class="arcs" d="m375 550c0 0 -4 9 -33 15c0 0 -2 3 -30 4c-6 0 -13 1 -25 1h-30"/>
+			<text x="280" y="585">created</text>
+			<rect x="65" y="550" width="190" height="40" />
+			<text x="85" y="575">2017-06-18T21:19:10Z</text>
+
+			<path class="arcs" d="m490 518c0 0 4 -9 33 -15c0 0 2 -3 30 -4c6 0 13 -1 25 -1h30"/>
+			<text x="535" y="490">nonce</text>
+			<rect x="610" y="480" width="170" height="40"/>
+			<text x="630" y="505">34dj239dsj328</text>
+
+			<path class="arcs" d="m490 550c0 0 4 9 33 15c0 0 2 3 30 4c6 0 13 1 25 1h30"/>
+		    <text x="485" y="590">signatureValue</text>
+		    <rect x="610" y="550" width="170" height="40"/>
+		      <text x="630" y="575">BavE110...3JT24=</text>
+
+    <line x1="425" y1="555" x2="425" y2="620" />
+		<text x="370" y="600">creator</text>
+			<rect x="340" y="620" rx="90" width="180"  ry="25" height="45"/>
+			  <text x="368" y="642">Example University
+			    <tspan x="389" dy="16">Public Key 7</tspan></text>
+		</g>
+
+  </g>
+
+  <g class="presentation-proof"><title>Presentation Proof Graph</title>
+	  <text class="graph-label" x="625" y="730">Presentation Proof Graph</text>
+	  <rect class="graph" x="30" y="735" rx="30" width="810" height="205" />
+
+
+<line x1="425" y1="700" x2="425" y2="780" />
+<text x="435" y="725">proof</text>
+
+<rect x="335" y="780" rx="85" ry="25" width="180" height="45" />
+<text x="380" y="810">Signature 8910</text>
+
+  <path class="arcs" d="m368 785c0 0 -4 -9 -33 -15c0 0 -2 -3 -33 -4c-6 0 -13 -1 -25 -1h-25"/>
+    <text x="285" y="760">type</text>
+    <rect x="60" y="750" width="190" height="40" />
+      <text x="80" y="775">RsaSignature2018</text>
+
+	<path class="arcs" d="m368 820c0 0 -4 9 -33 15c0 0 -2 3 -33 4c6 0 -13 1 -25 1h-25"/>
+	<!--path d="m368 820c0 5 -13 9 -33 15c-10 2 -22 4 -34 5c0 0 -13 1 -24 1h-25" class="arcs"/-->
+		<text x="280" y="855">created</text>
+    <rect x="60" y="820" width="190" height="40" />
+      <text x="80" y="845">2018-01-15T12:43:56Z</text>
+
+	<path class="arcs" d="m490 785c0 0 4 -9 35 -15c0 0 2 -3 33 -4c6 0 13 -1 25 -1h32"/>
+  	<text x="535" y="760">nonce</text>
+    <rect x="615" y="750" width="170" height="40" />
+      <text x="640" y="775">d28348djsj3239</text>
+
+		<path class="arcs" d="m490 820c0 0 4 9 35 15c0 0 2 3 33 4c6 0 13 1 25 1h32"/>
+			<text x="485" y="855">signatureValue</text>
+      <rect x="615" y="820" width="170" height="40" />
         <text x="640" y="845">p2KaZ...8Fj3K=</text>
 
-        <line x1="425" x2="425" y1="825" y2="890" />
-        <text x="370" y="870">creator</text>
-        <rect x="335" y="890" rx="85" ry="25" width="180" height="45" />
-        <text x="364" y="911">Example Presenter
-            <tspan x="385" dy="16">Public Key 11</tspan></text>
-    </g>
+
+  <line x1="425" x2="425" y1="825" y2="890" />
+    <text x="370" y="870">creator</text>
+    <rect x="335" y="890" rx="85" ry="25" width="180" height="45" />
+      <text x="364" y="911">Example Presenter
+        <tspan x="385" dy="16">Public Key 11</tspan></text>
+			</g>
 
 </svg>
