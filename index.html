@@ -2758,10 +2758,23 @@ in an archive.
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://www.w3.org/2018/credentials/examples/v1"
+    "https://www.w3.org/2018/credentials/examples/v1",
+    {
+        "@protected": true,
+        "VerifiablePresentationTermsOfUseExtension": {
+          "@id": "https://www.w3.org/2018/credentials/examples#VerifiablePresentationExtension",
+          "@context": {
+            "@protected": true,
+            "termsOfUse": {
+              "@id": "https://www.w3.org/2018/credentials#termsOfUse",
+              "@type": "@id"
+            }
+          }
+        }
+    }
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiablePresentation"],
+  "type": ["VerifiablePresentation", "VerifiablePresentationTermsOfUseExtension"],
   "verifiableCredential": [{
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -2790,10 +2803,21 @@ in an archive.
       "target": "http://example.edu/credentials/3732",
       "action": ["3rdPartyCorrelation"]
     }]
-  }</span>,
+  }]</span>,
   "proof": [ ... ]
 }
         </pre>
+
+        <p class="note">
+Warning: The <code>termsOfUse</code> property is improperly defined within the
+<code>VerifiablePresentation</code> scoped context. This is a bug with the
+version 1 context and will be fixed in the version 2 context. In the meantime,
+implementors who wish to use this feature will be required to extend the context
+of their <a>verifiable presentation</a> with an additional term that defines the
+<code>termsOfUse</code> property, which can then be used alongside the
+<a>verifiable presentation</a> type property, in order for the term to be
+semantically recognized in a JSON-LD processor.
+        </p>
 
         <p>
 In the example above, the <a>holder</a> (the <code>assigner</code>), who is
