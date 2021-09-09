@@ -910,7 +910,7 @@ discount from a university. In the example below, Pat receives an alumni
 <a>verifiable credential</a> in a digital wallet.
         </p>
 
-        <pre class="example nohighlight" title="A simple example of a verifiable credential">
+        <pre class="example nohighlight" title="A simple example of a verifiable credential with a JSON-LD Proof">
 {
   <span class='comment'>// set the context, which establishes the special terms we will be using
   // such as 'issuer' and 'alumniOf'.</span>
@@ -974,7 +974,7 @@ The digital wallet asks Pat if they would like to provide a previously issued
 <a>verifiable presentation</a>. The <a>verifiable presentation</a> is sent to
 the <a>verifier</a> and <a>verified</a>.
         </p>
-        <pre class="example nohighlight" title="A simple example of a verifiable presentation">
+        <pre class="example nohighlight" title="A simple example of a verifiable presentation with a JSON-LD Proof">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -1133,8 +1133,7 @@ processors that support JSON-LD can process the <code>@context</code>
         "lang": "fr"
       }]
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -1230,15 +1229,14 @@ about the <code>id</code>.
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
         <p>
 The example above uses two types of identifiers. The first identifier is for
-the <a>verifiable credential</a> and uses an HTTP-based URL. The second
-identifier is for the <a>subject</a> of the <a>verifiable credential</a> (the
+the <a>credential</a> and uses an HTTP-based URL. The second
+identifier is for the <a>subject</a> of the <a>credential</a> (the
 thing the <a>claims</a> are about) and uses a <a>decentralized identifier</a>,
 also known as a <a>DID</a>.
         </p>
@@ -1262,8 +1260,8 @@ cryptographic keys, and other machine-readable information associated with a
 
         <p>
 Software systems that process the kinds of objects specified in this document
-use type information to determine whether or not a provided
-<a>verifiable credential</a> or <a>verifiable presentation</a> is appropriate.
+use type information to determine whether or not a provided (verifiable)
+<a>credential</a> or (verifiable) <a>presentation</a> is appropriate.
 This specification defines a <code>type</code> <a>property</a> for the
 expression of type information.
         </p>
@@ -1271,7 +1269,7 @@ expression of type information.
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST have a
 <code>type</code> <a>property</a>. That is, any <a>credential</a> or
-<a>presentation</a> that does not have <code>type</code> <a>property</a>
+<a>presentation</a> that does not have a <code>type</code> <a>property</a>
 <em>is not <a>verifiable</a></em>, so is neither a <a>verifiable credential</a>
 nor a <a>verifiable presentation</a>.
         </p>
@@ -1304,8 +1302,7 @@ in a document containing machine-readable information about the
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -1490,7 +1487,7 @@ A <a>verifiable credential</a> contains <a>claims</a> about one or more
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
+A <a>credential</a> MUST have a <code>credentialSubject</code>
 <a>property</a>.
         </p>
 
@@ -1499,7 +1496,7 @@ A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
           <dd>
 The value of the <code>credentialSubject</code> <a>property</a> is defined as
 a set of objects that contain one or more properties that are each related to a
-<a>subject</a> of the <a>verifiable credential</a>. Each object MAY contain an
+<a>subject</a> of the (verifiable) <a>credential</a>. Each object MAY contain an
 <code>id</code>, as described in Section <a href="#identifiers"></a>.
           </dd>
         </dl>
@@ -1518,14 +1515,13 @@ a set of objects that contain one or more properties that are each related to a
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
         <p>
-It is possible to express information related to multiple <a>subjects</a> in a
-<a>verifiable credential</a>. The example below specifies two <a>subjects</a>
+It is possible to express information related to multiple <a>subjects</a> in a (verifiable)
+<a>credential</a>. The example below specifies two <a>subjects</a>
 who are spouses. Note the use of array notation to associate multiple
 <a>subjects</a> with the <code>credentialSubject</code> property.
         </p>
@@ -1546,8 +1542,7 @@ who are spouses. Note the use of array notation to associate multiple
     "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
     "name": "Morgan Doe",
     "spouse": "did:example:ebfeb1f712ebc6f1c276e12ec21"
-  }]</span>,
-  "proof": { <span class="comment">...</span> }
+  }]</span>  }
 }
         </pre>
 
@@ -1562,7 +1557,7 @@ a <a>verifiable credential</a>.
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have an <code>issuer</code> <a>property</a>.
+A <a>credential</a> MUST have an <code>issuer</code> <a>property</a>.
         </p>
 
         <dl>
@@ -1593,8 +1588,7 @@ machine-readable information about the <a>issuer</a> that can be used to
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -1622,8 +1616,7 @@ associating an object with the issuer property:
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -1672,8 +1665,7 @@ becomes valid.
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -1814,8 +1806,7 @@ date and time the <a>credential</a> ceases to be valid.
       "type": "BachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -1886,8 +1877,7 @@ privacy-enhancing.
   <span class="highlight">"credentialStatus": {
     "id": "https://example.edu/status/24",
     "type": "CredentialStatusList2017"
-  }</span>,
-  "proof": { <span class="comment">...</span> }
+  }</span>
 }
         </pre>
 
@@ -1915,7 +1905,7 @@ They can be packaged in such a way that the authorship of the data is
 
         <p>
 A <a>verifiable presentation</a> is typically composed of the following
-properties:
+properties along with a proof mechanism:
         </p>
 
         <dl>
@@ -1946,9 +1936,9 @@ is expected to be a <a>URI</a> for the entity that is generating the
           </dd>
           <dt><var>proof</var></dt>
           <dd>
-If present, the value of the <code>proof</code> <a>property</a> ensures that
-the <a>presentation</a> is <a>verifiable</a>. For details related to the use of
-this property, see Section <a href="#proofs-signatures"></a>.
+If present, the value of the embedded <code>proof</code> <a>property</a> ensures that
+the <a>presentation</a> is <a>verifiable</a>. For details related to the use of proof 
+mechanisms, see Section <a href="#proofs-signatures"></a>.
           </dd>
         </dl>
 
@@ -2288,7 +2278,7 @@ extensibility and program correctness are achieved.
 Let us assume we start with the <a>verifiable credential</a> shown below.
         </p>
 
-        <pre class="example nohighlight" title="A simple credential">
+        <pre class="example nohighlight" title="A simple credential with an embedded proof">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2342,7 +2332,7 @@ example by including the context and adding the new <a>properties</a> and
         </p>
 
         <pre class="example nohighlight"
-          title="A verifiable credential with a custom extension">
+          title="A verifiable credential with an embedded proof and a custom extension">
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -2527,8 +2517,7 @@ integrity protection mechanism. The <code>credentialSchema</code>
   <span class="highlight">"credentialSchema": {
     "id": "https://example.org/examples/degree.json",
     "type": "JsonSchemaValidator2018"
-  }</span>,
-  "proof": { <span class="comment">...</span> }
+  }</span>
 }
         </pre>
 
@@ -2657,8 +2646,7 @@ determined by the specific <code>refreshService</code> <a>type</a> definition.
   <span class="highlight">"refreshService": {
     "id": "https://example.edu/refresh/3732"
     "type": "ManualRefreshService2018",
-  }</span>,
-  "proof": { <span class="comment">...</span> }
+  }</span>
 }
         </pre>
 
@@ -2743,8 +2731,7 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
       "target": "http://example.edu/credentials/3732",
       "action": ["Archival"]
     }]
-  }</span>,
-  "proof": { <span class="comment">...</span> }
+  }</span>
 }
         </pre>
 
@@ -2790,8 +2777,7 @@ in an archive.
       "target": "http://example.edu/credentials/3732",
       "action": ["3rdPartyCorrelation"]
     }]
-  }</span>,
-  "proof": [ ... ]
+  }</span>
 }
         </pre>
 
@@ -2893,8 +2879,7 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
     "evidenceDocument": "Fluid Dynamics Focus",
     "subjectPresence": "Digital",
     "documentPresence": "Digital"
-  }]</span>,
-  "proof": { <span class="comment">...</span> }
+  }]</span>
 }
         </pre>
 
@@ -3191,13 +3176,12 @@ can issue the <a>credential</a> shown below and present it to the
     },
   }</span>,
   "issuer": "https://example.com/people#me",
-  "issuanceDate": "2017-12-05T14:27:42Z",
-  "proof": { <span class="comment">...</span> }
+  "issuanceDate": "2017-12-05T14:27:42Z"
 }
         </pre>
 
         <p>
-In the above <a>verifiable credential</a> the <a>issuer</a> is claiming that
+In the above <a>credential</a> the <a>issuer</a> is claiming that
 the address in the disputed <a>verifiable credential</a> is wrong.
        </p>
 
