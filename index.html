@@ -235,6 +235,9 @@ For those unfamiliar with the concepts related to
 
       <ul>
         <li>
+The intended audidence, purpose, goals, non-goals of this Recommendation
+        </li>
+        <li>
 The components that constitute a <a>verifiable credential</a>
         </li>
         <li>
@@ -248,6 +251,87 @@ An ecosystem where <a>verifiable credentials</a> and
 The use cases and requirements that informed this specification.
         </li>
       </ul>
+
+      <section class="informative">
+        <h3>Intended Audience</h3>
+
+        <p>
+The intended audience for the Verifiable Credentials Data Model 1.0 W3C Recommendation (Recommendation) 
+is a broad range of professionals interested in furthering
+the application of verifiable credentials technology for use in software apps, agents, and services.
+        </p>
+        <p>
+The primary audience includes software architects, application developers, and user experience (UX)
+specialists;
+as well as other people involved in a broad range of standards efforts related to decentralized identity,
+verifiable credentials, and secure storage.
+        </p>
+      </section>
+
+      <section class="informative">
+        <h3>Purpose</h3>
+
+        <p>
+The purpose of this Recommendation is to assist the intended audience by providing a deeper understanding
+of what a verifiable credential is as well as how to use verifiable credentials technology
+when designing and creating new software apps, agents, and services. 
+This also includes architects and developers creating reusable software libraries intended
+to assist architects and developers in incorporating verifiable credentials technology into their solutions.
+        </p>
+        <p>
+Verifiable credentials technology is adaptable to a wide variety of data serialization technologies
+(data platform bindings) including (but not limited to) JSON, JSON-LD, JWT, XML, POCOs (plain old CLR objects), etc.
+In this version of the Recommendation, documentation is provided (via the examples) to illustrate how
+JSON and JSON-LD data platform bindings can be used to support the creation, transmission, and verification
+of personal, business, governmental, and other types of data encapsulated in a verifiable credential.
+        </p>
+        <p>
+Verifiable credential support for additional data binding platforms is expected to become available in the future - supported
+independently or, possibly, documented in a future version of the W3C verifiable credentials technology
+documentation (Documentation).
+        </p>
+        <p>
+Lastly, verifiable credential technology is expected to be used
+in a wide range of applications, agents, and services to
+encapsulate a broad range of personal, business, governmental, and
+other types of data including (but not limited to) 
+passports, drivers licenses, health passes, travel documents, business documents 
+(e.g. purchases orders, invoices, etc.), IoT messages, etc.
+        </p>
+        <p class="note">
+The documentation of specific mappings of the virtually unlimited world of document schemas to verifiable credential technology
+(and data platform bindings) is outside the scope of the Documentation.
+        </p>
+      </section>
+
+      <section class="informative">
+        <h3>Goals</h3>
+
+        <p>
+The goals of this Recommendation are to:
+        </p>
+        <ul>
+<li>Define what is a verifiable credential</li>
+<li>Highlight a short list of use case examples</li>
+<li>Highlight what it means to have a conformant verifiable credentials technology implementation</li>
+<li>Define a conceptual data model (Core Data Model) for imagining and representing verifiable credentials</li>
+<li>Define a taxonomy of terms and concepts for describing verifiable credentials technology and associated workflows</li>
+<li>Highlight a range of advanced concepts such a the verifiable credential lifecycle, trust models, xero knowledge proofs, etc.</li>
+<li>Define the representation of the Core Data Model using the JSON data platform binding</li>
+<li>Define the representation of the Core Data Model using the JSON-LD data platform binding</li>
+<li>Document a range of privacy, security, accessibility concerns and considerations</li>
+<li>Describe the validation process for verifiable credentials</li>
+<li>Describe the relationships between <i>subjects</i> and <i>holders</i></li>
+        </ul>
+        <p>
+The non-goals of Recommendation include:
+        </p>
+        <ul>
+<li>Acting as a detailed developers' guide (primer) for programming against any of the verifiable crednetial data platform bindings.</li>
+<li>Related to the above, providing any guidance or documentation related to a specific verifiable credential technology software library.</li>
+<li>Detailing any specific use case or collection of use cases. These are documented in a seperate <i>Verifiable Credentials Use Cases</i> W3C Community Note.</li>
+        </ul>
+      </section>
 
       <section class="informative">
         <h3>What is a Verifiable Credential?</h3>
@@ -1195,6 +1279,12 @@ The <code>id</code> <a>property</a> MUST NOT have more than one value.
 The value of the <code>id</code> <a>property</a> MUST be a URI.
           </li>
         </ul>
+
+        <p class="note">
+If a credential contains a credentialSubject property and it, in turns 
+contains an id property, the value of the id property, if present, is to be interpreted 
+as an identifier for the corresponding credential subject.
+        </p>
 
         <p class="note">
 Developers should remember that identifiers might be harmful in scenarios
