@@ -2954,8 +2954,8 @@ information about the <code>proof</code> <a>property</a>, see Section
         <p>
 A zero-knowledge proof is a cryptographic method where an entity can prove to
 another entity that they know a certain value without disclosing the actual
-value. A real-world example is proving that an accredited university has granted
-a degree to you without revealing your identity or any other personally
+value. A real-world example is proving that an accredited university has
+granted a degree to you without revealing your identity or any other personally
 identifiable information contained on the degree.
         </p>
         <p>
@@ -2987,45 +2987,50 @@ their issued <a>verifiable credentials</a>.
         </ul>
 
         <p>
-This specification describes a data model that supports zero-knowledge proof
-mechanisms. The examples below highlight how the data model can be used to
-issue, present, and verify zero-knowledge <a>verifiable credentials</a>.
+This specification describes a data model that supports selective disclosure
+with the use of zero-knowledge proof mechanisms. The examples below highlight
+how the data model can be used to issue, present, and verify zero-knowledge
+<a>verifiable credentials</a>.
         </p>
 
         <p>
-To use zero-knowledge <a>verifiable credentials</a> the <a>issuer</a> must
-issue a <a>verifiable credential</a> in a manner that enables the <a>holder</a>
-to present the information to a <a>verifier</a> in a privacy-enhancing manner.
+For a <a>holder</a> to use a zero-knowledge <a>verifiable presentation</a>,
+they need an <a>issuer</a> to have issued a <a>verifiable credential</a> in a manner
+that enables the <a>holder</a> to derive a proof from the originally issued
+<a>verifiable credential</a>, so that the <a>holder</a> can present the
+information to a <a>verifier</a> in a privacy-enhancing manner.
 This implies that the <a>holder</a> can prove the validity of the
 <a>issuer's</a> signature without revealing the values that were signed, or when
 only revealing certain selected values. The standard practice is to do so by
 proving knowledge of the signature, without revealing the signature itself.
 There are two requirements for <a>verifiable credentials</a> when they are to be
-used in zero-knowledge proof systems. The <a>verifiable credential</a> MUST
-contain a:
+used in zero-knowledge proof systems.
         </p>
 
         <ul>
           <li>
-<a>Credential</a> definition, using the <code>credentialSchema</code>
-<a>property</a>, that can be used by all parties to perform various
-cryptographic operations in zero-knowledge.
+The <a>verifiable credential</a> MUST contain a Proof, using the
+<code>proof</code> <a>property</a>, so that the <a>holder</a> can derive a
+<a>verifiable presentation</a> that reveals only the information than the
+<a>holder</a> intends to reveal.
           </li>
           <li>
-Proof, using the <code>proof</code> <a>property</a>, that can be used to derive
-<a>verifiable presentations</a> that present information contained in the
-original <a>verifiable credential</a> in zero-knowledge. The zero-knowledge
-<a>verifiable presentation</a> must not reveal any information not intended to
-be revealed by the <a>holder</a>.
+If a <a>credential</a> definition is being used, the <a>credential</a>
+definition MUST be defined in the <code>credentialSchema</code> <a>property</a>,
+so that it can be used by all parties to perform various cryptographic
+operations in zero-knowledge.
           </li>
         </ul>
 
         <p>
 The following example shows one method of using <a>verifiable credentials</a> in
-zero-knowledge. It makes use of a CL Signature, which allows the presentation of
-the <a>verifiable credential</a> in a way that supports the privacy of the
+zero-knowledge. It makes use of a Camenisch-Lysyanskaya Signature
+[[?CL-SIGNATURES]], which allows the presentation of the <a>verifiable
+credential</a> in a way that supports the privacy of the
 <a>holder</a> and <a>subject</a> through the use of selective disclosure of the
-<a>verifiable credential</a> values.
+<a>verifiable credential</a> values. Some other cryptographic systems which rely
+upon zero-knowledge proofs to selectively disclose attributes can be found in the
+[[?LDP-REGISTRY]] as well.
         </p>
 
         <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
@@ -3058,7 +3063,6 @@ the <a>verifiable credential</a> in a way that supports the privacy of the
   }</span>
 }
         </pre>
-
         <p>
 The example above provides the <a>verifiable credential</a> definition by using
 the <code>credentialSchema</code> <a>property</a> and a specific proof that is
@@ -3069,17 +3073,18 @@ usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
 The next example utilizes the <a>verifiable credential</a> above to generate a
 new derived <a>verifiable credential</a> with a privacy-preserving proof. The
 derived <a>verifiable credential</a> is then placed in a
-<a>verifiable presentation</a>, which further proves that the entire assertion
-is valid. There are three requirements of most <a>verifiable presentations</a>
-when they are to be used in zero-knowledge systems:
+<a>verifiable presentation</a>, so that the <a>verifiable credential</a>
+discloses only the <a>claims</a> and additional credential metadata that the
+<a>holder</a> intended. To do this, all of the following requirements are
+expected to be met:
         </p>
 
         <ul>
           <li>
-Each derived <a>verifiable credential</a> within a
-<a>verifiable presentation</a> MUST have a <code>credentialSchema</code>
-<a>property</a>. This allows the derived <a>verifiable credential</a> to
-reference the credential definition used to generate the derived proof.
+Each derived <a>verifiable credential</a> within a <a>verifiable
+presentation</a> MUST contain all information necessary to verify the
+<a>verifiable credential</a>, either by including it directly within the
+credential, or by referencing the necessary information.
           </li>
           <li>
 A <a>verifiable presentation</a> MUST NOT leak information that would enable
@@ -3087,8 +3092,8 @@ the <a>verifier</a> to correlate the <a>holder</a> across multiple
 <a>verifiable presentations</a>.
           </li>
           <li>
-The <a>verifiable presentation</a> MUST contain a <code>proof</code>
-<a>property</a> to enable the <a>verifier</a> to ascertain that all derived
+The <a>verifiable presentation</a> SHOULD contain a <code>proof</code>
+<a>property</a> to enable the <a>verifier</a> to check that all derived
 <a>verifiable credentials</a> in the <a>verifiable presentation</a> were issued
 to the same <a>holder</a> without leaking personally identifiable information
 that the <a>holder</a> did not intend to share.
