@@ -3452,7 +3452,7 @@ use of specific JWT-registered <a>claim</a> names and specific JWS-registered
 header parameter names to allow systems based on JWT to comply with this
 specification. If these specific <a>claim</a> names and header parameters are
 present, their respective counterpart in the standard
-<a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
+<a>verifiable credential</a> and <a>verifiable presentation</a> SHOULD be omitted
 to avoid duplication.
             </p>
           </section>
@@ -3471,12 +3471,12 @@ These objects are enclosed in the JWT payload as follows:
               <li>
 <code>vc</code>: JSON object, which MUST be present in a JWT
 <a>verifiable credential</a>. The object contains the
-<a>verifiable credential</a> according to this specification.
+<a>credential</a> according to this specification.
               </li>
               <li>
 <code>vp</code>: JSON object, which MUST be present in a JWT
 <a>verifiable presentation</a>. The object contains the
-<a>verifiable presentation</a> according to this specification.
+<a>presentation</a> according to this specification.
               </li>
             </ul>
           </section>
@@ -3506,7 +3506,7 @@ Contained in the JWS signature part.
 
             <p>
 If no explicit rule is specified, <a>properties</a> are encoded in the same way
-as with a standard <a>verifiable credential</a>, and are added to the
+as with a standard <a>credential</a>, and are added to the
 <code>vc</code> <a>claim</a> of the JWT. As with all JWTs, the JWS-based
 signature of a <a>verifiable credential</a> represented in the JWT syntax is
 calculated against the literal JWT string value as presented across the wire,
@@ -3515,10 +3515,10 @@ paragraphs describe these encoding rules.
             </p>
 
             <p>
-If a JWS is present, the digital signature either refers to the <a>issuer</a>
+If a JWS is present, the digital signature refers to either the <a>issuer</a>
 of the <a>verifiable credential</a>, or in the case of a
-<a>verifiable presentation</a>, the <a>holder</a> of the
-<a>verifiable credential</a>. The JWS proves that the <a>issuer</a> of the JWT
+<a>verifiable presentation</a>, to the <a>holder</a> of the
+<a>verifiable credential</a>. The JWS proves that the <a>iss</a> of the JWT
 signed the contained JWT payload and therefore, the <code>proof</code>
 <a>property</a> can be omitted.
             </p>
@@ -3557,7 +3557,7 @@ specification. For example, the <code>kid</code> can refer to a key in a
 
             <p>
 For backward compatibility with JWT processors, the following JWT-registered
-claim names MUST be used instead of, or in addition to, their respective
+claim names MUST be used instead of their respective
 standard <a>verifiable credential</a> counterparts:
             </p>
 
@@ -3581,7 +3581,8 @@ timestamp (<code>NumericDate</code>).
               </li>
               <li>
 <code>sub</code> MUST represent the <code>id</code> <a>property</a> contained
-in the <a>verifiable credential</a> <a>subject</a>.
+in the <code>credentialSubject</code>.
+Note. In the case of <code>bearer credential</code>s and <code>presentation</code>s, <code>sub</code> will be absent.
               </li>
               <li>
 <code>aud</code> MUST represent (i.e., identify) the intended audience
@@ -3631,7 +3632,7 @@ Nested JSON Web Token</a> specification.
               <h5>JWT Decoding</h5>
 
             <p>
-To decode a JWT to a standard <a>verifiable credential</a>, the following
+To decode a JWT to a standard <a>credential</a> or <a>presentation</a>, the following
 transformation MUST be performed:
             </p>
 
@@ -3640,11 +3641,11 @@ transformation MUST be performed:
 Create a JSON object.
               </li>
               <li>
-Add the content from the <code>vc</code> <a>claim</a> to the new JSON object.
+Add the content from the <code>vc</code> or <code>vp</code> <a>claim</a> to the new JSON object.
               </li>
               <li>
 Transform the remaining JWT specific headers and <a>claims</a>, and add the
-results to the new JSON object.
+results to the new <a>credential</a> or <a>presentation</a> JSON object.
               </li>
             </ol>
 
@@ -3657,13 +3658,12 @@ done:
               <li>
 If <code>exp</code> is present, the UNIX timestamp MUST be converted to an
 [[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
-of the <code>expirationDate</code> <a>property</a> of
-<code>credentialSubject</code> of the new JSON object.
+of the <code>expirationDate</code> <a>property</a> of the new JSON object.
               </li>
               <li>
 If <code>iss</code> is present, the value MUST be used to set the
-<code>issuer</code> <a>property</a> of the new verifiable credential JSON object
- or the <code>holder</code> <a>property</a> of the new verifiable presentation JSON object.
+<code>issuer</code> <a>property</a> of the new <a>credential</a> JSON object
+ or the <code>holder</code> <a>property</a> of the new <a>presentation</a> JSON object.
                   </li>
                   <li>
 If <code>nbf</code> is present, the UNIX timestamp MUST be converted to an
@@ -3672,7 +3672,7 @@ of the <code>issuanceDate</code> <a>property</a> of the new JSON object.
                   </li>
                   <li>
 If <code>sub</code> is present, the value MUST be used to set the value of the
-<code>id</code> <a>property</a> of <code>credentialSubject</code> of the new
+<code>id</code> <a>property</a> of <code>credentialSubject</code> of the new <a>credential</a>
 JSON object.
               </li>
               <li>
