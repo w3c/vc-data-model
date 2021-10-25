@@ -8,12 +8,16 @@
       For the three scripts below, if your spec resides on dev.w3 you can check them
       out in the same tree and use relative links so that they'll work offline,
      -->
-    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script class="remove"
+      src="https://unpkg.com/browse/jquery/dist/jquery.min.js"></script>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' class='remove'></script>
     <script src="./common.js" class="remove"></script>
     <script type="text/javascript" class="remove">
       var respecConfig = {
+        group: "vc",
+
         // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus: "ED",
+        specStatus: "REC",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName: "vc-data-model",
@@ -22,10 +26,11 @@
         subtitle: "Expressing verifiable information on the Web",
 
         // if you wish the publication date to be other than today, set this
-//        publishDate: "2019-09-03",
+        publishDate: "2022-01-11",
         //crEnd: "2019-08-21",
         //prEnd: "2019-10-01",
         implementationReportURI: "https://w3c.github.io/vc-test-suite/implementations/",
+        errata: "https://w3c.github.io/vc-data-model/errata.html",
         previousMaturity: "REC",
         previousPublishDate: "2019-11-19",
 
@@ -37,6 +42,11 @@
         // extend the bibliography entries
         localBiblio: vcwg.localBiblio,
         doJsonLd: true,
+
+        // Uncomment these to use the respec extension that generates a list of
+        //   normative statements:
+        preProcess: [/*prepare_reqlist*/],
+        postProcess: [/*add_reqlist_button*/, restrictRefs],
 
         github: "https://github.com/w3c/vc-data-model/",
         includePermalinks: false,
@@ -73,21 +83,7 @@
           { name: "David Chadwick", url: "https://www.linkedin.com/in/david-chadwick-36816395/",
             company: "University of Kent", companyURL: "https://www.kent.ac.uk/"}
         ],
-        // name of the WG
-        wg:           "Verifiable Claims Working Group",
 
-        // URI of the public WG page
-        wgURI:        "https://www.w3.org/2017/vc/",
-
-        // name (with the @w3c.org) of the public mailing to which comments are due
-        wgPublicList: "public-vc-comments",
-
-        // URI of the patent status for this WG, for Rec-track documents
-        // !!!! IMPORTANT !!!!
-        // This is important for Rec-track documents, do not copy a patent URI from a random
-        // document unless you know what you're doing. If in doubt ask your friendly neighborhood
-        // Team Contact.
-        wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
         maxTocLevel: 2,
         inlineCSS: true
       };
@@ -642,9 +638,7 @@ valid JSON or JSON-LD.
     <section class="informative">
       <h2>Terminology</h2>
 
-      <div data-include="./terms.html"
-        data-oninclude="restrictReferences">
-      </div>
+      <div data-include="./terms.html"></div>
     </section>
 
     <section class="informative">
