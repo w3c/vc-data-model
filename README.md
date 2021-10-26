@@ -9,7 +9,7 @@ credentials on the Web in a way that is cryptographically secure,
 privacy respecting, and machine-verifiable.
 
 We encourage contributions meeting the [Contribution
-Guidelines](CONTRIBUTING.md).  While we prefer the creation of issues
+Guidelines](CONTRIBUTING.md). While we prefer the creation of issues
 and Pull Requests in the GitHub repository, discussions often occur
 on the
 [public-vc-wg](http://lists.w3.org/Archives/Public/public-vc-wg/)
