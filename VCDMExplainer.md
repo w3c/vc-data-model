@@ -346,7 +346,7 @@ but does not require it.
 
 ## Features at Risk
 
-We have asked for [preliminary commitments from potential implementers](https://docs.google.com/spreadsheets/d/1SzfAUA0J72-1BORHJEmY4cdZrQ6vmKy4oq_24r_NwB4/edit?usp=sharing).  We expect all features to have at
+We have asked for [preliminary commitments from potential implementers](https://docs.google.com/spreadsheets/d/1SzfAUA0J72-1BORHJEmY4cdZrQ6vmKy4oq_24r_NwB4/edit?usp=sharing). We expect all features to have at
 least two implementations. With current commitments, some features have exactly two.  
 Of course we will continue to recruit for additional implementations.
 
