@@ -48,37 +48,28 @@ var vcwg = {
     },
     "LD-PROOFS": {
       title: "Linked Data Proofs",
-      href: "https://w3c-dvcg.github.io/ld-proofs/",
+      href: "https://w3c-ccg.github.io/ld-proofs/",
       authors: [
         "Manu Sporny",
         "Dave Longley"
       ],
       status: "CG-DRAFT",
-      publisher: "Digital Verification Community Group"
+      publisher: "Credentials Community Group"
     },
-    "LD-SIGNATURES": {
-      title: "Linked Data Signatures",
-      href: "https://w3c-dvcg.github.io/ld-signatures/",
+    "LDP-REGISTRY": {
+      title: "Linked Data Cryptographic Suite Registry",
+      href: "https://w3c-ccg.github.io/ld-cryptosuite-registry/",
       authors: [
         "Manu Sporny",
-        "Dave Longley"
+        "Drummond Reed",
+        "Orie Steele"
       ],
       status: "CG-DRAFT",
-      publisher: "Digital Verification Community Group"
-    },
-    "LDS-RSA2018": {
-      title: "The 2018 RSA Linked Data Signature Suite",
-      href: "https://w3c-dvcg.github.io/lds-rsa2018/",
-      authors: [
-        "Manu Sporny",
-        "Dave Longley"
-      ],
-      status: "CG-DRAFT",
-      publisher: "Digital Verification Community Group"
+      publisher: "Credentials Community Group"
     },
     "CL-SIGNATURES": {
       title: "A Signature Scheme with Efficient Protocols",
-      href: "http://groups.csail.mit.edu/cis/pubs/lysyanskaya/cl02b.pdf",
+      href: "https://www.researchgate.net/publication/220922101_A_Signature_Scheme_with_Efficient_Protocols",
       authors: [
         "Jan Camenisch",
         "Anna Lysyanskaya"
