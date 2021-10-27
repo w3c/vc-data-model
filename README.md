@@ -48,8 +48,8 @@ Credentials Working Group members meet, review all the PRs that have been
 merged, and make a formal recommendation if agreement is reached.
 
 ### Roadmap for 2021
-- 1 editorial update (v1.1?)
-- 1 substantive update (v1.2?)
+- one editorial update (v1.1?)
+- one substantive update (v1.2?)
 - VC Test Suite Refactoring
 - Start planning VC v2 Work, request a rechartering 3-6 months before end of
   year to keep VC WG functioning.
