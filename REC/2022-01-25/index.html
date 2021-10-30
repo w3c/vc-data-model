@@ -140,7 +140,44 @@ pre .comment {
 
 </style>
 
+<style type="text/css">
+  .diff-old-a {
+    font-size: smaller;
+    color: red
+  }
 
+  .diff-new {
+    background-color: #ff0
+  }
+
+  .diff-chg {
+    background-color: #0f0
+  }
+
+  .diff-new:after,
+  .diff-new:before {
+    content: "\2191"
+  }
+
+  .diff-chg:after,
+  .diff-chg:before {
+    content: "\2195"
+  }
+
+  .diff-old {
+    text-decoration: line-through;
+    background-color: #FBB
+  }
+
+  .diff-old:after,
+  .diff-old:before {
+    content: "\2193"
+  }
+
+  :focus {
+    border: thin red solid
+  }
+</style>
 
 <meta name="description" content="Credentials are a part of our daily lives; driver's licenses are used to
 assert that we are capable of operating a motor vehicle, university degrees
@@ -2837,14 +2874,26 @@ expressing the date and time when a <a href="#dfn-credential" class="internalDFN
         <dl>
           <dt><var>issuanceDate</var></dt>
           <dd>
-A <a href="#dfn-credential" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-credential-42">credential</a> <em class="rfc2119">MUST</em> have an <code>issuanceDate</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-30">property</a>. The
-value of the <code>issuanceDate</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-31">property</a> <em class="rfc2119">MUST</em> be a string value of
-an [<a href="https://www.w3.org/TR/xmlschema11-2/#dateTime">XMLSCHEMA11-2</a>] combined
-<code>date-time</code> string representing the date and time the
-<a href="#dfn-credential" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-credential-43">credential</a> becomes valid, which could be a date and time in the future.
-Note that this value represents the earliest point in time
-at which the information associated with the <code>credentialSubject</code>
-<a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-32">property</a> becomes valid.
+A <a href="#dfn-credential" class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-credential-42">credential</a><em
+class="rfc2119">MUST</em> have an <code>issuanceDate</code> <a
+href="#dfn-property" class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-property-30">property</a>. The value of the
+<code>issuanceDate</code> <a href="#dfn-property" class="internalDFN"
+data-link-type="dfn" id="ref-for-dfn-property-31">property</a> <em
+class="rfc2119">MUST</em>be a string value of an [ <del
+class="diff-old">RFC3339</del> <a
+href="https://www.w3.org/TR/xmlschema11-2/#dateTime"><ins
+class="diff-chg">XMLSCHEMA11-2</ins></a> ] combined <del class="diff-old">date
+and time</del><code><ins class="diff-chg">date-time</ins></code>
+string representing the date and time the <a href="#dfn-credential"
+class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-credential-43">credential</a> becomes valid, which could be a
+date and time in the future. Note that this value represents the earliest point
+in time at which the information associated with the
+<code>credentialSubject</code> <a href="#dfn-property"
+class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-property-32">property</a> becomes valid.
           </dd>
         </dl>
 
@@ -2986,10 +3035,16 @@ the expression of <a href="#dfn-credential" class="internalDFN" data-link-type="
         <dl>
           <dt><var>expirationDate</var></dt>
           <dd>
-If present, the value of the <code>expirationDate</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-42">property</a> <em class="rfc2119">MUST</em> be
-a string value of an [<a href="https://www.w3.org/TR/xmlschema11-2/#dateTime">XMLSCHEMA11-2</a>]
-<code>date-time</code> representing the date and time the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-credential-47">credential</a>
-ceases to be valid.
+If present, the value of the <code>expirationDate</code> <a href="#dfn-property"
+class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-property-42">property</a>          <em class="rfc2119">MUST</em>
+be a string value of an [ <del class="diff-old">RFC3339</del>          <a
+href="https://www.w3.org/TR/xmlschema11-2/#dateTime"><ins
+class="diff-chg">XMLSCHEMA11-2</ins></a>          ] <del
+class="diff-old">combined date and time string</del> <code><ins
+class="diff-chg">date-time</ins></code>          representing the date and time
+the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-credential-47">credential</a> ceases to be valid.
           </dd>
         </dl>
 
@@ -4910,9 +4965,15 @@ done:
 
             <ul>
               <li>
-If <code>exp</code> is present, the UNIX timestamp <em class="rfc2119">MUST</em> be converted to an [<a href="https://www.w3.org/TR/xmlschema11-2/#dateTime">XMLSCHEMA11-2</a>] <code>date-time</code>,
-and <em class="rfc2119">MUST</em> be used to set the value of the <code>expirationDate</code>
-<a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-106">property</a> of <code>credentialSubject</code> of the new JSON object.
+If <code>exp</code> is present, the UNIX timestamp <em class="rfc2119">MUST</em>
+be converted to an [ <del class="diff-old">RFC3339</del> <a
+href="https://www.w3.org/TR/xmlschema11-2/#dateTime"><ins
+class="diff-chg">XMLSCHEMA11-2</ins></a> ] <code>date-time</code>, and <em
+class="rfc2119">MUST</em> be used to set the value of the
+<code>expirationDate</code><a href="#dfn-property"
+class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-property-106">property</a> of
+<code>credentialSubject</code> of the new JSON object.
               </li>
               <li>
 If <code>iss</code> is present, the value <em class="rfc2119">MUST</em> be used to set the
@@ -4920,10 +4981,14 @@ If <code>iss</code> is present, the value <em class="rfc2119">MUST</em> be used 
  or the <code>holder</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-108">property</a> of the new verifiable presentation JSON object.
                   </li>
                   <li>
-If <code>nbf</code> is present, the UNIX timestamp <em class="rfc2119">MUST</em> be converted to an
-[<a href="https://www.w3.org/TR/xmlschema11-2/#dateTime">XMLSCHEMA11-2</a>]
-<code>date-time</code>, and <em class="rfc2119">MUST</em> be used to set the value of the
-<code>issuanceDate</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-109">property</a> of the new JSON object.
+If <code>nbf</code> is present, the UNIX timestamp <em class="rfc2119">MUST</em>
+be converted to an [ <del class="diff-old">RFC3339</del> <a
+href="https://www.w3.org/TR/xmlschema11-2/#dateTime"><ins
+class="diff-chg">XMLSCHEMA11-2</ins></a> ] <code>date-time</code>, and <em
+class="rfc2119">MUST</em> be used to set the value of the
+<code>issuanceDate</code><a href="#dfn-property"
+class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-property-109">property</a>of the new JSON object.
                   </li>
                   <li>
 If <code>sub</code> is present, the value <em class="rfc2119">MUST</em> be used to set the value of the
