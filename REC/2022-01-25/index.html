@@ -4283,16 +4283,46 @@ used in zero-knowledge proof systems.
 
         <ul>
           <li>
-The <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-194">verifiable credential</a> <em class="rfc2119">MUST</em> contain a Proof, using the
-<code>proof</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-81">property</a>, so that the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-holders-66">holder</a> can derive a
-<a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-presentations-67">verifiable presentation</a> that reveals only the information than the
-<a href="#dfn-holders" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-holders-67">holder</a> intends to reveal.
+The <a href="#dfn-verifiable-credentials" class="internalDFN"
+data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-194">verifiable
+credential</a> <em class="rfc2119">MUST</em> contain <del class="diff-old">a:
+Credential definition,</del> <ins class="diff-chg">a Proof,</ins> using the
+<code><del class="diff-old">credentialSchema</del> <ins
+class="diff-chg">proof</ins></code><a href="#dfn-property"
+class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-property-81">property</a>, <ins class="diff-new">so</ins> that
+<ins class="diff-new">the</ins> <a href="#dfn-holders" class="internalDFN"
+data-link-type="dfn" id="ref-for-dfn-holders-66"><ins
+class="diff-new">holder</ins></a> can <del class="diff-old">be used by all
+parties</del><ins class="diff-chg">derive a</ins> <a
+href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-verifiable-presentations-67"><ins class="diff-chg">verifiable
+presentation</ins></a><ins class="diff-chg">that reveals only the information
+than the</ins> <a href="#dfn-holders" class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-holders-67"><ins class="diff-chg">holder</ins></a><ins
+class="diff-chg">intends</ins>to <del class="diff-old">perform
+various cryptographic operations in zero-knowledge.</del><ins
+class="diff-chg">reveal.</ins>
           </li>
           <li>
-If a <a href="#dfn-credential" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-credential-74">credential</a> definition is being used, the <a href="#dfn-credential" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-credential-75">credential</a>
-definition <em class="rfc2119">MUST</em> be defined in the <code>credentialSchema</code> <a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-82">property</a>,
-so that it can be used by all parties to perform various cryptographic
-operations in zero-knowledge.
+<del class="diff-old">Proof, using</del> <ins class="diff-chg">If a</ins> <a
+href="#dfn-credential" class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-credential-74"><ins class="diff-chg">credential</ins></a><ins
+class="diff-chg">definition is being used, the</ins> <a href="#dfn-credential"
+class="internalDFN" data-link-type="dfn" id="ref-for-dfn-credential-75"><ins
+class="diff-chg">credential</ins></a><ins class="diff-chg">definition</ins> <em
+class="rfc2119"><ins class="diff-chg">MUST</ins></em><ins class="diff-chg">be
+defined in</ins>the <code><del class="diff-old">proof</del> <ins
+class="diff-chg">credentialSchema</ins></code>              <a
+href="#dfn-property" class="internalDFN" data-link-type="dfn"
+id="ref-for-dfn-property-82">property</a>, <ins class="diff-new">so</ins> that
+<ins class="diff-new">it</ins>can be used <ins class="diff-new">by
+all parties</ins> to <del class="diff-old">derive verifiable presentations that
+present information contained in the original verifiable credential</del> <ins
+class="diff-chg">perform various cryptographic operations</ins> in
+zero-knowledge. <del class="diff-old">The zero-knowledge verifiable presentation
+must not reveal any information not intended to be revealed by the holder
+.</del>
           </li>
         </ul>
 
@@ -4356,24 +4386,29 @@ expected to be met:
         </p>
 
         <ul>
-          <li>
-Each derived <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-203">verifiable credential</a> within a <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-presentations-69">verifiable
-presentation</a> <em class="rfc2119">MUST</em> contain all information necessary to verify the
-<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-204">verifiable credential</a>, either by including it directly within the
-credential, or by referencing the necessary information.
-          </li>
-          <li>
-A <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-presentations-70">verifiable presentation</a> <em class="rfc2119">MUST NOT</em> leak information that would enable
-the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifier-63">verifier</a> to correlate the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-holders-70">holder</a> across multiple
-<a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-presentations-71">verifiable presentations</a>.
-          </li>
-          <li>
-The <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-presentations-72">verifiable presentation</a> <em class="rfc2119">SHOULD</em> contain a <code>proof</code>
-<a href="#dfn-property" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-property-84">property</a> to enable the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifier-64">verifier</a> to check that all derived
-<a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-205">verifiable credentials</a> in the <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-presentations-73">verifiable presentation</a> were issued
-to the same <a href="#dfn-holders" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-holders-71">holder</a> without leaking personally identifiable information
-that the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-holders-72">holder</a> did not intend to share.
-          </li>
+          <li>Each derived <a href="#dfn-verifiable-credentials" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-verifiable-credentials-203">verifiable credential</a> within
+            a <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-verifiable-presentations-69">verifiable presentation</a>        <em class="rfc2119">MUST</em> <del class="diff-old">have a credentialSchema property . This allows</del>        <ins class="diff-chg">contain all information necessary to verify</ins> the
+            <del class="diff-old">derived</del> <a href="#dfn-verifiable-credentials"
+            class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-204">verifiable credential <del class="diff-old">to reference</del></a>,
+            <ins class="diff-chg">either by including it directly within</ins> the
+            <del
+            class="diff-old">credential definition used to generate</del> <ins class="diff-chg">credential, or by referencing</ins>          the <del class="diff-old">derived proof.</del> <ins class="diff-chg">necessary information.</ins></li>
+          <li>A <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-verifiable-presentations-70">verifiable presentation</a>        <em class="rfc2119">MUST NOT</em> leak information that would enable the
+            <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifier-63">verifier</a>        to correlate the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-holders-70">holder</a> across multiple <a href="#dfn-verifiable-presentations"
+            class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifiable-presentations-71">verifiable presentations</a>.</li>
+          <li>The <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-verifiable-presentations-72">verifiable presentation</a>        <del class="diff-old">MUST</del> <em class="rfc2119"><ins class="diff-chg">SHOULD</ins></em>        contain a <code>proof</code> <a href="#dfn-property" class="internalDFN"
+            data-link-type="dfn" id="ref-for-dfn-property-84">property</a> to enable
+            the <a href="#dfn-verifier" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-verifier-64">verifier</a>        to <del class="diff-old">ascertain</del> <ins class="diff-chg">check</ins>        that all derived <a href="#dfn-verifiable-credentials" class="internalDFN"
+            data-link-type="dfn" id="ref-for-dfn-verifiable-credentials-205">verifiable credentials</a>        in the <a href="#dfn-verifiable-presentations" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-verifiable-presentations-73">verifiable presentation</a>        were issued to the same <a href="#dfn-holders" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-holders-71">holder</a> without leaking personally identifiable
+            information that the <a href="#dfn-holders" class="internalDFN" data-link-type="dfn"
+            id="ref-for-dfn-holders-72">holder</a> did not intend to share.</li>
         </ul>
 
         <div class="example" id="example-a-verifiable-presentation-that-supports-cl-signatures">
