@@ -32,24 +32,25 @@ mailing list as well.
 
 ## Process Overview for VC Data Model Pull Requests
 1. For now, we will focus only on merging new errata PRs into this repository,
-but encourage activity related to new features.
+   but encourage activity related to new features.
 2. Once a PR is opened, chairs and editors make judgement call on whether
-changes are substantive or editorial.
-<dl>
-  <dt>Editorial</dt>
-  <dd>Mark with "editorial" tag, merge into branch "v1.1"</dd>
-  <dt>Substantive</dt>
-  <dd>Mark with "substantial" tag. Bugfixes are merged into separate branch "v1.2". New Features stay around as an open PR.</dd>
-</dl>
+   changes are substantive or editorial.
+   <dl>
+     <dt>Editorial</dt>
+     <dd>Mark with "editorial" tag, merge into branch "v1.1"</dd>
+     <dt>Substantive</dt>
+     <dd>Mark with "substantial" tag. Bug fixes are merged into separate branch "v1.2". New Features stay around as an open PR.</dd>
+   </dl>
 3. W3C CCG is notified of PRs that will be merged in the next 14 days if there
-are no objections.
-4. When it's determined a new reccomendation should go out, the W3C Verifiable
-Credentials Working Group members meet, review all the PRs that have been
-merged, and make a formal recommendation if agreement is reached.
+   are no objections.
+4. When it's determined a new recommendation should go out, the W3C Verifiable
+   Credentials Working Group members meet, review all the PRs that have been
+   merged, and make a formal recommendation if agreement is reached.
 
 ### Roadmap for 2021
-- 1 editorial update (v1.1?)
-- 1 substantive update (v1.2?)
+- one editorial update (v1.1?)
+- one substantive update (v1.2?)
+
 - VC Test Suite Refactoring
 - Start planning VC v2 Work, request a rechartering 3-6 months before end of
   year to keep VC WG functioning.
