@@ -14,19 +14,6 @@ var vcwg = {
       ],
       publisher: "University of California, Irvine."
     },
-    "VC-USECASES": {
-      title: "Verifiable Claims Use Cases",
-      href: "https://www.w3.org/TR/verifiable-claims-use-cases/",
-      authors: [
-      	"Shane McCarron",
-        "Daniel Burnett",
-        "Gregg Kellogg",
-        "Brian Sletten",
-        "Manu Sporny"
-      ],
-      status: "NOTE",
-      publisher: "Verifiable Claims Working Group"
-    },
     "VC-EXTENSION-REGISTRY": {
       title: "Verifiable Credentials Extension Registry",
       href: "https://w3c-ccg.github.io/vc-extension-registry/",
