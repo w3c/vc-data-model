@@ -120,7 +120,7 @@ var vcwg = {
     },
     'HASHLINK': {
       title: 'Cryptographic Hyperlinks',
-      href: 'https://tools.ietf.org/html/draft-sporny-hashlink',
+      href: 'https://datatracker.ietf.org/doc/draft-sporny-hashlink/',
       authors: ['Manu Sporny'],
       status: 'Internet-Draft',
       publisher: 'Internet Engineering Task Force (IETF)'
@@ -132,7 +132,7 @@ var vcwg = {
     },
     'JSON-SCHEMA-2018': {
       title: 'JSON Schema: A Media Type for Describing JSON Documents',
-      href: 'https://tools.ietf.org/html/draft-handrews-json-schema',
+      href: 'https://datatracker.ietf.org/doc/draft-handrews-json-schema/',
       authors: ['Austin Wright', 'Henry Andrews'],
       status: 'Internet-Draft',
       publisher: 'Internet Engineering Task Force (IETF)'
