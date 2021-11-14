@@ -1,11 +1,11 @@
 ## Verifiable Credentials Data Model and Representations
 
-Credentials are a part of our daily lives; driver's licenses are 
-used to assert that we are capable of operating a motor vehicle, 
-university degrees can be used to assert our level of education, 
-and government-issued passports enable us to travel between countries. 
-This specification provides a mechanism to express these sorts of 
-credentials on the Web in a way that is cryptographically secure, 
+Credentials are a part of our daily lives; driver's licenses are
+used to assert that we are capable of operating a motor vehicle,
+university degrees can be used to assert our level of education,
+and government-issued passports enable us to travel between countries.
+This specification provides a mechanism to express these sorts of
+credentials on the Web in a way that is cryptographically secure,
 privacy respecting, and machine-verifiable.
 
 We encourage contributions meeting the [Contribution
@@ -60,3 +60,34 @@ mailing list as well.
 - [v1] Update examples in the spec to make them modern
 - [v2] VC `@context` needs updating, possibly with security vocab modularized
   into smaller components instead of all included into a large context file.
+
+### Debugging Github Pages Build Errors
+
+There are times where Github Pages will fail to build with nondescript errors
+such as "Page build error." or "Symlink does not exist within your site's
+repository". You will need to run github-pages locally to debug such errors.
+To run github-pages, which uses Ruby and Jekyll locally, you will need to
+[set up a working Ruby and Bundle environment](https://help.dreamhost.com/hc/en-us/articles/115001070131-Using-Bundler-to-install-Ruby-gems).
+
+After you have installed Ruby and Bundle, you will need to do the following:
+
+```
+gem install jekyll github-pages
+```
+
+Then create a `Gemfile` file in the top level directory with the following
+contents:
+
+```
+source 'https://rubygems.org'
+gem 'github-pages'
+```
+
+Then run the following command:
+
+```
+bundle exec jekyll serve --watch --force_polling
+```
+
+You should be able to see the page build errors in detail upon running the
+command above.
