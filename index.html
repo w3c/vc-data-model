@@ -3452,7 +3452,7 @@ use of specific JWT-registered <a>claim</a> names and specific JWS-registered
 header parameter names to allow systems based on JWT to comply with this
 specification. If these specific <a>claim</a> names and header parameters are
 present, their respective counterpart in the standard
-<a>verifiable credential</a> and <a>verifiable presentation</a> SHOULD be omitted
+<a>verifiable credential</a> and <a>verifiable presentation</a> MAY be omitted
 to avoid duplication.
             </p>
           </section>
@@ -3704,6 +3704,7 @@ header parameter.
   "nbf": 1541493724,
   "iat": 1541493724,
   "exp": 1573029723,
+  "nonce": "660!6345FSer",
   "vc": {
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -3725,7 +3726,7 @@ In the example above, <code>vc</code> does not contain the <code>id</code>
 <a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
 attribute to represent a unique identifier. The <code>sub</code> attribute
 encodes the information represented by the <code>id</code> <a>property</a> of
-<code>credentialSubject</code>.
+<code>credentialSubject</code>. The <code>nonce</code> has been added to stop a replay attack.
             </p>
 
             <pre class="example nohighlight" title="Verifiable credential using JWT compact serialization (non-normative)">
@@ -3769,6 +3770,7 @@ header parameter.
   "nbf": 1541493724,
   "iat": 1541493724,
   "exp": 1573029723,
+  "nonce": "343s$FSFDa-",
   "vp": {
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -3786,7 +3788,7 @@ In the example above, <code>vp</code> does not contain the <code>id</code>
 <a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
 attribute to represent a unique identifier. <code>verifiableCredential</code>
 contains a string array of <a>verifiable credentials</a> using
-<code>JWT</code> compact serialization.
+<code>JWT</code> compact serialization. The <code>nonce</code> has been added to stop a replay attack.
             </p>
 
             <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
