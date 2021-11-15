@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Verifiable Credentials Data Model 1.0</title>
+    <title>Verifiable Credentials Data Model v1.1</title>
     <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
     <!--
       === NOTA BENE ===
       For the three scripts below, if your spec resides on dev.w3 you can check them
       out in the same tree and use relative links so that they'll work offline,
      -->
-    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script class="remove"
+      src="https://unpkg.com/browse/jquery/dist/jquery.min.js"></script>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' class='remove'></script>
     <script src="./common.js" class="remove"></script>
     <script type="text/javascript" class="remove">
       var respecConfig = {
+        group: "vc",
+
         // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus: "ED",
+        specStatus: "REC",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName: "vc-data-model",
@@ -22,10 +26,11 @@
         subtitle: "Expressing verifiable information on the Web",
 
         // if you wish the publication date to be other than today, set this
-//        publishDate: "2019-09-03",
+        publishDate: "2021-11-09",
         //crEnd: "2019-08-21",
         //prEnd: "2019-10-01",
         implementationReportURI: "https://w3c.github.io/vc-test-suite/implementations/",
+        errata: "https://w3c.github.io/vc-data-model/errata.html",
         previousMaturity: "REC",
         previousPublishDate: "2019-11-19",
 
@@ -37,6 +42,11 @@
         // extend the bibliography entries
         localBiblio: vcwg.localBiblio,
         doJsonLd: true,
+
+        // Uncomment these to use the respec extension that generates a list of
+        //   normative statements:
+        preProcess: [/*prepare_reqlist*/],
+        postProcess: [/*add_reqlist_button*/, restrictRefs],
 
         github: "https://github.com/w3c/vc-data-model/",
         includePermalinks: false,
@@ -51,15 +61,23 @@
         // only "name" is required
         editors: [
           { name: "Manu Sporny", url: "https://www.linkedin.com/in/manusporny/",
-            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"},
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/",
+            note: "v1.0, v1.1"},
           { name: "Grant Noble", url: "https://www.linkedin.com/in/grant-noble-8253994a/",
-            company: "ConsenSys", companyURL: "https://consensys.net/"},
+            company: "ConsenSys", companyURL: "https://consensys.net/",
+            note: "v1.0"},
           { name: "Dave Longley", url: "https://github.com/dlongley",
-            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"},
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/",
+            note: "v1.0"},
           { name: "Daniel C. Burnett", url: "https://www.linkedin.com/in/daburnett/",
-            company: "ConsenSys", companyURL: "https://consensys.net/"},
+            company: "ConsenSys", companyURL: "https://consensys.net/",
+            note: "v1.0"},
           { name: "Brent Zundel", url: "https://www.linkedin.com/in/bzundel/",
-            company: "Evernym", companyURL: "https://evernym.com/"}
+            company: "Evernym", companyURL: "https://www.evernym.com/",
+            note: "v1.0"},
+          { name: "Kyle Den Hartog", url: "https://www.linkedin.com/in/kyledenhartog/",
+            company: "MATTR", companyURL: "https://mattr.global/",
+            note: "v1.1"}
         ],
         // authors, add as many as you like.
         // This is optional, uncomment if you have authors as well as editors.
@@ -67,27 +85,13 @@
         authors:
         [
           { name: "Manu Sporny", url: "http://digitalbazaar.com/",
-            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/" },
+            company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"},
           { name: "Dave Longley", url: "http://digitalbazaar.com/",
             company: "Digital Bazaar", companyURL: "http://digitalbazaar.com/"},
           { name: "David Chadwick", url: "https://www.linkedin.com/in/david-chadwick-36816395/",
             company: "University of Kent", companyURL: "https://www.kent.ac.uk/"}
         ],
-        // name of the WG
-        wg:           "Verifiable Claims Working Group",
 
-        // URI of the public WG page
-        wgURI:        "https://www.w3.org/2017/vc/",
-
-        // name (with the @w3c.org) of the public mailing to which comments are due
-        wgPublicList: "public-vc-comments",
-
-        // URI of the patent status for this WG, for Rec-track documents
-        // !!!! IMPORTANT !!!!
-        // This is important for Rec-track documents, do not copy a patent URI from a random
-        // document unless you know what you're doing. If in doubt ask your friendly neighborhood
-        // Team Contact.
-        wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
         maxTocLevel: 2,
         inlineCSS: true
       };
@@ -132,46 +136,11 @@ cryptographically secure, privacy respecting, and machine-verifiable.
     </section>
 
     <section id='sotd'>
-
       <p>
-The Working Group thanks the following individuals not only for their
-contributions toward the content of this document, but also for yeoman's work
-in this standards community that drove changes, discussion, and consensus among
-a sea of varied opinions: Matt Stone, Gregg Kellogg, Ted Thibodeau Jr, Oliver
-Terbu, Joe Andrieu, David I. Lehn, Matthew Collier, and Adrian Gropper.
-      </p>
-
-      <p>
-Work on this specification has been supported by the Rebooting the
-Web of Trust community facilitated by Christopher Allen, Shannon Appelcline,
-Kiara Robles, Brian Weller, Betty Dhamers, Kaliya Young, Manu Sporny,
-Drummond Reed, Joe Andrieu, Heather Vescent, Kim Hamilton Duffy, Samantha Chase,
-and Andrew Hughes. The participants in the Internet Identity Workshop,
-facilitated by Phil Windley, Kaliya Young, Doc Searls, and Heidi Nobantu Saul,
-also supported the refinement of this work through numerous working sessions
-designed to educate about, debate on, and improve this specification.
-      </p>
-
-      <p>
-The Working Group also thanks the Chairs, Dan Burnett and Matt Stone, as
-well as our W3C Staff Contact, Kazuyuki Ashimura, for their expert
-management and steady guidance of the group through the W3C standardization
-process.
-      </p>
-
-      <p>
-Portions of the work on this specification have been funded by the
-United States Department of Homeland Security's Science and Technology
-Directorate under contract HSHQDC-17-C-00019. The content of this specification
-does not necessarily reflect the position or the policy of the U.S. Government
-and no official endorsement should be inferred.
-      </p>
-
-      <p>
-Comments regarding this document are welcome by the W3C Advisory Committee,
-but readers should be aware that the Candidate Recommendation comment period
-regarding the rest of this document has ended and the Working Group is
-unlikley to make substantive modifications to the specification at this stage.
+Comments regarding this document by the W3C Advisory Committee are welcome
+before January 14th 2021, but readers should be aware that the comment period
+regarding the rest of this document has ended and the Working Group is unlikley
+to make substantive modifications to the specification at this stage.
 Please file issues directly on
 <a href="https://github.com/w3c/vc-data-model/issues/">GitHub</a>,
 or send them to
@@ -181,23 +150,13 @@ or send them to
       </p>
 
       <p>
-The Working Group has received implementation feedback showing that there are
-at least two implementations for each normative feature in the specification.
-The group has obtained reports from nine (9) implementations. For details, see
-the <a href="https://github.com/w3c/vc-test-suite/">test suite</a> and
-<a href="https://w3c.github.io/vc-test-suite/implementations/">implementation report</a>.
+The Working Group has received implementation feedback showing that there are at
+least two implementations for each normative feature in the specification. The
+group has obtained reports from fourteen (14) implementations. For details, see
+the <a href="https://github.com/w3c/vc-test-suite/">test suite</a> and <a
+href="https://w3c.github.io/vc-test-suite/implementations/">implementation
+report</a>.
       </p>
-
-      <p>
-Changes since the last publication of this document include:
-      </p>
-
-      <ul>
-        <li>
-Non-normative insertion of an additional example and some minor editorial
-modifications to a few sentences in the specification.
-        </li>
-      </ul>
 
     </section>
 
@@ -400,7 +359,7 @@ protected environments or proprietary systems, where
         <h3>Use Cases and Requirements</h3>
 
         <p>
-The Verifiable Credentials Use Cases document [[VC-USECASES]] outlines a number
+The Verifiable Credentials Use Cases document [[VC-USE-CASES]] outlines a number
 of key topics that readers might find useful, including:
         </p>
 
@@ -436,13 +395,19 @@ desirable ecosystem characteristics were identified for this specification:
 <!-- requirement list start -->
         <ul>
           <li>
+<a>Credentials</a> represent statements made by an <a>issuer</a>.
+          </li>
 <a>Verifiable credentials</a> represent statements made by an <a>issuer</a> in
 a tamper-evident and privacy-respecting manner.
           </li>
           <li>
-<a>Holders</a> assemble collections of <a>verifiable credentials</a> from
-different <a>issuers</a> into a single artifact, a
-<a>verifiable presentation</a>.
+<a>Holders</a> assemble collections of <a>credentials</a> and/or
+<a>verifiable credentials</a> from different <a>issuers</a> into a single
+artifact, a <a>presentation</a>.
+          </li>
+          <li>
+Holders transform <a>presentations</a> into <a>verifiable presentations</a>
+to render them tamper-evident.
           </li>
           <li>
 <a>Issuers</a> can issue <a>verifiable credentials</a> about any <a>subject</a>.
@@ -512,6 +477,17 @@ greater than, less than, equal to, is in set, and so on.
           </li>
           <li>
 <a>Issuers</a> can issue revocable <a>verifiable credentials</a>.
+          </li>
+          <li>
+The processes of cryptographically protecting <a>credentials</a> and
+<a>presentations</a>, and verifying <a>verifiable credentials</a> and
+<a>verifiable presentations</a>, have to be deterministic, bi-directional, and
+lossless. Any verification of a <a>verifiable credential</a> or
+<a>verifiable presentation</a> has to be transformable to the generic data model
+defined in this document in a deterministic process, such that the resulting
+<a>credential</a> or <a>presentation</a> is semantically and syntactically
+equivalent to the original construct, so that it can be processed in an
+interoperable fashion.
           </li>
           <li>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> have to be
@@ -589,7 +565,7 @@ At the time of publication, Working Group members had implemented
 JSON Web Tokens [[RFC7519]] secured using JSON Web Signatures [[RFC7515]]
           </li>
           <li>
-Linked Data Signatures [[?LD-SIGNATURES]]
+Linked Data Proofs [[?LD-PROOFS]]
           </li>
           <li>
 Camenisch-Lysyanskaya Zero-Knowledge Proofs [[?CL-SIGNATURES]].
@@ -624,9 +600,7 @@ valid JSON or JSON-LD.
     <section class="informative">
       <h2>Terminology</h2>
 
-      <div data-include="./terms.html"
-        data-oninclude="restrictReferences">
-      </div>
+      <div data-include="./terms.html"></div>
     </section>
 
     <section class="informative">
@@ -757,7 +731,7 @@ usually a digital signature.
 	       Proof Graph on the bottom.  The Credental Graph has
 	       Credential 123 with 4 properties: 'type' of value
 	       AlumniCredential, 'issuer' of Example University,
-	       'issuanceDate' of 2010-01-01T19:73:24Z, and
+	       'issuanceDate' of 2010-01-01T19:23:24Z, and
 	       credentialSubject of Pat, who has an alumniOf property
 	       with value of Example University.  The Proof Graph has
 	       Signature 456 with 5 properties: 'type' of
@@ -827,21 +801,21 @@ Basic components of a verifiable presentation.
 <a>verifiable presentation</a>, but abstracts the details about how
 <a>verifiable credentials</a> are organized into information <a>graphs</a>,
 which are then organized into <a>verifiable presentations</a>.
+        </p>
+        <p>
 <a href="#info-graph-vp"></a> below shows a more complete depiction of a
 <a>verifiable presentation</a>, which is normally composed of at least four
-information <a>graphs</a>. The first <a>graph</a> expresses the
-<a>verifiable presentation</a> itself, which contains
-<span class="color-text" style="color:#b4a7d6;">presentation metadata</span>.
-The <code>verifiablePresentation</code> property in the <a>graph</a> refers to
-one or more <a>verifiable credentials</a> (each a self-contained <a>graph</a>),
-which in turn contains
-<span class="color-text" style="color:#d5a6bd;">credential metadata</span> and
-<span class="color-text" style="color:#ffe599;">claims</span>.
-The third <a>graph</a> expresses the
-<span class="color-text" style="color:#b6d7a8;">credential graph proof</span>,
-which is usually a digital signature. The fourth <a>graph</a> expresses the
-<span class="color-text" style="color:#a4c2f4;">presentation graph proof</span>,
-which is usually a digital signature.
+information <a>graphs</a>. The first of these information <a>graphs</a>, the
+Presentation <a>Graph</a>, expresses the <a>verifiable presentation</a>
+itself, which contains presentation metadata. The
+<code>verifiableCredential</code> property in the Presentation <a>Graph</a>
+refers to one or more <a>verifiable credentials</a>, each being one of the
+second information <a>graphs</a>, i.e., a self-contained Credential
+<a>Graph</a>), which in turn contains credential metadata and claims. The
+third information <a>graph</a>, the Credential Proof <a>Graph</a>, expresses
+the credential graph proof, which is usually a digital signature. The fourth
+information <a>graph</a>, the Presentation Proof <a>Graph</a>, expresses the
+presentation graph proof, which is usually a digital signature.
         </p>
 
         <figure id="info-graph-vp">
@@ -925,7 +899,7 @@ discount from a university. In the example below, Pat receives an alumni
   <span class='comment'>// the entity that issued the credential</span>
   "issuer": "https://example.edu/issuers/565049",
   <span class='comment'>// when the credential was issued</span>
-  "issuanceDate": "2010-01-01T19:73:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   <span class='comment'>// claims about the subjects of the credential</span>
   "credentialSubject": {
     <span class='comment'>// identifier for the only subject of the credential</span>
@@ -952,7 +926,7 @@ discount from a university. In the example below, Pat receives an alumni
     <span class='comment'>// purpose of this proof</span>
     "proofPurpose": "assertionMethod",
     <span class='comment'>// the identifier of the public key that can verify the signature</span>
-    "verificationMethod": "https://example.edu/issuers/keys/1",
+    "verificationMethod": "https://example.edu/issuers/565049/keys/1",
     <span class='comment'>// the digital signature value</span>
     "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
       sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
@@ -990,7 +964,7 @@ the <a>verifier</a> and <a>verified</a>.
     "id": "http://example.edu/credentials/1872",
     "type": ["VerifiableCredential", "AlumniCredential"],
     "issuer": "https://example.edu/issuers/565049",
-    "issuanceDate": "2010-01-01T19:73:24Z",
+    "issuanceDate": "2010-01-01T19:23:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "alumniOf": {
@@ -1008,7 +982,7 @@ the <a>verifier</a> and <a>verified</a>.
       "type": "RsaSignature2018",
       "created": "2017-06-18T21:19:10Z",
       "proofPurpose": "assertionMethod",
-      "verificationMethod": "https://example.edu/issuers/keys/1",
+      "verificationMethod": "https://example.edu/issuers/565049/keys/1",
       "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
         sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
         X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
@@ -1035,13 +1009,12 @@ the <a>verifier</a> and <a>verified</a>.
 
         <p class="note">
 Implementers that are interested in understanding more about the
-<code>proof</code> mechanism used above can learn more in
-Section <a href="#proofs-signatures"></a> and by reading the
-following specifications: Linked Data Proofs [[LD-PROOFS]], Linked Data
-Signatures [[LD-SIGNATURES]], 2018 RSA Signature Suite [[LDS-RSA2018]], and
-JSON Web Signature (JWS) Unencoded Payload Option [[RFC7797]]. A list
-of proof mechanisms is available in the Verifiable Credentials
-Extension Registry [[VC-EXTENSION-REGISTRY]].
+<code>proof</code> mechanism used above can learn more in Section <a
+href="#proofs-signatures"></a> and by reading the following specifications:
+Linked Data Proofs [[?LD-PROOFS]], Linked Data Cryptographic Suites
+Registry[[?LDP-REGISTRY]], and JSON Web Signature (JWS) Unencoded Payload Option
+[[RFC7797]]. A list of proof mechanisms is available in the Verifiable
+Credentials Extension Registry [[VC-EXTENSION-REGISTRY]].
         </p>
       </section>
     </section>
@@ -1067,12 +1040,12 @@ mean the same thing to each other. This might be referred to as
         </p>
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> have many
-attributes and values that are identified by <a>URIs</a>. However, those
-<a>URIs</a> can be long and not very human-friendly. In such cases, short-form
-human-friendly aliases can be more helpful. This specification uses the
-<code>@context</code> <a>property</a> to map such short-form aliases to the URIs
-required by specific <a>verifiable credentials</a> and
-<a>verifiable presentations</a>.
+attributes and values that are identified by <a>URIs</a> [[RFC3986]]. However,
+those <a>URIs</a> can be long and not very human-friendly. In such cases,
+short-form human-friendly aliases can be more helpful. This specification uses
+the <code>@context</code> <a>property</a> to map such short-form aliases to the
+<a>URIs</a> required by specific <a>verifiable credentials</a> and <a>verifiable
+presentations</a>.
        </p>
   <p class="note">
 In JSON-LD, the <code>@context</code> <a>property</a> can also be used to
@@ -1121,6 +1094,8 @@ processors that support JSON-LD can process the <code>@context</code>
   ]</span>,
   "id": "http://example.edu/credentials/58473",
   "type": ["VerifiableCredential", "AlumniCredential"],
+  "issuer": "https://example.edu/issuers/565049",
+  "issuanceDate": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "alumniOf": {
@@ -1158,7 +1133,7 @@ The data available at <code>https://www.w3.org/2018/credentials/v1</code> is a
 static document that is never updated and SHOULD be downloaded and cached. The
 associated human-readable vocabulary document for the Verifiable Credentials
 Data Model is available at
-<a href="https://www.w3.org/2018/credentials">https://www.w3.org/2018/credentials</a>.
+<a href="https://www.w3.org/2018/credentials/">https://www.w3.org/2018/credentials/</a>.
 This concept is further expanded on in Section <a href="#extensibility"></a>.
         </p>
 
@@ -1192,7 +1167,7 @@ by that identifier.
 The <code>id</code> <a>property</a> MUST NOT have more than one value.
           </li>
           <li>
-The value of the <code>id</code> <a>property</a> MUST be a URI.
+The value of the <code>id</code> <a>property</a> MUST be a <a>URI</a>.
           </li>
         </ul>
 
@@ -1224,6 +1199,8 @@ about the <code>id</code>.
   ],
   <span class="highlight">"id": "http://example.edu/credentials/3732"</span>,
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/565049",
+  "issuanceDate": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
     "degree": {
@@ -1298,6 +1275,8 @@ in a document containing machine-readable information about the
   ],
   "id": "http://example.edu/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "UniversityDegreeCredential"]</span>,
+  "issuer": "https://example.edu/issuers/565049",
+  "issuanceDate": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1512,6 +1491,8 @@ a set of objects that contain one or more properties that are each related to a
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/565049",
+  "issuanceDate": "2010-01-01T00:00:00Z",
   <span class="highlight">"credentialSubject"</span>: {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1538,6 +1519,8 @@ who are spouses. Note the use of array notation to associate multiple
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
+  "issuer": "https://example.com/issuer/123",
+  "issuanceDate": "2010-01-01T00:00:00Z",
   "credentialSubject": <span class="highlight">[{
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "name": "Jayden Doe",
@@ -1648,11 +1631,12 @@ expressing the date and time when a <a>credential</a> becomes valid.
           <dd>
 A <a>credential</a> MUST have an <code>issuanceDate</code> <a>property</a>. The
 value of the <code>issuanceDate</code> <a>property</a> MUST be a string value of
-an [[!RFC3339]] combined date and time string representing the date and time the
+an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>] combined
+<code>date-time</code> string representing the date and time the
 <a>credential</a> becomes valid, which could be a date and time in the future.
-Note that this value represents the earliest point in time at which the
-information associated with the <code>credentialSubject</code> <a>property</a>
-becomes valid.
+Note that this value represents the earliest point in time
+at which the information associated with the <code>credentialSubject</code>
+<a>property</a> becomes valid.
           </dd>
         </dl>
 
@@ -1682,9 +1666,10 @@ It is expected that the next version of this specification will add the
 <code>validFrom</code> <a>property</a> and will deprecate the
 <code>issuanceDate</code> <a>property</a> in favor of a new <code>issued</code>
 <a>property</a>. The range of values for both properties are expected to remain
-as [[?RFC3339]] combined date and time strings. Implementers are advised that
-the <code>validFrom</code> and <code>issued</code> <a>properties</a> are
-reserved and use for any other purpose is discouraged.
+as [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>] combined
+<code>date-time</code> strings. Implementers are advised that the
+<code>validFrom</code> and <code>issued</code> <a>properties</a> are reserved
+and use for any other purpose is discouraged.
         </p>
 
       </section>
@@ -1742,7 +1727,7 @@ the signing date. The example below uses RSA digital signatures.
   "id": "http://example.gov/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu",
-  "issuanceDate": "2010-01-01T19:73:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1771,11 +1756,10 @@ As discussed in Section <a href="#conformance"></a>, there are multiple viable
 proof mechanisms, and this specification does not standardize nor recommend any
 single proof mechanism for use with <a>verifiable credentials</a>. For more
 information about the <code>proof</code> mechanism, see the following
-specifications: Linked Data Proofs [[LD-PROOFS]], Linked Data Signatures
-[[LD-SIGNATURES]], 2018 RSA Signature Suite [[LDS-RSA2018]], and JSON Web
-Signature (JWS) Unencoded Payload Option [[RFC7797]]. A list of proof mechanisms
-is available in the Verifiable Credentials Extension Registry
-[[VC-EXTENSION-REGISTRY]].
+specifications: Linked Data Proofs [[?LD-PROOFS]], Linked Data Cryptographic
+Suites Registries [[?LDP-REGISTRY]], and JSON Web Signature (JWS) Unencoded
+Payload Option [[RFC7797]]. A list of proof mechanisms is available in the
+Verifiable Credentials Extension Registry [[VC-EXTENSION-REGISTRY]].
         </p>
 
       </section>
@@ -1792,8 +1776,9 @@ the expression of <a>credential</a> expiration information.
           <dt><var>expirationDate</var></dt>
           <dd>
 If present, the value of the <code>expirationDate</code> <a>property</a> MUST be
-a string value of an [[!RFC3339]] combined date and time string representing the
-date and time the <a>credential</a> ceases to be valid.
+a string value of an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
+<code>date-time</code> representing the date and time the <a>credential</a>
+ceases to be valid.
           </dd>
         </dl>
 
@@ -1841,11 +1826,12 @@ This specification defines the following <code>credentialStatus</code>
         <dl>
           <dt><var>credentialStatus</var></dt>
           <dd>
-The value of the <code>credentialStatus</code> <a>property</a> MUST include the:
+If present, the value of the <code>credentialStatus</code> <a>property</a> MUST
+include the following:
 
             <ul>
               <li>
-<code>id</code> <a>property</a>, which MUST be a URL.
+<code>id</code> <a>property</a>, which MUST be a <a>URI</a>.
               </li>
               <li>
 <code>type</code> <a>property</a>, which expresses the <a>credential</a> status
@@ -2018,9 +2004,9 @@ the desired <a>verifiable presentation</a>.
         <figure>
           <img style="margin: auto; display: block; width: 50%;"
             src="diagrams/claim-example-2.svg" alt="Pat has a property
-            dateOfBirth whose value is 2010-01-01T19:73:24Z">
+            dateOfBirth whose value is 2010-01-01">
           <figcaption style="text-align: center;">
-A basic claim expressing that Pat's date of birth is 2010-01-01T19:23:24Z. Date
+A basic claim expressing that Pat's date of birth is January 1, 2010. Date
 encoding would be determined by the schema.
           </figcaption>
         </figure>
@@ -2222,7 +2208,7 @@ that market competition and customer choice is increased.
         <p>
 For more information about how this trust model interacts with various threat
 models studied by the Working Group, see the Verifiable Credentials Use Cases
-document [[VC-USECASES]].
+document [[VC-USE-CASES]].
         </p>
 
         <p class="note">
@@ -2232,7 +2218,7 @@ models. In the Verifiable Credentials Data Model, a <a>verifier</a> either
 directly trusts or does not trust an <a>issuer</a>. While it is possible to
 build transitive trust models using the Verifiable Credentials Data Model,
 implementers are urged to
-<a href="https://tools.ietf.org/html/draft-housley-web-pki-problems">learn
+<a href="https://datatracker.ietf.org/doc/draft-housley-web-pki-problems/">learn
 about the security weaknesses</a> introduced by
 <a href="https://www.cs.cornell.edu/people/egs/papers/dnssurvey.pdf">broadly
 delegating trust</a> in the manner adopted by Certificate Authority systems.
@@ -2259,9 +2245,9 @@ data model, without the use of a centralized system for doing so, through the
 use of [[?LINKED-DATA]].
           </li>
           <li>
-Support multiple types of cryptographic proof formats through the use of Linked
-Data Proofs [[?LD-PROOFS]], Linked Data Signatures [[?LD-SIGNATURES]], and a
-variety of signature suites.
+Support multiple types of cryptographic proof formats through the use of
+Linked Data Proofs [[?LD-PROOFS]] and a variety of signature suites listed
+in the Linked Data Cryptographic Suites Registry [[?LDP-REGISTRY]]
           </li>
           <li>
 Provide all of the extensibility mechanisms outlined above in a data format that
@@ -2462,7 +2448,8 @@ specification considers:
         <ul>
           <li>
 Data verification schemas, which are used to <a>verify</a> that the structure
-and contents of a <a>verifiable credential</a> conform to a published schema.
+and contents of a <a>credential</a> or <a>verifiable credential</a> conform to a
+published schema.
           </li>
           <li>
 Data encoding schemas, which are used to map the contents of a
@@ -2477,10 +2464,10 @@ the <code>@context</code> property, which neither enforces data structure or
 data syntax, nor enables the definition of arbitrary encodings to alternate
 representation formats.
         </p>
-
         <p>
 This specification defines the following <a>property</a> for the expression of a
-data schema:
+data schema, which can be included by an <a>issuer</a> in
+the <a>verifiable credentials</a> that it issues:
         </p>
 
         <dl>
@@ -2632,7 +2619,7 @@ more refresh services that provides enough information to the recipient's
 software such that the recipient can refresh the <a>verifiable credential</a>.
 Each <code>refreshService</code> value MUST specify its <code>type</code> (for
 example, <code>ManualRefreshService2018</code>) and its <code>id</code>, which
-is the URL of the service. The precise content of each refresh service is
+is the <a>URI</a> of the service. The precise content of each refresh service is
 determined by the specific <code>refreshService</code> <a>type</a> definition.
           </dd>
         </dl>
@@ -2758,10 +2745,23 @@ in an archive.
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://www.w3.org/2018/credentials/examples/v1"
+    "https://www.w3.org/2018/credentials/examples/v1",
+    {
+        "@protected": true,
+        "VerifiablePresentationTermsOfUseExtension": {
+          "@id": "https://www.w3.org/2018/credentials/examples#VerifiablePresentationExtension",
+          "@context": {
+            "@protected": true,
+            "termsOfUse": {
+              "@id": "https://www.w3.org/2018/credentials#termsOfUse",
+              "@type": "@id"
+            }
+          }
+        }
+    }
   ],
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiablePresentation"],
+  "type": ["VerifiablePresentation", "VerifiablePresentationTermsOfUseExtension"],
   "verifiableCredential": [{
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -2790,10 +2790,21 @@ in an archive.
       "target": "http://example.edu/credentials/3732",
       "action": ["3rdPartyCorrelation"]
     }]
-  }</span>,
+  }]</span>,
   "proof": [ ... ]
 }
         </pre>
+
+        <p class="note">
+Warning: The <code>termsOfUse</code> property is improperly defined within the
+<code>VerifiablePresentation</code> scoped context. This is a bug with the
+version 1 context and will be fixed in the version 2 context. In the meantime,
+implementors who wish to use this feature will be required to extend the context
+of their <a>verifiable presentation</a> with an additional term that defines the
+<code>termsOfUse</code> property, which can then be used alongside the
+<a>verifiable presentation</a> type property, in order for the term to be
+semantically recognized in a JSON-LD processor.
+        </p>
 
         <p>
 In the example above, the <a>holder</a> (the <code>assigner</code>), who is
@@ -2885,18 +2896,21 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
     "verifier": "https://example.edu/issuers/14",
     "evidenceDocument": "DriversLicense",
     "subjectPresence": "Physical",
-    "documentPresence": "Physical"
-  },{
-    "id": "https://example.edu/evidence/f2aeec97-fc0d-42bf-8ca7-0548192dxyzab",
-    "type": ["SupportingActivity"],
-    "verifier": "https://example.edu/issuers/14",
-    "evidenceDocument": "Fluid Dynamics Focus",
-    "subjectPresence": "Digital",
-    "documentPresence": "Digital"
+    "documentPresence": "Physical",
+    "licenseNumber": "123AB4567"
   }]</span>,
   "proof": { <span class="comment">...</span> }
 }
         </pre>
+
+        <p class="note">
+In this <code>evidence</code> example, the <a>issuer</a> is asserting that they
+physically matched the <a>subject</a> of the <a>credential</a> to a physical
+copy of a driver's license with the stated license number. This driver's license
+was used in the issuance process to verify that "Example University" verified
+the subject before issuance of the credential and how they did so (physical
+verification).
+        </p>
 
         <p class="note">
 The <code>evidence</code> <a>property</a> provides different and complementary
@@ -2918,8 +2932,8 @@ information about the <code>proof</code> <a>property</a>, see Section
         <p>
 A zero-knowledge proof is a cryptographic method where an entity can prove to
 another entity that they know a certain value without disclosing the actual
-value. A real-world example is proving that an accredited university has granted
-a degree to you without revealing your identity or any other personally
+value. A real-world example is proving that an accredited university has
+granted a degree to you without revealing your identity or any other personally
 identifiable information contained on the degree.
         </p>
         <p>
@@ -2951,45 +2965,50 @@ their issued <a>verifiable credentials</a>.
         </ul>
 
         <p>
-This specification describes a data model that supports zero-knowledge proof
-mechanisms. The examples below highlight how the data model can be used to
-issue, present, and verify zero-knowledge <a>verifiable credentials</a>.
+This specification describes a data model that supports selective disclosure
+with the use of zero-knowledge proof mechanisms. The examples below highlight
+how the data model can be used to issue, present, and verify zero-knowledge
+<a>verifiable credentials</a>.
         </p>
 
         <p>
-To use zero-knowledge <a>verifiable credentials</a> the <a>issuer</a> must
-issue a <a>verifiable credential</a> in a manner that enables the <a>holder</a>
-to present the information to a <a>verifier</a> in a privacy-enhancing manner.
+For a <a>holder</a> to use a zero-knowledge <a>verifiable presentation</a>,
+they need an <a>issuer</a> to have issued a <a>verifiable credential</a> in a manner
+that enables the <a>holder</a> to derive a proof from the originally issued
+<a>verifiable credential</a>, so that the <a>holder</a> can present the
+information to a <a>verifier</a> in a privacy-enhancing manner.
 This implies that the <a>holder</a> can prove the validity of the
 <a>issuer's</a> signature without revealing the values that were signed, or when
 only revealing certain selected values. The standard practice is to do so by
 proving knowledge of the signature, without revealing the signature itself.
 There are two requirements for <a>verifiable credentials</a> when they are to be
-used in zero-knowledge proof systems. The <a>verifiable credential</a> MUST
-contain a:
+used in zero-knowledge proof systems.
         </p>
 
         <ul>
           <li>
-<a>Credential</a> definition, using the <code>credentialSchema</code>
-<a>property</a>, that can be used by all parties to perform various
-cryptographic operations in zero-knowledge.
+The <a>verifiable credential</a> MUST contain a Proof, using the
+<code>proof</code> <a>property</a>, so that the <a>holder</a> can derive a
+<a>verifiable presentation</a> that reveals only the information than the
+<a>holder</a> intends to reveal.
           </li>
           <li>
-Proof, using the <code>proof</code> <a>property</a>, that can be used to derive
-<a>verifiable presentations</a> that present information contained in the
-original <a>verifiable credential</a> in zero-knowledge. The zero-knowledge
-<a>verifiable presentation</a> must not reveal any information not intended to
-be revealed by the <a>holder</a>.
+If a <a>credential</a> definition is being used, the <a>credential</a>
+definition MUST be defined in the <code>credentialSchema</code> <a>property</a>,
+so that it can be used by all parties to perform various cryptographic
+operations in zero-knowledge.
           </li>
         </ul>
 
         <p>
 The following example shows one method of using <a>verifiable credentials</a> in
-zero-knowledge. It makes use of a CL Signature, which allows the presentation of
-the <a>verifiable credential</a> in a way that supports the privacy of the
+zero-knowledge. It makes use of a Camenisch-Lysyanskaya Signature
+[[?CL-SIGNATURES]], which allows the presentation of the <a>verifiable
+credential</a> in a way that supports the privacy of the
 <a>holder</a> and <a>subject</a> through the use of selective disclosure of the
-<a>verifiable credential</a> values.
+<a>verifiable credential</a> values. Some other cryptographic systems which rely
+upon zero-knowledge proofs to selectively disclose attributes can be found in the
+[[?LDP-REGISTRY]] as well.
         </p>
 
         <pre class="example nohighlight" title="A verifiable credential that supports CL Signatures">
@@ -3022,7 +3041,6 @@ the <a>verifiable credential</a> in a way that supports the privacy of the
   }</span>
 }
         </pre>
-
         <p>
 The example above provides the <a>verifiable credential</a> definition by using
 the <code>credentialSchema</code> <a>property</a> and a specific proof that is
@@ -3033,17 +3051,18 @@ usable in the Camenisch-Lysyanskaya Zero-Knowledge Proof system.
 The next example utilizes the <a>verifiable credential</a> above to generate a
 new derived <a>verifiable credential</a> with a privacy-preserving proof. The
 derived <a>verifiable credential</a> is then placed in a
-<a>verifiable presentation</a>, which further proves that the entire assertion
-is valid. There are three requirements of most <a>verifiable presentations</a>
-when they are to be used in zero-knowledge systems:
+<a>verifiable presentation</a>, so that the <a>verifiable credential</a>
+discloses only the <a>claims</a> and additional credential metadata that the
+<a>holder</a> intended. To do this, all of the following requirements are
+expected to be met:
         </p>
 
         <ul>
           <li>
-Each derived <a>verifiable credential</a> within a
-<a>verifiable presentation</a> MUST have a <code>credentialSchema</code>
-<a>property</a>. This allows the derived <a>verifiable credential</a> to
-reference the credential definition used to generate the derived proof.
+Each derived <a>verifiable credential</a> within a <a>verifiable
+presentation</a> MUST contain all information necessary to verify the
+<a>verifiable credential</a>, either by including it directly within the
+credential, or by referencing the necessary information.
           </li>
           <li>
 A <a>verifiable presentation</a> MUST NOT leak information that would enable
@@ -3051,8 +3070,8 @@ the <a>verifier</a> to correlate the <a>holder</a> across multiple
 <a>verifiable presentations</a>.
           </li>
           <li>
-The <a>verifiable presentation</a> MUST contain a <code>proof</code>
-<a>property</a> to enable the <a>verifier</a> to ascertain that all derived
+The <a>verifiable presentation</a> SHOULD contain a <code>proof</code>
+<a>property</a> to enable the <a>verifier</a> to check that all derived
 <a>verifiable credentials</a> in the <a>verifiable presentation</a> were issued
 to the same <a>holder</a> without leaking personally identifiable information
 that the <a>holder</a> did not intend to share.
@@ -3557,8 +3576,8 @@ specification. For example, the <code>kid</code> can refer to a key in a
 
             <p>
 For backward compatibility with JWT processors, the following registered JWT
-claim names MUST be used instead of their respective
-standard <a>verifiable credential</a> counterparts:
+claim names MUST be used instead of their respective standard 
+<a>verifiable credential</a> counterparts:
             </p>
 
             <ul>
@@ -3599,7 +3618,7 @@ used if their use is not explicitly discouraged. Additional
 <code>credentialSubject</code> property of the JWT.
             </p>
 
-            <p>
+            <p class="note">
 For more information about using JOSE header parameters and/or JWT
 claim names not specified herein, see the Verifiable Credentials Implementation
 Guidelines [[?VC-IMP-GUIDE]] document.
@@ -3611,8 +3630,7 @@ the concepts outlined in Section
 <a href="#advanced-concepts">Advanced Concepts</a> (for example,
 <code>refreshService</code>, <code>termsOfUse</code>, and
 <code>evidence</code>). These concepts can be encoded as they are without any
-transformation, and can be added to the <code>vc</code> <a>claim</a> of the
-JWT.
+transformation, and can be added to the <code>vc</code> JWT <a>claim</a>.
             </p>
 
             <p class="note">
@@ -3621,8 +3639,8 @@ Implementers are warned that JWTs are not capable of encoding multiple
 <a>verifiable credential</a> with more than one <a>subject</a>. JWTs might
 support multiple subjects in the future and implementers are advised to refer
 to the <a href="https://www.iana.org/assignments/jwt/">
-JSON Web Token Claim Registry</a> for multi-subject JWT claim names or the
-<a href="https://tools.ietf.org/html/draft-yusef-oauth-nested-jwt-00">
+JSON Web Token Claim Registry</a> for multi-subject JWT claim names or
+the <a href="https://datatracker.ietf.org/doc/draft-yusef-oauth-nested-jwt/">
 Nested JSON Web Token</a> specification.
             </p>
 
@@ -3657,9 +3675,9 @@ done:
             <ul>
               <li>
 If <code>exp</code> is present, the UNIX timestamp MUST be converted to an [<a
-data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>] <code>date-time</code>, 
-and MUST be used to set the value
-of the <code>expirationDate</code> <a>property</a> of the new JSON object.
+data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>] <code>date-time</code>,
+and MUST be used to set the value of the <code>expirationDate</code>
+<a>property</a> of <code>credentialSubject</code> of the new JSON object.
               </li>
               <li>
 If <code>iss</code> is present, the value MUST be used to set the
@@ -3668,8 +3686,9 @@ If <code>iss</code> is present, the value MUST be used to set the
                   </li>
                   <li>
 If <code>nbf</code> is present, the UNIX timestamp MUST be converted to an
-[[!RFC3339]] <code>date-time</code>, and MUST be used to set the value
-of the <code>issuanceDate</code> <a>property</a> of the new JSON object.
+[<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
+<code>date-time</code>, and MUST be used to set the value of the
+<code>issuanceDate</code> <a>property</a> of the new JSON object.
                   </li>
                   <li>
 If <code>sub</code> is present, the value MUST be used to set the value of the
@@ -3724,7 +3743,7 @@ header parameter.
 
             <p>
 In the example above, <code>vc</code> does not contain the <code>id</code>
-<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
+<a>property</a> because the JWT encoding uses the <code>jti</code>
 attribute to represent a unique identifier. The <code>sub</code> attribute
 encodes the information represented by the <code>id</code> <a>property</a> of
 <code>credentialSubject</code>. The <code>nonce</code> has been added to stop a replay attack.
@@ -3786,10 +3805,11 @@ header parameter.
 
             <p>
 In the example above, <code>vp</code> does not contain the <code>id</code>
-<a>property</a> because the <code>JWT</code> encoding uses the <code>jti</code>
+<a>property</a> because the JWT encoding uses the <code>jti</code>
 attribute to represent a unique identifier. <code>verifiableCredential</code>
 contains a string array of <a>verifiable credentials</a> using
-<code>JWT</code> compact serialization. The <code>nonce</code> has been added to stop a replay attack.
+<code>JWT</code> compact serialization. The <code>nonce</code> has been added
+to stop a replay attack.
             </p>
 
             <pre class="example nohighlight" title="Verifiable presentation using JWT compact serialization (non-normative)">
@@ -3843,10 +3863,10 @@ other related information can be easily discovered and new information can be
 easily merged into the existing graph of knowledge. Linked Data is
 extensible in a decentralized way, greatly reducing barriers to large scale
 integration. The data model in this specification works well with the
-<a href="https://w3c-dvcg.github.io/ld-proofs/">Linked Data Proofs</a>,
-<a href="https://w3c-dvcg.github.io/ld-signatures/">Linked Data Signatures</a>,
-and the associated
-<a href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data Cryptographic Suites</a>,
+<a href="https://w3c-ccg.github.io/ld-proofs/">Linked Data Proofs</a> and
+the associated <a
+  href="https://w3c-ccg.github.io/ld-cryptosuite-registry/">Linked Data
+  Cryptographic Suites</a>
 which are designed to protect the data model as described by this specification.
           </p>
 
@@ -5523,7 +5543,7 @@ is invalid.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "ageOver": 21
     },
-  "nonTransferable": "True",
+  "nonTransferable": true,
   "proof": { ..
   "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   ... }
@@ -5759,7 +5779,7 @@ verifiable credential that was passed to it by the subject">
     "https://www.w3.org/2018/credentials/v1",
     "https://www.w3.org/2018/credentials/examples/v1"
   ],
-  "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
+  "id": "https://example.com/VP/0987654321",
   "type": ["VerifiablePresentation"],
   "verifiableCredential": [
     {
@@ -5767,17 +5787,19 @@ verifiable credential that was passed to it by the subject">
        "https://www.w3.org/2018/credentials/v1",
        "https://www.w3.org/2018/credentials/examples/v1"
       ],
-      "id": "http://example.gov/credentials/3732",
+      "id": "http://pharma.example.com/credentials/3732",
       "type": ["VerifiableCredential", "PrescriptionCredential"],
-      "issuer": "https://example.edu",
-      "issuanceDate": "2010-01-01T19:73:24Z",
+      "issuer": "https://pharma.example.com/issuer/4",
+      "issuanceDate": "2010-01-01T19:23:24Z",
       "credentialSubject": {
         "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
         "prescription": {....}
       },
-      "revocation": {
-        "id": "http://example.gov/revocations/738",
-        "type": "SimpleRevocationList2017"
+      "credentialStatus": {
+        "id": "https://pharma.example.com/credentials/status/3#94567",
+        "type": "RevocationList2020Status",
+        "revocationListIndex": "94567",
+        "revocationListCredential": "https://pharma.example.com/credentials/status/3"
       },
       "proof": {....}
     },
@@ -5789,7 +5811,7 @@ verifiable credential that was passed to it by the subject">
       "id": "https://example.com/VC/123456789",
       "type": ["VerifiableCredential", "PrescriptionCredential"],
       "issuer": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "issuanceDate": "2010-01-03T19:73:24Z",
+      "issuanceDate": "2010-01-03T19:53:24Z",
       "credentialSubject": {
         "id": "did:example:76e12ec21ebhyu1f712ebc6f1z2",
         "prescription": {....}
@@ -5859,7 +5881,7 @@ the subject of the credential, but who has a relationship with the issuer">
     "type": "LawEnforcement",
     "id": "did:example:ebfeb1276e12ec21f712ebc6f1c"
   },
-  "issuanceDate": "2010-01-01T19:73:24Z",
+  "issuanceDate": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "name": "Mr John Doe",
@@ -5918,8 +5940,102 @@ Extensions of Verifiable Credentials Data Model 1.0</a>
 
   </section>
 
+  <section>
+    <h2>Revision History</h2>
+
+    <p>
+This section contains the substantive changes that have been made since the
+publication of v1.0 of this specification as a W3C Recommendation.
+    </p>
+
+    <p>
+Changes since the <a
+href="https://www.w3.org/TR/2019/REC-vc-data-model-20191119/"> Recommendation
+</a>:
+
+      <ul>
+        <li>
+Add this revision history section.
+        </li>
+
+        <li>
+Update previous normative references that pointed to RFC3339 for datetime
+details to now normatively reference the datetime details described in
+XMLSCHEMA11-2 which more accurately reflects the usage in examples and
+libraries.
+        </li>
+
+        <li>
+Loosen the requirement to use URLs to use <a>URIs</a> in the <code>id</code>
+property of the <code>credentialStatus</code> and <code>refreshService</code>
+sections of the data model.
+        </li>
+
+        <li>
+Loosen normative statements in the zero-knowledge proofs section to enable
+compliance of new zero-knowledge proof schemes, such as BBS+, that have been
+created since the v1.0 specification was published as a Recommendation.
+        </li>
+
+        <li>
+Update all references to point to the latest version of the referenced
+specifications. Fix broken links to papers that have become unavailable to
+updated locations where the papers are available.
+        </li>
+
+        <li>
+Increase accessibility of SVG diagrams.
+        </li>
+
+        <li>
+Fix editorial bugs in a few examples related to `issuer`, `issuanceDate`,
+`credentialStatus`, dates, dead links, and minor syntax errors.
+        </li>
+
+        <li>
+Move acknowledgements from Status of the Document section into the
+Acknowledgements appendix.
+        </li>
+      </ul>
+    </p>
+  </section>
+
   <section class="appendix informative">
     <h2>Acknowledgements</h2>
+
+    <p>
+The Working Group thanks the following individuals not only for their
+contributions toward the content of this document, but also for yeoman's work
+in this standards community that drove changes, discussion, and consensus among
+a sea of varied opinions: Matt Stone, Gregg Kellogg, Ted Thibodeau Jr, Oliver
+Terbu, Joe Andrieu, David I. Lehn, Matthew Collier, and Adrian Gropper.
+    </p>
+
+    <p>
+Work on this specification has been supported by the Rebooting the
+Web of Trust community facilitated by Christopher Allen, Shannon Appelcline,
+Kiara Robles, Brian Weller, Betty Dhamers, Kaliya Young, Manu Sporny,
+Drummond Reed, Joe Andrieu, Heather Vescent, Kim Hamilton Duffy, Samantha Chase,
+and Andrew Hughes. The participants in the Internet Identity Workshop,
+facilitated by Phil Windley, Kaliya Young, Doc Searls, and Heidi Nobantu Saul,
+also supported the refinement of this work through numerous working sessions
+designed to educate about, debate on, and improve this specification.
+    </p>
+
+    <p>
+The Working Group also thanks our Chairs, Dan Burnett, Matt Stone, Brent Zundel,
+and Wayne Chang, as well as our W3C Staff Contacts, Kazuyuki Ashimura and
+Ivan Herman, for their expert management and steady guidance of the group
+through the W3C standardization process.
+    </p>
+
+    <p>
+Portions of the work on this specification have been funded by the
+United States Department of Homeland Security's Science and Technology
+Directorate under contract HSHQDC-17-C-00019. The content of this specification
+does not necessarily reflect the position or the policy of the U.S. Government
+and no official endorsement should be inferred.
+    </p>
 
     <p>
 The Working Group would like to thank the following individuals for reviewing
