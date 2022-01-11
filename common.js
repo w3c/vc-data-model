@@ -33,9 +33,9 @@ var vcwg = {
       status: "WD",
       publisher: "Internationalization Working Group"
     },
-    "LD-PROOFS": {
-      title: "Linked Data Proofs",
-      href: "https://w3c-ccg.github.io/ld-proofs/",
+    "DATA-INTEGRITY": {
+      title: "Data Integrity",
+      href: "https://w3c-ccg.github.io/data-integrity-spec/",
       authors: [
         "Manu Sporny",
         "Dave Longley"
