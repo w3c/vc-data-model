@@ -5253,15 +5253,17 @@ franchise. Policy information expressed by the <a>issuer</a> in the
     </section>
 
     <section class="appendix informative">
-      <h2>Base Context</h2>
+      <h2>Contexts, Types, and Credential Schemas</h2>
 
-      <p>
+      <section class="informative">
+        <h3>Base Context</h3>
+          <p>
 The base context, located at
 <code>https://www.w3.org/2018/credentials/v1</code> with a SHA-256 digest of
 <strong><code>ab4ddd9a531758807a79a5b450510d61ae8d147eab966cc9a200c07095b0cdcc</code></strong>,
 can be used to implement a local cached copy. For convenience, the base context
 is also provided in this section.
-      </p>
+          </p>
 
 <pre class="informative">
 {
@@ -5502,7 +5504,101 @@ is also provided in this section.
   }
 }
 </pre>
+      </section>
 
+      <section class="informative">
+        <h3>Differences between Contexts, Types, and CredentialSchemas</h3>
+
+        <p>
+The verifiable credential and verifiable presentation data models leverage a
+variety of underlying technologies including [JSON-LD] and [JSON-SCHEMA-2018].
+This section will provide a comparison of the <code>@context</code>,
+<code>type</code>, and <code>credentialSchema</code> properties, and cover some
+of the more specific use cases where it is possible to use these features of the
+data model.
+        </p>
+        
+        <p>
+The primary purpose of the <code>type</code> property is to uniquely
+identify the type of the <code>verifiableCredential</code> in which it
+appears i.e. to indicate which set of claims the
+<code>verifiableCredential</code> contains. This property is mandatory and
+the value "VerifiableCredential" must appear in the set of values. Whilst
+it is good practice to include one additional value depicting the unique
+subtype of this verifiableCredential, it is not forbidden to either omit
+additional type values or to include multiple type values in the array.
+Since many verifiers will request verifiableCredentials of a specific
+subtype, then omitting the subtype value may make it more difficult for
+verifiers to inform the holder which verifiableCredential they require.
+When a verifiableCredential is of multiple subtypes, then listing all of
+them in the type property is sensible. However, the usage of the
+<code>type</code> property in a JSON-LD representation of a credential
+conveys more than what it means in a JSON representation of a credential.
+With JSON-LD, the technology is not only describing the categorization of the
+set of claims, the technology is also conveying the structure of the sub-graph
+of the claims.
+        </p>
+
+        <p>
+The primary purpose of the <code>@context</code> property, from a JSON-LD
+perspective, is to convey the meaning of the data and term definitions of
+the data in a verifiable credential in a machine readable way. When
+utilizing only a JSON representation the <code>@context</code> provides
+little technical benefits, but remains mandatory. The <code>@context</code>
+property is used to map the globally unique URIs for
+<code>verifiableCredential</code> and <code>verifiablePresentation</code>
+properties into short form alias names making both the JSON and JSON-LD
+representations of them more human-friendly to read. From a JSON-LD
+perspective, this mapping also allows for the data in a
+<code>verifiableCredential</code> to be modelled in a network of
+machine-readable data by enhancing how the data in the
+<code>verifiableCredential</code> or <code>verifiablePresentation</code>
+relates to a larger machine readable data graph which is useful for being
+able to tell machines how to relate the meaning of data to other
+data in an ecosystem where parties are unable to coordinate. This
+property is mandatory and the first value in the set must be
+<code>https://www.w3.org/2018/credentials/v1</code>.
+        </p>
+
+        <p>
+Since the <code>@context</code> property is used to map data to a graph
+data model and the <code>type</code> property in JSON-LD is used to
+describe nodes within the graph, the <code>type</code> property becomes
+even more important when using the two in combination. For example, if the
+<code>type</code> property is not included within the resolved contexts
+using JSON-LD it could lead to claims being dropped and no longer being
+integrity protected during the production and consumption of the
+<code>verifiableCredential</code>.
+        </p>
+
+        <p>
+The primary purpose of the <code>credentialSchema</code> property is to
+define the properties (or contents) of the VerifiableCredential in which it
+appears, and the datatypes of each of these properties. A
+<code>credentialSchema</code> is useful for defining the contents and
+structured set of claims in a <code>verifiableCredential</code>, whereas
+[JSON-LD] and a <code>@context</code> in a
+<code>verifiableCredential</code> are best used only for conveying the
+semantics and term definitions of the data.
+        </p>
+
+        <p>
+While it is possible to use some of [JSON-LD] features to allude to the
+contents of the <code>verifiableCredential</code>, it's not generally
+suggested to use <code>@context</code> to constrain the data types of the
+data model. For example, "@type": "@json" is useful for leaving the
+semantics open-ended and not strictly defined. This can be dangerous if
+the implementer is looking to constrain the data type of the claim in the
+credential and so is expected not to be used.
+          </p>
+
+        <p>
+When the <code>credentialSchema</code> and <code>@context</code> properties
+are used in combination, both producers and consumers can be more confident
+in the expected contents and data types of the
+<code>verifiableCredential</code> and <code>verifiablePresentation</code>.
+        </p>
+      </section>
     </section>
 
     <section class="informative appendix">
