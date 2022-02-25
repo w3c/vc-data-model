@@ -94,7 +94,7 @@ var vcwg = {
     },
     'DEMOGRAPHICS': {
       title: 'Simple Demographics Often Identify People Uniquely',
-      href: 'http://dataprivacylab.org/projects/identifiability/paper1.pdf',
+      href: 'https://dataprivacylab.org/projects/identifiability/paper1.pdf',
       authors: ['Latanya Sweeney'],
       publisher: 'Data Privacy Lab'
     },
