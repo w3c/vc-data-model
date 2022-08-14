@@ -44,8 +44,8 @@ mailing list.
      <dd>Mark with "substantive" tag.</dd>
    </dl>
 3. W3C CCG is automatically notified of PRs as they are raised and discussed.
-4. PRs are merged in 7 days if there is adequate review, as determined by
-   the Chairs and Editors, and no objections.
+4. PRs are usually merged in 7 days if there is adequate review and consensus,
+   as determined by the Chairs and Editors.
 
 ### Roadmap for 2022-2024
 
