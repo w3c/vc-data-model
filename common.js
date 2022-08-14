@@ -33,15 +33,16 @@ var vcwg = {
       status: "WD",
       publisher: "Internationalization Working Group"
     },
-    "DATA-INTEGRITY": {
-      title: "Data Integrity",
-      href: "https://w3c-ccg.github.io/data-integrity-spec/",
+    "VC-DATA-INTEGRITY": {
+      title: "Verifiable Credential Data Integrity",
+      href: "https://w3c.github.io/vc-data-integrity/",
       authors: [
         "Manu Sporny",
-        "Dave Longley"
+        "Dave Longley",
+        "Mike Prorock"
       ],
-      status: "CG-DRAFT",
-      publisher: "Credentials Community Group"
+      status: "ED",
+      publisher: "Verifiable Credentials Working Group"
     },
     "LDP-REGISTRY": {
       title: "Linked Data Cryptographic Suite Registry",
