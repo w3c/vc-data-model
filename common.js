@@ -130,6 +130,13 @@ var vcwg = {
       authors: ['Gregg Kellogg', 'Manu Sporny', 'Dave Longley', 'Markus Lanthaler', 'Pierre-Antoine Champin', 'Niklas Lindström'],
       status: 'WD',
       publisher: 'W3C JSON-LD 1.1 Working Group'
+    },
+    'VC-JWT': {
+      title: 'Securing Verifiable Credentials using JSON Web Tokens',
+      href: 'https://w3c.github.io/vc-jwt/',
+      authors: ['Orie Steele', 'Michael Jones'],
+      status: 'ED',
+      publisher: 'W3C Verifiable Credentials Working Group'
     }
   }
 };
