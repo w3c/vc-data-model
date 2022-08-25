@@ -233,7 +233,7 @@ class Vocab
     output = []
 
     prefixes = {
-      "dc"   => {subClassOf: "http;//purl.org/dc/terms/"},
+      "dc"   => {subClassOf: "http://purl.org/dc/terms/"},
       "owl"  => {subClassOf: "http://www.w3.org/2002/07/owl#"},
       "rdf"  => {subClassOf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"},
       "rdfs" => {subClassOf: "http://www.w3.org/2000/01/rdf-schema#"},
@@ -248,6 +248,7 @@ class Vocab
     #output << %(  dc:imports #{imports.map {|i| '<' + i + '>'}.join(", ")};)
     #output << %(  owl:versionInfo <#{commit}>;)
     output << %(  rdfs:seeAlso #{seeAlso.map {|i| '<' + i + '>'}.join(", ")};)
+    output << "."
 
     output << "\n# Class definitions" unless @classes.empty?
     @classes.each do |id, entry|
