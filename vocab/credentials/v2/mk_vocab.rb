@@ -24,7 +24,7 @@ class Vocab
     path = File.expand_path("../vocab.csv", __FILE__)
     csv = CSV.new(File.open(path))
     @prefixes, @terms, @properties, @classes, @datatypes, @instances = {}, {}, {}, {}, {}, {}
-    @contexts, @imports, @seeAlso = [{"@version": 1.1}], [], []
+    @contexts, @imports, @seeAlso = [], [], []
     #git_info = %x{git log -1 #{path}}.split("\n")
     #@commit = "https://github.com/w3c/vc-vocab/commit/" + (git_info[0] || 'uncommitted').split.last
     date_line = nil #git_info.detect {|l| l.start_with?("Date:")}
