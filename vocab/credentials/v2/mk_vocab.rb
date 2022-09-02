@@ -65,13 +65,8 @@ class Vocab
   end
 
   def to_jsonld
-    context = {
-      "id" => "@id",
-      "type" => "@type",
-    }
-    rdfs_context = ::JSON.parse %({
-      "id": "@id",
-      "type": "@type",
+    rdfs_context = {}
+    context = ::JSON.parse %({
       "dc": "http://purl.org/dc/terms/",
       "owl": "http://www.w3.org/2002/07/owl#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
@@ -117,7 +112,7 @@ class Vocab
 
     classes.each do |id, entry|
       term = entry[:term] || id
-      context[term] = namespaced(id) unless entry[:@type] == '@null'
+      # context[term] = namespaced(id) unless entry[:@type] == '@null'
 
       # Class definition
       node = {
@@ -144,7 +139,7 @@ class Vocab
       defn['@type'] = entry[:@type] if entry[:@type]
 
       term = entry[:term] || id
-      context[term] = defn unless entry[:@type] == '@null'
+      # context[term] = defn unless entry[:@type] == '@null'
 
       # Property definition
       node = {
@@ -173,7 +168,7 @@ class Vocab
     end
 
     datatypes.each  do |id, entry|
-      context[id] = namespaced(id) unless entry[:@type] == '@null'
+      # context[id] = namespaced(id) unless entry[:@type] == '@null'
 
       # Datatype definition
       node = {
@@ -187,7 +182,7 @@ class Vocab
     end
 
     instances.each do |id, entry|
-      context[id] = namespaced(id) unless entry[:@type] == '@null'
+      # context[id] = namespaced(id) unless entry[:@type] == '@null'
       # Instance definition
       rdfs_instances << {
         '@id' => namespaced(id),
