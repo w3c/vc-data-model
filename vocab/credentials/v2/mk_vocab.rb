@@ -342,14 +342,8 @@ when :jsonld  then options[:output].puts(vocab.to_jsonld)
 when :ttl     then options[:output].puts(vocab.to_ttl)
 when :html    then options[:output].puts(vocab.to_html)
 else
-  # [:jsonld, :context, :ttl, :html].each do |format|
-  #   fn = {context: "context.jsonld", jsonld: "credentials.jsonld", ttl: "credentials.ttl", html: "credentials.html"}[format]
-  #   File.open(fn, "w") do |output|
-  #     output.puts(vocab.send("to_#{format}".to_sym))
-  #   end
-  # end
   [:jsonld, :ttl, :html].each do |format|
-    fn = {jsonld: "credentials.jsonld", ttl: "credentials.ttl", html: "credentials.html"}[format]
+    fn = {jsonld: "vocabulary.jsonld", ttl: "vocabulary.ttl", html: "vocabulary.html"}[format]
     File.open(fn, "w") do |output|
       output.puts(vocab.send("to_#{format}".to_sym))
     end
