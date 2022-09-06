@@ -84,6 +84,7 @@ class Vocab
       "owl:equivalentClass": {"@type": "@vocab"},
       "owl:equivalentProperty": {"@type": "@vocab"},
       "owl:oneOf": {"@container": "@list", "@type": "@vocab"},
+      "owl:deprecated": {"@type": "xsd:boolean"},
       "owl:imports": {"@type": "@id"},
       "owl:versionInfo": {"@type": "@id"},
       "owl:inverseOf": {"@type": "@vocab"},
@@ -121,6 +122,8 @@ class Vocab
         'rdfs:label' => {"en" => entry[:label].to_s},
         'rdfs:comment' => {"en" => entry[:comment].to_s},
       }
+      node['owl:deprecated'] = 'true' if entry[:deprecated]
+      node['@type'] = ['rdf:Property','owl:DeprecatedClass'] if entry[:deprecated]
       node['rdfs:subClassOf'] = namespaced(entry[:subClassOf]) if entry[:subClassOf]
       rdfs_classes << node
     end
@@ -148,6 +151,8 @@ class Vocab
         'rdfs:label' => {"en" => entry[:label].to_s},
         'rdfs:comment' => {"en" => entry[:comment].to_s},
       }
+      node['owl:deprecated'] = 'true' if entry[:deprecated]
+      node['@type'] = ['rdf:Property','owl:DeprecatedProperty'] if entry[:deprecated]
       node['rdfs:subPropertyOf'] = namespaced(entry[:subClassOf]) if entry[:subClassOf]
 
       domains = entry[:domain].to_s.split(',')
@@ -248,6 +253,8 @@ class Vocab
     output << "\n# Class definitions" unless @classes.empty?
     @classes.each do |id, entry|
       output << "cred:#{id} a rdfs:Class;"
+      output << %(  a owl:DeprecatedClass;) if entry[:deprecated]
+      output << %(  owl:deprecated "true"^^xsd:boolean;) if entry[:deprecated]
       output << %(  rdfs:label "#{entry[:label]}"@en;)
       output << %(  rdfs:comment """#{entry[:comment]}"""@en;)
       output << %(  rdfs:subClassOf #{namespaced(entry[:subClassOf])};) if entry[:subClassOf]
@@ -257,6 +264,8 @@ class Vocab
     output << "\n# Property definitions" unless @properties.empty?
     @properties.each do |id, entry|
       output << "cred:#{id} a rdf:Property;"
+      output << %(  a owl:DeprecatedProperty;) if entry[:deprecated]
+      output << %(  owl:deprecated "true"^^xsd:boolean;) if entry[:deprecated]
       output << %(  rdfs:label "#{entry[:label]}"@en;)
       output << %(  rdfs:comment """#{entry[:comment]}"""@en;)
       output << %(  rdfs:subPropertyOf #{namespaced(entry[:subClassOf])};) if entry[:subClassOf]
