@@ -181,16 +181,16 @@ class Vocab
       rdfs_datatypes << node
     end
 
-    instances.each do |id, entry|
-      # context[id] = namespaced(id) unless entry[:@type] == '@null'
-      # Instance definition
-      rdfs_instances << {
-        '@id' => namespaced(id),
-        '@type' => entry[:type],
-        'rdfs:label' => {"en" => entry[:label].to_s},
-        'rdfs:comment' => {"en" => entry[:comment].to_s},
-      }
-    end
+    # instances.each do |id, entry|
+    #   context[id] = namespaced(id) unless entry[:@type] == '@null'
+    #   # Instance definition
+    #   rdfs_instances << {
+    #     '@id' => namespaced(id),
+    #     '@type' => entry[:type],
+    #     'rdfs:label' => {"en" => entry[:label].to_s},
+    #     'rdfs:comment' => {"en" => entry[:comment].to_s},
+    #   }
+    # end
 
     # Use separate rdfs context so as not to polute the context.
     ontology = {
@@ -287,13 +287,13 @@ class Vocab
       output << %(  rdfs:isDefinedBy cred: .)
     end
 
-    output << "\n# Instance definitions" unless @instances.empty?
-    @instances.each do |id, entry|
-      output << "cred:#{id} a #{namespaced(entry[:type])};"
-      output << %(  rdfs:label "#{entry[:label]}"@en;)
-      output << %(  rdfs:comment """#{entry[:comment]}"""@en;)
-      output << %(  rdfs:isDefinedBy cred: .)
-    end
+    # output << "\n# Instance definitions" unless @instances.empty?
+    # @instances.each do |id, entry|
+    #   output << "cred:#{id} a #{namespaced(entry[:type])};"
+    #   output << %(  rdfs:label "#{entry[:label]}"@en;)
+    #   output << %(  rdfs:comment """#{entry[:comment]}"""@en;)
+    #   output << %(  rdfs:isDefinedBy cred: .)
+    # end
 
     output.join("\n")
   end
