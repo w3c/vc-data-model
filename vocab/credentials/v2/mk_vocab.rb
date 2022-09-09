@@ -122,8 +122,8 @@ class Vocab
         'rdfs:label' => {"en" => entry[:label].to_s},
         'rdfs:comment' => {"en" => entry[:comment].to_s},
       }
-      node['owl:deprecated'] = 'true' if entry[:deprecated]
-      node['@type'] = ['rdf:Property','owl:DeprecatedClass'] if entry[:deprecated]
+      node['owl:deprecated'] = true if entry[:deprecated]
+      node['@type'] = ['rdf:Class','owl:DeprecatedClass'] if entry[:deprecated]
       node['rdfs:subClassOf'] = namespaced(entry[:subClassOf]) if entry[:subClassOf]
       rdfs_classes << node
     end
@@ -151,7 +151,7 @@ class Vocab
         'rdfs:label' => {"en" => entry[:label].to_s},
         'rdfs:comment' => {"en" => entry[:comment].to_s},
       }
-      node['owl:deprecated'] = 'true' if entry[:deprecated]
+      node['owl:deprecated'] = true if entry[:deprecated]
       node['@type'] = ['rdf:Property','owl:DeprecatedProperty'] if entry[:deprecated]
       node['rdfs:subPropertyOf'] = namespaced(entry[:subClassOf]) if entry[:subClassOf]
 
@@ -254,7 +254,7 @@ class Vocab
     @classes.each do |id, entry|
       output << "cred:#{id} a rdfs:Class;"
       output << %(  a owl:DeprecatedClass;) if entry[:deprecated]
-      output << %(  owl:deprecated "true"^^xsd:boolean;) if entry[:deprecated]
+      output << %(  owl:deprecated true;) if entry[:deprecated]
       output << %(  rdfs:label "#{entry[:label]}"@en;)
       output << %(  rdfs:comment """#{entry[:comment]}"""@en;)
       output << %(  rdfs:subClassOf #{namespaced(entry[:subClassOf])};) if entry[:subClassOf]
@@ -265,7 +265,7 @@ class Vocab
     @properties.each do |id, entry|
       output << "cred:#{id} a rdf:Property;"
       output << %(  a owl:DeprecatedProperty;) if entry[:deprecated]
-      output << %(  owl:deprecated "true"^^xsd:boolean;) if entry[:deprecated]
+      output << %(  owl:deprecated true;) if entry[:deprecated]
       output << %(  rdfs:label "#{entry[:label]}"@en;)
       output << %(  rdfs:comment """#{entry[:comment]}"""@en;)
       output << %(  rdfs:subPropertyOf #{namespaced(entry[:subClassOf])};) if entry[:subClassOf]
