@@ -9,14 +9,16 @@ The vocabulary is defined in a CSV file, which contains the following columns: `
 The available categories, and the corresponding interpretation of the columns, are:
 
 - `vocab`: the prefix and the URL of the vocabulary that is being specified are provided in the `id` and `value` columns, respectively.
-- `prefix`: definition of a prefix, and corresponding URL, for each external external vocabulary in use, defined by the `id` and `value` columns, respectively. Note that some prefix/value pairs are defined by default, and it is not necessary to define them here; these are: `dc`, `owl`, `rdf`, `rdfs`, and `xsd`.
+- `prefix`: definition of a prefix, and corresponding URL, for each external external vocabulary in use, defined by the `id` and `value` columns, respectively. 
+    
+    Note that some prefix/value pairs are defined by default, and it is not necessary to define them here. These are: `dc` (for `http://purl.org/dc/terms/`), `owl` (for `http://www.w3.org/2002/07/owl#`), `rdf` (for `http://www.w3.org/1999/02/22-rdf-syntax-ns#`), `rdfs` (for `http://www.w3.org/2000/01/rdf-schema#`), and `xsd` (for `http://www.w3.org/2001/XMLSchema#`).
 - `ontology`: definition of an "ontology property", that is, a statement made about the vocabulary itself. The (prefixed) property term is defined in the `property` column, and the value in the `value` column. If the value can be parsed as a URL, it is considered to be the URL of an external resource; otherwise, the value is considered to be (English) text.
 
     It is good practice to provide, at least, `dc:description` as an ontology property with a short description of the vocabulary.
 
 - `class`: definition of a class. The `id` column defines the class name (no prefix should be used here); possible superclasses are defined in the `upper value` column as a single term, or as a comma-separated list of terms. There should be a label and a longer description in English text provided in the `label` and `comment` columns, respectively.
  
-    A class can be declared as deprecated by setting its `deprecated` column to "true".
+    A class can be declared as deprecated by setting its `deprecated` column to "yes".
 - `property`: definition of a property. The `id` column defines the property name (no prefix should be used here); possible superproperties are defined in the column `upper value` as a single term, or as a comma-separated list of terms. The domain and range classes can also be provided as a single term, or as a comma separated list thereof, in the `domain` and `range` columns. There should be a label and a longer description in English text, provided by the `label` and `comment` columns, respectively.
   
     A property can be declared as deprecated by setting its `deprecated` column to "yes".
@@ -49,4 +51,4 @@ The following files and directories are generated/modified by either the script 
 
 ## Acknowledgement
 
-The original idea, structure, and script (in Ruby) was created by Gregg Kellogg for v1 of the Credentials Vocabulary. The CSV definitions have been slightly updated/changed, and the script itself has been completely re-written in TypeScript.
+The original idea, structure, and script (in Ruby) was created by Gregg Kellogg for v1 of the Credentials Vocabulary. The CSV definitions have been slightly updated/changed, and the script itself has been re-written in TypeScript.
