@@ -4,7 +4,7 @@ The script in the directory generates RDFS vocabulary files in JSON and Turtle f
 
 ## Definition of the vocabulary in the CSV file
 
-The vocabulary is defined in a CSV file, which contains the following columns: `category`, `id`, `property`, `value`, `label`, `upper value`, `domain`, `range`, `comment`, and `deprecated`. The `category` column defines the category of the row, and the interpretation of the row's content, i.e., of the other columns, depends on this category.
+The vocabulary is defined in a CSV file, which contains the following columns: `category`, `id`, `property`, `value`, `label`, `upper value`, `domain`, `range`, `comment`, and `deprecated`. The `category` column defines the category of the row, and the interpretation of the row's content (that is, of the other columns) depends on this category.
 
 The available categories, and the corresponding interpretation of the columns, are:
 
