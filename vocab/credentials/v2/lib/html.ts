@@ -4,7 +4,7 @@
  * 
  * @packageDocumentation
  */
-import { Vocab, global }  from './common';
+import { Vocab, Link, RDFTerm, global }  from './common';
 import { JSDOM }          from 'jsdom';
 import { promises as fs } from 'fs';
 
@@ -73,6 +73,51 @@ const bnode = (): string => {
  * @async 
  */
 export async function to_html(fname: string, template: string, vocab: Vocab): Promise<void> {
+    const add_break = (text: string): string => {
+        const regex = /\\n/g;
+        return text.replace(regex, '<br>');
+    }
+
+    // Factor out all common fields for the terms
+    const common_fields = (td: HTMLElement, item: RDFTerm): void => {
+        td.setAttribute('typeof', `${item.type}`);
+        td.setAttribute('resource',`${vocab_prefix}:${item.id}`);
+        const em = add_child(td, 'em', item.label);
+        em.setAttribute('property', 'rdfs:label');
+        if (item.deprecated) {
+            const span = add_child(td, 'span');
+            span.className = 'bold';
+            add_child(span, 'em', ' (deprecated)');
+        }
+        const p = add_child(td, 'p', add_break(item.comment));
+        p.setAttribute('property', 'rdfs:comment');
+
+        if (item.see_also && item.see_also.length > 0) {
+            const dl = add_child(td, 'dl');
+            dl.className = 'terms';
+            add_child(dl, 'dt', 'See also:');
+            const dd = add_child(dl, 'dd');
+            for (const link of item.see_also) {
+                const a = add_child(dd, 'a', link.label);
+                a.setAttribute('href', link.url);
+                a.setAttribute('property', 'rdfs:seeAlso');
+                add_child(dd, 'br');
+            }
+        }
+
+        const span = add_child(td, 'span');
+        span.setAttribute('property', 'rdfs:isDefinedBy');
+        span.setAttribute('resource', `${vocab_prefix}:`);
+
+        if (item.deprecated) {
+            const span = add_child(td, 'span');
+            span.setAttribute('property', 'owl:deprecated');
+            span.setAttribute('datatype', 'xsd:boolean');
+            span.style.display = 'none';
+            add_text('true', span);
+        }
+    }
+
     // Get the DOM of the template
     const template_text = await fs.readFile(template, 'utf-8');
     const document = (new JSDOM(template_text)).window.document;
@@ -162,34 +207,13 @@ export async function to_html(fname: string, template: string, vocab: Vocab): Pr
 
                     const td2 = add_child(tr, 'td');
                     td2.setAttribute('typeof', item.deprecated ? 'rdfs:Class owl:DeprecatedClass' : 'rdfs:Class');
-                    td2.setAttribute('resource',`${vocab_prefix}:${item.id}`);
-                    const em = add_child(td2, 'em',item.label);
-                    em.setAttribute('property', 'rdfs:label');
-                    if (item.deprecated) {
-                        const dspan = add_child(td2, 'span');
-                        dspan.className = 'bold';
-                        add_child(dspan, 'em', ' (deprecated)');
-                    }
-                    const p = add_child(td2, 'p', item.comment);
-                    p.setAttribute('property', 'rdfs:comment');
-
-                    const span = add_child(td2, 'span');
-                    span.setAttribute('property', 'rdfs:isDefinedBy');
-                    span.setAttribute('resource', `${vocab_prefix}:`);
-
-                    if (item.deprecated) {
-                        const dspan = add_child(td2, 'span');
-                        dspan.setAttribute('property', 'owl:deprecated');
-                        dspan.setAttribute('datatype', 'xsd:boolean');
-                        dspan.style.display = 'none';
-                        add_text('true', dspan);
-                    }
+                    common_fields(td2, item);
                     
                     // Extra list of superclasses, if applicable
                     if (item.subClassOf && item.subClassOf.length > 0) {
                         const dl = add_child(td2, 'dl');
                         dl.className = 'terms'
-                        add_child(dl, 'dt', 'subClassOf')
+                        add_child(dl, 'dt', 'Subclass of:')
                         const dd = add_child(dl, 'dd');
                         for (const superclass of item.subClassOf) {
                             const code = add_child(dd, 'code', superclass)
@@ -231,35 +255,13 @@ export async function to_html(fname: string, template: string, vocab: Vocab): Pr
 
                     const td2 = add_child(tr, 'td');
                     td2.setAttribute('typeof', item.deprecated ? 'rdf:Property owl:DeprecatedProperty' : 'rdfs:Class');
-                    td2.setAttribute('typeof', 'rdf:Property');
-                    td2.setAttribute('resource',`${vocab_prefix}:${item.id}`);
-                    const em = add_child(td2, 'em',item.label);
-                    em.setAttribute('property', 'rdfs:label');
-                    if (item.deprecated) {
-                        const dspan = add_child(td2, 'span');
-                        dspan.className = 'bold';
-                        add_child(dspan, 'em', ' (deprecated)');
-                    }
-                    const p = add_child(td2, 'p', item.comment);
-                    p.setAttribute('property', 'rdfs:comment');
-
-                    const span = add_child(td2, 'span');
-                    span.setAttribute('property', 'rdfs:isDefinedBy');
-                    span.setAttribute('resource', `${vocab_prefix}:`);
-
-                    if (item.deprecated) {
-                        const dspan = add_child(td2, 'span');
-                        dspan.setAttribute('property', 'owl:deprecated');
-                        dspan.setAttribute('datatype', 'xsd:boolean');
-                        dspan.style.display = 'none';
-                        add_text('true', dspan);
-                    }
+                    common_fields(td2, item);
 
                     // Extra list of superproperties, if applicable
                     if (item.subPropertyOf && item.subPropertyOf.length > 0) {
                         const dl = add_child(td2, 'dl');
                         dl.className = 'terms'
-                        add_child(dl, 'dt', 'subPropertyOf')
+                        add_child(dl, 'dt', 'Subproperty of:')
                         const dd = add_child(dl, 'dd');
                         for (const superproperty of item.subPropertyOf) {
                             const code = add_child(dd, 'code', superproperty)
@@ -275,7 +277,7 @@ export async function to_html(fname: string, template: string, vocab: Vocab): Pr
                         dl.className = 'terms';
 
                         if (item.range && item.range.length > 0) {
-                            add_child(dl, 'dt', 'rdfs:range');
+                            add_child(dl, 'dt', 'Range:');
                             const dd = add_child(dl, 'dd');
                             if (item.range.length === 1) {
                                 dd.setAttribute('resource',item.range[0])
@@ -292,7 +294,7 @@ export async function to_html(fname: string, template: string, vocab: Vocab): Pr
                             }
                         }
                         if (item.domain && item.domain.length > 0) {
-                            add_child(dl, 'dt', 'rdfs:domain');
+                            add_child(dl, 'dt', 'Domain:');
                             const dd = add_child(dl, 'dd');
                             dd.setAttribute('property', 'rdfs:domain')
                             if (item.domain.length === 1) {
@@ -346,21 +348,7 @@ export async function to_html(fname: string, template: string, vocab: Vocab): Pr
                     td1.id = item.id
 
                     const td2 = add_child(tr, 'td');
-                    td2.setAttribute('typeof', `${item.type}`);
-                    td2.setAttribute('resource',`${vocab_prefix}:${item.id}`);
-                    const em = add_child(td2, 'em',item.label);
-                    em.setAttribute('property', 'rdfs:label');
-                    if (item.deprecated) {
-                        const dspan = add_child(td2, 'span');
-                        dspan.className = 'bold';
-                        add_child(dspan, 'em', ' (deprecated)');
-                    }
-                    const p = add_child(td2, 'p', item.comment);
-                    p.setAttribute('property', 'rdfs:comment');
-
-                    const span = add_child(td2, 'span');
-                    span.setAttribute('property', 'rdfs:isDefinedBy');
-                    span.setAttribute('resource', `${vocab_prefix}:`);
+                    common_fields(td2, item);
 
                     const dl = add_child(td2, 'dl');
                     dl.className = 'terms';

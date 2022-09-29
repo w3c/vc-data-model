@@ -4,8 +4,8 @@
  * 
  * @packageDocumentation
  */
-import { Vocab, global }  from './common';
-import { promises as fs } from 'fs';
+import { Vocab, global, text_comment, RDFTerm, Link } from './common';
+import { promises as fs }               from 'fs';
 
 /**
  * Generate the Turtle representation of the vocabulary.
@@ -17,6 +17,7 @@ import { promises as fs } from 'fs';
  * @async
  */
 export function to_turtle(fname: string, vocab: Vocab): Promise<void> {
+
     // Handling of the domain is a bit complicated due to the usage
     // of the owl:unionOf construct if there are several domains; factored it here to make the 
     // code more readable.
@@ -39,6 +40,18 @@ export function to_turtle(fname: string, vocab: Vocab): Promise<void> {
 
     // This will be the output...
     let turtle = "";
+
+    // Factoring out the common fields
+    const common_fields = (entry: RDFTerm): void => {
+        turtle += `    rdfs:label "${entry.label}" ;\n`;
+        turtle += `    rdfs:comment """${text_comment(entry.comment)}"""@en ;\n`;
+        turtle += `    rdfs:isDefinedBy cred: ;\n`;
+        if (entry.see_also && entry.see_also.length > 0) {
+            const urls = entry.see_also.map( (link: Link): string => `<${link.url}>`).join(", ");
+            turtle +=`    rdfs:seeAlso ${urls} ;\n`
+        }
+        turtle += ".\n\n";
+    }
 
     // Here we go, category by category...
     {
@@ -77,10 +90,7 @@ export function to_turtle(fname: string, vocab: Vocab): Promise<void> {
             if (cl.subClassOf) {
                 turtle += `    rdfs:subClassOf ${cl.subClassOf.join(", ")} ;\n`;
             }
-            turtle += `    rdfs:label "${cl.label}" ;\n`;
-            turtle += `    rdfs:comment """${cl.comment}"""@en ;\n`;
-            turtle += `    rdfs:isDefinedBy cred: ;\n`;
-            turtle += ".\n\n"
+            common_fields(cl);
         }
         turtle += "\n\n";    
     }
@@ -101,10 +111,7 @@ export function to_turtle(fname: string, vocab: Vocab): Promise<void> {
             if (prop.range) {
                 turtle += `    rdfs:range ${multi_range(prop.range)} ;\n`;
             }
-            turtle += `    rdfs:label "${prop.label}" ;\n`;
-            turtle += `    rdfs:comment """${prop.comment}"""@en ;\n`;
-            turtle += `    rdfs:isDefinedBy cred: ;\n`;
-            turtle += ".\n\n";
+            common_fields(prop);
         }
     }
 
@@ -115,10 +122,7 @@ export function to_turtle(fname: string, vocab: Vocab): Promise<void> {
             if (ind.deprecated) {
                 turtle += `    owl:deprecated true ;\n`;
             }
-            turtle += `    rdfs:label "${ind.label}" ;\n`;
-            turtle += `    rdfs:comment """${ind.comment}"""@en ;\n`;
-            turtle += `    rdfs:isDefinedBy cred: ;\n`;
-            turtle += ".\n\n";
+            common_fields(ind);
         }
     }
 
