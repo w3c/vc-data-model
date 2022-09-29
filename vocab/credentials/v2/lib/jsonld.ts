@@ -5,8 +5,8 @@
  * @packageDocumentation
  */
 
-import { Vocab, global } from './common';
-import { promises as fs } from 'fs';
+import { Vocab, global, text_comment, RDFTerm, Link } from './common';
+import { promises as fs }                             from 'fs';
 
 // Generic context. All items may not be used in a specific vocabulary, but it
 // is not harmful to have them here.
@@ -80,6 +80,20 @@ export function to_jsonld(fname: string, vocab: Vocab): Promise<void> {
     // This is the target object
     const jsonld: any = {}
 
+    // Factoring out the common fields
+    const common_fields = (target: any, entry: RDFTerm): void => {
+        target["rdfs:label"] = {
+            "en" : entry.label
+        }
+        target["rdfs:comment"] = {
+            "en" : text_comment(entry.comment),
+        }
+        if (entry.see_also && entry.see_also.length > 0) {
+            const urls = entry.see_also.map( (link: Link): string => link.url);
+            target["rdfs:seeAlso"] = urls;
+        }
+    }
+
     // Creation of the context: take the prefixes from the vocabulary definition
     // and add the generic context
     {
@@ -126,12 +140,7 @@ export function to_jsonld(fname: string, vocab: Vocab): Promise<void> {
             if (cl.subClassOf) {
                 cl_object["rdfs:subClassOf"] = cl.subClassOf;
             }
-            cl_object["rdfs:label"] = {
-                "en" : cl.label
-            }
-            cl_object["rdfs:comment"] = {
-                "en" : cl.comment
-            }
+            common_fields(cl_object,cl);
             classes.push(cl_object)
         }
         if (classes.length > 0) jsonld.rdfs_classes = classes;
@@ -161,12 +170,7 @@ export function to_jsonld(fname: string, vocab: Vocab): Promise<void> {
             if (prop.range) {
                 pr_object["rdfs:range"] = multi_range(prop.range);
             }
-            pr_object["rdfs:label"] = {
-                "en" : prop.label
-            }
-            pr_object["rdfs:comment"] = {
-                "en" : prop.comment
-            }
+            common_fields(pr_object,prop);
             properties.push(pr_object);
         }
         if (properties.length > 0) jsonld.rdfs_properties = properties;
@@ -186,12 +190,7 @@ export function to_jsonld(fname: string, vocab: Vocab): Promise<void> {
             if (ind.deprecated) {
                 ind_object["owl:deprecated"] = true
             }
-            ind_object["rdfs:label"] = {
-                "en" : ind.label
-            }
-            ind_object["rdfs:comment"] = {
-                "en" : ind.comment
-            }
+            common_fields(ind_object,ind);
             individuals.push(ind_object);
         }
         if (individuals.length > 0) jsonld.rdfs_individuals = individuals;

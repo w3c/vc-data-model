@@ -4,6 +4,7 @@
  * @packageDocumentation
  */
 
+
 /**
  * Placeholder for global data. At the moment, the only thing
  * it holds is the prefix and the URL of the URL that is being 
@@ -19,6 +20,11 @@ export const global = {
     vocab_url    : ""
 } 
 
+export interface Link {
+    label : string;
+    url   : string;
+}
+
 /**
  * Top level class for a term in general. Pretty much self-explanatory...
  */
@@ -27,9 +33,9 @@ export interface RDFTerm {
     type        : string[];
     label       : string;
     comment     : string;
+    see_also   ?: Link[];
     deprecated ?: boolean;
 }
-
 
 /**
  * Extra information necessary for a class: its superclasses.
@@ -87,3 +93,36 @@ export interface Vocab {
     properties          : RDFProperty[],
     individuals         : RDFIndividual[],
 }
+
+
+/* ------------------------ Utility functions used by the various serializers... ------------------- */
+import { JSDOM } from 'jsdom';
+
+/**
+ * Turn a text field with HTML tags and line breaks into a single text.
+ * 
+ * @param text 
+ * @returns transformed text
+ */
+export function text_comment(text: string): string {
+    /** Remove the HTML tags */
+    const de_html  = (txt: string): string => {
+        const dom = new JSDOM(`<!DOCTYPE html><section>${txt}</section>`);
+        if (dom) {
+            const p = dom.window.document.querySelector("section");
+            const retval = p?.textContent;
+            return (retval) ? retval : ""; 
+        } else {
+            return ""
+        }    
+    };
+    /** Turn the line feed characters into spaces */
+    const de_break = (txt: string): string => {
+        const regex = /\\n/g;
+        return txt.replace(regex, ' ');
+    };
+
+    const pure_txt = de_html(text);
+    return de_break(pure_txt);
+}
+

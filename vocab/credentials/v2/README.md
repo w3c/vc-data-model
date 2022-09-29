@@ -4,9 +4,11 @@ The script in the directory generates RDFS vocabulary files in JSON and Turtle f
 
 ## Definition of the vocabulary in the CSV file
 
-The vocabulary is defined in a CSV file, which contains the following columns: `category`, `id`, `property`, `value`, `label`, `upper value`, `domain`, `range`, `comment`, and `deprecated`. The `category` column defines the category of the row, and the interpretation of the row's content (that is, of the other columns) depends on this category.
+The vocabulary is defined in a CSV file, which contains the following columns: `category`, `id`, `property`, `value`, `label`, `upper value`, `domain`, `range`, `comment`, and `deprecated`. The `category` column defines the category of the row, and the interpretation of the row's content (that is, of the other columns) depends on this category. 
 
-The available categories, and the corresponding interpretation of the columns, are:
+The `comment` cells may include HTML tags; these will be filtered out for Turtle and JSON-LD, but will be copied into HTML (note, b.t.w., that the markdown syntax for simple formatting, like the use of "`" for code, may also be used)
+
+The available categories, specified by the `category` cells, and the corresponding interpretation of the columns, are:
 
 - `vocab`: the prefix and the URL of the vocabulary that is being specified are provided in the `id` and `value` columns, respectively.
 - `prefix`: definition of a prefix, and corresponding URL, for each external external vocabulary in use, defined by the `id` and `value` columns, respectively. 

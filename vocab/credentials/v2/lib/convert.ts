@@ -6,7 +6,7 @@
  */
 import { parse }          from 'csv-parse/sync';
 import { promises as fs } from 'fs';
-import { RDFClass, RDFProperty, RDFIndividual, RDFPrefix, OntologyProperty, Vocab, global } from './common';
+import { RDFClass, RDFProperty, RDFIndividual, RDFPrefix, OntologyProperty, Vocab, Link, global } from './common';
 
 const today = new Date();
 
@@ -37,8 +37,9 @@ interface RawVocabEntry {
     upper_value : string[];
     domain      : string[];
     range       : string[];
-    comment     : string;
     deprecated  : boolean;
+    comment     : string;
+    see_also    : Link[]
 }
 
 /**
@@ -56,21 +57,43 @@ interface RawVocabEntry {
  * @async
  */
 async function get_vocab(fname: string): Promise<RawVocabEntry[]> {
+    const handle_csv_list = (csv_entry: string): string[] => {
+        return csv_entry ? csv_entry.split(',').map((entry: string): string => entry.trim()) : []
+    }
+
+    const convert_links = (md_links: string[]): Link[] => {
+        // TS cannot detect that the 'undefined' entries are removed by filter,
+        // hence the necessity of the 'as Link[]'. The TS compiler
+        // asks for '(Link|undefined)[]'...
+        return md_links.map((entry: string): Link | undefined => {
+            const cut = entry.split('](');
+            if (cut.length < 2) {
+                return undefined;
+            } else {
+                return {
+                    label : cut[0].slice(1),
+                    url   : cut[1].slice(0,-1),
+                }
+            }
+        }).filter((entry: Link|undefined): boolean => entry !== undefined) as Link[];
+    }
+
     const vocab_source = await fs.readFile(fname);
     const vocab = parse(vocab_source, {delimiter: ',', columns: true})
 
     return vocab.map((entry: Record<string, unknown>): RawVocabEntry => {
-         return {
+        return {
             category    : entry["category"] as string,
             id          : entry["id"] as string,
             property    : entry["property"] as string,
             value       : entry["value"] as string,
             label       : entry["label"] as string,
-            domain      : (entry["domain"] as string).split(','),
-            upper_value : (entry["upper value"] as string).split(','),
-            range       : (entry["range"] as string).split(','),
+            domain      : handle_csv_list(entry["domain"] as string),
+            upper_value : handle_csv_list(entry["upper value"] as string),
+            range       : handle_csv_list(entry["range"] as string),
             comment     : entry["comment"] as string,
             deprecated  : (entry["deprecated"] as string) === "yes",
+            see_also    : convert_links(handle_csv_list(entry["see also"] as string)),
         };
     });
 }
@@ -151,7 +174,8 @@ function categorize_vocabulary(raw_vocab: RawVocabEntry[]): Vocab {
             subClassOf : entry.upper_value.length === 1 && entry.upper_value[0] === "" ? undefined : entry.upper_value,
             label      : entry.label,
             comment    : entry.comment,
-            deprecated : entry.deprecated
+            deprecated : entry.deprecated,
+            see_also   : entry.see_also,
         }
     });
 
@@ -166,7 +190,8 @@ function categorize_vocabulary(raw_vocab: RawVocabEntry[]): Vocab {
             domain        : entry.domain.length === 1 && entry.domain[0] === "" ? undefined : entry.domain,
             label         : entry.label,
             comment       : entry.comment,
-            deprecated    : entry.deprecated
+            deprecated    : entry.deprecated,
+            see_also      : entry.see_also,
         }
     });
 
@@ -178,7 +203,8 @@ function categorize_vocabulary(raw_vocab: RawVocabEntry[]): Vocab {
             type          : entry.upper_value.length === 1 && entry.upper_value[0] === "" ? [] : entry.upper_value,
             label         : entry.label,
             comment       : entry.comment,
-            deprecated    : entry.deprecated
+            deprecated    : entry.deprecated,
+            see_also      : entry.see_also,
         }
     });
 
