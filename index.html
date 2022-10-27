@@ -1646,7 +1646,7 @@ example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
       </section>
 
       <section>
-        <h3>Issuance Date</h3>
+        <h3>Valid From</h3>
 
         <p>
 This specification defines the <code>validFrom</code> <a>property</a> for
@@ -1781,14 +1781,14 @@ Verifiable Credentials Extension Registry [[VC-EXTENSION-REGISTRY]].
         <h3>Expiration</h3>
 
         <p>
-This specification defines the <code>expirationDate</code> <a>property</a> for
+This specification defines the <code>validUntil</code> <a>property</a> for
 the expression of <a>credential</a> expiration information.
         </p>
 
         <dl>
-          <dt><var>expirationDate</var></dt>
+          <dt><var>validUntil</var></dt>
           <dd>
-If present, the value of the <code>expirationDate</code> <a>property</a> MUST be
+If present, the value of the <code>validUntil</code> <a>property</a> MUST be
 a string value of an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
 <code>date-time</code> representing the date and time the <a>credential</a>
 ceases to be valid.
@@ -1796,7 +1796,7 @@ ceases to be valid.
         </dl>
 
         <pre class="example nohighlight vc"
-          title="Usage of the expirationDate property"
+          title="Usage of the validUntil property"
           data-vc-vm="https://example.edu/issuers/14#key-1">
 {
   "@context": [
@@ -1807,7 +1807,7 @@ ceases to be valid.
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
-  <span class="highlight">"expirationDate": "2020-01-01T19:23:24Z"</span>,
+  <span class="highlight">"validUntil": "2020-01-01T19:23:24Z"</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1817,14 +1817,6 @@ ceases to be valid.
   }
 }
         </pre>
-
-        <p class="note">
-It is expected that the next version of this specification will add the
-<code>validUntil</code> <a>property</a> in a way that deprecates, but
-preserves backwards compatibility with the <code>expirationDate</code>
-<a>property</a>. Implementers are advised that the <code>validUntil</code>
-<a>property</a> is reserved and its use for any other purpose is discouraged.
-        </p>
 
       </section>
 
@@ -3321,7 +3313,7 @@ If present, the following properties are represented as a single value:
 <code>validFrom</code> <a>property</a>
         </li>
         <li>
-<code>expirationDate</code> <a>property</a>.
+<code>validUntil</code> <a>property</a>.
         </li>
       </ul>
 
@@ -4786,7 +4778,7 @@ purposes and to a <a>verifiable credential</a> as a method of assertion.
         <h3>Expiration</h3>
 
         <p>
-The <code>expirationDate</code> is expected to be within an expected range
+The <code>validUntil</code> is expected to be within an expected range
 for the <a>verifier</a>. For example, a <a>verifier</a> can check that the
 expiration date of a <a>verifiable credential</a> is not in the past.
         </p>
@@ -4881,7 +4873,7 @@ is also provided in this section.
         "credentialStatus": {"@id": "cred:credentialStatus", "@type": "@id"},
         "credentialSubject": {"@id": "cred:credentialSubject", "@type": "@id"},
         "evidence": {"@id": "cred:evidence", "@type": "@id"},
-        "expirationDate": {"@id": "cred:expirationDate", "@type": "xsd:dateTime"},
+        "validUntil": {"@id": "cred:validUntil", "@type": "xsd:dateTime"},
         "holder": {"@id": "cred:holder", "@type": "@id"},
         "issued": {"@id": "cred:issued", "@type": "xsd:dateTime"},
         "issuer": {"@id": "cred:issuer", "@type": "@id"},

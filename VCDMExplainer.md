@@ -153,7 +153,7 @@ Decentralized Identifier (DID) scheme.
   "id": "http://example.edu/credentials/1872",
   "type": ["VerifiableCredential", "AlumniCredential"],
   "issuer": "https://example.edu/issuers/565049",,
-  "issuanceDate": "2010-01-01T19:73:24Z",
+  "validFrom": "2010-01-01T19:73:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "alumniOf": "Example University"
@@ -184,7 +184,7 @@ The following is an example verifiable credential that supports ZKPs.
     "ExampleNameDOB"
   ],
   "issuer": "did:sov:4t1FPo72LzDMwpqtTVGVjysD6GUqS",
-  "issuanceDate": "2018-11-27T12:37:15Z",
+  "validFrom": "2018-11-27T12:37:15Z",
   "credentialSubject": {
     "name": "John Doe",
     "birthDate": "1969-02-14",
