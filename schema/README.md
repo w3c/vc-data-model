@@ -16,7 +16,7 @@ There are two schemas provided, each with associated tests:
 
 # Tests
 
-A limited set of tests are included against examples in the specification. To run these tests you can use the following command, after `npm i`:
+A limited set of tests against examples in the specification are included. To run these tests, you can use the following command, after `npm i`:
 
 ```bash
 npm run test-schemas
