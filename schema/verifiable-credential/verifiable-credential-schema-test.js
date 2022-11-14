@@ -1,9 +1,8 @@
 const fs = require('fs');
 const assert = require('assert');
-const Ajv2020 = require("ajv/dist/2020");
-const ajv = new Ajv2020();
+const ajv = require('../__fixtures__/ajv');
 
-const verifiableCredentialSchema = "/../verifiable-credential-schema.json";
+const verifiableCredentialSchema = "/verifiable-credential-schema.json";
 const schema = JSON.parse(fs.readFileSync(__dirname + verifiableCredentialSchema));
 
 describe('Verifiable Credential', function () {
