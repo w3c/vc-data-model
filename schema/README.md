@@ -22,4 +22,4 @@ A limited set of tests are included against examples in the specification. To ru
 npm run test-schemas
 ```
 
-The tests rely on examples featured in the spec. Currently these examples are copy-pasted and there is no guarantee there are in sync with the spec. This should be improved!
+The tests rely on examples featured in the spec. Currently these examples have been copy-pasted, and there is no guarantee they are in sync with the spec. This should be improved!
