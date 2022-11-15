@@ -1,0 +1,144 @@
+{
+  "$id": "https://www.w3.org/2022/credentials/v2/verifiable-presentation-schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "JSON Schema for a Verifiable Presentation according to the Verifiable Credentials Data Model v2",
+  "type": "object",
+  "$defs": {
+    "type": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "minItems": 1
+        }
+      ]
+    },
+    "proof": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "proofPurpose": {
+          "type": "string"
+        },
+        "verificationMethod": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "controller": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "type",
+                  "controller"
+                ],
+                "additionalProperties": true
+              }
+            }
+          ]
+        },
+        "created": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "challenge": {
+          "type": "string"
+        },
+        "proofValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "proofPurpose",
+        "verificationMethod",
+        "created"
+      ],
+      "additionalProperties": true
+    },
+    "proofChain": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/proof"
+      },
+      "minItems": 1
+    }
+  },
+  "properties": {
+    "@context": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "contains": {
+        "const": "https://www.w3.org/2018/credentials/v1"
+      },
+      "minItems": 1
+    },
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/type",
+      "contains": {
+        "const": "VerifiablePresentation"
+      }
+    },
+    "verifiableCredential": {
+      "oneOf": [
+        {
+          "$ref": "https://www.w3.org/2022/credentials/v2/verifiable-credential-schema.json"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "https://www.w3.org/2022/credentials/v2/verifiable-credential-schema.json"
+          },
+          "minItems": 1
+        }
+      ]
+    },
+    "proof": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/proof"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/proof"
+          },
+          "minItems": 1
+        }
+      ]
+    },
+    "proofChain": {
+      "$ref": "#/$defs/proofChain"
+    }
+  },
+  "required": [
+    "@context",
+    "type"
+  ],
+  "additionalProperties": true
+}
