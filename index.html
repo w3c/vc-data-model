@@ -2497,9 +2497,9 @@ data syntax, nor enables the definition of arbitrary encodings to alternate
 representation formats.
         </p>
         <p>
-This specification defines the following <a>property</a> for the expression of a
-data schema, which can be included by an <a>issuer</a> in
-the <a>verifiable credentials</a> that it issues:
+This specification defines the following two <a>properties</a> for the expression of a
+data schema, which can be included either by an <a>issuer</a> in
+the <a>verifiable credentials</a> that it issues or by a <a>holder</a> in the <a>verifiable presentations</a> that it issues, respectively:
         </p>
 
         <dl>
@@ -2513,16 +2513,30 @@ determine if the provided data conforms to the provided schema. Each
 that MUST be a <a>URI</a> identifying the schema file. The precise contents of
 each data schema is determined by the specific type definition.
           </dd>
+          <dt><var>presentationSchema</var></dt>
+          <dd>
+The value of the <code>presentationSchema</code> <a>property</a> MUST be one or
+more data schemas that provide <a>verifiers</a> with enough information to
+determine if the provided data conforms to the provided schema. Each
+<code>presentationSchema</code> MUST specify its <code>type</code> (for example,
+<code>JsonSchemaValidator2018</code>), and an <code>id</code> <a>property</a>
+that MUST be a <a>URI</a> identifying the schema file. The precise contents of
+each data schema is determined by the specific type definition.
+          </dd>
         </dl>
 
         <p class="note">
-The <code>credentialSchema</code> <a>property</a> provides an opportunity to
+The <code>credentialSchema</code> and <code>presentationSchema</code> 
+<a>properties</a> provide an opportunity to
 annotate type definitions or lock them to specific versions of the vocabulary.
-Authors of <a>verifiable credentials</a> can include a static version of their
-vocabulary using <code>credentialSchema</code> that is locked to some content
-integrity protection mechanism. The <code>credentialSchema</code>
-<a>property</a> also makes it possible to perform syntactic checking on the
-<a>credential</a> and to use <a>verification</a> mechanisms such as JSON Schema
+Authors of <a>verifiable credentials</a> and <a>verifiable presentations</a>can 
+include a static version of their
+vocabulary using <code>credentialSchema</code> or <code>presentationSchema</code>
+respectively, that is locked to some content
+integrity protection mechanism. These
+<a>properties</a> also make it possible to perform syntactic checking on the
+<a>credential</a> and <a>presentation<a> respectively,
+ and to use <a>verification</a> mechanisms such as JSON Schema
 [[JSON-SCHEMA-2018]] validation.
         </p>
 
