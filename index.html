@@ -756,7 +756,7 @@ which is usually a digital signature.
                Proof Graph on the bottom.  The Credental Graph has
                Credential 123 with 4 properties: 'type' of value
                AlumniCredential, 'issuer' of Example University,
-               'issuanceDate' of 2010-01-01T19:23:24Z, and
+               'validFrom' of 2010-01-01T19:23:24Z, and
                credentialSubject of Pat, who has an alumniOf property
                with value of Example University.  The Proof Graph has
                Signature 456 with 5 properties: 'type' of
@@ -924,7 +924,7 @@ discount from a university. In the example below, Pat receives an alumni
   <span class='comment'>// the entity that issued the credential</span>
   "issuer": "https://example.edu/issuers/565049",
   <span class='comment'>// when the credential was issued</span>
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   <span class='comment'>// claims about the subjects of the credential</span>
   "credentialSubject": {
     <span class='comment'>// identifier for the only subject of the credential</span>
@@ -989,7 +989,7 @@ the <a>verifier</a> and <a>verified</a>.
     "id": "http://example.edu/credentials/1872",
     "type": ["VerifiableCredential", "AlumniCredential"],
     "issuer": "https://example.edu/issuers/565049",
-    "issuanceDate": "2010-01-01T19:23:24Z",
+    "validFrom": "2010-01-01T19:23:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "alumniOf": {
@@ -1120,7 +1120,7 @@ processors that support JSON-LD can process the <code>@context</code>
   "id": "http://example.edu/credentials/58473",
   "type": ["VerifiableCredential", "AlumniCredential"],
   "issuer": "https://example.edu/issuers/565049",
-  "issuanceDate": "2010-01-01T00:00:00Z",
+  "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "alumniOf": {
@@ -1226,7 +1226,7 @@ about the <code>id</code>.
   <span class="highlight">"id": "http://example.edu/credentials/3732"</span>,
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/565049",
-  "issuanceDate": "2010-01-01T00:00:00Z",
+  "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
     "degree": {
@@ -1302,7 +1302,7 @@ in a document containing machine-readable information about the
   "id": "http://example.edu/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "UniversityDegreeCredential"]</span>,
   "issuer": "https://example.edu/issuers/565049",
-  "issuanceDate": "2010-01-01T00:00:00Z",
+  "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1519,7 +1519,7 @@ a set of objects that MUST contain one or more claims that are each related to a
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/565049",
-  "issuanceDate": "2010-01-01T00:00:00Z",
+  "validFrom": "2010-01-01T00:00:00Z",
   <span class="highlight">"credentialSubject"</span>: {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1547,7 +1547,7 @@ who are spouses. Note the use of array notation to associate multiple
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "https://example.com/issuer/123",
-  "issuanceDate": "2010-01-01T00:00:00Z",
+  "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": <span class="highlight">[{
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "name": "Jayden Doe",
@@ -1596,7 +1596,7 @@ machine-readable information about the <a>issuer</a> that can be used to
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   <span class="highlight">"issuer": "https://example.edu/issuers/14"</span>,
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1626,7 +1626,7 @@ associating an object with the issuer property:
     "id": "did:example:76e12ec712ebc6f1c221ebfeb1f",
     "name": "Example University"
   }</span>,
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1649,15 +1649,15 @@ example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
         <h3>Issuance Date</h3>
 
         <p>
-This specification defines the <code>issuanceDate</code> <a>property</a> for
+This specification defines the <code>validFrom</code> <a>property</a> for
 expressing the date and time when a <a>credential</a> becomes valid.
         </p>
 
         <dl>
-          <dt><var>issuanceDate</var></dt>
+          <dt><var>validFrom</var></dt>
           <dd>
-A <a>credential</a> MUST have an <code>issuanceDate</code> <a>property</a>. The
-value of the <code>issuanceDate</code> <a>property</a> MUST be a string value of
+A <a>credential</a> MUST have an <code>validFrom</code> <a>property</a>. The
+value of the <code>validFrom</code> <a>property</a> MUST be a string value of
 an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>] combined
 <code>date-time</code> string representing the date and time the
 <a>credential</a> becomes valid, which could be a date and time in the future.
@@ -1668,7 +1668,7 @@ at which the information associated with the <code>credentialSubject</code>
         </dl>
 
         <pre class="example nohighlight vc"
-          title="Usage of issuanceDate property"
+          title="Usage of validFrom property"
           data-vc-vm="https://example.edu/issuers/14#key-1">
 {
   "@context": [
@@ -1678,7 +1678,7 @@ at which the information associated with the <code>credentialSubject</code>
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  <span class="highlight">"issuanceDate": "2010-01-01T19:23:24Z"</span>,
+  <span class="highlight">"validFrom": "2010-01-01T19:23:24Z"</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1688,17 +1688,6 @@ at which the information associated with the <code>credentialSubject</code>
   }
 }
         </pre>
-
-        <p class="note">
-It is expected that the next version of this specification will add the
-<code>validFrom</code> <a>property</a> and will deprecate the
-<code>issuanceDate</code> <a>property</a> in favor of a new <code>issued</code>
-<a>property</a>. The range of values for both properties are expected to remain
-as [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>] combined
-<code>date-time</code> strings. Implementers are advised that the
-<code>validFrom</code> and <code>issued</code> <a>properties</a> are reserved
-and use for any other purpose is discouraged.
-        </p>
 
       </section>
 
@@ -1756,7 +1745,7 @@ the signing date. The example below uses Ed25519 digital signatures.
   "id": "http://example.gov/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu",
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1792,14 +1781,14 @@ Verifiable Credentials Extension Registry [[VC-EXTENSION-REGISTRY]].
         <h3>Expiration</h3>
 
         <p>
-This specification defines the <code>expirationDate</code> <a>property</a> for
+This specification defines the <code>validUntil</code> <a>property</a> for
 the expression of <a>credential</a> expiration information.
         </p>
 
         <dl>
-          <dt><var>expirationDate</var></dt>
+          <dt><var>validUntil</var></dt>
           <dd>
-If present, the value of the <code>expirationDate</code> <a>property</a> MUST be
+If present, the value of the <code>validUntil</code> <a>property</a> MUST be
 a string value of an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
 <code>date-time</code> representing the date and time the <a>credential</a>
 ceases to be valid.
@@ -1807,7 +1796,7 @@ ceases to be valid.
         </dl>
 
         <pre class="example nohighlight vc"
-          title="Usage of the expirationDate property"
+          title="Usage of the validUntil property"
           data-vc-vm="https://example.edu/issuers/14#key-1">
 {
   "@context": [
@@ -1817,8 +1806,8 @@ ceases to be valid.
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
-  <span class="highlight">"expirationDate": "2020-01-01T19:23:24Z"</span>,
+  "validFrom": "2010-01-01T19:23:24Z",
+  <span class="highlight">"validUntil": "2020-01-01T19:23:24Z"</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1828,14 +1817,6 @@ ceases to be valid.
   }
 }
         </pre>
-
-        <p class="note">
-It is expected that the next version of this specification will add the
-<code>validUntil</code> <a>property</a> in a way that deprecates, but
-preserves backwards compatibility with the <code>expirationDate</code>
-<a>property</a>. Implementers are advised that the <code>validUntil</code>
-<a>property</a> is reserved and its use for any other purpose is discouraged.
-        </p>
 
       </section>
 
@@ -1889,7 +1870,7 @@ suspended or revoked.
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -2317,7 +2298,7 @@ Let us assume we start with the <a>verifiable credential</a> shown below.
   "id": "http://example.com/credentials/4643",
   "type": ["VerifiableCredential"],
   "issuer": "https://example.com/issuers/14",
-  "issuanceDate": "2018-02-24T05:28:04Z",
+  "validFrom": "2018-02-24T05:28:04Z",
   "credentialSubject": {
     "id": "did:example:abcdef1234567",
     "name": "Jane Doe"
@@ -2370,7 +2351,7 @@ example by including the context and adding the new <a>properties</a> and
   "id": "http://example.com/credentials/4643",
   "type": ["VerifiableCredential", "CustomExt12"],
   "issuer": "https://example.com/issuers/14",
-  "issuanceDate": "2018-02-24T05:28:04Z",
+  "validFrom": "2018-02-24T05:28:04Z",
   <span class="highlight">"referenceNumber": 83294847,</span>
   "credentialSubject": {
     "id": "did:example:abcdef1234567",
@@ -2537,7 +2518,7 @@ integrity protection mechanism. The <code>credentialSchema</code>
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -2581,7 +2562,7 @@ see Section <a href="#zero-knowledge-proofs"></a>.
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -2669,7 +2650,7 @@ each refresh service is determined by the specific <code>refreshService</code>
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -2749,7 +2730,7 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -2807,7 +2788,7 @@ in an archive.
     "id": "http://example.edu/credentials/3732",
     "type": ["VerifiableCredential", "UniversityDegreeCredential"],
     "issuer": "https://example.edu/issuers/14",
-    "issuanceDate": "2010-01-01T19:23:24Z",
+    "validFrom": "2010-01-01T19:23:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "degree": {
@@ -2920,7 +2901,7 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -3248,7 +3229,7 @@ can issue the <a>credential</a> shown below and present it to the
     },
   }</span>,
   "issuer": "https://example.com/people#me",
-  "issuanceDate": "2017-12-05T14:27:42Z",
+  "validFrom": "2017-12-05T14:27:42Z",
   "proof": { <span class="comment">...</span> }
 }
         </pre>
@@ -3329,10 +3310,10 @@ If present, the following properties are represented as a single value:
 <code>issuer</code> <a>property</a>
         </li>
         <li>
-<code>issuanceDate</code> <a>property</a>
+<code>validFrom</code> <a>property</a>
         </li>
         <li>
-<code>expirationDate</code> <a>property</a>.
+<code>validUntil</code> <a>property</a>.
         </li>
       </ul>
 
@@ -3821,7 +3802,7 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
   "id": "http://example.edu/credentials/temporary/28934792387492384",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
-  "issuanceDate": "2017-10-22T12:23:48Z",
+  "validFrom": "2017-10-22T12:23:48Z",
   "credentialSubject": {
     <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
     "degree": {
@@ -4722,9 +4703,9 @@ checking the proofs on the <a>verifiable credentials</a>.
         <h3>Issuance Date</h3>
 
         <p>
-The <code>issuanceDate</code> is expected to be within an expected range for the
-<a>verifier</a>. For example, a <a>verifier</a> can check that the issuance date
-of a <a>verifiable credential</a> is not in the future.
+The <code>validFrom</code> is expected to be within an expected range for the
+<a>verifier</a>. For example, a <a>verifier</a> can check that the start of
+a validity period for a <a>verifiable credential</a> is not in the future.
         </p>
       </section>
 
@@ -4797,7 +4778,7 @@ purposes and to a <a>verifiable credential</a> as a method of assertion.
         <h3>Expiration</h3>
 
         <p>
-The <code>expirationDate</code> is expected to be within an expected range
+The <code>validUntil</code> is expected to be within an expected range
 for the <a>verifier</a>. For example, a <a>verifier</a> can check that the
 expiration date of a <a>verifiable credential</a> is not in the past.
         </p>
@@ -4892,11 +4873,11 @@ is also provided in this section.
         "credentialStatus": {"@id": "cred:credentialStatus", "@type": "@id"},
         "credentialSubject": {"@id": "cred:credentialSubject", "@type": "@id"},
         "evidence": {"@id": "cred:evidence", "@type": "@id"},
-        "expirationDate": {"@id": "cred:expirationDate", "@type": "xsd:dateTime"},
+        "validUntil": {"@id": "cred:validUntil", "@type": "xsd:dateTime"},
         "holder": {"@id": "cred:holder", "@type": "@id"},
         "issued": {"@id": "cred:issued", "@type": "xsd:dateTime"},
         "issuer": {"@id": "cred:issuer", "@type": "@id"},
-        "issuanceDate": {"@id": "cred:issuanceDate", "@type": "xsd:dateTime"},
+        "validFrom": {"@id": "cred:validFrom", "@type": "xsd:dateTime"},
         "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"},
         "refreshService": {
           "@id": "cred:refreshService",
