@@ -1646,11 +1646,13 @@ example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
       </section>
 
       <section>
-        <h3>Issuance Date</h3>
+        <h3>Validity Period</h3>
 
         <p>
-This specification defines the <code>validFrom</code> <a>property</a> for
-expressing the date and time when a <a>credential</a> becomes valid.
+This specification defines the <code>validFrom</code> <a>property</a> to help an
+issuer to express the date and time when a <a>credential</a> becomes valid and
+the <code>validUntil</code> <a>property</a> for expressing the date and time
+when a <a>credential</a> ceases to be valid.
         </p>
 
         <dl>
@@ -1665,10 +1667,17 @@ Note that this value represents the earliest point in time
 at which the information associated with the <code>credentialSubject</code>
 <a>property</a> becomes valid.
           </dd>
+          <dt><var>validUntil</var></dt>
+          <dd>
+  If present, the value of the <code>validUntil</code> <a>property</a> MUST be
+  a string value of an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
+  <code>date-time</code> representing the date and time the <a>credential</a>
+  ceases to be valid.
+          </dd>
         </dl>
 
         <pre class="example nohighlight vc"
-          title="Usage of validFrom property"
+          title="Usage of validFrom and validUntil property"
           data-vc-vm="https://example.edu/issuers/14#key-1">
 {
   "@context": [
@@ -1679,6 +1688,7 @@ at which the information associated with the <code>credentialSubject</code>
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
   "issuer": "https://example.edu/issuers/14",
   <span class="highlight">"validFrom": "2010-01-01T19:23:24Z"</span>,
+  <span class="highlight">"validUntil": "2020-01-01T19:23:24Z"</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -1774,49 +1784,6 @@ Suites Registries [[?LDP-REGISTRY]], and JSON Web Signature (JWS) Unencoded
 Payload Option [[RFC7797]]. A list of proof mechanisms is available in the
 Verifiable Credentials Extension Registry [[VC-EXTENSION-REGISTRY]].
         </p>
-
-      </section>
-
-      <section>
-        <h3>Expiration</h3>
-
-        <p>
-This specification defines the <code>validUntil</code> <a>property</a> for
-the expression of <a>credential</a> expiration information.
-        </p>
-
-        <dl>
-          <dt><var>validUntil</var></dt>
-          <dd>
-If present, the value of the <code>validUntil</code> <a>property</a> MUST be
-a string value of an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
-<code>date-time</code> representing the date and time the <a>credential</a>
-ceases to be valid.
-          </dd>
-        </dl>
-
-        <pre class="example nohighlight vc"
-          title="Usage of the validUntil property"
-          data-vc-vm="https://example.edu/issuers/14#key-1">
-{
-  "@context": [
-    "https://www.w3.org/2018/credentials/v1",
-    "https://www.w3.org/2018/credentials/examples/v1"
-  ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  <span class="highlight">"validUntil": "2020-01-01T19:23:24Z"</span>,
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "BachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  }
-}
-        </pre>
 
       </section>
 
