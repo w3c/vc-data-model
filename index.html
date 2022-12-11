@@ -1065,11 +1065,11 @@ mean the same thing to each other. This might be referred to as
         </p>
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> have many
-attributes and values that are identified by <a>URIs</a> [[RFC3986]]. However,
-those <a>URIs</a> can be long and not very human-friendly. In such cases,
+attributes and values that are identified by <a>URLs</a> [[URL]]. However,
+those <a>URLs</a> can be long and not very human-friendly. In such cases,
 short-form human-friendly aliases can be more helpful. This specification uses
 the <code>@context</code> <a>property</a> to map such short-form aliases to the
-<a>URIs</a> required by specific <a>verifiable credentials</a> and <a>verifiable
+<a>URLs</a> required by specific <a>verifiable credentials</a> and <a>verifiable
 presentations</a>.
        </p>
   <p class="note">
@@ -1090,12 +1090,12 @@ of the [[JSON-LD]] specification.
           <dt><dfn class="lint-ignore">@context</dfn></dt>
           <dd>
 The value of the <code>@context</code> <a>property</a> MUST be an ordered set
-where the first item is a <a>URI</a> with the value
+where the first item is a <a>URL</a> with the value
 <code>https://www.w3.org/2018/credentials/v1</code>. For reference, a copy of
 the base context is provided in Appendix <a href="#base-context"></a>.
 Subsequent items in the array MUST express context information and be composed
-of any combination of <a>URIs</a> or objects. It is RECOMMENDED that each
-<a>URI</a> in the <code>@context</code> be one which, if dereferenced, results
+of any combination of <a>URLs</a> or objects. It is RECOMMENDED that each
+<a>URL</a> in the <code>@context</code> be one which, if dereferenced, results
 in a document containing machine-readable information about the
 <code>@context</code>.
           </dd>
@@ -1139,18 +1139,18 @@ processors that support JSON-LD can process the <code>@context</code>
         </pre>
 
         <p>
-The example above uses the base context <a>URI</a>
+The example above uses the base context <a>URL</a>
 (<code>https://www.w3.org/2018/credentials/v1</code>) to establish that the
-conversation is about a <a>verifiable credential</a>. The second <a>URI</a>
+conversation is about a <a>verifiable credential</a>. The second <a>URL</a>
 (<code>https://www.w3.org/2018/credentials/examples/v1</code>) establishes that
 the conversation is about examples.
         </p>
 
         <p class="note">
-This document uses the example context <a>URI</a>
+This document uses the example context <a>URL</a>
 (<code>https://www.w3.org/2018/credentials/examples/v1</code>) for the purpose
 of demonstrating examples. Implementations are expected to not use this
-<a>URI</a> for any other purpose, such as in pilot or production systems.
+<a>URL</a> for any other purpose, such as in pilot or production systems.
         </p>
 
         <p>
@@ -1192,7 +1192,8 @@ by that identifier.
 The <code>id</code> <a>property</a> MUST NOT have more than one value.
           </li>
           <li>
-The value of the <code>id</code> <a>property</a> MUST be a <a>URI</a>.
+The value of the <code>id</code> <a>property</a> MUST be a <a>URL</a> which
+MAY be dereferenceable.
           </li>
         </ul>
 
@@ -1209,8 +1210,8 @@ MAY be omitted.
         <dl>
           <dt><dfn class="lint-ignore">id</dfn></dt>
           <dd>
-The value of the <code>id</code> <a>property</a> MUST be a single <a>URI</a>.
-It is RECOMMENDED that the <a>URI</a> in the <code>id</code> be one which, if
+The value of the <code>id</code> <a>property</a> MUST be a single <a>URL</a>.
+It is RECOMMENDED that the <a>URL</a> in the <code>id</code> be one which, if
 dereferenced, results in a document containing machine-readable information
 about the <code>id</code>.
           </dd>
@@ -1282,11 +1283,11 @@ nor a <a>verifiable presentation</a>.
           <dt><dfn data-lt="type|types">type</dfn></dt>
           <dd>
 The value of the <code>type</code> <a>property</a> MUST be, or map to (through
-interpretation of the <code>@context</code> property), one or more <a>URIs</a>.
-If more than one <a>URI</a> is provided, the <a>URIs</a> MUST be interpreted
+interpretation of the <code>@context</code> property), one or more <a>URLs</a>.
+If more than one <a>URL</a> is provided, the <a>URLs</a> MUST be interpreted
 as an unordered set. Syntactic conveniences SHOULD be used to ease developer
 usage. Such conveniences might include JSON-LD terms. It is RECOMMENDED that
-each <a>URI</a> in the <code>type</code> be one which, if dereferenced, results
+each <a>URL</a> in the <code>type</code> be one which, if dereferenced, results
 in a document containing machine-readable information about the
 <code>type</code>.
           </dd>
@@ -1578,8 +1579,8 @@ A <a>verifiable credential</a> MUST have an <code>issuer</code> <a>property</a>.
           <dt><var>issuer</var></dt>
           <dd>
 The value of the <code>issuer</code> <a>property</a> MUST be either a
-<a>URI</a> or an object containing an <code>id</code> <a>property</a>. It is
-RECOMMENDED that the <a>URI</a> in the <code>issuer</code> or its
+<a>URL</a> or an object containing an <code>id</code> <a>property</a>. It is
+RECOMMENDED that the <a>URL</a> in the <code>issuer</code> or its
 <code>id</code> be one which, if dereferenced, results in a document containing
 machine-readable information about the <a>issuer</a> that can be used to
 <a>verify</a> the information expressed in the <a>credential</a>.
@@ -1806,7 +1807,8 @@ include the following:
 
             <ul>
               <li>
-<code>id</code> <a>property</a>, which MUST be a <a>URI</a>.
+<code>id</code> <a>property</a>, which MUST be a <a>URL</a> which MAY be
+dereferenceable.
               </li>
               <li>
 <code>type</code> <a>property</a>, which expresses the <a>credential</a> status
@@ -1823,7 +1825,7 @@ depending on factors such as whether it is simple to implement or if it is
 privacy-enhancing.
 It is expected that the value will provide enough information to determine the
 current status of the <a>credential</a> and that machine readable information
-needs to be retrievable from the URI. For example, the object could contain a
+needs to be retrievable from the URL. For example, the object could contain a
 link to an external document noting whether or not the <a>credential</a> is
 suspended or revoked.
         </p>
@@ -1904,7 +1906,7 @@ derived from <a>verifiable credentials</a> in a cryptographically
           <dt><var>holder</var></dt>
           <dd>
 If present, the value of the <code>holder</code> <a>property</a>
-is expected to be a <a>URI</a> for the entity that is generating the
+is expected to be a <a>URL</a> for the entity that is generating the
 <a>presentation</a>.
           </dd>
           <dt><var>proof</var></dt>
@@ -2461,7 +2463,7 @@ more data schemas that provide <a>verifiers</a> with enough information to
 determine if the provided data conforms to the provided schema. Each
 <code>credentialSchema</code> MUST specify its <code>type</code> (for example,
 <code>JsonSchemaValidator2018</code>), and an <code>id</code> <a>property</a>
-that MUST be a <a>URI</a> identifying the schema file. The precise contents of
+that MUST be a <a>URL</a> identifying the schema file. The precise contents of
 each data schema is determined by the specific type definition.
           </dd>
         </dl>
@@ -2603,8 +2605,8 @@ refresh services that provides enough information to the recipient's software
 such that the recipient can refresh the <a>verifiable credential</a>. Each
 <code>refreshService</code> value MUST specify its <code>type</code> (for
 example, <code>ManualRefreshService2018</code>) and its <code>id</code>, which
-is the <a>URI</a> of the service. There is an expectation that machine readable
-information needs to be retrievable from the URI. The precise content of
+is the <a>URL</a> of the service. There is an expectation that machine readable
+information needs to be retrievable from the URL. The precise content of
 each refresh service is determined by the specific <code>refreshService</code>
 <a>type</a> definition.
           </dd>
@@ -5088,7 +5090,7 @@ perspective, is to convey the meaning of the data and term definitions of the
 data in a <a>verifiable credential</a>, in a machine readable way. When encoding a pure
 [[JSON]] representation, the <code>@context</code> property remains mandatory and
 provides some basic support for global semantics. The <code>@context</code>
-property is used to map the globally unique URIs for properties in <a>verifiable
+property is used to map the globally unique URLs for properties in <a>verifiable
 credentials</a> and <a>verifiable presentations</a> into short-form alias names,
 making both the [[JSON]] and [[JSON-LD]] representations more human-friendly
 to read. From a [[JSON-LD]] perspective, this mapping also allows the data in
@@ -5218,9 +5220,9 @@ libraries.
         </li>
 
         <li>
-Loosen the requirement to use URLs to use <a>URIs</a> in the <code>id</code>
-property of the <code>credentialStatus</code> and <code>refreshService</code>
-sections of the data model.
+Loosen the requirement to allow non-dereferenceable <a>URLs</a> in the
+<code>id</code> property of the <code>credentialStatus</code> and
+<code>refreshService</code> sections of the data model.
         </li>
 
         <li>
