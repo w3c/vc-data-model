@@ -35,13 +35,13 @@ var vcwg = {
     },
     "VC-DATA-INTEGRITY": {
       title: "Verifiable Credential Data Integrity",
-      href: "https://w3c.github.io/vc-data-integrity/",
+      href: "https://www.w3.org/TR/vc-data-integrity/",
       authors: [
         "Manu Sporny",
         "Dave Longley",
         "Mike Prorock"
       ],
-      status: "ED",
+      status: "WD",
       publisher: "Verifiable Credentials Working Group"
     },
     "LDP-REGISTRY": {
