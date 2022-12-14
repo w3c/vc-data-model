@@ -5224,6 +5224,79 @@ Extensions of Verifiable Credentials Data Model 1.0</a>
         </li>
       </ul>
 
+<section id="media-type">
+  <h2>The <code>application/credential+json</code> Media Type</h2>
+  <p>
+    This specification registers the <code>application/credential+json</code> MIME Media Type specifically for
+    identifying documents
+    conforming to the Verifiable Credentials format.
+  </p>
+  <table>
+    <tr>
+      <td>Type name: </td>
+      <td>application</td>
+    </tr>
+    <tr>
+      <td>Subtype name: </td>
+      <td>credential+json</td>
+    </tr>
+    <tr>
+      <td>Required parameters: </td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Optional parameters: </td>
+      <td>
+        profile: The profile parameter for the application/credential+json
+        media type allows one or more profile URIs to be specified. These
+        profile URIs have the identifier semantics defined in [[!RFC6906]].
+        The "profile" media type parameter MUST be quoted. It contains a
+        non-empty list of space-separated URIs (the profile URIs).
+        <pre>profile-param = "profile=" profile-value
+profile-value = <"> profile-URI 0*( 1*SP profile-URI ) <">
+profile-URI   = URI</"></"></pre>
+        The "URI" in the above grammar refers to the "URI" as defined in
+        Section 3 of [[!RFC3986]].
+      </td>
+    </tr>
+    <tr>
+      <td>Encoding considerations: </td>
+      <td>
+        Resources that use the "<code>application/credential+json</code>"
+        Media Type are required to conform to all of the requirements
+        for the "<code>application/json</code>" Media Type and are
+        therefore subject to the same encoding considerations specified
+        in Section 11 of [[!RFC7159]].
+      </td>
+    </tr>
+    <tr>
+      <td>Security considerations: </td>
+      <td>As defined in this specification.</td>
+    </tr>
+    <tr>
+      <td>Contact: </td>
+      <td>
+        Orie Steele &lt;<a href="mailto:orie@transmute.industries">orie@transmute.industries</a>&gt;
+      </td>
+    </tr>
+  </table>
+
+  <p>
+    Note that while the Verifiable Credentials format uses JSON-LD
+    conventions, there are a number of constraints and additional
+    requirements for Verifiable Credential implementations that justify
+    the use of a specific media type.
+  </p>
+
+  <p>
+    Because Verifiable Credentials can be considered a restricted profile
+    of JSON-LD, Implementations SHOULD consider the
+    `application/ld+json; profile="https://www.w3.org/ns/credentials"`
+    media type as being equivalent to `application/credential+json`.
+  </p>
+</section>
+
+
     </section>
 
     <section>
