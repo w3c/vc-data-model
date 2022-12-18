@@ -249,8 +249,8 @@ the classes of vehicle entitled to drive, or date of birth)
 Evidence related to how the <a>credential</a> was derived
           </li>
           <li>
-Information related to constraints on the credential (for example, expiration
-date, or terms of use).
+Information related to constraints on the credential (for example,
+validity period, or terms of use).
           </li>
         </ul>
 
@@ -705,11 +705,11 @@ expected to be added to the graph.
 
         <p>
 A <a>credential</a> is a set of one or more <a>claims</a> made by the same
-<a>entity</a>. <a>Credentials</a> might also include an identifier and
-metadata to describe properties of the <a>credential</a>, such as the
-<a>issuer</a>, the expiry date and time, a representative image, a public key
-to use for <a>verification</a> purposes, the revocation mechanism, and so on.
-The metadata might be signed by the <a>issuer</a>. A
+<a>entity</a>. <a>Credentials</a> might also include an identifier and metadata
+to describe properties of the <a>credential</a>, such as the
+<a>issuer</a>, the validity date and time period, a representative image, a
+public key to use for <a>verification</a> purposes, the revocation mechanism,
+and so on. The metadata might be signed by the <a>issuer</a>. A
 <a>verifiable credential</a> is a set of tamper-evident <a>claims</a> and
 metadata that cryptographically prove who issued it.
         </p>
@@ -2561,10 +2561,10 @@ then be used by a <a>verifier</a> to determine if the proof provided with the
         <h3>Refreshing</h3>
 
         <p>
-It is useful for systems to enable the manual or automatic refresh of an
-expired <a>verifiable credential</a>. For more information about expired
-<a>verifiable credentials</a>, see Section <a href="#expiration"></a>. This
-specification defines a <code>refreshService</code> <a>property</a>, which
+It is useful for systems to enable the manual or automatic refresh of an expired
+<a>verifiable credential</a>. For more information about validity periods for
+<a>verifiable credentials</a>, see Section <a href="#validity-periods"></a>.
+This specification defines a <code>refreshService</code> <a>property</a>, which
 enables an <a>issuer</a> to include a link to a refresh service.
         </p>
         <p>
@@ -4107,7 +4107,7 @@ automatic.
         <p>
 For example, an <code>ageOver</code> <a>verifiable credential</a> is useful for
 gaining access to a bar. If an <a>issuer</a> issues such a
-<a>verifiable credential</a> with a very short expiration date and an automatic
+<a>verifiable credential</a> with a very short validity period and an automatic
 renewal mechanism, then the <a>issuer</a> could possibly correlate the behavior
 of the <a>holder</a> in a way that negatively impacts the <a>holder</a>.
         </p>
@@ -4381,14 +4381,14 @@ would comprise a false <a>claim</a>.
 
         <p>
 When <a>verifiable credentials</a> are issued for highly dynamic information,
-implementers should ensure the expiration times are set appropriately.
-Expiration periods longer than the timeframe where the
-<a>verifiable credential</a> is valid might create exploitable security
-vulnerabilities. Expiration periods shorter than the timeframe where the
-information expressed by the <a>verifiable credential</a> is valid creates a
-burden on <a>holders</a> and <a>verifiers</a>. It is therefore important to set
-validity periods for <a>verifiable credentials</a> that are appropriate to the
-use case and the expected lifetime for the information contained in the
+implementers should ensure the validity periods are set appropriately. Validity
+periods longer than the timeframe where the <a>verifiable credential</a> is
+meant for use might create exploitable security vulnerabilities. Validity
+periods shorter than the timeframe where the information expressed by the
+<a>verifiable credential</a> is expected to be used creates a burden on
+<a>holders</a> and <a>verifiers</a>. It is therefore important to set validity
+periods for <a>verifiable credentials</a> that are appropriate to the use case
+and the expected lifetime for the information contained in the
 <a>verifiable credential</a>.
         </p>
       </section>
@@ -4712,7 +4712,7 @@ signatures, implementations are expected to ensure:
           <li>
 Acceptably recent metadata regarding the public key associated with the
 signature is available. For example, the metadata might include
-<a>properties</a> related to expiration, key owner, or key purpose.
+<a>properties</a> related to validity periods, key owner, or key purpose.
           </li>
           <li>
 The key is not suspended, revoked, or expired.
@@ -4744,12 +4744,13 @@ purposes and to a <a>verifiable credential</a> as a method of assertion.
       </section>
 
       <section class="informative">
-        <h3>Expiration</h3>
+        <h3>Validity Periods</h3>
 
         <p>
-The <code>validUntil</code> is expected to be within an expected range
-for the <a>verifier</a>. For example, a <a>verifier</a> can check that the end of the
-validity period of a <a>verifiable credential</a> is not in the past.
+The <code>validFrom</code> and <code>validUntil</code> properties are expected
+to be within an expected range for the <a>verifier</a>. For example, a
+<a>verifier</a> can check that the end of the validity period of a <a>verifiable
+credential</a> is not in the past.
         </p>
       </section>
 
