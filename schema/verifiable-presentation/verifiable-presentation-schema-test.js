@@ -18,7 +18,7 @@ describe('Verifiable Presentation', function () {
     });
 
     // Note: this example fails because the dependent VC is not valid;
-    // it is missing an issuanceDate. Both the VP and VC proofs are missing
+    // it is missing an validFrom. Both the VP and VC proofs are missing
     // created, proofPurpose, and verificationMethod fields. The example has
     // been modified to get the test to pass.
     it('should validate example 25 using JSON Schema 2020-12 ', function () {
