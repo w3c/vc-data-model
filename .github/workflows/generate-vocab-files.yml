@@ -1,33 +1,30 @@
-name: Automatic Generation of Vocabulary Files
+name: Publish via gh-pages
 on:
+  pull_request: {}
   push:
     branches: [main]
-    paths: ["vocab/credentials/v2/vocabulary.yml", "vocab/credentials/v2/template.html"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout source code
+      - name: Setup environment
         uses: actions/checkout/@v2
-      - name: setup node.js
+      - name: Setup Node 16.x
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-      - name: install and run the yml2vocab script
+      - name: Generate VC vocabularies
         run: |
           npm install yml2vocab
           npm update yml2vocab
           ./node_modules/.bin/yml2vocab -v vocab/credentials/v2/vocabulary.yml -t vocab/credentials/v2/template.html
-      - name: Deploy to gh-pages branches
+      - name: Publish via gh-pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
+        if: ${{ github.ref_name == 'main' }}
         with:
           branch: gh-pages
           folder: .
           git-config-name: "vcwg[bot]"
           git-config-email: "vcwg[bot]@users.noreply.github.com"
           single-commit: true
-
-
-
-
