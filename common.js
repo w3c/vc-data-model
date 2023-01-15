@@ -144,8 +144,6 @@ var vcwg = {
 require(["core/pubsubhub"], (respecEvents) => {
   "use strict";
 
-  console.log("RESPEC EVENTS", respecEvents);
-
   respecEvents.sub('end-all', (message) => {
     console.log("END EVENT", message);
     // remove data-cite on where the citation is to ourselves.
