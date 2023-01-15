@@ -1,0 +1,31 @@
+name: Publish via Echidna
+on:
+  pull_request: {}
+  push:
+    branches: [main]
+jobs:
+  main:
+    name: Build and publish
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Setup environment
+        uses: actions/checkout@v2
+      - name: Setup Node 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Generate VC vocabularies
+        run:
+          npm install yml2vocab
+          npm update yml2vocab
+          ./node_modules/.bin/yml2vocab -v vocab/credentials/v2/vocabulary.yml -t vocab/credentials/v2/template.html
+      - name: Publish via Echidna
+        uses: w3c/spec-prod@v2
+        if: ${{ github.ref_name == 'main' }}
+        with:
+          TOOLCHAIN: respec
+          W3C_ECHIDNA_TOKEN: ${{ secrets.W3C_TR_TOKEN }}
+          W3C_WG_DECISION_URL: https://www.w3.org/2017/vc/WG/Meetings/Minutes/2022-08-03-vcwg#resolution1
+          W3C_BUILD_OVERRIDE: |
+             shortName: vc-data-model-2.0
+             specStatus: WD
