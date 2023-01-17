@@ -1,25 +1,15 @@
-name: Publish via Echidna
+name: Publish to W3C
 on:
-  pull_request: {}
   push:
     branches: [main]
 jobs:
   main:
-    name: Build and publish
+    name: Build, Validate, and Deploy
     runs-on: ubuntu-20.04
     steps:
-      - name: Setup environment
+      - name: Checkout source code
         uses: actions/checkout@v3
-      - name: Setup Node 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Generate VC vocabularies
-        run:
-          npm install yml2vocab
-          npm update yml2vocab
-          ./node_modules/.bin/yml2vocab -v vocab/credentials/v2/vocabulary.yml -t vocab/credentials/v2/template.html
-      - name: Publish via Echidna
+      - name: Publish as W3C Technical Report Snapshot
         uses: w3c/spec-prod@v2
         if: ${{ github.ref_name == 'main' }}
         with:
