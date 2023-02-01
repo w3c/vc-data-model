@@ -2458,14 +2458,22 @@ the <a>verifiable credentials</a> that it issues:
 
         <dl>
           <dt><var>credentialSchema</var></dt>
-          <dd>
-The value of the <code>credentialSchema</code> <a>property</a> MUST be one or
-more data schemas that provide <a>verifiers</a> with enough information to
-determine if the provided data conforms to the provided schema. Each
-<code>credentialSchema</code> MUST specify its <code>type</code> (for example,
-<code>JsonSchemaValidator2018</code>), and an <code>id</code> <a>property</a>
-that MUST be a <a>URL</a> identifying the schema file. The precise contents of
-each data schema is determined by the specific type definition.
+          <dd><p>
+The value of the <code>credentialSchema</code> <a>property</a> MUST be a single
+data schema object which provides <a>verifiers</a> with enough information 
+to determine if the provided data conforms to the provided schema object. Each
+<code>credentialSchema</code> MUST specify its <code>type</code> (e.g.,
+<code>JsonSchemaValidator2018</code>, 
+<code><a href="https://w3c-ccg.github.io/vc-json-schemas/">CredentialSchema2022</a></code>,
+or <code><a href="https://transmute-industries.github.io/vc-credential-schema-open-api-specification/">
+OpenApiSpecificationValidator2022</a></code>), and an <code>id</code> <a>property</a>
+which MUST be a <a>URL</a> identifying the schema file. </p>
+<p>The precise contents of each data schema object is determined by its 
+<code>type</code> definition. Different <code>type</code> implementations
+of data schema objects may choose to support different processing mechanisms 
+such as enabling the use of multiple data schemas for a single credential.
+Types may also enable specific processing rules (e.g. if there are multiple 
+schemas, all must be valid, some must be valid, and so on).</p>
           </dd>
         </dl>
 
