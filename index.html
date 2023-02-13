@@ -145,6 +145,18 @@ pre .comment {
   -ms-user-select: none;
   user-select: none;
 }
+ol.algorithm {
+  counter-reset: numsection;
+  list-style-type: none;
+}
+ol.algorithm li {
+  margin: 0.5em 0;
+}
+ol.algorithm li:before {
+  font-weight: bold;
+  counter-increment: numsection;
+  content: counters(numsection, ".") ") ";
+}
     </style>
   </head>
   <body>
@@ -2756,6 +2768,42 @@ In the example above, the <a>issuer</a> has provided an SVG rendering template
 for a bachelor's degree that will be filled in with the information in the
 <a>verifiable credential</a>.
         </p>
+
+        <section>
+          <h5>SvgRenderingTemplate2023 Algorithm</h5>
+
+          <p>
+The following algorithm is used to transform the SVG image template into the
+final SVG image that is displayed. The inputs to the algorithm are the
+<a>verifiable credential</a> (`verifiableCredential`) and the SVG image
+source code (`svgImage`). The output is a SVG image.
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Generate a map, `replacementMap`, by finding all strings in `svgImage` that
+start with `{{` (double open parenthesis) and end with `}}`
+(double close parenthesis). For each string, `templateKey`, that is found:
+              <ol class="algorithm">
+                <li>
+Generate another string, `templateValue`, by evaluating the value of
+`templateKey` (without the opening or closing parenthesis) using the JSON
+Pointer [[RFC6901]] algorithm with the `verifiableCredential` as input to the
+algorithm. If the evaluation is `null`, set `templateValue` to the empty string.
+                </li>
+                <li>
+Set a key in `replacementMap` by using `templateKey` and associate it with
+`templateValue`.
+                </li>
+              </ol>
+            </li>
+            <li>
+For every key in `replacementMap`, replace each corresponding
+string in `svgImage` that matches the key with the associated value in the
+`replacementMap`.
+            </li>
+          </ol>
+        </section>
         </section>
       </section>
 
