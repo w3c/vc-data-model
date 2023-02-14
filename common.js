@@ -118,12 +118,12 @@ var vcwg = {
       href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
       publisher: 'Wikipedia'
     },
-    'JSON-SCHEMA-2018': {
-      title: 'JSON Schema: A Media Type for Describing JSON Documents',
-      href: 'https://datatracker.ietf.org/doc/draft-handrews-json-schema/',
-      authors: ['Austin Wright', 'Henry Andrews'],
-      status: 'Internet-Draft',
-      publisher: 'Internet Engineering Task Force (IETF)'
+    'CREDENTIAL-SCHEMA-2022': {
+      title: 'Verifiable Credentials JSON Schema 2022',
+      href: 'https://w3c-ccg.github.io/vc-json-schemas/',
+      authors: ['Gabe Cohen', 'Orie Steele'],
+      status: 'CG-DRAFT',
+      publisher: 'Credentials Community Group'
     },
     'JSON-LD': {
       title: 'JSON-LD 1.1: A JSON-based Serialization for Linked Data',
