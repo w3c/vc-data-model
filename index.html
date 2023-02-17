@@ -4869,8 +4869,37 @@ The base context, located at
 <strong><code>944167aaabd904ea9e35c98fd7e8794eb6dd42ae4666b036b171e87fc34cc7cc</code></strong>,
 can be used to implement a local cached copy. It is possible to confirm the
 SHA-256 digest by running the following command from a modern Unix command
-interface line: `curl -s https://www.w3.org/ns/credentials/v2 | sha256sum`. For
-convenience, the base context is also provided below.
+interface line: `curl -s https://www.w3.org/ns/credentials/v2 | sha256sum`.
+          </p>
+          <p>
+This section serves as a reminder of the importance of ensuring that, when
+verifying <a>verifiable credentials</a> and <a>verifiable presentations</a>, the
+<a>verifier</a> has information that is consistent with what the <a>issuer</a>
+had when securing the <a>credential</a> or <a>presentation</a>. This information
+might include at least: 1) contents of the credential itself; 2) any content
+included by reference in the credential; 3) any content transitively included by
+reference.
+          </p>
+          <p>
+Mechanisms used to secure <a>credentials</a> and <a>presentations</a>, such
+as digital signatures, address securing the contents of the credential itself
+(item #1 in the previous paragraph). The SHA-256 digest of the Base Context in
+this section addresses securing the context information (item #2 in the
+previous paragraph).
+          </p>
+          <p>
+However, it does not cryptographically protect other content referenced such as
+other JSON-LD Contexts or files referenced via URLs. It is considered a best
+practice to ensure that the same sorts of protections are provided for other
+JSON-LD Contexts and URLs through the use of permanently cached files or
+cryptographic hashes for linked information that is critical to a specific use
+case. See the Content Integrity section of the Verifiable Credential
+Implementation Guide to verify that content it either fetches remotely or caches
+locally is consistent with what the <a>issuer</a> intended.
+          </p>
+          <p>
+For convenience, the base context for the Verifiable Credential Data Model v2.0
+is provided below.
           </p>
 
 <pre class="informative">
