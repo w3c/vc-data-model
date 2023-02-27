@@ -2906,6 +2906,153 @@ information about the <code>proof</code> <a>property</a>, see Section
       </section>
 
       <section>
+        <h3>Confirmation Method</h3>
+
+        <p>
+Confirmation Method can be included by an <a>issuer</a> in a <a>verifiable
+credential</a> to declare that the <a>subject</a> controls one or more
+particular confirmation methods and to bind the <a>claims</a> about the
+<a>subject</a> to one or more of these confirmation methods. In this way, an
+<a>issuer</a> explicitly enables a <a>verifier</a> to validate that the
+<a>holder</a> presenting the <a>verifiable credential</a> has proven control of
+one or more of these confirmation methods when the <a>claims</a> bound to the
+confirmation method are presented.
+        </p>
+
+        <p class="note">
+A <a>verifier</a> can decide to accept <a>claims</a> in a <a>verifiable
+credential</a> without validating the confirmation method or to use a different
+mechanism to validate the <a>holder</a> is bound to the presented <a>claims</a>
+if required without impacting liability if not specified by other means such
+as a <code>termsOfUse</code> policy.
+        </p>
+
+        <p>
+This specification defines the <code>confirmationMethod</code> <a>property</a>
+for expressing confirmation method information in a
+<code>credentialSubject</code> in a <a>verifiable credential</a>.
+        </p>
+
+        <p class="note">
+For example, an <a>issuer</a> can include a confirmation method based on public
+key cryptography in the <a>verifiable credential</a>. A <a>holder</a> can
+generate and include a <a>proof</a> with a cryptographic signature in the
+<a>verifiable presentation</a> where the verification key of the cryptographic
+signature is bound to a confirmation method in the embedded <a>verifiable
+credential</a>. A <a>verifier</a> can validate that the <a>holder</a> controls
+the confirmation method by verifying the <a>proof</a> of the <a>verifiable
+presentation</a> using the information in the confirmation method. The
+confirmation method can include the verification key or the type of the
+confirmation method can define that the verification key is inferred by other
+<a>properties</a> in the <a>verifiable credential</a> such as the
+<code>credentialSubject.id</code>.
+        </p>
+
+        <dl>
+          <dt><dfn>confirmationMethod</dfn></dt>
+          <dd>
+If present, the value of the <code>confirmationMethod</code> <a>property</a> is
+one or more confirmation methods each providing enough information for a
+<a>verifier</a> to validate a <a>holder</a> generating a <a>verifiable
+presentation</a> has proven control of a confirmation method bound to <a>claims
+</a> in a <a>verifiable credential</a> in the <a>verifiable presentation</a>.
+Each confirmation method MUST specify its <code>type</code> (for example,
+<code>DIDAuthWithSubjectIdConfirmation2023</code>) and MAY specify an <code>id
+</code>. The precise <a>properties</a> and semantics of each confirmation
+method is determined by the specific <code>confirmationMethod</code> type
+definition.
+          </dd>
+        </dl>
+
+        <p>
+The type <code>DIDAuthWithSubjectIdConfirmation2023</code> defines that a
+<a>verifier</a> MAY validate the confirmation method by verifying the proof of
+the <a>verifiable presentation</a> with the verification material of one of the
+authentication verification relationships of the
+<code>credentialSubject.id</code> in case the particular
+<code>credentialSubject.id</code> is a Decentralized Identifier (DID).
+        </p>
+
+       <pre class="example nohighlight"
+          title="Usage of the confirmationMethod property of type DIDAuthWithSubjectIdConfirmation2023">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    <span class="highlight">"confirmationMethod": [{
+      "type": ["DIDAuthWithSubjectIdConfirmation2023"]
+    }]</span>,
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  "proof": { <span class="comment">...</span> }
+}
+        </pre>
+
+        <p>
+The type <code>VerificationKeyConfirmation2023</code> defines that a
+<a>verifier</a> MAY validate the confirmation method by verifying the proof of
+the <a>verifiable presentation</a> with the verification material contained in
+<code>publicKeyJwk</code> or <code>publicKeyMultibase</code>.
+        </p>
+
+       <pre class="example nohighlight"
+          title="Usage of the confirmationMethod property of type DIDAuthWithSubjectIdConfirmation2023">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://example.edu/credentials/3732",
+  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "issuer": "https://example.edu/issuers/14",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    <span class="highlight">"confirmationMethod": [{
+      "type": ["VerificationKeyConfirmation2023"],
+      "publicKeyJwk": {
+        "crv": "Ed25519",
+        "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+        "kty": "OKP",
+        "kid": "_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A"
+      }
+    },{
+      "type": ["VerificationKeyConfirmation2023"],
+      "publicKeyMultibase": "zH3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+    }]</span>,
+    "degree": {
+      "type": "BachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  "proof": { <span class="comment">...</span> }
+}
+        </pre>
+
+        <p class="note">
+A confirmation method can express various metadata such as the <a>issuer's</a>
+level of confidence that the <a>holder</a> is the entity referenced by a
+<a>subject</a> of the <a>verifiable credential</a>, specific form factors or
+mechanisms of authenticators, references to other <a>verifiable credentials</a>
+or versioned trust frameworks. For example, an <a>issuer</a> can make a
+<a>claim</a> about a confirmation method that is based on a cryptographic key
+pair but to produce a signature using that key the <a>holder</a> has to unlock
+a device using multi-factor authentication.
+        </p>
+
+      </section>
+
+      <section>
         <h3>Zero-Knowledge Proofs</h3>
 
 <p class="issue" data-number="863">
