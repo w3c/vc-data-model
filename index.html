@@ -2526,7 +2526,9 @@ determine if the provided data conforms to the provided schema. Each
 <code>presentationSchema</code> MUST specify its <code>type</code> (for example,
 <code>JsonSchemaValidator2018</code>), and an <code>id</code> <a>property</a>
 that MUST be a <a>URI</a> identifying the schema file. The precise contents of
-each data schema is determined by the specific type definition.
+each data schema is determined by the specific type definition. Note that the
+<code>presentationSchema</code> only applies to the <code>verifiablePresentation</code>
+and not to the embedded <code>verifiableCredentials</code>.
           </dd>
         </dl>
 <p>
@@ -2580,6 +2582,36 @@ In the example above, the <a>issuer</a> is specifying a
 <code>credentialSchema</code>, which points to a [[?JSON-SCHEMA-2018]] file that
 can be used by a <a>verifier</a> to determine if the
 <a>verifiable credential</a> is well formed.
+        </p>
+
+       <pre class="example nohighlight vc"
+          title="Usage of the presentationSchema property to perform JSON schema validation"
+          data-vc-vm="https://example.edu/issuers/14#keys-1">
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.example.info/w3c-vc/context"
+    ],
+    "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
+    "holder": "did:jwk:123456789",
+    "type": [
+        "VerifiablePresentation", "OpenID4VP"
+    ],
+    "nonce": "123456789",
+    "audience": "http://rp.example.com",
+    "presentationSchema": {
+        "id": "https://www.example.info/schema/V-2022-1/VerifiablePresentation.json",
+        "type": "JsonSchemaValidator2018"
+    },
+    "verifiableCredential": [{}]
+}
+        </pre>
+
+        <p>
+In the example above, the <a>holder</a> is specifying a
+<code>presentationSchema</code>, which points to a [[?JSON-SCHEMA-2018]] file that
+can be used by the <a>verifier</a> to determine if the
+<a>verifiable presentation</a> is well formed.
         </p>
 
         <p class="note" >
