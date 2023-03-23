@@ -2908,69 +2908,66 @@ information about the <code>proof</code> <a>property</a>, see Section
       <section>
         <h3>Zero-Knowledge Proofs</h3>
 
-<p class="issue" data-number="863">
-We anticipate this section will undergo major revision for v2 of the data model,
-and plan to remove the normative requirements and move it to the
-implementation guide if there are no active work items related to the topic of
-"Zero-Knowledge Proofs" when we transition v2 to CR.
-</p>
-
-        <p>
-A zero-knowledge proof is a cryptographic method where an entity can prove to
-another entity that they know a certain value without disclosing the actual
-value. A real-world example is proving that an accredited university has
-granted a degree to you without revealing your identity or any other personally
-identifiable information contained on the degree.
+        <p class="issue" data-number="863">
+We plan to remove the normative requirements in this section if there are no
+active work items for securing <a>verifiable credentials</a> using zero
+knowledge proof mechanisms when we transition v2 of the data model to CR.
+Additionally, the remaining non-normative language will likely be moved to the
+Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]].
         </p>
         <p>
-The key capabilities introduced by zero-knowledge proof mechanisms are the
-ability of a <a>holder</a> to:
+Zero-knowledge proofs are cryptographic methods which enable a user to prove
+knowledge of a value without disclosing the actual value. This data model
+supports being secured with the use of zero-knowledge proof mechanisms.
         </p>
-
+        <p>
+Some capabilities that are compatible with <a>verifiable credentials</a> which
+are made possible by zero-knowledge proof mechanisms:
+        </p>
         <ul>
           <li>
-Combine multiple <a>verifiable credentials</a> from multiple <a>issuers</a> into
-a single <a>verifiable presentation</a> without revealing
-<a>verifiable credential</a> or <a>subject</a> identifiers to the
-<a>verifier</a>. This makes it more difficult for the <a>verifier</a> to collude
-with any of the issuers regarding the issued <a>verifiable credentials</a>.
-          </li>
-          <li>
-Selectively disclose the <a>claims</a> in a <a>verifiable credential</a> to a
-<a>verifier</a> without requiring the issuance of multiple atomic
-<a>verifiable credentials</a>. This allows a <a>holder</a> to provide a
+Selective disclosure of the properties in a <a>verifiable credential</a> by the
+<a>holder</a> to a <a>verifier</a>. This allows a <a>holder</a> to provide a
 <a>verifier</a> with precisely the information they need and nothing more.
+This also enables the production of a derived <a>verifiable credential</a> that
+is formatted according to the <a>verifier's</a> data schema without needing to
+involve the <a>issuer</a> during presentation. This provides a great deal of
+flexibility for <a>holders</a> to use their issued
+<a>verifiable credentials</a>.
           </li>
           <li>
-Produce a derived <a>verifiable credential</a> that is formatted according to
-the <a>verifier's</a> data schema instead of the <a>issuer's</a>, without
-needing to involve the <a>issuer</a> after <a>verifiable credential</a>
-issuance. This provides a great deal of flexibility for <a>holders</a> to use
-their issued <a>verifiable credentials</a>.
+Blinding of the signature value that is shared with a <a>verifier</a>. This
+allows a <a>holder</a> to share a different signature value with each
+presentation, which in turn reduces the amount of data shared.
+          </li>
+          <li>
+Privacy preserving identification of the <a>holder</a> and/or <a>subject</a>. This
+allows a <a>holder</a> to prove that a <a>credential</a> was issued to them, or
+a <a>subject</a> to prove that a <a>credential</a> was issued about them,
+without sharing an identifier. This also reduces the amount of data necessary to
+be shared. This capability can also be used to combine multiple
+<a>verifiable credentials</a> from multiple <a>issuers</a> into a single
+<a>verifiable presentation</a> without revealing <a>verifiable credential</a> or
+<a>subject</a> identifiers to the <a>verifier</a>.
           </li>
         </ul>
-
         <p>
-This specification describes a data model that supports selective disclosure
-with the use of zero-knowledge proof mechanisms. The examples below highlight
-how the data model can be used to issue, present, and verify zero-knowledge
-<a>verifiable credentials</a>.
+Not all capabilities are supported in all zero-knowledge proof mechanisms.
+Specific details about the capabilities and techniques provided by a particular
+zero knowledge proof mechanism, along with any normative requirements for using
+them with <a>verifiable credentials</a>, would be found in a specification for
+securing <a>verifiable credentials</a> with that zero-knowledge proof mechanism.
         </p>
-
         <p>
-For a <a>holder</a> to use a zero-knowledge <a>verifiable presentation</a>,
-they need an <a>issuer</a> to have issued a <a>verifiable credential</a> in a manner
-that enables the <a>holder</a> to derive a proof from the originally issued
-<a>verifiable credential</a>, so that the <a>holder</a> can present the
-information to a <a>verifier</a> in a privacy-enhancing manner.
-This implies that the <a>holder</a> can prove the validity of the
-<a>issuer's</a> signature without revealing the values that were signed, or when
-only revealing certain selected values. The standard practice is to do so by
-proving knowledge of the signature, without revealing the signature itself.
+We note that in most instances, for <a>holder</a> to make use of zero knowledge
+mechanisms with <a>verifiable credentials</a> requires an <a>issuer</a> to
+secure the <a>verifiable credential</a> in a manner that supports these
+capabilities.
+        </p>
+        <p>
 There are two requirements for <a>verifiable credentials</a> when they are to be
 used in zero-knowledge proof systems.
         </p>
-
         <ul>
           <li>
 The <a>verifiable credential</a> MUST contain a Proof, using the
@@ -2985,7 +2982,15 @@ so that it can be used by all parties to perform various cryptographic
 operations in zero-knowledge.
           </li>
         </ul>
-
+        <p>
+The examples below highlight how the data model might be used to issue and
+present <a>verifiable credentials</a> in zero-knowledge.
+        </p>
+        <p class="note">
+The provided examples will either be significantly re-written to demonstrate how
+to secure a <a>verifiable credential</a> using a normatively defined method that
+enable zero knowledge proofs, or they will be removed.
+        </p>
         <p>
 The following example shows one method of using <a>verifiable credentials</a> in
 zero-knowledge. It makes use of a Camenisch-Lysyanskaya Signature
