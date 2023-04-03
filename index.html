@@ -4879,24 +4879,28 @@ This section serves as a reminder of the importance of ensuring that, when
 verifying <a>verifiable credentials</a> and <a>verifiable presentations</a>, the
 <a>verifier</a> has information that is consistent with what the <a>issuer</a>
 or <a>holder</a> had when securing the <a>credential</a> or <a>presentation</a>.
-This information might include at least: 1) contents of the credential itself;
-2) any content linked to via a URL in the credential; 3) any content linked to
-via a URL, which then links to more content via a URL (and so on).
+This information might include at least:
           </p>
+          <ol>
+            <li>
+The contents of the credential itself, which is secured in
+<a>verifiable credentials</a> and <a>verifiable presentations</a> by using
+mechanisms such as [[VC-JWT]] and [[VC-DATA-INTEGRITY].
+            </li>
+            <li>
+The content in a credential whose meaning depends on a link to an external URL,
+such as a JSON-LD Context, which can be secured by using a locally cached copy,
+or a cryptographic digest of the file.
+            </li>
+          </ol>
           <p>
-Mechanisms used to secure <a>credentials</a> and <a>presentations</a>, such
-[[VC-JWT]] and [[VC-DATA-INTEGRITY]], address securing the contents of the
-credential itself (item #1 in the previous paragraph). The SHA-256 digest of
-JSON-LD Contexts, as well as locally cached copies, address item #2 in the
-previous paragraph.
-          </p>
-          <p>
-However, other data that is referenced from within a credential, such as
-resources that are linked to via URLs, are not cryptographically protected by
-default. It is considered a best practice to ensure that the same sorts of
-protections are provided for any URL that is critical to the security of the
-credential through the use of permanently cached files or cryptographic hashes.
-See the <a data-cite="vc-imp-guide/#content-integrity">Content Integrity</a>
+Verifiers are warned that other data that is referenced from within a
+credential, such as resources that are linked to via URLs, are not
+cryptographically protected by default. It is considered a best practice to
+ensure that the same sorts of protections are provided for any URL that is
+critical to the security of the credential through the use of permanently cached
+files or cryptographic hashes. See the <a
+data-cite="vc-imp-guide/#content-integrity">Content Integrity</a>
 section of the Verifiable Credential Implementation Guide to verify that content
 that is either fetched remotely or loaded from a local copy is consistent with
 what the <a>issuer</a> or <a>holder</a> intended.
