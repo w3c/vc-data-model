@@ -14,14 +14,14 @@ var vcwg = {
       ],
       publisher: "University of California, Irvine."
     },
-    "VC-EXTENSION-REGISTRY": {
-      title: "Verifiable Credentials Extension Registry",
-      href: "https://w3c-ccg.github.io/vc-extension-registry/",
+    "VC-SPECS": {
+      title: "Verifiable Credential Specifications Directory",
+      href: "https://w3c.github.io/vc-specs-dir/",
       authors: [
         "Manu Sporny"
       ],
-      status: "CG-DRAFT",
-      publisher: "Credentials Community Group"
+      status: "ED",
+      publisher: "W3C Verifiable Credentials Working Group"
     },
     "STRING-META": {
       title: "Strings on the Web: Language and Direction Metadata",
