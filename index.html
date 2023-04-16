@@ -3261,15 +3261,14 @@ The data model as described in Sections
 <a href="#advanced-concepts"></a> is the canonical structural representation of
 a <a>verifiable credential</a> or <a>verifiable presentation</a>. All
 serializations are representations of that data model in a specific format. This
-section specifies how the data model is realized in JSON-LD and plain JSON.
-Although syntactic mappings are provided for only these two syntaxes,
+section specifies how the data model is realized in JSON-LD for the base
+media type (`application/vc+ld+json`).
+Although syntactic mappings are provided for JSON-LD,
 applications and services can use any other data representation syntax (such as
-XML, YAML, or CBOR) that is capable of expressing the data model. As the
-<a>verification</a> and <a>validation</a> requirements are defined in terms of
-the data model, all serialization syntaxes have to be deterministically
+XML, YAML, or CBOR) that is capable of being mapped back to the base media type.
+As the <a>verification</a> and <a>validation</a> requirements are defined in terms
+of the data model, all serialization syntaxes have to be deterministically
 translated to the data model for processing, <a>validation</a>, or comparison.
-This specification makes no requirements for support of any specific
-serialization format.
       </p>
 
       <p>
@@ -3299,47 +3298,6 @@ or an array of values.
       </p>
 
       <section>
-        <h3>JSON</h3>
-
-        <p>
-The data model, as described in Section <a href="#core-data-model"></a>, can be
-encoded in JavaScript Object Notation (JSON) [[!RFC8259]] by mapping property
-values to JSON types as follows:
-        </p>
-
-        <ul>
-          <li>
-Numeric values representable as IEEE754 SHOULD be represented as a Number type.
-          </li>
-          <li>
-Boolean values SHOULD be represented as a Boolean type.
-          </li>
-          <li>
-Sequence value SHOULD be represented as an Array type.
-          </li>
-          <li>
-Unordered sets of values SHOULD be represented as an Array type.
-          </li>
-          <li>
-Sets of <a>properties</a> SHOULD be represented as an Object type.
-          </li>
-          <li>
-Empty values SHOULD be represented as a null value.
-          </li>
-          <li>
-Other values MUST be represented as a String type.
-          </li>
-        </ul>
-
-        <p class="note">
-As the transformations listed herein have potentially incompatible
-interpretations, additional profiling of the JSON format is required to provide
-a deterministic transformation to the data model.
-        </p>
-
-      </section>
-
-      <section>
         <h3>JSON-LD</h3>
 
         <p>
@@ -3354,9 +3312,8 @@ storage engines.
 
         <p>
 [[!JSON-LD]] is useful when extending the data model described in this
-specification. Instances of the data model are encoded in [[!JSON-LD]] in the
-same way they are encoded in JSON (Section <a href="#json"></a>), with the
-addition of the <code>@context</code> <a>property</a>. The
+specification. Instances of the data model are encoded in [[!JSON-LD]]
+and include the <code>@context</code> <a>property</a>. The
 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
 is described in detail in the [[!JSON-LD]] specification and its use is
 elaborated on in Section <a href="#extensibility"></a>.
