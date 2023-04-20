@@ -139,7 +139,7 @@ var vcwg = {
       status: 'ED',
       publisher: 'W3C Verifiable Credentials Working Group'
     },
-    'VC-SPECS-DIR': {
+    'VC-SPECS': {
       title: 'Verifiable Credentials Specifications Directory',
       href: 'https://w3c.github.io/vc-specs-dir/',
       authors: ['Manu Sporny'],
