@@ -1392,7 +1392,7 @@ A valid proof <a>type</a>. For example,<br>
               </td>
               <td>
 A valid <a>credential</a> status <a>type</a>. For example,<br>
-<code>"type": "CredentialStatusList2017"</code>
+<code>"type": "StatusList2021Entry"</code>
               </td>
             </tr>
 
@@ -1814,22 +1814,21 @@ dereferenced.
               </li>
               <li>
 <code>type</code> <a>property</a>, which expresses the <a>credential</a> status
-type (also referred to as the <a>credential</a> status method).
+type.
               </li>
             </ul>
           </dd>
         </dl>
 
         <p>
-The precise contents of the <a>credential</a> status information is determined
+The precise content of the <a>credential</a> status information is determined
 by the specific <code>credentialStatus</code> <a>type</a> definition, and varies
 depending on factors such as whether it is simple to implement or if it is
-privacy-enhancing.
-It is expected that the value will provide enough information to determine the
-current status of the <a>credential</a> and that machine readable information
-needs to be retrievable from the URL. For example, the object could contain a
-link to an external document noting whether or not the <a>credential</a> is
-suspended or revoked.
+privacy-enhancing. It is expected that the value will provide enough information
+to determine the current status of the <a>credential</a> and that machine
+readable information will be retrievable from the URL. For example, the
+object could contain a link to an external document which notes whether or not the
+<a>credential</a> is suspended or revoked.
         </p>
 
         <pre class="example nohighlight"
@@ -1837,7 +1836,7 @@ suspended or revoked.
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
+    "https://w3id.org/vc/status-list/2021/v1"
   ],
   "id": "http://example.edu/credentials/3732",
   "type": ["VerifiableCredential", "UniversityDegreeCredential"],
@@ -1851,8 +1850,11 @@ suspended or revoked.
     }
   },
   <span class="highlight">"credentialStatus": {
-    "id": "https://example.edu/status/24",
-    "type": "CredentialStatusList2017"
+    "id": "https://example.edu/credentials/status/3#94567",
+    "type": "StatusList2021Entry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "94567",
+    "statusListCredential": "https://example.edu/credentials/status/3"
   }</span>
 }
         </pre>
@@ -2936,9 +2938,11 @@ flexibility for <a>holders</a> to use their issued
 <a>verifiable credentials</a>.
           </li>
           <li>
-Blinding of the signature value that is shared with a <a>verifier</a>. This
-allows a <a>holder</a> to share a different signature value with each
-presentation, which in turn reduces the amount of data shared.
+Blinding of the signature value that is shared with a <a>verifier</a>. Blinded
+signatures allow for unlinkable proofs, which remove a common source of
+<a>holder</a> correlation during multiple presentations to one or more
+<a>verifiers</a>. This allows a <a>holder</a> to share a different signature
+value with each presentation, which in turn reduces the amount of data shared.
           </li>
           <li>
 Privacy preserving identification of the <a>holder</a> and/or <a>subject</a>. This
@@ -2972,7 +2976,7 @@ used in zero-knowledge proof systems.
           <li>
 The <a>verifiable credential</a> MUST contain a Proof, using the
 <code>proof</code> <a>property</a>, so that the <a>holder</a> can derive a
-<a>verifiable presentation</a> that reveals only the information than the
+<a>verifiable presentation</a> that reveals only the information that the
 <a>holder</a> intends to reveal.
           </li>
           <li>
@@ -3246,6 +3250,70 @@ this specification and is pursuing that work as an architectural layer built
 on top of this specification.
         </p>
       </section>
+
+      <section class="normative">
+        <h3>Reserved Extension Points</h3>
+
+        <p>
+This specification reserves a number of <a>properties</a> to serve as possible
+extension points. While some implementers signaled interest in these properties,
+their inclusion in this specification was considered to be premature; these
+extension points might be more formally defined in future versions of this
+specification. It is important to note that these properties are not defined by
+this specification and implementers are cautioned that usage of these properties
+is considered experimental.
+        </p>
+        <p>
+Implementers MAY use these properties, but SHOULD expect them and/or
+their meanings to change during the process to normatively specify them.
+Implementers SHOULD NOT use these properties without a publicly disclosed
+specification describing their implementation.
+        </p>
+
+        <p>
+In order to avoid collisions regarding how the following properties are used,
+implementations MUST specify a `type` property in the value associated with the
+reserved property. For more information related to adding `type` information,
+see Section <a href="#types"></a>.
+        </p>
+
+        <p class="issue" title="Reserved properties under debate">
+The following extension point properties are under consideration for being
+marked as reserved: `presentationSchema`, `credentialRefresh`, `termsOfUse`,
+`evidence`, `renderMethod`, `refreshService`, and
+`confirmationMethod/confidenceMethod`.
+        </p>
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Reserved&nbsp;Property</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+`example`
+              </td>
+              <td>
+An example entry for a reserved property.
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <p>
+An unofficial list of specifications that are associated with the extension
+points defined in this specification, as well as the reserved extension points
+defined in this section, can be found in the Verifiable Credentials
+Specifications Directory [[?VC-SPECS]]. Items in the directory that refer to
+reserved extension points SHOULD be treated as experimental.
+        </p>
+
+      </section>
     </section>
 
     <section>
@@ -3257,15 +3325,14 @@ The data model as described in Sections
 <a href="#advanced-concepts"></a> is the canonical structural representation of
 a <a>verifiable credential</a> or <a>verifiable presentation</a>. All
 serializations are representations of that data model in a specific format. This
-section specifies how the data model is realized in JSON-LD and plain JSON.
-Although syntactic mappings are provided for only these two syntaxes,
+section specifies how the data model is realized in JSON-LD for
+`application/vc+ld+json`, the base media type for Verifiable Credentials.
+Although syntactic mappings are only provided for JSON-LD,
 applications and services can use any other data representation syntax (such as
-XML, YAML, or CBOR) that is capable of expressing the data model. As the
-<a>verification</a> and <a>validation</a> requirements are defined in terms of
-the data model, all serialization syntaxes have to be deterministically
+XML, YAML, or CBOR) that is capable of being mapped back to `application/vc+ld+json`.
+As the <a>verification</a> and <a>validation</a> requirements are defined in terms
+of the data model, all serialization syntaxes have to be deterministically
 translated to the data model for processing, <a>validation</a>, or comparison.
-This specification makes no requirements for support of any specific
-serialization format.
       </p>
 
       <p>
@@ -3295,47 +3362,6 @@ or an array of values.
       </p>
 
       <section>
-        <h3>JSON</h3>
-
-        <p>
-The data model, as described in Section <a href="#core-data-model"></a>, can be
-encoded in JavaScript Object Notation (JSON) [[!RFC8259]] by mapping property
-values to JSON types as follows:
-        </p>
-
-        <ul>
-          <li>
-Numeric values representable as IEEE754 SHOULD be represented as a Number type.
-          </li>
-          <li>
-Boolean values SHOULD be represented as a Boolean type.
-          </li>
-          <li>
-Sequence value SHOULD be represented as an Array type.
-          </li>
-          <li>
-Unordered sets of values SHOULD be represented as an Array type.
-          </li>
-          <li>
-Sets of <a>properties</a> SHOULD be represented as an Object type.
-          </li>
-          <li>
-Empty values SHOULD be represented as a null value.
-          </li>
-          <li>
-Other values MUST be represented as a String type.
-          </li>
-        </ul>
-
-        <p class="note">
-As the transformations listed herein have potentially incompatible
-interpretations, additional profiling of the JSON format is required to provide
-a deterministic transformation to the data model.
-        </p>
-
-      </section>
-
-      <section>
         <h3>JSON-LD</h3>
 
         <p>
@@ -3350,9 +3376,8 @@ storage engines.
 
         <p>
 [[!JSON-LD]] is useful when extending the data model described in this
-specification. Instances of the data model are encoded in [[!JSON-LD]] in the
-same way they are encoded in JSON (Section <a href="#json"></a>), with the
-addition of the <code>@context</code> <a>property</a>. The
+specification. Instances of the data model are encoded in JSON-LD compact
+form [[!JSON-LD]] and include the <code>@context</code> <a>property</a>. The
 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
 is described in detail in the [[!JSON-LD]] specification and its use is
 elaborated on in Section <a href="#extensibility"></a>.
@@ -4925,8 +4950,8 @@ critical to the security of the credential through the use of permanently cached
 files and/or cryptographic hashes. See the <a
 data-cite="vc-imp-guide/#content-integrity">Content Integrity</a>
 section of the Verifiable Credential Implementation Guide for further
-information. Ultimately, knowing the cryptographic digest of any externally
-linked content enables a <a>verifier</a> to confirm that the content is the same
+information. Ultimately, knowing the cryptographic digest of any linked external
+content enables a <a>verifier</a> to confirm that the content is the same
 as what the <a>issuer</a> or <a>holder</a> intended.
           </p>
           <p>
@@ -4934,163 +4959,7 @@ For convenience, the base context for the Verifiable Credential Data Model v2.0
 is provided below.
           </p>
 
-<pre class="informative">
-{
-  "@context": {
-    "@protected": true,
-
-    "id": "@id",
-    "type": "@type",
-
-    "VerifiableCredential": {
-      "@id": "https://www.w3.org/2018/credentials#VerifiableCredential",
-      "@context": {
-        "@protected": true,
-
-        "id": "@id",
-        "type": "@type",
-
-        "credentialSchema": {
-          "@id": "https://www.w3.org/2018/credentials#credentialSchema",
-          "@type": "@id"
-        },
-        "credentialStatus": {
-          "@id": "https://www.w3.org/2018/credentials#credentialStatus",
-          "@type": "@id"
-        },
-        "credentialSubject": {
-          "@id": "https://www.w3.org/2018/credentials#credentialSubject",
-          "@type": "@id"
-        },
-        "description": {
-          "@id": "https://schema.org/description",
-          "@type": "http://www.w3.org/2001/XMLSchema#string"
-        },
-        "evidence": {
-          "@id": "https://www.w3.org/2018/credentials#evidence",
-          "@type": "@id"
-        },
-        "holder": {
-          "@id": "https://www.w3.org/2018/credentials#holder",
-          "@type": "@id"
-        },
-        "issued": {
-          "@id": "https://www.w3.org/2018/credentials#issued",
-          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-        },
-        "issuer": {
-          "@id": "https://www.w3.org/2018/credentials#issuer",
-          "@type": "@id"
-        },
-        "name": {
-          "@id": "https://schema.org/description",
-          "@type": "http://www.w3.org/2001/XMLSchema#string"
-        },
-        "proof": {
-          "@id": "https://w3id.org/security#proof",
-          "@type": "@id",
-          "@container": "@graph"
-        },
-        "refreshService": {
-          "@id": "https://www.w3.org/2018/credentials#refreshService",
-          "@type": "@id"
-        },
-        "termsOfUse": {
-          "@id": "https://www.w3.org/2018/credentials#termsOfUse",
-          "@type": "@id"
-        }
-      }
-    },
-
-    "VerifiablePresentation": {
-      "@id": "https://www.w3.org/2018/credentials#VerifiablePresentation",
-      "@context": {
-        "@protected": true,
-
-        "id": "@id",
-        "type": "@type",
-        "holder": {
-          "@id": "https://www.w3.org/2018/credentials#holder",
-          "@type": "@id"
-        },
-        "proof": {
-          "@id": "https://w3id.org/security#proof",
-          "@type": "@id",
-          "@container": "@graph"
-        },
-        "verifiableCredential": {
-          "@id": "https://www.w3.org/2018/credentials#verifiableCredential",
-          "@type": "@id",
-          "@container": "@graph"
-        }
-      }
-    },
-
-    "DataIntegrityProof": {
-      "@id": "https://w3id.org/security#DataIntegrityProof",
-      "@context": {
-        "@protected": true,
-        "id": "@id",
-        "type": "@type",
-        "challenge": "https://w3id.org/security#challenge",
-        "created": {
-          "@id": "http://purl.org/dc/terms/created",
-          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-        },
-        "domain": "https://w3id.org/security#domain",
-        "expires": {
-          "@id": "https://w3id.org/security#expiration",
-          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-        },
-        "nonce": "https://w3id.org/security#nonce",
-        "proofPurpose": {
-          "@id": "https://w3id.org/security#proofPurpose",
-          "@type": "@vocab",
-          "@context": {
-            "@protected": true,
-            "id": "@id",
-            "type": "@type",
-            "assertionMethod": {
-              "@id": "https://w3id.org/security#assertionMethod",
-              "@type": "@id",
-              "@container": "@set"
-            },
-            "authentication": {
-              "@id": "https://w3id.org/security#authenticationMethod",
-              "@type": "@id",
-              "@container": "@set"
-            },
-            "capabilityInvocation": {
-              "@id": "https://w3id.org/security#capabilityInvocationMethod",
-              "@type": "@id",
-              "@container": "@set"
-            },
-            "capabilityDelegation": {
-              "@id": "https://w3id.org/security#capabilityDelegationMethod",
-              "@type": "@id",
-              "@container": "@set"
-            },
-            "keyAgreement": {
-              "@id": "https://w3id.org/security#keyAgreementMethod",
-              "@type": "@id",
-              "@container": "@set"
-            }
-          }
-        },
-        "cryptosuite": "https://w3id.org/security#cryptosuite",
-        "proofValue": {
-          "@id": "https://w3id.org/security#proofValue",
-          "@type": "https://w3id.org/security#multibase"
-        },
-        "verificationMethod": {
-          "@id": "https://w3id.org/security#verificationMethod",
-          "@type": "@id"
-        }
-      }
-    }
-  }
-}
-</pre>
+          <pre class="informative" data-include="contexts/credentials/v2"></pre>
       </section>
 
       <section class="informative">
@@ -5224,9 +5093,9 @@ Extensions of Verifiable Credentials Data Model 1.0</a>
       </ul>
 
 <section id="media-type">
-  <h2>The <code>application/credential+ld+json</code> Media Type</h2>
+  <h2>The <code>application/vc+ld+json</code> Media Type</h2>
   <p>
-    This specification registers the <code>application/credential+ld+json</code> Media Type specifically for
+    This specification registers the <code>application/vc+ld+json</code> Media Type specifically for
     identifying documents
     conforming to the Verifiable Credentials format.
   </p>
@@ -5237,7 +5106,7 @@ Extensions of Verifiable Credentials Data Model 1.0</a>
     </tr>
     <tr>
       <td>Subtype name: </td>
-      <td>credential+ld+json</td>
+      <td>vc+ld+json</td>
     </tr>
     <tr>
       <td>Required parameters: </td>
@@ -5246,11 +5115,11 @@ Extensions of Verifiable Credentials Data Model 1.0</a>
     <tr>
       <td>Encoding considerations: </td>
       <td>
-        Resources that use the "<code>application/credential+ld+json</code>"
+        Resources that use the "<code>application/vc+ld+json</code>"
         Media Type are required to conform to all of the requirements
         for the "<code>application/ld+json</code>" Media Type and are
         therefore subject to the same encoding considerations specified
-        in Section 11 of [[!RFC7159]].
+        in Section 11 of [[RFC7159]].
       </td>
     </tr>
     <tr>

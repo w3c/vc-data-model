@@ -138,6 +138,13 @@ var vcwg = {
       authors: ['Orie Steele', 'Michael Jones'],
       status: 'ED',
       publisher: 'W3C Verifiable Credentials Working Group'
+    },
+    'VC-SPECS': {
+      title: 'Verifiable Credentials Specifications Directory',
+      href: 'https://w3c.github.io/vc-specs-dir/',
+      authors: ['Manu Sporny'],
+      status: 'ED',
+      publisher: 'W3C Verifiable Credentials Working Group'
     }
   }
 };
