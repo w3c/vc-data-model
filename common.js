@@ -145,6 +145,13 @@ var vcwg = {
       authors: ['Manu Sporny'],
       status: 'ED',
       publisher: 'W3C Verifiable Credentials Working Group'
+    },
+    'PRES-EX': {
+      title: 'Presentation Exchange 2.0.0',
+      href: 'https://identity.foundation/presentation-exchange/spec/v2.0.0/',
+      authors: ['Daniel Buchner', 'Brent Zundel', 'Martin Riedel', 'Kim Hamilton Duffy'],
+      status: 'DIF Ratified Specification',
+      publisher: 'Decentralized Identity Foundation'
     }
   }
 };
