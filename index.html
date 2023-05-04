@@ -2369,7 +2369,7 @@ documents with implementations, or enabling aggressive caching of contexts.
         <p>
 Implementers are advised to pay close attention to the extension points in this
 specification, such as in Sections <a href="#proofs-signatures"></a>,
-<a href="#status"></a>, <a href="#data-schemas"></a>,<a href="#refreshing"></a>,
+<a href="#status"></a>, <a href="#data-schemas"></a>,
 <a href="#terms-of-use"></a>, and <a href="#evidence"></a>. While this
 specification does not define concrete implementations for those extension
 points, the Verifiable Credential Specifications Directory [[?VC-SPECS]]
@@ -2562,91 +2562,6 @@ In the example above, the <a>issuer</a> is specifying a
 <code>credentialSchema</code> pointing to a means of transforming the input
 data into a format which can then be used by a <a>verifier</a> to determine if
 the proof provided with the <a>verifiable credential</a> is valid.
-        </p>
-
-      </section>
-
-      <section>
-        <h3>Refreshing</h3>
-
-        <p>
-It is useful for systems to enable the manual or automatic refresh of an expired
-<a>verifiable credential</a>. For more information about validity periods for
-<a>verifiable credentials</a>, see Section <a href="#validity-periods"></a>.
-This specification defines a <code>refreshService</code> <a>property</a>, which
-enables an <a>issuer</a> to include a link to a refresh service.
-        </p>
-        <p>
-The <a>issuer</a> can include the refresh service as an element inside the
-<a>verifiable credential</a> if it is intended for either the <a>verifier</a> or
-the <a>holder</a> (or both), or inside the <a>verifiable presentation</a> if it
-is intended for the <a>holder</a> only. In the latter case, this enables the
-<a>holder</a> to refresh the <a>verifiable credential</a> before creating a
-<a>verifiable presentation</a> to share with a <a>verifier</a>. In the former
-case, including the refresh service inside the <a>verifiable credential</a>
-enables either the <a>holder</a> or the <a>verifier</a> to perform future
-updates of the <a>credential</a>.
-        </p>
-        <p>
-The refresh service is only expected to be used when either the
-<a>credential</a> has expired or the <a>issuer</a> does not publish
-<a>credential</a> status information. <a>Issuers</a> are advised not to put the
-<code>refreshService</code> <a>property</a> in a <a>verifiable credential</a>
-that does not contain public information or whose refresh service is not
-protected in some way.
-        </p>
-        <p class="note">
-Placing a <code>refreshService</code> <a>property</a> in a
-<a>verifiable credential</a> so that it is available to <a>verifiers</a> can
-remove control and consent from the <a>holder</a> and allow the
-<a>verifiable credential</a> to be issued directly to the <a>verifier</a>,
-thereby bypassing the <a>holder</a>.
-        </p>
-
-        <dl>
-          <dt><var>refreshService</var></dt>
-          <dd>
-The value of the <code>refreshService</code> <a>property</a> MUST be one or more
-refresh services that provides enough information to the recipient's software
-such that the recipient can refresh the <a>verifiable credential</a>. Each
-<code>refreshService</code> value MUST specify its <code>type</code> (for
-example, <code>ManualRefreshService2018</code>) and its <code>id</code>, which
-is the <a>URL</a> of the service. There is an expectation that machine readable
-information needs to be retrievable from the URL. The precise content of
-each refresh service is determined by the specific <code>refreshService</code>
-<a>type</a> definition.
-          </dd>
-        </dl>
-
-        <pre class="example nohighlight"
-          title="Usage of the refreshService property by an issuer">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "BachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"refreshService": {
-    "id": "https://example.edu/refresh/3732",
-    "type": "ManualRefreshService2018"
-  }</span>
-}
-        </pre>
-
-        <p>
-In the example above, the <a>issuer</a> specifies a manual
-<code>refreshService</code> that can be used by directing the <a>holder</a> or
-the <a>verifier</a> to <code>https://example.edu/refresh/3732</code>.
         </p>
 
       </section>
