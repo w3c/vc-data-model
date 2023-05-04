@@ -1705,29 +1705,36 @@ at which the information associated with the <code>credentialSubject</code>
       </section>
 
       <section>
-        <h3>Proofs (Signatures)</h3>
+        <h3>Securing Verifiable Credentials</h3>
 
         <p>
-At least one proof mechanism, and the details necessary to evaluate that proof,
-MUST be expressed for a <a>credential</a> or <a>presentation</a> to be a
+At least one securing mechanism, and the details necessary to evaluate it, MUST
+be expressed for a <a>credential</a> or <a>presentation</a> to be a
 <a>verifiable credential</a> or <a>verifiable presentation</a>; that is, to be
 <a>verifiable</a>.
         </p>
-
         <p>
-This specification identifies two classes of proof mechanisms: external proofs
-and embedded proofs. An <dfn class="lint-ignore">external proof</dfn> is one
-that wraps an expression of this data model, such as a JSON Web Token, which is
-elaborated on in the Securing Verifiable Credentials using JSON Web Tokens
-[[?VC-JWT]] specification. An <dfn>embedded proof</dfn> is a mechanism where
-the proof is included in the data, such as a Data Integrity Proof, which is
-elaborated upon in Verifiable Credential Data Integrity [[VC-DATA-INTEGRITY]].
+This specification recognizes two classes of securing mechanisms: those that use
+external proofs and those that use embedded proofs. An
+<dfn class="lint-ignore">external proof</dfn> is one that wraps an expression of
+this data model, such as via a JSON Web Token, which is elaborated on in the
+<em>Securing Verifiable Credentials using JSON Web Tokens</em> [[VC-JWT]] specification.
+An <dfn>embedded proof</dfn> is a mechanism where the proof is included in the
+data model, such as a Data Integrity Proof, which is elaborated on in <em>Verifiable
+Credential Data Integrity</em> [[VC-DATA-INTEGRITY]].
         </p>
-
         <p>
-When embedding a proof, the <code>proof</code> <a>property</a> MUST be used.
+It should be noted that these two classes of securing mechanisms are not
+mutually exclusive.
         </p>
-
+        <p>
+Methods of securing <a>credentials</a> or <a>presentations</a> that embed a
+proof in the data model MUST use the <code>proof</code> <a>property</a>.
+        </p>
+        <p>
+Methods of securing <a>credentials</a> or <a>presentations</a> that use an
+external proof MAY use the <code>proof</code> <a>property</a>.
+        </p>
         <dl>
           <dt><var>proof</var></dt>
           <dd>
