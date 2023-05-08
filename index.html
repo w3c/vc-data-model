@@ -2921,7 +2921,7 @@ information about the <code>proof</code> <a>property</a>, see Section
         <p>
 An <a>issuer</a> can include a Confidence Method in a <a>verifiable
 credential</a> to inform verifiers of mechanisms they could use to increase
-their confidence in the truth of a variety of things, including the 
+their confidence in the truth of a variety of things, including the
 following:</p>
 <ul>
   <li>
@@ -2929,16 +2929,16 @@ a particular identifier in the <a>verifiable credential</a> refers to the
 same <a>entity</a> the issuer intended it to refer to
   </li>
   <li>
-an <a>entity</a>, such as the presenter of a <a>verifiable credential</a>, 
+an <a>entity</a>, such as the presenter of a <a>verifiable credential</a>,
 is the same <a>entity</a> that the <a>issuer</a> made claims about
   </li>
   <li>
-an <a>entity</a> controls, or has been designated to use, one or more 
-mechanisms for demonstrating proof-of-possession or proof-of-use of 
+an <a>entity</a> controls, or has been designated to use, one or more
+mechanisms for demonstrating proof-of-possession or proof-of-use of
 cryptographic key material
   </li>
   <li>
-an <a>entity</a> identified in the <a>verifiable credential</a> can be 
+an <a>entity</a> identified in the <a>verifiable credential</a> can be
 checked against a biometric
   </li>
 </ul>
@@ -2998,8 +2998,7 @@ the <a>issuer</a> verifies the <a>holder</a> can satisfy each
 <a>claims</a> of the <a>verifiable credential</a>s they issue.
             </p>
             <p>
-Each confidence method MUST specify its <code>type</code> (for example,
-<code>DIDAuthWithSubjectIdConfirmation</code>) and MAY specify an
+Each confidence method MUST specify its <code>type</code> and MAY specify an
 <code>id</code>. The precise <a>properties</a> and semantics of each
 confidence method are determined by the specific
 <code>confidenceMethod</code> type definition.
@@ -3008,44 +3007,9 @@ confidence method are determined by the specific
         </dl>
 
         <p>
-The type <code>DIDAuthWithSubjectIdConfirmation</code> defines that a
-<a>verifier</a> MAY validate the confidence method by verifying the proof of
-the <a>verifiable presentation</a> with the verification material of one of the
-authentication verification relationships of the
-<code>credentialSubject.id</code> if the particular
-<code>credentialSubject.id</code> is a Decentralized Identifier (DID).
-        </p>
-
-       <pre class="example nohighlight"
-          title="Usage of the confirmationMethod property of type DIDAuthWithSubjectIdConfirmation">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    <span class="highlight">"confirmationMethod": {
-      "type": "DIDAuthWithSubjectIdConfirmation"
-    }</span>,
-    "degree": {
-      "type": "BachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  "proof": { <span class="comment">...</span> }
-}
-        </pre>
-
-        <p>
-The type <code>VerificationKeyConfirmation</code> defines that a
-<a>verifier</a> MAY validate the confidence method by verifying the proof of
-the <a>verifiable presentation</a> with the verification material contained in
-<code>publicKeyJwk</code> or <code>publicKeyMultibase</code>.
+The following example demonstrates a confidence method based on proving
+possession of a cryptographic key. The corresponding public key is a
+type-specific property of the confidence method.
         </p>
 
        <pre class="example nohighlight"
