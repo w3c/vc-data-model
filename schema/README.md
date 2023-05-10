@@ -19,7 +19,7 @@ There are two schemas provided, each with associated tests:
 A limited set of tests against examples in the specification are included. To run these tests, you can use the following command, after `npm i`:
 
 ```bash
-npm run test-schemas
+npm run test-schema
 ```
 
 The tests rely on examples featured in the spec. Currently these examples have been copy-pasted, and there is no guarantee they are in sync with the spec. This should be improved!
