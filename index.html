@@ -755,12 +755,12 @@ which is usually a digital signature.
                Credential Graph on top connected via a proof to a
                Proof Graph on the bottom.  The Credental Graph has
                Credential 123 with 4 properties: 'type' of value
-               AlumniCredential, 'issuer' of Example University,
+               ExampleAlumniCredential, 'issuer' of Example University,
                'validFrom' of 2010-01-01T19:23:24Z, and
                credentialSubject of Pat, who has an alumniOf property
                with value of Example University.  The Proof Graph has
                Signature 456 with 5 properties: 'type' of
-               RsaSignature2018, 'verificationMethod' of Example University
+               DataIntegrityProof, 'verificationMethod' of Example University
                Public Key 7, 'created' of 2017-06-18T21:19:10Z, and 'jws'
                of 'BavEll0...3JT24='">
           <figcaption style="text-align: center;">
@@ -853,7 +853,7 @@ presentation graph proof, which is usually a digital signature.
                'termsOfUse' of value Do Not Archive, and
                'verifiableCredential' whose value is Figure 6.  The
                Presentation Proof Graph has Signature 8910 with 5
-               properties: 'type' of RsaSignature2018, 'verificationMethod'
+               properties: 'type' of DataIntegrityProof, 'verificationMethod'
                of Example Presenter Public Key 11, 'created' of
                2018-01-15T12:43:56Z, 'challenge' of d28348djsj3239, and
                'jws' of 'p2KaZ...8Fj3K='">
@@ -918,11 +918,11 @@ discount from a university. In the example below, Pat receives an alumni
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
   <span class='comment'>// specify the identifier for the credential</span>
-  "id": "http://example.edu/credentials/1872",
+  "id": "http://university.example/credentials/1872",
   <span class='comment'>// the credential types, which declare what data to expect in the credential</span>
-  "type": ["VerifiableCredential", "AlumniCredential"],
+  "type": ["VerifiableCredential", "ExampleAlumniCredential"],
   <span class='comment'>// the entity that issued the credential</span>
-  "issuer": "https://example.edu/issuers/565049",
+  "issuer": "https://university.example/issuers/565049",
   <span class='comment'>// when the credential was issued</span>
   "validFrom": "2010-01-01T19:23:24Z",
   <span class='comment'>// claims about the subjects of the credential</span>
@@ -931,32 +931,27 @@ discount from a university. In the example below, Pat receives an alumni
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     <span class='comment'>// assertion about the only subject of the credential</span>
     "alumniOf": {
+      <span class='comment'>// identifier for the university</span>
       "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
-      "name": [{
-        "value": "Example University",
-        "lang": "en"
-      }, {
-        "value": "Université Exemple",
-        "lang": "fr"
-      }]
-    }
+      <span class='comment'>// name of the university</span>
+      "name": "Example University"
   },
   <span class='comment'>// digital proof that makes the credential tamper-evident</span>
   <span class='comment'>// see the NOTE at end of this section for more detail</span>
   "proof": {
-    <span class='comment'>// the cryptographic signature suite that was used to generate the signature</span>
-    "type": "RsaSignature2018",
+    <span class='comment'>// the type of embedded proof securing the verifiable credential</span>
+    "type": "DataIntegrityProof",
+    <span class='comment'>// the name of the cryptographic signature suite</span>
+    "cryptosuite": "eddsa-2022",
     <span class='comment'>// the date the signature was created</span>
-    "created": "2017-06-18T21:19:10Z",
+    "created": "2023-06-18T21:19:10Z",
     <span class='comment'>// purpose of this proof</span>
     "proofPurpose": "assertionMethod",
     <span class='comment'>// the identifier of the public key that can verify the signature</span>
-    "verificationMethod": "https://example.edu/issuers/565049#key-1",
+    "verificationMethod": "https://university.example/issuers/565049#key-123",
     <span class='comment'>// the digital signature value</span>
-    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
-      sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
-      X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
-      PAYuNzVBAh4vGHSrQyHUdBBPM"
+    "proofValue": "zQeVbY4oey5q2M3XKaxup3tmzN4DRFTLVqpLMweBrSxMY2xHX5XTYV8nQA
+      pmEcqaqA3Q1gVHMrXFkXJeV6doDwLWx"
   }
 }
         </pre>
@@ -986,48 +981,40 @@ the <a>verifier</a> and <a>verified</a>.
       "https://www.w3.org/ns/credentials/v2",
       "https://www.w3.org/ns/credentials/examples/v2"
     ],
-    "id": "http://example.edu/credentials/1872",
-    "type": ["VerifiableCredential", "AlumniCredential"],
-    "issuer": "https://example.edu/issuers/565049",
+    "id": "http://university.example/credentials/1872",
+    "type": ["VerifiableCredential", "ExampleAlumniCredential"],
+    "issuer": "https://university.example/issuers/565049",
     "validFrom": "2010-01-01T19:23:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "alumniOf": {
         "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
-        "name": [{
-          "value": "Example University",
-          "lang": "en"
-        }, {
-          "value": "Université Exemple",
-          "lang": "fr"
-        }]
+        "name": "Example University"
       }
     },
     "proof": {
-      "type": "RsaSignature2018",
-      "created": "2017-06-18T21:19:10Z",
+      "type": "DataIntegrityProof",
+      "cryptosuite": "eddsa-2022",
+      "created": "2023-06-18T21:19:10Z",
       "proofPurpose": "assertionMethod",
-      "verificationMethod": "https://example.edu/issuers/565049#key-1",
-      "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5X
-        sITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUc
-        X16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtj
-        PAYuNzVBAh4vGHSrQyHUdBBPM"
+      "verificationMethod": "https://university.example/issuers/565049#key-1",
+      "proofValue": "zQeVbY4oey5q2M3XKaxup3tmzN4DRFTLVqpLMweBrSxMY2xHX5XTYV8nQA
+        pmEcqaqA3Q1gVHMrXFkXJeV6doDwLWx"
     }
   }],
   <span class='comment'>// digital signature by Pat on the presentation
   // protects against replay attacks</span>
   "proof": {
-    "type": "RsaSignature2018",
+    "type": "DataIntegrityProof",
+    "cryptosuite": "eddsa-2022",
     "created": "2018-09-14T21:19:10Z",
     "proofPurpose": "authentication",
     "verificationMethod": "did:example:ebfeb1f712ebc6f1c276e12ec21#keys-1",
     <span class='comment'>// 'challenge' and 'domain' protect against replay attacks</span>
     "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
     "domain": "4jt78h47fh47",
-    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..kTCYt5
-      XsITJX1CxPCT8yAV-TVIw5WEuts01mq-pQy7UJiN5mgREEMGlv50aqzpqh4Qq_PbChOMqs
-      LfRoPsnsgxD-WUcX16dUOqV0G_zS245-kronKb78cPktb3rk-BuQy72IFLN25DYuNzVBAh
-      4vGHSrQyHUGlcTwLtjPAnKb78"
+    "proofValue": "zqpLMweBrSxMY2xHX5XTYV8nQAJeV6doDwLWxQeVbY4oey5q2pmEcqaqA3Q1
+      gVHMrXFkXM3XKaxup3tmzN4DRFTLV"
   }
 }
         </pre>
@@ -1159,9 +1146,9 @@ processors that support JSON-LD can process the <code>@context</code>
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ]</span>,
-  "id": "http://example.edu/credentials/58473",
-  "type": ["VerifiableCredential", "AlumniCredential"],
-  "issuer": "https://example.edu/issuers/565049",
+  "id": "http://university.example/credentials/58473",
+  "type": ["VerifiableCredential", "ExampleAlumniCredential"],
+  "issuer": "https://university.example/issuers/565049",
   "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -1264,20 +1251,20 @@ about the <code>id</code>.
         </dl>
 
         <pre class="example nohighlight vc" title="Usage of the id property"
-          data-vc-vm="https://example.edu/issuers/565049#key-1">
+          data-vc-vm="https://university.example/issuers/565049#key-1">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  <span class="highlight">"id": "http://example.edu/credentials/3732"</span>,
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/565049",
+  <span class="highlight">"id": "http://university.example/credentials/3732"</span>,
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/565049",
   "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     <span class="highlight">"id": "did:example:ebfeb1f712ebc6f1c276e12ec21"</span>,
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   }
@@ -1342,20 +1329,20 @@ in a document containing machine-readable information about the
         </dl>
 
         <pre class="example nohighlight vc" title="Usage of the type property"
-          data-vc-vm="https://example.edu/issuers/565049#key-1">
+          data-vc-vm="https://university.example/issuers/565049#key-1">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  <span class="highlight">"type": ["VerifiableCredential", "UniversityDegreeCredential"]</span>,
-  "issuer": "https://example.edu/issuers/565049",
+  "id": "http://university.example/credentials/3732",
+  <span class="highlight">"type": ["VerifiableCredential", "ExampleDegreeCredential"]</span>,
+  "issuer": "https://university.example/issuers/565049",
   "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   }
@@ -1384,7 +1371,7 @@ MUST have a <a>type</a> specified.
               <td>
 <code>VerifiableCredential</code> and, optionally, a more specific
 <a>verifiable credential</a> <a>type</a>. For example,<br>
-<code>"type": ["VerifiableCredential", "UniversityDegreeCredential"]</code>
+<code>"type": ["VerifiableCredential", "ExampleDegreeCredential"]</code>
               </td>
             </tr>
 
@@ -1395,7 +1382,7 @@ MUST have a <a>type</a> specified.
               <td>
 <code>VerifiableCredential</code> and, optionally, a more specific
 <a>verifiable credential</a> <a>type</a>. For example,<br>
-<code>"type": ["VerifiableCredential", "UniversityDegreeCredential"]</code>
+<code>"type": ["VerifiableCredential", "ExampleDegreeCredential"]</code>
               </td>
             </tr>
 
@@ -1428,7 +1415,7 @@ MUST have a <a>type</a> specified.
               </td>
               <td>
 A valid proof <a>type</a>. For example,<br>
-<code>"type": "RsaSignature2018"</code>
+<code>"type": "DataIntegrityProof"</code>
               </td>
             </tr>
 
@@ -1482,7 +1469,7 @@ of this specification who want to support interoperable extensibility, do.
         <p>
 All <a>credentials</a>, <a>presentations</a>, and encapsulated objects MUST
 specify, or be associated with, additional more narrow <a>types</a> (like
-<code>UniversityDegreeCredential</code>, for example) so software systems can
+<code>ExampleDegreeCredential</code>, for example) so software systems can
 process this additional information.
         </p>
 
@@ -1498,7 +1485,7 @@ of an associated object based on the encapsulating object <a>type</a>.
 
         <p>
 For example, a <a>credential</a> object with the <code>type</code> of
-<code>UniversityDegreeCredential</code>, signals to a <a>verifier</a> that the
+<code>ExampleDegreeCredential</code>, signals to a <a>verifier</a> that the
 object associated with the <code>credentialSubject</code> property contains the
 identifier for the:
         </p>
@@ -1559,20 +1546,20 @@ a set of objects that MUST contain one or more claims that are each related to a
 
         <pre class="example nohighlight vc"
           title="Usage of the credentialSubject property"
-          data-vc-vm="https://example.edu/issuers/565049#key-1">
+          data-vc-vm="https://university.example/issuers/565049#key-1">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/565049",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/565049",
   "validFrom": "2010-01-01T00:00:00Z",
   <span class="highlight">"credentialSubject"</span>: {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   }
@@ -1593,7 +1580,7 @@ who are spouses. Note the use of array notation to associate multiple
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
+  "id": "http://university.example/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
   "issuer": "https://example.com/issuer/123",
   "validFrom": "2010-01-01T00:00:00Z",
@@ -1636,20 +1623,20 @@ machine-readable information about the <a>issuer</a> that can be used to
         </dl>
 
         <pre class="example nohighlight vc" title="Usage of issuer property"
-          data-vc-vm="https://example.edu/issuers/14#key-1">
+          data-vc-vm="https://university.example/issuers/14#key-1">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  <span class="highlight">"issuer": "https://example.edu/issuers/14"</span>,
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  <span class="highlight">"issuer": "https://university.example/issuers/14"</span>,
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   }
@@ -1669,8 +1656,8 @@ associating an object with the issuer property:
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
   <span class="highlight">"issuer": {
     "id": "did:example:76e12ec712ebc6f1c221ebfeb1f",
     "name": "Example University"
@@ -1679,7 +1666,7 @@ associating an object with the issuer property:
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   }
@@ -1729,21 +1716,21 @@ at which the information associated with the <code>credentialSubject</code>
 
         <pre class="example nohighlight vc"
           title="Usage of validFrom and validUntil property"
-          data-vc-vm="https://example.edu/issuers/14#key-1">
+          data-vc-vm="https://university.example/issuers/14#key-1">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   <span class="highlight">"validFrom": "2010-01-01T19:23:24Z"</span>,
   <span class="highlight">"validUntil": "2020-01-01T19:23:24Z"</span>,
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   }
@@ -1811,20 +1798,20 @@ the signing date. The example below uses Ed25519 digital signatures.
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
   "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   },
   <span class="highlight">"proof": {
     "type": "Ed25519Signature2020",
     "created": "2021-11-13T18:19:39Z",
-    "verificationMethod": "https://example.edu/issuers/14#key-1",
+    "verificationMethod": "https://university.example/issuers/14#key-1",
     "proofPurpose": "assertionMethod",
     "proofValue": "z58DAdFfa9SkqZMVPxAQpic7ndSayn1PzZs6ZjWp1CktyGesjuTSwRdo
                    WhAfGFCF5bppETSTojQCrfFPP2oumHKtz"
@@ -1890,23 +1877,23 @@ object could contain a link to an external document which notes whether or not t
     "https://www.w3.org/ns/credentials/v2",
     "https://w3id.org/vc/status-list/2021/v1"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   },
   <span class="highlight">"credentialStatus": {
-    "id": "https://example.edu/credentials/status/3#94567",
+    "id": "https://university.example/credentials/status/3#94567",
     "type": "StatusList2021Entry",
     "statusPurpose": "revocation",
     "statusListIndex": "94567",
-    "statusListCredential": "https://example.edu/credentials/status/3"
+    "statusListCredential": "https://university.example/credentials/status/3"
   }</span>
 }
         </pre>
@@ -2316,7 +2303,7 @@ Let us assume we start with the <a>verifiable credential</a> shown below.
 
         <pre class="example nohighlight vc"
           title="A simple credential"
-          data-vc-vm="https://example.edu/issuers/14#keys-1">
+          data-vc-vm="https://university.example/issuers/14#keys-1">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2542,14 +2529,14 @@ integrity protection mechanism. The <code>credentialSchema</code>
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   },
@@ -2586,14 +2573,14 @@ see Section <a href="#zero-knowledge-proofs"></a>.
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   },
@@ -2682,19 +2669,19 @@ each refresh service is determined by the specific <code>refreshService</code>
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   },
   <span class="highlight">"refreshService": {
-    "id": "https://example.edu/refresh/3732",
+    "id": "https://university.example/refresh/3732",
     "type": "ManualRefreshService2018"
   }</span>
 }
@@ -2703,7 +2690,7 @@ each refresh service is determined by the specific <code>refreshService</code>
         <p>
 In the example above, the <a>issuer</a> specifies a manual
 <code>refreshService</code> that can be used by directing the <a>holder</a> or
-the <a>verifier</a> to <code>https://example.edu/refresh/3732</code>.
+the <a>verifier</a> to <code>https://university.example/refresh/3732</code>.
         </p>
 
       </section>
@@ -2770,14 +2757,14 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   },
@@ -2786,9 +2773,9 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
     "id": "http://example.com/policies/credential/4",
     "profile": "http://example.com/profiles/credential",
     "prohibition": [{
-      "assigner": "https://example.edu/issuers/14",
+      "assigner": "https://university.example/issuers/14",
       "assignee": "AllVerifiers",
-      "target": "http://example.edu/credentials/3732",
+      "target": "http://university.example/credentials/3732",
       "action": ["Archival"]
     }]
   }]
@@ -2828,14 +2815,14 @@ in an archive.
       "https://www.w3.org/ns/credentials/v2",
       "https://www.w3.org/ns/credentials/examples/v2"
     ],
-    "id": "http://example.edu/credentials/3732",
-    "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-    "issuer": "https://example.edu/issuers/14",
+    "id": "http://university.example/credentials/3732",
+    "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+    "issuer": "https://university.example/issuers/14",
     "validFrom": "2010-01-01T19:23:24Z",
     "credentialSubject": {
       "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
     },
@@ -2848,7 +2835,7 @@ in an archive.
     "prohibition": [{
       "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
       "assignee": "https://wineonline.example.org/",
-      "target": "http://example.edu/credentials/3732",
+      "target": "http://university.example/credentials/3732",
       "action": ["3rdPartyCorrelation"]
     }]
   }]</span>,
@@ -2939,21 +2926,21 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/3732",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   },
   <span class="highlight">"evidence": [{
-    "id": "https://example.edu/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
+    "id": "https://university.example/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
     "type": ["DocumentVerification"],
-    "verifier": "https://example.edu/issuers/14",
+    "verifier": "https://university.example/issuers/14",
     "evidenceDocument": "DriversLicense",
     "subjectPresence": "Physical",
     "documentPresence": "Physical",
@@ -3109,7 +3096,7 @@ Verifiable Credential Specifications Directory [[?VC-SPECS]] as well.
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
   <span class="highlight">"credentialSchema": {
     "id": "did:example:cdf:35LB7w9ueWbagPL94T9bMLtyXDj9pX5o",
     "type": "did:example:schema:22KpkXgecryx9k7N6XN1QoN3gXwBkSU8SfyyYQG"
@@ -3119,7 +3106,7 @@ Verifiable Credential Specifications Directory [[?VC-SPECS]] as well.
     "givenName": "Jane",
     "familyName": "Doe",
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts",
       "college": "College of Engineering"
     }
@@ -3183,14 +3170,14 @@ that the <a>holder</a> did not intend to share.
         "https://www.w3.org/ns/credentials/v2",
         "https://www.w3.org/ns/credentials/examples/v2"
       ],
-      "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+      "type": ["VerifiableCredential", "ExampleDegreeCredential"],
       <span class="highlight">"credentialSchema": {
         "id": "did:example:cdf:35LB7w9ueWbagPL94T9bMLtyXDj9pX5o",
         "type": "did:example:schema:22KpkXgecryx9k7N6XN1QoN3gXwBkSU8SfyyYQG"
       }</span>,
       "issuer": "did:example:Wz4eUg7SetGfaUVCn8U9d62oDYrUJLuUtcy619",
       "credentialSubject": {
-        "degreeType": "BachelorDegree",
+        "degreeType": "ExampleBachelorDegree",
         "degreeSchool": "College of Engineering"
       },
       <span class="highlight">"proof": {
@@ -3899,20 +3886,20 @@ possible by not specifying the <a>subject</a> identifier, expressed using the
 
         <pre class="example nohighlight vc"
           title="Usage of issuer properties"
-          data-vc-vm="https://example.edu/issuers/14#keys-1">
+          data-vc-vm="https://university.example/issuers/14#keys-1">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.edu/credentials/temporary/28934792387492384",
-  "type": ["VerifiableCredential", "UniversityDegreeCredential"],
-  "issuer": "https://example.edu/issuers/14",
+  "id": "http://university.example/credentials/temporary/28934792387492384",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
   "validFrom": "2017-10-22T12:23:48Z",
   "credentialSubject": {
     <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
     "degree": {
-      "type": "BachelorDegree",
+      "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
     }
   }
@@ -4388,11 +4375,11 @@ probably should be:
     <span class="highlight">"https://www.w3.org/ns/credentials/v2"</span>,
     <span class="highlight">"https://www.w3.org/ns/credentials/examples/v2"</span>
   ],
-  "id": "http://example.edu/credentials/58473",
-  "type": ["VerifiableCredential", "AlumniCredential"],
+  "id": "http://university.example/credentials/58473",
+  "type": ["VerifiableCredential", "ExampleAlumniCredential"],
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "image": <span class="highlight">"https://example.edu/images/58473"</span>,
+    "image": <span class="highlight">"https://university.example/images/58473"</span>,
     "alumniOf": {
       "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
       "name": [{
@@ -4424,8 +4411,8 @@ protection to the image by using an [[IPFS]] link.
     "https://www.w3.org/ns/credentials/v2<span class="highlight">?hl=z3aq31uzgnZBuWNzUB</span>",
     "https://www.w3.org/ns/credentials/examples/v2<span class="highlight">?hl=z8guWNzUBnZBu3aq31</span>"
   ],
-  "id": "http://example.edu/credentials/58473",
-  "type": ["VerifiableCredential", "AlumniCredential"],
+  "id": "http://university.example/credentials/58473",
+  "type": ["VerifiableCredential", "ExampleAlumniCredential"],
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "image": <span class="highlight">"ipfs:/ipfs/QmXfrS3pHerg44zzK6QKQj6JDk8H6cMtQS7pdXbohwNQfK/image"</span>,
