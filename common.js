@@ -118,12 +118,12 @@ var vcwg = {
       href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
       publisher: 'Wikipedia'
     },
-    'CREDENTIAL-SCHEMA-2022': {
-      title: 'Verifiable Credentials JSON Schema 2022',
-      href: 'https://w3c-ccg.github.io/vc-json-schemas/',
+    'CREDENTIAL-SCHEMA-2023': {
+      title: 'Verifiable Credentials JSON Schema 2023',
+      href: 'https://w3c.github.io/vc-json-schema/',
       authors: ['Gabe Cohen', 'Orie Steele'],
-      status: 'CG-DRAFT',
-      publisher: 'Credentials Community Group'
+      status: 'FPWD',
+      publisher: 'W3C Verifiable Credentials Working Group'
     },
     'JSON-LD': {
       title: 'JSON-LD 1.1: A JSON-based Serialization for Linked Data',
