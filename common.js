@@ -120,7 +120,7 @@ var vcwg = {
     },
     'CREDENTIAL-SCHEMA-2023': {
       title: 'Verifiable Credentials JSON Schema 2023',
-      href: 'https://w3c.github.io/vc-json-schema/',
+      href: 'https://www.w3.org/TR/vc-json-schema/',
       authors: ['Gabe Cohen', 'Orie Steele'],
       status: 'FPWD',
       publisher: 'W3C Verifiable Credentials Working Group'
