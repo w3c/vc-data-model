@@ -2596,30 +2596,38 @@ the proof provided with the <a>verifiable credential</a> is valid.
       </section>
 
       <section>
-        <h2>Context Integrity</h2>
+        <h2>External Resource Integrity</h2>
         <p>
-          In some cases it is desirable to know that the contents of the
-          context(s) utilized in the verifiable credential are the same as
-          used by both the issuer and verifier.  
+          When including a link to an external resource in a VC it is 
+          desireable to know if the resource that is pointed to, is the
+          same at signing time, as at verification time.  This applies to
+          both cases where there is an external resource that is 
+          remotely retrieved, as well as to cases where the issuer and/or
+          verifier may have local cached copies of a resource.
         </p>
         <p>
-          To validate that a context included in a Verifiable Credential is
+          It is also desirable to know that the contents of the
+          context(s) utilized in the verifiable credential are the same as
+          used by both the issuer and verifier. 
+        </p>
+        <p>
+          To validate that a resource referenced by a Verifiable Credential is
           the same at verification time as at issuing time an implementer
-          MAY include a property named <code>contextIntegrity</code> that
+          MAY include a property named <code>resourceIntegrity</code> that
           stores an array of objects that describe additional integrity
-          metadata about each context used by the VC. If
-          <code>contextIntegrity</code>
+          metadata about each resource referenced by the VC. If
+          <code>resourceIntegrity</code>
           is present there MUST be an object in the array for each remote
-          context.
+          resource.
         </p>
         <p>
           Each object in the
-          <code>contextIntegrity</code> array MUST contain the following:
-          the URL to the context named <code>context</code>, a
+          <code>resourceIntegrity</code> array MUST contain the following:
+          the URL to the resource named <code>resource</code>, a
           <code>timestamp</code>
           that indicates the time at which the hash was computed, the
           <code>hash</code>
-          of the context, and the <code>method</code> which indicates what
+          of the resource, and the <code>method</code> which indicates what
           hashing algorithm was used as listed as the 'Hash Name String'
           property from the <a
           href="https://www.iana.org/assignments/named-information/named-information.xhtml">IANA
@@ -2648,20 +2656,36 @@ the proof provided with the <a>verifiable credential</a> is valid.
         <p>
           <aside
             class="example"
-            title="context integrity"
+            title="resource integrity"
           >
-            <p>An example of a context integrity object</p>
+            <p>An example of a resource integrity object referencing contexts</p>
             <pre>
-              "contextIntegrity": [{
-                "@context": "https://www.w3.org/ns/credentials/v2",
+              "resourceIntegrity": [{
+                "resource": "https://www.w3.org/ns/credentials/v2",
                 "timestamp": "2020-01-01T19:23:24Z", 
                 "hash": "0c63a75b845e4f7d01107d852e4c2485c51a50aaaa94fc61995e71bbee983a2ac3713831264adb47fb6bd1e058d5f004", 
                 "method": "sha3-384"  
               },{
-                "@context": "https://www.w3.org/ns/credentials/examples/v2",
+                "resource": "https://www.w3.org/ns/credentials/examples/v2",
                 "timestamp": "2019-02-04T17:32:15Z", 
                 "hash": "ac996ae492f9a987c84f109f2118d3f6632e2259455d30c455a9ecd66c3c4959", 
                 "method": "sha2-256"  
+              }]
+            </pre>
+          </aside>
+        </p>
+        <p>
+          <aside
+            class="example"
+            title="resource integrity over image"
+          >
+            <p>An example of a resource integrity object refering to an image</p>
+            <pre>
+              "resourceIntegrity": [{
+                "resource": "https://www.w3.org/Icons/w3c_home.png",
+                "timestamp": "2023-06-05T19:23:24Z", 
+                "hash": "d727ecbc780ef52b029e0013677afa36c14e0f31b30dfb6d946739800dd0926ff4f3225be1f7a94d76c02ba2116760be", 
+                "method": "sha3-384"  
               }]
             </pre>
           </aside>
