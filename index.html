@@ -2618,12 +2618,12 @@ the proof provided with the <a>verifiable credential</a> is valid.
           metadata about each resource referenced by the VC. If
           <code>resourceIntegrity</code>
           is present, there MUST be an object in the array for each remote
-          resource.
+          resource. 
         </p>
         <p>
           Each object in the
           <code>resourceIntegrity</code> array MUST contain the following:
-          the URL to the resource named <code>id</code>, a
+          the [[URL]] to the resource named <code>resource</code>, a
           <code>timestamp</code>
           that indicates the time at which the hash was computed, the
           <code>digest</code>
@@ -2653,21 +2653,29 @@ the proof provided with the <a>verifiable credential</a> is valid.
           additional properties.
         </p>
         <p>
-          Implementers SHOULD consult appropriate sources, such as the <a
-          href="https://www.iana.org/assignments/named-information/named-information.xhtml">IANA
+          Implementers SHOULD consult appropriate sources, such as the 
+          <a href="https://www.iana.org/assignments/named-information/named-information.xhtml">IANA
           Named Information Hash Algorithm Registry</a> to ensure that they
           are chosing a current and reliable hash algorithm.  At the time of
           this writing `sha-256` SHOULD be considered the minimum strength
           hash algorithm for use by implemnters.
         </p>
+        <p>
+          If there is more than one object in <code>resourceIntegrity</code>
+          that refers to the same <code>resource</code> the <code>method</code>
+          MUST be different for each object.  When performing integrity
+          checking the strongest hash algorithm available SHOULD be used
+          to confirm integrity of the resource.
+        </p>
         <p class="issue">
-         The working group is discussing if we will adopt subresource integrity as defined in [[SRI]] is
-          adopted into the [[JSON-LD]] specification as noted in that
-          specifications <a
-          href="https://www.w3.org/TR/json-ld11/#security">current security
-          considerations</a> of that specification, this hash in the VC can
-          serve as an additional check towards ensuring that a cached
-          context used when issuing the VC matches the remote resource.
+          The working group is discussing if we will adopt subresource
+          integrity as defined in [[SRI]] is adopted into the [[JSON-LD]]
+          specification as noted in that specifications <a
+          href="https://www.w3.org/TR/json-ld11/#security">current
+          security considerations</a> of that specification, this hash in
+          the VC can serve as an additional check towards ensuring that a
+          cached context used when issuing the VC matches the remote
+          resource.
         </p>
         <p>
           <aside
@@ -2677,12 +2685,12 @@ the proof provided with the <a>verifiable credential</a> is valid.
             <p>An example of a resource integrity object referencing contexts</p>
             <pre>
               "resourceIntegrity": [{
-                "id": "https://www.w3.org/ns/credentials/v2",
+                "resource: "https://www.w3.org/ns/credentials/v2",
                 "timestamp": "2023-06-07T19:23:24Z", 
                 "digest": "zMxXZRc9wGRgtsdFaCaqluKtZbyEz-emTp4Y1k1wBvgKNYguD7qTACwjWOTUgB-A", 
                 "method": "sha3-384"  
               },{
-                "id": "https://www.w3.org/ns/credentials/examples/v2",
+                "resource": "https://www.w3.org/ns/credentials/examples/v2",
                 "timestamp": "2023-06-07T17:32:15Z", 
                 "digest": "STCt_TVvy-QH6PCA8IDH7tw0dsBsgkewEl9VjCDwvUCVPz5M10dUhrMG9f2Q82MA", 
                 "method": "sha2-256"  
@@ -2698,7 +2706,7 @@ the proof provided with the <a>verifiable credential</a> is valid.
             <p>An example of a resource integrity object refering to an image</p>
             <pre>
               "resourceIntegrity": [{
-                "id": "https://www.w3.org/Icons/w3c_home.png",
+                "resource": "https://www.w3.org/Icons/w3c_home.png",
                 "timestamp": "2023-06-05T19:23:24Z", 
                 "digest": "1yfsvHgO9SsCngATZ3r6NsFODzGzDfttlGc5gA3Qkm_08yJb4fepTXbAK6IRZ2C-", 
                 "method": "sha3-384"  
