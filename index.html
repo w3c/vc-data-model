@@ -2618,28 +2618,29 @@ the proof provided with the <a>verifiable credential</a> is valid.
           metadata about each resource referenced by the VC. If
           <code>resourceIntegrity</code>
           is present, there MUST be an object in the array for each remote
-          resource. 
+          resource for each context used in the verifiable credential. 
         </p>
         <p>
           Each object in the
           <code>resourceIntegrity</code> array MUST contain the following:
-          the [[URL]] to the resource named <code>resource</code>, the
-          <code>digest</code>
-          of the resource, and the <code>method</code> which indicates what
-          hashing algorithm was used as listed as the 'Hash Name String'
-          property from the <a
-          href="https://www.iana.org/assignments/named-information/named-information.xhtml">IANA
-          Named Information Hash Algorithm Registry</a>.  
-          The <code>digest</code> property MUST be the base64url [[RFC 4648]]
-          encoded digest of the hash with no trailing characters.
-          The <code>timestamp</code> property MUST be a string value of an
-          [[XMLSCHEMA11-2]] combined date-time string. An implementer MAY
-          include other fields in each object.
+          the [[URL]] to the resource named <code>id</code> and the 
+          <code>integrity</code> information for the resource
+          constructed using the method specified in <a
+          href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource
+          Integrity</a>.
         </p>
         <p>
-          An object in the <code>resourceIntegrity</code> array MAY contain
-          a property named <code>timestamp</code>
-          that indicates the time at which the hash was computed. 
+          There may be only one object in the <code>resourceIntegrity</code>
+          per <code>id</code>. When performing integrity checking the
+          strongest hash algorithm available SHOULD be used to confirm
+          integrity of the resource.
+        </p>
+        <p>
+          An object in the <code>resourceIntegrity</code> array MAY
+          contain a property named <code>timestamp</code>
+          that indicates the time at which the hash was computed. The
+          <code>timestamp</code> property if included MUST be a string
+          value of an [[XMLSCHEMA11-2]] combined date-time string.
         </p>
         <p>
           An object in the <code>resourceIntegrity</code> array MAY contain
@@ -2656,6 +2657,13 @@ the proof provided with the <a>verifiable credential</a> is valid.
           additional properties.
         </p>
         <p>
+          In any object in the <code>credential.credentialSubject</code>
+          that contains a [[URL]], a property named
+          <code>integrity</code> may be included with the integrity
+          information as specified above, with the [[URL]] in the
+          <code>id</code> property. 
+        </p>
+        <p>
           Implementers SHOULD consult appropriate sources, such as the 
           <a href="https://www.iana.org/assignments/named-information/named-information.xhtml">IANA
           Named Information Hash Algorithm Registry</a> to ensure that they
@@ -2663,13 +2671,7 @@ the proof provided with the <a>verifiable credential</a> is valid.
           this writing `sha-256` SHOULD be considered the minimum strength
           hash algorithm for use by implemnters.
         </p>
-        <p>
-          If there is more than one object in <code>resourceIntegrity</code>
-          that refers to the same <code>resource</code> the <code>method</code>
-          MUST be different for each object.  When performing integrity
-          checking the strongest hash algorithm available SHOULD be used
-          to confirm integrity of the resource.
-        </p>
+        
         <p class="issue">
           The working group is discussing if we will adopt subresource
           integrity as defined in [[SRI]] is adopted into the [[JSON-LD]]
@@ -2688,15 +2690,11 @@ the proof provided with the <a>verifiable credential</a> is valid.
             <p>An example of a resource integrity object referencing contexts</p>
             <pre>
               "resourceIntegrity": [{
-                "resource": "https://www.w3.org/ns/credentials/v2",
-                "timestamp": "2023-06-07T19:23:24Z", 
-                "digest": "zMxXZRc9wGRgtsdFaCaqluKtZbyEz-emTp4Y1k1wBvgKNYguD7qTACwjWOTUgB-A", 
-                "method": "sha3-384"  
-              },{
-                "resource": "https://www.w3.org/ns/credentials/examples/v2",
-                "timestamp": "2023-06-07T17:32:15Z", 
-                "digest": "STCt_TVvy-QH6PCA8IDH7tw0dsBsgkewEl9VjCDwvUCVPz5M10dUhrMG9f2Q82MA", 
-                "method": "sha2-256"  
+                "id": "https://www.w3.org/ns/credentials/v2",
+                "integrity": "sha384-lHKDHh0msc6pRx8PhDOMkNtSI8bOfsp4giNbUrw71nXXLf13nTqNJoRp3Nx+ArVK", 
+              },{  
+                "id": "https://www.w3.org/ns/credentials/examples/v2",  
+                "integrity": "sha384-zNNbQTWCSUSi0bbz7dbua+RcENv7C6FvlmYJ1Y+I727HsPOHdzwELMYO9Mz68M26", 
               }]
             </pre>
           </aside>
@@ -2706,13 +2704,16 @@ the proof provided with the <a>verifiable credential</a> is valid.
             class="example"
             title="resource integrity over image"
           >
-            <p>An example of a resource integrity object refering to an image</p>
+            <p>An example of a resource integrity object in a credentialSubject refering to an image</p>
             <pre>
-              "resourceIntegrity": [{
-                "resource": "https://www.w3.org/Icons/w3c_home.png",
-                "digest": "1yfsvHgO9SsCngATZ3r6NsFODzGzDfttlGc5gA3Qkm_08yJb4fepTXbAK6IRZ2C-", 
-                "method": "sha3-384"  
-              }]
+              "credentialSubject": {
+                "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+                "image": {
+                    "id": "https://university.example/images/58473",
+                    "integrity": "sha384-ZfAwuJmMgoX3s86L7x9XSPi3AEbiz6S/5SyGHJPCxWHs5NEth/c5S9QoS1zZft+J"
+                },
+                ...
+              }
             </pre>
           </aside>
         </p>
