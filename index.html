@@ -2600,6 +2600,134 @@ the proof provided with the <a>verifiable credential</a> is valid.
       </section>
 
       <section>
+        <h2>Integrity of Related Resources</h2>
+        <p>
+          When including a link to an external resource in a
+          <a>verifiable credential</a>, it is desirable to know whether
+          the resource that is pointed to is the same at signing time as
+          it is at verification time. This applies to cases where there
+          is an external resource that is remotely retrieved as well as
+          to cases where the <a>issuer</a> and/or
+          <a>verifier</a> may have local cached copies of a resource.
+        </p>
+        <p>
+          It is also desirable to know that the contents of the JSON-LD
+          context(s) used in the <a>verifiable credential</a> are the
+          same when used by both the <a>issuer</a> and <a>verifier</a>. 
+        </p>
+        <p>
+          To validate that a resource referenced by a <a>verifiable
+          credential</a> is the same at verification time as it is at
+          issuing time, an implementer MAY include a property named
+          <code>relatedResource</code> that stores an array of objects
+          that describe additional integrity metadata about each
+          resource referenced by the <a>verifiable credential</a>. If
+          <code>relatedResource</code>
+          is present, there MUST be an object in the array for each remote
+          resource for each context used in the verifiable credential. 
+        </p>
+        <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
+The requirement that contexts be listed in `relatedResource` is currently being debated in the VCWG. This requirement might be removed in future iterations of the specification. 
+        </p>
+        <p>
+          Each object in the
+          <code>relatedResource</code> array MUST contain the following:
+          the [[URL]] to the resource named <code>id</code> and the 
+          <code>digestSRI</code> information for the resource
+          constructed using the method specified in <a
+          href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource
+          Integrity</a>.
+        </p>
+        <p class="issue" title="Unification of cryptographic hash expression formats are under discussion">
+The Working Group is currently attempting to determine if cryptographic hash expression formats can be unified across all of the VCWG core specifications. Candidates for this mechanism include `digestSRI` and `digestMultibase`. There are arguments for and against unification that the WG is currently debating.
+        </p>
+          There MUST NOT be more than one object in the
+          <code>relatedResource</code> per <code>id</code>. 
+        </p>
+        <p>
+          An object in the <code>relatedResource</code> array MAY
+          contain a property named <code>mediaType</code> that indicates
+          the expected media type for the indicated
+          <code>resource</code>. If a <code>mediaType</code> is included
+          it SHOULD be a valid media type as listed in the 
+          <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">
+            IANA Media Types
+          </a> registry.
+        </p>
+        <p>
+          Any object in the <a>verifiable credential</a>
+          that contains an `id` [[URL]] property MAY be annotated with 
+          integrity information as specified in this section by inclusion
+          of <code>digestSRI</code> in the object.
+        </p>
+        <p>
+          Any objects for which selective disclosure is desired SHOULD
+          NOT be included as an object in the
+          <code>relatedResource</code> array.
+        </p>
+        <p>
+          Implementers are urged to consult appropriate sources, such as
+          the 
+          <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf">
+            FIPS 180-4 Secure Hash Standard</a> and the 
+          <a href="https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF">
+            Commercial National Security Algorithm Suite 2.0</a>
+          to ensure that they are chosing a current and reliable hash
+          algorithm. At the time of this writing `sha384` SHOULD be
+          considered the minimum strength hash algorithm for use by
+          implementers.
+        </p>
+        <p class="issue">
+          The working group is discussing if we will adopt more aspects
+          of subresource integrity as defined in [[SRI]] is adopted into
+          the [[JSON-LD]] specification as noted in that specifications
+          <a href="https://www.w3.org/TR/json-ld11/#security">current
+          security considerations</a> of that specification, this hash
+          in the VC can serve as an additional check towards ensuring
+          that a cached context used when issuing the VC matches the
+          remote resource.
+        </p>
+        <p>
+          <aside
+            class="example"
+            title="related resource integrity"
+          >
+            <p>An example of related resource integrity object referencing
+            contexts</p>
+            <pre>
+              "relatedResource": [{
+                "id": "https://www.w3.org/ns/credentials/v2",
+                "digestSRI": "sha384-lHKDHh0msc6pRx8PhDOMkNtSI8bOfsp4giNbUrw71nXXLf13nTqNJoRp3Nx+ArVK", 
+              },{  
+                "id": "https://www.w3.org/ns/credentials/examples/v2",  
+                "digestSRI": "sha384-zNNbQTWCSUSi0bbz7dbua+RcENv7C6FvlmYJ1Y+I727HsPOHdzwELMYO9Mz68M26", 
+              }]
+            </pre>
+          </aside>
+        </p>
+        <p>
+          <aside
+            class="example"
+            title="related resource integrity over image"
+          >
+            <p>An example of a related resource integrity object in a
+            credentialSubject refering to an image</p>
+            <pre class="example" title="An integrity-protected image that is associated with a credentialSubject">
+              "credentialSubject": {
+                "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+                "image": {
+                    "id": "https://university.example.org/images/58473",
+                    "digestSRI": "sha384-ZfAwuJmMgoX3s86L7x9XSPi3AEbiz6S/5SyGHJPCxWHs5NEth/c5S9QoS1zZft+J",
+                    "mediaType": "application/svg+xml",
+                },
+                ...
+              }
+            </pre>
+          </aside>
+        </p>
+      </section>
+
+      <section>
         <h3>Refreshing</h3>
 
         <p class="issue" title="(AT RISK) Feature depends on demonstration of independent implementations">
