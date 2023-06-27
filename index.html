@@ -2596,7 +2596,7 @@ the proof provided with the <a>verifiable credential</a> is valid.
       </section>
 
       <section>
-        <h2>External Resource Integrity</h2>
+        <h2>Integrity of Related Resources</h2>
         <p>
           When including a link to an external resource in a <a>verifiable credential</a>, it is 
           desirable to know whether the resource that is pointed to is the
@@ -2607,22 +2607,22 @@ the proof provided with the <a>verifiable credential</a> is valid.
         </p>
         <p>
           It is also desirable to know that the contents of the
-          context(s) used in the <a>verifiable credential</a> are the same when
+          JSON-LD context(s) used in the <a>verifiable credential</a> are the same when
           used by both the <a>issuer</a> and <a>verifier</a>. 
         </p>
         <p>
           To validate that a resource referenced by a <a>verifiable credential</a> is
           the same at verification time as it is at issuing time, an implementer
-          MAY include a property named <code>resourceIntegrity</code> that
+          MAY include a property named <code>relatedResource</code> that
           stores an array of objects that describe additional integrity
           metadata about each resource referenced by the <a>verifiable credential</a>. If
-          <code>resourceIntegrity</code>
+          <code>relatedResource</code>
           is present, there MUST be an object in the array for each remote
           resource for each context used in the verifiable credential. 
         </p>
         <p>
           Each object in the
-          <code>resourceIntegrity</code> array MUST contain the following:
+          <code>relatedResource</code> array MUST contain the following:
           the [[URL]] to the resource named <code>id</code> and the 
           <code>integrity</code> information for the resource
           constructed using the method specified in <a
@@ -2639,14 +2639,14 @@ the proof provided with the <a>verifiable credential</a> is valid.
           integrity of the resource.
         </p>
         <p>
-          An object in the <code>resourceIntegrity</code> array MAY
+          An object in the <code>relatedResource</code> array MAY
           contain a property named <code>timestamp</code>
           that indicates the time at which the hash was computed. The
           <code>timestamp</code> property if included MUST be a string
           value of an [[XMLSCHEMA11-2]] combined date-time string.
         </p>
         <p>
-          An object in the <code>resourceIntegrity</code> array MAY contain
+          An object in the <code>relatedResource</code> array MAY contain
           a property named <code>mediaType</code> that indicates the 
           expected media type for the indicated <code>resource</code>.
           If a <code>mediaType</code> is included it SHOULD be a valid
@@ -2656,15 +2656,13 @@ the proof provided with the <a>verifiable credential</a> is valid.
           </a> registry.
         </p>
         <p>
-          In any object in the <code>credential.credentialSubject</code>
-          that contains a [[URL]], a property named
-          <code>integrity</code> may be included with the integrity
-          information as specified above, with the [[URL]] in the
-          <code>id</code> property. 
+          Any object in the <a>verifiable credential</a>
+          that contains an `id` [[URL]] property MAY be annotated with 
+          integrity information as specified in this section.
         </p>
         <p>
           Any objects for which selective disclosure is desired SHOULD NOT
-          be included as an object in the <code>resourceIntegrity</code>
+          be included as an object in the <code>relatedResource</code>
           array.
         </p>
         <p>
