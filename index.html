@@ -425,20 +425,12 @@ desirable ecosystem characteristics were identified for this specification:
 <!-- requirement list start -->
         <ul>
           <li>
-<a>Credentials</a> represent statements made by an <a>issuer</a>.
-          </li>
-          <li>
 <a>Verifiable credentials</a> represent statements made by an <a>issuer</a> in
 a tamper-evident and privacy-respecting manner.
           </li>
           <li>
-<a>Holders</a> assemble collections of <a>credentials</a> and/or
-<a>verifiable credentials</a> from different <a>issuers</a> into a single
-artifact, a <a>presentation</a>.
-          </li>
-          <li>
-Holders transform <a>presentations</a> into <a>verifiable presentations</a>
-to render them tamper-evident.
+<a>Holders</a> can assemble collections of <a>verifiable credentials</a> from
+different <a>issuers</a> into a single artifact, a <a>verifiable presentation</a>.
           </li>
           <li>
 <a>Issuers</a> can issue <a>verifiable credentials</a> about any <a>subject</a>.
@@ -510,14 +502,12 @@ greater than, less than, equal to, is in set, and so on.
 <a>Issuers</a> can issue revocable <a>verifiable credentials</a>.
           </li>
           <li>
-The processes of cryptographically protecting <a>credentials</a> and
-<a>presentations</a>, and verifying <a>verifiable credentials</a> and
-<a>verifiable presentations</a>, have to be deterministic, bi-directional, and
-lossless. Any verification of a <a>verifiable credential</a> or
-<a>verifiable presentation</a> has to be transformable to the generic data model
-defined in this document in a deterministic process, such that the resulting
-<a>credential</a> or <a>presentation</a> is semantically and syntactically
-equivalent to the original construct, so that it can be processed in an
+The processes of cryptographically protecting and verifying
+<a>verifiable credentials</a> and <a>verifiable presentations</a> have to be
+deterministic, bi-directional, and lossless. Any
+<a>verifiable credential</a> or <a>verifiable presentation</a> has to be
+transformable to the JSON-LD data model defined in this document via a
+deterministic process so that its verification can be processed in an
 interoperable fashion.
           </li>
           <li>
@@ -1379,7 +1369,7 @@ MUST have a <a>type</a> specified.
               <td>
 <code>VerifiablePresentation</code> and, optionally, a more specific
 <a>verifiable presentation</a> <a>type</a>. For example,<br>
-<code>"type": ["VerifiablePresentation", "CredentialManagerPresentation"]</code>
+<code>"type": ["VerifiablePresentation", "ExamplePresentation"]</code>
               </td>
             </tr>
 
@@ -1409,7 +1399,7 @@ A valid <a>credential</a> status <a>type</a>. For example,<br>
               </td>
               <td>
 A valid terms of use <a>type</a>. For example,<br>
-<code>"type": "OdrlPolicy2017"</code>)
+<code>"type": "ExampleTermsPolicy"</code>)
               </td>
             </tr>
 
@@ -1419,7 +1409,7 @@ A valid terms of use <a>type</a>. For example,<br>
               </td>
               <td>
 A valid evidence <a>type</a>. For example,<br>
-<code>"type": "DocumentVerification2018"</code>
+<code>"type": "ExampleEvidence"</code>
               </td>
             </tr>
 
@@ -1893,7 +1883,15 @@ They can be packaged in such a way that the authorship of the data is
 <a>verifiable credentials</a> is a typical use of
 <a>verifiable presentations</a>.
         </p>
-
+        <p>
+<a>Verifiable presentations</a> SHOULD be extremely short-lived, and
+bound to a challenge provided by a <a>verifier</a>. Details for accomplishing
+this depend on the securing mechanism, the transport protocol, and
+<a>verifier</a> policies. Unless additional requirements are defined by the
+particular securing mechanism or embedding protocol, a <a>verifier</a> cannot
+generally assume that the <a>verifiable presentation</a> has any correlation
+with the presented <a>verifiable credentials</a>.
+        </p>
         <p>
 A <a>verifiable presentation</a> is typically composed of the following
 properties:
@@ -1945,7 +1943,7 @@ The example below shows a <a>verifiable presentation</a> that embeds
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
   "id": "urn:uuid:3978344f-8596-4c3a-a978-8fcaba3903c5",
-  "type": ["VerifiablePresentation", "CredentialManagerPresentation"],
+  "type": ["VerifiablePresentation", "ExamplePresentation"],
   <span class="highlight">"verifiableCredential": [{ <span class="comment">...</span> }],
   "proof": [{ <span class="comment">...</span> }]</span>
 }
@@ -2576,6 +2574,125 @@ the proof provided with the <a>verifiable credential</a> is valid.
       </section>
 
       <section>
+        <h2>Integrity of Related Resources</h2>
+        <p>
+When including a link to an external resource in a <a>verifiable credential</a>,
+it is desirable to know whether the resource that is pointed to is the same at
+signing time as it is at verification time. This applies to cases where there is
+an external resource that is remotely retrieved as well as to cases where the
+<a>issuer</a> and/or <a>verifier</a> may have local cached copies of a resource.
+        </p>
+        <p>
+It is also desirable to know that the contents of the JSON-LD context(s) used in
+the <a>verifiable credential</a> are the same when used by both the
+<a>issuer</a> and <a>verifier</a>.
+        </p>
+        <p>
+To validate that a resource referenced by a <a>verifiable credential</a> is the
+same at verification time as it is at issuing time, an implementer MAY include a
+property named <code>relatedResource</code> that stores an array of objects that
+describe additional integrity metadata about each resource referenced by the
+<a>verifiable credential</a>. If <code>relatedResource</code> is present, there
+MUST be an object in the array for each remote resource for each context used in
+the verifiable credential.
+        </p>
+        <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
+The requirement that contexts be listed in `relatedResource` is currently being
+debated in the VCWG. This requirement might be removed in future iterations of
+the specification.
+        </p>
+        <p>
+Each object in the <code>relatedResource</code> array MUST contain the
+following: the [[URL]] to the resource named <code>id</code> and the
+<code>digestSRI</code> information for the resource constructed using the method
+specified in <a href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource
+Integrity</a>.
+        </p>
+        <p class="issue" title="Unification of cryptographic hash expression formats are under discussion">
+The Working Group is currently attempting to determine if cryptographic hash
+expression formats can be unified across all of the VCWG core specifications.
+Candidates for this mechanism include `digestSRI` and `digestMultibase`. There
+are arguments for and against unification that the WG is currently debating.
+        </p>
+There MUST NOT be more than one object in the <code>relatedResource</code> per
+<code>id</code>.
+        </p>
+        <p>
+An object in the <code>relatedResource</code> array MAY contain a property named
+<code>mediaType</code> that indicates the expected media type for the indicated
+<code>resource</code>. If a <code>mediaType</code> is included it SHOULD be a
+valid media type as listed in the
+<a href="https://www.iana.org/assignments/media-types/media-types.xhtml">
+IANA Media Types</a> registry.
+        </p>
+        <p>
+Any object in the <a>verifiable credential</a> that contains an `id` [[URL]]
+property MAY be annotated with integrity information as specified in this
+section by inclusion of <code>digestSRI</code>
+in the object.
+        </p>
+        <p>
+Any objects for which selective disclosure is desired SHOULD NOT be included as
+an object in the <code>relatedResource</code> array.
+        </p>
+        <p>
+Implementers are urged to consult appropriate sources, such as the
+<a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf">
+FIPS 180-4 Secure Hash Standard</a> and the
+<a href="https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF">
+Commercial National Security Algorithm Suite 2.0</a> to ensure that they are
+chosing a current and reliable hash algorithm. At the time of this writing
+`sha384` SHOULD be considered the minimum strength hash algorithm for use by
+implementers.
+        </p>
+        <p class="issue">
+The working group is discussing if we will adopt more aspects of subresource
+integrity as defined in [[SRI]] is adopted into the [[JSON-LD]] specification as
+noted in that specifications <a href="https://www.w3.org/TR/json-ld11/#security">
+current security considerations</a> of that specification, this hash in the VC
+can serve as an additional check towards ensuring that a cached context used
+when issuing the VC matches the remote resource.
+        </p>
+        <p>
+An example of a related resource integrity object referencing JSON-LD contexts.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Usage of the relatedResource property">
+"relatedResource": [{
+  "id": "https://www.w3.org/ns/credentials/v2",
+  "digestSRI":
+    "sha384-lHKDHh0msc6pRx8PhDOMkNtSI8bOfsp4giNbUrw71nXXLf13nTqNJoRp3Nx+ArVK",
+},{
+  "id": "https://www.w3.org/ns/credentials/examples/v2",
+  "digestSRI":
+    "sha384-zNNbQTWCSUSi0bbz7dbua+RcENv7C6FvlmYJ1Y+I727HsPOHdzwELMYO9Mz68M26",
+}]
+        </pre>
+
+        <p>
+An example of an object in a `credentialSubject` that is refering to an
+integrity protected image.
+        </p>
+
+        <pre class="example nohighlight"
+          title="An integrity-protected image that is associated with a credentialSubject">
+"credentialSubject": {
+  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+  "image": {
+    "id": "https://university.example.org/images/58473",
+    "digestSRI":
+      "sha384-ZfAwuJmMgoX3s86L7x9XSPi3AEbiz6S/5SyGHJPCxWHs5NEth/c5S9QoS1zZft+J",
+    "mediaType": "application/svg+xml",
+  },
+  ...
+}
+            </pre>
+          </aside>
+        </p>
+      </section>
+
+      <section>
         <h3>Refreshing</h3>
 
         <p class="issue" title="(AT RISK) Feature depends on demonstration of independent implementations">
@@ -2672,7 +2789,7 @@ the <a>verifier</a> to <code>https://university.example/refresh/3732</code>.
       <section>
         <h3>Terms of Use</h3>
 
-        <p class="issue" title="(AT RISK) Feature depends on demonstration of independent implementations">
+        <p class="issue" data-number="1010" title="(AT RISK) Feature depends on demonstration of independent implementations">
 This feature is at risk and will be removed from the specification if at least
 two independent, interoperable implementations are not demonstrated for a
 single extension type by the end of the Candidate Recommendation Phase.
@@ -2844,7 +2961,7 @@ appropriate section of the Verifiable Credentials Implementation Guidelines
       <section>
         <h3>Evidence</h3>
 
-        <p class="issue" title="(AT RISK) Feature depends on demonstration of independent implementations">
+        <p class="issue" data-number="870" title="(AT RISK) Feature depends on demonstration of independent implementations">
 This feature is at risk and will be removed from the specification if at least
 two independent, interoperable implementations are not demonstrated for a
 single extension type by the end of the Candidate Recommendation Phase. If
@@ -3258,11 +3375,11 @@ reserved property. For more information related to adding `type` information,
 see Section <a href="#types"></a>.
         </p>
         <p class="issue" title="Extension points under consideration by the Working Group">
-          The working group is discussing if additional extension points 
-          will be reserved in <a href="https://www.w3.org/ns/credentials/v2">https://www.w3.org/ns/credentials/v2</a>.
-          <br/>
-          The working group currently plans to only reserve extension points that 
-          have at least a draft specification that is being incubated in a community group.
+The working group is discussing if additional extension points
+will be reserved in <a href="https://www.w3.org/ns/credentials/v2">https://www.w3.org/ns/credentials/v2</a>.
+<br/>
+The working group currently plans to only reserve extension points that
+have at least a draft specification that is being incubated in a community group.
         </p>
 
         <table class="simple">
@@ -4909,41 +5026,56 @@ franchise. Policy information expressed by the <a>issuer</a> in the
     </section>
 
     <section class="appendix informative">
-      <h2>Contexts, Types, and Credential Schemas</h2>
+      <h2>Contexts, Vocabularies, Types, and Credential Schemas</h2>
 
-      <section class="informative">
+      <section class="normative">
         <h3>Base Context</h3>
-          <p>
-The base context, located at <code>https://www.w3.org/ns/credentials/v2</code>
-with a SHA-256 digest of
-<strong><code>ff1fdfa8d3f07547ec149b6652fe3f5a4276b9f0c48344dc29400763ba7b44fa</code></strong>,
-can be used to implement a local cached copy. It is possible to confirm the
-SHA-256 digest by running the following command from a modern Unix command
+
+        <p class="issue" title="(AT RISK) Hash values might change during Candidate Recommendation">
+This section lists cryptographic hash values that might change during the
+Candidate Recommendation phase based on implementer feedback that requires
+the referenced files to be modified.
+        </p>
+        <p>
+Implementations MUST ensure that the base context value, located at
+<code>https://www.w3.org/ns/credentials/v2</code>, matches the following
+SHA-384 digest of the value computed and encoded according to the [[SRI]] definition of `digest`:
+<strong><code>lHKDHh0msc6pRx8PhDOMkNtSI8bOfsp4giNbUrw71nXXLf13nTqNJoRp3Nx+ArVK</code></strong>.
+The base context value matching the digest previously stated can be used to
+implement a local cached copy. It is possible to confirm the
+SHA-384 digest by running the following command from a modern Unix command
 interface line:
-`curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha256 -hex -r`.
-It is strongly advised that all JSON-LD Contexts used in an application utilize
-a similar mechanism to ensure end-to-end security.
-          </p>
-          <p>
+`curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha384 -binary | openssl base64 -A`.
+        </p>
+        <p class="issue" data-number="1177">
+The Working Group is currently discussing what a processor should do if a hash
+value differs from one that is listed in the specification.
+        </p>
+More details regarding this hash encoding method may be found in the <a
+href="https://www.w3.org/TR/SRI/#integrity-metadata">integrity metadata</a>
+section of [[SRI]]. It is strongly advised that all JSON-LD Contexts used in an
+application utilize a similar mechanism to ensure end-to-end security.
+        </p>
+        <p>
 This section serves as a reminder of the importance of ensuring that, when
 verifying <a>verifiable credentials</a> and <a>verifiable presentations</a>, the
 <a>verifier</a> has information that is consistent with what the <a>issuer</a>
 or <a>holder</a> had when securing the <a>credential</a> or <a>presentation</a>.
 This information might include at least:
-          </p>
-          <ol>
-            <li>
+        </p>
+        <ol>
+          <li>
 The contents of the credential itself, which is secured in
 <a>verifiable credentials</a> and <a>verifiable presentations</a> by using
 mechanisms such as [[VC-JWT]] and [[VC-DATA-INTEGRITY]].
-            </li>
-            <li>
+          </li>
+          <li>
 The content in a credential whose meaning depends on a link to an external URL,
 such as a JSON-LD Context, which can be secured by using a local static copy,
 or a cryptographic digest of the file.
-            </li>
-          </ol>
-          <p>
+          </li>
+        </ol>
+        <p>
 Verifiers are warned that other data that is referenced from within a
 credential, such as resources that are linked to via URLs, are not
 cryptographically protected by default. It is considered a best practice to
@@ -4955,9 +5087,118 @@ section of the Verifiable Credential Implementation Guide for further
 information. Ultimately, knowing the cryptographic digest of any linked external
 content enables a <a>verifier</a> to confirm that the content is the same
 as what the <a>issuer</a> or <a>holder</a> intended.
-          </p>
+        </p>
       </section>
 
+      <section class="normative">
+        <h3>Vocabularies</h3>
+
+        <p class="issue" title="(AT RISK) URL values might change during Candidate Recommendation">
+This section lists URL values that might change during the Candidate
+Recommendation phase based on migration of documents to the W3C Technical
+Reports namespace and implementer feedback that requires the referenced URLs to
+be modified.
+        </p>
+
+        <p>
+Implementations MUST ensure that the following vocabulary URLs used in the base
+context ultimately resolve to the following files, which are normative:
+        </p>
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>URL</th>
+              <th>Media Type</th>
+              <th>Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+https://www.w3.org/2018/credentials#
+              </td>
+              <td>
+text/html
+              </td>
+              <td>
+https://www.w3.org/2018/credentials/index.html
+              </td>
+            </tr>
+            <tr>
+              <td>
+https://www.w3.org/2018/credentials#
+              </td>
+              <td>
+application/ld+json
+              </td>
+              <td>
+https://www.w3.org/2018/credentials/index.jsonld
+              </td>
+            </tr>
+            <tr>
+              <td>
+https://schema.org/
+              </td>
+              <td>
+text/html
+              </td>
+              <td>
+https://schema.org/
+              </td>
+            </tr>
+            <tr>
+              <td>
+https://schema.org/
+              </td>
+              <td>
+application/ld+json
+              </td>
+              <td>
+https://schema.org/version/latest/schemaorg-current-https.jsonld
+              </td>
+            </tr>
+            <tr>
+              <td>
+https://w3id.org/security#
+              </td>
+              <td>
+text/html
+              </td>
+              <td>
+https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.html
+              </td>
+            </tr>
+            <tr>
+              <td>
+https://w3id.org/security#
+              </td>
+              <td>
+application/ld+json
+              </td>
+              <td>
+https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="issue" title="w3c.github.io links expected to change">
+The URLs listed above that start with
+`https://w3c.github.io/vc-data-integrity/vocab/security/` are expected to change
+to `https://www.w3.org/ns/security/` or an equally normative and archived
+location under W3C control.
+        </p>
+
+        <p class="issue" title="How to normatively refer to vocabulary files">
+The Working Group is currently discussing how it might want to normatively
+refer to the vocabulary files that are under the control of the Working Group.
+Current options are: inclusion of the files directly into the specification or
+publishing the files in W3C TR space and referring to them by using a
+cryptographic hash.
+        </p>
+
+      </section>
       <section class="informative">
         <h3>Differences between Contexts, Types, and CredentialSchemas</h3>
 
