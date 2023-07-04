@@ -1654,7 +1654,7 @@ when a <a>credential</a> ceases to be valid.
           <dd>
 If present, the value of the <code>validFrom</code> <a>property</a> MUST be
 a string value of an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
-combined <code>date-time</code> string representing the date and time the
+<code>dateTimeStamp</code> string representing the date and time the
 <a>credential</a> becomes valid, which could be a date and time in the future.
 Note that this value represents the earliest point in time
 at which the information associated with the <code>credentialSubject</code>
@@ -1662,12 +1662,14 @@ at which the information associated with the <code>credentialSubject</code>
           </dd>
           <dt><var>validUntil</var></dt>
           <dd>
-  If present, the value of the <code>validUntil</code> <a>property</a> MUST be
-  a string value of an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
-  combined <code>date-time</code> string representing the date and time the
-  <a>credential</a> ceases to be valid, which could be a date and time in the past.
-  Note that this value represents the latest point in time at which the information
-  associated with the <code>credentialSubject</code> <a>property</a> is valid.
+If present, the value of the <code>validUntil</code> <a>property</a> MUST be a
+string value of an
+[<a data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] combined
+<code>dateTimeStamp</code> string representing the date and time the
+<a>credential</a> ceases to be valid, which could be a date and time in the
+past. Note that this value represents the latest point in time at which the
+information associated with the <code>credentialSubject</code> <a>property</a>
+is valid.
           </dd>
         </dl>
 
@@ -1700,6 +1702,69 @@ If <code>validFrom</code> and <code>validUntil</code> are not present, the
 indefinitely. In such cases, the <a>verifiable credential</a> is assumed to be
 valid from the time the <code>verifiable credential</code> was created.
         </p>
+
+        <h4>Representing Time</h4>
+
+        <p>
+When representing time values, implementers are urged to understand that times
+are not implemented in a uniform manner throughout the world. For example:
+        </p>
+
+        <ul>
+          <li>
+The observation of daylight savings time does not start or end on the same day
+and time, if at all, between various regions.
+          </li>
+          <li>
+The adoption of the Gregorian calendar did not happen in a single year, it was
+phased in over many years across various societies.
+          </li>
+          <li>
+Leap seconds might not be taken into account in all software systems, especially
+for dates and times that precede the introduction of the leap second.
+          </li>
+        </ul>
+
+        <p>
+These are just a few examples that illustrate that whether or not a time is seen
+as valid can be based on cultural norms. In other words, some dates and times
+exist for some cultures, while they do not exist for other cultures.
+        </p>
+
+        <p>
+This specification attempts to increase the number of universally recognized
+combinations of dates and times, and reduce the potentials for
+mis-interpretation of time values, by utilizing the
+<code>dateTimeStamp</code> construction first established by the [<a
+data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification. In
+order to reduce mis-interpretations between different cultures, all times are
+specified as offsets against Universal Coordinated Time (UTC).
+        </p>
+
+        <p>
+Implementers that desire to check <code>dateTimeStamp</code> values for validity
+can use the regular expression provided below, which is reproduced from the [<a
+data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification for the
+purposes of convenience. For the avoidance of doubt, the regular expression in
+[[XMLSCHEMA11-2]] is the normative definition. Implementers are advised that not
+all <code>dateTimeStamp</code> values that pass the regular expression below are
+valid moments in time. For example, the regular expression below allows for 31
+days in every month, which allows for leap years, and leap seconds, as well as
+days in places where they do not exist. That said, modern system libraries that
+generate <code>dateTimeStamp</code> are often error-free in their generation of
+valid <code>dateTimeStamp</code> values and thus the regular expression shown
+below is often adequate when processing modern system library-generated dates
+and times.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Regular expression to detect a valid XML Schema 1.1: Part 2 dateTimeStamp">
+-?([1-9][0-9]{3,}|0[0-9]{3})
+-(0[1-9]|1[0-2])
+-(0[1-9]|[12][0-9]|3[01])
+T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))
+(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?
+        </pre>
 
       </section>
 
