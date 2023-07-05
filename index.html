@@ -2030,6 +2030,65 @@ encoding would be determined by the schema.
             </figcaption>
           </figure>
         </section>
+        <section>
+          <h4>Presentations Including Holder Claims</h4>
+          <p>
+In addition to <a>claims</a> from an <a>issuer</a> in the form of
+<a>verifiable credentials</a>, a <a>verifiable presentation</a> MAY include
+<a>claims</a> directly from the <a>holder</a>. These <a>holder</a> <a>claims</a>
+are considered to be self-asserted. If present, these self-asserted
+<a>claims</a> MUST be formatted as a <a>verifiable credential</a> and included
+in the value of the <code>verifiableCredential</code> <a>property</a> of the
+<a>verifiable presentation</a>. These self-asserted claims are considered to be
+secured by the same mechanism that secures the <a>verifiable presentation</a> in
+which they are included.
+          </p>
+          <p>
+A self-asserted <a>verifiable credential</a> that has been included in the value
+of the <code>verifiableCredential</code> <a>property</a> of a
+<a>verifiable presentation</a> MUST include the following properties:
+        </p>
+
+        <dl>
+          <dt><var>type</var></dt>
+          <dd>
+The <code>type</code> <a>property</a> is required. The value MUST be
+<code>VerifiableCredential</code> and <code>SelfAssertedCredential</code>.For
+example,<br>
+<code>"type": ["VerifiableCredential", "SelfAssertedCredential"]</code>
+          </dd>
+          <dt><var>issuer</var></dt>
+          <dd>
+The <code>issuer</code> <a>property</a> is required. The value MUST be identical
+to the <code>holder</code> <a>property</a> of the <a>verifiable presentation</a>.
+          </dd>
+        </dl>
+        <p>
+The example below shows a <a>verifiable presentation</a> that embeds a
+self-asserted <a>verifiable credential</a>.
+        </p>
+
+        <pre class="example nohighlight" title="Verifiable presentation with a self-asserted verifiable credential">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "type": ["VerifiablePresentation", "ExamplePresentation"],
+  "holder": "did:example:12345678",
+  "verifiableCredential": [{
+    "@context": "https://www.w3.org/ns/credentials/v2",
+    "type": ["VerifiableCredential", "SelfAssertedCredential"],
+    "issuer": "did:example:12345678",
+    "credentialSubject": {
+      "favoriteCheese": "Gouda"
+    },
+    { <span class="comment">...</span> }
+  }],
+  "proof": [{ <span class="comment">...</span> }]</span>
+}
+        </pre>
+        </section>
       </section>
     </section>
 
