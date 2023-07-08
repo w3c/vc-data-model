@@ -3679,6 +3679,68 @@ This also applies to media types that allow for transformation into
 media type used to communicate it.
         </p>
 
+        <section>
+          <h3>Media Type Leniency</h3>
+
+          <p>
+At times, developers or systems might utilize incorrect media types to convey
+<a>verifiable credentials</a> or <a>verifiable presentations</a>. Some of the
+reasons for use of incorrect media types include:
+          </p>
+
+          <ul>
+            <li>
+A web server defaults to `text/plain` or `application/octet-stream` when a file
+extension is not available and it cannot determine the media type.
+            </li>
+            <li>
+A developer adds a file extension that leads to a media type that is less
+specific than the content of the file. For example, `.json` could result in a
+media type of `application/json` and `.jsonld` might result in a media type of
+`application/ld+json`.
+            </li>
+            <li>
+An implementer misimplements the media type that is transmitted over a protocol
+for a particular transaction. For example, using `application/json` instead of
+`application/vp+ld+json`.
+            </li>
+          </ul>
+
+          <p>
+Implementers are urged to not raise errors when it is possible to determine the
+intended media type from a payload. For example, if an application is expecting
+an `application/vc+ld+json` payload, but `application/json` or
+`application/ld+json` is received instead, then the application might perform
+the following steps to determine a more accurate media type:
+          </p>
+
+          <ol>
+            <li>
+Parse the payload as a JSON document.
+            </li>
+            <li>
+Ensure that the first element of the `@context` field matches
+`https://www.w3.org/2018/credentials/v2`.
+            </li>
+            <li>
+Assume an `application/vp+ld+json` media type if the JSON document contains a
+top-level `type` field containing a `VerifiablePresentation` element.
+            </li>
+            <li>
+Assume an `application/vc+ld+json` media type if the JSON document contains a
+top-level `type` field containing a `VerifiableCredential` element.
+            </li>
+          </ol>
+
+          <p>
+Implementers are advised to, when possible, use the most accurate media type for
+all payloads defined by this specification. Implementers are also advised to be
+lenient in what they accept if it leads to better system robustness. In other
+words, implementers are to be conservative in what their software produces, but
+liberal in what their applications accept from other systems.
+          </p>
+        </section>
+
       </section>
 
       <section>
