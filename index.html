@@ -789,13 +789,11 @@ family persona, or an incognito persona.
         </p>
 
         <p>
-A <a>verifiable presentation</a> expresses data from one or more
-<a>verifiable credentials</a>, and is packaged in such a way that the
-authorship of the data is <a>verifiable</a>. If <a>verifiable credentials</a>
-are presented directly, they become <a>verifiable presentations</a>. Data
-formats derived from <a>verifiable credentials</a> that are cryptographically
-<a>verifiable</a>, but do not of themselves contain
-<a>verifiable credentials</a>, might also be <a>verifiable presentations</a>.
+A <a>verifiable presentation</a> can express data from multiple
+<a>verifiable credentials</a> and contain arbitrary additional data encoded as
+JSON-LD. They are used by a <a>holder</a> to present <a>claims</a> to a
+<a>verifier</a>. It is also possible to present <a>verifiable credentials</a>
+directly.
         </p>
 
         <p>
@@ -1881,65 +1879,68 @@ status checking.
         <h3>Presentations</h3>
 
         <p>
-<a>Presentations</a> MAY be used to combine and present <a>credentials</a>.
-They can be packaged in such a way that the authorship of the data is
-<a>verifiable</a>. The data in a <a>presentation</a> is often all about the same
-<a>subject</a>, but there is no limit to the number of <a>subjects</a> or
-<a>issuers</a> in the data. The aggregation of information from multiple
-<a>verifiable credentials</a> is a typical use of
-<a>verifiable presentations</a>.
+<a>Verifiable presentations</a> MAY be used to aggregate information from
+multiple <a>verifiable credentials</a>.
         </p>
         <p>
-<a>Verifiable presentations</a> SHOULD be extremely short-lived, and
-bound to a challenge provided by a <a>verifier</a>. Details for accomplishing
-this depend on the securing mechanism, the transport protocol, and
-<a>verifier</a> policies. Unless additional requirements are defined by the
-particular securing mechanism or embedding protocol, a <a>verifier</a> cannot
-generally assume that the <a>verifiable presentation</a> has any correlation
-with the presented <a>verifiable credentials</a>.
+<a>Verifiable presentations</a> SHOULD be extremely short-lived, and bound to a
+challenge provided by a <a>verifier</a>. Details for accomplishing this depend
+on the securing mechanism, the transport protocol, and <a>verifier</a> policies.
+Unless additional requirements are defined by the particular securing mechanism
+or embedding protocol, a <a>verifier</a> cannot generally assume that the
+<a>verifiable presentation</a> has any correlation with the presented
+<a>verifiable credentials</a>.
         </p>
         <p>
-A <a>verifiable presentation</a> is typically composed of the following
-properties:
+The following properties are defined for a <a>verifiable presentation</a>:
         </p>
 
         <dl>
           <dt><var>id</var></dt>
           <dd>
-The <code>id</code> <a>property</a> is optional and MAY be used to provide a
-unique identifier for the <a>presentation</a>. For details related to the use of
-this property, see Section <a href="#identifiers"></a>.
+The <code>id</code> <a>property</a> is optional. It MAY be used to provide a
+unique identifier for the <a>verifiable presentation</a>. If present, the
+normative guidance in Section <a href="#identifiers"></a> MUST be followed.
           </dd>
           <dt><var>type</var></dt>
           <dd>
-The <code>type</code> <a>property</a> is required and expresses the
-type of <a>presentation</a>, such as <code>VerifiablePresentation</code>. For
-details related to the use of this property, see Section <a href="#types"></a>.
+The <code>type</code> <a>property</a> MUST be present. It is used to express the
+type of <a>verifiable presentation</a>. One value of this property MUST be
+<code>VerifiablePresentation</code>, but additional types MAY be included. The
+related normative guidance in Section <a href="#types"></a> MUST be followed.
           </dd>
           <dt><var>verifiableCredential</var></dt>
           <dd>
-If present, the value of the <code>verifiableCredential</code> <a>property</a>
-MUST be constructed from one or more <a>verifiable credentials</a>, or of data
+The <code>verifiableCredential</code> <a>property</a> MAY be present. The value
+MUST be an array of one or more <a>verifiable credentials</a>, or of data
 derived from <a>verifiable credentials</a> in a cryptographically
 <a>verifiable</a> format.
           </dd>
           <dt><var>holder</var></dt>
           <dd>
-If present, the value of the <code>holder</code> <a>property</a>
-is expected to be a <a>URL</a> for the entity that is generating the
-<a>presentation</a>.
+The <a>verifiable presentation</a> MAY include a <code>holder</code>
+<a>property</a>. If present, the value MUST be either a <a>URL</a> or an object
+containing an <code>id</code> <a>property</a>. It is RECOMMENDED that the
+<a>URL</a> in the <code>holder</code> or its <code>id</code> be one which, if
+dereferenced, results in a document containing machine-readable information
+about the <a>holder</a> that can be used to <a>verify</a> the information
+expressed in the <a>verifiable presentation</a>.
+If the <code>holder</code> <a>property> is absent, information about the
+<a>holder</a> is expected to either be obtained via the securing mechanism, or
+to not pertain to the <a>validation</a> of the <a>verifiable presentation</a>.
           </dd>
           <dt><var>proof</var></dt>
           <dd>
-If present, the value of the <code>proof</code> <a>property</a> ensures that
-the <a>presentation</a> is <a>verifiable</a>. For details related to the use of
-this property, see Section <a href="#proofs-signatures"></a>.
+The <a>verifiable presentation</a> MAY include a <code>proof</code> 
+<a>property</a>. If present, the value SHOULD be used to express a securing 
+mechanism such as [[?VC-DATA-INTEGRITY]]. A <a>verifiable presentation</a> MAY
+be secured using an external proof such as [[?VC-JWT]]. For details related to 
+the use of this property, see Section <a href="#securing-verifiable-credentials"></a>.
           </dd>
         </dl>
 
         <p>
-The example below shows a <a>verifiable presentation</a> that embeds
-<a>verifiable credentials</a>.
+The example below shows a <a>verifiable presentation</a>:
         </p>
 
         <pre class="example nohighlight" title="Basic structure of a presentation">
@@ -1971,35 +1972,20 @@ provided in the Securing Verifiable Credentials using JSON Web Tokens
           <p>
 Some zero-knowledge cryptography schemes might enable <a>holders</a> to
 indirectly prove they hold <a>claims</a> from a <a>verifiable credential</a>
-without revealing the <a>verifiable credential</a> itself. In these schemes, a
-<a>claim</a> from a <a>verifiable credential</a> might be used to derive a
-presented value, which is cryptographically asserted such that a <a>verifier</a>
-can trust the value if they trust the <a>issuer</a>.
+without revealing all claims in that <a>verifiable credential</a>. In these schemes,
+a <a>verifiable credential</a> might be used to derive presentable data, which is
+cryptographically asserted such that a <a>verifier</a> can trust the value if
+they trust the <a>issuer</a>.
           </p>
-
           <p>
-For example, a <a>verifiable credential</a> containing the <a>claim</a>
-<code>date of birth</code> might be used to derive the presented value
-<code>over the age of 15</code> in a manner that is cryptographically
-<a>verifiable</a>. That is, a <a>verifier</a> can still trust the derived value
-if they trust the <a>issuer</a>.
+Some selective disclosure schemes can share a subset of <a>claims</a>
+derived from a <a>verifiable credential</a>.
           </p>
 
           <p class="note">
 For an example of a ZKP-style <a>verifiable presentation</a> containing
 derived data instead of directly embedded <a>verifiable credentials</a>, see
 Section <a href="#zero-knowledge-proofs"></a>.
-          </p>
-
-          <p>
-Selective disclosure schemes using zero-knowledge proofs can use <a>claims</a>
-expressed in this model to prove additional statements about those <a>claims</a>.
-For example, a <a>claim</a> specifying a <a>subject's</a> date of birth can be
-used as a predicate to prove the <a>subject's</a> age is within a given range,
-and therefore prove the <a>subject</a> qualifies for age-related discounts,
-without actually revealing the <a>subject's</a> birthdate. The <a>holder</a>
-has the flexibility to use the <a>claim</a> in any way that is applicable to
-the desired <a>verifiable presentation</a>.
           </p>
 
           <figure>
