@@ -2045,28 +2045,41 @@ secured by the same mechanism that secures the <a>verifiable presentation</a> in
 which they are included.
           </p>
           <p>
+A <a>verifiable presentation</a> that includes a self-asserted
+<a>verifiable credential</a> that is only secured using the same mechanism as
+the <a>verifiable presentation</a> MUST include a <code>holder</code>
+<a>property</a>.
+          </p>
+          <p>
 A self-asserted <a>verifiable credential</a> that has been included in the value
 of the <code>verifiableCredential</code> <a>property</a> of a
 <a>verifiable presentation</a> MUST include the following properties:
-        </p>
+          </p>
 
         <dl>
           <dt><var>type</var></dt>
           <dd>
 The <code>type</code> <a>property</a> is required. The value MUST be
-<code>VerifiableCredential</code> and IT IS RECOMMENDED that an additional value
-<code>SelfAssertedCredential</code> be included. For example,<br>
-<code>"type": ["VerifiableCredential", "SelfAssertedCredential"]</code>
+<code>VerifiableCredential</code> and IT IS RECOMMENDED that the additional
+value <code>SelfAssertedCredential</code> be included. Additional types are also
+acceptable. For example,<br>
+<code>"type": ["VerifiableCredential", "SelfAssertedCredential", "ExampleTypeCredential"]</code>
           </dd>
           <dt><var>issuer</var></dt>
           <dd>
-The <code>issuer</code> <a>property</a> is required. The value MUST be identical
-to the <code>holder</code> <a>property</a> of the <a>verifiable presentation</a>.
+The <code>issuer</code> <a>property</a> is required. For self-asserted
+<a>verifiable credentials</a> that are secured using the same mechanism as the
+<a>verifiable presentation</a>, the value MUST be identical to the
+<code>holder</code> <a>property</a> of the <a>verifiable presentation</a>.
+Self-asserted <a>verifiable credentials</a> that use their own securing
+mechanism MUST follow the normative guidance for the <code>issuer</code>
+<a>property</a> in Section <a href="#issuer"></a>.
           </dd>
         </dl>
         <p>
 The example below shows a <a>verifiable presentation</a> that embeds a
-self-asserted <a>verifiable credential</a>.
+self-asserted <a>verifiable credential</a> that is secured using the same
+mechanism as the <a>verifiable presentation</a>.
         </p>
 
         <pre class="example nohighlight" title="Verifiable presentation with a self-asserted verifiable credential">
