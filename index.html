@@ -3619,12 +3619,12 @@ media type used to communicate it.
         </p>
 
         <section>
-          <h3>Media Type Leniency</h3>
+          <h3>Media Type Precision</h3>
 
           <p>
-At times, developers or systems might utilize incorrect media types to convey
+At times, developers or systems might use lower precision media types to convey
 <a>verifiable credentials</a> or <a>verifiable presentations</a>. Some of the
-reasons for use of incorrect media types include:
+reasons for use of lower precision media types include:
           </p>
 
           <ul>
@@ -3639,18 +3639,20 @@ media type of `application/json` and `.jsonld` might result in a media type of
 `application/ld+json`.
             </li>
             <li>
-An implementer misimplements the media type that is transmitted over a protocol
-for a particular transaction. For example, using `application/json` instead of
-`application/vp+ld+json`.
+A protocol requires a less precise media type for a particular transaction; for
+example, `application/json` instead of `application/vp+ld+json`, 
             </li>
           </ul>
 
           <p>
 Implementers are urged to not raise errors when it is possible to determine the
-intended media type from a payload. For example, if an application is expecting
-an `application/vc+ld+json` payload, but `application/json` or
-`application/ld+json` is received instead, then the application might perform
-the following steps to determine a more accurate media type:
+intended media type from a payload, provided that the media type used is
+acceptable in the given protocol. For example, if an application only accepts
+payloads that conform to the rules associated with the `application/vc+ld+json`
+media type, but the payload is tagged with `application/json` or
+`application/ld+json` instead, the application might perform the following
+steps to determine whether the payload also conforms to the higher precision
+media type:
           </p>
 
           <ol>
@@ -3663,20 +3665,29 @@ Ensure that the first element of the `@context` field matches
             </li>
             <li>
 Assume an `application/vp+ld+json` media type if the JSON document contains a
-top-level `type` field containing a `VerifiablePresentation` element.
+top-level `type` field containing a `VerifiablePresentation` element. Additional
+subsequent checks are still expected to be performed (according to this
+specification) to ensure the payload expresses a conformant Verifiable Presentation.
             </li>
             <li>
 Assume an `application/vc+ld+json` media type if the JSON document contains a
-top-level `type` field containing a `VerifiableCredential` element.
+top-level `type` field containing a `VerifiableCredential` element. Additional
+subsequent checks are still expected to be performed (according to this
+specification) to ensure the payload expresses a conformant Verifiable Credential.
             </li>
           </ol>
 
           <p>
-Implementers are advised to, when possible, use the most accurate media type for
-all payloads defined by this specification. Implementers are also advised to be
-lenient in what they accept if it leads to better system robustness. In other
-words, implementers are to be conservative in what their software produces, but
-liberal in what their applications accept from other systems.
+Whenever possible, implementers are advised to use the most precise (the highest
+precision) media type for all payloads defined by this specification.
+Implementers are also advised to recognize that a payload tagged with a lower
+precision media type does not mean that the payload does not meet the rules
+necessary to tag it with a higher precision type. Similarly, a payload tagged
+with a higher precision media type does not mean that the payload will meet the
+requirements associated with the media type. Receivers of payloads, regardless
+of their associated media type, are expected to perform appropriate checks to
+ensure that payloads conform with the requirements for their use in a given
+system.
           </p>
         </section>
 
