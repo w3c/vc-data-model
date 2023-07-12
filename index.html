@@ -2526,13 +2526,20 @@ the <a>verifiable credentials</a> that it issues:
         <dl>
           <dt><var>credentialSchema</var></dt>
           <dd>
+            <p>
 The value of the <code>credentialSchema</code> <a>property</a> MUST be one or
 more data schemas that provide <a>verifiers</a> with enough information to
-determine if the provided data conforms to the provided schema. Each
+determine if the provided data conforms to the provided schema(s). Each
 <code>credentialSchema</code> MUST specify its <code>type</code> (for example,
-<code>CredentialSchema2022</code>), and an <code>id</code> <a>property</a>
+<code>JsonSchema2023</code>), and an <code>id</code> <a>property</a>
 that MUST be a <a>URL</a> identifying the schema file. The precise contents of
 each data schema is determined by the specific type definition.
+            </p>
+            <p>
+If multiple schemas are present, validity is determined according to the
+processing rules outlined by each associated <code>credentialSchema</code> 
+<code>type</code> property.
+            </p>
           </dd>
         </dl>
 
@@ -2544,7 +2551,7 @@ vocabulary using <code>credentialSchema</code> that is locked to some content
 integrity protection mechanism. The <code>credentialSchema</code>
 <a>property</a> also makes it possible to perform syntactic checking on the
 <a>credential</a> and to use <a>verification</a> mechanisms such as JSON Schema
-[[?CREDENTIAL-SCHEMA-2023]] validation.
+[[?VC-JSON-SCHEMA-2023]] validation.
         </p>
 
         <pre class="example nohighlight"
@@ -2555,7 +2562,7 @@ integrity protection mechanism. The <code>credentialSchema</code>
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
   "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "type": ["VerifiableCredential", "ExampleDegreeCredential", "ExamplePersonCredential"],
   "issuer": "https://university.example/issuers/14",
   "validFrom": "2010-01-01T19:23:24Z",
   "credentialSubject": {
@@ -2563,24 +2570,31 @@ integrity protection mechanism. The <code>credentialSchema</code>
     "degree": {
       "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
+    },
+    "alumniOf": {
+      "name": "Example University"
     }
   },
-  <span class="highlight">"credentialSchema": {
+  <span class="highlight">"credentialSchema": [{
     "id": "https://example.org/examples/degree.json",
-    "type": "CredentialSchema2023"
-  }</span>
+    "type": "JsonSchema2023"
+  },
+  {
+    "id": "https://example.org/examples/person.json",
+    "type": "JsonSchema2023"
+  }]</span>
 }
         </pre>
 
         <p>
 In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code>, which points to a [[?CREDENTIAL-SCHEMA-2023]] file that
+<code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA-2023]] file that
 can be used by a <a>verifier</a> to determine if the
 <a>verifiable credential</a> is well formed.
         </p>
 
         <p class="note" >
-For information about linkages to JSON Schema [[?CREDENTIAL-SCHEMA-2023]] or other
+For information about linkages to JSON Schema [[?VC-JSON-SCHEMA-2023]] or other
 optional <a>verification</a> mechanisms, see the Verifiable Credentials
 Implementation Guidelines [[VC-IMP-GUIDE]] document.
         </p>
@@ -2623,6 +2637,7 @@ In the example above, the <a>issuer</a> is specifying a
 data into a format which can then be used by a <a>verifier</a> to determine if
 the proof provided with the <a>verifiable credential</a> is valid.
         </p>
+
 
       </section>
 
@@ -5124,7 +5139,7 @@ If the <code>credentialSchema</code> property is available, the schema of a
 according to the <code>credentialSchema</code> <a>type</a> definition for the
 <a>verifiable credential</a> and the <a>verifier's</a> own schema evaluation
 criteria. For example, if the <code>credentialSchema</code>'s <code>type</code> value is
-[[?CREDENTIAL-SCHEMA-2023]], then a <a>verifier</a> can ensure a credential's
+[[?VC-JSON-SCHEMA-2023]], then a <a>verifier</a> can ensure a credential's
 data is valid against the given JSON Schema.
         </p>
       </section>
@@ -5332,7 +5347,7 @@ cryptographic hash.
         <p>
 The <a>verifiable credential</a> and <a>verifiable presentation</a> data models
 leverage a variety of underlying technologies including [[JSON-LD]] and
-[[?CREDENTIAL-SCHEMA-2023]]. This section will provide a comparison of the
+[[?VC-JSON-SCHEMA-2023]]. This section will provide a comparison of the
 <code>@context</code>, <code>type</code>, and <code>credentialSchema</code>
 properties, and cover some of the more specific use cases where it is possible
 to use these features of the data model.
