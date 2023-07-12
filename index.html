@@ -4854,6 +4854,67 @@ checking the proofs on the <a>verifiable credentials</a>.
       </section>
 
       <section class="informative">
+        <h4>Holder</h4>
+        <p>
+The value associated with the <code>holder</code> <a>property</a> is expected
+to identify an <a>holder</a> that is known to and trusted by the
+<a>verifier</a>.
+        </p>
+        <p>
+Relevant metadata about the <code>holder</code> <a>property</a> is expected
+to be available to the <a>verifier</a>. For example, an <a>holder</a> can
+publish information containing the verification material used to secure
+<a>verifiable presentations</a>. This metadata is relevant when
+checking the proofs on the <a>verifiable presentations</a>.
+        </p>
+        <p>
+See the <a href="https://www.w3.org/TR/vc-data-model/#subject-holder-relationships">Subject-Holder Relationships</a> and
+<a data-cite="VC-USE-CASES#user-tasks"></a> for additional examples related to <a>subject</a> and <a>holder</a>.
+        </p>
+
+        <p class="note">
+`issuer`, `subject` and `holder` are graph nodes, which support multiple representations, 
+making validating that these roles are performed by the same entity potentially complex.
+        </p>
+        <ul>
+          <li>
+<a href="#issuer">Issuer</a> defines expressions of `issuer` in <a>credentials</a>
+          </li>
+          <li>
+<a href="#presentations-0">Presentations</a> defines expressions of `holder` in <a>presentations</a>
+          </li>
+          <li>
+<a href="#credential-subject">credential subject</a> defines expressions of `credentialSubject` in <a>credentials</a>
+          </li>
+        </ul>
+        <p>
+A <a>verifier</a> might believe that a <a>verifiable presentation</a> <a>holder</a> 
+is the same entity as a <a>verifiable credential</a> <a>subject</a>, when the following happens:
+        </p>
+        <ul>
+          <li>
+The <a>verifiable presentation</a> is secured, 
+using a mechanism the <a>verifier</a> trusts to protect the integrity of `vp+ld+json`.
+          </li>
+          <li>
+The <a>verifiable presentation</a> includes one or more <a>verifiable credentials</a> that are secured, 
+using a mechanism the <a>verifier</a> trusts to protect the integrity of `vc+ld+json`.
+          </li>
+          <li>
+            <p>
+When the identifiers for `holder` and `subject` are the same.
+            </p>
+          </li>
+          <li>
+            <p>
+When the verification material used to provide a `proof` on a <a>verifiable presentation</a>,
+is also present in the claims about the credential <a>subject</a>, either by value or by reference.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="informative">
         <h3>Issuance Date</h3>
 
         <p>
