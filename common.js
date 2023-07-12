@@ -118,7 +118,7 @@ var vcwg = {
       href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
       publisher: 'Wikipedia'
     },
-    'CREDENTIAL-SCHEMA-2023': {
+    'VC-JSON-SCHEMA-2023': {
       title: 'Verifiable Credentials JSON Schema 2023',
       href: 'https://www.w3.org/TR/vc-json-schema/',
       authors: ['Gabe Cohen', 'Orie Steele'],
