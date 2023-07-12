@@ -2181,6 +2181,159 @@ self-asserted <a>verifiable credential</a> that holds <a>claims</a> about the
           </pre>
         </section>
       </section>
+
+      <section>
+        <h3>Data Schemas</h3>
+
+        <p>
+Data schemas are useful when enforcing a specific structure on a given
+collection of data. There are at least two types of data schemas that this
+specification considers:
+        </p>
+
+        <ul>
+          <li>
+Data verification schemas, which are used to <a>verify</a> that the structure
+and contents of a <a>credential</a> or <a>verifiable credential</a> conform to a
+published schema.
+          </li>
+          <li>
+Data encoding schemas, which are used to map the contents of a
+<a>verifiable credential</a> to an alternative representation format, such as a
+format used in a zero-knowledge proof.
+          </li>
+        </ul>
+
+        <p>
+It is important to understand that data schemas serve a different purpose from
+the <code>@context</code> property, which neither enforces data structure or
+data syntax, nor enables the definition of arbitrary encodings to alternate
+representation formats.
+        </p>
+        <p>
+This specification defines the following <a>property</a> for the expression of a
+data schema, which can be included by an <a>issuer</a> in
+the <a>verifiable credentials</a> that it issues:
+        </p>
+
+        <dl>
+          <dt><var>credentialSchema</var></dt>
+          <dd>
+            <p>
+The value of the <code>credentialSchema</code> <a>property</a> MUST be one or
+more data schemas that provide <a>verifiers</a> with enough information to
+determine if the provided data conforms to the provided schema(s). Each
+<code>credentialSchema</code> MUST specify its <code>type</code> (for example,
+<code>JsonSchema2023</code>), and an <code>id</code> <a>property</a>
+that MUST be a <a>URL</a> identifying the schema file. The precise contents of
+each data schema is determined by the specific type definition.
+            </p>
+            <p>
+If multiple schemas are present, validity is determined according to the
+processing rules outlined by each associated <code>credentialSchema</code> 
+<code>type</code> property.
+            </p>
+          </dd>
+        </dl>
+
+        <p class="note">
+The <code>credentialSchema</code> <a>property</a> provides an opportunity to
+annotate type definitions or lock them to specific versions of the vocabulary.
+Authors of <a>verifiable credentials</a> can include a static version of their
+vocabulary using <code>credentialSchema</code> that is locked to some content
+integrity protection mechanism. The <code>credentialSchema</code>
+<a>property</a> also makes it possible to perform syntactic checking on the
+<a>credential</a> and to use <a>verification</a> mechanisms such as JSON Schema
+[[?VC-JSON-SCHEMA-2023]] validation.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Usage of the credentialSchema property to perform JSON schema validation">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential", "ExamplePersonCredential"],
+  "issuer": "https://university.example/issuers/14",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    },
+    "alumniOf": {
+      "name": "Example University"
+    }
+  },
+  <span class="highlight">"credentialSchema": [{
+    "id": "https://example.org/examples/degree.json",
+    "type": "JsonSchema2023"
+  },
+  {
+    "id": "https://example.org/examples/alumni.json",
+    "type": "JsonSchema2023"
+  }]</span>
+}
+        </pre>
+
+        <p>
+In the example above, the <a>issuer</a> is specifying a
+<code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA-2023]] file that
+can be used by a <a>verifier</a> to determine if the
+<a>verifiable credential</a> is well formed.
+        </p>
+
+        <p class="note" >
+For information about linkages to JSON Schema [[?VC-JSON-SCHEMA-2023]] or other
+optional <a>verification</a> mechanisms, see the Verifiable Credentials
+Implementation Guidelines [[VC-IMP-GUIDE]] document.
+        </p>
+
+        <p>
+Data schemas can also be used to specify mappings to other formats, such as
+those used to perform zero-knowledge proofs. For more information on using the
+<code>credentialSchema</code> <a>property</a> with zero-knowledge proofs,
+see Section <a href="#zero-knowledge-proofs"></a>.
+        </p>
+
+        <pre class="example nohighlight" title="Usage of the credentialSchema property to perform zero-knowledge validation">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/14",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  <span class="highlight">"credentialSchema": {
+    "id": "https://example.org/examples/degree",
+    "type": "ZkpExampleSchema2018"
+  }</span>,
+  "proof": { <span class="comment">...</span> }
+}
+        </pre>
+
+        <p>
+In the example above, the <a>issuer</a> is specifying a
+<code>credentialSchema</code> pointing to a means of transforming the input
+data into a format which can then be used by a <a>verifier</a> to determine if
+the proof provided with the <a>verifiable credential</a> is valid.
+        </p>
+
+
+      </section>
+
     </section>
 
     <section>
@@ -2582,158 +2735,6 @@ at the URL specified in the <code>@context</code> <a>property</a> by
 JSON-LD implementers seeking interoperability.
           </p>
         </section>
-      </section>
-
-      <section>
-        <h3>Data Schemas</h3>
-
-        <p>
-Data schemas are useful when enforcing a specific structure on a given
-collection of data. There are at least two types of data schemas that this
-specification considers:
-        </p>
-
-        <ul>
-          <li>
-Data verification schemas, which are used to <a>verify</a> that the structure
-and contents of a <a>credential</a> or <a>verifiable credential</a> conform to a
-published schema.
-          </li>
-          <li>
-Data encoding schemas, which are used to map the contents of a
-<a>verifiable credential</a> to an alternative representation format, such as a
-format used in a zero-knowledge proof.
-          </li>
-        </ul>
-
-        <p>
-It is important to understand that data schemas serve a different purpose from
-the <code>@context</code> property, which neither enforces data structure or
-data syntax, nor enables the definition of arbitrary encodings to alternate
-representation formats.
-        </p>
-        <p>
-This specification defines the following <a>property</a> for the expression of a
-data schema, which can be included by an <a>issuer</a> in
-the <a>verifiable credentials</a> that it issues:
-        </p>
-
-        <dl>
-          <dt><var>credentialSchema</var></dt>
-          <dd>
-            <p>
-The value of the <code>credentialSchema</code> <a>property</a> MUST be one or
-more data schemas that provide <a>verifiers</a> with enough information to
-determine if the provided data conforms to the provided schema(s). Each
-<code>credentialSchema</code> MUST specify its <code>type</code> (for example,
-<code>JsonSchema2023</code>), and an <code>id</code> <a>property</a>
-that MUST be a <a>URL</a> identifying the schema file. The precise contents of
-each data schema is determined by the specific type definition.
-            </p>
-            <p>
-If multiple schemas are present, validity is determined according to the
-processing rules outlined by each associated <code>credentialSchema</code>
-<code>type</code> property.
-            </p>
-          </dd>
-        </dl>
-
-        <p class="note">
-The <code>credentialSchema</code> <a>property</a> provides an opportunity to
-annotate type definitions or lock them to specific versions of the vocabulary.
-Authors of <a>verifiable credentials</a> can include a static version of their
-vocabulary using <code>credentialSchema</code> that is locked to some content
-integrity protection mechanism. The <code>credentialSchema</code>
-<a>property</a> also makes it possible to perform syntactic checking on the
-<a>credential</a> and to use <a>verification</a> mechanisms such as JSON Schema
-[[?VC-JSON-SCHEMA-2023]] validation.
-        </p>
-
-        <pre class="example nohighlight"
-          title="Usage of the credentialSchema property to perform JSON schema validation">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential", "ExamplePersonCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    },
-    "alumniOf": {
-      "name": "Example University"
-    }
-  },
-  <span class="highlight">"credentialSchema": [{
-    "id": "https://example.org/examples/degree.json",
-    "type": "JsonSchema2023"
-  },
-  {
-    "id": "https://example.org/examples/person.json",
-    "type": "JsonSchema2023"
-  }]</span>
-}
-        </pre>
-
-        <p>
-In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA-2023]] file that
-can be used by a <a>verifier</a> to determine if the
-<a>verifiable credential</a> is well formed.
-        </p>
-
-        <p class="note" >
-For information about linkages to JSON Schema [[?VC-JSON-SCHEMA-2023]] or other
-optional <a>verification</a> mechanisms, see the Verifiable Credentials
-Implementation Guidelines [[VC-IMP-GUIDE]] document.
-        </p>
-
-        <p>
-Data schemas can also be used to specify mappings to other formats, such as
-those used to perform zero-knowledge proofs. For more information on using the
-<code>credentialSchema</code> <a>property</a> with zero-knowledge proofs,
-see Section <a href="#zero-knowledge-proofs"></a>.
-        </p>
-
-        <pre class="example nohighlight" title="Usage of the credentialSchema property to perform zero-knowledge validation">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/examples/degree",
-    "type": "ZkpExampleSchema2018"
-  }</span>,
-  "proof": { <span class="comment">...</span> }
-}
-        </pre>
-
-        <p>
-In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code> pointing to a means of transforming the input
-data into a format which can then be used by a <a>verifier</a> to determine if
-the proof provided with the <a>verifiable credential</a> is valid.
-        </p>
-
-
       </section>
 
       <section>
