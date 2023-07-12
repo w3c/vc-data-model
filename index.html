@@ -612,12 +612,11 @@ proof mechanism; it requires clearly identifying the mechanism a
         </p>
 
         <p>
-This document also contains examples that contain JSON and JSON-LD content.
-Some of these examples contain characters that are invalid JSON, such as
+This document also contains examples that contain characters that are invalid JSON, such as
 inline comments (<code>//</code>) and the use of ellipsis (<code>...</code>)
 to denote information that adds little value to the example. Implementers are
 cautioned to remove this content if they desire to use the information as
-valid JSON or JSON-LD.
+valid.
         </p>
       </section>
 
@@ -1126,15 +1125,8 @@ in a document containing machine-readable information about the
           </dd>
         </dl>
         <p class="note">
-Though this specification requires that a <code>@context</code> <a>property</a>
-be present, it is not required that the value of the <code>@context</code>
-<a>property</a> be processed using JSON-LD. This is to support processing using
-plain JSON libraries, such as those that might be used when the
-<a>verifiable credential</a> is encoded as a JWT. All libraries or processors
-MUST ensure that the order of the values in the <code>@context</code>
-<a>property</a> is what is expected for the specific application. Libraries or
-processors that support JSON-LD can process the <code>@context</code>
-<a>property</a> using full JSON-LD processing as expected.
+This specification requires for a <code>@context</code> <a>property</a>
+to be present; this property is defined by [[JSON-LD]].
         </p>
         <pre class="example nohighlight" title="Usage of the @context property">
 {
@@ -2383,22 +2375,7 @@ these extension points.
         <section>
           <h4>Semantic Interoperability</h4>
 
-          <p>
-This specification ensures that "plain" JSON and JSON-LD syntaxes are
-semantically compatible without requiring JSON implementations to use a JSON-LD
-processor. To achieve this, the specification imposes the following additional
-requirements on both syntaxes:
-          </p>
-
           <ul>
-            <li>
-JSON-based processors MUST process the <code>@context</code> key, ensuring the
-expected values exist in the expected order for the <a>credential</a> type being
-processed. The order is important because keys used in a <a>credential</a>,
-which are defined using the values associated with <code>@context</code>, are
-defined using a "first defined wins" mechanism and changing the order might
-result in a different key definition "winning".
-            </li>
             <li>
 JSON-LD-based processors MUST produce an error when a JSON-LD context redefines
 any term in the
@@ -2418,17 +2395,6 @@ implementer seeking interoperability. A machine-readable description
 at the URL specified in the <code>@context</code> <a>property</a> by
 JSON-LD implementers seeking interoperability.
           </p>
-
-          <p>
-The requirements above guarantee semantic interoperability between JSON and
-JSON-LD for terms defined by the <code>@context</code> mechanism. While JSON-LD
-processors will use the specific mechanism provided and can verify that all
-terms are correctly specified, JSON-based processors implicitly accept the same
-set of terms without testing that they are correct. In other words, the context
-in which the data exchange happens is explicitly stated for both JSON and
-JSON-LD by using the same mechanism. With respect to JSON-based processors, this
-is achieved in a lightweight manner, without having to use JSON-LD processing
-libraries.
         </section>
       </section>
 
@@ -5220,11 +5186,9 @@ verifiers will request a <a>verifiable credential</a> of a specific subtype, the
 omitting the subtype value could make it more difficult for verifiers to inform
 the holder which <a>verifiable credential</a> they require. When a <a>verifiable
 credential</a> has multiple subtypes, listing all of them in the <code>type</code>
-property is sensible. While the semantics are the same in both a [[JSON]] and
-[[JSON-LD]] representation, the usage of the <code>type</code> property in a
-[[JSON-LD]] representation of a <a>verifiable credential</a> is able to enforce the semantics of the
-<a>verifiable credential</a> better than a [[JSON]] representation of the same
-credential because the machine is able to check the semantics. With [[JSON-LD]],
+property is sensible. The usage of the <code>type</code> property in a
+[[JSON-LD]] representation of a <a>verifiable credential</a> enables to enforce the semantics of the
+<a>verifiable credential</a> because the machine is able to check the semantics. With [[JSON-LD]],
 the technology is not only describing the categorization of the set of claims,
 the technology is also conveying the structure and semantics of the sub-graph of
 the properties in the graph. In [[JSON-LD]], this represents the type of the node
@@ -5236,12 +5200,10 @@ credential</a> will use the <code>type</code> property on many objects in the
         <p>
 The primary purpose of the <code>@context</code> property, from a [[JSON-LD]]
 perspective, is to convey the meaning of the data and term definitions of the
-data in a <a>verifiable credential</a>, in a machine readable way. When encoding a pure
-[[JSON]] representation, the <code>@context</code> property remains mandatory and
-provides some basic support for global semantics. The <code>@context</code>
+data in a <a>verifiable credential</a>, in a machine readable way. The <code>@context</code>
 property is used to map the globally unique URLs for properties in <a>verifiable
 credentials</a> and <a>verifiable presentations</a> into short-form alias names,
-making both the [[JSON]] and [[JSON-LD]] representations more human-friendly
+making [[JSON-LD]] representations more human-friendly
 to read. From a [[JSON-LD]] perspective, this mapping also allows the data in
 a <a>credential</a> to be modeled in a network of machine-readable data, by
 enhancing how the data in the <a>verifiable credential</a> or <a>verifiable
