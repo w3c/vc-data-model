@@ -1706,21 +1706,22 @@ valid from the time the <code>verifiable credential</code> was created.
         <h4>Representing Time</h4>
 
         <p>
-When representing time values, implementers are urged to understand that times
-are not implemented in a uniform manner throughout the world. For example:
+Implementers are urged to understand that representing and processing time
+values is not as straight-forward as it might seem and have a variety of
+idiosyncrasies that are not immediately obvious nor uniformly observed in
+different regions of the world. For example:
         </p>
 
         <ul>
           <li>
-When processing Daylight Saving/Summer Time, it is important to understand that
-1) it is not observed in all regions, 2) it does not necessarily begin or end on the
-same day or at the same time of day, and 3) the amount or direction of the
-adjustment does not always match other similar regions.
-and time, if at all, between various regions.
+Calendaring systems other than the Gregorian calendar are actively used by
+various regions.
           </li>
           <li>
-Calendaring systems other than the Gregorian calendar are actively used by
-various cultures.
+When processing Daylight Saving/Summer Time, it is important to understand that
+1) it is not observed in all regions, 2) it does not necessarily begin or end on
+the same day or at the same time of day, and 3) the amount or direction of the
+adjustment does not always match other similar regions.
           </li>
           <li>
 Leap seconds might not be taken into account in all software systems, especially
@@ -1729,14 +1730,18 @@ seconds can affects highly sensitive systems that depend on the exact
 millisecond offset from the epoch. However, note that for most applications the
 only moment in time that is affected is the one second period of the leap second
 itself. That is, the moment after the most recent leap second can always be
-represented as something equivalent to `2017-01-01T00:00:00Z`, regardless of
-whether the system in question understands leap seconds.
+represented as the first moment of the next day (for example,
+`2023-01-01T00:00:00Z`), regardless of whether the system in question
+understands leap seconds.
           </li>
         </ul>
 
         <p>
-These are just a few examples that illustrate that some wall time values can
-exist in one region, but not exist in another region.
+These are just a few examples that illustrate that the actual time of day, as
+would be seen on a clock on the wall, can exist in one region but not exist in
+another region. For this reason, implementers are urged to use time values
+that are more universal, such as values anchored to the `Z` time zone over
+values that are affected by Daylight Saving/Summer Time.
         </p>
 
         <p>
@@ -1754,7 +1759,7 @@ Time zone definitions are occasionally changed by their governing body. When
 replacing or issuing new <a>verifiable credentials</a>, implementers are advised
 to ensure that changes to local time zone rules do not result in unexpected gaps
 in validity. For example, consider the zone `America/Los_Angeles`, which has
-a raw offset of UTC-8 and has voted to stop observing daylight savings time in
+a raw offset of UTC-8 and had voted to stop observing daylight savings time in
 the year 2024. A given <a>verifiable credential</a> that had a `validUtil`
 value of `2024-07-12T12:00:00-07:00`, might be re-issued to have a
 `validFrom` value of `2024-07-12T12:00:00-08:00`, which would create a gap of
