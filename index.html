@@ -1712,9 +1712,9 @@ are not implemented in a uniform manner throughout the world. For example:
 
         <ul>
           <li>
-When processing Daylight Saving/Summer Time, it is important to understand that 
-1) it is not observed in all regions, 2) it does not necessarily begin or end on the 
-same day or at the same time of day, and 3) the amount or direction of the 
+When processing Daylight Saving/Summer Time, it is important to understand that
+1) it is not observed in all regions, 2) it does not necessarily begin or end on the
+same day or at the same time of day, and 3) the amount or direction of the
 adjustment does not always match other similar regions.
 and time, if at all, between various regions.
           </li>
@@ -1743,6 +1743,18 @@ misinterpretation of time values, by utilizing the
 data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification. In
 order to reduce misinterpretations between different regions, all times MUST be
 specified as offsets against Universal Coordinated Time (UTC).
+        </p>
+
+        <p>
+Time zone definitions are occasionally changed by their governing body. When
+replacing or issuing new <a>verifiable credentials</a>, implementers are advised
+to ensure that changes to local time zone rules do not result in unexpected gaps
+in validity. For example, consider the zone `America/Los_Angeles`, which has
+a raw offset of UTC-8 and has voted to stop observing daylight savings time in
+the year 2024. A given <a>verifiable credential</a> that had a `validUtil`
+value of `2024-07-12T12:00:00-07:00`, might be re-issued to have a
+`validFrom` value of `2024-07-12T12:00:00-08:00`, which would create a gap of
+an hour where the <a>verifiable credential</a> would not be valid.
         </p>
 
         <p>
