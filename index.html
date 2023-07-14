@@ -3952,6 +3952,69 @@ system.
           </p>
         </section>
 
+        <section>
+          <h2>JSON Processing</h2>
+
+          <p>
+While the base media types for this specification are JSON-LD documents, JSON-LD
+processing is not required to be performed in a variety of scenarios. These
+scenarios include, but are not limited to:
+          </p>
+
+          <ul>
+            <li>
+When using the JOSE or COSE specifications to secure a
+<a>verifiable credential</a> or <a>verifiable presentation</a>.
+            </li>
+            <li>
+When performing JSON Schema validation.
+            </li>
+            <li>
+When serializing or deserializing <a>verifiable credentials</a> or
+<a>verifiable presentations</a> into databases that index their contents.
+            </li>
+            <li>
+When operating on <a>verifiable credentials</a> or <a>verifiable
+presentations</a> in a software application after verification or validation
+is performed.
+            </li>
+            <li>
+When an application chooses to process the media type using the `+json`
+structured media type suffix.
+            </li>
+          </ul>
+
+          <p>
+That is, pure JSON processing is allowed as long as the document being
+consumed or produced is a <a>conforming document</a>. If pure JSON processing
+is desired, an implementer is advised to follow the following rule:
+          </p>
+
+          <ul>
+            <li>
+Ensure that all values associated with a `@context` property are in the
+expected order, and the contents of the context files match known good
+cryptographic hashes for each file.
+            </li>
+          </ul>
+
+          <p>
+Using static context files and a JSON Schema to ensure proper URL values and
+order is one acceptable approach when implementing the rule above.
+          </p>
+
+          <p>
+The rule above guarantees semantic interoperability between JSON and JSON-LD for
+terms defined by the `@context` mechanism. While JSON-LD processors will use the
+specific mechanism provided and can verify that all terms are correctly
+specified, JSON-based processors implicitly accept the same set of terms without
+testing that they are correct. In other words, the context in which the data
+exchange happens is explicitly stated for both JSON and JSON-LD by using the
+same mechanism. With respect to JSON-based processors, this is achieved in a
+lightweight manner, without having to use JSON-LD processing libraries.
+          </p>
+
+        </section>
       </section>
 
       <section>
