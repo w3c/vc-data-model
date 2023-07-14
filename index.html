@@ -2059,29 +2059,24 @@ the <a>verifiable presentation</a> MUST include a <code>holder</code>
 <a>property</a>.
           </p>
           <p>
-A self-asserted <a>verifiable credential</a> that has been included in the value
-of the <code>verifiableCredential</code> <a>property</a> of a
-<a>verifiable presentation</a> MUST include the following properties:
+All of the normative requirements defined for <a>verifiable credentials</a>
+apply to self-asserted <a>verifiable credentials</a>. Some additional
+considerations follow:
           </p>
 
         <dl>
           <dt><var>type</var></dt>
           <dd>
-The <code>type</code> <a>property</a> is required. One value MUST be
-<code>VerifiableCredential</code>, and it is RECOMMENDED that another
-value be <code>SelfAssertedCredential</code>. Additional types MAY also
-be included. For example,<br>
+It is RECOMMENDED that <code>SelfAssertedCredential</code> be included as an
+additional <code>type</code> value. For example,<br>
 <code>"type": ["VerifiableCredential", "SelfAssertedCredential", "ExampleTypeCredential"]</code>
           </dd>
           <dt><var>issuer</var></dt>
           <dd>
-The <code>issuer</code> <a>property</a> is required. For self-asserted
-<a>verifiable credentials</a> that are secured using the same mechanism as the
-<a>verifiable presentation</a>, the value MUST be identical to the
-<code>holder</code> <a>property</a> of the <a>verifiable presentation</a>.
-Self-asserted <a>verifiable credentials</a> that use their own securing
-mechanism MUST follow the normative guidance for the <code>issuer</code>
-<a>property</a> in Section <a href="#issuer"></a>.
+For self-asserted <a>verifiable credentials</a> that are secured using the same
+mechanism as the <a>verifiable presentation</a>, the value of the
+<code>issuer</code> <a>property</a> MUST be identical to the <code>holder</code>
+<a>property</a> of the <a>verifiable presentation</a>.
           </dd>
         </dl>
         <p>
@@ -2104,6 +2099,35 @@ mechanism as the <a>verifiable presentation</a>.
     "issuer": "did:example:12345678",
     "credentialSubject": {
       "favoriteCheese": "Gouda"
+    },
+    { <span class="comment">...</span> }
+  }],
+  "proof": [{ <span class="comment">...</span> }]</span>
+}
+        </pre>
+                <p>
+The example below shows a <a>verifiable presentation</a> that embeds a
+self-asserted <a>verifiable credential</a> that holds <a>claims</a> about the
+<a>verifiable presentation</a>. It is secured using the same mechanism as the
+<a>verifiable presentation</a>.
+        </p>
+
+        <pre class="example nohighlight" title="Verifiable presentation with a self-asserted verifiable credential about the verifiable presentation">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "type": ["VerifiablePresentation", "ExamplePresentation"],
+  <span class="highlight">"id": "http://example.com/presentation/5223"</span>,
+  "holder": "did:example:12345678",
+  "verifiableCredential": [{
+    "@context": "https://www.w3.org/ns/credentials/v2",
+    "type": ["VerifiableCredential", "ExampleTimeLimitCredential"],
+    "issuer": "did:example:12345678",
+    "credentialSubject": {
+      <span class="highlight">"id": "http://example.com/presentation/5223"</span>,
+      "validUntil": "2024-01-01T19:23:24Z"
     },
     { <span class="comment">...</span> }
   }],
