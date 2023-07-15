@@ -3625,6 +3625,58 @@ reserved extension points SHOULD be treated as experimental.
         </p>
 
       </section>
+
+      <section class="normative">
+        <h3>Ecosystem Compatibility</h3>
+
+        <p>
+There are a number of digital credential formats that do not natively use the
+data model provided in this document, but are aligned with a number of concepts
+in this specification. At the time of publication, examples of these digital
+credential formats include pure JSON Web Tokens (JWTs), CBOR Web Tokens (CWTs),
+ISO-18013-5 (mDLs), and Authentic Chained Data Containers (ACDCs).
+        </p>
+
+        <p>
+If conceptually aligned digital credential formats can be transformed to the
+data model according to the rules provided in this section, they are considered
+<em>"compatible with the Verifiable Credentials ecosystem"</em>, and the result
+of the transformation, which is a <a>conforming document</a>, is a
+<a>verifiable credential</a>. Specifications that contain transformations to the
+data model described by this specification:
+        </p>
+
+        <ul>
+          <li>
+MUST identify if the transformation to this data model is uni-directional or
+bi-directional.
+          </li>
+          <li>
+MUST preserve the `@context` values when performing bi-directional
+transformation.
+          </li>
+          <li>
+MUST result in a <a>conforming document</a>.
+          </li>
+          <li>
+MUST specify a media type for the input document, which will be transformed into
+a <a>conforming document</a>.
+          </li>
+          <li>
+SHOULD provide a test suite that demonstrates that the transformation algorithm
+specified results in a <a>conforming document</a>.
+          </li>
+          <li>
+SHOULD ensure that all semantics utilized in the transformed
+<a>conforming document</a> follow best practices for Linked Data. See
+Section <a href="#getting-started"></a>, Section
+<a href="#extensibility"></a>, and Linked Data Best Practices [[?LD-BP]]
+for additional guidance.
+          </li>
+        </ul>
+
+      </section>
+
     </section>
 
     <section>
