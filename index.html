@@ -2085,6 +2085,101 @@ encoding would be determined by the schema.
             </figcaption>
           </figure>
         </section>
+        <section>
+          <h4>Presentations Including Holder Claims</h4>
+          <p>
+A <a>holder</a> MAY use the <code>verifiableCredential</code> <a>property</a> in
+a <a>verifiable presentation</a> to include <a>verifiable credentials</a> from
+any <a>issuer</a>, including themselves. When the <a>issuer</a> of a
+<a>verifiable credential</a> is the <a>holder</a>, the <a>claims</a> in that
+<a>verifiable credential</a> are considered to be <em>self-asserted</em>.
+Such self-asserted claims can be secured by the same mechanism that secures
+the <a>verifiable presentation</a> in which they are included or by any
+mechanism usable for other <a>verifiable credentials</a>.
+          </p>
+          <p>
+The <a>subject(s)</a> of these self-asserted <a>claims</a> are not limited, so
+these <a>claims</a> can include statements about the <a>holder</a>, one of the
+other included <a>verifiable credentials</a>, or even the <a>verifiable
+presentation</a> in which the self-asserted <a>verifiable credential</a> is
+included. In each case, the <code>id</code> <a>property</a>
+is used to identify the specific <a>subject</a>, in the object where the
+<a>claims</a> about it are made, just as it is done in
+<a>verifiable credentials</a> that are not self-asserted.
+          </p>
+          <p>
+A <a>verifiable presentation</a> that includes a self-asserted
+<a>verifiable credential</a> that is only secured using the same mechanism as
+the <a>verifiable presentation</a> MUST include a <code>holder</code>
+<a>property</a>.
+          </p>
+          <p>
+All of the normative requirements defined for <a>verifiable credentials</a>
+apply to self-asserted <a>verifiable credentials</a>.
+          </p>
+          <p>
+When a self-asserted <a>verifiable credential</a> is secured using the same
+mechanism as the <a>verifiable presentation</a>, the value of the
+<code>issuer</code> <a>property</a> of the <a>verifiable credential</a>
+MUST be identical to the <code>holder</code> <a>property</a> of the
+<a>verifiable presentation</a>.
+          </p>
+          <p>
+The example below shows a <a>verifiable presentation</a> that embeds a
+self-asserted <a>verifiable credential</a> that is secured using the same
+mechanism as the <a>verifiable presentation</a>.
+          </p>
+
+          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "type": ["VerifiablePresentation", "ExamplePresentation"],
+  "holder": "did:example:12345678",
+  "verifiableCredential": [{
+    "@context": "https://www.w3.org/ns/credentials/v2",
+    "type": ["VerifiableCredential", "ExampleFoodPreferenceCredential"],
+    "issuer": "did:example:12345678",
+    "credentialSubject": {
+      "favoriteCheese": "Gouda"
+    },
+    { <span class="comment">...</span> }
+  }],
+  "proof": [{ <span class="comment">...</span> }]</span>
+}
+          </pre>
+          <p>
+The example below shows a <a>verifiable presentation</a> that embeds a
+self-asserted <a>verifiable credential</a> that holds <a>claims</a> about the
+<a>verifiable presentation</a>. It is secured using the same mechanism as the
+<a>verifiable presentation</a>.
+          </p>
+
+          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential about the verifiable presentation">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "type": ["VerifiablePresentation", "ExamplePresentation"],
+  <span class="highlight">"id": "urn:uuid:313801ba-24b7-11ee-be02-ff560265cf9b"</span>,
+  "holder": "did:example:12345678",
+  "verifiableCredential": [{
+    "@context": "https://www.w3.org/ns/credentials/v2",
+    "type": ["VerifiableCredential", "ExampleAssertCredential"],
+    "issuer": "did:example:12345678",
+    "credentialSubject": {
+      <span class="highlight">"id": "urn:uuid:313801ba-24b7-11ee-be02-ff560265cf9b"</span>,
+      "assertion": "This VP is submitted by the subject as evidence of a legal right to drive"
+    },
+    { <span class="comment">...</span> }
+  }],
+  "proof": [{ <span class="comment">...</span> }]</span>
+}
+          </pre>
+        </section>
       </section>
     </section>
 
