@@ -3,30 +3,19 @@ The following terms are used to describe concepts in this specification.
 </p>
 
 <dl class="termlist">
-  <dt><dfn data-lt="author|authors|authored|author's|author(s)|authoring">author</dfn></dt>
-  <dd>
-A role that a <a>party</a> performs as it creates data, such as a <a>claim</a>, a <a>verifiable credential</a>,
-a request to present <a>presentation</a>, a <a>verifiable presentation</a>, etc. An author may include a proof of
-its authorship to such data so as to make it <a>verifiable</a>.
-Thus,
-<ul>
-  <li><a>issuers</a> typically author <a>claims</a> and use them to author <a>verifiable credentials</a>.</li>
-  <li><a>holders</a> typically author <a>verifiable presentations</a> (and <a>claims</a> that they put in a presentation that do not come from a <a>verifiable credential</a>.</li>
-  <li><a>verifiers</a> typically author presentation requests.</li>
-</ul>
-  </dd>
   <dt><dfn data-lt="claims">claim</dfn></dt>
   <dd>
 A digital representation of an assertion made about an <a>entity</a> by a specific <a>party</a>.
 The entity about which the assertion is made is called the <a>subject</a> of the claim. 
-The <a>party</a> that makes the assertion is referred to as the <a>author</a> of the claim.
-The meaning of the claim (its semantics) is determined by its <a>author</a>.
-Different <a>authors</a> can reuse the same semantics for claims through the
-use of author-independent, shared vocabularies.
+The meaning of the claim (its semantics) is determined by its author.
+Claims can be authored by <a>issuers</a>, e.g., to construct a <a>verifiable credential</a> with, or 
+by <a>holders</a>, e.g., to include in a <a>verifiable presentation</a>.
+Different authors can reuse the same semantics for claims through the use of shared vocabularies.
   </dd>
   <dt><dfn data-lt="credential|credentials">credential</dfn></dt>
   <dd>
-A set of one or more <a>claims</a> <a>authored</a> by a single <a>party</a>, that is constructed for the purpose of transferring it to some other <a>party</a>. 
+A set of one or more <a>claims</a> created by a single <a>party</a>,
+that is constructed for the purpose of transferring it to some other <a>party</a>. 
 The <a>claims</a> in a <a>verifiable credential</a> can be about different <a>subjects</a>.
   </dd>
   <dt><dfn>data minimization</dfn></dt>
@@ -79,10 +68,11 @@ to other <a>subjects</a> or data.
   <dt><dfn data-lt="holders|holder's|holders'">holder</dfn></dt>
   <dd>
 A role a <a>party</a> might perform by possessing one or more
-<a>verifiable credentials</a> and generating <a>verifiable presentations</a> from them.
-A holder is usually, but not always, a <a>subject</a> of the <a>verifiable
-credentials</a> they are holding. Holders store their <a>credentials</a> in
-<a>credential repositories</a>.
+<a>verifiable credentials</a> and generating <a>verifiable presentations</a>,
+both from such <a>verifiable credentials</a> and <a>claims</a> it authors itself.
+A holder is usually, but not always, the <a>subject</a> of a <a>claim</a> within
+the <a>verifiable credentials</a> they are holding.
+Holders store their <a>credentials</a> in <a>credential repositories</a>.
   </dd>
   <dt><dfn class="lint-ignore"
            data-lt="identities|identity's">identity</dfn></dt>
@@ -111,17 +101,18 @@ concept into two distinct concepts: the <a>issuer</a> and the <a>holder</a>.
   <dt><dfn data-lt="issuers|issuer's|issuer(s)|issuing|issued">issuer</dfn></dt>
   <dd>
 A role a <a>party</a> can perform as it constructs a <a>verifiable credential</a> 
-from a set of <a>claims</a> it has <a>authored</a>, including metadata and proofs,
+from a set of <a>claims</a> it has authored, including metadata and proofs,
 typically for the purpose of transferring the <a>verifiable credential</a> to 
 a <a>holder</a>.
   </dd>
   <dt><dfn data-lt="party|parties|party's">party</dfn></dt>
 An <a>entity</a> that has 'a mind of its own', which means, among other things, that it
 <ul>
-  <li>creates (in other words, <a>authors</a>) data, including <a>identifiers</a>, <a>claims</a>, and <a>verifiable credentials</a></li>
-  <li>decides on the semantics of all data that it <a>authors</a> (i.e., what the data means)</li>
+  <li>creates  data, including <a>identifiers</a>, <a>claims</a>, and <a>verifiable credentials</a></li>
+  <li>decides on the semantics of all such data (i.e., what the data means)</li>
   <li>gathers, stores, processes, and disseminates data</li>
-  <li>manages its own logic, deciding what is, and what is not, true, valid, trustworthy, what to reuse (e.g., in terms of shared vocabularies and contexts that other <a>parties</a> have produced), etc.</li>
+  <li>manages its own logic, deciding what is, and what is not, true, valid, trustworthy, what to reuse
+     (e.g., in terms of shared vocabularies and contexts that other <a>parties</a> have produced), etc.</li>
 </ul>
 Typical examples include people and organizations.
   </dd>
@@ -198,9 +189,11 @@ of <a>claims</a> encoded in the credential.</a>.
   </dd>
   <dt><dfn data-lt="verifier|verifiers|verifier's|credential verifiers|credential verifier's">verifier</dfn></dt>
   <dd>
-A role a <a>party</a> performs by receiving one or more
-<a>verifiable credentials</a>, optionally inside a
-<a>verifiable presentation</a> for processing. Other specifications might refer
+A role a <a>party</a> performs by requesting for, and receiving one or more
+<a>verifiable credentials</a> that are authored by <a>parties</a> that it trusts,
+so that they can reliably be processed for the purpose(s) they have been requested.
+The <a>verifiable credentials</a> may be received within a
+<a>verifiable presentation</a>. Other specifications might refer
 to this concept as a <dfn data-lt="relying parties">relying party</dfn>.
   </dd>
   <dt><dfn data-lt="URL|URLs">URL</dfn></dt>
