@@ -2230,7 +2230,7 @@ each data schema is determined by the specific type definition.
             </p>
             <p>
 If multiple schemas are present, validity is determined according to the
-processing rules outlined by each associated <code>credentialSchema</code> 
+processing rules outlined by each associated <code>credentialSchema</code>
 <code>type</code> property.
             </p>
           </dd>
@@ -3556,6 +3556,26 @@ have at least a draft specification that is being incubated in a community group
 
           <tbody>
             <tr>
+              <td>`confidenceMethod`</td>
+              <td>
+A property used for specifying one or more methods that a verifier
+might use to increase their confidence that the value of an attribute in or of
+a verifiable credential or verifiable presentation is accurate, including but not
+limited to attributes such as `initialRecipient` (a/k/a `issuee`), `presenter`,
+`authorizedPresenter`, `holder`, etc.
+The associated vocabulary URL MUST be
+`https://www.w3.org/2018/credentials#confidenceMethod`.
+                <p class="issue" title="(AT RISK) Reservation depends on implementations">
+This property reservation might be deleted in favor of an existing section
+in the specification if at least one specification with two independent
+implementations are demonstrated by the end of the Candidate Recommendation
+Phase. If that does not occur, this reservation will remain, but the existing
+section in the specification will be removed.
+See <a href="https://w3c-ccg.github.io/confidence-method-spec/">Verifiable Credential Confidence Methods</a>.
+                </p>
+              </td>
+            </tr>
+            <tr>
               <td>`evidence`</td>
               <td>
 A property used for specifying the evidence that was presented in order to
@@ -3588,13 +3608,14 @@ section in the specification will be removed.
             <tr>
               <td>`renderMethod`</td>
               <td>
-A property used for specifying how to render a credential into a visual,
+A property used for specifying one or more methods to render a credential into a visual,
 auditory, or haptic format. The associated vocabulary URL MUST be
 `https://www.w3.org/2018/credentials#renderMethod`.
                 <p class="issue" title="(AT RISK) Reservation depends on implementations">
 This reserved property is at risk and will be removed from the
 specification if at least one specification with two independent implementations
 are not demonstrated by the end of the Candidate Recommendation Phase.
+See <a href="https://w3c-ccg.github.io/vc-render-method/">Verifiable Credential Rendering Methods</a>.
                 </p>
               </td>
             </tr>
@@ -3625,6 +3646,82 @@ reserved extension points SHOULD be treated as experimental.
         </p>
 
       </section>
+
+      <section class="normative">
+        <h3>Ecosystem Compatibility</h3>
+
+        <p>
+There are a number of digital credential formats that do not natively use the
+data model provided in this document, but are aligned with a number of concepts
+in this specification. At the time of publication, examples of these digital
+credential formats include
+<a href="https://www.rfc-editor.org/rfc/rfc7519.html">
+JSON Web Tokens</a> (JWTs),
+<a href="https://www.rfc-editor.org/rfc/rfc8392.html">
+CBOR Web Tokens</a> (CWTs),
+<a href="https://www.iso.org/standard/69084.html">ISO-18013-5:2021</a>
+(mDLs),
+<a href="https://hyperledger.github.io/anoncreds-spec/">
+AnonCreds</a>,
+<a href="https://www.ietf.org/archive/id/draft-mcnally-envelope-02.html">
+Gordian Envelopes</a>, and
+<a href="https://www.ietf.org/archive/id/draft-ssmith-acdc-02.html">
+Authentic Chained Data Containers</a> (ACDCs).
+        </p>
+
+        <p>
+If conceptually aligned digital credential formats can be transformed into a
+<a>conforming document</a> according to the rules provided in this section, they
+are considered <em>"compatible with the W3C Verifiable Credentials ecosystem"</em>.
+A <a>conforming document</a> is either a <a>verifiable credential</a> serialized
+as the `application/vc+ld+json` media type or a <a>verifiable presentation</a>
+serialized as the `application/vp+ld+json` media type. Specifications that
+describe how to perform transformations that enable compatibility with
+the Verifiable Credentials ecosystem:
+        </p>
+
+        <ul>
+          <li>
+MUST identify whether the transformation to this data model is one-way-only or
+round-trippable.
+          </li>
+          <li>
+MUST preserve the `@context` values when performing round-trippable
+transformation.
+          </li>
+          <li>
+MUST result in a <a>conforming document</a> when transforming to the data
+model described by this specification.
+          </li>
+          <li>
+MUST specify a registered media type for the input document.
+          </li>
+          <li>
+SHOULD provide a test suite that demonstrates that the specified transformation
+algorithm to the data model in this specification results in
+a <a>conforming document</a>.
+          </li>
+          <li>
+SHOULD ensure that all semantics utilized in the transformed
+<a>conforming document</a> follow best practices for Linked Data. See
+Section <a href="#getting-started"></a>, Section
+<a href="#extensibility"></a>, and Linked Data Best Practices [[?LD-BP]]
+for additional guidance.
+          </li>
+        </ul>
+
+        <p class="note" title="What constitutes a verifiable credential?">
+Readers are advised that a digital credential is only considered
+compatible with the W3C Verifiable Credentials ecosystem if it is a
+<a>conforming document</a> and it utilizes at least one securing mechanism, as
+described by their respective requirements in this specification. While some communities might call some digital
+credential formats that are not <a>conforming documents</a>
+"verifiable credentials", doing so does NOT make that digital credential
+compliant to this specification.
+        </p>
+
+      </section>
+
     </section>
 
     <section>
@@ -3855,6 +3952,78 @@ system.
           </p>
         </section>
 
+        <section class="informative">
+          <h2>JSON Processing</h2>
+
+          <p>
+While the media types describing conforming documents defined in this
+specification always express JSON-LD, JSON-LD processing is not required to be
+performed, since JSON-LD is JSON. Some scenarios where processing a
+<a>verifiable credential</a> or a <a>verifiable presentation</a> as JSON is
+desirable include, but are not limited to:
+          </p>
+
+          <ul>
+            <li>
+Before securing or after verifying content
+that requires <a href="https://csrc.nist.gov/glossary/term/data_integrity">data
+integrity</a>, such as a
+<a>verifiable credential</a> or <a>verifiable presentation</a>.
+            </li>
+            <li>
+When performing JSON Schema validation, as described in Section
+<a href="#data-schemas"></a>.
+            </li>
+            <li>
+When serializing or deserializing <a>verifiable credentials</a> or
+<a>verifiable presentations</a> into systems that store or index their contents.
+            </li>
+            <li>
+When operating on <a>verifiable credentials</a> or <a>verifiable
+presentations</a> in a software application, after verification or validation
+is performed for securing mechanisms that require an understanding of
+and/or processing of JSON-LD.
+            </li>
+            <li>
+When an application chooses to process the media type using the `+json`
+structured media type suffix.
+            </li>
+          </ul>
+
+          <p>
+That is, JSON processing is allowed as long as the document being consumed or
+produced is a <a>conforming document</a>. If JSON processing is desired, an
+implementer is advised to follow the following rule:
+          </p>
+
+          <ul>
+            <li>
+Ensure that all values associated with a `@context` property are in the
+expected order, the contents of the context files match known good
+cryptographic hashes for each file, and domain experts have deemed that the
+contents are appropriate for the intended use case.
+            </li>
+          </ul>
+
+          <p>
+Using static context files with a JSON Schema is one acceptable approach to
+implementing the rule above. This can ensure proper term identification,
+typing, and order, when a JSON document is processed as JSON-LD.
+          </p>
+
+          <p>
+The rule above guarantees semantic interoperability between JSON and JSON-LD for
+literal JSON keys mapped to URIs by the `@context` mechanism. While JSON-LD
+processors will use the specific mechanism provided and can verify that all
+terms are correctly specified, JSON-based processors implicitly accept the same
+semantics without performing any JSON-LD transformations, but instead by
+applying the above rules. In other words, the context in which the data exchange
+happens is explicitly stated for both JSON and JSON-LD by using the same
+mechanism. With respect to JSON-based processors, this is achieved in a
+lightweight manner, without having to use JSON-LD processing libraries.
+          </p>
+
+        </section>
       </section>
 
       <section>
@@ -5255,7 +5424,7 @@ franchise. Policy information expressed by the <a>issuer</a> in the
       </section>
     </section>
 
-    <section class="appendix informative">
+    <section class="appendix">
       <h2>Contexts, Vocabularies, Types, and Credential Schemas</h2>
 
       <section class="normative">
