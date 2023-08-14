@@ -4867,11 +4867,11 @@ ensure the long term viability of systems processing <a>credentials</a>.
         <p>
 <a>Verifiable credentials</a> often contain URLs to data that resides outside of
 the <a>verifiable credential</a> itself. Linked content that exists outside a
-<a>verifiable credential</a>, such as images, JSON-LD Contexts, and other
-machine-readable data, are often not protected against tampering because the
+<a>verifiable credential</a>, such as images, JSON-LD Contexts, JSON Schemas, and 
+other machine-readable data, are often not protected against tampering because the
 data resides outside of the protection of the
-<a href="#proofs-signatures">proof</a> on the <a>verifiable credential</a>. For
-example, the following highlighted links are not content-integrity protected but
+<a href="#securing-verifiable-credentials">securing mechanism</a> on the <a>verifiable credential</a>.
+For example, the following highlighted links are not content-integrity protected but
 probably should be:
         </p>
 
@@ -4956,18 +4956,52 @@ authorship either is not known or cannot be trusted.
       </section>
 
       <section class="informative">
-        <h3>Token Binding</h3>
+        <h3>Man-in-the-Middle (MITM), Replay, and Cloning Attacks</h3>
 
+        <p>
+The data model does not inherently prevent against 
+<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">Man-in-the-Middle (MITM)</a>,
+<a href="https://en.wikipedia.org/wiki/Replay_attack">replay</a>, and 
+<a href="https://en.wikipedia.org/wiki/Spoofing_attack">spoofing</a> attacks.
+Both online and offline use cases may be susceptible to these types of attacks,
+where an adversary intercepts, modifies, re-uses, or replicates the verifiable
+credential data during transmission or storage. 
+        </p>
+        <h4>Man-in-the-Middle (MITM) Attack</h4>
         <p>
 A <a>verifier</a> might need to ensure it is the intended recipient of a
 <a>verifiable presentation</a> and not the target of a
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>.
-Approaches such as token binding [[RFC8471]], which ties the request for a
-<a>verifiable presentation</a> to the response, can secure the protocol.
+Some <a href=#securing-verifiable-credentials>securing mechanisms</a>, like [[VC-JOSE-COSE]],
+provide an option to specify the intended audience of a presentation which can
+help reduce this risk.
+        </p>
+        <p>
+Alternate approaches such as token binding [[RFC8471]], which ties the request
+for a <a>verifiable presentation</a> to the response, can secure the protocol.
 Any unsecured protocol is susceptible to man-in-the-middle attacks.
         </p>
+        <h4>Replay Attack</h4>
+        <p>
+A <a>verifier</a> may wish to ensure that a presentation is not used more than a
+certain number of times. For example, a credential representing an event ticket,
+if presented multiple times, may allow entry to multiple individuals, undermining
+the utility of the ticket. To prevent against such attacks verifiers can make use
+of techniques such as requiring the inclusion of a 
+<a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> during presentation.
+        </p> 
+        <h4>Spoofing Attack</h4>
+        <p>
+A <a>verifier</a> has a vested interest in knowing that a <a>holder</a> is authorized
+to present the claims inside of a <a>verifiable presentation</a>. While the data
+model outlines the structure and data elements necessary for a credential, it does
+not inherently include a foolproof mechanism to ascertain the authorization of
+presented credentials. To address this concern, implementers may need to explore
+supplementary methods, such as binding verifiable credentials to strong
+authentication mechanisms or utilizing additional attributes in presentations
+that enable legitimate proof of control.
+        </p> 
       </section>
-
       <section class="informative">
         <h3>Bundling Dependent Claims</h3>
 
