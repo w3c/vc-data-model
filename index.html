@@ -4951,6 +4951,7 @@ where an adversary intercepts, modifies, re-uses, and/or replicates the verifiab
 credential data during transmission or storage. 
         </p>
         <h4>Man-in-the-Middle (MITM) Attack</h4>
+
         <p>
 A <a>verifier</a> might need to ensure it is the intended recipient of a
 <a>verifiable presentation</a> and not the target of a
@@ -4965,15 +4966,18 @@ for a <a>verifiable presentation</a> to the response, can secure the protocol.
 Any unsecured protocol is susceptible to man-in-the-middle attacks.
         </p>
         <h4>Replay Attack</h4>
+
         <p>
 A <a>verifier</a> may wish to ensure that a presentation is not used more than a
 certain number of times. For example, a credential representing an event ticket,
 may allow entry to multiple individuals if presented multiple times, undermining
 the utility of the ticket. To prevent against such attacks verifiers can make use
 of techniques such as requiring the inclusion of a 
-<a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> during presentation.
+<a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> during presentation,
+or add an expiry timestamps to reduce the window of attack.
         </p> 
         <h4>Spoofing Attack</h4>
+
         <p>
 A <a>verifier</a> has a vested interest in knowing that a <a>holder</a> is authorized
 to present the claims inside of a <a>verifiable presentation</a>. While the data
@@ -5059,6 +5063,64 @@ Using a separate hardware-based signature device.
 All or any combination of the above.
           </li>
         </ul>
+
+        <p>
+Furthermore, instances of impersonation can manifest in various forms,
+including situations where an entity attempts to disavow their actions. 
+Elevating the level of trust and security within the realm of <a>verifiable credentials</a>
+entails more than just averting impersonation; it involves the implementation
+of non-repudiation mechanisms. These mechanisms solidify an entity's responsibility
+for their actions or transactions, thereby reinforcing accountability and deterring
+malicious behaviors. The attainment of non-repudiation is a multifaceted endeavor,
+encompassing an array of techniques ranging from 
+<a href=#securing-verifiable-credentials>securing mechanisms</a>, proofs of possession,
+and authentication schemes to various protocols designed to foster trust and reliability.
+        </p>
+      </section>
+      <section class="informative">
+        <h3>Acceptable Usage</h3>
+
+        <p>
+Ensuring that there is alignment between an entity's actions, such as <a>presentation</a>
+and the intended purpose of those actions is of paramount importance. It involves
+having the authorization to make use of <a>credentials</a> but also using them
+in a manner that adheres to its designated scope and objectives. Two critical
+aspects that arise within this context are <i>Unauthorized Usage</i> and 
+<i>Inappropriate Usage</i>.
+        </p>
+        <h4>Unauthorized Usage</h4>
+        <p>
+Any attempt by entitites to make use of <a>credentials</a> and <a>presentations</a>
+outside of their intended usage can be seen as unauthorized. One class of unauthorized 
+usage can be a <i>confidentiality violation</i>. Consider an example
+where a holder shares a <a>presentations</a> with a <a>verifier</a> to establish
+attributes such as age and residency. If the <a>verifier</a> then proceeds to
+exploit the <a>holder</a>'s data without proper consent, such as by selling the
+data to a data broker, constitutes an unauthorized use of the data, violating
+the trust implicit in the transaction.
+        </p>      
+        <p>
+Similarly, an <a>issuer</a> may make use of a <a href="#terms-of-use">termsOfUse</a>
+property to stipulate how and when a credential may be used. A <a>holder</a> using
+credentials outside of the scopes defined in the <code>termsOfUse</code> would
+be considered unauthorized usage.
+        </p>
+        <p class="note">
+Further study is required to determine how a <a>holder</a> can assert and enforce
+authorized usage of their data after <a>presentation</a>.
+        </p>  
+        <h4>Inappropriate Usage</h4>
+        <p>
+While valid cryptographic signatures and successful <a href="#validation">validity checks</a>
+signify the reliability of credentials, they do not signify that all credentials
+are interchangeable for all contexts. Toward the pursuit of appropriate usage,
+it's crucial to consider the source and authenticity of the information. For
+instance, in scenarios where a certified medical diagnosis is required, a self-asserted
+credential carrying the necessary data may not suffice, as it lacks validity from an
+authoritative medical source. To ensure the appropriateness of credential usage,
+stakeholders must assess the credentials' relevance and authority within the specific
+context of their intended application.
+        </p>
       </section>
     </section>
 
