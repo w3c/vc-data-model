@@ -5559,15 +5559,16 @@ Implementations MUST treat the base context value, located at
 content of the resource matches the following SHA-384 digest of the value
 computed and encoded according to the [[SRI]] definition of `digest`:
 <strong><code>vxRgTREj3/ZmDabpiTX+Au4UXY8GDhyCSFNw+UQtdtISDyO/znDUY+FTg8rNsGXJ</code></strong>.
-It is strongly advised that all JSON-LD Contexts used in an
-application utilize a similar mechanism to ensure end-to-end security and
-implementations are expected to throw errors if a resource's cryptographic hash
-value does not match the expected hash value.
+It is strongly advised that all JSON-LD Context URLs used by an
+application utilize the same mechanism, or a functionally equivalent mechanism,
+to ensure end-to-end security. Implementations are expected to throw errors
+if a cryptographic hash value for a resource does not match the expected hash
+value.
         </p>
         <p>
 It is possible to confirm the SHA-384 digest above by running the following
 command from a modern Unix command interface line:
-`curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha384 -binary | openssl base64 -A`.
+`curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha384 -binary | openssl base64 -A`
         </p>
 More details regarding this hash encoding method can be found in the <a
 href="https://www.w3.org/TR/SRI/#integrity-metadata">integrity metadata</a>
@@ -5588,7 +5589,7 @@ mechanisms such as [[VC-JOSE-COSE]] and [[VC-DATA-INTEGRITY]].
           </li>
           <li>
 The content in a credential whose meaning depends on a link to an external URL,
-such as a JSON-LD Context, which can be secured by using a local static copy,
+such as a JSON-LD Context, which can be secured by using a local static copy
 or a cryptographic digest of the file.
           </li>
         </ol>
