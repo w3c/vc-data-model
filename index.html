@@ -5554,24 +5554,24 @@ Candidate Recommendation phase based on implementer feedback that requires
 the referenced files to be modified.
         </p>
         <p>
-Implementations MUST ensure that the base context value, located at
-<code>https://www.w3.org/ns/credentials/v2</code>, matches the following
-SHA-384 digest of the value computed and encoded according to the [[SRI]] definition of `digest`:
-<strong><code>lHKDHh0msc6pRx8PhDOMkNtSI8bOfsp4giNbUrw71nXXLf13nTqNJoRp3Nx+ArVK</code></strong>.
-The base context value matching the digest previously stated can be used to
-implement a local cached copy. It is possible to confirm the
-SHA-384 digest by running the following command from a modern Unix command
-interface line:
+Implementations MUST treat the base context value, located at
+<code>https://www.w3.org/ns/credentials/v2</code>, as already resolved where the
+content of the resource matches the following SHA-384 digest of the value
+computed and encoded according to the [[SRI]] definition of `digest`:
+<strong><code>vxRgTREj3/ZmDabpiTX+Au4UXY8GDhyCSFNw+UQtdtISDyO/znDUY+FTg8rNsGXJ</code></strong>.
+It is strongly advised that all JSON-LD Contexts used in an
+application utilize a similar mechanism to ensure end-to-end security and
+implementations are expected to throw errors if a resource's cryptographic hash
+value does not match the expected hash value.
+        </p>
+        <p>
+It is possible to confirm the SHA-384 digest above by running the following
+command from a modern Unix command interface line:
 `curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha384 -binary | openssl base64 -A`.
         </p>
-        <p class="issue" data-number="1177">
-The Working Group is currently discussing what a processor should do if a hash
-value differs from one that is listed in the specification.
-        </p>
-More details regarding this hash encoding method may be found in the <a
+More details regarding this hash encoding method can be found in the <a
 href="https://www.w3.org/TR/SRI/#integrity-metadata">integrity metadata</a>
-section of [[SRI]]. It is strongly advised that all JSON-LD Contexts used in an
-application utilize a similar mechanism to ensure end-to-end security.
+section of [[SRI]].
         </p>
         <p>
 This section serves as a reminder of the importance of ensuring that, when
@@ -5597,9 +5597,9 @@ Verifiers are warned that other data that is referenced from within a
 credential, such as resources that are linked to via URLs, are not
 cryptographically protected by default. It is considered a best practice to
 ensure that the same sorts of protections are provided for any URL that is
-critical to the security of the credential through the use of permanently cached
-files and/or cryptographic hashes. See the <a
-data-cite="vc-imp-guide/#content-integrity">Content Integrity</a>
+critical to the security of the <a>verifiable credential</a> through the use of
+permanently cached files and/or cryptographic hashes. See the
+<a data-cite="vc-imp-guide/#content-integrity">Content Integrity</a>
 section of the Verifiable Credential Implementation Guide for further
 information. Ultimately, knowing the cryptographic digest of any linked external
 content enables a <a>verifier</a> to confirm that the content is the same
