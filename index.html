@@ -4872,7 +4872,7 @@ other machine-readable data, are often not protected against tampering because t
 data resides outside of the protection of the
 <a href="#securing-verifiable-credentials">securing mechanism</a> on the <a>verifiable credential</a>.
 For example, the content retrievable by dereferencing the following highlighted
-links is not integrity protected, but probably should be:
+links is not integrity protected, but probably ought to be:
         </p>
 
         <pre class="example nohighlight"
@@ -4963,9 +4963,9 @@ The data model does not inherently prevent
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">Man-in-the-Middle (MITM)</a>,
 <a href="https://en.wikipedia.org/wiki/Replay_attack">replay</a>, and 
 <a href="https://en.wikipedia.org/wiki/Spoofing_attack">spoofing</a> attacks.
-Both online and offline use cases may be susceptible to these types of attacks,
-where an adversary intercepts, modifies, re-uses, and/or replicates the verifiable
-credential data during transmission or storage. 
+Both online and offline use cases might be susceptible to these types of attacks,
+where an adversary intercepts, modifies, re-uses, and/or replicates the <a>verifiable
+credential</a> data during transmission or storage. 
         </p>
         <h4>Man-in-the-Middle (MITM) Attack</h4>
 
@@ -4973,9 +4973,10 @@ credential data during transmission or storage.
 A <a>verifier</a> might need to ensure it is the intended recipient of a
 <a>verifiable presentation</a> and not the target of a
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>.
-Some <a href=#securing-verifiable-credentials>securing mechanisms</a>, like [[VC-JOSE-COSE]],
-provide an option to specify the intended audience of a presentation, which can
-help reduce this risk.
+Some <a href=#securing-verifiable-credentials>securing mechanisms</a>, 
+like [[VC-JOSE-COSE]] or [[VC-DATA-INTEGRITY]], provide an option to specify 
+the intended audience or domain of a presentation, which can help reduce 
+this risk.
         </p>
         <p>
 Alternate approaches such as token binding [[RFC8471]], which ties the request
@@ -4985,10 +4986,10 @@ Any unsecured protocol is susceptible to man-in-the-middle attacks.
         <h4>Replay Attack</h4>
 
         <p>
-A <a>verifier</a> may wish to ensure that a presentation is not used more than a
+A <a>verifier</a> might wish to ensure that a <a>verifiable presentation</a> is not used more than a
 certain number of times. For example, a credential representing an event ticket,
-may allow entry to multiple individuals if presented multiple times, undermining
-the utility of the ticket. To prevent against such attacks verifiers can make use
+might allow entry to multiple individuals if presented multiple times, undermining
+the purpose of the ticket. To prevent against such attacks <a>verifiers</a> can make use
 of techniques such as requiring the inclusion of a 
 <a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> during presentation,
 or add an expiry timestamp to reduce the window of attack.
@@ -4998,12 +4999,12 @@ or add an expiry timestamp to reduce the window of attack.
         <p>
 A <a>verifier</a> has a vested interest in knowing that a <a>holder</a> is authorized
 to present the claims inside of a <a>verifiable presentation</a>. While the data
-model outlines the structure and data elements necessary for a credential, it does
-not inherently include a foolproof mechanism to ascertain the authorization of
-presented credentials. To address this concern, implementers may need to explore
-supplementary methods, such as binding verifiable credentials to strong
-authentication mechanisms or using additional attributes in presentations
-to enable legitimate proof of control.
+model outlines the structure and data elements necessary for a <a>verifiable credential</a>, it does
+not include a mechanism to ascertain the authorization of
+presented credentials. To address this concern, implementers might need to explore
+supplementary methods, such as binding <a>verifiable credentials</a> to strong
+authentication mechanisms or using additional attributes in <a>verifiable presentations</a>
+to enable proof of control.
         </p> 
       </section>
       <section class="informative">
@@ -5091,7 +5092,7 @@ for their actions or transactions, thereby reinforcing accountability and deterr
 malicious behaviors. The attainment of non-repudiation is a multifaceted endeavor,
 encompassing an array of techniques ranging from 
 <a href=#securing-verifiable-credentials>securing mechanisms</a>, proofs of possession,
-and authentication schemes to various protocols designed to foster trust and reliability.
+and authentication schemes in a variety protocols designed to foster trust and reliability.
         </p>
       </section>
       <section class="informative">
@@ -5099,26 +5100,26 @@ and authentication schemes to various protocols designed to foster trust and rel
 
         <p>
 Ensuring that there is alignment between an entity's actions, such as <a>presentation</a>,
-and the intended purpose of those actions, is of paramount importance. It involves
-having the authorization to make use of <a>credentials</a> as well as using them
+and the intended purpose of those actions, is of importance. It involves
+having the authorization to make use of <a>verifiable credentials</a> as well as using them
 in a manner that adheres to their designated scope(s) and objective(s). Two critical
 aspects that arise within this context are <i>Unauthorized Use</i> and 
 <i>Inappropriate Use</i>.
         </p>
         <h4>Unauthorized Use</h4>
         <p>
-Any attempt by entities to make use of <a>credentials</a> and <a>presentations</a>
+Any attempt by entities to make use of <a>verifiable credentials</a> and <a>verifiable presentations</a>
 outside of their intended use can be seen as unauthorized. One class of unauthorized 
 use is a <i>confidentiality violation</i>. Consider an example
-where a holder shares a <a>presentation</a> with a <a>verifier</a> to establish
-attributes such as age and residency. If the <a>verifier</a> then proceeds to
+where a <a>holder</a> shares a <a>verifiable presentation</a> with a <a>verifier</a> to establish
+their age and residency status. If the <a>verifier</a> then proceeds to
 exploit the <a>holder's</a> data without proper consent, such as by selling the
-data to a data broker, constitutes an unauthorized use of the data, violating
-the trust implicit in the transaction.
+data to a data broker, that would constitute an unauthorized use of the data, violating
+an expectation that the <a>holder</a> might have in the transaction.
         </p>      
         <p>
-Similarly, an <a>issuer</a> may make use of a <a href="#terms-of-use">termsOfUse</a>
-property to stipulate how and when a credential may be used. A <a>holder</a> using
+Similarly, an <a>issuer</a> could make use of a <a href="#terms-of-use">termsOfUse</a>
+property to stipulate how and when a credential might be used. A <a>holder</a> using
 credentials outside of the scopes defined in the <code>termsOfUse</code> would
 be considered unauthorized use.
         </p>
@@ -5131,12 +5132,12 @@ authorized use of their data after <a>presentation</a>.
 While valid cryptographic signatures and successful <a href="#validation">validity checks</a>
 signify the reliability of credentials, they do not signify that all credentials
 are interchangeable for all contexts. Toward the pursuit of appropriate use,
-it's crucial to consider the source and authenticity of the information. For
+it is crucial to consider the source and authenticity of the information. For
 instance, in scenarios where a certified medical diagnosis is required, a self-asserted
-credential carrying the necessary data may not suffice, as it lacks validity from an
+credential carrying the necessary data might not suffice because it lacks validity from an
 authoritative medical source. To ensure the propriety of credential use,
-stakeholders must assess the credentials' relevance and authority within the specific
-context of their intended application.
+stakeholders are urged to assess the credentials' relevance and authority within 
+the specific context of their intended application.
         </p>
       </section>
     </section>
