@@ -1537,7 +1537,11 @@ to look through the entirety of the <a>claims</a>.
   ],
   "id": "http://university.example/credentials/3732",
   <span class="highlight">"type": ["VerifiableCredential", "ExampleDegreeCredential"]</span>,
-  "issuer": "https://university.example/issuers/565049",
+  "issuer": {
+    "id": "https://university.example/issuers/565049",
+    "name": "Example University",
+    "description": "A public university focusing on teaching examples."
+  },
   "validFrom": "2015-05-10T12:30:00Z",
   "name": "Example University Degree",
   "description": "2015 Bachelor of Science and Arts Degree"
@@ -1546,6 +1550,80 @@ to look through the entirety of the <a>claims</a>.
     "degree": {
       "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
+    }
+  }
+}
+        </pre>
+
+        <p>
+Names and descriptions also support expressing content in different languages.
+To express a string with language and text direction information, one can use
+an object that contains the `value`, `lang`, and `dir` properties to express
+the text value, language code, and text direction, respectively.
+See <a href="#language-and-base-direction"></a> for further information.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Usage of the name and description property">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "issuer": {
+    "id": "https://university.example/issuers/565049",
+    "name": [{
+      "value": "Example University",
+      "lang": "en"
+    }, {
+      "value": "Université de Exemple",
+      "lang": "fr"
+    }, {
+      "value": "جامعة المثال",
+      "lang": "ar",
+      "dir": "rtl"
+    }],
+    "description": [{
+      "value": "A public university focusing on teaching examples.",
+      "lang": "en"
+    }, {
+      "value": "Une université publique axée sur l'enseignement des exemples.",
+      "lang": "fr"
+    }, {
+      "value": "جامعة عامة تركز على أمثلة التدريس.",
+      "lang": "ar",
+      "dir": "rtl"
+    }]
+  },
+  "validFrom": "2015-05-10T12:30:00Z",
+  "name": "Example University Degree",
+  "description": [{
+    "value": "2015 Bachelor of Science and Arts Degree",
+    "lang": "en"
+  }, {
+    "value": "2015 Baccalauréat Scientifique et Arts",
+    "lang": "fr"
+  }, {
+    "value": "2015 بكالوريوس العلوم والآداب",
+    "lang": "ar",
+    "dir": "rtl"
+  }],
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": [{
+        "value": "Bachelor of Science and Arts",
+        "lang": "en"
+      }, {
+        "value": "Baccalauréat en sciences et arts",
+        "lang": "fr"
+      }, {
+        "value": "بكالوريوس العلوم والآداب",
+        "lang": "ar",
+        "dir": "rtl"
+      }]
     }
   }
 }
