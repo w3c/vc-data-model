@@ -1544,7 +1544,7 @@ look through the entirety of the <a>claims</a>.
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
   "id": "http://university.example/credentials/3732",
-  <span class="highlight">"type": ["VerifiableCredential", "ExampleDegreeCredential"]</span>,
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
   "issuer": {
     "id": "https://university.example/issuers/565049",
     "name": "Example University",
@@ -1552,12 +1552,12 @@ look through the entirety of the <a>claims</a>.
   },
   "validFrom": "2015-05-10T12:30:00Z",
   "name": "Example University Degree",
-  "description": "2015 Bachelor of Science and Arts Degree"
+  "description": "2015 Bachelor of Science and Arts Degree",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
+      "subtype": "Bachelor of Science and Arts"
     }
   }
 }
@@ -1579,6 +1579,7 @@ See <a href="#language-and-base-direction"></a> for further information.
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
   "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
   "issuer": {
     "id": "https://university.example/issuers/565049",
     "name": [{
@@ -1605,7 +1606,17 @@ See <a href="#language-and-base-direction"></a> for further information.
     }]
   },
   "validFrom": "2015-05-10T12:30:00Z",
-  "name": "Example University Degree",
+  "name": [{
+    "value": "Example University Degree",
+    "lang": "en"
+  }, {
+    "value": "Exemple de Diplôme Universitaire",
+    "lang": "fr"
+  }, {
+    "value": "مثال الشهادة الجامعية",
+    "lang": "ar",
+    "dir": "rtl"
+  }],
   "description": [{
     "value": "2015 Bachelor of Science and Arts Degree",
     "lang": "en"
@@ -1621,17 +1632,7 @@ See <a href="#language-and-base-direction"></a> for further information.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "ExampleBachelorDegree",
-      "name": [{
-        "value": "Bachelor of Science and Arts",
-        "lang": "en"
-      }, {
-        "value": "Baccalauréat en sciences et arts",
-        "lang": "fr"
-      }, {
-        "value": "بكالوريوس العلوم والآداب",
-        "lang": "ar",
-        "dir": "rtl"
-      }]
+      "subtype": "Bachelor of Science and Arts"
     }
   }
 }
