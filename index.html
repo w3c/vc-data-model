@@ -1501,10 +1501,10 @@ Implementation Guidelines [[?VC-IMP-GUIDE]].
 
         <p>
 When displaying a <a>credential</a>, it can be useful to have
-text provided by the <a>issuer</a> that provides the
-<a>credential</a> with a name as well as a short description of the
-purpose of the <a>credential</a>. The `name` and `description` <a>properties</a>
-are provided for these purposes.
+text provided by the <a>issuer</a> that furnishes the
+<a>credential</a> with a name as well as a short description of its
+purpose. The `name` and `description` <a>properties</a>
+are meant to serve these purposes.
         </p>
 
         <dl>
@@ -1514,11 +1514,12 @@ An OPTIONAL property that expresses the name of the <a>credential</a>. If
 present, the value of the <code>name</code> <a>property</a> MUST be a string or
 an object. If the value is an object, the object MUST contain a `value` property
 whose value is a string, and SHOULD contain a `lang` property whose value is a
-`langtag` string defined in [[BCP47]], and MAY contain a `dir` property whose
+string containing a well-formed `Language-Tag` as defined by [[BCP47]],
+and MAY contain a `dir` property whose
 value is a text direction string defined by the `dir` attribute in [[JSON-LD]].
 Ideally, the name of a <a>credential</a> is concise, human-readable, and could
-be used to enable an individual to quickly differentiate the <a>credential</a>
-from other <a>credentials</a> that they might hold.
+enable an individual to quickly differentiate one <a>credential</a>
+from any other <a>credentials</a> that they might hold.
           </dd>
           <dt><dfn class="lint-ignore">description</dfn></dt>
           <dd>
@@ -1526,11 +1527,12 @@ An OPTIONAL property that conveys specific details about a <a>credential</a>. If
 present, the value of the <code>description</code> <a>property</a> MUST be a
 string or an object. If the value is an object, the object MUST contain a
 `value` property whose value is a string, and SHOULD contain a `lang` property
-whose value is a `langtag` string defined in [[BCP47]], and MAY contain a `dir`
+whose value is a string containing a well-formed language tag as defined
+by [[BCP47]], and MAY contain a `dir`
 property whose value is a text direction string defined by the `dir` attribute
-in [[JSON-LD]]. Ideally, the description of a <a>credential</a> is no longer than
+in [[JSON-LD]]. Ideally, the description of a <a>credential</a> is no more than
 a few sentences in length and conveys enough information about the
-<a>credential</a> to remind an individual as to its contents without having to
+<a>credential</a> to remind an individual of its contents without their having to
 look through the entirety of the <a>claims</a>.
           </dd>
         </dl>
@@ -1567,7 +1569,7 @@ look through the entirety of the <a>claims</a>.
 Names and descriptions also support expressing content in different languages.
 To express a string with language and text direction information, one can use
 an object that contains the `value`, `lang`, and `dir` properties to express
-the text value, language code, and text direction, respectively.
+the text value, language tag, and text direction, respectively.
 See <a href="#language-and-base-direction"></a> for further information.
         </p>
 
