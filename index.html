@@ -3896,17 +3896,23 @@ JSON-LD. This might lead to unexpected behavior.
 If JSON structure or ordering is important to your application, 
 we recommend you mark such elements as `@json` via an `@context`.
           </p>
+          <pre class="example" title="A @context file that defines a matrix as an embedded JSON data structure">
+{
+  "@context":
+    {
+      "matrix": {
+        "@id": "https://website.example/vocabulary#matrix",
+        "@type": "@json"
+      }
+    }
+}
+          </pre>
           <pre class="example" title="A verifiable credential with an embedded JSON data structure">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2",
-    { 
-      "matrix": { 
-        "@id": "https://website.example/vocabulary#matrix", 
-        "@type": "@json" 
-      }
-    }
+    "https://example.com/matrix"
   ],
   "id": "http://university.example/credentials/1872",
   "type": [
