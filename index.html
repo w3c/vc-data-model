@@ -305,10 +305,7 @@ The word "verifiable" in the terms
 refers to the characteristic of a <a>credential</a> or <a>presentation</a>
 as being able to be <a>verified</a> by a <a>verifier</a>,
 as defined in this document. Verifiability of a credential does not imply
-that the truth of <a>claims</a> encoded therein can be evaluated; however,
-the issuer can include values in the <a>evidence</a> property to help the verifier
-apply their business logic to determine whether the claims have sufficient
-veracity for their needs.
+that truth of <a>claims</a> encoded therein. Rather, once the authenticity and currency of a Verifiable Credential or Verifiable Presentation are established, a <a>verifier</a> MUST validate included claims using their own business rules before relying on them. Such reliance SHOULD only occur after evaluating the issuer, the proof, the subject, and the claims, against verifier policy. 
         </p>
       </section>
 
@@ -912,6 +909,9 @@ Composition of <a>verifiable credentials</a> into a
 <a>Verification</a> of the <a>verifiable presentation</a> by the
 <a>verifier</a>.
           </li>
+          <li>
+            <a>Validation</a> by the <a>verifier</a> of relevant <a>claims</a> contained in the <a>verifiable presentation</a>.
+          </li>
         </ol>
 
         <p>
@@ -962,9 +962,20 @@ The digital wallet asks Pat if they would like to provide a previously issued
 <a>verifiable credential</a>. Pat selects the alumni
 <a>verifiable credential</a>, which is then composed into a
 <a>verifiable presentation</a>. The <a>verifiable presentation</a> is sent to
-the <a>verifier</a> and <a>verified</a>.
-        </p>
-        <pre class="example nohighlight" title="A simple example of the contents of a verifiable presentation">
+the <a>verifier</a> and <a>verified</a>. 
+</p>
+<p>Once verified as authentic and current, the seller of the season ticket
+   then validates that the issuer of the <a>verifiable credential</a> is 
+   recognized for the claim of alumni status&mdash;it is, as it is issued
+   by Example University&mdash;and that today's date lies within the
+   validity period defined by the values of the validFrom and validUntil
+   properties. Since the holder is expected to be the subject of the 
+   <a>verifiable credential</a> , the <a>verifier</a> also confirms that 
+   the id for the alumni claim matches the id of the creator of the 
+   <a>verifiable presentation.</a>
+</p>
+<p>Having verified the credential and the presentation, and validated the relevant claims, the ticket seller safely enables the alumni discount for Pat, confident that Pat is legitimately entitled to it.</p>
+        <pre class="example nohighlight" title="A simple example of a verifiable presentation">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2370,7 +2381,7 @@ specification considers:
 
         <ul>
           <li>
-Data verification schemas, which are used to <a>verify</a> that the structure
+Data verification schemas, which are used to establish that the structure
 and contents of a <a>credential</a> or <a>verifiable credential</a> conform to a
 published schema.
           </li>
@@ -2460,12 +2471,12 @@ integrity protection mechanism. The <code>credentialSchema</code>
 In the example above, the <a>issuer</a> is specifying a
 <code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA]] file that
 can be used by a <a>verifier</a> to determine if the
-<a>verifiable credential</a> is well formed.
+<a>verifiable credential</a> is well-formed.
         </p>
 
         <p class="note" >
-For information about linkages to JSON Schema [[?VC-JSON-SCHEMA]] or other
-optional <a>verification</a> mechanisms, see the Verifiable Credentials
+For information about linkages to JSON Schema [[?VC-JSON-SCHEMA-2023]] or other
+optional schema validation mechanisms, see the Verifiable Credentials
 Implementation Guidelines [[VC-IMP-GUIDE]] document.
         </p>
 
@@ -2505,7 +2516,7 @@ see Section <a href="#zero-knowledge-proofs"></a>.
 In the example above, the <a>issuer</a> is specifying a
 <code>credentialSchema</code> pointing to a means of transforming the input
 data into a format which can then be used by a <a>verifier</a> to determine if
-the proof provided with the <a>verifiable credential</a> is valid.
+the proof provided with the <a>verifiable credential</a> is well-formed.
         </p>
 
 
@@ -2540,6 +2551,7 @@ how the ecosystem is envisaged to operate.
          verifiable data registry">
           <figcaption style="text-align: center;">
             The roles and information flows for this specification.
+            NEEDS VALIDATE
           </figcaption>
         </figure>
 
@@ -2566,10 +2578,12 @@ inside a <a>verifiable presentation</a>.
           </li>
           <li>
 A <a>verifier</a> <a>verifies</a> the authenticity of the presented
-<a>verifiable presentation</a> and <a>verifiable credentials</a>. This should
-include checking the <a href="#status">credential status</a> for revocation
+<a>verifiable presentation</a> and <a>verifiable credentials</a> and 
+checks any <a href="#status">credential status</a>
 of the <a>verifiable credentials</a>.
           </li>
+          <li>
+After <a>verification</a>, a <a>verifier</a> validates the relevant claims in presented <a>verifiable credentials</a>, using their own business logic to evaluate which issuers are appropriate for which claims and which subjects are appropriate for the requested use.</li>
          <li>
 An <a>issuer</a> might <dfn class="lint-ignore" data-lt="revoke">revoke</dfn> a
 <a>verifiable credential</a>.
@@ -2592,13 +2606,19 @@ The most common sequence of actions is envisioned to be:
 
         <ol>
           <li>
-An <a>issuer</a> <a href="#lifecycle-details">issues</a> to a <a>holder</a>.
+An <a>issuer</a> <a href="#lifecycle-details">issues</a> a <a>verifiable credential</a> to a <a>holder</a>.
           </li>
           <li>
 The <a>holder</a> <a href="#lifecycle-details">presents</a> to a <a>verifier</a>.
           </li>
           <li>
 The <a>verifier</a> <a href="#lifecycle-details">verifies</a>.
+          </li>
+          <li>
+The <a>verifier</a> <a href="#lifecycle-details">validates</a> claims.
+          </li>
+          <li>
+The <a>verifier</a> applies valid claims</a>.
           </li>
         </ol>
 
@@ -2610,13 +2630,15 @@ this Verifiable Credential Data Model is directly applicable.
         </p>
 
         <p>
-This specification also does not define an authorization framework nor the
-decisions that a <a>verifier</a> might make after <a>verifying</a> a
-<a>verifiable credential</a> or <a>verifiable presentation</a>,
-taking into account the <a>holder</a>, the <a>issuers</a> of the
-<a>verifiable credentials</a>, the contents of the
-<a>verifiable credentials</a>, and its own policies.
-        </p>
+This specification also does not define an authorization framework nor 
+does it restrict the business decisions that a <a>verifier</a> might make
+after <a>verifying</a> a <a>verifiable credential</a> or <a>verifiable 
+  presentation</a>. However, it is required that <a>verifiers</a> MUST 
+  apply their own business rules before treating any claims as valid,
+  taking into account the <a>holder</a>, the <a>issuers</a> of the
+  <a>verifiable credentials</a>, the claims of the
+  <a>verifiable credentials</a>, and its own policies.
+ </p>
 
         <p>
 In particular, Sections <a href="#terms-of-use"></a> and
@@ -4685,14 +4707,15 @@ to unduly correlate the <a>holder</a>.
         </p>
       </section>
 
-      <section class="informative">
-        <h3>Validity Checks</h3>
+      <section class="normative">
+        <h3>Validation</h3>
 
         <p>
-When processing <a>verifiable credentials</a>, <a>verifiers</a> are expected to
-perform many of the checks listed in Appendix <a href="#validation"></a> as
-well as a variety of specific business process checks. Validity checks might
-include checking:
+When processing <a>verifiable credentials</a>, <a>verifiers</a> MUST 
+evaluate any relevant <a>claims</a> before relying upon them. This 
+evaluation may be done in any manner desired, as long as it satisfies
+the requirements of the <a>verifier</a> doing the validation. 
+Many verifiers will perform the checks listed in Appendix <a href="#validation"></a> as well as a variety of specific business process checks such as:
         </p>
 
         <ul>
@@ -4717,8 +4740,9 @@ The geolocation information associated with the <a>holder</a>.
         <p>
 The process of performing these checks might result in information leakage that
 leads to a privacy violation of the <a>holder</a>. For example, a simple
-operation such as checking a revocation list can notify the <a>issuer</a> that a
-specific business is likely interacting with the <a>holder</a>. This could
+operation such as checking an improperly configured revocation list can
+notify the <a>issuer</a> that a specific business is likely interacting 
+with the <a>holder</a>. This could
 enable <a>issuers</a> to collude and correlate individuals without their
 knowledge.
         </p>
@@ -5405,10 +5429,12 @@ authorized use of their data after <a>presentation</a>.
         </p>
         <h4>Inappropriate Use</h4>
         <p>
-While valid cryptographic signatures and successful <a href="#validation">validity checks</a>
+While valid cryptographic signatures and successful status checks
 signify the reliability of credentials, they do not signify that all credentials
-are interchangeable for all contexts. Toward the pursuit of appropriate use,
-it is crucial to consider the source and authenticity of the information. For
+are interchangeable for all contexts. It is crucial for verifiers to
+also validate any claims which might be relevant, considering the source and nature of the claim as well as privilege or service for which the credential is presented. 
+</p><p>
+For
 instance, in scenarios where a certified medical diagnosis is required, a self-asserted
 <a>credential</a> carrying the necessary data might not suffice because it lacks validity from an
 authoritative medical source. To ensure the propriety of <a>credential</a> use,
@@ -5802,7 +5828,8 @@ it is expected to exist and be a valid value, such as
 The digital signature provides a number of protections, other than tamper
 resistance, which are not immediately obvious. For example, a Linked Data
 Signature <code>created</code> <a>property</a> establishes a date and time
-before which the <a>credential</a> should not be considered <a>verified</a>. The
+before which the <a>credential</a> should not be considered <a>verified</a>, separate from the validity period of the credential. This property describes the validity of the proof, not of the credential.<br/>
+The
 <code>verificationMethod</code> <a>property</a> specifies, for example, the
 public key that can be used to verify the digital signature. Dereferencing a
 public key URL reveals information about the controller of the key, which can
@@ -5821,7 +5848,7 @@ purposes and to a <a>verifiable credential</a> as a method of assertion.
 The <code>validFrom</code> and <code>validUntil</code> properties are expected
 to be within an expected range for the <a>verifier</a>. For example, a
 <a>verifier</a> can check that the end of the validity period of a <a>verifiable
-credential</a> is not in the past.
+credential</a> is not in the past. Because some credentials can be useful for secondary purposes even if their original validity period has expired, validity period, as expressed using the validFrom and validUntil properties, is always considered a component of validation, which is perforemed **after** verification.
         </p>
       </section>
 
