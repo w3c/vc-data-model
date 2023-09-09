@@ -4031,7 +4031,64 @@ model whether or not they use a [[!JSON-LD]] processor.
             </li>
           </ul>
         </section>
-
+        <section>
+          <h3>Lists and Arrays</h3>
+          <p>
+Lists, arrays, and even lists of lists, are possible when using [[JSON-LD]] 1.1.
+We encourage those who want RDF semantics in use
+cases requiring lists and arrays to follow the guidance on
+<a href="https://www.w3.org/TR/json-ld11/#lists">lists in JSON-LD 1.1</a>.
+          </p>
+          <p>
+In general, a JSON array is ordered, while a JSON-LD array is not ordered unless
+that array uses the <code>@list</code> keyword.
+          </p>
+          <p class="note">
+While it is possible to use this data model without any JSON-LD processing,
+those who do so and make use of arrays need to be aware that unless the above
+guidance is followed, the order of items in an array cannot be guaranteed in
+JSON-LD. This might lead to unexpected behavior.
+          </p>
+          <p>
+If JSON structure or ordering is important to your application, 
+we recommend you mark such elements as `@json` via an `@context`.
+          </p>
+          <pre class="example" title="A @context file that defines a matrix as an embedded JSON data structure">
+{
+  "@context":
+    {
+      "matrix": {
+        "@id": "https://website.example/vocabulary#matrix",
+        "@type": "@json"
+      }
+    }
+}
+          </pre>
+          <pre class="example" title="A verifiable credential with an embedded JSON data structure">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2",
+    "https://website.example/matrix/v1"
+  ],
+  "id": "http://university.example/credentials/1872",
+  "type": [
+    "VerifiableCredential",
+    "ExampleMatrixCredential"
+  ],
+  "issuer": "https://university.example/issuers/565049",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "matrix": [
+      [1,2,3,4,5,6,7,8,9,10,11,12], 
+      [1,1,1,1,1,1,1,1,0,0,0,0],
+      [0,0,1,1,1,1,1,1,1,0,0,0]
+    ]
+  }
+}
+          </pre>
+        </section>
       </section>
       <section>
         <h3>Media Types</h3>
