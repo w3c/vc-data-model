@@ -5900,6 +5900,17 @@ if a cryptographic hash value for a resource does not match the expected hash
 value.
         </p>
         <p>
+Implementations that apply the base context above, as well as other contexts
+and values in any `@context` property, during operations such as
+<a href="https://www.w3.org/TR/json-ld11-api/#expansion-algorithm">
+JSON-LD Expansion</a> or
+<a href="https://www.w3.org/TR/json-ld11/#serializing-deserializing-rdf">
+transformation to RDF</a> are expected to do so without experiencing any
+errors. If these operations are performed, and the result is an error, the
+<a>verifiable credential</a> or <a>verifiable presentation</a> MUST result in
+a verification failure.
+        </p>
+        <p>
 It is possible to confirm the SHA-384 digest above by running the following
 command from a modern Unix command interface line:
 `curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha384 -binary | openssl base64 -A`
