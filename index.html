@@ -5975,14 +5975,16 @@ as what the <a>issuer</a> or <a>holder</a> intended.
 
         <p class="issue" title="(AT RISK) URL values might change during Candidate Recommendation">
 This section lists URL values that might change during the Candidate
-Recommendation phase based on migration of documents to the W3C Technical
-Reports namespace and implementer feedback that requires the referenced URLs to
-be modified.
+Recommendation phase based on migration of documents to time-stamped locations,
+migration of documents to the W3C Technical Reports namespace, and/or
+implementer feedback that requires the referenced URLs to be modified.
         </p>
 
         <p>
 Implementations MUST ensure that the following vocabulary URLs used in the base
-context ultimately resolve to the following files, which are normative:
+context ultimately resolve to the following files, which are normative.
+Cryptographic hashes are provided for all content to ensure that developers
+can verify that the contents of each file are correct.
         </p>
 
         <table class="simple">
@@ -5999,32 +6001,13 @@ context ultimately resolve to the following files, which are normative:
 https://www.w3.org/2018/credentials#
               </td>
               <td>
-text/html
-              </td>
-              <td>
-https://www.w3.org/2018/credentials/index.html
-              </td>
-            </tr>
-            <tr>
-              <td>
-https://www.w3.org/2018/credentials#
-              </td>
-              <td>
 application/ld+json
               </td>
               <td>
-https://www.w3.org/2018/credentials/index.jsonld
-              </td>
-            </tr>
-            <tr>
-              <td>
-https://schema.org/
-              </td>
-              <td>
-text/html
-              </td>
-              <td>
-https://schema.org/
+https://www.w3.org/2018/credentials/index.jsonld<br><br>
+sha256: z52TgKqh2nqTCuACI8lCvhRdjwxQjeVmuOMCDCEijq4=<br><br>
+sha3-512: m8Ss+jgZiyL2Ws/ICJcWjHFd9PccJWsXPvMatBOhrH<wbr>
+h0qCBrzfgO2zO1OQQbTL7zoPgLseIbcxJJpunD2bkoRA==
               </td>
             </tr>
             <tr>
@@ -6035,18 +6018,10 @@ https://schema.org/
 application/ld+json
               </td>
               <td>
-https://schema.org/version/latest/schemaorg-current-https.jsonld
-              </td>
-            </tr>
-            <tr>
-              <td>
-https://w3id.org/security#
-              </td>
-              <td>
-text/html
-              </td>
-              <td>
-https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.html
+https://schema.org/version/22.0/schemaorg-all-https.jsonld<br><br>
+sha256: KToiFier2I43VBuzvTkHG1dnBZEnpwoThC5AozLhnzA=<br><br>
+sha3-512: uao4ahYBx+0pl5os+tg1CaljyXxVN4CpHtC19tESQF<wbr>
+QYx7Rd5nQww/F8/ERpnsay1gDECReEyZzmffwhWV3omQ==
               </td>
             </tr>
             <tr>
@@ -6057,25 +6032,18 @@ https://w3id.org/security#
 application/ld+json
               </td>
               <td>
-https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld
+https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld<br><br>
+sha256: LEaoTyf796eTaSlYWjfPe3Yb+poCW9TjWYTbFDmC0tc=<br><br>
+sha3-512: f4DhJ3xhT8nT+GZ8UUZi4QC+HT//wXE2fRTgUP4UNw<wbr>e4kvel2PFfd6jcofHBm9BjwEiGzVFGv4K+fFTKXRD2NA==
               </td>
             </tr>
           </tbody>
         </table>
 
-        <p class="issue" title="w3c.github.io links expected to change">
-The URLs listed above that start with
-`https://w3c.github.io/vc-data-integrity/vocab/security/` are expected to change
-to `https://www.w3.org/ns/security/` or an equally normative and archived
-location under W3C control.
-        </p>
-
-        <p class="issue" title="How to normatively refer to vocabulary files">
-The Working Group is currently discussing how it might want to normatively
-refer to the vocabulary files that are under the control of the Working Group.
-Current options are: inclusion of the files directly into the specification or
-publishing the files in W3C TR space and referring to them by using a
-cryptographic hash.
+        <p>
+It is possible to confirm the cryptographic digests listed above by running the
+following command from a modern Unix command interface line:
+`curl -sL -H "Accept: &lt;MEDIA_TYPE>" &lt;DOCUMENT_URL> | openssl dgst -&ltDIGEST_ALGORITHM> -binary | openssl base64 -nopad -a`
         </p>
 
         <p>
