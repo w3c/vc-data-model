@@ -5635,6 +5635,67 @@ checking the proofs on the <a>verifiable credentials</a>.
       </section>
 
       <section class="informative">
+        <h4>Holder</h4>
+        <p>
+The value associated with the <code>holder</code> <a>property</a> is expected
+to be usable to identify the <a>holder</a> to the <a>verifier</a>.
+        </p>
+        <p>
+Often relevant metadata about the <a>holder</a>, as identified by the value of the
+<code>holder</code> <a>property</a>, is available to, or
+retrievable by, the <a>verifier</a>. For example, a <a>holder</a> can
+publish information containing the verification material used to secure
+<a>verifiable presentations</a>. This metadata is expected to be used when
+checking proofs on <a>verifiable presentations</a>. Some cryptographic
+identifiers contain all necessary metadata in the identifier itself. In those 
+cases, no additional metadata is required. Other identifiers use verifiable
+data registries where such metadata is automatically published for use
+by <a>verifiers</a>, without any additional action by the <a>holder</a>.
+        </p>
+        <p>
+See the <a data-cite="VC-IMP-GUIDE/#subject-holder-relationships"></a> and
+<a data-cite="VC-USE-CASES#user-tasks"></a> for additional examples related to <a>subject</a> and <a>holder</a>.
+        </p>
+
+        <p class="note">
+Validation is the process by which verifiers apply business rules to 
+evaluate the propriety of a particular use of a <a>verifiable credential</a>.
+        </p>
+        <ul>
+          <li>
+          </li>
+        </ul>
+        <p>
+A <a>verifier</a> might need to validate a given <a>verifiable presentation</a>
+against complex business rules; for example, the verifier might need confidence
+that the <a>holder</a> is the same entity as a <a>subject</a> of a <a>verifiable
+credential</a>. In such a situation, the following factors can provide a
+<a>verifier</a> with reasonable confidence that the claims expressed regarding
+that identifier, in included <a>verifiable credentials</a>, are, in fact, about
+the current presenter:
+        </p>
+        <ul>
+          <li>
+The <a>verifiable presentation</a> is secured, 
+using a mechanism the <a>verifier</a> trusts to protect the integrity of the content.
+          </li>
+          <li>
+The <a>verifiable presentation</a> includes one or more <a>verifiable credentials</a> that are secured, 
+using a mechanism the <a>verifier</a> trusts to protect the integrity of the content.
+          </li>
+          <li>
+The identifier in the `holder` property of the <a>verifiable presentation</a> and
+at least one identifier property of at least one object in the `credentialSubject` array
+are the same.
+          </li>
+          <li>
+That common identifier can be used to discover or derive the verification
+material used to verify the integrity of that <a>verifiable presentation</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section class="informative">
         <h3>Issuance Date</h3>
 
         <p>
