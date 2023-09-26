@@ -1070,7 +1070,7 @@ the type of credential they would like to create. Since
 the `credentialSubject` object expresses a particular attribute of the
 credential subject. Once a developer has added a number of these property-value
 combinations, the modified object can be sent to <a>verifiable credential</a>
-issuer sofware and a <a>verifiable credential</a> will be created for the
+issuer software and a <a>verifiable credential</a> will be created for the
 developer. From a prototyping standpoint, that is all a developer needs to do.
         </p>
 
@@ -2178,9 +2178,10 @@ related normative guidance in Section <a href="#types"></a> MUST be followed.
           <dt><var id="defn-verifiableCredential">verifiableCredential</var></dt>
           <dd>
 The <code>verifiableCredential</code> <a>property</a> MAY be present. The value
-MUST be an array of one or more <a>verifiable credentials</a>, or of data
-derived from <a>verifiable credentials</a> in a cryptographically
-<a>verifiable</a> format.
+MUST be an array of one or more <a href="#verifiable-credential-graphs">
+verifiable credential graphs</a> in a cryptographically <a>verifiable</a> format.
+See Section <a href="#verifiable-credential-graphs"></a> for further details on
+this topic.
           </dd>
           <dt><var id="defn-holder">holder</var></dt>
           <dd>
@@ -2223,13 +2224,48 @@ The example below shows a <a>verifiable presentation</a>:
 
         <p>
 The contents of the <code>verifiableCredential</code> <a>property</a> shown
-above are <a>verifiable credentials</a>, as described by this specification. The
-contents of the <code>proof</code> <a>property</a> are proofs, as described by
-the Data Integrity [[VC-DATA-INTEGRITY]] specification. An example of a
-<a>verifiable presentation</a> using the JWT proof mechanism is
+above are <a href="#verifiable-credential-graphs">verifiable credential graphs</a>, as described by this
+specification. The contents of the <code>proof</code> <a>property</a> are proof
+graphs, as described by the Data Integrity [[VC-DATA-INTEGRITY]] specification.
+An example of a <a>verifiable presentation</a> using the JWT proof mechanism is
 provided in the Securing Verifiable Credentials using JOSE and COSE
 [[?VC-JOSE-COSE]] specification.
         </p>
+
+        <section>
+          <h4>Verifiable Credential Graphs</h4>
+
+          <p>
+When expressing <a>verifiable credentials</a> in a <a>presentation</a>, it is
+important to ensure that data in one <a>verifiable credential</a> is not
+mistaken to be the same data in another <a>verifiable credential</a>. For
+example, if one has two <a>verifiable credentials</a>, each containing an
+object of the following form: `{"type": "Person", "name": "Jane Doe"}`, it is
+not possible to tell if one object is describing the same person as the other
+object. In other words, merging data between two <a>verifiable credentials</a>
+without confirming that they are discussing the same entities and/or properties,
+can lead to a corrupted data set.
+          </p>
+
+          <p>
+To ensure that data from different <a>verifiable credentials</a> are not
+accidentally co-mingled, the concept of a
+<dfn class="lint-ignore">verifiable credential graph</dfn> is used to
+encapsulate each <a>verifiable credential</a>. Each value associated with the
+`verifiableCredential` property of a <a>presentation</a> is of type
+<dfn class="lint-ignore">VerifiableCredentialGraph</dfn> and contains a single
+<a>verifiable credential</a>. Using this type has a concrete effect on full
+JSON-LD processing, which properly separates graph node identifiers in one graph
+from those in another graph. Implementers that do not fully process JSON-LD will
+need to keep this in mind if they merge data from one <a>verifiable
+credential</a> with data from another, such as when the `credentialSubject.id`
+is the same in both <a>verifiable credentials</a>, but the object might contain
+objects of the "Jane Doe" form described in the previous paragraph. It is
+important to not merge objects that seem to have similar properties but do not
+contain an `id` property that uses a global identifier, such
+as a URL.
+          </p>
+        </section>
 
         <section>
           <h4>Presentations Using Derived Credentials</h4>
@@ -2325,7 +2361,7 @@ mechanism as the <a>verifiable presentation</a>.
     },
     { <span class="comment">...</span> }
   }],
-  "proof": [{ <span class="comment">...</span> }]</span>
+  "proof": [{ <span class="comment">...</span> }]
 }
           </pre>
           <p>
@@ -2354,7 +2390,7 @@ self-asserted <a>verifiable credential</a> that holds <a>claims</a> about the
     },
     { <span class="comment">...</span> }
   }],
-  "proof": [{ <span class="comment">...</span> }]</span>
+  "proof": [{ <span class="comment">...</span> }]
 }
           </pre>
         </section>
@@ -2956,6 +2992,7 @@ expression formats can be unified across all of the VCWG core specifications.
 Candidates for this mechanism include `digestSRI` and `digestMultibase`. There
 are arguments for and against unification that the WG is currently debating.
         </p>
+        <p>
 There MUST NOT be more than one object in the <code>relatedResource</code> per
 <code>id</code>.
         </p>
@@ -3029,9 +3066,7 @@ integrity protected image.
   },
   ...
 }
-            </pre>
-          </aside>
-        </p>
+        </pre>
       </section>
 
       <section>
@@ -5204,7 +5239,7 @@ credential</a> data during transmission or storage.
 A <a>verifier</a> might need to ensure it is the intended recipient of a
 <a>verifiable presentation</a> and not the target of a
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>.
-Some <a href=#securing-verifiable-credentials>securing mechanisms</a>,
+Some <a href="#securing-verifiable-credentials">securing mechanisms</a>,
 like [[VC-JOSE-COSE]] or [[VC-DATA-INTEGRITY]], provide an option to specify
 the intended audience or domain of a <a>presentation</a>, which can help reduce
 this risk.
@@ -5322,7 +5357,7 @@ of non-repudiation mechanisms. These mechanisms solidify an <a>entity</a>'s resp
 for their actions or transactions, thereby reinforcing accountability and deterring
 malicious behaviors. The attainment of non-repudiation is a multifaceted endeavor,
 encompassing an array of techniques ranging from
-<a href=#securing-verifiable-credentials>securing mechanisms</a>, proofs of possession,
+<a href="#securing-verifiable-credentials">securing mechanisms</a>, proofs of possession,
 and authentication schemes in a variety of protocols designed to foster trust and reliability.
         </p>
       </section>
@@ -5647,7 +5682,7 @@ retrievable by, the <a>verifier</a>. For example, a <a>holder</a> can
 publish information containing the verification material used to secure
 <a>verifiable presentations</a>. This metadata is expected to be used when
 checking proofs on <a>verifiable presentations</a>. Some cryptographic
-identifiers contain all necessary metadata in the identifier itself. In those 
+identifiers contain all necessary metadata in the identifier itself. In those
 cases, no additional metadata is required. Other identifiers use verifiable
 data registries where such metadata is automatically published for use
 by <a>verifiers</a>, without any additional action by the <a>holder</a>.
@@ -5658,7 +5693,7 @@ See the <a data-cite="VC-IMP-GUIDE/#subject-holder-relationships"></a> and
         </p>
 
         <p class="note">
-Validation is the process by which verifiers apply business rules to 
+Validation is the process by which verifiers apply business rules to
 evaluate the propriety of a particular use of a <a>verifiable credential</a>.
         </p>
         <ul>
@@ -5676,11 +5711,11 @@ the current presenter:
         </p>
         <ul>
           <li>
-The <a>verifiable presentation</a> is secured, 
+The <a>verifiable presentation</a> is secured,
 using a mechanism the <a>verifier</a> trusts to protect the integrity of the content.
           </li>
           <li>
-The <a>verifiable presentation</a> includes one or more <a>verifiable credentials</a> that are secured, 
+The <a>verifiable presentation</a> includes one or more <a>verifiable credentials</a> that are secured,
 using a mechanism the <a>verifier</a> trusts to protect the integrity of the content.
           </li>
           <li>
@@ -5865,6 +5900,17 @@ if a cryptographic hash value for a resource does not match the expected hash
 value.
         </p>
         <p>
+Implementations that apply the base context above, as well as other contexts
+and values in any `@context` property, during operations such as
+<a href="https://www.w3.org/TR/json-ld11-api/#expansion-algorithm">
+JSON-LD Expansion</a> or
+<a href="https://www.w3.org/TR/json-ld11/#serializing-deserializing-rdf">
+transformation to RDF</a>, are expected to do so without experiencing any
+errors. If such operations are performed and result in an error,
+the <a>verifiable credential</a> or <a>verifiable presentation</a> MUST result
+in a verification failure.
+        </p>
+        <p>
 It is possible to confirm the SHA-384 digest above by running the following
 command from a modern Unix command interface line:
 `curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha384 -binary | openssl base64 -A`
@@ -6023,6 +6069,104 @@ Current options are: inclusion of the files directly into the specification or
 publishing the files in W3C TR space and referring to them by using a
 cryptographic hash.
         </p>
+
+        <p>
+The following base classes are defined in this specification for processors
+and other specifications that benefit from such definitions:
+        </p>
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Base Class</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="bc-credential-evidence">
+              <td>
+`CredentialEvidence`
+              </td>
+              <td>
+Serves as a superclass for specific evidence types that are placed into the
+<a href="#evidence">evidence</a> property. <span class="issue atrisk">This
+superclass is at risk and will be removed if at least two independent
+implementations for the superclass are not identified by the end of the
+Candidate Recommendation phase.</span>
+              </td>
+            </tr>
+            <tr id="bc-credential-schema">
+              <td>
+`CredentialSchema`
+              </td>
+              <td>
+Serves as a superclass for specific schema types that are placed into the
+<a href="#data-schemas">credentialSchema</a> property.
+              </td>
+            </tr>
+            <tr id="bc-credential-status">
+              <td>
+`CredentialStatus`
+              </td>
+              <td>
+Serves as a superclass for specific credential status types that are placed into
+the <a href="#status">credentialStatus</a> property.
+              </td>
+            </tr>
+            <tr id="bc-confidence-method">
+              <td>
+`ConfidenceMethod`
+              </td>
+              <td>
+Serves as a superclass for specific confidence method types that are placed into
+the `confidenceMethod` property.
+<span class="issue atrisk">This superclass is at risk and will be removed if
+at least two independent implementations for the superclass are not identified
+by the end of the Candidate Recommendation phase.
+</span>
+              </td>
+            </tr>
+            <tr id="bc-refresh-service">
+              <td>
+`RefreshService`
+              </td>
+              <td>
+Serves as a superclass for specific refresh service types that are placed into
+the <a href="#refreshing">credentialRefresh</a> property.
+<span class="issue atrisk">This superclass is at risk and will be removed if
+at least two independent implementations for the superclass are not identified
+by the end of the Candidate Recommendation phase.
+</span>
+              </td>
+            </tr>
+            <tr id="bc-render-method">
+              <td>
+`RenderMethod`
+              </td>
+              <td>
+Serves as a superclass for specific render method types that are placed into
+the `renderMethod` property.
+<span class="issue atrisk">This superclass is at risk and will be removed if
+at least two independent implementations for the superclass are not identified
+by the end of the Candidate Recommendation phase.
+</span>
+              </td>
+            </tr>
+            <tr id="bc-terms-of-use">
+              <td>
+`TermsOfUse`
+              </td>
+              <td>
+Serves as a superclass for specific terms of use types that are placed into
+the <a href="#terms-of-use">termsOfUse</a> property.
+<span class="issue atrisk">This superclass is at risk and will be removed if
+at least two independent implementations for the superclass are not identified
+by the end of the Candidate Recommendation phase.
+</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
       </section>
       <section class="informative">
