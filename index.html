@@ -2179,9 +2179,7 @@ related normative guidance in Section <a href="#types"></a> MUST be followed.
           <dd>
 The <code>verifiableCredential</code> <a>property</a> MAY be present. The value
 MUST be an array of one or more <a href="#verifiable-credential-graphs">
-verifiable credential graphs</a>, or <a href="#verifiable-credential-graphs">
-verifiable credential graphs</a> that are derived from
-<a>verifiable credentials</a>, in a cryptographically <a>verifiable</a> format.
+verifiable credential graphs</a> in a cryptographically <a>verifiable</a> format.
 See Section <a href="#verifiable-credential-graphs"></a> for further details on
 this topic.
           </dd>
@@ -2226,7 +2224,7 @@ The example below shows a <a>verifiable presentation</a>:
 
         <p>
 The contents of the <code>verifiableCredential</code> <a>property</a> shown
-above are <a>verifiable credential</a> graphs, as described by this
+above are <a href="#verifiable-credential-graphs">verifiable credential graphs</a>, as described by this
 specification. The contents of the <code>proof</code> <a>property</a> are proof
 graphs, as described by the Data Integrity [[VC-DATA-INTEGRITY]] specification.
 An example of a <a>verifiable presentation</a> using the JWT proof mechanism is
@@ -2244,26 +2242,27 @@ mistaken to be the same data in another <a>verifiable credential</a>. For
 example, if one has two <a>verifiable credentials</a>, each containing an
 object of the following form: `{"type": "Person", "name": "Jane Doe"}`, it is
 not possible to tell if one object is describing the same person as the other
-object. In other words, prematurely merging data between two
-<a>verifiable credentials</a> can lead to a corrupted data model.
+object. In other words, merging data between two <a>verifiable credentials</a>
+without confirming that they are discussing the same entities and/or properties,
+can lead to a corrupted data set.
           </p>
 
           <p>
-In order to ensure that data from different <a>verifiable credentials</a> are
+To ensure that data from different <a>verifiable credentials</a> are
 not accidentally co-mingled, the concept of a
-<dfn class="lint-ignore">verifiable credential graph</dfn> is utilized to
-encapsulate the <a>verifiable credential</a>. The value(s) associated with the
-`verifiableCredential` property on a <a>presentation</a> is of type
+<dfn class="lint-ignore">verifiable credential graph</dfn> is used to
+encapsulate each <a>verifiable credential</a>. Each value associated with the
+`verifiableCredential` property of a <a>presentation</a> is of type
 <dfn class="lint-ignore">VerifiableCredentialGraph</dfn>. Using this type has a
 concrete effect on full JSON-LD processing, which properly separates graph
-node identifiers in one graph vs. another graph. Implementers that do not do
-full JSON-LD processing will need to keep this in mind if they merge data
-from one <a>verifiable credential</a> into another, such as when the
-`credentialSubject.id` is the same in both <a>verifiable credentials</a> but
+node identifiers in one graph from those in another graph. Implementers that do not
+fully process JSON-LD will need to keep this in mind if they merge data
+from one <a>verifiable credential</a> with data from another, such as when the
+`credentialSubject.id` is the same in both <a>verifiable credentials</a>, but
 the object might contain objects of the "Jane Doe" form described in the
-previous paragraph. Care is to be taken to not merge objects that use
-document-relative identifiers, such as blank node identifiers, and only
-perform merges when global identifiers, such as URLs, are utilized.
+previous paragraph. It is important to not merge objects that use
+document-relative identifiers, such as blank node identifiers, and to only
+perform merges when global identifiers, such as URLs, are used.
           </p>
         </section>
 
