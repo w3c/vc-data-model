@@ -3189,13 +3189,15 @@ information.
 Examples for the value of the <code>termsOfUse</code> <a>property</a> may be
 to tells the <a>verifier</a> 
 <li>
-- what actions it is required to perform (an <em>obligation</em>),
+what actions it is required to perform (an <em>obligation</em>),
 not allowed to perform (a <em>prohibition</em>), or allowed to perform (a
 <em>permission</em>) if it is to accept the <a>verifiable credential</a> or
 <a>verifiable presentation</a>;
 </li>
 <li>
-- what procedures or policies were used in issuing the verifiable credential, for example, by providing a pointer to the location where these procedures or policies can be found, or naming the standard that defines them.
+what procedures or policies were used in issuing the verifiable credential,
+for example, by providing a pointer to the location where these procedures 
+or policies can be found, or naming the standard that defines them.
 </li>
         </p>
 <p>
@@ -3233,36 +3235,37 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
+  id: "urn:did:123456",
+  type: ["VerifiableCredential", "VerifiableAttestation", "VerifiableId"],
+  issuer: "did:ebsi:zz7XsC9ixAXuZecoD9sZEM1",
+  issuanceDate: "2021-11-01T00:00:00Z",
+  validFrom: "2021-11-01T00:00:00Z",
+  issued: "2021-10-30T00:00:00Z",
+  credentialSubject: {
+    id: "did:key:z2dmzD81cgPx8Vki7JbuuMmFYrWPgYoytykUZ3eyqht1j9KbrDt4zxXoDrBWYFiATYZ8G9JMeEXC7Kki24fbTwtsJbGe5qcbkYFunSzcDokMRmj8UJ1PbdCGh33mf97K3To89bMzd15qrYq3VkDztoZqfmujkJVpvTbqoXWXqxmzNDbvMJ",
+    personalIdentifier: "IT/DE/1234",
+    familyName: "Castafiori",
+    firstName: "Bianca",
+    dateOfBirth: "1930-10-01",
   },
-  <span class="highlight">"termsOfUse": [{
-    "type": "IssuerPolicy",
-    "id": "http://example.com/policies/credential/4",
-    "profile": "http://example.com/profiles/credential",
-    "prohibition": [{
-      "assigner": "https://university.example/issuers/14",
-      "assignee": "AllVerifiers",
-      "target": "http://university.example/credentials/3732",
-      "action": ["Archival"]
-    }]
-  }]
-  </span>
+  credentialSchema: {
+    id: "https://api-test.ebsi.eu/trusted-schemas-registry/v2/schemas/z3MgUFUkb722uq4x3dv5yAJmnNmzDFeK5UC8x83QoeLJM",
+    type: "FullJsonSchemaValidator2021",
+  },
+  expirationDate: "2031-11-30T00:00:00Z",
+  termsOfUse: {
+    id: "https://api-test.ebsi.eu/trusted-issuers-registry/v4/issuers/did:ebsi:zz7XsC9ixAXuZecoD9sZEM1/attributes/7201d95fef05f72667f5454c2192da2aa30d9e052eeddea7651b47718d6f31b0",
+    type: "IssuanceCertificate",
+  }
 }
         </pre>
 
         <p>
-In the example above, the <a>issuer</a> (the <code>assigner</code>) is
-prohibiting <a>verifiers</a> (the <code>assignee</code>) from storing the data
-in an archive.
+In the example above, the <a>issuer</a> is asserting that it is an accredited issuer
+and is registered in the EBSI register of trusted issuers. 
+The <a>id</a> can be resolved by the verifier
+and this will reveal that the <a>issuer</a>  has been issued an accreditation VC (in JWT format)
+by a trusted issuer higher in the EBSI trust chain. (See https://ec.europa.eu/digital-building-blocks/wikis/download/attachments/600343491/Chapter%205%20-%20Issuer%20Trust%20Model%20%20.pdf?api=v2 for more details of the EBSI Trust Model.) 
         </p>
 
         <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
