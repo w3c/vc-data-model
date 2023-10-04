@@ -93,6 +93,14 @@ var vcwg = {
       status:   'CG-DRAFT',
       publisher:  'Credentials W3C Community Group'
     },
+    // todo: replace all references to RDF-NORMALIZATION, with this.
+    'RDF-CANON': {
+      title: 'RDF Dataset Canonicalization',
+      href: 'https://www.w3.org/TR/rdf-canon/',
+      authors: ['Dave Longley', 'Gregg Kellogg', 'Dan Yamamoto'],
+      status:   'WG-DRAFT',
+      publisher:  'RDF Dataset Canonicalization and Hash Working Group'
+    },
     'DEMOGRAPHICS': {
       title: 'Simple Demographics Often Identify People Uniquely',
       href: 'https://dataprivacylab.org/projects/identifiability/paper1.pdf',

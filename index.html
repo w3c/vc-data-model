@@ -4240,47 +4240,54 @@ content type, or return an error code such as
         </section>
 
         <section class="informative">
-          <h2>JSON Processing</h2>
-
+          <h2>JSON-LD Processing</h2>
           <p>
 While the media types describing conforming documents defined in this
-specification always express JSON-LD, JSON-LD processing is not required to be
-performed, since JSON-LD is JSON. Some scenarios where processing a
-<a>verifiable credential</a> or a <a>verifiable presentation</a> as JSON is
+specification always express JSON-LD, RDF processing is not required to be
+performed, since JSON-LD is a concrete RDF syntax as described in [RDF11-CONCEPTS]. 
+Hence, a JSON-LD document is both an RDF document and a JSON document and correspondingly represents an instance of an RDF data model.
+See <a href="JSON-LD11##relationship-to-rdf">Relationship to RDF</a> for more details.
+          </p>
+          <p>
+Some scenarios where processing a <a>verifiable credential</a> or a <a>verifiable presentation</a> as RDF is
 desirable include, but are not limited to:
           </p>
-
           <ul>
             <li>
-Before securing or after verifying content
-that requires <a href="https://csrc.nist.gov/glossary/term/data_integrity">data
-integrity</a>, such as a
-<a>verifiable credential</a> or <a>verifiable presentation</a>.
+Before securing or after verifying <a>verifiable credentials</a> or <a>verifiable presentations</a>,
+in cases where the issuer has leveraged the <code>@context</code> to provide details regarding 
+their intended expression of the <a href="#verifiable-credential-graphs">Verifiable Credential Graphs</a>.
             </li>
             <li>
-When performing JSON Schema validation, as described in Section
-<a href="#data-schemas"></a>.
+After performing JSON Schema validation, as described in Section
+<a href="#data-schemas"></a>, in order to mitigate attacks 
+on the canonicalization process as described in <a href="https://w3c.github.io/rdf-canon/spec/#dataset-poisoning">Dataset Poisoning</a>
             </li>
             <li>
 When serializing or deserializing <a>verifiable credentials</a> or
-<a>verifiable presentations</a> into systems that store or index their contents.
+<a>verifiable presentations</a> into systems that store or index claims about subject in
+<code>text/turtle</code>, <code>application/n-quads</code>, <code>application/ld+json</code>. 
             </li>
             <li>
-When operating on <a>verifiable credentials</a> or <a>verifiable
-presentations</a> in a software application, after verification or validation
-is performed for securing mechanisms that require an understanding of
-and/or processing of JSON-LD.
+When validating <a>verifiable credentials</a> or <a>verifiable
+presentations</a> in a software application, after verification 
+is performed for securing mechanisms that do not require an understanding
+or processing of JSON-LD.
             </li>
             <li>
-When an application chooses to process the media type using the `+json`
+When an application chooses to process the media type using the `+ld+json`
 structured media type suffix.
             </li>
           </ul>
 
           <p>
-That is, JSON processing is allowed as long as the document being consumed or
-produced is a <a>conforming document</a>. If JSON processing is desired, an
-implementer is advised to follow the following rule:
+Naive JSON processing is allowed as long as the document being consumed or
+produced is a <a>conforming document</a>, however, this can lead to interoperability issues 
+and confusion about the specific information that has been secured between JSON-LD and RDF processors.
+          </p>
+
+          <p>
+Implementers unfamilar with JSON-LD / RDF are advised:
           </p>
 
           <ul>
@@ -4297,19 +4304,60 @@ Using static context files with a JSON Schema is one acceptable approach to
 implementing the rule above. This can ensure proper term identification,
 typing, and order, when a JSON document is processed as JSON-LD.
           </p>
-
           <p>
-The rule above guarantees semantic interoperability between JSON and JSON-LD for
-literal JSON keys mapped to URIs by the `@context` mechanism. While JSON-LD
-processors will use the specific mechanism provided and can verify that all
-terms are correctly specified, JSON-based processors implicitly accept the same
-semantics without performing any JSON-LD transformations, but instead by
-applying the above rules. In other words, the context in which the data exchange
-happens is explicitly stated for both JSON and JSON-LD by using the same
-mechanism. With respect to JSON-based processors, this is achieved in a
-lightweight manner, without having to use JSON-LD processing libraries.
+However, the intention of the issuer is not preserved, unless the <code>@context</code>
+is applied, and the resulting <a href="#verifiable-credential-graphs">Verifiable Credential Graphs</a>,
+and their exact RDF types, and node and edge structure is understood by the verifier.
           </p>
 
+          <p>
+These rules alone do not guarantee semantic interoperability between JSON and JSON-LD for
+literal JSON keys mapped to URIs by the `@context` mechanism.
+          </p>
+While some RDF processors will use the langauge features of JSON-LD and can verify that all
+terms are correctly specified, JSON-LD processors implicitly accept the same
+semantics without performing any RDF transformations, but instead by
+applying the above rules. In other words, the context in which the data exchange
+happens is explicitly stated for both RDF and JSON-LD by using the same
+mechanism. With respect to JSON-LD-based processors, this is achieved in a
+lightweight manner, without having to use RDF processing libraries.
+          </p>
+        </section>
+        <section>
+          <h2>Advanced RDF Processing</h2>
+          <p>
+Issuers should be aware that while conforming documents are expressed as compact JSON-LD,
+not all Holders or Verifiers will understand expressions of intention that are only visible 
+after RDF processing has occured.
+          </p>
+          <p>
+Some of the best features of JSON-LD are only possible by applying its langauge features to the 
+terms defined in the <code>@context</code>.
+          </p>
+          <p>
+Implementers should be aware that <code>id</code> and <code>type</code> have been
+aliased to <code>@id</code> and <code>@type</code>, and are marked <code>@protected</code>.
+Depending on the software libraries used, attempts to redefine these terms may raise processing errors.
+Implementers interested in the details being what <code>@id</code> means 
+should review <a href="https://www.w3.org/TR/json-ld11/#node-identifiers">Node Identifiers</a>, and
+<a href="https://www.w3.org/TR/json-ld11/#specifying-the-type">Specifying the Type</a>.
+          </p>
+          <p>
+Implementers should be aware that object member, and array element order are not preserved by default in JSON-LD,
+and as such, Issuers intending to communicate array order need to leverage the langauge features of JSON-LD.
+See <a href="https://www.w3.org/TR/json-ld11/#sets-and-lists">Value Ordering</a>.
+          </p>
+          <p>
+Implementers should be aware that while naive JSON interpretation of claims might make it appear that claims are related,
+the <code>https://www.w3.org/ns/credentials/v2</code> leverages <code>@container</code> and <code>@graph</code> to seperate information graphs.
+In particular, to seperate the graphs related to <a>verifiable credentials</a>, <a>verifiable presentations</a>
+and <code>data integrity proofs</code>.
+          </p>
+          <p>
+Issuers and Holders might apply these same techniques to unambigiously communicate their intention regarding structured claims in 
+<a>verifiable credentials</a> and <a>verifiable presentations</a>. Verifiers that do not understand or process JSON-LD, will not 
+be aware of these differences, and confusion over the intention of the issuer and the holder could lead to unexpected processing behavior by verifiers.
+          </p>
         </section>
       </section>
 
