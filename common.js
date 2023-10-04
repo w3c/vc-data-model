@@ -5,15 +5,6 @@ var vcwg = {
   // Add as the respecConfig localBiblio variable
   // Extend or override global respec references
   localBiblio: {
-    "REST": {
-      title: "Architectural Styles and the Design of Network-based Software Architectures",
-      date: "2000",
-      href: "http://www.ics.uci.edu/~fielding/pubs/dissertation/",
-      authors: [
-        "Fielding, Roy Thomas"
-      ],
-      publisher: "University of California, Irvine."
-    },
     "VC-SPECS": {
       title: "Verifiable Credential Specifications Directory",
       href: "https://w3c.github.io/vc-specs-dir/",
@@ -44,17 +35,6 @@ var vcwg = {
       status: "WD",
       publisher: "Verifiable Credentials Working Group"
     },
-    "LDP-REGISTRY": {
-      title: "Linked Data Cryptographic Suite Registry",
-      href: "https://w3c-ccg.github.io/ld-cryptosuite-registry/",
-      authors: [
-        "Manu Sporny",
-        "Drummond Reed",
-        "Orie Steele"
-      ],
-      status: "CG-DRAFT",
-      publisher: "Credentials Community Group"
-    },
     "CL-SIGNATURES": {
       title: "A Signature Scheme with Efficient Protocols",
       href: "https://www.researchgate.net/publication/220922101_A_Signature_Scheme_with_Efficient_Protocols",
@@ -64,10 +44,6 @@ var vcwg = {
       ],
       status: "Peer Reviewed Paper",
       publisher: "IBM Research"
-    },
-    // aliases to known references
-    "HTTP-SIGNATURES": {
-      aliasOf: "http-signatures"
     },
     // todo: is there a better reference here?
     'DEMOGRAPHICS': {
@@ -83,8 +59,8 @@ var vcwg = {
       status: 'ED',
       publisher: 'Credentials Community Group'
     },
-    'VC-JSON-SCHEMA-2023': {
-      title: 'Verifiable Credentials JSON Schema 2023',
+    'VC-JSON-SCHEMA': {
+      title: 'Verifiable Credentials JSON Schema Specification',
       href: 'https://www.w3.org/TR/vc-json-schema/',
       authors: ['Gabe Cohen', 'Orie Steele'],
       status: 'FPWD',
