@@ -55,16 +55,6 @@ var vcwg = {
       status: "CG-DRAFT",
       publisher: "Credentials Community Group"
     },
-    "CL-SIGNATURES": {
-      title: "A Signature Scheme with Efficient Protocols",
-      href: "https://www.researchgate.net/publication/220922101_A_Signature_Scheme_with_Efficient_Protocols",
-      authors: [
-        "Jan Camenisch",
-        "Anna Lysyanskaya"
-      ],
-      status: "Peer Reviewed Paper",
-      publisher: "IBM Research"
-    },
     // aliases to known references
     "HTTP-SIGNATURES": {
       aliasOf: "http-signatures"
