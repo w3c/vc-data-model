@@ -69,30 +69,7 @@ var vcwg = {
     "HTTP-SIGNATURES": {
       aliasOf: "http-signatures"
     },
-    "MACAROONS": {
-      title: 'Macaroons',
-      // TODO: create spec
-      href: 'http://macaroons.io/',
-      authors: ['Arnar Birgisson', 'Joe Gibbs Politz', 'Úlfar Erlingsson',
-        'Ankur Taly', 'Michael Vrable', 'Mark Lentczner'],
-      status: 'unofficial',
-      publisher: 'Credentials Community Group'
-    },
-    'OPEN-BADGES': {
-      title: 'Open Badges',
-      href: 'https://github.com/openbadges/openbadges-specification',
-      authors: ['Brian Brennan', 'Mike Larsson', 'Chris McAvoy',
-        'Nate Otto', 'Kerri Lemoie'],
-      status:   'BA-DRAFT',
-      publisher:  'Badge Alliance Standard Working Group'
-    },
-    'RDF-NORMALIZATION': {
-      title: 'RDF Dataset Normalization',
-      href: 'http://json-ld.github.io/normalization/spec/',
-      authors: ['Dave Longley', 'Manu Sporny'],
-      status:   'CG-DRAFT',
-      publisher:  'Credentials W3C Community Group'
-    },
+    // todo: is there a better reference here?
     'DEMOGRAPHICS': {
       title: 'Simple Demographics Often Identify People Uniquely',
       href: 'https://dataprivacylab.org/projects/identifiability/paper1.pdf',
@@ -105,18 +82,6 @@ var vcwg = {
       authors: ['Andrei Sambra', 'Manu Sporny'],
       status: 'ED',
       publisher: 'Credentials Community Group'
-    },
-    'HASHLINK': {
-      title: 'Cryptographic Hyperlinks',
-      href: 'https://datatracker.ietf.org/doc/draft-sporny-hashlink/',
-      authors: ['Manu Sporny'],
-      status: 'Internet-Draft',
-      publisher: 'Internet Engineering Task Force (IETF)'
-    },
-    'IPFS': {
-      title: 'InterPlanetary File System (IPFS)',
-      href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
-      publisher: 'Wikipedia'
     },
     'VC-JSON-SCHEMA-2023': {
       title: 'Verifiable Credentials JSON Schema 2023',
