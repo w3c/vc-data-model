@@ -33,6 +33,13 @@ var vcwg = {
       status: "WD",
       publisher: "Internationalization Working Group"
     },
+    "EBSI": {
+      title: "EBSI W3C Verifiable Credentials (VCs) and W3C Verifiable Presentations (VPs)",
+      href: ["https://ec.europa.eu/digital-building-blocks/wikis/display/EBSIDOC/Verifiable+Attestation", "https://ec.europa.eu/digital-building-blocks/wikis/display/EBSIDOC/Issuers+trust+model+-+Accreditation+of+Issuers"],
+      authors: "European Blockchain Services Infrastructure (EBSI)",
+      status: "Developers hub materials",
+      publisher: "European Commission"
+    },
     "VC-DATA-INTEGRITY": {
       title: "Verifiable Credential Data Integrity",
       href: "https://www.w3.org/TR/vc-data-integrity/",
