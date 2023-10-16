@@ -2931,7 +2931,7 @@ the <a>verifiable credential</a> are the same when used by both the
         <p>
 To validate that a resource referenced by a <a>verifiable credential</a> is the
 same at verification time as it is at issuing time, an implementer MAY include a
-property named <code>relatedResource</code> that stores an array of objects that
+property named <code id="defn-relatedResource">relatedResource</code> that stores an array of objects that
 describe additional integrity metadata about each resource referenced by the
 <a>verifiable credential</a>. If <code>relatedResource</code> is present, there
 MUST be an object in the array for each remote resource for each context used in
@@ -2945,7 +2945,7 @@ the specification.
         <p>
 Each object in the <code>relatedResource</code> array MUST contain the
 following: the [[URL]] to the resource named <code>id</code> and the
-<code>digestSRI</code> information for the resource constructed using the method
+<code id="defn-digestSRI">digestSRI</code> information for the resource constructed using the method
 specified in <a href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource
 Integrity</a>.
         </p>
@@ -6051,6 +6051,54 @@ by the end of the Candidate Recommendation phase.
         </table>
 
       </section>
+
+      <section>
+        <h3>Datatypes</h3>
+        <p>
+          This section defines datatypes that are used by this specification.
+        </p>
+
+        <section>
+            <h4>The <code>sriString</code> Datatype</h4>
+        
+            <p>
+              The string provides the integrity information for a resource using the method specified in the [[SRI]] specification.
+            </p>
+        
+            <p>
+              The `sriString` datatype is defined as follows:
+            </p>
+        
+            <dl>
+              <dt>The URL denoting this datatype</dt>
+              <dd>
+                `https://www.w3.org/2018/credentials#sriString`
+              </dd>
+              <dt>The lexical space</dt>
+              <dd>
+                See the <a href="https://www.w3.org/TR/SRI/#the-integrity-attribute">ABNF grammar</a>, defining the `integrity` 
+                attribute in the [[SRI]] specification, for the restrictions on the string format.
+              </dd>
+              <dt>The value space</dt>
+              <dd>
+                A (possibly empty) list of <i>(alg,val)</i> pairs, where <i>alg</i> identifies a hash function, and <i>val</i> is an integer as a standard mathematical concept.
+              </dd>
+              <dt>The lexical-to-value mapping</dt>
+              <dd>
+                Any element of the lexical space is mapped to the value space by   
+                following the <a href="https://www.w3.org/TR/SRI/#parse-metadata">parse metadata algorithm</a> based
+                on the <a href="https://www.w3.org/TR/SRI/#the-integrity-attribute">ABNF grammar</a> in the [[SRI]] specification.
+              </dd>
+              <dt>The canonical mapping</dt>
+              <dd>
+                The canonical mapping consists of the lexical-to-value mapping.
+              </dd>
+            </dl>
+        </section>
+
+
+      </section>
+
       <section class="informative">
         <h3>Differences between Contexts, Types, and CredentialSchemas</h3>
 
