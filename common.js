@@ -35,38 +35,6 @@ var vcwg = {
       status: "WD",
       publisher: "Verifiable Credentials Working Group"
     },
-    "LDP-REGISTRY": {
-      title: "Linked Data Cryptographic Suite Registry",
-      href: "https://w3c-ccg.github.io/ld-cryptosuite-registry/",
-      authors: [
-        "Manu Sporny",
-        "Drummond Reed",
-        "Orie Steele"
-      ],
-      status: "CG-DRAFT",
-      publisher: "Credentials Community Group"
-    },
-    // aliases to known references
-    "HTTP-SIGNATURES": {
-      aliasOf: "http-signatures"
-    },
-    "MACAROONS": {
-      title: 'Macaroons',
-      // TODO: create spec
-      href: 'http://macaroons.io/',
-      authors: ['Arnar Birgisson', 'Joe Gibbs Politz', 'Úlfar Erlingsson',
-        'Ankur Taly', 'Michael Vrable', 'Mark Lentczner'],
-      status: 'unofficial',
-      publisher: 'Credentials Community Group'
-    },
-    'OPEN-BADGES': {
-      title: 'Open Badges',
-      href: 'https://github.com/openbadges/openbadges-specification',
-      authors: ['Brian Brennan', 'Mike Larsson', 'Chris McAvoy',
-        'Nate Otto', 'Kerri Lemoie'],
-      status:   'BA-DRAFT',
-      publisher:  'Badge Alliance Standard Working Group'
-    },
     'RDF-NORMALIZATION': {
       title: 'RDF Dataset Normalization',
       href: 'http://json-ld.github.io/normalization/spec/',
@@ -100,13 +68,6 @@ var vcwg = {
       authors: ['Gregg Kellogg', 'Manu Sporny', 'Dave Longley', 'Markus Lanthaler', 'Pierre-Antoine Champin', 'Niklas Lindström'],
       status: 'WD',
       publisher: 'W3C JSON-LD 1.1 Working Group'
-    },
-    'VC-JWT': {
-      title: 'Securing Verifiable Credentials using JSON Web Tokens',
-      href: 'https://w3c.github.io/vc-jwt/',
-      authors: ['Orie Steele', 'Michael Jones'],
-      status: 'ED',
-      publisher: 'W3C Verifiable Credentials Working Group'
     },
     'VC-SPECS': {
       title: 'Verifiable Credentials Specifications Directory',
