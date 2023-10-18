@@ -35,17 +35,45 @@ var vcwg = {
       status: "WD",
       publisher: "Verifiable Credentials Working Group"
     },
-    "CL-SIGNATURES": {
-      title: "A Signature Scheme with Efficient Protocols",
-      href: "https://www.researchgate.net/publication/220922101_A_Signature_Scheme_with_Efficient_Protocols",
+    "LDP-REGISTRY": {
+      title: "Linked Data Cryptographic Suite Registry",
+      href: "https://w3c-ccg.github.io/ld-cryptosuite-registry/",
       authors: [
-        "Jan Camenisch",
-        "Anna Lysyanskaya"
+        "Manu Sporny",
+        "Drummond Reed",
+        "Orie Steele"
       ],
-      status: "Peer Reviewed Paper",
-      publisher: "IBM Research"
+      status: "CG-DRAFT",
+      publisher: "Credentials Community Group"
     },
-    // todo: is there a better reference here?
+    // aliases to known references
+    "HTTP-SIGNATURES": {
+      aliasOf: "http-signatures"
+    },
+    "MACAROONS": {
+      title: 'Macaroons',
+      // TODO: create spec
+      href: 'http://macaroons.io/',
+      authors: ['Arnar Birgisson', 'Joe Gibbs Politz', 'Úlfar Erlingsson',
+        'Ankur Taly', 'Michael Vrable', 'Mark Lentczner'],
+      status: 'unofficial',
+      publisher: 'Credentials Community Group'
+    },
+    'OPEN-BADGES': {
+      title: 'Open Badges',
+      href: 'https://github.com/openbadges/openbadges-specification',
+      authors: ['Brian Brennan', 'Mike Larsson', 'Chris McAvoy',
+        'Nate Otto', 'Kerri Lemoie'],
+      status:   'BA-DRAFT',
+      publisher:  'Badge Alliance Standard Working Group'
+    },
+    'RDF-NORMALIZATION': {
+      title: 'RDF Dataset Normalization',
+      href: 'http://json-ld.github.io/normalization/spec/',
+      authors: ['Dave Longley', 'Manu Sporny'],
+      status:   'CG-DRAFT',
+      publisher:  'Credentials W3C Community Group'
+    },
     'DEMOGRAPHICS': {
       title: 'Simple Demographics Often Identify People Uniquely',
       href: 'https://dataprivacylab.org/projects/identifiability/paper1.pdf',
