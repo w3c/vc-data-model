@@ -755,28 +755,29 @@ disclosure scheme that does not reveal the <a>credential</a> identifier.
 <a href="#basic-vc"></a> above shows the basic components of a
 <a>verifiable credential</a>, but abstracts the details about how <a>claims</a>
 are organized into information <a>graphs</a>, which are then organized into
-<a>verifiable credentials</a>. <a href="#info-graph-vc"></a> below shows a
+<a>verifiable credentials</a>. 
+<a href="#info-graph-vc"></a> below shows a
 more complete depiction of a <a>verifiable credential</a>, which is normally
-composed of at least two information <a>graphs</a>. The first <a>graph</a>
+composed of at least two collections of <a>claims</a>. The first collection
 expresses the <a>verifiable credential</a> itself, which contains credential
-metadata and <a>claims</a>. The second <a>graph</a> expresses the digital proof,
-which is usually a digital signature.
+metadata and application specific <a>claims</a>. The second collection expresses the digital proof,
+which is usually a digital signature, and which is enclosed in a separate <a>graph</a>.
         </p>
 
         <figure id="info-graph-vc">
           <img style="margin: auto; display: block; width: 100%;"
                src="diagrams/vc-graph.svg" alt="diagram with a
-               Credential Graph on top connected via a proof to a
-               Proof Graph on the bottom.  The Credential Graph has
-               Credential 123 with 4 properties: 'type' of value
+               collections of claims for a Verifiable Credential on top connected via a proof to a
+               Verifiable Credential Proof Graph on the bottom.  The claims for a Verifiable Credential has
+               Credential 123 as a subject with 4 properties: 'type' of value
                ExampleAlumniCredential, 'issuer' of Example University,
                'validFrom' of 2010-01-01T19:23:24Z, and
                credentialSubject of Pat, who has an alumniOf property
-               with value of Example University.  The Proof Graph has
-               Signature 456 with 5 properties: 'type' of
+               with value of Example University.  The Verifiable Credential Proof Graph has
+               Signature 456 subject with 5 properties: 'type' of
                DataIntegrityProof, 'verificationMethod' of Example University
-               Public Key 7, 'created' of 2017-06-18T21:19:10Z, and 'jws'
-               of 'BavEll0...3JT24='">
+               Public Key 7, 'created' of 2017-06-18T21:19:10Z, a 'nonce'
+               of 34dj239dsj328, and 'proofValue' of 'zBavE110…3JT2pq'">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable credential.
           </figcaption>
@@ -842,21 +843,22 @@ which are then organized into <a>verifiable presentations</a>.
         <p>
 <a href="#info-graph-vp"></a> below shows a more complete depiction of a
 <a>verifiable presentation</a>, which is normally composed of at least four
-information <a>graphs</a>. The first of these information <a>graphs</a>, the
-Presentation <a>Graph</a>, expresses the <a>verifiable presentation</a>
+distinct collections of  <a>claims</a>. The first of these collections, the
+Presentation, expresses the <a>verifiable presentation</a>
 itself, which contains presentation metadata. The
-<code>verifiableCredential</code> property in the Presentation <a>Graph</a>
+<code>verifiableCredential</code> property in this collection
 refers to one or more <a>verifiable credentials</a>, each being one of the
-second information <a>graphs</a>, i.e., a self-contained Credential
-<a>Graph</a>, which in turn contains credential metadata and claims. The
-third information <a>graph</a>, the Credential Proof <a>Graph</a>, expresses
+second collections, and each enclosed in a distinct <a>graph</a>. I.e., each is 
+a self-contained Verifiable Credential with credential metadata and claims. The
+third collection is the Verifiable Credential Proof Graph, enclosed in a 
+distinct <a>graph</a>, and expresses
 the credential graph proof, which is usually a digital signature. The fourth
-information <a>graph</a>, the Presentation Proof <a>Graph</a>, expresses the
-presentation graph proof, which is usually a digital signature.
+collection, the Verifiable Presentation Proof Graph, which is usually a digital signature, and is also
+enclosed in a distinct <a>graph</a>.
         </p>
 
         <figure id="info-graph-vp">
-          <img style="margin: auto; display: block; width: 75%;"
+          <img style="margin: auto; display: block; width: 100%;"
                src="diagrams/vp-graph.svg" alt="diagram with
                a Presentation Graph on top connected via a proof to a
                Presentation Proof Graph on the bottom.  The
@@ -867,8 +869,9 @@ presentation graph proof, which is usually a digital signature.
                Presentation Proof Graph has Signature 8910 with 5
                properties: 'type' of DataIntegrityProof, 'verificationMethod'
                of Example Presenter Public Key 11, 'created' of
-               2018-01-15T12:43:56Z, 'challenge' of d28348djsj3239, and
-               'jws' of 'p2KaZ...8Fj3K='">
+               2018-01-15T12:43:56Z, 'challenge' of d28348djsj3239, 
+               a 'nonce' of 'd28348djsj3239', and 'proofValue' 
+               of 'p2KaZ...8Fj3K='">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable presentation.
           </figcaption>
