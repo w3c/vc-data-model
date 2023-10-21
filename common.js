@@ -48,6 +48,13 @@ var vcwg = {
       authors: ['Latanya Sweeney'],
       publisher: 'Data Privacy Lab'
     },
+    "NIST-SP-800-57-Part-1": {
+      title: "Recommendation for Key Management: Part 1 – General",
+      authors: ["Elaine Barker"],
+      date: "May 2020",
+      publisher: "National Institute of Standards and Technology",
+      href: "https://doi.org/10.6028/NIST.SP.800-57pt1r5"
+    },
     'VC-IMP-GUIDE': {
       title: 'Verifiable Credentials Implementation Guidelines 1.0',
       href: 'https://w3c.github.io/vc-imp-guide/',
