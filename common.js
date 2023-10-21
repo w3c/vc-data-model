@@ -82,6 +82,13 @@ var vcwg = {
       authors: ['Daniel Buchner', 'Brent Zundel', 'Martin Riedel', 'Kim Hamilton Duffy'],
       status: 'DIF Ratified Specification',
       publisher: 'Decentralized Identity Foundation'
+    },
+    'OHTTP': {
+      title: 'Oblivious HTTP ',
+      href: 'https://ietf-wg-ohai.github.io/oblivious-http/draft-ietf-ohai-ohttp.html',
+      authors: ['Martin Thomson', 'Christopher A. Wood'],
+      status: 'Working Group Draft',
+      publisher: 'IETF Oblivious HTTP Application Intermediation'
     }
   }
 };
