@@ -5,15 +5,6 @@ var vcwg = {
   // Add as the respecConfig localBiblio variable
   // Extend or override global respec references
   localBiblio: {
-    "REST": {
-      title: "Architectural Styles and the Design of Network-based Software Architectures",
-      date: "2000",
-      href: "http://www.ics.uci.edu/~fielding/pubs/dissertation/",
-      authors: [
-        "Fielding, Roy Thomas"
-      ],
-      publisher: "University of California, Irvine."
-    },
     "VC-SPECS": {
       title: "Verifiable Credential Specifications Directory",
       href: "https://w3c.github.io/vc-specs-dir/",
@@ -44,38 +35,6 @@ var vcwg = {
       status: "WD",
       publisher: "Verifiable Credentials Working Group"
     },
-    "LDP-REGISTRY": {
-      title: "Linked Data Cryptographic Suite Registry",
-      href: "https://w3c-ccg.github.io/ld-cryptosuite-registry/",
-      authors: [
-        "Manu Sporny",
-        "Drummond Reed",
-        "Orie Steele"
-      ],
-      status: "CG-DRAFT",
-      publisher: "Credentials Community Group"
-    },
-    // aliases to known references
-    "HTTP-SIGNATURES": {
-      aliasOf: "http-signatures"
-    },
-    "MACAROONS": {
-      title: 'Macaroons',
-      // TODO: create spec
-      href: 'http://macaroons.io/',
-      authors: ['Arnar Birgisson', 'Joe Gibbs Politz', 'Úlfar Erlingsson',
-        'Ankur Taly', 'Michael Vrable', 'Mark Lentczner'],
-      status: 'unofficial',
-      publisher: 'Credentials Community Group'
-    },
-    'OPEN-BADGES': {
-      title: 'Open Badges',
-      href: 'https://github.com/openbadges/openbadges-specification',
-      authors: ['Brian Brennan', 'Mike Larsson', 'Chris McAvoy',
-        'Nate Otto', 'Kerri Lemoie'],
-      status:   'BA-DRAFT',
-      publisher:  'Badge Alliance Standard Working Group'
-    },
     'RDF-NORMALIZATION': {
       title: 'RDF Dataset Normalization',
       href: 'http://json-ld.github.io/normalization/spec/',
@@ -96,20 +55,8 @@ var vcwg = {
       status: 'ED',
       publisher: 'Credentials Community Group'
     },
-    'HASHLINK': {
-      title: 'Cryptographic Hyperlinks',
-      href: 'https://datatracker.ietf.org/doc/draft-sporny-hashlink/',
-      authors: ['Manu Sporny'],
-      status: 'Internet-Draft',
-      publisher: 'Internet Engineering Task Force (IETF)'
-    },
-    'IPFS': {
-      title: 'InterPlanetary File System (IPFS)',
-      href: 'https://en.wikipedia.org/wiki/InterPlanetary_File_System',
-      publisher: 'Wikipedia'
-    },
-    'VC-JSON-SCHEMA-2023': {
-      title: 'Verifiable Credentials JSON Schema 2023',
+    'VC-JSON-SCHEMA': {
+      title: 'Verifiable Credentials JSON Schema Specification',
       href: 'https://www.w3.org/TR/vc-json-schema/',
       authors: ['Gabe Cohen', 'Orie Steele'],
       status: 'FPWD',
@@ -121,13 +68,6 @@ var vcwg = {
       authors: ['Gregg Kellogg', 'Manu Sporny', 'Dave Longley', 'Markus Lanthaler', 'Pierre-Antoine Champin', 'Niklas Lindström'],
       status: 'WD',
       publisher: 'W3C JSON-LD 1.1 Working Group'
-    },
-    'VC-JWT': {
-      title: 'Securing Verifiable Credentials using JSON Web Tokens',
-      href: 'https://w3c.github.io/vc-jwt/',
-      authors: ['Orie Steele', 'Michael Jones'],
-      status: 'ED',
-      publisher: 'W3C Verifiable Credentials Working Group'
     },
     'VC-SPECS': {
       title: 'Verifiable Credentials Specifications Directory',

@@ -2422,7 +2422,7 @@ vocabulary using <code>credentialSchema</code> that is locked to some content
 integrity protection mechanism. The <code>credentialSchema</code>
 <a>property</a> also makes it possible to perform syntactic checking on the
 <a>credential</a> and to use <a>verification</a> mechanisms such as JSON Schema
-[[?VC-JSON-SCHEMA-2023]] validation.
+[[?VC-JSON-SCHEMA]] validation.
         </p>
 
         <pre class="example nohighlight"
@@ -2459,13 +2459,13 @@ integrity protection mechanism. The <code>credentialSchema</code>
 
         <p>
 In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA-2023]] file that
+<code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA]] file that
 can be used by a <a>verifier</a> to determine if the
 <a>verifiable credential</a> is well formed.
         </p>
 
         <p class="note" >
-For information about linkages to JSON Schema [[?VC-JSON-SCHEMA-2023]] or other
+For information about linkages to JSON Schema [[?VC-JSON-SCHEMA]] or other
 optional <a>verification</a> mechanisms, see the Verifiable Credentials
 Implementation Guidelines [[VC-IMP-GUIDE]] document.
         </p>
@@ -3302,7 +3302,7 @@ appropriate section of the Verifiable Credentials Implementation Guidelines
       <section>
         <h3>Evidence</h3>
 
-        <p class="issue" data-number="870" title="(AT RISK) Feature depends on demonstration of independent implementations">
+        <p class="issue" data-number="1303" title="(AT RISK) Feature depends on demonstration of independent implementations">
 This feature is at risk and will be removed from the specification if at least
 two independent, interoperable implementations are not demonstrated for a
 single extension type by the end of the Candidate Recommendation Phase. If
@@ -5048,11 +5048,7 @@ links is not integrity protected, but probably ought to be:
         <p>
 While this specification does not recommend any specific content integrity
 protection, document authors who want to ensure links to content are integrity
-protected are advised to use URL schemes that enforce content integrity. Two
-such schemes are the [[HASHLINK]] specification and the [[IPFS]]. The example
-below transforms the previous example and adds content integrity protection to
-the JSON-LD Contexts using the [[HASHLINK]] specification, and content integrity
-protection to the image by using an [[IPFS]] link.
+protected are advised to use URL schemes that enforce content integrity.
         </p>
 
         <pre class="example nohighlight" title="Content-integrity protection for links to external data">
@@ -5065,7 +5061,7 @@ protection to the image by using an [[IPFS]] link.
   "type": ["VerifiableCredential", "ExampleAlumniCredential"],
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "image": <span class="highlight">"ipfs:/ipfs/QmXfrS3pHerg44zzK6QKQj6JDk8H6cMtQS7pdXbohwNQfK/image"</span>,
+    "image": <span class="highlight">"https://example.com/image"</span>,
     "alumniOf": {
       "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
       "name": "Example University"
@@ -5720,7 +5716,7 @@ If the <code>credentialSchema</code> property is available, the schema of a
 according to the <code>credentialSchema</code> <a>type</a> definition for the
 <a>verifiable credential</a> and the <a>verifier's</a> own schema evaluation
 criteria. For example, if the <code>credentialSchema</code>'s <code>type</code> value is
-[[?VC-JSON-SCHEMA-2023]], then a <a>verifier</a> can ensure a credential's
+[[?VC-JSON-SCHEMA]], then a <a>verifier</a> can ensure a credential's
 data is valid against the given JSON Schema.
         </p>
       </section>
@@ -5763,7 +5759,7 @@ The Working Group is expecting all of the terms and URLs supplied in the
 JSON-LD Context to be either stabilized, or removed, before the publication of
 this specification as a Proposed Recommendation. While that means that this
 specification could be delayed if dependencies such as [[?VC-DATA-INTEGRITY]],
-[[?VC-JOSE-COSE]], SD-JWT, [[?VC-JSON-SCHEMA-2023]], or status list
+[[?VC-JOSE-COSE]], SD-JWT, [[?VC-JSON-SCHEMA]], or status list
 do not enter the Proposed Recommendation phase around the same time frame, the
 Working Group is prepared to remove the dependencies if an undue burden is
 placed on transitioning to the Recommendation phase. This is a calculated
@@ -6106,7 +6102,7 @@ by the end of the Candidate Recommendation phase.
         <p>
 The <a>verifiable credential</a> and <a>verifiable presentation</a> data models
 leverage a variety of underlying technologies including [[JSON-LD]] and
-[[?VC-JSON-SCHEMA-2023]]. This section will provide a comparison of the
+[[?VC-JSON-SCHEMA]]. This section will provide a comparison of the
 <code>@context</code>, <code>type</code>, and <code>credentialSchema</code>
 properties, and cover some of the more specific use cases where it is possible
 to use these features of the data model.
