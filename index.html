@@ -758,16 +758,20 @@ are organized into information <a>graphs</a>, which are then organized into
 <a>verifiable credentials</a>. <a href="#info-graph-vc"></a> below shows a
 more complete depiction of a <a>verifiable credential</a>, which is normally
 composed of at least two information <a>graphs</a>. The first <a>graph</a>
+(the <a>verifiable credential graph</a>, in this case the <a>default graph</a>)
 expresses the <a>verifiable credential</a> itself, which contains credential
-metadata and <a>claims</a>. The second <a>graph</a> expresses the digital proof,
-which is usually a digital signature.
+metadata and <a>claims</a>. The second <a>graph</a> 
+(the <a>proof graph</a> of the <a>verifiable credential</a>, which is 
+a <a>named graph</a>) expresses the digital proof, which is, in this case, a digital signature.
         </p>
 
         <figure id="info-graph-vc">
           <img style="margin: auto; display: block; width: 100%;"
-               src="diagrams/vc-graph.svg" alt="diagram with a
-               collections of claims for a Verifiable Credential on top connected via a proof to a
-               Verifiable Credential Proof Graph on the bottom.  The claims for a Verifiable Credential has
+               src="diagrams/vc-graph.svg" alt="Diagram with a
+               collections of claims for a Verifiable Credential Graph
+               on top connected via a proof to a
+               Verifiable Credential Proof Graph on the bottom.  
+               The claims for a Verifiable Credential has
                Credential 123 as a subject with 4 properties: 'type' of value
                ExampleAlumniCredential, 'issuer' of Example University,
                'validFrom' of 2010-01-01T19:23:24Z, and
@@ -776,7 +780,11 @@ which is usually a digital signature.
                Signature 456 subject with 5 properties: 'type' of
                DataIntegrityProof, 'verificationMethod' of Example University
                Public Key 7, 'created' of 2017-06-18T21:19:10Z, a 'nonce'
-               of 34dj239dsj328, and 'proofValue' of 'zBavE110…3JT2pq'">
+               of 34dj239dsj328, and 'proofValue' of 'zBavE110…3JT2pq'. 
+               The Verifiable Credential Graph is also annotated with the 
+               parenthetical remark '(the default graph)', the
+               Verifiable Credential Proof Graph is annotated with the
+               parenthetical remark '(a named graph)'.">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable credential.
           </figcaption>
@@ -842,34 +850,39 @@ which are then organized into <a>verifiable presentations</a>.
         <p>
 <a href="#info-graph-vp"></a> below shows a more complete depiction of a
 <a>verifiable presentation</a>, which is normally composed of at least four
-information <a>graphs</a>. The first of these information <a>graphs</a>, the
-Presentation <a>Graph</a>, expresses the <a>verifiable presentation</a>
-itself, which contains presentation metadata. The
-<code>verifiableCredential</code> property in the Presentation <a>Graph</a>
+information <a>graphs</a>. The first of these <a>graphs</a>, the
+<a>verifiable presentation graph</a> (which is the <a>default graph</a>), 
+expresses the <a>verifiable presentation</a> itself, and contains presentation metadata. 
+The <code>verifiableCredential</code> property in the <a>verifiable presentation graph</a>
 refers to one or more <a>verifiable credentials</a>, each being one of the
-second information <a>graphs</a>, i.e., a self-contained Credential
-<a>Graph</a>, which in turn contains credential metadata and claims. The
-third information <a>graph</a>, the Credential Proof <a>Graph</a>, expresses
-the credential graph proof, which is usually a digital signature. The fourth
-information <a>graph</a>, the Presentation Proof <a>Graph</a>, expresses the
+second information <a>graphs</a>, i.e., a self-contained <a>verifiable credential graph</a>
+which in turn contains credential metadata and claims. Each of these graphs are 
+<a>named graphs</a>. The third information <a>graph</a>, the verifiable credential
+<a>proof graph</a>, expresses the credential graph proof, which is usually a digital signature. 
+The fourth information <a>named graph</a>, the presentation <a>proof graph</a>, expresses the
 presentation graph proof, which is usually a digital signature.
         </p>
 
         <figure id="info-graph-vp">
           <img style="margin: auto; display: block; width: 100%;"
-               src="diagrams/vp-graph.svg" alt="diagram with
-               a Presentation Graph on top connected via a proof to a
-               Presentation Proof Graph on the bottom.  The
-               Presentation Graph has Presentation ABC with 3
+               src="diagrams/vp-graph.svg" alt="Diagram with
+               a Verifiable Presentation Graph on top connected via a proof to a
+               Verifiable Presentation Proof Graph on the bottom.  The
+               Verifiable Presentation Graph has Presentation ABC with 3
                properties: 'type' of value VerifiablePresentation,
-               'termsOfUse' of value Do Not Archive, and
-               'verifiableCredential' whose value is Figure 6.  The
-               Presentation Proof Graph has Signature 8910 with 5
+               'termsOfUse' of value 'Do Not Archive', and
+               'verifiableCredential' whose value is Figure 6 (except
+               that the Verifiable Credential Graph is now
+               annotated to be a named graph).  
+               The graph is annotated with the
+               parenthetical remark '(the default graph)'
+               The Verifiable Presentation Proof Graph has Signature 8910 with 5
                properties: 'type' of DataIntegrityProof, 'verificationMethod'
                of Example Presenter Public Key 11, 'created' of
                2018-01-15T12:43:56Z, 'challenge' of d28348djsj3239, 
                a 'nonce' of 'd28348djsj3239', and 'proofValue' 
-               of 'p2KaZ...8Fj3K='">
+               of 'p2KaZ...8Fj3K='. The graph is annotated with the
+               parenthetical remark '(a named graph)'">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable presentation.
           </figcaption>
@@ -1932,6 +1945,47 @@ T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))
       </section>
 
       <section>
+        <h3>Verifiable Credential Graphs</h3>
+      
+        <p>
+          When expressing <a>verifiable credentials</a> (for example in a <a>presentation</a>), it is
+          important to ensure that data in one <a>verifiable credential</a> is not
+          mistaken to be the same data in another <a>verifiable credential</a>. For
+          example, if one has two <a>verifiable credentials</a>, each containing an
+          object of the following form: `{"type": "Person", "name": "Jane Doe"}`, it is
+          not possible to tell if one object is describing the same person as the other
+          object. In other words, merging data between two <a>verifiable credentials</a>
+          without confirming that they are discussing the same entities and/or properties,
+          can lead to a corrupted data set.
+        </p>
+      
+        <p>
+          To ensure that data from different <a>verifiable credentials</a> are not
+          accidentally co-mingled, the concept of a
+          <dfn data-lt="verifiable credential graphs">verifiable credential graph</dfn> is used to
+          encapsulate each <a>verifiable credential</a>.
+          For simple <a>verifiable credentials</a> this graph is the
+          <a>default graph</a>.
+          For <a>presentations</a>, each value associated with the
+          `verifiableCredential` property of the <a>presentation</a> is a separate <a>named graph</a> of type
+          <dfn class="lint-ignore">VerifiableCredentialGraph</dfn> which contains a single
+          <a>verifiable credential</a>.
+        </p>
+        <p>
+          Using these <a>graphs</a> has a concrete effect on full
+          JSON-LD processing, which properly separates graph node identifiers in one graph
+          from those in another graph. Implementers that do not fully process JSON-LD will
+          need to keep this in mind if they merge data from one <a>verifiable
+            credential</a> with data from another, such as when the `credentialSubject.id`
+          is the same in both <a>verifiable credentials</a>, but the object might contain
+          objects of the "Jane Doe" form described in the previous paragraph. It is
+          important to not merge objects that seem to have similar properties but do not
+          contain an `id` property that uses a global identifier, such
+          as a URL.
+        </p>
+      </section>
+
+      <section>
         <h3>Securing Verifiable Credentials</h3>
 
         <p>
@@ -1970,10 +2024,19 @@ presentations</a> that use an external proof MAY use the <code>proof</code>
         <dl>
           <dt><var>proof</var></dt>
           <dd>
-One or more cryptographic proofs that can be used to detect tampering and verify
-the authorship of a <a>verifiable credential</a> or <a>verifiable
-presentation</a>. The specific method used for an <a>embedded proof</a> MUST be
-identified using the <code>type</code> <a>property</a>.
+            <p>
+              One or more cryptographic proofs that can be used to detect tampering and verify
+              the authorship of a <a>verifiable credential</a> or <a>verifiable
+              presentation</a>. Each proof referred to by a property is a separate <a>named graph</a>
+              containing a single proof (referred to as a <dfn>proof graph</dfn>).
+              The specific method used for an <a>embedded proof</a> MUST be
+              identified using the <code>type</code> <a>property</a>.
+            </p>
+            <p>
+              A proof for a <a>verifiable credential</a> proves the validity of all <a>claims</a>
+              included in the corresponding <a>verifiable credential graph</a>. See <a href="#presentations-0"></a>
+              for the case when the property is used for a <a>verifiable presentation</a>.
+            </p>
           </dd>
         </dl>
 
@@ -2121,6 +2184,13 @@ or embedding protocol, a <a>verifier</a> cannot generally assume that the
 <a>verifiable presentation</a> has any correlation with the presented
 <a>verifiable credentials</a>.
         </p>
+
+        <p>
+          The <a>default graph</a> of a <a>verifiable presentation</a> is also referred to as the 
+          <dfn>verifiable presentation graph</dfn>.
+        </p>
+
+
         <p>
 The following properties are defined for a <a>verifiable presentation</a>:
         </p>
@@ -2162,10 +2232,20 @@ to not pertain to the <a>validation</a> of the <a>verifiable presentation</a>.
           </dd>
           <dt><var>proof</var></dt>
           <dd>
-The <a>verifiable presentation</a> MAY include a <code>proof</code>
-<a>property</a>. If present, the value SHOULD be used to express a securing
-mechanism, such as those listed in the
-Verifiable Credentials Specifications Directory [[?VC-SPECS]].
+            <p>
+                The <a>verifiable presentation</a> MAY include a <code>proof</code>
+                <a>property</a>, which refers to a separate <a>named graph</a> containing a single proof.
+                The specific method used for the MUST be
+                identified using the <code>type</code> <a>property</a>.
+                <!-- If present, the value SHOULD be used to express a securing
+                mechanism, such as those listed in the
+                Verifiable Credentials Specifications Directory [[?VC-SPECS]]. -->
+                The proof proves the validity of all claims in the following <a>graphs</a>:
+            </p>
+            <ul>
+              <li>the <a>verifiable presentation graph</a>;</li>
+              <li>all <a>verifiable credential graphs</a> referred to by the <code>verifiableCredential</code> property of the presentation, as well as their corresponding <a>proof graphs</a>.</li>
+            </ul> 
           </dd>
         </dl>
 
@@ -2195,41 +2275,6 @@ An example of a <a>verifiable presentation</a> using the JWT proof mechanism is
 provided in the Securing Verifiable Credentials using JOSE and COSE
 [[?VC-JOSE-COSE]] specification.
         </p>
-
-        <section>
-          <h4>Verifiable Credential Graphs</h4>
-
-          <p>
-When expressing <a>verifiable credentials</a> in a <a>presentation</a>, it is
-important to ensure that data in one <a>verifiable credential</a> is not
-mistaken to be the same data in another <a>verifiable credential</a>. For
-example, if one has two <a>verifiable credentials</a>, each containing an
-object of the following form: `{"type": "Person", "name": "Jane Doe"}`, it is
-not possible to tell if one object is describing the same person as the other
-object. In other words, merging data between two <a>verifiable credentials</a>
-without confirming that they are discussing the same entities and/or properties,
-can lead to a corrupted data set.
-          </p>
-
-          <p>
-To ensure that data from different <a>verifiable credentials</a> are not
-accidentally co-mingled, the concept of a
-<dfn class="lint-ignore">verifiable credential graph</dfn> is used to
-encapsulate each <a>verifiable credential</a>. Each value associated with the
-`verifiableCredential` property of a <a>presentation</a> is of type
-<dfn class="lint-ignore">VerifiableCredentialGraph</dfn> and contains a single
-<a>verifiable credential</a>. Using this type has a concrete effect on full
-JSON-LD processing, which properly separates graph node identifiers in one graph
-from those in another graph. Implementers that do not fully process JSON-LD will
-need to keep this in mind if they merge data from one <a>verifiable
-credential</a> with data from another, such as when the `credentialSubject.id`
-is the same in both <a>verifiable credentials</a>, but the object might contain
-objects of the "Jane Doe" form described in the previous paragraph. It is
-important to not merge objects that seem to have similar properties but do not
-contain an `id` property that uses a global identifier, such
-as a URL.
-          </p>
-        </section>
 
         <section>
           <h4>Presentations Using Derived Credentials</h4>
