@@ -762,7 +762,7 @@ more complete depiction of a <a>verifiable credential</a>, which is normally
 composed of at least two information <a>graphs</a>. The first <a>graph</a>
 (the <a>verifiable credential graph</a>, in this case the <a>default graph</a>)
 expresses the <a>verifiable credential</a> itself, which contains credential
-metadata and <a>claims</a>. The second <a>graph</a> 
+metadata and other <a>claims</a>. The second <a>graph</a> 
 (the <a>proof graph</a> of the <a>verifiable credential</a>, which is 
 a <a>named graph</a>) expresses the digital proof, which is, in this case, a digital signature.
         </p>
@@ -770,22 +770,22 @@ a <a>named graph</a>) expresses the digital proof, which is, in this case, a dig
         <figure id="info-graph-vc">
           <img style="margin: auto; display: block; width: 100%;"
                src="diagrams/vc-graph.svg" alt="Diagram with a
-               collections of claims for a Verifiable Credential Graph
+               collections of claims for a 'verifiable credential graph'
                on top connected via a proof to a
-               Verifiable Credential Proof Graph on the bottom.  
-               The claims for a Verifiable Credential has
-               Credential 123 as a subject with 4 properties: 'type' of value
+               'verifiable credential proof graph' on the bottom.  
+               The claims for a verifiable credential include
+               'Credential 123' as a subject with 4 properties: 'type' of value
                ExampleAlumniCredential, 'issuer' of Example University,
                'validFrom' of 2010-01-01T19:23:24Z, and
-               credentialSubject of Pat, who has an alumniOf property
-               with value of Example University.  The Verifiable Credential Proof Graph has
-               Signature 456 subject with 5 properties: 'type' of
+               credentialSubject of Pat, who also has an alumniOf property
+               with value of Example University.  The verifiable credential proof graph 
+               has and object 'Signature 456' subject with 5 properties: 'type' of
                DataIntegrityProof, 'verificationMethod' of Example University
                Public Key 7, 'created' of 2017-06-18T21:19:10Z, a 'nonce'
                of 34dj239dsj328, and 'proofValue' of 'zBavE110…3JT2pq'. 
-               The Verifiable Credential Graph is also annotated with the 
+               The verifiable credential graph is also annotated with the 
                parenthetical remark '(the default graph)', the
-               Verifiable Credential Proof Graph is annotated with the
+               verifiable credential proof graph is annotated with the
                parenthetical remark '(a named graph)'.">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable credential.
@@ -858,32 +858,33 @@ expresses the <a>verifiable presentation</a> itself, and contains presentation m
 The <code>verifiableCredential</code> property in the <a>verifiable presentation graph</a>
 refers to one or more <a>verifiable credentials</a>, each being one of the
 second information <a>graphs</a>, i.e., a self-contained <a>verifiable credential graph</a>
-which in turn contains credential metadata and claims. Each of these graphs are 
-<a>named graphs</a>. The third information <a>graph</a>, the verifiable credential
+which in turn contains credential metadata and other claims. Each of these graphs are 
+separate <a>named graphs</a>. The third information <a>graph</a>, the verifiable credential
 <a>proof graph</a>, expresses the credential graph proof, which is usually a digital signature. 
 The fourth information <a>named graph</a>, the presentation <a>proof graph</a>, expresses the
-presentation graph proof, which is usually a digital signature.
+presentation's digital proof, which is usually a digital signature.
         </p>
 
         <figure id="info-graph-vp">
           <img style="margin: auto; display: block; width: 100%;"
                src="diagrams/vp-graph.svg" alt="Diagram with
-               a Verifiable Presentation Graph on top connected via a proof to a
-               Verifiable Presentation Proof Graph on the bottom.  The
-               Verifiable Presentation Graph has Presentation ABC with 3
+               a 'verifiable presentation graph' on top connected via a 'proof' to a
+               'verifiable presentation proof graph on the bottom.  The
+               verifiable presentation graph has and object 'Presentation ABC' with 3
                properties: 'type' of value VerifiablePresentation,
-               'termsOfUse' of value 'Do Not Archive', and
-               'verifiableCredential' whose value is Figure 6 (except
-               that the Verifiable Credential Graph is now
-               annotated to be a named graph).  
+               'termsOfUse' of value 'Do Not Archive'. 
                The graph is annotated with the
-               parenthetical remark '(the default graph)'
-               The Verifiable Presentation Proof Graph has Signature 8910 with 5
+               parenthetical remark '(the default graph)'.
+               This graph is connected, through 
+               'verifiableCredential', to the part of the figure which is identical to Figure 6, 
+               except that the verifiable credential graph is
+               annotated to be a named graph instead of a default graph.  
+               The verifiable presentation proof graph, has and object with 'Signature 8910' with 5
                properties: 'type' of DataIntegrityProof, 'verificationMethod'
                of Example Presenter Public Key 11, 'created' of
                2018-01-15T12:43:56Z, 'challenge' of d28348djsj3239, 
                a 'nonce' of 'd28348djsj3239', and 'proofValue' 
-               of 'p2KaZ...8Fj3K='. The graph is annotated with the
+               of 'p2KaZ...8Fj3K='. This graph is annotated with the
                parenthetical remark '(a named graph)'">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable presentation.
@@ -1982,10 +1983,11 @@ T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))
         <p>
           To ensure that data from different <a>verifiable credentials</a> are not
           accidentally co-mingled, the concept of a
-          <dfn data-lt="verifiable credential graphs">verifiable credential graph</dfn> is used to
+          <dfn>verifiable credential graph</dfn> is used to
           encapsulate each <a>verifiable credential</a>.
-          For simple <a>verifiable credentials</a> this graph is the
-          <a>default graph</a>.
+          For simple <a>verifiable credentials</a>, i.e., when the JSON-LD
+          document contains a single credential with, possibly, associated proofs,
+          this graph is the <a>default graph</a>.
           For <a>presentations</a>, each value associated with the
           `verifiableCredential` property of the <a>presentation</a> is a separate <a>named graph</a> of type
           <dfn class="lint-ignore">VerifiableCredentialGraph</dfn> which contains a single
@@ -2046,9 +2048,9 @@ presentations</a> that use an external proof MAY use the <code>proof</code>
           <dd>
             <p>
               One or more cryptographic proofs that can be used to detect tampering and verify
-              the authorship of a <a>verifiable credential</a> or <a>verifiable
-              presentation</a>. Each proof referred to by a property is a separate <a>named graph</a>
-              containing a single proof (referred to as a <dfn>proof graph</dfn>).
+              the authorship of a <a>verifiable credential</a> or a <a>verifiable
+              presentation</a>. Each proof is a separate <a>named graph</a>
+              (referred to as a <dfn>proof graph</dfn>) containing a single proof.
               The specific method used for an <a>embedded proof</a> MUST be
               identified using the <code>type</code> <a>property</a>.
             </p>
@@ -3997,8 +3999,9 @@ require them.
             </li>
             <li>
 The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
-are treated as <em>graph containers</em>. That is, mechanisms used to isolate
-sets of data asserted by different entities. This ensures, for example, proper
+are defined as <a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph containers</a>. 
+This means the creation of <a>named graphs</a> used to isolate sets of data 
+asserted by different entities. This ensures, for example, proper
 cryptographic separation between the data graph provided by each <a>issuer</a>
 and the one provided by the <a>holder</a> presenting the
 <a>verifiable credential</a> to ensure the provenance of the information for
