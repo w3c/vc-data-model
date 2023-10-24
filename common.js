@@ -85,7 +85,7 @@ var vcwg = {
     },
     'OHTTP': {
       title: 'Oblivious HTTP ',
-      href: 'https://ietf-wg-ohai.github.io/oblivious-http/draft-ietf-ohai-ohttp.html',
+      href: 'https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp',
       authors: ['Martin Thomson', 'Christopher A. Wood'],
       status: 'Working Group Draft',
       publisher: 'IETF Oblivious HTTP Application Intermediation'
