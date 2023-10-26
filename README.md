@@ -19,7 +19,6 @@ mailing list.
 * Charter: [https://www.w3.org/2022/06/verifiable-credentials-wg-charter.html](https://www.w3.org/2022/06/verifiable-credentials-wg-charter.html)
 * Chairs
   * Brent Zundel - @brentzundel
-  * Kristina Yasuda - @Sakurann
 
 ### Verifiable Credentials github repos
 * [Use Cases](https://github.com/w3c/vc-use-cases)
