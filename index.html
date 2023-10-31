@@ -1532,6 +1532,10 @@ an object that contains the `value`, `lang`, and `dir` properties to express
 the text value, language tag, and text direction, respectively.
 See <a href="#language-and-base-direction"></a> for further information.
         </p>
+        <p>
+The vocabulary required by this specification relies on RDF classes and predicates
+that cannot be localized, in order to ensure consistent semantic processing.
+        </p>
 
         <pre class="example nohighlight"
           title="Usage of the name and description property">
@@ -1594,7 +1598,17 @@ See <a href="#language-and-base-direction"></a> for further information.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "ExampleBachelorDegree",
-      "subtype": "Bachelor of Science and Arts"
+      "subtype": [{
+        "value": "Bachelor of Science and Arts Degree",
+        "lang": "en"
+      }, {
+        "value": "Baccalauréat Scientifique et Arts",
+        "lang": "fr"
+      }, {
+        "value": "بكالوريوس العلوم والآداب",
+        "lang": "ar",
+        "dir": "rtl"
+      }],
     }
   }
 }
