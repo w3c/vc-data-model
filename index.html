@@ -584,13 +584,13 @@ be ignored by <a>issuers</a> and/or <a>verifiers</a>.
         </p>
 
         <p>
-<a>Verifiable credential</a> and <a>verifiable presentation</a> MUST be protected using a digital proof
-mechanism such as a digital signature. Having and
-verifying proofs, which may be dependent on the syntax of the proof
-(for example, using the JSON Web Signature of a JSON Web Token for proofing a
-key holder), are an essential part of processing <a>verifiable credentials</a> and <a>verifiable presentations</a>.
-At the time of publication, Working Group members had implemented
-such protection using at least three proof mechanisms:
+<a>Verifiable credential</a> and <a>verifiable presentation</a> MUST be
+protected using a digital proof mechanism such as a digital signature. Having
+and verifying proofs, which may be dependent on the syntax of the proof (for
+example, using the JSON Web Signature of a JSON Web Token for proofing a key
+holder), are an essential part of processing <a>verifiable credentials</a> and
+<a>verifiable presentations</a>. At the time of publication, Working Group
+members had implemented such protection using at least three proof mechanisms:
         </p>
 
         <ul>
@@ -762,31 +762,28 @@ more complete depiction of a <a>verifiable credential</a>, which is normally
 composed of at least two information <a>graphs</a>. The first <a>graph</a>
 (the <a>verifiable credential graph</a>, in this case the <a>default graph</a>)
 expresses the <a>verifiable credential</a> itself, which contains credential
-metadata and other <a>claims</a>. The second <a>graph</a> 
-(the <a>proof graph</a> of the <a>verifiable credential</a>, which is 
-a <a>named graph</a>) expresses the digital proof, which is, in this case, a digital signature.
+metadata and other <a>claims</a>. The second <a>graph</a>
+(the <a>proof graph</a> of the <a>verifiable credential</a>, which is a <a>named
+graph</a>) expresses the digital proof, which is, in this case, a digital
+signature.
         </p>
 
         <figure id="info-graph-vc">
-          <img style="margin: auto; display: block; width: 100%;"
-               src="diagrams/vc-graph.svg" alt="Diagram with a
-               collections of claims for a 'verifiable credential graph'
-               on top connected via a proof property (or predicate) to a
-               'verifiable credential proof graph' on the bottom.  
-               The claims for a verifiable credential include
-               'Credential 123' as a subject with 4 properties: 'type' of value
-               ExampleAlumniCredential, 'issuer' of Example University,
-               'validFrom' of 2010-01-01T19:23:24Z, and
-               credentialSubject of Pat, who also has an alumniOf property
-               with value of Example University.  The verifiable credential proof graph 
-               has an object 'Signature 456' subject with 5 properties: 'type' of
-               DataIntegrityProof, 'verificationMethod' of Example University
-               Public Key 7, 'created' of 2017-06-18T21:19:10Z, a 'nonce'
-               of 34dj239dsj328, and 'proofValue' of 'zBavE110…3JT2pq'. 
-               The verifiable credential graph is also annotated with the 
-               parenthetical remark '(the default graph)', the
-               verifiable credential proof graph is annotated with the
-               parenthetical remark '(a named graph)'.">
+        <img style="margin: auto; display: block; width: 100%;"
+             src="diagrams/vc-graph.svg" alt="Diagram with a collections of
+claims for a 'verifiable credential graph' on top
+connected via a proof property (or predicate) to a 'verifiable credential proof
+graph' on the bottom. The claims for a verifiable credential include 'Credential
+123' as a subject with 4 properties: 'type' of value ExampleAlumniCredential,
+'issuer' of Example University, 'validFrom' of 2010-01-01T19:23:24Z, and
+credentialSubject of Pat, who also has an alumniOf property with value of
+Example University.  The verifiable credential proof graph has an object
+'Signature 456' subject with 5 properties: 'type' of DataIntegrityProof,
+'verificationMethod' of Example University Public Key 7, 'created' of
+2017-06-18T21:19:10Z, a 'nonce' of 34dj239dsj328, and 'proofValue' of
+'zBavE110…3JT2pq'. The verifiable credential graph is also annotated with the
+parenthetical remark '(the default graph)', the verifiable credential proof
+graph is annotated with the parenthetical remark '(a named graph)'.">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable credential.
           </figcaption>
@@ -853,39 +850,35 @@ which are then organized into <a>verifiable presentations</a>.
 <a href="#info-graph-vp"></a> below shows a more complete depiction of a
 <a>verifiable presentation</a>, which is normally composed of at least four
 information <a>graphs</a>. The first of these <a>graphs</a>, the
-<a>verifiable presentation graph</a> (which is the <a>default graph</a>), 
-expresses the <a>verifiable presentation</a> itself, and contains presentation metadata. 
+<a>verifiable presentation graph</a> (which is the <a>default graph</a>),
+expresses the <a>verifiable presentation</a> itself, and contains presentation metadata.
 The <code>verifiableCredential</code> property in the <a>verifiable presentation graph</a>
 refers to one or more <a>verifiable credentials</a>, each being one of the
 second information <a>graphs</a>, i.e., a self-contained <a>verifiable credential graph</a>
-which in turn contains credential metadata and other claims. Each of these graphs are 
+which in turn contains credential metadata and other claims. Each of these graphs are
 separate <a>named graphs</a>. The third information <a>graph</a>, the verifiable credential
-<a>proof graph</a>, expresses the credential graph proof, which is usually a digital signature. 
+<a>proof graph</a>, expresses the credential graph proof, which is usually a digital signature.
 The fourth information <a>named graph</a>, the presentation <a>proof graph</a>, expresses the
 presentation's digital proof, which is usually a digital signature.
         </p>
 
         <figure id="info-graph-vp">
-          <img style="margin: auto; display: block; width: 100%;"
-               src="diagrams/vp-graph.svg" alt="Diagram with
-               a 'verifiable presentation graph' on top connected via a 'proof' to a
-               'verifiable presentation proof graph on the bottom.  The
-               verifiable presentation graph has and object 'Presentation ABC' with 3
-               properties: 'type' of value VerifiablePresentation,
-               'termsOfUse' of value 'Do Not Archive'. 
-               The graph is annotated with the
-               parenthetical remark '(the default graph)'.
-               This graph is connected, through 
-               'verifiableCredential', to the part of the figure which is identical to Figure 6, 
-               except that the verifiable credential graph is
-               annotated to be a named graph instead of a default graph.  
-               The verifiable presentation proof graph, has and object with 'Signature 8910' with 5
-               properties: 'type' of DataIntegrityProof, 'verificationMethod'
-               of Example Presenter Public Key 11, 'created' of
-               2018-01-15T12:43:56Z, 'challenge' of d28348djsj3239, 
-               a 'nonce' of 'd28348djsj3239', and 'proofValue' 
-               of 'p2KaZ...8Fj3K='. This graph is annotated with the
-               parenthetical remark '(a named graph)'">
+        <img style="margin: auto; display: block; width: 100%;"
+               src="diagrams/vp-graph.svg" alt="Diagram with a
+'verifiable presentation graph' on top connected via a 'proof' to
+a 'verifiable presentation proof graph on the bottom.  The verifiable
+presentation graph has and object 'Presentation ABC' with 3 properties: 'type'
+of value VerifiablePresentation, 'termsOfUse' of value 'Do Not Archive'. The
+graph is annotated with the parenthetical remark '(the default graph)'. This
+graph is connected, through 'verifiableCredential', to the part of the figure
+which is identical to Figure 6, except that the verifiable credential graph is
+annotated to be a named graph instead of a default graph.
+The verifiable presentation proof graph, has and object with 'Signature 8910'
+with 5 properties: 'type' of DataIntegrityProof, 'verificationMethod' of Example
+Presenter Public Key 11, 'created' of 2018-01-15T12:43:56Z, 'challenge' of
+d28348djsj3239, a 'nonce' of 'd28348djsj3239', and 'proofValue' of
+'p2KaZ...8Fj3K='. This graph is annotated with the parenthetical remark '(a
+named graph)'">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable presentation.
           </figcaption>
@@ -930,7 +923,8 @@ Composition of <a>verifiable credentials</a> into a
 <a>verifier</a>.
           </li>
           <li>
-            <a>Validation</a> by the <a>verifier</a> of relevant <a>claims</a> contained in the <a>verifiable presentation</a>.
+<a>Validation</a> by the <a>verifier</a> of relevant <a>claims</a> contained in
+the <a>verifiable presentation</a>.
           </li>
         </ol>
 
@@ -1028,12 +1022,12 @@ the creator of the <a>verifiable presentation.</a>
         </pre>
 
         <p class="note">
-The examples above are unsecured.
-Implementers that are interested in understanding more about
-securing Verifiable Credentials can see the specifications
-Securing Verifiable Credentials using JOSE and COSE [[VC-JOSE-COSE]] and
-Verifiable Credential Data Integrity [[VC-DATA-INTEGRITY]] and the "Proofs" section of the Verifiable
-Credential Specifications Directory [[VC-SPECS]].
+The examples above are unsecured. Implementers that are interested in
+understanding more about securing Verifiable Credentials can see the
+specifications Securing Verifiable Credentials using JOSE and COSE
+[[VC-JOSE-COSE]] and Verifiable Credential Data Integrity [[VC-DATA-INTEGRITY]]
+and the "Proofs" section of the Verifiable Credential Specifications Directory
+[[VC-SPECS]].
         </p>
       </section>
     </section>
@@ -1232,8 +1226,8 @@ where pseudonymity is required. Developers are encouraged to read Section
 scenarios. There are also other types of correlation mechanisms documented in
 Section <a href="#privacy-considerations"></a> that create privacy concerns.
 Where privacy is a strong consideration, the <code>id</code> <a>property</a>
-MAY be omitted. Some use cases do not require, or explicitly require omitting, the <code>id</code>
-<a>property</a>.
+MAY be omitted. Some use cases do not require, or explicitly require omitting,
+the <code>id</code> <a>property</a>.
         </p>
 
         <dl>
@@ -1820,27 +1814,27 @@ a particular point on the timeline.
         <dl>
           <dt><var id="defn-validFrom">validFrom</var></dt>
           <dd>
-If present, the value of the <code>validFrom</code> <a>property</a> MUST be
-an [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
+If present, the value of the <code>validFrom</code> <a>property</a> MUST be an
+[<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
 <code>dateTimeStamp</code> string value representing the date and time the
-<a>credential</a> becomes valid, which could be a date and time in the future or in the past.
-Note that this value represents the earliest point in time
-at which the information associated with the <code>credentialSubject</code>
+<a>credential</a> becomes valid, which could be a date and time in the future or
+in the past. Note that this value represents the earliest point in time at which
+the information associated with the <code>credentialSubject</code>
 <a>property</a> becomes valid. If a `validUntil` value also exists, the
-`validFrom` value MUST express a datetime that is temporally the same or
-earlier than the datetime expressed by the `validUntil` value.
+`validFrom` value MUST express a datetime that is temporally the same or earlier
+than the datetime expressed by the `validUntil` value.
           </dd>
           <dt><var id="defn-validUntil">validUntil</var></dt>
           <dd>
 If present, the value of the <code>validUntil</code> <a>property</a> MUST be an
 [<a data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>]
 <code>dateTimeStamp</code> string value representing the date and time the
-<a>credential</a> ceases to be valid, which could be a date and time in the
-past or in the future. Note that this value represents the latest point in time at which the
-information associated with the <code>credentialSubject</code> <a>property</a>
-is valid. If a `validFrom` value also exists, the `validUntil` value MUST
-express a datetime that is temporally the same or later than the datetime
-expressed by the `validFrom` value.
+<a>credential</a> ceases to be valid, which could be a date and time in the past
+or in the future. Note that this value represents the latest point in time at
+which the information associated with the <code>credentialSubject</code>
+<a>property</a> is valid. If a `validFrom` value also exists, the `validUntil`
+value MUST express a datetime that is temporally the same or later than the
+datetime expressed by the `validFrom` value.
           </dd>
         </dl>
 
@@ -1967,43 +1961,42 @@ T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))
 
       <section>
         <h3>Verifiable Credential Graphs</h3>
-      
+
         <p>
-          When expressing <a>verifiable credentials</a> (for example in a <a>presentation</a>), it is
-          important to ensure that data in one <a>verifiable credential</a> is not
-          mistaken to be the same data in another <a>verifiable credential</a>. For
-          example, if one has two <a>verifiable credentials</a>, each containing an
-          object of the following form: `{"type": "Person", "name": "Jane Doe"}`, it is
-          not possible to tell if one object is describing the same person as the other
-          object. In other words, merging data between two <a>verifiable credentials</a>
-          without confirming that they are discussing the same entities and/or properties,
-          can lead to a corrupted data set.
+When expressing <a>verifiable credentials</a> (for example in a
+<a>presentation</a>), it is important to ensure that data in one <a>verifiable
+credential</a> is not mistaken to be the same data in another <a>verifiable
+credential</a>. For example, if one has two <a>verifiable credentials</a>, each
+containing an object of the following form: `{"type": "Person", "name": "Jane
+Doe"}`, it is not possible to tell if one object is describing the same person
+as the other object. In other words, merging data between two <a>verifiable
+credentials</a> without confirming that they are discussing the same entities
+and/or properties, can lead to a corrupted data set.
         </p>
-      
+
         <p>
-          To ensure that data from different <a>verifiable credentials</a> are not
-          accidentally co-mingled, the concept of a
-          <dfn>verifiable credential graph</dfn> is used to
-          encapsulate each <a>verifiable credential</a>.
-          For simple <a>verifiable credentials</a>, i.e., when the JSON-LD
-          document contains a single credential with, possibly, associated proofs,
-          this graph is the <a>default graph</a>.
-          For <a>presentations</a>, each value associated with the
-          `verifiableCredential` property of the <a>presentation</a> is a separate <a>named graph</a> of type
-          <dfn class="lint-ignore">VerifiableCredentialGraph</dfn> which contains a single
-          <a>verifiable credential</a>.
+To ensure that data from different <a>verifiable credentials</a> are not
+accidentally co-mingled, the concept of a <dfn>verifiable credential graph</dfn>
+is used to encapsulate each <a>verifiable credential</a>. For simple
+<a>verifiable credentials</a>, i.e., when the JSON-LD document contains a single
+credential with, possibly, associated proofs, this graph is the <a>default
+graph</a>. For <a>presentations</a>, each value associated with the
+`verifiableCredential` property of the <a>presentation</a> is a separate
+<a>named graph</a> of type
+<dfn class="lint-ignore">VerifiableCredentialGraph</dfn> which contains a single
+<a>verifiable credential</a>.
         </p>
         <p>
-          Using these <a>graphs</a> has a concrete effect when performing
-          JSON-LD processing, which properly separates graph node identifiers in one graph
-          from those in another graph. Implementers that limit their inputs to application-specific
-          JSON-LD documents will also need to keep this in mind if they merge data from one <a>verifiable
-            credential</a> with data from another, such as when the `credentialSubject.id`
-          is the same in both <a>verifiable credentials</a>, but the object might contain
-          objects of the "Jane Doe" form described in the previous paragraph. It is
-          important to not merge objects that seem to have similar properties but do not
-          contain an `id` property that uses a global identifier, such
-          as a URL.
+Using these <a>graphs</a> has a concrete effect when performing JSON-LD
+processing, which properly separates graph node identifiers in one graph from
+those in another graph. Implementers that limit their inputs to
+application-specific JSON-LD documents will also need to keep this in mind if
+they merge data from one <a>verifiable credential</a> with data from another,
+such as when the `credentialSubject.id` is the same in both <a>verifiable
+credentials</a>, but the object might contain objects of the "Jane Doe" form
+described in the previous paragraph. It is important to not merge objects that
+seem to have similar properties but do not contain an `id` property that uses a
+global identifier, such as a URL.
         </p>
       </section>
 
@@ -2047,17 +2040,18 @@ presentations</a> that use an external proof MAY use the <code>proof</code>
           <dt><var>proof</var></dt>
           <dd>
             <p>
-              One or more cryptographic proofs that can be used to detect tampering and verify
-              the authorship of a <a>verifiable credential</a> or a <a>verifiable
-              presentation</a>. Each proof is a separate <a>named graph</a>
-              (referred to as a <dfn>proof graph</dfn>) containing a single proof.
-              The specific method used for an <a>embedded proof</a> MUST be
-              identified using the <code>type</code> <a>property</a>.
+One or more cryptographic proofs that can be used to detect tampering and verify
+the authorship of a <a>verifiable credential</a> or a <a>verifiable
+presentation</a>. Each proof is a separate <a>named graph</a>
+(referred to as a <dfn>proof graph</dfn>) containing a single proof. The
+specific method used for an <a>embedded proof</a> MUST be identified using the
+<code>type</code> <a>property</a>.
             </p>
             <p>
-              A proof for a <a>verifiable credential</a> covers all <a>claims</a>
-              included in the corresponding <a>verifiable credential graph</a>. See <a href="#presentations-0"></a>
-              for the case when the property is used for a <a>verifiable presentation</a>.
+A proof for a <a>verifiable credential</a> covers all <a>claims</a>
+included in the corresponding <a>verifiable credential graph</a>.
+See <a href="#presentations-0"></a> for the case when the property is used for a
+<a>verifiable presentation</a>.
             </p>
           </dd>
         </dl>
@@ -2208,7 +2202,7 @@ or embedding protocol, a <a>verifier</a> cannot generally assume that the
         </p>
 
         <p>
-          The <a>default graph</a> of a <a>verifiable presentation</a> is also referred to as the 
+          The <a>default graph</a> of a <a>verifiable presentation</a> is also referred to as the
           <dfn>verifiable presentation graph</dfn>.
         </p>
 
@@ -2267,7 +2261,7 @@ to not pertain to the <a>validation</a> of the <a>verifiable presentation</a>.
             <ul>
               <li>the <a>verifiable presentation graph</a>;</li>
               <li>all <a>verifiable credential graphs</a> referred to by the <code>verifiableCredential</code> property of the presentation, as well as their corresponding <a>proof graphs</a>.</li>
-            </ul> 
+            </ul>
           </dd>
         </dl>
 
@@ -3239,11 +3233,11 @@ to tell the <a>verifier</a> any or all of the following, among other things:
 
 <ul><li>
 the procedures or policies that were used in issuing the <a>verifiable credential</a>,
-for example, by providing a pointer to the location where these procedures 
+for example, by providing a pointer to the location where these procedures
 or policies can be found, or naming the standard that defines them;
 </li>
 <li>
-the rules and policies of the issuer that apply to the presentation of this 
+the rules and policies of the issuer that apply to the presentation of this
 <a>verifiable credential</a> to the <a>verifier</a>;
 </li>
 <li>
@@ -3301,7 +3295,7 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
         <p>
 In the example above, the <a>issuer</a> is asserting that as a European
 Blockchain Services Infrastructure (EBSI) accredited issuer, it complies with the EBSI
-policies as an accredited issuer and is registered in the EBSI register of trusted issuers. 
+policies as an accredited issuer and is registered in the EBSI register of trusted issuers.
 The <code>termsOfUse</code> <a>id</a> can be resolved by the verifier to check
 whether the <a>issuer</a> has been issued an accreditation VC (in JWT format)
 by a trusted issuer higher in the EBSI trust chain [?EBSI].
@@ -3999,8 +3993,8 @@ require them.
             </li>
             <li>
 The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
-are defined as <a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph containers</a>. 
-This means the creation of <a>named graphs</a> used to isolate sets of data 
+are defined as <a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph containers</a>.
+This means the creation of <a>named graphs</a> used to isolate sets of data
 asserted by different entities. This ensures, for example, proper
 cryptographic separation between the data graph provided by each <a>issuer</a>
 and the one provided by the <a>holder</a> presenting the
@@ -5139,23 +5133,23 @@ issued <a>credential</a>, it might be possible for the <a>issuer</a> to track
 inability to do so.
         </p>
         <p>
-In addition to previously described privacy protections an <a>issuer</a> might use,
-<a>issuers</a> need to also be aware of data they leak associated with identifiers
-and claim types they use when issuing <a>credentials</a>. One example of this would
-be an <a>issuer</a> issuing drivers licenses which reveal both the location(s) in
-which they have jurisdiction and the location of the <a>subject's</a> residence.
-<a>Verifiers</a> might take advantage of this by requesting a <a>credential</a>
-to check that the <a>subject</a> is licensed to drive, when
-in fact they are interested in metadata <em>about</em> the credential, such as which
-<a>issuer</a> issued the credential, and tangential information that might have been
-leaked by the <a>issuer</a>, such as the subject's home address. To mitigate such
-leakage, <a>issuers</a> might choose to use common identifiers to mask specific
-location information or other sensitive metadata; for example, a shared issuer
-identifier at a state or nation level, instead of at the level of a county, city, town, or other smaller
-municipality. Further, <a>holder</a> attestation mechanisms can be used by
-<a>verifiers</a> to preserve privacy, by providing proofs that an <a>issuer</a>
-exists in a set of trusted entities, without needing to disclose the exact
-<a>issuer</a>.
+In addition to previously described privacy protections an <a>issuer</a> might
+use, <a>issuers</a> need to also be aware of data they leak associated with
+identifiers and claim types they use when issuing <a>credentials</a>. One
+example of this would be an <a>issuer</a> issuing drivers licenses which reveal
+both the location(s) in which they have jurisdiction and the location of the
+<a>subject's</a> residence. <a>Verifiers</a> might take advantage of this by
+requesting a <a>credential</a> to check that the <a>subject</a> is licensed to
+drive, when in fact they are interested in metadata <em>about</em> the
+credential, such as which <a>issuer</a> issued the credential, and tangential
+information that might have been leaked by the <a>issuer</a>, such as the
+subject's home address. To mitigate such leakage, <a>issuers</a> might choose to
+use common identifiers to mask specific location information or other sensitive
+metadata; for example, a shared issuer identifier at a state or nation level,
+instead of at the level of a county, city, town, or other smaller municipality.
+Further, <a>holder</a> attestation mechanisms can be used by <a>verifiers</a> to
+preserve privacy, by providing proofs that an <a>issuer</a> exists in a set of
+trusted entities, without needing to disclose the exact <a>issuer</a>.
         </p>
       </section>
     </section>
@@ -5237,12 +5231,13 @@ confirmation of the validity of all public keys before using them.
         <p>
 <a>Verifiable credentials</a> often contain URLs to data that resides outside of
 the <a>verifiable credential</a> itself. Linked content that exists outside a
-<a>verifiable credential</a>, such as images, JSON-LD Contexts, JSON Schemas, and
-other machine-readable data, are often not protected against tampering because the
-data resides outside of the protection of the
-<a href="#securing-verifiable-credentials">securing mechanism</a> on the <a>verifiable credential</a>.
-For example, the content retrievable by dereferencing the following highlighted
-links is not integrity protected, but probably ought to be:
+<a>verifiable credential</a>, such as images, JSON-LD Contexts, JSON Schemas,
+and other machine-readable data, are often not protected against tampering
+because the data resides outside of the protection of the
+<a href="#securing-verifiable-credentials">securing mechanism</a> on the
+<a>verifiable credential</a>. For example, the content retrievable by
+dereferencing the following highlighted links is not integrity protected, but
+probably ought to be:
         </p>
 
         <pre class="example nohighlight"
@@ -5352,24 +5347,26 @@ Any unsecured protocol is susceptible to man-in-the-middle attacks.
         <h4>Replay Attack</h4>
 
         <p>
-A <a>verifier</a> might wish to ensure that a <a>verifiable presentation</a> is not used more than a
-certain number of times. For example, a <a>verifiable credential</a> representing an event ticket,
-might allow entry to multiple individuals if presented multiple times, undermining
-the purpose of the ticket from the perspective of its issuer. To prevent against such attacks,
+A <a>verifier</a> might wish to ensure that a <a>verifiable presentation</a> is
+not used more than a certain number of times. For example, a <a>verifiable
+credential</a> representing an event ticket, might allow entry to multiple
+individuals if presented multiple times, undermining the purpose of the ticket
+from the perspective of its issuer. To prevent against such attacks,
 <a>holders</a> can make use of techniques such as including a
-<a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> during presentation,
-or adding an expiry timestamp to reduce the window of attack.
+<a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> during
+presentation, or adding an expiry timestamp to reduce the window of attack.
         </p>
         <h4>Spoofing Attack</h4>
 
         <p>
-A <a>verifier</a> has a vested interest in knowing that a <a>holder</a> is authorized
-to present the claims inside of a <a>verifiable presentation</a>. While the data
-model outlines the structure and data elements necessary for a <a>verifiable credential</a>,
-it does not include a mechanism to ascertain the authorization of
-presented <a>credentials</a>. To address this concern, implementers might need to explore
-supplementary methods, such as binding <a>verifiable credentials</a> to strong
-authentication mechanisms or using additional attributes in <a>verifiable presentations</a>
+A <a>verifier</a> has a vested interest in knowing that a <a>holder</a> is
+authorized to present the claims inside of a <a>verifiable presentation</a>.
+While the data model outlines the structure and data elements necessary for a
+<a>verifiable credential</a>, it does not include a mechanism to ascertain the
+authorization of presented <a>credentials</a>. To address this concern,
+implementers might need to explore supplementary methods, such as binding
+<a>verifiable credentials</a> to strong authentication mechanisms or using
+additional attributes in <a>verifiable presentations</a>
 to enable proof of control.
         </p>
       </section>
@@ -5474,14 +5471,15 @@ Two critical aspects that arise within this context are <i>Unauthorized Use</i> 
         </p>
         <h4>Unauthorized Use</h4>
         <p>
-Any attempt by entities to make use of <a>verifiable credentials</a> and <a>verifiable presentations</a>
-outside of their intended use can be seen as unauthorized. One class of unauthorized
-use is a <i>confidentiality violation</i>. Consider an example
-where a <a>holder</a> shares a <a>verifiable presentation</a> with a <a>verifier</a> to establish
-their age and residency status. If the <a>verifier</a> then proceeds to
-exploit the <a>holder's</a> data without proper consent, such as by selling the
-data to a data broker, that would constitute an unauthorized use of the data, violating
-an expectation of privacy that the <a>holder</a> might have in the transaction.
+Any attempt by entities to make use of <a>verifiable credentials</a> and
+<a>verifiable presentations</a> outside of their intended use can be seen as
+unauthorized. One class of unauthorized use is a <i>confidentiality
+violation</i>. Consider an example where a <a>holder</a> shares a <a>verifiable
+presentation</a> with a <a>verifier</a> to establish their age and residency
+status. If the <a>verifier</a> then proceeds to exploit the <a>holder's</a> data
+without proper consent, such as by selling the data to a data broker, that would
+constitute an unauthorized use of the data, violating an expectation of privacy
+that the <a>holder</a> might have in the transaction.
         </p>
         <p>
 Similarly, an <a>issuer</a> could make use of a <a href="#terms-of-use">termsOfUse</a>
@@ -5794,7 +5792,8 @@ by <a>verifiers</a>, without any additional action by the <a>holder</a>.
         </p>
         <p>
 See the <a data-cite="VC-IMP-GUIDE/#subject-holder-relationships"></a> and
-<a data-cite="VC-USE-CASES#user-tasks"></a> for additional examples related to <a>subject</a> and <a>holder</a>.
+<a data-cite="VC-USE-CASES#user-tasks"></a> for additional examples related to
+<a>subject</a> and <a>holder</a>.
         </p>
 
         <p class="note">
