@@ -3149,22 +3149,21 @@ information.
         </p>
 
         <p>
-The value of the <code>termsOfUse</code> <a>property</a> tells the
-<a>verifier</a> what actions it is required to perform (an <em>obligation</em>),
-not allowed to perform (a <em>prohibition</em>), or allowed to perform (a
-<em>permission</em>) if it is to accept the <a>verifiable credential</a> or
-<a>verifiable presentation</a>.
-        </p>
+The value of the <code>termsOfUse</code> <a>property</a> might be used
+to tell the <a>verifier</a> any or all of the following, among other things:
 
-        <p class="note">
-Further study is required to determine how a <a>subject</a> who is not a
-<a>holder</a> places terms of use on their <a>verifiable credentials</a>. One
-way could be for the <a>subject</a> to request the <a>issuer</a> to place the
-terms of use inside the issued <a>verifiable credentials</a>. Another way
-could be for the <a>subject</a> to delegate a <a>verifiable credential</a> to a
-<a>holder</a> and place terms of use restrictions on the delegated
-<a>verifiable credential</a>.
-        </p>
+<ul><li>
+the procedures or policies that were used in issuing the <a>verifiable credential</a>,
+for example, by providing a pointer to the location where these procedures 
+or policies can be found, or naming the standard that defines them;
+</li>
+<li>
+the rules and policies of the issuer that apply to the presentation of this 
+<a>verifiable credential</a> to the <a>verifier</a>;
+</li>
+<li>
+the identity of the entity under whose authority the issuer issued this particular <a>verifiable credential</a>.
+</li></ul>
 
         <dl>
           <dt><var id="defn-termsOfUse">termsOfUse</var></dt>
@@ -3188,36 +3187,39 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
+  "id": "urn:did:123456",
+  "type": [
+    "VerifiableCredential",
+    "EbsiTermsOfUseExample"
+  ],
+  "issuer": "did:ebsi:zz7XsC9ixAXuZecoD9sZEM1",
+  "validFrom": "2021-11-01T00:00:00Z",
+  "validUntil": "2021-10-30T00:00:00Z",
   "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
+    "id": "did:key:z2dmzD81cgPx8Vki7JbuuMmFYrWPgYoytykUZ3eyqht1j9KbrDt4zxXoDrBWYFiATYZ8G9JMeEXC7Kki24fbTwtsJbGe5qcbkYFunSzcDokMRmj8UJ1PbdCGh33mf97K3To89bMzd15qrYq3VkDztoZqfmujkJVpvTbqoXWXqxmzNDbvMJ",
+    "personalIdentifier": "IT/DE/1234",
+    "familyName": "Castafiori",
+    "firstName": "Bianca",
+    "dateOfBirth": "1930-10-01"
   },
-  <span class="highlight">"termsOfUse": [{
-    "type": "IssuerPolicy",
-    "id": "http://example.com/policies/credential/4",
-    "profile": "http://example.com/profiles/credential",
-    "prohibition": [{
-      "assigner": "https://university.example/issuers/14",
-      "assignee": "AllVerifiers",
-      "target": "http://university.example/credentials/3732",
-      "action": ["Archival"]
-    }]
-  }]
-  </span>
+  "credentialSchema": {
+    "id": "https://api-test.ebsi.eu/trusted-schemas-registry/v2/schemas/z3MgUFUkb722uq4x3dv5yAJmnNmzDFeK5UC8x83QoeLJM",
+    "type": "JsonSchema"
+  },
+  "termsOfUse": {
+    "id": "https://api-test.ebsi.eu/trusted-issuers-registry/v4/issuers/did:ebsi:zz7XsC9ixAXuZecoD9sZEM1/attributes/7201d95fef05f72667f5454c2192da2aa30d9e052eeddea7651b47718d6f31b0",
+    "type": "IssuanceCertificate"
+  }
 }
         </pre>
 
         <p>
-In the example above, the <a>issuer</a> (the <code>assigner</code>) is
-prohibiting <a>verifiers</a> (the <code>assignee</code>) from storing the data
-in an archive.
+In the example above, the <a>issuer</a> is asserting that as a European
+Blockchain Services Infrastructure (EBSI) accredited issuer, it complies with the EBSI
+policies as an accredited issuer and is registered in the EBSI register of trusted issuers. 
+The <code>termsOfUse</code> <a>id</a> can be resolved by the verifier to check
+whether the <a>issuer</a> has been issued an accreditation VC (in JWT format)
+by a trusted issuer higher in the EBSI trust chain [?EBSI].
         </p>
 
         <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
