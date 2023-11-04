@@ -305,7 +305,12 @@ The word "verifiable" in the terms
 refers to the characteristic of a <a>credential</a> or <a>presentation</a>
 as being able to be <a>verified</a> by a <a>verifier</a>,
 as defined in this document. Verifiability of a credential does not imply
-that truth of <a>claims</a> encoded therein. Rather, once the authenticity and currency of a <a>verifiable credential</a> or <a>verifiable presentation</a> are established, a <a>verifier</a> validates the included claims using their own business rules before relying on them. Such reliance only occurs after evaluating the issuer, the proof, the subject, and the claims, against one or more verifier policies.
+that truth of <a>claims</a> encoded therein. Rather, once the authenticity and
+currency of a <a>verifiable credential</a> or <a>verifiable presentation</a> are
+established, a <a>verifier</a> validates the included claims using their own
+business rules before relying on them. Such reliance only occurs after
+evaluating the issuer, the proof, the subject, and the claims, against one or
+more verifier policies.
         </p>
       </section>
 
@@ -963,18 +968,22 @@ The digital wallet asks Pat if they would like to provide a previously issued
 <a>verifiable credential</a>, which is then composed into a
 <a>verifiable presentation</a>. The <a>verifiable presentation</a> is sent to
 the <a>verifier</a> and <a>verified</a>.
-</p>
-<p>Once verified as authentic and current, the seller of the season ticket
-   then validates that the issuer of the <a>verifiable credential</a> is
-   recognized for the claim of alumni status&mdash;it is, as it is issued
-   by Example University&mdash;and that today's date lies within the
-   validity period defined by the values of the validFrom and validUntil
-   properties. Since the holder is expected to be the subject of the
-   <a>verifiable credential</a>, the <a>verifier</a> also confirms that
-   the id for the alumni claim matches the id of the creator of the
-   <a>verifiable presentation.</a>
-</p>
-<p>Having verified the credential and the presentation, and validated the relevant claims, the ticket seller safely enables the alumni discount for Pat, confident that Pat is legitimately entitled to it.</p>
+        </p>
+        <p>
+Once verified as authentic and current, the seller of the season ticket then
+validates that the issuer of the <a>verifiable credential</a> is recognized for
+the claim of alumni status&mdash;it is, as it is issued by Example
+University&mdash;and that today's date lies within the validity period defined
+by the values of the validFrom and validUntil properties. Since the holder is
+expected to be the subject of the <a>verifiable credential</a>, the
+<a>verifier</a> also confirms that the id for the alumni claim matches the id of
+the creator of the <a>verifiable presentation.</a>
+        </p>
+        <p>
+  Having verified the credential and the presentation, and validated the
+  relevant claims, the ticket seller safely enables the alumni discount for Pat,
+  confident that Pat is legitimately entitled to it.
+        </p>
         <pre class="example nohighlight" title="A simple example of a verifiable presentation">
 {
   "@context": [
@@ -2585,7 +2594,11 @@ checks any <a href="#status">credential status</a>
 of the <a>verifiable credentials</a>.
           </li>
           <li>
-After <a>verification</a>, a <a>verifier</a> validates the relevant claims in presented <a>verifiable credentials</a>, using their own business logic to evaluate which issuers are appropriate for which claims and which subjects are appropriate for the requested use.</li>
+After <a>verification</a>, a <a>verifier</a> validates the relevant claims in
+presented <a>verifiable credentials</a>, using their own business logic to
+evaluate which issuers are appropriate for which claims and which subjects are
+appropriate for the requested use.
+         </li>
          <li>
 An <a>issuer</a> might <dfn class="lint-ignore" data-lt="revoke">revoke</dfn> a
 <a>verifiable credential</a>.
@@ -4715,7 +4728,9 @@ When processing <a>verifiable credentials</a>, <a>verifiers</a>
 evaluate any relevant <a>claims</a> before relying upon them. This
 evaluation might be done in any manner desired, as long as it satisfies
 the requirements of the <a>verifier</a> doing the validation.
-Many verifiers will perform the checks listed in Appendix <a href="#validation-0"></a> as well as a variety of specific business process checks such as:
+Many verifiers will perform the checks listed in Appendix <a
+href="#validation-0"></a> as well as a variety of specific business process
+checks such as:
         </p>
 
         <ul>
@@ -5432,14 +5447,17 @@ authorized use of their data after <a>presentation</a>.
 While valid cryptographic signatures and successful status checks
 signify the reliability of credentials, they do not signify that all credentials
 are interchangeable for all contexts. It is crucial for verifiers to
-also validate any claims which might be relevant, considering the source and nature of the claim as well as privilege or service for which the credential is presented.
-</p><p>
-For
-instance, in scenarios where a certified medical diagnosis is required, a self-asserted
-<a>credential</a> carrying the necessary data might not suffice because it lacks validity from an
-authoritative medical source. To ensure the propriety of <a>credential</a> use,
-stakeholders are urged to assess the <a>credential</a>s' relevance and authority within
-the specific context of their intended application.
+also validate any claims which might be relevant, considering the source and
+nature of the claim as well as privilege or service for which the credential is
+presented.
+        </p>
+        <p>
+For instance, in scenarios where a certified medical diagnosis is required, a
+self-asserted <a>credential</a> carrying the necessary data might not suffice
+because it lacks validity from an authoritative medical source. To ensure the
+propriety of <a>credential</a> use, stakeholders are urged to assess the
+<a>credential</a>s' relevance and authority within the specific context of their
+intended application.
         </p>
       </section>
     </section>
@@ -5828,8 +5846,9 @@ it is expected to exist and be a valid value, such as
 The digital signature provides a number of protections, other than tamper
 resistance, which are not immediately obvious. For example, a Linked Data
 Signature <code>created</code> <a>property</a> establishes a date and time
-before which the <a>credential</a> should not be considered <a>verified</a>, separate from the validity period of the credential. This property describes the validity of the proof, not of the credential.<br/>
-The
+before which the <a>credential</a> should not be considered <a>verified</a>,
+separate from the validity period of the credential. This property describes the
+validity of the proof, not of the credential.<br/> The
 <code>verificationMethod</code> <a>property</a> specifies, for example, the
 public key that can be used to verify the digital signature. Dereferencing a
 public key URL reveals information about the controller of the key, which can
@@ -5848,7 +5867,11 @@ purposes and to a <a>verifiable credential</a> as a method of assertion.
 The <code>validFrom</code> and <code>validUntil</code> properties are expected
 to be within an expected range for the <a>verifier</a>. For example, a
 <a>verifier</a> can check that the end of the validity period of a <a>verifiable
-credential</a> is not in the past. Because some credentials can be useful for secondary purposes even if their original validity period has expired, validity period, as expressed using the <code>validFrom</code> and <code>validUntil</code> properties, is always considered a component of validation, which is performed <em>after</em> verification.
+credential</a> is not in the past. Because some credentials can be useful for
+secondary purposes even if their original validity period has expired, validity
+period, as expressed using the <code>validFrom</code> and
+<code>validUntil</code> properties, is always considered a component of
+validation, which is performed <em>after</em> verification.
         </p>
       </section>
 
