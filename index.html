@@ -851,15 +851,17 @@ which are then organized into <a>verifiable presentations</a>.
 <a>verifiable presentation</a>, which is normally composed of at least four
 information <a>graphs</a>. The first of these <a>graphs</a>, the
 <a>verifiable presentation graph</a> (which is the <a>default graph</a>),
-expresses the <a>verifiable presentation</a> itself, and contains presentation metadata.
-The <code>verifiableCredential</code> property in the <a>verifiable presentation graph</a>
-refers to one or more <a>verifiable credentials</a>, each being one of the
-second information <a>graphs</a>, i.e., a self-contained <a>verifiable credential graph</a>
-which in turn contains credential metadata and other claims. Each of these graphs are
-separate <a>named graphs</a>. The third information <a>graph</a>, the verifiable credential
-<a>proof graph</a>, expresses the credential graph proof, which is usually a digital signature.
-The fourth information <a>named graph</a>, the presentation <a>proof graph</a>, expresses the
-presentation's digital proof, which is usually a digital signature.
+expresses the <a>verifiable presentation</a> itself, and contains presentation
+metadata. The <code>verifiableCredential</code> property in the <a>verifiable
+presentation graph</a> refers to one or more <a>verifiable credentials</a>, each
+being one of the second information <a>graphs</a>, i.e., a self-contained
+<a>verifiable credential graph</a> which in turn contains credential metadata
+and other claims. Each of these graphs are separate <a>named graphs</a>. The
+third information <a>graph</a>, the verifiable credential <a>proof graph</a>,
+expresses the credential graph proof, which is usually a digital signature. The
+fourth information <a>named graph</a>, the presentation <a>proof graph</a>,
+expresses the presentation's digital proof, which is usually a digital
+signature.
         </p>
 
         <figure id="info-graph-vp">
@@ -2826,10 +2828,10 @@ data model, without the use of a centralized system for doing so, through the
 use of [[?LINKED-DATA]].
           </li>
           <li>
-Support multiple types of cryptographic proof formats through the use of
-JOSE or COSE [[VC-JOSE-COSE]], Data Integrity Proofs [[VC-DATA-INTEGRITY]], and a variety of cryptographic
-suites listed in the Verifiable Credential Specifications Directory
-[[?VC-SPECS]].
+Support multiple types of cryptographic proof formats through the use of JOSE or
+COSE [[VC-JOSE-COSE]], Data Integrity Proofs [[VC-DATA-INTEGRITY]], and a
+variety of cryptographic suites listed in the Verifiable Credential
+Specifications Directory [[?VC-SPECS]].
           </li>
           <li>
 Provide all of the extensibility mechanisms outlined above in a data format that
@@ -3010,11 +3012,11 @@ the <a>verifiable credential</a> are the same when used by both the
         <p>
 To validate that a resource referenced by a <a>verifiable credential</a> is the
 same at verification time as it is at issuing time, an implementer MAY include a
-property named <code id="defn-relatedResource">relatedResource</code> that stores an array of objects that
-describe additional integrity metadata about each resource referenced by the
-<a>verifiable credential</a>. If <code>relatedResource</code> is present, there
-MUST be an object in the array for each remote resource for each context used in
-the verifiable credential.
+property named <code id="defn-relatedResource">relatedResource</code> that
+stores an array of objects that describe additional integrity metadata about
+each resource referenced by the <a>verifiable credential</a>. If
+<code>relatedResource</code> is present, there MUST be an object in the array
+for each remote resource for each context used in the verifiable credential.
         </p>
         <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
 The requirement that contexts be listed in `relatedResource` is currently being
@@ -3024,9 +3026,9 @@ the specification.
         <p>
 Each object in the <code>relatedResource</code> array MUST contain the
 following: the [[URL]] to the resource named <code>id</code> and the
-<code id="defn-digestSRI">digestSRI</code> information for the resource constructed using the method
-specified in <a href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource
-Integrity</a>.
+<code id="defn-digestSRI">digestSRI</code> information for the resource
+constructed using the method specified in
+<a href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource Integrity</a>.
         </p>
         <p class="issue" title="Unification of cryptographic hash expression formats are under discussion">
 The Working Group is currently attempting to determine if cryptographic hash
@@ -3230,19 +3232,23 @@ information.
         <p>
 The value of the <code>termsOfUse</code> <a>property</a> might be used
 to tell the <a>verifier</a> any or all of the following, among other things:
+        </p>
 
-<ul><li>
-the procedures or policies that were used in issuing the <a>verifiable credential</a>,
-for example, by providing a pointer to the location where these procedures
-or policies can be found, or naming the standard that defines them;
-</li>
-<li>
+        <ul>
+          <li>
+the procedures or policies that were used in issuing the <a>verifiable
+credential</a>, for example, by providing a pointer to the location where these
+procedures or policies can be found, or naming the standard that defines them;
+          </li>
+          <li>
 the rules and policies of the issuer that apply to the presentation of this
 <a>verifiable credential</a> to the <a>verifier</a>;
-</li>
-<li>
-the identity of the entity under whose authority the issuer issued this particular <a>verifiable credential</a>.
-</li></ul>
+          </li>
+          <li>
+the identity of the entity under whose authority the issuer issued this
+particular <a>verifiable credential</a>.
+          </li>
+        </ul>
 
         <dl>
           <dt><var id="defn-termsOfUse">termsOfUse</var></dt>
@@ -3868,11 +3874,11 @@ for additional guidance.
         </ul>
 
         <p class="note" title="What constitutes a verifiable credential?">
-Readers are advised that a digital credential is only considered
-compatible with the W3C Verifiable Credentials ecosystem if it is a
-<a>conforming document</a> and it utilizes at least one securing mechanism, as
-described by their respective requirements in this specification. While some communities might call some digital
-credential formats that are not <a>conforming documents</a>
+Readers are advised that a digital credential is only considered compatible with
+the W3C Verifiable Credentials ecosystem if it is a <a>conforming document</a>
+and it utilizes at least one securing mechanism, as described by their
+respective requirements in this specification. While some communities might call
+some digital credential formats that are not <a>conforming documents</a>
 "verifiable credentials", doing so does NOT make that digital credential
 compliant to this specification.
         </p>
@@ -3993,13 +3999,14 @@ require them.
             </li>
             <li>
 The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
-are defined as <a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph containers</a>.
+are defined as
+<a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph containers</a>.
 This means the creation of <a>named graphs</a> used to isolate sets of data
-asserted by different entities. This ensures, for example, proper
-cryptographic separation between the data graph provided by each <a>issuer</a>
-and the one provided by the <a>holder</a> presenting the
-<a>verifiable credential</a> to ensure the provenance of the information for
-each graph is preserved.
+asserted by different entities. This ensures, for example, proper cryptographic
+separation between the data graph provided by each <a>issuer</a>
+and the one provided by the <a>holder</a> presenting the <a>verifiable
+credential</a> to ensure the provenance of the information for each graph is
+preserved.
             </li>
             <li>
 The <code>@protected</code> properties feature of [[!JSON-LD]] 1.1 is used to
@@ -4088,10 +4095,11 @@ listed in the Section <a href="#iana-considerations"></a>:
 `application/vc+ld+json` and `application/vp+ld+json`.
         </p>
         <p>
-The `application/vc+ld+json` and `application/vp+ld+json` media types do not imply any particular securing
-mechanism, but are intended to be used in conjunction with securing mechanisms.
-A securing mechanism needs to be applied to protect the integrity of these media types.
-Do not assume security of content regardless of the media type used to communicate it.
+The `application/vc+ld+json` and `application/vp+ld+json` media types do not
+imply any particular securing mechanism, but are intended to be used in
+conjunction with securing mechanisms. A securing mechanism needs to be applied
+to protect the integrity of these media types. Do not assume security of content
+regardless of the media type used to communicate it.
         </p>
 
         <section class="informative">
