@@ -1121,7 +1121,7 @@ of the [[JSON-LD]] specification.
         </p>
 
         <dl>
-          <dt><dfn class="lint-ignore">@context</dfn></dt>
+          <dt><dfn class="export">@context</dfn></dt>
           <dd>
 The value of the <code>@context</code> <a>property</a> MUST be an ordered set
 where the first item is a <a>URL</a> with the value
@@ -1233,7 +1233,7 @@ the <code>id</code> <a>property</a>.
         </p>
 
         <dl>
-          <dt><dfn class="lint-ignore">id</dfn></dt>
+          <dt><dfn class="export">id</dfn></dt>
           <dd>
 The value of the <code>id</code> <a>property</a> MUST be a single <a>URL</a>.
 It is RECOMMENDED that the <a>URL</a> in the <code>id</code> be one which, if
@@ -1307,7 +1307,7 @@ nor a <a>verifiable presentation</a>.
         </p>
 
         <dl>
-          <dt><dfn data-lt="type|types">type</dfn></dt>
+          <dt><dfn class="export" data-lt="type|types">type</dfn></dt>
           <dd>
 The value of the <code>type</code> <a>property</a> MUST be, or map to (through
 interpretation of the <code>@context</code> property), one or more <a>URLs</a>.
@@ -1499,7 +1499,7 @@ are meant to serve these purposes.
         </p>
 
         <dl>
-          <dt><dfn class="lint-ignore">name</dfn></dt>
+          <dt><dfn class="export">name</dfn></dt>
           <dd>
 An OPTIONAL property that expresses the name of the <a>credential</a>. If
 present, the value of the <code>name</code> <a>property</a> MUST be a string or
@@ -1512,7 +1512,7 @@ Ideally, the name of a <a>credential</a> is concise, human-readable, and could
 enable an individual to quickly differentiate one <a>credential</a>
 from any other <a>credentials</a> that they might hold.
           </dd>
-          <dt><dfn class="lint-ignore">description</dfn></dt>
+          <dt><dfn class="export">description</dfn></dt>
           <dd>
 An OPTIONAL property that conveys specific details about a <a>credential</a>. If
 present, the value of the <code>description</code> <a>property</a> MUST be a
@@ -1648,7 +1648,7 @@ A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
         </p>
 
         <dl>
-          <dt><dfn class="lint-ignore"
+          <dt><dfn class="export"
                    id="defn-credentialSubject">credentialSubject</dfn></dt>
           <dd>
 The value of the <code>credentialSubject</code> <a>property</a> is defined as
@@ -1978,15 +1978,14 @@ and/or properties, can lead to a corrupted data set.
 
         <p>
 To ensure that data from different <a>verifiable credentials</a> are not
-accidentally co-mingled, the concept of a <dfn>verifiable credential graph</dfn>
-is used to encapsulate each <a>verifiable credential</a>. For simple
-<a>verifiable credentials</a>, i.e., when the JSON-LD document contains a single
-credential with, possibly, associated proofs, this graph is the <a>default
-graph</a>. For <a>presentations</a>, each value associated with the
-`verifiableCredential` property of the <a>presentation</a> is a separate
-<a>named graph</a> of type
-<dfn class="lint-ignore">VerifiableCredentialGraph</dfn> which contains a single
-<a>verifiable credential</a>.
+accidentally co-mingled, the concept of a <dfn class="export">verifiable
+credential graph</dfn> is used to encapsulate each <a>verifiable credential</a>.
+For simple <a>verifiable credentials</a>, i.e., when the JSON-LD document
+contains a single credential with, possibly, associated proofs, this graph is
+the <a>default graph</a>. For <a>presentations</a>, each value associated with
+the `verifiableCredential` property of the <a>presentation</a> is a separate
+<a>named graph</a> of type <dfn class="export">VerifiableCredentialGraph</dfn>
+which contains a single <a>verifiable credential</a>.
         </p>
         <p>
 Using these <a>graphs</a> has a concrete effect when performing JSON-LD
@@ -2013,12 +2012,12 @@ using it.
         <p>
 This specification recognizes two classes of securing mechanisms: those that use
 external proofs and those that use embedded proofs. An
-<dfn class="lint-ignore">external proof</dfn> is one that wraps an expression of
+<dfn class="export">external proof</dfn> is one that wraps an expression of
 this data model, such as via a JSON Web Token, which is elaborated on in the
 <em>Securing Verifiable Credentials using JOSE and COSE</em> [[VC-JOSE-COSE]] specification.
-An <dfn>embedded proof</dfn> is a mechanism where the proof is included in the
-data model, such as a Data Integrity Proof, which is elaborated on in <em>Verifiable
-Credential Data Integrity</em> [[VC-DATA-INTEGRITY]].
+An <dfn class="export">embedded proof</dfn> is a mechanism where the proof is
+included in the data model, such as a Data Integrity Proof, which is elaborated
+on in <em>Verifiable Credential Data Integrity</em> [[VC-DATA-INTEGRITY]].
         </p>
         <p>
 It should be noted that these two classes of securing mechanisms are not
@@ -2045,9 +2044,9 @@ presentations</a> that use an external proof MAY use the <code>proof</code>
 One or more cryptographic proofs that can be used to detect tampering and verify
 the authorship of a <a>verifiable credential</a> or a <a>verifiable
 presentation</a>. Each proof is a separate <a>named graph</a>
-(referred to as a <dfn>proof graph</dfn>) containing a single proof. The
-specific method used for an <a>embedded proof</a> MUST be identified using the
-<code>type</code> <a>property</a>.
+(referred to as a <dfn class="export">proof graph</dfn>) containing a single
+proof. The specific method used for an <a>embedded proof</a> MUST be identified
+using the <code>type</code> <a>property</a>.
             </p>
             <p>
 A proof for a <a>verifiable credential</a> covers all <a>claims</a>
@@ -2617,17 +2616,17 @@ are as follows:
 
         <ul>
           <li>
-An <a>issuer</a> <dfn class="lint-ignore" data-lt="issue">issues</dfn> a
+An <a>issuer</a> <dfn class="export" data-lt="issue">issues</dfn> a
 <a>verifiable credential</a> to a <a>holder</a>. Issuance always occurs before
 any other actions involving a <a>credential</a>.
           </li>
           <li>
-A <a>holder</a> might <dfn class="lint-ignore"
+A <a>holder</a> might <dfn class="export"
 data-lt="transfers">transfer</dfn> one or more of its <a>verifiable
 credentials</a> to another <a>holder</a>.
           </li>
           <li>
-A <a>holder</a> <dfn class="lint-ignore" data-lt="present">presents</dfn> one or
+A <a>holder</a> <dfn class="export" data-lt="present">presents</dfn> one or
 more of its <a>verifiable credentials</a> to a <a>verifier</a>, optionally
 inside a <a>verifiable presentation</a>.
           </li>
@@ -2644,11 +2643,11 @@ evaluate which issuers are appropriate for which claims and which subjects are
 appropriate for the requested use.
          </li>
          <li>
-An <a>issuer</a> might <dfn class="lint-ignore" data-lt="revoke">revoke</dfn> a
+An <a>issuer</a> might <dfn class="export" data-lt="revoke">revoke</dfn> a
 <a>verifiable credential</a>.
           </li>
           <li>
-A <a>holder</a> might <dfn class="lint-ignore" data-lt="delete">delete</dfn> a
+A <a>holder</a> might <dfn class="export" data-lt="delete">delete</dfn> a
 <a>verifiable credential</a>.
           </li>
         </ul>
@@ -3417,7 +3416,7 @@ expressing evidence information.
         </p>
 
         <dl>
-          <dt><dfn id="defn-evidence">evidence</dfn></dt>
+          <dt><dfn id="defn-evidence" class="export">evidence</dfn></dt>
           <dd>
 The value of the <code>evidence</code> <a>property</a> MUST be one or more
 evidence schemes providing enough information for a <a>verifier</a> to determine
