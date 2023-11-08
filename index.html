@@ -164,6 +164,18 @@ pre .comment {
   -ms-user-select: none;
   user-select: none;
 }
+ol.algorithm {
+  counter-reset: numsection;
+  list-style-type: none;
+}
+ol.algorithm li {
+  margin: 0.5em 0;
+}
+ol.algorithm li:before {
+  font-weight: bold;
+  counter-increment: numsection;
+  content: counters(numsection, ".") ") ";
+}
     </style>
   </head>
   <body>
@@ -5912,25 +5924,58 @@ identified attacks.
     </section>
 
     <section class="appendix normative">
-      <h2>Verification</h2>
+      <h2>Verification Algorithm</h2>
 
       <p>
-This section contains the algorithm that conforming verifiers run when verifying
-a <a>verifiable credential</a> or a <a>verifiable presentation</a>. The
-algorithm takes a <a>conforming document</a> (<var>document</var>) as input and
-produces an object <var>result</var> that contains a verification result and
-optional warning and error information.
+This section contains the algorithm that <a>conforming verifier processors</a>
+run when verifying a <a>verifiable credential</a> or a <a>verifiable
+presentation</a>. Any algorithm can be used that produces output that
+is equivalent to the algorithm defined in this section. The algorithm takes a
+byte stream (<var>inputBytes</var>) and media type (<var>inputMediaType</var>)
+as input and produces an object (<var>verified</var>) that contains a
+verification status (<var>verified</var>.<var>status</var>),
+verified document (<var>verified</var>.<var>document</var>),
+media type (<var>verified</var>.<var>mediaType</var>),
+and optional warning  (<var>verified</var>.<var>warnings</var>) and
+error (<var>verified</var>.<var>errors</var>) information.
       </p>
 
       <ol class="algorithm">
         <li>
-
+Set <var>verified</var> to an empty object.
         </li>
         <li>
-
+Verify that the securing mechanism in use on <var>inputBytes</var> has not been
+tampered with, using <var>inputMediaType</var> as additional input to the
+algorithm. See Section <a href="#securing-verifiable-credentials"></a>
+for details.
         </li>
         <li>
-
+If the verification of the securing mechanism is successful, set
+<var>verified</var>.<var>status</var> to `true`,
+<var>verified</var>.<var>document</var> to the information that was secured,
+and <var>verified</var>.<var>mediaType</var> to the corresponding media type,
+and optionally set <var>verified</var>.<var>warnings</var> to any warning
+objects returned by the verification process for the securing mechanism.
+          <ol class="algorithm">
+            <li>
+Ensure that <var>verified</var>.<var>document</var> is a
+<a>conforming document</a>, and if not, optionally add appropriate warnings
+and errors to <var>verified</var>.<var>warnings</var> and
+<var>verified</var>.<var>errors</var>, respectively.
+            </li>
+          </ol>
+        </li>
+        <li>
+If the verification of the securing mechanism is not successful, set
+<var>verified</var>.<var>status</var> to `false`, and optionally set
+<var>verified</var>.<var>errors</var> to any error objects returned by the
+verification process for the securing mechanism and
+<var>verified</var>.<var>warnings</var> to any warning objects returned by the
+verification process for the securing mechanism.
+        </li>
+        <li>
+Return <var>verified</var>.
         </li>
       </ol>
     </section>
