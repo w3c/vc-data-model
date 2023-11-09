@@ -5721,17 +5721,17 @@ identified attacks.
       <h2>Verification Algorithm</h2>
 
       <p>
-This section contains the algorithm that <a>conforming verifier processors</a>
-run when verifying a <a>verifiable credential</a> or a <a>verifiable
+This section contains an algorithm that <a>conforming verifier processors</a>
+can run when verifying a <a>verifiable credential</a> or a <a>verifiable
 presentation</a>. Any algorithm can be used that produces output that
-is equivalent to the algorithm defined in this section. The algorithm takes a
-byte stream (<var>inputBytes</var>) and media type (<var>inputMediaType</var>)
-as input and produces an object (<var>verified</var>) that contains a
+is equivalent to the algorithm defined in this section. This algorithm takes a
+byte stream (<var>inputBytes</var>) and a media type (<var>inputMediaType</var>)
+as inputs, and produces an object (<var>verified</var>) that contains a
 verification status (<var>verified</var>.<var>status</var>),
-verified document (<var>verified</var>.<var>document</var>),
-media type (<var>verified</var>.<var>mediaType</var>),
-and optional warning  (<var>verified</var>.<var>warnings</var>) and
-error (<var>verified</var>.<var>errors</var>) information.
+a verified document (<var>verified</var>.<var>document</var>),
+a media type (<var>verified</var>.<var>mediaType</var>), zero or more
+optional warnings (<var>verified</var>.<var>warnings</var>), and
+zero or more optional errors (<var>verified</var>.<var>errors</var>).
       </p>
 
       <ol class="algorithm">
@@ -5748,25 +5748,24 @@ for details.
 If the verification of the securing mechanism is successful, set
 <var>verified</var>.<var>status</var> to `true`,
 <var>verified</var>.<var>document</var> to the information that was secured,
-and <var>verified</var>.<var>mediaType</var> to the corresponding media type,
-and optionally set <var>verified</var>.<var>warnings</var> to any warning
+<var>verified</var>.<var>mediaType</var> to the corresponding media type,
+and optionally <var>verified</var>.<var>warnings</var> to any warning
 objects returned by the verification process for the securing mechanism.
           <ol class="algorithm">
             <li>
-Ensure that <var>verified</var>.<var>document</var> is a
-<a>conforming document</a>, and if not, optionally add appropriate warnings
+Check whether <var>verified</var>.<var>document</var> is a
+<a>conforming document</a>. If not, optionally add appropriate warnings
 and errors to <var>verified</var>.<var>warnings</var> and
 <var>verified</var>.<var>errors</var>, respectively.
             </li>
           </ol>
         </li>
         <li>
-If the verification of the securing mechanism is not successful, set
+If verification of the securing mechanism is not successful, set
 <var>verified</var>.<var>status</var> to `false`, and optionally set
-<var>verified</var>.<var>errors</var> to any error objects returned by the
-verification process for the securing mechanism and
-<var>verified</var>.<var>warnings</var> to any warning objects returned by the
-verification process for the securing mechanism.
+<var>verified</var>.<var>errors</var> and 
+<var>verified</var>.<var>warnings</var>, respectively, to any error and
+warning objects returned by the verification process for the securing mechanism.
         </li>
         <li>
 Return <var>verified</var>.
