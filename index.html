@@ -690,7 +690,7 @@ have associated media types. The concrete difference between these concepts
 credential</a> and <a>verifiable presentation</a> &mdash; is simply the fact
 that the "verifiable" objects are secured in a way that is cryptographically
 verifiable, and the others are not. For more details, see Section
-<a href="#securing-verifiable-credentials"></a>.
+<a href="#securing-mechanisms"></a>.
       </p>
 
       <section class="informative">
@@ -2051,7 +2051,7 @@ global identifier, such as a URL.
       </section>
 
       <section>
-        <h3>Securing Verifiable Credentials</h3>
+        <h3>Securing Mechanisms</h3>
 
         <p>
 A securing mechanism MUST express the details necessary to evaluate whether a
@@ -2155,6 +2155,62 @@ single proof mechanisms for use with <a>verifiable credentials</a> or
 [VC-JOSE-COSE], and the "Proofs" section of the Verifiable Credential Specifications
 Directory [[VC-SPECS]].
         </p>
+
+        <section class="normative">
+          <h2>The Verification Algorithm</h2>
+
+          <p>
+This section contains an algorithm that <a>conforming verifier processors</a>
+can run when verifying a <a>verifiable credential</a> or a <a>verifiable
+presentation</a>. Any algorithm can be used that produces output that
+is equivalent to the algorithm defined in this section. This algorithm takes a
+byte stream (<var>inputBytes</var>) and a media type (<var>inputMediaType</var>)
+as inputs, and produces an object (<var>verified</var>) that contains a
+verification status (<var>verified</var>.<var>status</var>),
+a verified document (<var>verified</var>.<var>document</var>),
+a media type (<var>verified</var>.<var>mediaType</var>), zero or more
+optional warnings (<var>verified</var>.<var>warnings</var>), and
+zero or more optional errors (<var>verified</var>.<var>errors</var>).
+          </p>
+
+          <ol class="algorithm">
+            <li>
+Set <var>verified</var> to an empty object.
+            </li>
+            <li>
+Verify that the securing mechanism in use on <var>inputBytes</var> has not been
+tampered with, using <var>inputMediaType</var> as additional input to the
+algorithm. See Section <a href="#securing-mechanisms"></a>
+for details.
+            </li>
+            <li>
+If the verification of the securing mechanism is successful, set
+<var>verified</var>.<var>status</var> to `true`,
+<var>verified</var>.<var>document</var> to the information that was secured,
+<var>verified</var>.<var>mediaType</var> to the corresponding media type,
+and optionally <var>verified</var>.<var>warnings</var> to any warning
+objects returned by the verification process for the securing mechanism.
+              <ol class="algorithm">
+                <li>
+Check whether <var>verified</var>.<var>document</var> is a
+<a>conforming document</a>. If not, optionally add appropriate warnings
+and errors to <var>verified</var>.<var>warnings</var> and
+<var>verified</var>.<var>errors</var>, respectively.
+                </li>
+              </ol>
+            </li>
+            <li>
+If verification of the securing mechanism is not successful, set
+<var>verified</var>.<var>status</var> to `false`, and optionally set
+<var>verified</var>.<var>errors</var> and
+<var>verified</var>.<var>warnings</var>, respectively, to any error and
+warning objects returned by the verification process for the securing mechanism.
+            </li>
+            <li>
+Return <var>verified</var>.
+            </li>
+          </ol>
+        </section>
 
       </section>
 
@@ -5427,7 +5483,7 @@ the <a>verifiable credential</a> itself. Linked content that exists outside a
 <a>verifiable credential</a>, such as images, JSON-LD Contexts, JSON Schemas,
 and other machine-readable data, are often not protected against tampering
 because the data resides outside of the protection of the
-<a href="#securing-verifiable-credentials">securing mechanism</a> on the
+<a href="#securing-mechanisms">securing mechanism</a> on the
 <a>verifiable credential</a>. For example, the content retrievable by
 dereferencing the following highlighted links is not integrity protected, but
 probably ought to be:
@@ -5527,7 +5583,7 @@ credential</a> data during transmission or storage.
 A <a>verifier</a> might need to ensure it is the intended recipient of a
 <a>verifiable presentation</a> and not the target of a
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a>.
-Some <a href="#securing-verifiable-credentials">securing mechanisms</a>,
+Some <a href="#securing-mechanisms">securing mechanisms</a>,
 like [[VC-JOSE-COSE]] or [[VC-DATA-INTEGRITY]], provide an option to specify
 the intended audience or domain of a <a>presentation</a>, which can help reduce
 this risk.
@@ -5647,7 +5703,7 @@ of non-repudiation mechanisms. These mechanisms solidify an <a>entity</a>'s resp
 for their actions or transactions, thereby reinforcing accountability and deterring
 malicious behaviors. The attainment of non-repudiation is a multifaceted endeavor,
 encompassing an array of techniques ranging from
-<a href="#securing-verifiable-credentials">securing mechanisms</a>, proofs of possession,
+<a href="#securing-mechanisms">securing mechanisms</a>, proofs of possession,
 and authentication schemes in a variety of protocols designed to foster trust and reliability.
         </p>
       </section>
@@ -5921,62 +5977,6 @@ identified attacks.
         </p>
       </section>
 
-    </section>
-
-    <section class="appendix normative">
-      <h2>Verification Algorithm</h2>
-
-      <p>
-This section contains an algorithm that <a>conforming verifier processors</a>
-can run when verifying a <a>verifiable credential</a> or a <a>verifiable
-presentation</a>. Any algorithm can be used that produces output that
-is equivalent to the algorithm defined in this section. This algorithm takes a
-byte stream (<var>inputBytes</var>) and a media type (<var>inputMediaType</var>)
-as inputs, and produces an object (<var>verified</var>) that contains a
-verification status (<var>verified</var>.<var>status</var>),
-a verified document (<var>verified</var>.<var>document</var>),
-a media type (<var>verified</var>.<var>mediaType</var>), zero or more
-optional warnings (<var>verified</var>.<var>warnings</var>), and
-zero or more optional errors (<var>verified</var>.<var>errors</var>).
-      </p>
-
-      <ol class="algorithm">
-        <li>
-Set <var>verified</var> to an empty object.
-        </li>
-        <li>
-Verify that the securing mechanism in use on <var>inputBytes</var> has not been
-tampered with, using <var>inputMediaType</var> as additional input to the
-algorithm. See Section <a href="#securing-verifiable-credentials"></a>
-for details.
-        </li>
-        <li>
-If the verification of the securing mechanism is successful, set
-<var>verified</var>.<var>status</var> to `true`,
-<var>verified</var>.<var>document</var> to the information that was secured,
-<var>verified</var>.<var>mediaType</var> to the corresponding media type,
-and optionally <var>verified</var>.<var>warnings</var> to any warning
-objects returned by the verification process for the securing mechanism.
-          <ol class="algorithm">
-            <li>
-Check whether <var>verified</var>.<var>document</var> is a
-<a>conforming document</a>. If not, optionally add appropriate warnings
-and errors to <var>verified</var>.<var>warnings</var> and
-<var>verified</var>.<var>errors</var>, respectively.
-            </li>
-          </ol>
-        </li>
-        <li>
-If verification of the securing mechanism is not successful, set
-<var>verified</var>.<var>status</var> to `false`, and optionally set
-<var>verified</var>.<var>errors</var> and 
-<var>verified</var>.<var>warnings</var>, respectively, to any error and
-warning objects returned by the verification process for the securing mechanism.
-        </li>
-        <li>
-Return <var>verified</var>.
-        </li>
-      </ol>
     </section>
 
     <section class="appendix informative">
