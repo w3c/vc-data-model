@@ -305,7 +305,7 @@ The word "verifiable" in the terms
 refers to the characteristic of a <a>credential</a> or <a>presentation</a>
 as being able to be <a>verified</a> by a <a>verifier</a>,
 as defined in this document. Verifiability of a credential does not imply
-that truth of <a>claims</a> encoded therein. Rather, once the authenticity and
+the truth of <a>claims</a> encoded therein. Rather, once the authenticity and
 currency of a <a>verifiable credential</a> or <a>verifiable presentation</a> are
 established, a <a>verifier</a> validates the included claims using their own
 business rules before relying on them. Such reliance only occurs after
@@ -970,7 +970,7 @@ discount from a university. In the example below, Pat receives an alumni
 
         <p>
 Pat then attempts to redeem the alumni discount. The <a>verifier</a>, a ticket
-sales system, states that any alumni of "Example University" receives a discount
+sales system, states that alumni of "Example University" receive a discount
 on season tickets to sporting events. Using a mobile device, Pat starts the
 process of purchasing a season ticket. A step in this process requests an alumni
 <a>verifiable credential</a>, and this request is routed to Pat's digital wallet.
@@ -981,19 +981,19 @@ The digital wallet asks Pat if they would like to provide a previously issued
 the <a>verifier</a> and <a>verified</a>.
         </p>
         <p>
-Once verified as authentic and current, the seller of the season ticket then
-validates that the issuer of the <a>verifiable credential</a> is recognized for
-the claim of alumni status&mdash;it is, as it is issued by Example
-University&mdash;and that today's date lies within the validity period defined
-by the values of the validFrom and validUntil properties. Since the holder is
-expected to be the subject of the <a>verifiable credential</a>, the
-<a>verifier</a> also confirms that the id for the alumni claim matches the id of
+Once <a>verified</a> as authentic and current, the seller of the season ticket then
+validates that the <a>issuer</a> of the <a>verifiable credential</a> is recognized for
+the claim of alumni status &mdash; it is, as it was issued by Example
+University &mdash; and that today's date lies within the validity period defined
+by the values of the `validFrom` and `validUntil` properties. Since the <a>holder</a> is
+expected to be the <a>subject</a> of the <a>verifiable credential</a>, the
+<a>verifier</a> also confirms that the `id` for the alumni claim matches the `id` of
 the creator of the <a>verifiable presentation</a>.
         </p>
         <p>
-  Having verified the credential and the presentation, and validated the
-  relevant claims, the ticket seller safely enables the alumni discount for Pat,
-  confident that Pat is legitimately entitled to it.
+Having <a>verified</a> the credential and the presentation, and validated the
+relevant claims, the ticket seller safely enables the alumni discount for Pat,
+confident that Pat is legitimately entitled to it.
         </p>
         <pre class="example nohighlight" title="A simple example of a verifiable presentation">
 {
@@ -1025,10 +1025,10 @@ the creator of the <a>verifiable presentation</a>.
 
         <p class="note">
 The examples above are unsecured. Implementers that are interested in
-understanding more about securing Verifiable Credentials can see the
-specifications Securing Verifiable Credentials using JOSE and COSE
-[[VC-JOSE-COSE]] and Verifiable Credential Data Integrity [[VC-DATA-INTEGRITY]]
-and the "Proofs" section of the Verifiable Credential Specifications Directory
+understanding more about securing <a>verifiable credentials</a> can see the
+specifications [[[VC-JOSE-COSE]]]
+[[VC-JOSE-COSE]] and [[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]]
+and the "Proofs" section of the [[[VC-SPECS]]]
 [[VC-SPECS]].
         </p>
       </section>
@@ -1081,8 +1081,8 @@ vocabulary and context files for their application and publish them at stable UR
 so that other developers can use the same vocabulary and context to achieve
 interoperability. This process is covered in Section
 <a href="#extensibility"></a>. Alternatively, developers can reuse existing vocabulary
-and context files that happen to fit their use case. They can explore the Verifiable
-Credential Specifications Directory [[VC-SPECS]] for reusable resources.
+and context files that happen to fit their use case. They can explore the
+[[[VC-SPECS]]] [[VC-SPECS]] for reusable resources.
         </p>
 
       </section>
@@ -1113,7 +1113,7 @@ transformation rules, and so on, which are beyond the needs of this
 specification, but might be useful in the future or to related work. For more
 information, see
 <a href="https://www.w3.org/TR/json-ld11/#the-context">Section 3.1: The Context</a>
-of the [[JSON-LD]] specification.
+of the [[[JSON-LD]]] [[JSON-LD]] specification.
         </p>
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST include a
@@ -2462,7 +2462,7 @@ the <a>verifiable credentials</a> that it issues:
             <p>
 The value of the <code>credentialSchema</code> <a>property</a> MUST be one or
 more data schemas that provide <a>verifiers</a> with enough information to
-determine if the provided data conforms to the provided schema(s). Each
+determine whether the provided data conforms to the provided schema(s). Each
 <code>credentialSchema</code> MUST specify its <code>type</code> (for example,
 <code>JsonSchema</code>), and an <code>id</code> <a>property</a>
 that MUST be a <a>URL</a> identifying the schema file. The precise contents of
@@ -2522,7 +2522,7 @@ integrity protection mechanism. The <code>credentialSchema</code>
         <p>
 In the example above, the <a>issuer</a> is specifying a
 <code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA]] file that
-can be used by a <a>verifier</a> to determine if the
+can be used by a <a>verifier</a> to determine whether the
 <a>verifiable credential</a> is well-formed.
         </p>
 
@@ -2567,7 +2567,7 @@ see Section <a href="#zero-knowledge-proofs"></a>.
         <p>
 In the example above, the <a>issuer</a> is specifying a
 <code>credentialSchema</code> pointing to a means of transforming the input
-data into a format which can then be used by a <a>verifier</a> to determine if
+data into a format which can then be used by a <a>verifier</a> to determine whether
 the proof provided with the <a>verifiable credential</a> is well-formed.
         </p>
 
@@ -2633,7 +2633,7 @@ inside a <a>verifiable presentation</a>.
           <li>
 A <a>verifier</a> <a>verifies</a> the authenticity of the presented
 <a>verifiable presentation</a> and <a>verifiable credentials</a> and
-checks any <a href="#status">credential status</a>
+checks any <a href="#status">credential status</a> (if present)
 of the <a>verifiable credentials</a>.
           </li>
           <li>
@@ -2691,12 +2691,12 @@ this Verifiable Credential Data Model is directly applicable.
 This specification neither defines an authorization framework nor
 does it restrict the business decisions that a <a>verifier</a> might make
 after <a>verifying</a> a <a>verifiable credential</a> or <a>verifiable
-  presentation</a>. However, <a>verifiers</a>
-  apply their own business rules before treating any claims as valid,
-  taking into account the <a>holder</a>, the <a>issuers</a> of the
-  <a>verifiable credentials</a>, the claims of the
-  <a>verifiable credentials</a>, and its own policies.
- </p>
+presentation</a>. Rather, <a>verifiers</a>
+apply their own business rules before treating any claim as valid,
+taking into account the <a>holder</a>, the <a>issuer</a> of the
+<a>verifiable credential</a>, the claims of the
+<a>verifiable credential</a>, and the <a>verifier's</a> own policies.
+        </p>
 
         <p>
 In particular, Sections <a href="#terms-of-use"></a> and
@@ -3030,7 +3030,7 @@ constructed using the method specified in
 <a href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource Integrity</a>.
         </p>
         <p class="issue" title="Unification of cryptographic hash expression formats are under discussion">
-The Working Group is currently attempting to determine if cryptographic hash
+The Working Group is currently attempting to determine whether cryptographic hash
 expression formats can be unified across all of the VCWG core specifications.
 Candidates for this mechanism include `digestSRI` and `digestMultibase`. There
 are arguments for and against unification that the WG is currently debating.
@@ -3703,7 +3703,7 @@ see Section <a href="#types"></a>.
         <p class="issue" title="Extension points under consideration by the Working Group">
 The working group is discussing if additional extension points
 will be reserved in <a href="https://www.w3.org/ns/credentials/v2">https://www.w3.org/ns/credentials/v2</a>.
-<br/>
+<br/><br/>
 The working group currently plans to only reserve extension points that
 have at least a draft specification that is being incubated in a community group.
         </p>
@@ -4442,7 +4442,7 @@ with these kinds of characteristics. <a>Issuers</a> are strongly advised to
 provide privacy-protecting <a>verifiable credentials</a> when possible. For
 example, issuing <code>ageOver</code> <a>verifiable credentials</a> instead of
 date of birth <a>verifiable credentials</a> when a <a>verifier</a> wants to
-determine if an <a>entity</a> is over the age of 18.
+determine whether an <a>entity</a> is over the age of 18.
         </p>
 
         <p>
@@ -4807,10 +4807,10 @@ The geolocation information associated with the <a>holder</a>.
         <p>
 The process of performing these checks might result in information leakage that
 leads to a privacy violation of the <a>holder</a>. For example, a simple
-operation such as checking an improperly configured revocation list can
+operation, such as checking an improperly configured revocation list, can
 notify the <a>issuer</a> that a specific business is likely interacting
 with the <a>holder</a>. This could
-enable <a>issuers</a> to collude and correlate individuals without their
+enable <a>issuers</a> to collude to correlate individuals without their
 knowledge.
         </p>
 
@@ -5501,9 +5501,9 @@ authorized use of their data after <a>presentation</a>.
         <h4>Inappropriate Use</h4>
         <p>
 While valid cryptographic signatures and successful status checks
-signify the reliability of credentials, they do not signify that all credentials
-are interchangeable for all contexts. It is crucial for verifiers to
-also validate any claims which might be relevant, considering the source and
+signify the reliability of <a>credentials</a>, they do not signify that all <a>credentials</a>
+are interchangeable for all contexts. It is crucial that <a>verifiers</a>
+also <a>validate</a> any claims which might be relevant, considering the source and
 nature of the claim as well as privilege or service for which the credential is
 presented.
         </p>
@@ -5512,7 +5512,7 @@ For instance, in scenarios where a certified medical diagnosis is required, a
 self-asserted <a>credential</a> carrying the necessary data might not suffice
 because it lacks validity from an authoritative medical source. To ensure the
 propriety of <a>credential</a> use, stakeholders are urged to assess the
-<a>credential</a>s' relevance and authority within the specific context of their
+<a>credential's</a> relevance and authority within the specific context of their
 intended application.
         </p>
       </section>
@@ -5904,9 +5904,10 @@ The digital signature provides a number of protections, other than tamper
 resistance, which are not immediately obvious. For example, a Linked Data
 Signature <code>created</code> <a>property</a> establishes a date and time
 before which the <a>credential</a> should not be considered <a>verified</a>,
-separate from the validity period of the credential. This property describes the
-validity of the proof, not of the credential.<br/> The
-<code>verificationMethod</code> <a>property</a> specifies, for example, the
+distinct from the validity period of the credential. This property describes the
+validity of the proof, not of the credential.
+<br/><br/>
+The <code>verificationMethod</code> <a>property</a> specifies, for example, the
 public key that can be used to verify the digital signature. Dereferencing a
 public key URL reveals information about the controller of the key, which can
 be checked against the issuer of the <a>credential</a>. The
@@ -5921,8 +5922,8 @@ purposes and to a <a>verifiable credential</a> as a method of assertion.
         <h3>Validity Periods</h3>
 
         <p>
-The <code>validFrom</code> and <code>validUntil</code> properties are expected
-to be within an expected range for the <a>verifier</a>. For example, a
+The <a>verifier</a> expects that the <code>validFrom</code> and
+<code>validUntil</code> properties will be within a certain range. For example, a
 <a>verifier</a> can check that the end of the validity period of a <a>verifiable
 credential</a> is not in the past. Because some credentials can be useful for
 secondary purposes even if their original validity period has expired, validity
