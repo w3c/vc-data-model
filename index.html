@@ -4188,22 +4188,26 @@ content type, or return an error code such as
         </section>
 
         <section class="informative">
-          <h2>JSON Processing</h2>
+          <h2>Credential Type-Specific Processing</h2>
 
           <p>
-While the media types describing conforming documents defined in this
-specification always express JSON-LD, JSON-LD processing is not required to be
-performed, since JSON-LD is JSON. Some scenarios where processing a
-<a>verifiable credential</a> or a <a>verifiable presentation</a> as JSON is
-desirable include, but are not limited to:
+<dfn>General JSON-LD processing</dfn> is defined as a mechanism that utilizes a
+JSON-LD software library to process a <a>conforming document</a> by performing
+various <a data-cite="?JSON-LD11#forms-of-json-ld">transformations</a>.
+<dfn>Credential type-specific processing</dfn> is defined as a lighter-weight
+mechanism, that doesn't require a JSON-LD software library, to process
+<a>conforming documents</a>. General JSON-LD processing is not always required
+to be performed when working with <a>verifiable credentials</a> and
+<a>verifiable presentations</a>; one can use credential-type-specific
+processing, instead. Some scenarios where credential-type-specific processing
+is desirable include, but are not limited to:
           </p>
 
           <ul>
             <li>
-Before securing or after verifying content
-that requires <a href="https://csrc.nist.gov/glossary/term/data_integrity">data
-integrity</a>, such as a
-<a>verifiable credential</a> or <a>verifiable presentation</a>.
+Before applying a securing mechanism, or after verifying a
+<a>conforming document</a> protected by a securing mechanism to ensure
+<a href="https://csrc.nist.gov/glossary/term/data_integrity">data integrity</a>.
             </li>
             <li>
 When performing JSON Schema validation, as described in Section
@@ -4216,8 +4220,8 @@ When serializing or deserializing <a>verifiable credentials</a> or
             <li>
 When operating on <a>verifiable credentials</a> or <a>verifiable
 presentations</a> in a software application, after verification or validation
-is performed for securing mechanisms that require an understanding of
-and/or processing of JSON-LD.
+is performed for securing mechanisms that require
+<a>general JSON-LD processing</a>.
             </li>
             <li>
 When an application chooses to process the media type using the `+json`
@@ -4226,9 +4230,10 @@ structured media type suffix.
           </ul>
 
           <p>
-That is, JSON processing is allowed as long as the document being consumed or
-produced is a <a>conforming document</a>. If JSON processing is desired, an
-implementer is advised to follow the following rule:
+That is, <a href="#dfn-credential-type-specific-processing">
+credential-type-specific processing</a> is allowed as long as the document being
+consumed or produced is a <a>conforming document</a>. If this type of processing
+is desired, an implementer is advised to follow this rule:
           </p>
 
           <ul>
@@ -4243,19 +4248,19 @@ contents are appropriate for the intended use case.
           <p>
 Using static context files with a JSON Schema is one acceptable approach to
 implementing the rule above. This can ensure proper term identification,
-typing, and order, when a JSON document is processed as JSON-LD.
+typing, and order, when performing credential-type-specific processing.
           </p>
 
           <p>
-The rule above guarantees semantic interoperability between JSON and JSON-LD for
-literal JSON keys mapped to URIs by the `@context` mechanism. While JSON-LD
-processors will use the specific mechanism provided and can verify that all
-terms are correctly specified, JSON-based processors implicitly accept the same
-semantics without performing any JSON-LD transformations, but instead by
-applying the above rules. In other words, the context in which the data exchange
-happens is explicitly stated for both JSON and JSON-LD by using the same
-mechanism. With respect to JSON-based processors, this is achieved in a
-lightweight manner, without having to use JSON-LD processing libraries.
+The rule above guarantees semantic interoperability between the two processing
+mechanisms for literal JSON keys mapped to URIs by the `@context` mechanism.
+While <a>general JSON-LD processing</a> will use `@context` values provided in
+its algorithms and verify that all terms are correctly specified,
+<a href="#dfn-credential-type-specific-processing">credential-type-specific
+processing</a> implicitly accepts the same semantics without invoking any
+JSON-LD APIs. In other words, the context in which the data exchange happens is
+explicitly stated for both processing approaches due to the use of
+`@context` in a way that leads to the same <a>conforming document</a> semantics.
           </p>
 
         </section>
