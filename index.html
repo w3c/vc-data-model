@@ -3950,7 +3950,8 @@ specification. Instances of the data model are encoded in JSON-LD compact
 form [[!JSON-LD]] and include the <code>@context</code> <a>property</a>. The
 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
 is described in detail in the [[!JSON-LD]] specification and its use is
-elaborated on in Section <a href="#extensibility"></a>.
+elaborated on in Section <a href="#contexts"></a> and
+Section <a href="#extensibility"></a>.
         </p>
 
         <p>
@@ -3972,15 +3973,17 @@ base media type, `application/vc+ld+json`.
         </p>
 
         <p>
-As elaborated upon in Section <a href="#static-processing"></a>, some software
-applications might not perform dynamic JSON-LD processing.
+As elaborated upon in Section
+<a href="#credential-type-specific-processing"></a>, some software
+applications might not perform generalized JSON-LD processing.
 Authors of <a>conforming documents</a> are advised that interoperability
 might be reduced if JSON-LD keywords in the `@context` value are used to
-globally affect values in `@context` or other documents, such as by
-globally setting the keywords `@base` or `@language`. Using these
-keywords with specific focus, as when aligned with one or more values
-of one or more other keywords, may broaden the utility of specific
-`@context` files and/or <a>conforming documents</a>.
+globally affect values in a <a>verifiable credential</a> or
+<a>verifiable presentation</a>, such as by globally setting the `@base` keyword.
+For example, globally setting these values might trigger a failure in a
+mis-implemented JSON Schema check on the `@context` value in an implementation
+that is performing credential-type-specific processing and not expecting the
+`@base` value to be expressed in the `@context` value.
         </p>
 
         <section>
