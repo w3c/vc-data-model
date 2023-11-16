@@ -4357,7 +4357,7 @@ Ensure that the securing mechanism has properly protected the
 <var>conforming document</var> by performing the following steps:
             <ol class="algorithm">
               <li>
-Set <var>securingMechanismVerified</var> to the result of executing the
+Set <var>securingMechanisecuringMechanismVerified</var> to the result of executing the
 <a href="#verify-securing-mechanism">securing mechanism verification
 algorithm</a> with <var>inputBytes</var> and <var>mediaType</var> passed as
 input to the algorithm.
@@ -4365,7 +4365,7 @@ input to the algorithm.
               <li>
 Set <var>status</var>, <var>document</var>, <var>mediaType</var>,
 <var>warnings</var>, and <var>errors</var> in <var>verified</var> to the
-associated properties in <var>securingMechanismVerified</var>.
+associated properties in <var>securingMechanisecuringMechanismVerified</var>.
               </li>
               <li>
 If <var>verified</var>.<var>status</var> is `false`, the provided
@@ -4409,36 +4409,114 @@ Return <var>verified</var>.
         <p>
 The algorithm in this section can be used to determine if a provided document is
 conformant to the data model provided in this specification. This algorithm
-takes a document (object <var>document</var>) and produces an object
-(<var>dmVerified</var>) that contains the following:
+takes a document (object <var>inputDocument</var>) and produces an object
+(<var>dataModelVerified</var>) that contains the following:
         </p>
 
         <ul>
           <li>
-a verification status (boolean <var>verified</var>.<var>status</var>)
+a verification status (boolean <var>status</var>)
           </li>
           <li>
-a verified document (object <var>verified</var>.<var>document</var>)
+a verified document (object <var>document</var>)
           </li>
           <li>
-zero or more optional warnings (array of <a>ProblemDetails</a>
-<var>verified</var>.<var>warnings</var>)
+zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
           </li>
           <li>
-zero or more optional errors (array of <a>ProblemDetails</a>
-<var>verified</var>.<var>errors</var>)
+zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
           </li>
         </ul>
 
         <p>
 The verification algorithm is as follows:
         </p>
+
         <ol class="algorithm">
           <li>
-Set <var>verified</var> to an empty object.
+Set <var>dataModelVerified</var> to an empty object. Initialize the following
+fields in <var>dataModelVerified</var>:
+<var>status</var> to `false`, <var>document</var> to <var>inputDocument</var>,
+<var>warnings</var> to an empty array, and <var>errors</var> to an empty array.
           </li>
           <li>
-Return <var>dmVerified</var>.
+Ensure that the `@context` property of <var>document</var> conforms to the
+statements in <a href="#contexts"></a>. If not, return
+<var>dataModelVerified</var>, which will contain a false verification status.
+          </li>
+          <li>
+Starting at the top level, recursively process each object <var>obj</var> in
+<var>document</var>, setting <a href="#MALFORMED_VALUE">MALFORMED_VALUE</a>
+errors in <var>dataModelVerified</var>.<var>errors</var> if errors are found,
+by performing the following checks:
+            <ol class="algorithm">
+              <li>
+If present, ensure that the `id` property conforms to the statements in
+Section <a href="#identifiers"></a>.
+              </li>
+              <li>
+If present, ensure that the `type` property conforms to the statements in
+Section <a href="#types"></a>.
+              </li>
+              <li>
+If present, ensure that the `name` and `description` properties conform to the
+statements in Section <a href="#names-and-descriptions"></a>.
+              </li>
+              <li>
+If present, ensure that the `proof` property conforms to
+the statements in Section <a href="#securing-mechanisms"></a>.
+              </li>
+              <li>
+If the `type` property is present and contains the
+`VerifiablePresentation` type, ensure that the object conforms to the
+statements in Section <a href="#presentations"></a>.
+              </li>
+              <li>
+If the `type` property is present and contains the
+`VerifiableCredential` type, perform the following checks:
+                <ol class="algorithm">
+                  <li>
+Ensure that the `credentialSubject` property conforms to the
+statements in Section <a href="#credential-subject"></a>.
+                  </li>
+                  <li>
+Ensure that the `issuer` property conforms to the
+statements in Section <a href="#issuer"></a>.
+                  </li>
+                  <li>
+If present, ensure that the `validFrom` and `validUntil` properties conform to
+the statements in Section <a href="#validity-period"></a>.
+                  </li>
+                  <li>
+If present, ensure that the `credentialStatus` property conforms to
+the statements in Section <a href="#status"></a>.
+                  </li>
+                  <li>
+If present, ensure that the `credentialSchema` property conforms to
+the statements in Section <a href="#data-schemas"></a>.
+                  </li>
+                  <li>
+If present, ensure that the `relatedResource` property conforms to
+the statements in Section <a href="#integrity-of-related-resources"></a>.
+                  </li>
+                  <li>
+If present, ensure that the `refreshService` property conforms to
+the statements in Section <a href="#refreshing"></a>.
+                  </li>
+                  <li>
+If present, ensure that the `evidence` property conforms to
+the statements in Section <a href="#evidence"></a>.
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li>
+If no errors were detected to this point, set
+<var>dataModelVerified</var>.<var>verified</var> to `true`.
+          </li>
+          <li>
+Return <var>dataModelVerified</var>.
           </li>
         </ol>
 
@@ -4452,7 +4530,7 @@ The algorithm in this section can be used to verify if a securing mechanism
 that is associated with a sequence of bytes is valid. This algorithm takes a
 byte sequence (bytes <var>inputBytes</var>) and a media type
 (string <var>inputMediaType</var>) as inputs, and produces an object
-(<var>smVerified</var>) that contains the following:
+(<var>securingMechanismVerified</var>) that contains the following:
         </p>
 
         <ul>
@@ -4477,7 +4555,7 @@ The securing mechanism verification algorithm is as follows:
         </p>
         <ol class="algorithm">
           <li>
-Set <var>smVerified</var> to an empty object.
+Set <var>securingMechanismVerified</var> to an empty object.
           </li>
           <li>
 If the verification of the securing mechanism is successful:
@@ -4505,7 +4583,7 @@ the verification process for the securing mechanism
             </ol>
           </li>
           <li>
-Return <var>smVerified</var>.
+Return <var>securingMechanismVerified</var>.
           </li>
         </ol>
 
