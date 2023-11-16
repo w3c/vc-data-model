@@ -4401,27 +4401,27 @@ Return <var>verified</var>.
       </section>
 
       <section>
-        <h3>Anomaly Descriptions</h3>
+        <h3>Problem Details</h3>
 
         <p>
-When an anomaly is detected by a <a>conforming processor</a>, an
-<dfn>anomalyDescription</dfn> is used to report the issue to software that
-invoked the process that led to the anomaly.
-The interface for these objects follows [[RFC9457]] to encode the data. An
-<a>anomalyDescription</a> object consists of the following properties:
+When an implementation detects an anomaly while processing a document, a
+<dfn>ProblemDetail</dfn> can be used to report the issue to other software
+systems. The interface for these objects follows [[RFC9457]] to encode the data.
+An <a>ProblemDetail</a> object consists of the following properties:
         </p>
 
         <dl>
           <dt>type</dt>
           <dd>
 The `type` <a>property</a> MUST be present and its value MUST be a <a>URL</a>
-identifying the type of the anomaly.
+identifying the type of problem.
           </dd>
           <dt>code</dt>
           <dd>
-The `code` <a>property</a> is OPTIONAL. If present, its value MUST be an integer
-that identifies the type of the anomaly. Integer codes are useful in systems
-that only provide integer return values.
+The `code` <a>property</a> is an OPTIONAL
+<a data-cite="RFC9457#name-extension-members">RFC9457 extension member</a> . If
+present, its value MUST be an integer that identifies the type of the anomaly.
+Integer codes are useful in systems that only provide integer return values.
           </dd>
           <dt>title</dt>
           <dd>
@@ -4437,7 +4437,7 @@ longer human-readable string for the anomaly.
 
         <p>
 Other properties that are useful for debugging purposes MAY be included in
-an <a>anomalyDescription</a> object.
+a <a>ProblemDescription</a> object. See [[RFC9457]] for further details.
         </p>
 
       </section>
