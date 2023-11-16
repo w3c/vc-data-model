@@ -4538,8 +4538,7 @@ The verification algorithm is as follows:
         <ol class="algorithm">
           <li>
 Set <var>dataModelVerified</var> to an empty object. Initialize the following
-fields in <var>dataModelVerified</var>:
-<var>status</var> to `false`, <var>document</var> to <var>inputDocument</var>,
+fields in <var>dataModelVerified</var>: <var>status</var> to `false`,
 <var>warnings</var> to an empty array, and <var>errors</var> to an empty array.
           </li>
           <li>
@@ -4616,12 +4615,23 @@ the statements in Section <a href="#evidence"></a>.
           </li>
           <li>
 If no errors were detected to this point, set
+<var>dataModelVerified</var>.<var>document</var> to <var>inputDocument</var>,
 <var>dataModelVerified</var>.<var>verified</var> to `true`.
           </li>
           <li>
 Return <var>dataModelVerified</var>.
           </li>
         </ol>
+
+        <p class="note" title="Additional checks are expected">
+Implementers are advised that the checks in this section are the bare minimum
+set of tests to conform to this specification. Other checks that create helpful
+warnings for developers to help debug potential issues are expected to be
+provided by implementations. Additional checks that could result in new types of
+errors being detected to stop harmful content are also expected to be provided
+by implementations, which might be integrated into future versions of this
+specification.
+        </p>
 
       </section>
 
