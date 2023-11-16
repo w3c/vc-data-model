@@ -4440,10 +4440,12 @@ a verified document (object <var>verified</var>.<var>document</var>)
 a media type (string <var>verified</var>.<var>mediaType</var>)
           </li>
           <li>
-zero or more optional warnings (array of <a>anomalyDescriptions</a> <var>verified</var>.<var>warnings</var>)
+zero or more optional warnings (array of <a>ProblemDetails</a>
+<var>verified</var>.<var>warnings</var>)
           </li>
           <li>
-zero or more optional errors (array of <a>anomalyDescriptions</a> <var>verified</var>.<var>errors</var>)
+zero or more optional errors (array of <a>ProblemDetails</a>
+<var>verified</var>.<var>errors</var>)
           </li>
         </ul>
 
@@ -4462,26 +4464,28 @@ algorithm. See Section <a href="#securing-mechanisms"></a>
 for details.
           </li>
           <li>
-If the verification of the securing mechanism is successful, set the following:
-            <ul>
-              <li>
+If the verification of the securing mechanism is successful:
+            <ol class="algorithm">
+              <li>Set the following:
+                <ol class="algorithm">
+                  <li>
 <var>verified</var>.<var>status</var> to `true`
-              </li>
-              <li>
+                  </li>
+                  <li>
 <var>verified</var>.<var>document</var> to the information that was checked and
 returned as successfully protected by the verification process for the securing
 mechanism
-              </li>
-              <li>
+                  </li>
+                  <li>
 <var>verified</var>.<var>mediaType</var> to the corresponding
 media type
-              </li>
-              <li>
+                  </li>
+                  <li>
 <var>verified</var>.<var>warnings</var> optionally to any warnings returned by
 the verification process for the securing mechanism
+                  </li>
+                </ol>
               </li>
-            </ul>
-            <ol class="algorithm">
               <li>
 Check whether <var>verified</var>.<var>document</var> is a
 <a>conforming document</a>. If not, optionally add appropriate warnings
@@ -4508,9 +4512,10 @@ Return <var>verified</var>.
 
         <p>
 When an implementation detects an anomaly while processing a document, a
-<dfn>ProblemDetail</dfn> can be used to report the issue to other software
-systems. The interface for these objects follows [[RFC9457]] to encode the data.
-An <a>ProblemDetail</a> object consists of the following properties:
+<dfn>ProblemDetails</dfn> object can be used to report the issue to other
+software systems. The interface for these types of objects follows [[RFC9457]]
+to encode the data. A <a>ProblemDetails</a> object consists of the following
+properties:
         </p>
 
         <dl>
@@ -4523,25 +4528,43 @@ identifying the type of problem.
           <dd>
 The `code` <a>property</a> is an OPTIONAL
 <a data-cite="RFC9457#name-extension-members">RFC9457 extension member</a> . If
-present, its value MUST be an integer that identifies the type of the anomaly.
+present, its value MUST be an integer that identifies the type of the problem.
 Integer codes are useful in systems that only provide integer return values.
           </dd>
           <dt>title</dt>
           <dd>
 The `title` <a>property</a> MUST be present and its value SHOULD provide a short
-but specific human-readable string for the anomaly.
+but specific human-readable string for the problem.
           </dd>
           <dt>detail</dt>
           <dd>
 The `detail` <a>property</a> MUST be present and its value SHOULD provide a
-longer human-readable string for the anomaly.
+longer human-readable string for the problem.
           </dd>
         </dl>
 
         <p>
 Other properties that are useful for debugging purposes MAY be included in
-a <a>ProblemDescription</a> object. See [[RFC9457]] for further details.
+a <a>ProblemDetails</a> object. See [[RFC9457]] for further guidance on
+using this mechanism.
         </p>
+
+        <p>
+The following problem description types and codes are defined by this
+specification:
+        </p>
+
+        <dl>
+          <dt id="MALFORMED_VALUE">
+https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE
+(-64)
+          </dt>
+          <dd>
+The value associated with a particular <a>property</a> is malformed. The
+name of the <a>property</a> and the path to the property SHOULD be provided
+in the <a>ProblemDetails</a> object. See Section <a href="#verification"></a>.
+          </dd>
+        </dl>
 
       </section>
 
