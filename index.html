@@ -2121,129 +2121,6 @@ single proof mechanisms for use with <a>verifiable credentials</a> or
 Directory [[VC-SPECS]].
         </p>
 
-        <section class="normative">
-          <h4>The Verification Algorithm</h4>
-
-          <p>
-This section contains an algorithm that <a>conforming verifier processors</a>
-can run when verifying a <a>verifiable credential</a> or a <a>verifiable
-presentation</a>. This algorithm takes a byte sequence (bytes
-<var>inputBytes</var>) and a media type (string <var>inputMediaType</var>) as
-inputs, and produces an object (<var>verified</var>) that contains the following:
-          </p>
-          <ul>
-            <li>
-a verification status (boolean <var>verified</var>.<var>status</var>)
-            </li>
-            <li>
-a verified document (object <var>verified</var>.<var>document</var>)
-            </li>
-            <li>
-a media type (string <var>verified</var>.<var>mediaType</var>)
-            </li>
-            <li>
-zero or more optional warnings (array of <a>anomalyDescriptions</a> <var>verified</var>.<var>warnings</var>)
-            </li>
-            <li>
-zero or more optional errors (array of <a>anomalyDescriptions</a> <var>verified</var>.<var>errors</var>)
-            </li>
-          </ul>
-          </p>
-
-          <ol class="algorithm">
-            <li>
-Set <var>verified</var> to an empty object.
-            </li>
-            <li>
-Verify that the securing mechanism in use on <var>inputBytes</var> has not been
-tampered with, using <var>inputMediaType</var> as additional input to the
-algorithm. See Section <a href="#securing-mechanisms"></a>
-for details.
-            </li>
-            <li>
-If the verification of the securing mechanism is successful, set the following:
-              <ul>
-                <li>
-<var>verified</var>.<var>status</var> to `true`
-                </li>
-                <li>
-<var>verified</var>.<var>document</var> to the information that was checked and
-returned as successfully protected by the verification process for the securing
-mechanism
-                </li>
-                <li>
-<var>verified</var>.<var>mediaType</var> to the corresponding
-media type
-                </li>
-                <li>
-<var>verified</var>.<var>warnings</var> optionally to any warnings returned by
-the verification process for the securing mechanism
-                </li>
-              </ul>
-              <ol class="algorithm">
-                <li>
-Check whether <var>verified</var>.<var>document</var> is a
-<a>conforming document</a>. If not, optionally add appropriate warnings
-and errors to <var>verified</var>.<var>warnings</var> and
-<var>verified</var>.<var>errors</var>, respectively.
-                </li>
-              </ol>
-            </li>
-            <li>
-If verification of the securing mechanism is not successful, set
-<var>verified</var>.<var>status</var> to `false`, and optionally set
-<var>verified</var>.<var>errors</var> and
-<var>verified</var>.<var>warnings</var>, respectively, to any error and
-warnings returned by the verification process for the securing mechanism. At least one error MUST be populated.
-            </li>
-            <li>
-Return <var>verified</var>.
-            </li>
-          </ol>
-        </section>
-
-        <section>
-          <h4>Anomaly Descriptions</h4>
-
-          <p>
-When an anomaly is detected by a <a>conforming processor</a>, an
-<dfn>anomalyDescription</dfn> is used to report the issue to software that
-invoked the process that led to the anomaly.
-The interface for these objects follows [[RFC9457]] to encode the data. An
-<a>anomalyDescription</a> object consists of the following properties:
-          </p>
-
-          <dl>
-            <dt>type</dt>
-            <dd>
-The `type` <a>property</a> MUST be present and its value MUST be a <a>URL</a>
-identifying the type of the anomaly.
-            </dd>
-            <dt>code</dt>
-            <dd>
-The `code` <a>property</a> is OPTIONAL. If present, its value MUST be an integer
-that identifies the type of the anomaly. Integer codes are useful in systems
-that only provide integer return values.
-            </dd>
-            <dt>title</dt>
-            <dd>
-The `title` <a>property</a> MUST be present and its value SHOULD provide a short
-but specific human-readable string for the anomaly.
-            </dd>
-            <dt>detail</dt>
-            <dd>
-The `detail` <a>property</a> MUST be present and its value SHOULD provide a
-longer human-readable string for the anomaly.
-            </dd>
-          </dl>
-
-          <p>
-Other properties that are useful for debugging purposes MAY be included in
-an <a>anomalyDescription</a> object.
-          </p>
-
-        </section>
-
       </section>
 
       <section>
@@ -4427,6 +4304,144 @@ Verifiable Credential Data Integrity [[VC-DATA-INTEGRITY]].
         </ul>
 
       </section>
+    </section>
+
+    <section class="normative">
+      <h2>Algorithms</h2>
+
+      <p>
+This section contains algorithms that can be used by implementations to
+perform common operations.
+      </p>
+
+      <section class="normative">
+        <h3>Verification</h3>
+
+        <p>
+This section contains an algorithm that <a>conforming verifier
+implementations</a> can run when verifying a <a>verifiable credential</a> or a
+<a>verifiable presentation</a>. This algorithm takes a byte sequence (bytes
+<var>inputBytes</var>) and a media type (string <var>inputMediaType</var>) as
+inputs, and produces an object (<var>verified</var>) that contains the
+following:
+        </p>
+
+        <ul>
+          <li>
+a verification status (boolean <var>verified</var>.<var>status</var>)
+          </li>
+          <li>
+a verified document (object <var>verified</var>.<var>document</var>)
+          </li>
+          <li>
+a media type (string <var>verified</var>.<var>mediaType</var>)
+          </li>
+          <li>
+zero or more optional warnings (array of <a>anomalyDescriptions</a> <var>verified</var>.<var>warnings</var>)
+          </li>
+          <li>
+zero or more optional errors (array of <a>anomalyDescriptions</a> <var>verified</var>.<var>errors</var>)
+          </li>
+        </ul>
+
+        <p>
+The verification algorithm is as follows:
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Set <var>verified</var> to an empty object.
+          </li>
+          <li>
+Verify that the securing mechanism in use on <var>inputBytes</var> has not been
+tampered with, using <var>inputMediaType</var> as additional input to the
+algorithm. See Section <a href="#securing-mechanisms"></a>
+for details.
+          </li>
+          <li>
+If the verification of the securing mechanism is successful, set the following:
+            <ul>
+              <li>
+<var>verified</var>.<var>status</var> to `true`
+              </li>
+              <li>
+<var>verified</var>.<var>document</var> to the information that was checked and
+returned as successfully protected by the verification process for the securing
+mechanism
+              </li>
+              <li>
+<var>verified</var>.<var>mediaType</var> to the corresponding
+media type
+              </li>
+              <li>
+<var>verified</var>.<var>warnings</var> optionally to any warnings returned by
+the verification process for the securing mechanism
+              </li>
+            </ul>
+            <ol class="algorithm">
+              <li>
+Check whether <var>verified</var>.<var>document</var> is a
+<a>conforming document</a>. If not, optionally add appropriate warnings
+and errors to <var>verified</var>.<var>warnings</var> and
+<var>verified</var>.<var>errors</var>, respectively.
+              </li>
+            </ol>
+          </li>
+          <li>
+If verification of the securing mechanism is not successful, set
+<var>verified</var>.<var>status</var> to `false`, and optionally set
+<var>verified</var>.<var>errors</var> and
+<var>verified</var>.<var>warnings</var>, respectively, to any error and
+warnings returned by the verification process for the securing mechanism. At least one error MUST be populated.
+          </li>
+          <li>
+Return <var>verified</var>.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Anomaly Descriptions</h3>
+
+        <p>
+When an anomaly is detected by a <a>conforming processor</a>, an
+<dfn>anomalyDescription</dfn> is used to report the issue to software that
+invoked the process that led to the anomaly.
+The interface for these objects follows [[RFC9457]] to encode the data. An
+<a>anomalyDescription</a> object consists of the following properties:
+        </p>
+
+        <dl>
+          <dt>type</dt>
+          <dd>
+The `type` <a>property</a> MUST be present and its value MUST be a <a>URL</a>
+identifying the type of the anomaly.
+          </dd>
+          <dt>code</dt>
+          <dd>
+The `code` <a>property</a> is OPTIONAL. If present, its value MUST be an integer
+that identifies the type of the anomaly. Integer codes are useful in systems
+that only provide integer return values.
+          </dd>
+          <dt>title</dt>
+          <dd>
+The `title` <a>property</a> MUST be present and its value SHOULD provide a short
+but specific human-readable string for the anomaly.
+          </dd>
+          <dt>detail</dt>
+          <dd>
+The `detail` <a>property</a> MUST be present and its value SHOULD provide a
+longer human-readable string for the anomaly.
+          </dd>
+        </dl>
+
+        <p>
+Other properties that are useful for debugging purposes MAY be included in
+an <a>anomalyDescription</a> object.
+        </p>
+
+      </section>
+
     </section>
 
     <section class="informative">
