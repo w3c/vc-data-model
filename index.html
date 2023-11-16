@@ -4328,13 +4328,97 @@ following:
 
         <ul>
           <li>
+a verification status (boolean <var>status</var>)
+          </li>
+          <li>
+a verified document (object <var>document</var>)
+          </li>
+          <li>
+a media type (string <var>mediaType</var>)
+          </li>
+          <li>
+zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
+          </li>
+          <li>
+zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
+          </li>
+        </ul>
+
+        <p>
+The verification algorithm is as follows:
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Set <var>verified</var> to an empty object.
+          </li>
+          <li>
+Ensure that the securing mechanism has properly protected the
+<var>conforming document</var> by performing the following steps:
+            <ol class="algorithm">
+              <li>
+Set <var>securingMechanismVerified</var> to the result of executing the
+<a href="#verify-securing-mechanism">securing mechanism verification
+algorithm</a> with <var>inputBytes</var> and <var>mediaType</var> passed as
+input to the algorithm.
+              </li>
+              <li>
+Set <var>status</var>, <var>document</var>, <var>mediaType</var>,
+<var>warnings</var>, and <var>errors</var> in <var>verified</var> to the
+associated properties in <var>securingMechanismVerified</var>.
+              </li>
+              <li>
+If <var>verified</var>.<var>status</var> is `false`, the provided
+<var>inputBytes</var> contains a document that cannot be considered to be
+secured; return <var>verified</var>, which will contain warning and error
+information related to the verification failure.
+              </li>
+            </ol>
+          </li>
+          <li>
+Ensure that the <var>verified</var>.<var>document</var> is a
+<a>conforming document</a> by performing the following steps:
+            <ol class="algorithm">
+              <li>
+Set <var>dataModelVerified</var> to the result of executing the
+<a href="#verify-data-model">data model verification algorithm</a>
+with <var>document</var> passed as input to the algorithm.
+              </li>
+              <li>
+Set <var>status</var>, <var>document</var>, <var>warnings</var>, and
+<var>errors</var> in <var>verified</var> to the associated properties in
+<var>dataModelVerified</var>.
+              </li>
+              <li>
+If <var>verified</var>.<var>status</var> is `false`, the provided
+<var>inputBytes</var> contains a non-conforming document; return
+<var>verified</var>, which will contain warning and error information
+related to the verification failure.
+              </li>
+            </ol>
+          </li>
+          <li>
+Return <var>verified</var>.
+          </li>
+        </ol>
+      </section>
+
+      <section class="normative">
+        <h3>Verify Data Model</h3>
+
+        <p>
+The algorithm in this section can be used to determine if a provided document is
+conformant to the data model provided in this specification. This algorithm
+takes a document (object <var>document</var>) and produces an object
+(<var>dmVerified</var>) that contains the following:
+        </p>
+
+        <ul>
+          <li>
 a verification status (boolean <var>verified</var>.<var>status</var>)
           </li>
           <li>
 a verified document (object <var>verified</var>.<var>document</var>)
-          </li>
-          <li>
-a media type (string <var>verified</var>.<var>mediaType</var>)
           </li>
           <li>
 zero or more optional warnings (array of <a>ProblemDetails</a>
@@ -4349,16 +4433,51 @@ zero or more optional errors (array of <a>ProblemDetails</a>
         <p>
 The verification algorithm is as follows:
         </p>
-
         <ol class="algorithm">
           <li>
 Set <var>verified</var> to an empty object.
           </li>
           <li>
-Verify that the securing mechanism in use on <var>inputBytes</var> has not been
-tampered with, using <var>inputMediaType</var> as additional input to the
-algorithm. See Section <a href="#securing-mechanisms"></a>
-for details.
+Return <var>dmVerified</var>.
+          </li>
+        </ol>
+
+      </section>
+
+      <section class="normative">
+        <h3>Verify Securing Mechanism</h3>
+
+        <p>
+The algorithm in this section can be used to verify if a securing mechanism
+that is associated with a sequence of bytes is valid. This algorithm takes a
+byte sequence (bytes <var>inputBytes</var>) and a media type
+(string <var>inputMediaType</var>) as inputs, and produces an object
+(<var>smVerified</var>) that contains the following:
+        </p>
+
+        <ul>
+          <li>
+a verification status (boolean <var>verified</var>.<var>status</var>)
+          </li>
+          <li>
+a verified document (object <var>verified</var>.<var>document</var>)
+          </li>
+          <li>
+zero or more optional warnings (array of <a>ProblemDetails</a>
+<var>verified</var>.<var>warnings</var>)
+          </li>
+          <li>
+zero or more optional errors (array of <a>ProblemDetails</a>
+<var>verified</var>.<var>errors</var>)
+          </li>
+        </ul>
+
+        <p>
+The securing mechanism verification algorithm is as follows:
+        </p>
+        <ol class="algorithm">
+          <li>
+Set <var>smVerified</var> to an empty object.
           </li>
           <li>
 If the verification of the securing mechanism is successful:
@@ -4383,25 +4502,13 @@ the verification process for the securing mechanism
                   </li>
                 </ol>
               </li>
-              <li>
-Check whether <var>verified</var>.<var>document</var> is a
-<a>conforming document</a>. If not, optionally add appropriate warnings
-and errors to <var>verified</var>.<var>warnings</var> and
-<var>verified</var>.<var>errors</var>, respectively.
-              </li>
             </ol>
           </li>
           <li>
-If verification of the securing mechanism is not successful, set
-<var>verified</var>.<var>status</var> to `false`, and optionally set
-<var>verified</var>.<var>errors</var> and
-<var>verified</var>.<var>warnings</var>, respectively, to any error and
-warnings returned by the verification process for the securing mechanism. At least one error MUST be populated.
-          </li>
-          <li>
-Return <var>verified</var>.
+Return <var>smVerified</var>.
           </li>
         </ol>
+
       </section>
 
       <section>
