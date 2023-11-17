@@ -4429,7 +4429,7 @@ zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
         </ul>
 
         <p>
-The verification algorithm is as follows:
+The data model verification algorithm is as follows:
         </p>
 
         <ol class="algorithm">
@@ -4445,9 +4445,10 @@ statements in <a href="#contexts"></a>. If not, return
           </li>
           <li>
 Starting at the top level, recursively process each object <var>obj</var> in
-<var>document</var>, setting <a href="#MALFORMED_VALUE">MALFORMED_VALUE</a>
-errors in <var>dataModelVerified</var>.<var>errors</var> if errors are found,
-by performing the following checks:
+<var>document</var>, setting <a href="#MALFORMED_VALUE_ERROR">
+MALFORMED_VALUE_ERROR</a> errors in
+<var>dataModelVerified</var>.<var>errors</var> if errors are found, by
+performing the following checks:
             <ol class="algorithm">
               <li>
 If present, ensure that the `id` property conforms to the statements in
@@ -4551,6 +4552,9 @@ a verification status (boolean <var>status</var>)
 a verified document (object <var>document</var>)
           </li>
           <li>
+a media type (string <var>mediaType</var>)
+          </li>
+          <li>
 zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
           </li>
           <li>
@@ -4561,32 +4565,94 @@ zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
         <p>
 The securing mechanism verification algorithm is as follows:
         </p>
+
         <ol class="algorithm">
           <li>
-Set <var>securingMechanismVerified</var> to an empty object.
+Set <var>securingMechanismVerified</var> to an empty object and initialize the
+following fields: <var>status</var> to `false`, <var>warnings</var> to an
+empty array, and <var>errors</var> to an empty array.
           </li>
           <li>
-If the verification of the securing mechanism is successful:
+Determine the specific mechanism for extracting the <a>conforming document</a>
+(<var>extractDocument</var>):
             <ol class="algorithm">
-              <li>Set the following:
-                <ol class="algorithm">
-                  <li>
-<var>verified</var>.<var>status</var> to `true`
-                  </li>
-                  <li>
-<var>verified</var>.<var>document</var> to the information that was checked and
-returned as successfully protected by the verification process for the securing
-mechanism
-                  </li>
-                  <li>
-<var>verified</var>.<var>mediaType</var> to the corresponding
-media type
-                  </li>
-                  <li>
-<var>verified</var>.<var>warnings</var> optionally to any warnings returned by
-the verification process for the securing mechanism
-                  </li>
-                </ol>
+              <li>
+If the <var>inputMediaType</var> is `application/vc+ld+json` or
+`application/vp+ld+json`, the <var>extractDocument</var> function takes
+<var>inputBytes</var> as an input parameter, parses the value as JSON,
+and returns the result as an object. If JSON parsing fails, a
+<a href="#PARSING_ERROR">PARSING_ERROR</a> is appended to
+<var>securingMechanismVerified</var>.<var>errors</var>.
+              </li>
+              <li>
+If the <var>inputMediaType</var> is associated with the JOSE or COSE
+specifications, the [[?VC-JOSE-COSE]] specification defines a process for
+extracting the <a>conforming document</a>.
+              </li>
+              <li>
+Other extracting functions are possible, but need not be listed in
+the <a data-cite="?VC-SPECS#media-type-extensions">Media Type Extensions</a>
+section of the Verifiable Credentials Specifications Directory [[?VC-SPECS]].
+Implementers might find these other specifications through other standards
+bodies or communities that utilize this specification.
+              </li>
+            </ol>
+          </li>
+          <li>
+Determine the specific cryptographic verification algorithm
+(<var>verifyProof</var>) required to verify the securing mechanism:
+            <ol class="algorithm">
+              <li>
+If the <var>inputMediaType</var> is `application/vc+ld+json` or
+`application/vp+ld+json`, the Verifiable Credential Data Integrity
+Specification [[?VC-DATA-INTEGRITY]] defines the process for identifying
+a specific cryptography suite type used for cryptographic verification by
+utilizing the `proof`.`type` property. The list of all registered
+proof types can be found in the <a data-cite="?VC-SPECS#proof">Proof Types</a>
+section of the Verifiable Credentials Specifications Directory [[?VC-SPECS]].
+              </li>
+              <li>
+If the <var>inputMediaType</var> is associated with the JOSE or COSE
+specifications, the [[?VC-JOSE-COSE]] specification defines a process for
+identification of a specific cryptography suite and cryptographic verification
+process.
+              </li>
+              <li>
+Other proof verification functions are possible, but need not be listed in
+the <a data-cite="?VC-SPECS#proof">Proof Types</a> section of the
+Verifiable Credentials Specifications Directory [[?VC-SPECS]].
+Implementers might find these other specifications through other standards
+bodies or communities that utilize this specification.
+              </li>
+            </ol>
+          </li>
+          <li>
+Set <var>securingMechanismVerified</var>.<var>status</var> to the
+result of passing <var>inputBytes</var> to the <var>verifyProof</var> function
+as well as any relevant function-specific options. For example, for
+Verifiable Credential Data Integrity [[?VC-DATA-INTEGRITY]] proof
+verification functions, the <var>expectedProofPurpose</var> option is set to
+`assertionMethod` and if the <a>conforming document</a> is expected to be a
+<a>verifiable presentation</a>, the <var>domain</var> and <var>challenge</var>
+are also provided options.
+          </li>
+          <li>
+If <var>securingMechanismVerified</var>.<var>status</var> is set to
+`false`, add a <a href="#CRYPTOGRAPHIC_SECURITY_ERROR">
+  CRYPTOGRAPHIC_SECURITY_ERROR</a> to
+<var>securingMechanismVerified</var>.<var>errors</var>.
+          </li>
+          <li>
+If <var>securingMechanismVerified</var>.<var>status</var> is set to
+`true`:
+            <ol class="algorithm">
+              <li>
+Set <var>securingMechanismVerified</var>.<var>document</var> by passing
+<var>inputBytes</var> to the <var>extractDocument</var> function.
+              </li>
+              <li>
+Set <var>securingMechanismVerified</var>.<var>mediaType</var> to the media type
+associated with <var>securingMechanismVerified</var>.<var>document</var>.
               </li>
             </ol>
           </li>
@@ -4645,14 +4711,33 @@ specification:
         </p>
 
         <dl>
-          <dt id="MALFORMED_VALUE">
-https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE
+          <dt id="PARSING_ERROR">
+https://www.w3.org/TR/vc-data-model#PARSING_ERROR
 (-64)
+          </dt>
+          <dd>
+There was an error while parsing input. See Section
+<a href="#verify-securing-mechanism"></a>.
+          </dd>
+          <dt id="CRYPTOGRAPHIC_SECURITY_ERROR">
+https://www.w3.org/TR/vc-data-model#CRYPTOGRAPHIC_SECURITY_ERROR
+(-65)
+          </dt>
+          <dd>
+The securing mechanism for the document has detected a
+modification to the contents of the document since it was created;
+potential tampering detected. See Section
+<a href="#verify-securing-mechanism"></a>.
+          </dd>
+          <dt id="MALFORMED_VALUE_ERROR">
+https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE_ERROR
+(-66)
           </dt>
           <dd>
 The value associated with a particular <a>property</a> is malformed. The
 name of the <a>property</a> and the path to the property SHOULD be provided
-in the <a>ProblemDetails</a> object. See Section <a href="#verification"></a>.
+in the <a>ProblemDetails</a> object. See Section
+<a href="#verify-data-model"></a>.
           </dd>
         </dl>
 
