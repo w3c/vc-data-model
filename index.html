@@ -3974,19 +3974,23 @@ base media type, `application/vc+ld+json`.
 
         <p>
 As elaborated upon in Section
-<a href="#credential-type-specific-processing"></a>, some software
-applications might not perform generalized JSON-LD processing.
-Authors of <a>conforming documents</a> are advised that interoperability
-might be reduced if JSON-LD keywords in the `@context` value are used to
-globally affect values in a <a>verifiable credential</a> or
-<a>verifiable presentation</a>, such as by globally setting the `@base` keyword.
-For example, globally setting these values might trigger a failure in a
-mis-implemented JSON Schema check on the `@context` value in an implementation
-that is performing credential-type-specific processing and not expecting the
-`@base` value to be expressed in the `@context` value. In order to increase
-interoperability, <a>conforming document</a> authors are urged to not use
-JSON-LD features that are not easily detected when not performing generalized
-JSON-LD processing. This guidance includes:
+<a href="#credential-type-specific-processing"></a>, some software applications
+might not perform generalized JSON-LD processing. Authors of <a>conforming
+documents</a> are advised that interoperability might be reduced if JSON-LD
+keywords in the `@context` value are used to globally affect values in a
+<a>verifiable credential</a> or <a>verifiable presentation</a>, such as by
+globally setting the `@base` keyword. For example, globally setting these values
+might trigger a failure in a mis-implemented JSON Schema check on the `@context`
+value in an implementation that is performing credential-type-specific
+processing and not expecting the `@base` value to be expressed in the `@context`
+value.
+        </p>
+
+        <p>
+In order to increase interoperability, <a>conforming document</a> authors are
+urged to not use JSON-LD features that are not easily detected when performing
+<a href="#credential-type-specific-processing">
+credential-type-specific processing</a>. These features include:
         </p>
 
         <ul>
@@ -3996,10 +4000,12 @@ value processing, such as global settings of `@base`
           </li>
           <li>
 Use of full URLs for JSON-LD terms and types (e.g.,
-`https://www.w3.org/2018/credentials#VerifiableCredential`), instead of the
-unmapped forms of any such values (e.g., `VerifiableCredential`) that are
-among active JSON-LD `@context` mappings (e.g.,
-`https://www.w3.org/ns/credentials/v2`)
+`https://www.w3.org/2018/credentials#VerifiableCredential` or
+`https://vocab.example/myvocab#SomeNewType`) instead of the short forms of
+any such values (e.g., `VerifiableCredential` or `SomeNewType`) that are
+either explicitly defined as JSON-LD `@context` mappings (e.g.,
+`https://www.w3.org/ns/credentials/v2`) or are implicitly defined via the
+`@vocab` feature that applies to all undefined terms.
           </li>
        </ul>
 
