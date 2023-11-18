@@ -42,6 +42,21 @@ var vcwg = {
       status: "WD",
       publisher: "Verifiable Credentials Working Group"
     },
+    "VC-CONTROLLER-DOCUMENT": {
+      title: "Verifiable Credential Controller Document",
+      href: "https://w3c.github.io/vc-controller-document/",
+      authors: [
+        "Manu Sporny",
+        "Dave Longley",
+        "Markus Sabadello",
+        "Drummond Reed",
+        "Orie Steele",
+        "Christopher Allen",
+        "Michael B. Jones"
+      ],
+      status: "ED",
+      publisher: "Verifiable Credentials Working Group"
+    },
     'RDF-NORMALIZATION': {
       title: 'RDF Dataset Normalization',
       href: 'http://json-ld.github.io/normalization/spec/',
