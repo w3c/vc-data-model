@@ -3079,11 +3079,24 @@ There MUST NOT be more than one object in the <code>relatedResource</code> per
         <p>
 An object in the <code>relatedResource</code> array MAY contain a property named
 <code>mediaType</code> that indicates the expected media type for the indicated
-<code>resource</code>. If a <code>mediaType</code> is included it SHOULD be a
-valid media type as listed in the
-<a href="https://www.iana.org/assignments/media-types/media-types.xhtml">
-IANA Media Types</a> registry.
+<code>resource</code>. If a <code>mediaType</code> is included, its value
+SHOULD:
         </p>
+        <ul>
+          <li>
+be a valid media type as listed in the
+<a href="https://www.iana.org/assignments/media-types/media-types.xhtml">
+IANA Media Types</a> registry
+          </li>
+          <li>
+be used when retrieving the content, such as via the `Accept` HTTP Header
+          </li>
+          <li>
+match the retrieved content media type, such as via the `Content-Type` HTTP
+Header.
+          </li>
+        </ul>
+
         <p>
 Any object in the <a>verifiable credential</a> that contains an `id` [[URL]]
 property MAY be annotated with integrity information as specified in this
