@@ -4321,8 +4321,8 @@ specification. Additional checks that report helpful warnings for developers to
 help debug potential issues are expected to be provided by implementations.
 Similarly, additional checks that could result in new types of errors being
 reported in order to stop harmful content are also expected to be provided by
-implementations, which might be integrated into future versions of this
-specification.
+implementations. Any of these additional checks might be integrated into future
+versions of this specification.
       </p>
 
       <section class="normative">
@@ -4371,7 +4371,7 @@ Ensure that the securing mechanism has properly protected the
 Set <var>securingMechanismVerified</var> to the result of executing the
 <a href="#verify-securing-mechanism">securing mechanism verification
 algorithm</a> with <var>inputBytes</var> and <var>mediaType</var> passed as
-input to the algorithm.
+inputs to the algorithm.
               </li>
               <li>
 Set <var>status</var>, <var>document</var>, <var>mediaType</var>,
@@ -4381,7 +4381,7 @@ respective properties in <var>securingMechanismVerified</var>.
               <li>
 If <var>verified</var>.<var>status</var> is `false`, the provided
 <var>inputBytes</var> contains a document that cannot be considered to be
-secured; return <var>verified</var>, which will contain warning and error
+secured. Return <var>verified</var>, which will contain warning and error
 information related to the verification failure.
               </li>
             </ol>
@@ -4402,7 +4402,7 @@ Set <var>status</var>, <var>document</var>, <var>warnings</var>, and
               </li>
               <li>
 If <var>verified</var>.<var>status</var> is `false`, the provided
-<var>inputBytes</var> contains a non-conforming document; return
+<var>inputBytes</var> contains a non-conforming document. Return
 <var>verified</var>, which will contain warning and error information
 related to the verification failure.
               </li>
@@ -4470,7 +4470,7 @@ If present, ensure that the `type` property conforms to the statements in
 Section <a href="#types"></a>.
               </li>
               <li>
-If present, ensure that the `name` and `description` properties conform to the
+If present, ensure that the `name` and/or `description` properties conform to the
 statements in Section <a href="#names-and-descriptions"></a>.
               </li>
               <li>
@@ -4495,7 +4495,7 @@ Ensure that the `issuer` property conforms to the
 statements in Section <a href="#issuer"></a>.
                   </li>
                   <li>
-If present, ensure that the `validFrom` and `validUntil` properties conform to
+If present, ensure that the `validFrom` and/or `validUntil` properties conform to
 the statements in Section <a href="#validity-period"></a>.
                   </li>
                   <li>
@@ -4538,7 +4538,7 @@ Return <var>dataModelVerified</var>.
         <h3>Verify Securing Mechanism</h3>
 
         <p>
-The algorithm in this section can be used to verify if a securing mechanism
+The algorithm in this section can be used to verify whether a securing mechanism
 that is associated with a sequence of bytes is valid. This algorithm takes a
 byte sequence (bytes <var>inputBytes</var>) and a media type
 (string <var>inputMediaType</var>) as inputs, and produces an object
@@ -4629,13 +4629,13 @@ bodies or communities that utilize this specification.
           </li>
           <li>
 Set <var>securingMechanismVerified</var>.<var>status</var> to the
-result of passing <var>inputBytes</var> to the <var>verifyProof</var> function
-as well as any relevant function-specific options. For example, for
+result of passing <var>inputBytes</var>, along with any relevant function-specific
+options, to the <var>verifyProof</var> function. For example, for
 Verifiable Credential Data Integrity [[?VC-DATA-INTEGRITY]] proof
 verification functions, the <var>expectedProofPurpose</var> option is set to
-`assertionMethod` and if the <a>conforming document</a> is expected to be a
+`assertionMethod`, and if the <a>conforming document</a> is expected to be a
 <a>verifiable presentation</a>, the <var>domain</var> and <var>challenge</var>
-are also provided options.
+are also provided as options.
           </li>
           <li>
 If <var>securingMechanismVerified</var>.<var>status</var> is set to
