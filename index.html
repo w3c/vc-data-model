@@ -2022,11 +2022,11 @@ using it.
         </p>
         <p>
 This specification recognizes two classes of securing mechanisms: those that use
-external proofs and those that use embedded proofs. An
-<dfn class="export">external proof</dfn> is one that wraps an expression of
+enveloping proofs and those that use watermarking proofs. An
+<dfn class="export">enveloping proof</dfn> is one that wraps an expression of
 this data model, such as via a JSON Web Token, which is elaborated on in the
 <em>Securing Verifiable Credentials using JOSE and COSE</em> [[VC-JOSE-COSE]] specification.
-An <dfn class="export">embedded proof</dfn> is a mechanism where the proof is
+An <dfn class="export">watermarking proof</dfn> is a mechanism where the proof is
 included in the data model, such as a Data Integrity Proof, which is elaborated
 on in <em>Verifiable Credential Data Integrity</em> [[VC-DATA-INTEGRITY]].
         </p>
@@ -2045,7 +2045,7 @@ the <code>proof</code> <a>property</a>.
         </p>
         <p>
 Methods of securing <a>verifiable credentials</a> or <a>verifiable
-presentations</a> that use an external proof MAY use the <code>proof</code>
+presentations</a> that use an enveloping proof MAY use the <code>proof</code>
 <a>property</a>.
         </p>
         <dl>
@@ -2056,7 +2056,7 @@ One or more cryptographic proofs that can be used to detect tampering and verify
 the authorship of a <a>verifiable credential</a> or a <a>verifiable
 presentation</a>. Each proof is a separate <a>named graph</a>
 (referred to as a <dfn class="export">proof graph</dfn>) containing a single
-proof. The specific method used for an <a>embedded proof</a> MUST be identified
+proof. The specific method used for a <a>watermarking proof</a> MUST be identified
 using the <code>type</code> <a>property</a>.
             </p>
             <p>
@@ -2245,6 +2245,13 @@ verifiable credential graphs</a> in a cryptographically <a>verifiable</a> format
 See Section <a href="#verifiable-credential-graphs"></a> for further details on
 this topic.
           </dd>
+          <dt><var id="defn-envelopedVerifiableCredential">envelopedVerifiableCredential</var></dt>
+          <dd>
+The <code>envelopedVerifiableCredential</code> <a>property</a> MAY be present.
+The value MUST be an array of one or more <a>URLs</a> using the `data:` URL
+scheme where each value contains a <a>verifiable credential</a> that
+is secured using an <a>enveloping proof</a>.
+          </dd>
           <dt><var id="defn-holder">holder</var></dt>
           <dd>
 The <a>verifiable presentation</a> MAY include a <code>holder</code>
@@ -2278,7 +2285,8 @@ to not pertain to the <a>validation</a> of the <a>verifiable presentation</a>.
         </dl>
 
         <p>
-The example below shows a <a>verifiable presentation</a>:
+The example below shows a <a>verifiable presentation</a> that uses
+<a>watermarking proofs</a>:
         </p>
 
         <pre class="example nohighlight" title="Basic structure of a presentation">
@@ -2303,6 +2311,26 @@ An example of a <a>verifiable presentation</a> using the JWT proof mechanism is
 provided in the Securing Verifiable Credentials using JOSE and COSE
 [[?VC-JOSE-COSE]] specification.
         </p>
+
+        <p>
+The example below shows a <a>verifiable presentation</a> that contains
+<a>verifiable credentials</a> that are protected using <a>enveloping proofs</a>:
+        </p>
+
+        <pre class="example nohighlight" title="A presentation that contains verifiable credentials secured using enveloping proofs">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "urn:uuid:5ec137ea-871e-11ee-a783-ef96a4397a9a",
+  "type": ["VerifiablePresentation", "ExamplePresentation"],
+  "envelopedVerifiableCredential": [
+    "data:application/jwt;base64,QzVjV...RMjUK==",
+    "data:application/cwt;base64,ZmlOW...pYzMK="
+ ]
+}
+        </pre>
 
         <section>
           <h4>Presentations Using Derived Credentials</h4>
@@ -2381,7 +2409,7 @@ self-asserted <a>verifiable credential</a> that is secured using the same
 mechanism as the <a>verifiable presentation</a>.
           </p>
 
-          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential">
+          <pre class="example nohighlight" title="A verifiable presentation, secured with a watermarking proof, with a self-asserted verifiable credential">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2408,7 +2436,7 @@ self-asserted <a>verifiable credential</a> that holds <a>claims</a> about the
 <a>verifiable presentation</a>.
           </p>
 
-          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential about the verifiable presentation">
+          <pre class="example nohighlight" title="A verifiable presentation, secured with a watermarking proof, with a self-asserted verifiable credential about the verifiable presentation">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -6528,7 +6556,7 @@ Credential implementations that justify the use of a specific media type.
         </p>
 
         <p>
-This media type can be used with credentials secured using an <a>external
+This media type can be used with credentials secured using an <a>enveloping
 proof</a>.
         </p>
         <p>
@@ -6590,7 +6618,7 @@ Credential implementations that justify the use of a specific media type.
 
         <p>
 This media type can be used with presentations secured using an
-<a>external proof</a>.
+<a>enveloping proof</a>.
         </p>
         <p>
 A [[JSON-LD]] context is expected to be present in the body of the document, and
