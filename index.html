@@ -1512,28 +1512,21 @@ are meant to serve these purposes.
           <dd>
 An OPTIONAL property that expresses the name of the <a>credential</a>. If
 present, the value of the <code>name</code> <a>property</a> MUST be a string or
-an object. If the value is an object, the object MUST contain a `value` property
-whose value is a string, and SHOULD contain a `lang` property whose value is a
-string containing a well-formed `Language-Tag` as defined by [[BCP47]],
-and MAY contain a `dir` property whose
-value is a text direction string defined by the `dir` attribute in [[JSON-LD]].
-Ideally, the name of a <a>credential</a> is concise, human-readable, and could
-enable an individual to quickly differentiate one <a>credential</a>
-from any other <a>credentials</a> that they might hold.
+a language value object as described in
+<a href="#language-and-base-direction"></a>. Ideally, the name of a
+<a>credential</a> is concise, human-readable, and could enable an individual to
+quickly differentiate one <a>credential</a> from any other <a>credentials</a>
+that they might hold.
           </dd>
           <dt><dfn class="export">description</dfn></dt>
           <dd>
 An OPTIONAL property that conveys specific details about a <a>credential</a>. If
 present, the value of the <code>description</code> <a>property</a> MUST be a
-string or an object. If the value is an object, the object MUST contain a
-`value` property whose value is a string, and SHOULD contain a `lang` property
-whose value is a string containing a well-formed language tag as defined
-by [[BCP47]], and MAY contain a `dir`
-property whose value is a text direction string defined by the `dir` attribute
-in [[JSON-LD]]. Ideally, the description of a <a>credential</a> is no more than
-a few sentences in length and conveys enough information about the
-<a>credential</a> to remind an individual of its contents without their having to
-look through the entirety of the <a>claims</a>.
+string or a language value object as described in
+<a href="#language-and-base-direction"></a>. Ideally, the description of a
+<a>credential</a> is no more than a few sentences in length and conveys enough
+information about the <a>credential</a> to remind an individual of its contents
+without their having to look through the entirety of the <a>claims</a>.
           </dd>
         </dl>
 
@@ -1559,7 +1552,7 @@ look through the entirety of the <a>claims</a>.
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "ExampleBachelorDegree",
-      "subtype": "Bachelor of Science and Arts"
+      "name": "Bachelor of Science and Arts"
     }
   }
 }
@@ -1568,8 +1561,8 @@ look through the entirety of the <a>claims</a>.
         <p>
 Names and descriptions also support expressing content in different languages.
 To express a string with language and text direction information, one can use
-an object that contains the `value`, `lang`, and `dir` properties to express
-the text value, language tag, and text direction, respectively.
+an object that contains the `@value`, `@language`, and `@direction` properties
+to express the text value, language tag, and text direction, respectively.
 See <a href="#language-and-base-direction"></a> for further information.
         </p>
 
@@ -1585,56 +1578,66 @@ See <a href="#language-and-base-direction"></a> for further information.
   "issuer": {
     "id": "https://university.example/issuers/565049",
     "name": [{
-      "value": "Example University",
-      "lang": "en"
+      "@value": "Example University",
+      "@language": "en"
     }, {
-      "value": "Université de Exemple",
-      "lang": "fr"
+      "@value": "Université de Exemple",
+      "@language": "fr"
     }, {
-      "value": "جامعة المثال",
-      "lang": "ar",
-      "dir": "rtl"
+      "@value": "جامعة المثال",
+      "@language": "ar",
+      "@direction": "rtl"
     }],
     "description": [{
-      "value": "A public university focusing on teaching examples.",
-      "lang": "en"
+      "@value": "A public university focusing on teaching examples.",
+      "@language": "en"
     }, {
-      "value": "Une université publique axée sur l'enseignement des exemples.",
-      "lang": "fr"
+      "@value": "Une université publique axée sur l'enseignement des exemples.",
+      "@language": "fr"
     }, {
-      "value": "جامعة عامة تركز على أمثلة التدريس.",
-      "lang": "ar",
-      "dir": "rtl"
+      "@value": "جامعة عامة تركز على أمثلة التدريس.",
+      "@language": "ar",
+      "@direction": "rtl"
     }]
   },
   "validFrom": "2015-05-10T12:30:00Z",
   "name": [{
-    "value": "Example University Degree",
-    "lang": "en"
+    "@value": "Example University Degree",
+    "@language": "en"
   }, {
-    "value": "Exemple de Diplôme Universitaire",
-    "lang": "fr"
+    "@value": "Exemple de Diplôme Universitaire",
+    "@language": "fr"
   }, {
-    "value": "مثال الشهادة الجامعية",
-    "lang": "ar",
-    "dir": "rtl"
+    "@value": "مثال الشهادة الجامعية",
+    "@language": "ar",
+    "@direction": "rtl"
   }],
   "description": [{
-    "value": "2015 Bachelor of Science and Arts Degree",
-    "lang": "en"
+    "@value": "2015 Bachelor of Science and Arts Degree",
+    "@language": "en"
   }, {
-    "value": "2015 Baccalauréat Scientifique et Arts",
-    "lang": "fr"
+    "@value": "2015 Baccalauréat Scientifique et Arts",
+    "@language": "fr"
   }, {
-    "value": "2015 بكالوريوس العلوم والآداب",
-    "lang": "ar",
-    "dir": "rtl"
+    "@value": "2015 بكالوريوس العلوم والآداب",
+    "@language": "ar",
+    "@direction": "rtl"
   }],
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
       "type": "ExampleBachelorDegree",
-      "subtype": "Bachelor of Science and Arts"
+      "name": [{
+        "@value": "Bachelor of Science and Arts Degree",
+        "@language": "en"
+      }, {
+        "@value": "Baccalauréat Scientifique et Arts",
+        "@language": "fr"
+      }, {
+        "@value": "بكالوريوس العلوم والآداب",
+        "@language": "ar",
+        "@direction": "rtl"
+      }]
     }
   }
 }
@@ -5648,7 +5651,7 @@ parts of the <em>Strings on the Web: Language and Direction Metadata</em>
 document [[STRING-META]] that implementers might be interested in reading.
       </p>
 
-      <section class="informative">
+      <section>
         <h3>Language and Base Direction</h3>
 
         <p>
@@ -5667,11 +5670,21 @@ specific base direction.
 
         <pre class="example nohighlight" title="Design pattern for natural language strings">
 "<a>property</a>": {
-  "value": "<span class="highlight">The string value</span>",
-  "lang": "<code>LANGUAGE</code>"
-  "dir": "<code>DIRECTION</code>"
+  "@value": "<span class="highlight">The string value</span>",
+  "@language": "<code>LANGUAGE</code>"
+  "@direction": "<code>DIRECTION</code>"
 }
         </pre>
+
+        <p>
+When the language value object is used in place of a string value, the object
+MUST contain a `@value` property whose value is a string, and SHOULD contain a
+`@language` property whose value is a string containing a well-formed
+`Language-Tag` as defined by [[BCP47]], and MAY contain a `@direction` property
+whose value is a text direction string defined by the `@direction` attribute in
+[[JSON-LD]]. The language value object MUST NOT include any other keys beyond
+`@value`, `@language`, and `@direction`.
+        </p>
 
         <p>
 Using the design pattern above, the following example expresses the title of a
@@ -5680,8 +5693,8 @@ book in the English language without specifying a text direction.
 
         <pre class="example nohighlight" title="Expressing natural language text as English">
 "title": {
-  "value": "<span class="highlight">HTML and CSS: Designing and Creating Websites</span>",
-  "lang": "<code>en</code>"
+  "@value": "<span class="highlight">HTML and CSS: Designing and Creating Websites</span>",
+  "@language": "<code>en</code>"
 }
         </pre>
 
@@ -5692,9 +5705,9 @@ base direction of right-to-left.
 
         <pre class="example nohighlight" title="Arabic text with a base direction of right-to-left">
 "title": {
-  "value": "<span class="highlight">HTML و CSS: تصميم و إنشاء مواقع الويب</span>",
-  "lang": "<code>ar</code>"
-  "dir": "<code>rtl</code>"
+  "@value": "<span class="highlight">HTML و CSS: تصميم و إنشاء مواقع الويب</span>",
+  "@language": "<code>ar</code>",
+  "@direction": "<code>rtl</code>"
 }
         </pre>
 
@@ -5705,20 +5718,22 @@ use the first character of a text string to determine text direction.
         </p>
 
         <p>
-Implementers utilizing JSON-LD are strongly urged to
-<a href="#extensibility">extend</a> the JSON-LD Context defining the
-internationalized <a>property</a> and use the Scoped Context feature of JSON-LD
-to alias the <code>@value</code>, <code>@language</code>, and
-<code>@direction</code> keywords to <code>value</code>, <code>lang</code>,
-and <code>dir</code>, respectively. An example of a JSON-LD Context snippet
-doing this is shown below.
+Multiple language value objects MAY be provided as an array value for the
+property:
         </p>
 
-        <pre class="example nohighlight" title="Specifying scoped aliasing for language information">
-"title": {
-  <span class="highlight">"@context": {"value": "@value", "lang": "@language", "dir": "@direction"}</span>,
-  "@id": "https://www.w3.org/2018/credentials/examples#title"
-}
+        <pre class="example nohighlight" title="Multiple language texts provided for title">
+"title": [
+  {
+    "@value": "<span class="highlight">HTML and CSS: Designing and Creating Websites</span>",
+    "@language": "<code>en</code>"
+  },
+  {
+    "@value": "<span class="highlight">HTML و CSS: تصميم و إنشاء مواقع الويب</span>",
+    "@language": "<code>ar</code>",
+    "@direction": "<code>rtl</code>"
+  }
+]
         </pre>
       </section>
 
