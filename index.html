@@ -1153,7 +1153,7 @@ where the first item is a <a>URL</a> with the value
 <code>https://www.w3.org/ns/credentials/v2</code>. For reference, a copy of
 the base context is provided in Appendix <a href="#base-context"></a>.
 Subsequent items in the array MUST be composed of any combination of
-<a>URLs</a> or objects where each is processable as a
+<a>URLs</a> and/or objects where each is processable as a
 <a data-cite="JSON-LD11#the-context">JSON-LD Context</a>.
           </dd>
         </dl>
@@ -2229,14 +2229,14 @@ guideline:
         <ul>
           <li>
 Status schemes MUST NOT be implemented in ways that enable tracking of
-individuals, such as an <a>issuer</a> being notified (either directly, or
+individuals, such as an <a>issuer</a> being notified (either directly or
 indirectly) when a <a>verifier</a> is interested in a particular <a>holder</a>
 or <a>subject</a>. Unacceptable approaches include "phoning home", such that
 every use of a credential contacts the <a>issuer</a> of the credential to
-check the status for a specific individual, or reduction in pseudonymity,
-such that every use of the credential requests information from the
-<a>issuer</a> that can be used to deduce <a>verifier</a> interest in a
-specific individual.
+check the status for a specific individual, or "pseudonymity reduction",
+such that every use of the credential causes a request for information
+from the <a>issuer</a> that can be used by the <a>issuer</a> to deduce
+<a>verifier</a> interest in a specific individual.
           </li>
         </ul>
 
@@ -3129,8 +3129,8 @@ an object in the <code>relatedResource</code> array.
         </p>
         <p>
 Any failure to verify content integrity information that is vital to the
-validity of a <a>conforming document</a>, such as the integrity of related
-`@context` URLs, SHOULD result in a validation error.
+validity of a <a>conforming document</a>, such as the integrity of content
+identified by related `@context` URLs, SHOULD result in a validation error.
         </p>
         <p>
 Implementers are urged to consult appropriate sources, such as the
@@ -3693,15 +3693,15 @@ credentials in a ZKP <a>presentation</a>.
         </figure>
 
         <p>
-Specification authors that create <a href="#securing-verifiable-credentials">
-securing mechanisms</a> that provide unlinkability are provided the following
-guideline:
+The following guideline is provided for authors who create
+<a href="#securing-verifiable-credentials">securing mechanisms</a>
+specifications that provide unlinkability:
         </p>
 
         <ul>
           <li>
-The unlinkable securing mechanism MUST NOT be designed in such a way that it
-leaks information that would enable the <a>verifier</a> to correlate the
+Unlinkable securing mechanisms MUST NOT be designed in such a way that they
+leak information that would enable the <a>verifier</a> to correlate a
 <a>holder</a> across multiple <a>verifiable presentations</a> to different
 <a>verifiers</a>.
           </li>
