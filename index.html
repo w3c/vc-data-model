@@ -4729,6 +4729,26 @@ utilizing the `proof`.`type` property. A list of registered proof types can be
 found in the
 <a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a>
 section of the Verifiable Credentials Specifications Directory [[?VC-SPECS]].
+                <ol class="algorithm">
+                  <li>
+Set <var>securedDocument</var> to the result of a JSON parsing function that
+takes <var>inputBytes</var> as an input parameter, parses the value as JSON,
+and returns the result as an object. If JSON parsing fails,
+<var>securingMechanismVerified</var>.<var>status</var> is set to `false`, and a
+<a href="#PARSING_ERROR">PARSING_ERROR</a> is appended to
+<var>securingMechanismVerified</var>.<var>errors</var>.
+                  </li>
+                  <li>
+If <var>securedDocument</var> was successfully set in the previous step, set
+<var>securingMechanismVerified</var>.<var>status</var> to the result of passing
+<var>securedDocument</var>, along with any relevant function-specific options,
+to the <var>verifyProof</var> function. For example, the
+<var>expectedProofPurpose</var> option is set to `assertionMethod`, and if the
+<a>conforming document</a> is expected to be a
+<a>verifiable presentation</a>, the <var>domain</var> and <var>challenge</var>
+are also provided as options.
+                  </li>
+                </ol>
               </li>
               <li>
 If the <var>inputMediaType</var> is associated with the JOSE or COSE
@@ -4740,6 +4760,13 @@ The process for securing mechanism verification is not clearly documented in
 the [[?VC-JOSE-COSE]] specification yet, but once it is, a link to that section
 of the specification will be included in this text.
 </div>
+                <ol class="algorithm">
+                  <li>
+Set <var>securingMechanismVerified</var>.<var>status</var> to the
+result of passing <var>inputBytes</var>, along with any relevant
+function-specific options, to the <var>verifyProof</var> function.
+                  </li>
+                </ol>
               </li>
               <li>
 Other proof verification functions are possible, but need not be listed in
@@ -4747,18 +4774,15 @@ the <a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section
 of the Verifiable Credentials Specifications Directory [[?VC-SPECS]].
 Implementers might find these other specifications through other standards
 bodies or communities that utilize this specification.
+                <ol class="algorithm">
+                  <li>
+Set <var>securingMechanismVerified</var>.<var>status</var> to the
+result of passing <var>inputBytes</var>, along with any relevant
+function-specific options, to the <var>verifyProof</var> function.
+                  </li>
+                </ol>
               </li>
             </ol>
-          </li>
-          <li>
-Set <var>securingMechanismVerified</var>.<var>status</var> to the
-result of passing <var>inputBytes</var>, along with any relevant function-specific
-options, to the <var>verifyProof</var> function. For example, for
-Verifiable Credential Data Integrity [[?VC-DATA-INTEGRITY]] proof
-verification functions, the <var>expectedProofPurpose</var> option is set to
-`assertionMethod`, and if the <a>conforming document</a> is expected to be a
-<a>verifiable presentation</a>, the <var>domain</var> and <var>challenge</var>
-are also provided as options.
           </li>
           <li>
 If <var>securingMechanismVerified</var>.<var>status</var> is set to
