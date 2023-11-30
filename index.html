@@ -3128,9 +3128,11 @@ Any objects for which selective disclosure is desired SHOULD NOT be included as
 an object in the <code>relatedResource</code> array.
         </p>
         <p>
-Any failure to verify content integrity information that is vital to the
-validity of a <a>conforming document</a>, such as the integrity of content
-identified by related `@context` URLs, SHOULD result in a validation error.
+Specification authors that write algorithms that fetch a resource based on the
+`id` of an object inside a <a>conforming document</a> need to consider whether
+that resource's content is vital to the validity of that document. If it is, the
+specification MUST produce a validation error unless the resource has the
+expected media type and its bytes hash to the expected digest.
         </p>
         <p>
 Implementers are urged to consult appropriate sources, such as the
