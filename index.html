@@ -4436,16 +4436,16 @@ This section contains an algorithm that <a>conforming verifier
 implementations</a> MUST run when verifying a <a>verifiable credential</a> or a
 <a>verifiable presentation</a>. This algorithm takes a byte sequence (bytes
 <var>inputBytes</var>) and a media type (string <var>inputMediaType</var>) as
-inputs, and produces an object (<var>verified</var>) that contains the
+inputs, and produces an object (<var>result</var>) that contains the
 following:
         </p>
 
         <ul>
           <li>
-a verification status (boolean <var>status</var>)
+a status (boolean <var>status</var>)
           </li>
           <li>
-a verified conforming document (object <var>document</var>)
+a conforming document (object <var>document</var>)
           </li>
           <li>
 a media type (string <var>mediaType</var>), including any media type parameters
@@ -4464,11 +4464,11 @@ The verification algorithm is as follows:
 
         <ol class="algorithm">
           <li>
-Set <var>verified</var> to an empty object.
+Set <var>result</var> to an empty object.
           </li>
           <li>
 Ensure that the securing mechanism has properly protected the
-<var>conforming document</var> by performing the following steps:
+<a>conforming document</a> by performing the following steps:
             <ol class="algorithm">
               <li>
 Set <var>securingMechanismVerified</var> to the result of executing the
@@ -4478,19 +4478,19 @@ inputs to the algorithm.
               </li>
               <li>
 Set <var>status</var>, <var>document</var>, <var>mediaType</var>,
-<var>warnings</var>, and <var>errors</var> in <var>verified</var> to their
+<var>warnings</var>, and <var>errors</var> in <var>result</var> to their
 respective properties in <var>securingMechanismVerified</var>.
               </li>
               <li>
-If <var>verified</var>.<var>status</var> is `false`, the provided
+If <var>result</var>.<var>status</var> is `false`, the provided
 <var>inputBytes</var> contains a document that cannot be considered to be
-secured. Return <var>verified</var>, which will contain warning and error
+secured. Return <var>result</var>, which will contain warning and error
 information related to the verification failure.
               </li>
             </ol>
           </li>
           <li>
-Ensure that the <var>verified</var>.<var>document</var> is a
+Ensure that the <var>result</var>.<var>document</var> is a
 <a>conforming document</a> by performing the following steps:
             <ol class="algorithm">
               <li>
@@ -4500,19 +4500,19 @@ algorithm</a> with <var>document</var> passed as input to the algorithm.
               </li>
               <li>
 Set <var>status</var>, <var>document</var>, <var>warnings</var>, and
-<var>errors</var> in <var>verified</var> to their respective properties in
+<var>errors</var> in <var>result</var> to their respective properties in
 <var>dataModelConformanceChecked</var>.
               </li>
               <li>
-If <var>verified</var>.<var>status</var> is `false`, the provided
+If <var>result</var>.<var>status</var> is `false`, the provided
 <var>inputBytes</var> contains a non-conforming document. Return
-<var>verified</var>, which will contain warning and error information
+<var>result</var>, which will contain warning and error information
 related to the verification failure.
               </li>
             </ol>
           </li>
           <li>
-Return <var>verified</var>.
+Return <var>result</var>.
           </li>
         </ol>
 
@@ -4637,7 +4637,7 @@ the "MUST" statements in Section <a href="#evidence"></a>.
           <li>
 If no errors were detected to this point, set
 <var>dataModelConformanceChecked</var>.<var>document</var> to <var>inputDocument</var>,
-<var>dataModelConformanceChecked</var>.<var>verified</var> to `true`.
+<var>dataModelConformanceChecked</var>.<var>status</var> to `true`.
           </li>
           <li>
 Return <var>dataModelConformanceChecked</var>.
