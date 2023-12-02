@@ -4391,14 +4391,14 @@ Ensure that the <var>verified</var>.<var>document</var> is a
 <a>conforming document</a> by performing the following steps:
             <ol class="algorithm">
               <li>
-Set <var>dataModelVerified</var> to the result of executing the
-<a href="#verify-data-model">data model verification algorithm</a>
-with <var>document</var> passed as input to the algorithm.
+Set <var>dataModelConformanceChecked</var> to the result of executing the
+<a href="#data-model-conformance-checking">data model conformance checking
+algorithm</a> with <var>document</var> passed as input to the algorithm.
               </li>
               <li>
 Set <var>status</var>, <var>document</var>, <var>warnings</var>, and
 <var>errors</var> in <var>verified</var> to their respective properties in
-<var>dataModelVerified</var>.
+<var>dataModelConformanceChecked</var>.
               </li>
               <li>
 If <var>verified</var>.<var>status</var> is `false`, the provided
@@ -4424,13 +4424,13 @@ Implementations MAY produce different errors than described above.
       </section>
 
       <section class="normative">
-        <h3>Verify Data Model</h3>
+        <h3>Data Model Conformance Checking</h3>
 
         <p>
 The algorithm in this section can be used to determine if a provided document is
 conformant to the data model provided in this specification. This algorithm
 takes a document (object <var>inputDocument</var>) and produces an object
-(<var>dataModelVerified</var>) that contains the following:
+(<var>dataModelConformanceChecked</var>) that contains the following:
         </p>
 
         <ul>
@@ -4454,20 +4454,20 @@ The data model verification algorithm is as follows:
 
         <ol class="algorithm">
           <li>
-Set <var>dataModelVerified</var> to an empty object. Initialize the following
-fields in <var>dataModelVerified</var>: <var>status</var> to `false`,
+Set <var>dataModelConformanceChecked</var> to an empty object. Initialize the following
+fields in <var>dataModelConformanceChecked</var>: <var>status</var> to `false`,
 <var>warnings</var> to an empty array, and <var>errors</var> to an empty array.
           </li>
           <li>
 Ensure that the `@context` property of <var>document</var> conforms to the
 statements in <a href="#contexts"></a>. If not, return
-<var>dataModelVerified</var>, which will contain a false verification status.
+<var>dataModelConformanceChecked</var>, which will contain a false verification status.
           </li>
           <li>
 Starting at the top level, recursively process each object <var>obj</var> in
 <var>document</var>, setting <a href="#MALFORMED_VALUE_ERROR">
 MALFORMED_VALUE_ERROR</a> errors in
-<var>dataModelVerified</var>.<var>errors</var> if errors are found, by
+<var>dataModelConformanceChecked</var>.<var>errors</var> if errors are found, by
 performing the following checks:
             <ol class="algorithm">
               <li>
@@ -4533,11 +4533,11 @@ the "MUST" statements in Section <a href="#evidence"></a>.
           </li>
           <li>
 If no errors were detected to this point, set
-<var>dataModelVerified</var>.<var>document</var> to <var>inputDocument</var>,
-<var>dataModelVerified</var>.<var>verified</var> to `true`.
+<var>dataModelConformanceChecked</var>.<var>document</var> to <var>inputDocument</var>,
+<var>dataModelConformanceChecked</var>.<var>verified</var> to `true`.
           </li>
           <li>
-Return <var>dataModelVerified</var>.
+Return <var>dataModelConformanceChecked</var>.
           </li>
         </ol>
 
@@ -4785,7 +4785,7 @@ https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE_ERROR
 The value associated with a particular <a>property</a> is malformed. The
 name of the <a>property</a> and the path to the property SHOULD be provided
 in the <a>ProblemDetails</a> object. See Section
-<a href="#verify-data-model"></a>.
+<a href="#data-model-conformance-checking"></a>.
           </dd>
         </dl>
 
