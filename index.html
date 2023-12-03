@@ -4387,7 +4387,7 @@ information related to the verification failure.
             </ol>
           </li>
           <li>
-Ensure that the <var>result</var>.<var>document</var> is a
+Ensure that <var>result</var>.<var>document</var> is a
 <a>conforming document</a> by performing the following steps:
             <ol class="algorithm">
               <li>
@@ -4405,6 +4405,33 @@ If <var>result</var>.<var>status</var> is `false`, the provided
 <var>inputBytes</var> contains a non-conforming document. Return
 <var>result</var>, which will contain warning and error information
 related to the verification failure.
+              </li>
+            </ol>
+          </li>
+          <li>
+Ensure that <var>result</var>.<var>document</var> meets all status
+expectations by performing the following steps for each
+<var>statusMechanism</var> associated with the
+<var>result</var>.<var>document</var>.<var>credentialStatus</var> property:
+            <ol class="algorithm">
+              <li>
+Set <var>expectedStatus</var> to the expected value of the status entry
+associated with the <var>statusMechanism</var>. For example, implementations
+can utilize the `type` and `statusPurpose` fields to determine the value
+for <var>expectedStatus</var>.
+              </li>
+              <li>
+Set <var>statusCheckResult</var> to the result of executing the
+<a href="#status-checking">status checking algorithm</a> with
+<var>statusMechanism</var> and <var>expectedStatus</var> passed as input to
+the algorithm.
+              </li>
+              <li>
+If <var>statusCheckResult</var>.<var>status</var> is `false`, the
+<a>conforming document</a> does not meet the provided status expectations.
+Set <var>result</var>.<var>status</var> to `false`, append all
+<var>warnings</var> and <var>errors</var> in <var>statusCheckResult</var> to
+their respective properties in <var>result</var> and continue to the next step.
               </li>
             </ol>
           </li>
