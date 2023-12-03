@@ -3054,25 +3054,26 @@ JSON-LD implementers seeking interoperability.
       <section>
         <h2>Integrity of Related Resources</h2>
         <p>
-When including a link to an external resource in a <a>verifiable credential</a>,
+When including a link to an external resource in a <a>conforming document</a>,
 it is desirable to know whether the resource that is pointed to is the same at
 signing time as it is at verification time. This applies to cases where there is
 an external resource that is remotely retrieved as well as to cases where the
-<a>issuer</a> and/or <a>verifier</a> may have local cached copies of a resource.
+<a>issuer</a> and/or <a>verifier</a> might have local cached copies of a
+resource.
         </p>
         <p>
 It is also desirable to know that the contents of the JSON-LD context(s) used in
-the <a>verifiable credential</a> are the same when used by both the
+a <a>conforming document</a> are the same when used by both the
 <a>issuer</a> and <a>verifier</a>.
         </p>
         <p>
-To validate that a resource referenced by a <a>verifiable credential</a> is the
+To validate that a resource referenced by a <a>conforming document</a> is the
 same at verification time as it is at issuing time, an implementer MAY include a
 property named <code id="defn-relatedResource">relatedResource</code> that
 stores an array of objects that describe additional integrity metadata about
-each resource referenced by the <a>verifiable credential</a>. If
+each resource referenced by the <a>conforming document</a>. If
 <code>relatedResource</code> is present, there MUST be an object in the array
-for each remote resource for each context used in the verifiable credential.
+for each remote resource used in the verifiable credential.
         </p>
         <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
 The requirement that contexts be listed in `relatedResource` is currently being
@@ -3118,7 +3119,7 @@ Header.
         </ul>
 
         <p>
-Any object in the <a>verifiable credential</a> that contains an `id` [[URL]]
+Any object in a <a>conforming document</a> that contains an `id` [[URL]]
 property MAY be annotated with integrity information as specified in this
 section by inclusion of <code>digestSRI</code>
 in the object.
@@ -3140,7 +3141,7 @@ Implementers are urged to consult appropriate sources, such as the
 FIPS 180-4 Secure Hash Standard</a> and the
 <a href="https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF">
 Commercial National Security Algorithm Suite 2.0</a> to ensure that they are
-chosing a current and reliable hash algorithm. At the time of this writing
+choosing a current and reliable hash algorithm. At the time of this writing
 `sha384` SHOULD be considered the minimum strength hash algorithm for use by
 implementers.
         </p>
@@ -3170,7 +3171,7 @@ An example of a related resource integrity object referencing JSON-LD contexts.
         </pre>
 
         <p>
-An example of an object in a `credentialSubject` that is refering to an
+An example of an object in a `credentialSubject` that is referring to an
 integrity protected image.
         </p>
 
