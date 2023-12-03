@@ -4707,6 +4707,66 @@ Return <var>securingMechanismVerified</var>.
 
       </section>
 
+
+      <section class="normative">
+        <h3>Status Checking</h3>
+
+        <p>
+The algorithm in this section can be used to check one or more status
+mechanisms that are associated with a particular <a>verifiable credential</a>
+for an expected value. This algorithm takes a status mechanism
+(object <var>statusMechanism</var>) and an expected status value
+(any <var>expectedStatus</var>) as inputs, and produces an object
+(<var>result</var>) that contains the following:
+        </p>
+
+        <ul>
+          <li>
+a status (boolean <var>status</var>)
+          </li>
+          <li>
+zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
+          </li>
+          <li>
+zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
+          </li>
+        </ul>
+
+        <p>
+The status checking algorithm is as follows:
+        </p>
+
+        <ol class="algorithm">
+          <li>
+Set <var>result</var> to an empty object and initialize the following fields:
+<var>status</var> to `false`, <var>warnings</var> to an empty array, and
+<var>errors</var> to an empty array.
+          </li>
+          <li>
+Use the <var>statusMechanism</var>.<var>type</var> value to determine the
+<var>statusCheckingAlgorithm</var> to use. For example, implementers can
+refer to the
+<a data-cite="?VC-SPECS#credential-status">Credential Status section</a> in
+the [[[VC-SPECS]]] for a variety of status mechanisms that are available, or
+they might discover additional status mechanisms through other documentation
+or developer communities.
+          </li>
+          <li>
+Set <var>statusResult</var> to the result of passing <var>statusMechanism</var>
+and <var>expectedStatus</var>, along with any relevant function-specific
+options, to the <var>statusCheckingAlgorithm</var>.
+          </li>
+          <li>
+Set <var>status</var>, <var>warnings</var>, and <var>errors</var> in
+<var>result</var> to their respective properties in <var>statusResult</var>.
+          </li>
+          <li>
+Return <var>result</var>.
+          </li>
+        </ol>
+
+      </section>
+
       <section>
         <h3>Problem Details</h3>
 
