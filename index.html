@@ -2325,6 +2325,52 @@ provided in the Securing Verifiable Credentials using JOSE and COSE
         </p>
 
         <section>
+          <h4>Enveloped Verifiable Credentials</h4>
+
+          <p>
+It is possible to include one or more <a>verifiable credentials</a> in a
+<a>verifiable presentation</a> that have been secured using a securing mechanism
+that "envelopes" the payload, such as [[[?VC-JOSE-COSE]]] [[?VC-JOSE-COSE]].
+This can be accomplished by associating the `verifiableCredential` property with
+an object that has a `type` of `EnvelopedVerifiableCredential`.
+          </p>
+
+          <dl>
+            <dt id="defn-EnvelopedVerifiableCredential">EnvelopedVerifiableCredential</dt>
+            <dd>
+Used to associate an object containing an enveloped <a>verifiable credential</a>
+with the `verifiableCredential` property in a <a>verifiable presentation</a>.
+The `@context` value of the object MUST follow all of the "MUST" statements in
+Section <a href="#contexts"></a>. The `id` value of the object MUST be a `data:`
+URL that expresses a secured <a>verifiable credential</a> using an enveloping
+security scheme, such as [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]]. The `type` value
+of the object MUST be `EnvelopedVerifiableCredential`.
+            </dd>
+          </dl>
+
+        <p>
+The example below shows a <a>verifiable presentation</a> that contains an
+enveloped <a>verifiable credential</a>:
+        </p>
+
+        <pre class="example nohighlight" title="Basic structure of a presentation">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "type": ["VerifiablePresentation", "ExamplePresentation"],
+  <span class="highlight">"verifiableCredential": [{
+    "@context": "https://www.w3.org/ns/credentials/v2",
+    "id": "data:application/vc+ld+json+sd-jwt;base64,QzVjV...RMjUK==",
+    "type": "EnvelopedVerifiableCredential"
+  }]</span>
+}
+        </pre>
+
+        </section>
+
+        <section>
           <h4>Presentations Using Derived Credentials</h4>
 
           <p>
