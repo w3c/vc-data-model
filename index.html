@@ -4503,25 +4503,12 @@ information related to the verification failure.
           </li>
           <li>
 Ensure that the <var>result</var>.<var>document</var> is a
-<a>conforming document</a> by performing the following steps:
-            <ol class="algorithm">
-              <li>
-Set <var>dataModelConformanceChecked</var> to the result of executing the
-<a href="#data-model-conformance-checking">data model conformance checking
-algorithm</a> with <var>document</var> passed as input to the algorithm.
-              </li>
-              <li>
-Set <var>status</var>, <var>document</var>, <var>warnings</var>, and
-<var>errors</var> in <var>result</var> to their respective properties in
-<var>dataModelConformanceChecked</var>.
-              </li>
-              <li>
-If <var>result</var>.<var>status</var> is `false`, the provided
-<var>inputBytes</var> contains a non-conforming document. Return
-<var>result</var>, which will contain warning and error information
-related to the verification failure.
-              </li>
-            </ol>
+<a>conforming document</a>. If it is not, set
+<var>result</var>.<var>status</var> to `false`, remove the
+<var>document</var> property from <var>result</var>, and add at least
+one <a href="#MALFORMED_VALUE_ERROR">MALFORMED_VALUE_ERROR</a> to
+<var>result</var>.<var>errors</var>. Other warnings and errors MAY be included
+to aid any debugging process.
           </li>
           <li>
 Return <var>result</var>.
@@ -4535,122 +4522,6 @@ a different order than that provided above as long as the
 implementation returns errors for the same inputs.
 Implementations MAY produce different errors than described above.
         </p>
-
-      </section>
-
-      <section class="normative">
-        <h3>Data Model Conformance Checking</h3>
-
-        <p>
-The algorithm in this section can be used to determine if a provided document is
-conformant with the data model provided in this specification. This algorithm
-takes a document (object <var>inputDocument</var>) and produces an object
-(<var>dataModelConformanceChecked</var>) that contains the following:
-        </p>
-
-        <ul>
-          <li>
-a verification status (boolean <var>status</var>)
-          </li>
-          <li>
-a verified document (object <var>document</var>)
-          </li>
-          <li>
-zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
-          </li>
-          <li>
-zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
-          </li>
-        </ul>
-
-        <p>
-The data model verification algorithm is as follows:
-        </p>
-
-        <ol class="algorithm">
-          <li>
-Set <var>dataModelConformanceChecked</var> to an empty object. Initialize the following
-fields in <var>dataModelConformanceChecked</var>: <var>status</var> to `false`,
-<var>warnings</var> to an empty array, and <var>errors</var> to an empty array.
-          </li>
-          <li>
-Ensure that the `@context` property of <var>document</var> conforms to the
-statements in <a href="#contexts"></a>. If not, return
-<var>dataModelConformanceChecked</var>, which will contain a false verification status.
-          </li>
-          <li>
-Starting at the top level, recursively process each object <var>obj</var> in
-<var>document</var>, setting <a href="#MALFORMED_VALUE_ERROR">
-MALFORMED_VALUE_ERROR</a> errors in
-<var>dataModelConformanceChecked</var>.<var>errors</var> if errors are found, by
-performing the following checks:
-            <ol class="algorithm">
-              <li>
-If present, ensure that the `id` property conforms to the "MUST" statements in
-Section <a href="#identifiers"></a>.
-              </li>
-              <li>
-If present, ensure that the `type` property conforms to the "MUST" statements in
-Section <a href="#types"></a>.
-              </li>
-              <li>
-If present, ensure that the `name` and/or `description` properties conform to
-the "MUST" statements in Section <a href="#names-and-descriptions"></a>.
-              </li>
-              <li>
-If the `type` property is present and contains an object with the type
-`VerifiablePresentation`, ensure that the object conforms to the
-"MUST" statements in Section <a href="#presentations-0"></a>.
-              </li>
-              <li>
-If the `type` property is present and contains an object with the type
-`VerifiableCredential`, perform the following checks:
-                <ol class="algorithm">
-                  <li>
-Ensure that the `credentialSubject` property conforms to the
-"MUST" statements in Section <a href="#credential-subject"></a>.
-                  </li>
-                  <li>
-Ensure that the `issuer` property conforms to the
-"MUST" statements in Section <a href="#issuer"></a>.
-                  </li>
-                  <li>
-If present, ensure that the `validFrom` and/or `validUntil` properties conform
-to the "MUST" statements in Section <a href="#validity-period"></a>.
-                  </li>
-                  <li>
-If present, ensure that the `credentialStatus` property conforms to
-the "MUST" statements in Section <a href="#status"></a>.
-                  </li>
-                  <li>
-If present, ensure that the `credentialSchema` property conforms to
-the "MUST" statements in Section <a href="#data-schemas"></a>.
-                  </li>
-                  <li>
-If present, ensure that the `relatedResource` property conforms to
-the "MUST" statements in Section <a href="#integrity-of-related-resources"></a>.
-                  </li>
-                  <li>
-If present, ensure that the `refreshService` property conforms to
-the "MUST" statements in Section <a href="#refreshing"></a>.
-                  </li>
-                  <li>
-If present, ensure that the `evidence` property conforms to
-the "MUST" statements in Section <a href="#evidence"></a>.
-                  </li>
-                </ol>
-              </li>
-            </ol>
-          </li>
-          <li>
-If no errors were detected to this point, set
-<var>dataModelConformanceChecked</var>.<var>document</var> to <var>inputDocument</var>,
-<var>dataModelConformanceChecked</var>.<var>status</var> to `true`.
-          </li>
-          <li>
-Return <var>dataModelConformanceChecked</var>.
-          </li>
-        </ol>
 
       </section>
 
@@ -4896,7 +4767,7 @@ https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE_ERROR
 The value associated with a particular <a>property</a> is malformed. The
 name of the <a>property</a> and the path to the property SHOULD be provided
 in the <a>ProblemDetails</a> object. See Section
-<a href="#data-model-conformance-checking"></a>.
+<a href="#verification"></a>.
           </dd>
         </dl>
 
