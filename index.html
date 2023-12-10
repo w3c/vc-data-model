@@ -133,7 +133,7 @@
             companyURL: "https://www.transmute.industries/",
             note: "v2.0", w3cid: 109171}
         ],
-        xref: ["url", "i18n-glossary"],
+        xref: ["URL", "I18N-GLOSSARY", "INFRA"],
         lint: { "informative-dfn": false },
         maxTocLevel: 2,
         inlineCSS: true
@@ -4522,27 +4522,27 @@ versions of this specification.
         <p>
 This section contains an algorithm that <a>conforming verifier
 implementations</a> MUST run when verifying a <a>verifiable credential</a> or a
-<a>verifiable presentation</a>. This algorithm takes a byte sequence (bytes
-<var>inputBytes</var>) and a media type (string <var>inputMediaType</var>) as
-inputs, and produces an object (<var>result</var>) that contains the
-following:
+<a>verifiable presentation</a>. This algorithm takes a sequence of bytes
+([=byte sequence=] <var>inputBytes</var>) and a media type
+([=string=] <var>inputMediaType</var>) as inputs, and produces a result
+([=map=] <var>result</var>) that contains the following:
         </p>
 
         <ul>
           <li>
-a status (boolean <var>status</var>)
+a status ([=boolean=] <var>status</var>)
           </li>
           <li>
-a <a>conforming document</a> (object <var>document</var>)
+a <a>conforming document</a> ([=map=] <var>document</var>)
           </li>
           <li>
-a media type (string <var>mediaType</var>)
+a media type ([=string=] <var>mediaType</var>)
           </li>
           <li>
-zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
+zero or more warnings ([=list=] of <a>ProblemDetails</a> <var>warnings</var>)
           </li>
           <li>
-zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
+zero or more errors ([=list=] of <a>ProblemDetails</a> <var>errors</var>)
           </li>
         </ul>
 
@@ -4552,7 +4552,7 @@ The verification algorithm is as follows:
 
         <ol class="algorithm">
           <li>
-Set <var>result</var> to an empty object.
+Set <var>result</var> to an empty [=map=].
           </li>
           <li>
 Ensure that the securing mechanism has properly protected the
@@ -4607,26 +4607,26 @@ Implementations MAY produce different errors than described above.
         <p>
 The algorithm in this section can be used to verify whether a securing mechanism
 that is associated with a sequence of bytes is valid. This algorithm takes a
-byte sequence (bytes <var>inputBytes</var>) and a media type
-(string <var>inputMediaType</var>) as inputs, and produces an object
-(<var>securingMechanismVerified</var>) that contains the following:
+sequence of bytes ([=byte sequence=] <var>inputBytes</var>) and a media type
+([=string=] <var>inputMediaType</var>) as inputs, and produces an object
+([=map=] <var>result</var>) that contains the following:
         </p>
 
         <ul>
           <li>
-a verification status (boolean <var>status</var>)
+a verification status ([=boolean=] <var>status</var>)
           </li>
           <li>
-a verified document (object <var>document</var>)
+a verified document ([=map=] <var>document</var>)
           </li>
           <li>
-a media type (string <var>mediaType</var>)
+a media type ([=string=] <var>mediaType</var>)
           </li>
           <li>
-zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
+zero or more warnings ([=list=] of <a>ProblemDetails</a> <var>warnings</var>)
           </li>
           <li>
-zero or more errors (array of <a>ProblemDetails</a> <var>errors</var>)
+zero or more errors ([=list=] of <a>ProblemDetails</a> <var>errors</var>)
           </li>
         </ul>
 
@@ -4636,7 +4636,7 @@ The securing mechanism verification algorithm is as follows:
 
         <ol class="algorithm">
           <li>
-Set <var>securingMechanismVerified</var> to an empty object and initialize the
+Set <var>result</var> to an empty object and initialize the
 following fields: <var>status</var> to `false`, <var>warnings</var> to an
 empty array, and <var>errors</var> to an empty array.
           </li>
@@ -4650,7 +4650,7 @@ If the <var>inputMediaType</var> is `application/vc+ld+json` or
 <var>inputBytes</var> as an input parameter, parses the value as JSON into
 an object, removes the `proof` property, and returns the result as an object.
 If JSON parsing fails, a <a href="#PARSING_ERROR">PARSING_ERROR</a> is appended
-to <var>securingMechanismVerified</var>.<var>errors</var>.
+to <var>result</var>.<var>errors</var>.
               </li>
               <li>
 If the <var>inputMediaType</var> is associated with the JOSE or COSE
@@ -4690,13 +4690,13 @@ section of the Verifiable Credentials Specifications Directory [[?VC-SPECS]].
 Set <var>securedDocument</var> to the result of a JSON parsing function that
 takes <var>inputBytes</var> as an input parameter, parses the value as JSON,
 and returns the result as an object. If JSON parsing fails,
-<var>securingMechanismVerified</var>.<var>status</var> is set to `false`, and a
+<var>result</var>.<var>status</var> is set to `false`, and a
 <a href="#PARSING_ERROR">PARSING_ERROR</a> is appended to
-<var>securingMechanismVerified</var>.<var>errors</var>.
+<var>result</var>.<var>errors</var>.
                   </li>
                   <li>
 If <var>securedDocument</var> was successfully set in the previous step, set
-<var>securingMechanismVerified</var>.<var>status</var> to the result of passing
+<var>result</var>.<var>status</var> to the result of passing
 <var>securedDocument</var>, along with any relevant function-specific options,
 to the <var>verifyProof</var> function. For example, the
 <var>expectedProofPurpose</var> option is set to `assertionMethod` when
@@ -4720,7 +4720,7 @@ of the specification will be included in this text.
 </div>
                 <ol class="algorithm">
                   <li>
-Set <var>securingMechanismVerified</var>.<var>status</var> to the
+Set <var>result</var>.<var>status</var> to the
 result of passing <var>inputBytes</var>, along with any relevant
 function-specific options, to the <var>verifyProof</var> function.
                   </li>
@@ -4734,7 +4734,7 @@ Mechanisms</a> section of the Verifiable Credentials Specifications Directory
 this specification, among other places.
                 <ol class="algorithm">
                   <li>
-Set <var>securingMechanismVerified</var>.<var>status</var> to the
+Set <var>result</var>.<var>status</var> to the
 result of passing <var>inputBytes</var>, along with any relevant
 function-specific options, to the <var>verifyProof</var> function.
                   </li>
@@ -4743,27 +4743,27 @@ function-specific options, to the <var>verifyProof</var> function.
             </ol>
           </li>
           <li>
-If <var>securingMechanismVerified</var>.<var>status</var> is set to
+If <var>result</var>.<var>status</var> is set to
 `false`, add a <a href="#CRYPTOGRAPHIC_SECURITY_ERROR">
   CRYPTOGRAPHIC_SECURITY_ERROR</a> to
-<var>securingMechanismVerified</var>.<var>errors</var>.
+<var>result</var>.<var>errors</var>.
           </li>
           <li>
-If <var>securingMechanismVerified</var>.<var>status</var> is set to
+If <var>result</var>.<var>status</var> is set to
 `true`:
             <ol class="algorithm">
               <li>
-Set <var>securingMechanismVerified</var>.<var>document</var> by passing
+Set <var>result</var>.<var>document</var> by passing
 <var>inputBytes</var> to the <var>extractDocument</var> function.
               </li>
               <li>
-Set <var>securingMechanismVerified</var>.<var>mediaType</var> to the media type
-associated with <var>securingMechanismVerified</var>.<var>document</var>.
+Set <var>result</var>.<var>mediaType</var> to the media type
+associated with <var>result</var>.<var>document</var>.
               </li>
             </ol>
           </li>
           <li>
-Return <var>securingMechanismVerified</var>.
+Return <var>result</var>.
           </li>
         </ol>
 
