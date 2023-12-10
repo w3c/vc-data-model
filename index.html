@@ -4460,7 +4460,7 @@ a status (boolean <var>status</var>)
 a <a>conforming document</a> (object <var>document</var>)
           </li>
           <li>
-a media type (string <var>mediaType</var>), including any media type parameters
+a media type (string <var>mediaType</var>)
           </li>
           <li>
 zero or more warnings (array of <a>ProblemDetails</a> <var>warnings</var>)
@@ -4500,6 +4500,15 @@ secured. Return <var>result</var>, which will contain warning and error
 information related to the verification failure.
               </li>
             </ol>
+          </li>
+          <li>
+Ensure that the <var>result</var>.<var>mediaType</var> value is either
+`application/vc+ld+json` or `application/vp+ld+json` and does not contain any
+media type parameters, as defined in [[RFC6838]]. If the checks fail, set
+<var>result</var>.<var>status</var> to `false`, and add at least one <a
+href="#MEDIA_TYPE_ERROR">MEDIA_TYPE_ERROR</a> to
+<var>result</var>.<var>errors</var>. Other warnings and errors MAY be included
+to aid any debugging process. Return <var>result</var>.
           </li>
           <li>
 Ensure that the <var>result</var>.<var>document</var> is a
