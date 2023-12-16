@@ -2344,11 +2344,14 @@ an object that has a `type` of `EnvelopedVerifiableCredential`.
             <dd>
 Used to associate an object containing an enveloped <a>verifiable credential</a>
 with the `verifiableCredential` property in a <a>verifiable presentation</a>.
-The `@context` value of the object MUST follow all of the "MUST" statements in
-Section <a href="#contexts"></a>. The `id` value of the object MUST be a `data:`
-URL [[RFC2397]] that expresses a secured <a>verifiable credential</a> using an enveloping
-security scheme, such as [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]]. The `type` value
-of the object MUST be `EnvelopedVerifiableCredential`.
+The `@context` property of the object MUST be present and include a context,
+such as the <a href="#base-context">base context for this specification</a>,
+that defines at least the `id`, `type`, and `EnvelopedVerifiableCredential`
+terms as defined by the base context provided by this specification. The `id`
+value of the object MUST be a `data:` URL [[RFC2397]] that expresses a secured
+<a>verifiable credential</a> using an enveloping security scheme, such as
+[[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]]. The `type` value of the object MUST be
+`EnvelopedVerifiableCredential`.
             </dd>
           </dl>
 
@@ -3988,7 +3991,8 @@ contains a single credential with, possibly, associated proofs, this graph is
 the <a>default graph</a>. For <a>presentations</a>, each value associated with
 the `verifiableCredential` property of the <a>presentation</a> is a separate
 <a>named graph</a> of type <dfn class="export">VerifiableCredentialGraph</dfn>
-which contains a single <a>verifiable credential</a>.
+which contains a single <a>verifiable credential</a> or an
+<a href="#enveloped-verifiable-credentials">enveloped verifiable credential</a>.
         </p>
         <p>
 Using these <a>graphs</a> has a concrete effect when performing JSON-LD
