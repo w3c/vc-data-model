@@ -2053,34 +2053,36 @@ of the [[[?VC-SPECS]]] [[?VC-SPECS]].
         <h3>Proofs</h3>
 
         <p>
-Methods of securing <a>verifiable credentials</a> or
-<a>verifiable presentations</a> that embed a proof in the data model MUST use
-the <code>proof</code> <a>property</a>.
+This specification defines the `proof` property for the expression of
+<a href="#dfn-embedded-proof">embedded proofs</a>.
         </p>
-        <p>
-Methods of securing <a>verifiable credentials</a> or <a>verifiable
-presentations</a> that use an <a>enveloping proof</a>
-MAY use the <code>proof</code> <a>property</a>.
-        </p>
+
         <dl>
           <dt><var>proof</var></dt>
           <dd>
-            <p>
 One or more cryptographic proofs that can be used to detect tampering and verify
 the authorship of a <a>verifiable credential</a> or a <a>verifiable
 presentation</a>. Each proof is a separate <a>named graph</a>
 (referred to as a <dfn class="export">proof graph</dfn>) containing a single
 proof. The specific method used for an <a>embedded proof</a> MUST be identified
 using the <code>type</code> <a>property</a>.
-            </p>
-            <p>
+          </dd>
+        </dl>
+
+        <p>
 A proof for a <a>verifiable credential</a> covers all <a>claims</a>
 included in the corresponding <a>verifiable credential graph</a>.
 See <a href="#presentations-0"></a> for the case when the property is used for a
 <a>verifiable presentation</a>.
-            </p>
-          </dd>
-        </dl>
+        </p>
+
+        <p>
+Methods of securing <a>verifiable credentials</a> or
+<a>verifiable presentations</a> that embed a proof in the data model MUST use
+the <code>proof</code> <a>property</a>. Methods of securing <a>verifiable
+credentials</a> or <a>verifiable presentations</a> that use an <a>enveloping
+proof</a> MAY use the <code>proof</code> <a>property</a>.
+        </p>
 
         <p>
 Because the method used for a mathematical proof varies by representation
@@ -2111,12 +2113,12 @@ the signing date. The example below uses Ed25519 digital signatures.
     }
   },
   <span class="highlight">"proof": {
-    "type": "Ed25519Signature2020",
+    "type": "DataIntegrityProof",
+    "cryptosuite": "eddsa-rdfc-2022",
     "created": "2021-11-13T18:19:39Z",
     "verificationMethod": "https://university.example/issuers/14#key-1",
     "proofPurpose": "assertionMethod",
-    "proofValue": "z58DAdFfa9SkqZMVPxAQpic7ndSayn1PzZs6ZjWp1CktyGesjuTSwRdo
-                   WhAfGFCF5bppETSTojQCrfFPP2oumHKtz"
+    "proofValue": "z58DAdFfa9SkqZMVPxAQp...jQCrfFPP2oumHKtz"
   }</span>
 }
         </pre>
