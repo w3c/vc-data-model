@@ -2019,17 +2019,15 @@ T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))
 
         <p>
 This specification recognizes two classes of securing mechanisms: those that use
-external proofs and those that use embedded proofs. An
-<dfn class="export">external proof</dfn> is one that wraps an expression of
-this data model, such as via a JSON Web Token, which is elaborated on in the
-<em>Securing Verifiable Credentials using JOSE and COSE</em> [[VC-JOSE-COSE]] specification.
-An <dfn class="export">embedded proof</dfn> is a mechanism where the proof is
-included in the data model, such as a Data Integrity Proof, which is elaborated
-on in <em>Verifiable Credential Data Integrity</em> [[VC-DATA-INTEGRITY]].
-        </p>
-        <p>
-It should be noted that these two classes of securing mechanisms are not
-mutually exclusive.
+enveloping proofs and those that use embedded proofs. An
+<dfn class="export">enveloping proof</dfn> is one that wraps an expression of this
+data model. One such enveloping proof mechanism is JSON Web Token,
+which is elaborated on in the [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]]
+specification. An <dfn class="export">embedded proof</dfn> is a mechanism where
+the proof is included in the data model, using the extension point
+defined in Section <a href="#proofs"></a>. One such embedded proof mechanism
+is [[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]]. These two classes of securing
+mechanisms are not mutually exclusive.
         </p>
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST be
@@ -2061,7 +2059,11 @@ discussed in Section <a href="#integrity-of-related-resources"></a> and Section
 <a href="#base-context"></a>.
           </li>
         </ul>
-        </p>
+
+      </section>
+
+      <section>
+        <h3>Proofs</h3>
 
         <p>
 Methods of securing <a>verifiable credentials</a> or
@@ -2070,8 +2072,8 @@ the <code>proof</code> <a>property</a>.
         </p>
         <p>
 Methods of securing <a>verifiable credentials</a> or <a>verifiable
-presentations</a> that use an external proof MAY use the <code>proof</code>
-<a>property</a>.
+presentations</a> that use an <a>enveloping proof</a>
+MAY use the <code>proof</code> <a>property</a>.
         </p>
         <dl>
           <dt><var>proof</var></dt>
@@ -2373,7 +2375,8 @@ such as the <a href="#base-context">base context for this specification</a>,
 that defines at least the `id`, `type`, and `EnvelopedVerifiableCredential`
 terms as defined by the base context provided by this specification. The `id`
 value of the object MUST be a `data:` URL [[RFC2397]] that expresses a secured
-<a>verifiable credential</a> using an enveloping security scheme, such as
+<a>verifiable credential</a> using an
+<a href="#dfn-enveloping-proof">enveloping</a> security scheme, such as
 [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]]. The `type` value of the object MUST be
 `EnvelopedVerifiableCredential`.
             </dd>
@@ -7112,8 +7115,8 @@ Credential implementations that justify the use of a specific media type.
         </p>
 
         <p>
-This media type can be used with credentials secured using an <a>external
-proof</a>.
+This media type can be used with credentials secured using an
+<a>enveloping proof</a>.
         </p>
         <p>
 A [[JSON-LD]] context is expected to be present in the body of the document, and
@@ -7174,7 +7177,7 @@ Credential implementations that justify the use of a specific media type.
 
         <p>
 This media type can be used with presentations secured using an
-<a>external proof</a>.
+<a>enveloping proof</a>.
         </p>
         <p>
 A [[JSON-LD]] context is expected to be present in the body of the document, and
