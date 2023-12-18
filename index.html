@@ -4572,36 +4572,43 @@ The verification algorithm is as follows:
 
         <ol class="algorithm">
           <li>
-Set <var>result</var> to an empty [=map=].
-          </li>
-          <li>
 Ensure that the securing mechanism has properly protected the
 <a>conforming document</a> by performing the following steps:
             <ol class="algorithm">
-              <li>
-Set <var>securingMechanismVerified</var> to the result of executing the
-<a href="#verify-securing-mechanism">securing mechanism verification
-algorithm</a> with <var>inputBytes</var> and <var>mediaType</var> passed as
-inputs to the algorithm.
+             <li>
+Set the |verifyProof| function by using the |inputMediaType| and the
+<a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section of
+the [[[?VC-SPECS]]] [[?VC-SPECS]], or other mechanisms known to the
+implementation, to determine the cryptographic suite to use when verifying
+the securing mechanism. The |verifyProof| function MUST implement the interface
+described in <a href="#securing-mechanisms"></a>.
+                <div class="issue"
+                     title="Mechanism for 'determining' is being detailed">
+At present, the Working Group is concerned that the algorithm for "determining"
+might need to be more formally defined. At present, no implementation has
+had an issue determining the proper |verifyProof| algorithm to use, but the
+Working Group is attempting to see if saying more here would be worthwhile.
+                </div>
               </li>
               <li>
-Set <var>status</var>, <var>document</var>, <var>mediaType</var>,
-<var>controller</var>, <var>controllerDocument</var>,
-<var>warnings</var>, and <var>errors</var> in <var>result</var> to their
-respective properties in <var>securingMechanismVerified</var>.
+Set <var>result</var> to the result of passing <var>inputBytes</var> and
+|inputMediaType| to the <var>verifyProof</var> function. If the call was
+successful, <var>result</var> will contain the <var>status</var>,
+<var>document</var>, <var>mediaType</var>, <var>controller</var>,
+<var>controllerDocument</var>, <var>warnings</var>, and <var>errors</var>
+properties.
               </li>
               <li>
-If <var>result</var>.<var>status</var> is `false`, the provided
-<var>inputBytes</var> contains a document that cannot be considered to be
-secured. Return <var>result</var>, which will contain warning and error
-information related to the verification failure.
+If <var>result</var>.<var>status</var> is set to `false`, add a
+<a href="#CRYPTOGRAPHIC_SECURITY_ERROR">CRYPTOGRAPHIC_SECURITY_ERROR</a> to
+<var>result</var>.<var>errors</var>.
               </li>
             </ol>
           </li>
           <li>
-Ensure that the <var>result</var>.<var>document</var> is a
-<a>conforming document</a>. If it is not, set
-<var>result</var>.<var>status</var> to `false`, remove the
+If <var>result</var>.<var>status</var> is set to `true`, ensure that
+<var>result</var>.<var>document</var> is a <a>conforming document</a>. If it is
+not, set <var>result</var>.<var>status</var> to `false`, remove the
 <var>document</var> property from <var>result</var>, and add at least
 one <a href="#MALFORMED_VALUE_ERROR">MALFORMED_VALUE_ERROR</a> to
 <var>result</var>.<var>errors</var>. Other warnings and errors MAY be included
@@ -4619,182 +4626,6 @@ a different order than that provided above as long as the
 implementation returns errors for the same invalid inputs.
 Implementations MAY produce different errors than described above.
         </p>
-
-      </section>
-
-      <section class="normative">
-        <h3>Verify Securing Mechanism</h3>
-
-        <p>
-The algorithm in this section can be used to verify whether a securing mechanism
-that is associated with a sequence of bytes is valid. This algorithm takes a
-sequence of bytes ([=byte sequence=] <var>inputBytes</var>) and a media type
-([=string=] <var>inputMediaType</var>) as inputs, and produces an object
-([=map=] <var>result</var>) that contains the following:
-        </p>
-
-        <ul>
-          <li>
-a verification status ([=boolean=] <var>status</var>)
-          </li>
-          <li>
-a verified document ([=map=] <var>document</var>)
-          </li>
-          <li>
-a media type ([=string=] <var>mediaType</var>)
-          </li>
-          <li>
-a controller of the verification method associated with the securing mechanism
-([=string=] <var>controller</var>)
-          </li>
-          <li>
-a controller document that is associated with the verification method used
-to verify the securing mechanism ([=map=] <var>controllerDocument</var>)
-          </li>
-          <li>
-zero or more warnings ([=list=] of <a>ProblemDetails</a> <var>warnings</var>)
-          </li>
-          <li>
-zero or more errors ([=list=] of <a>ProblemDetails</a> <var>errors</var>)
-          </li>
-        </ul>
-
-        <p>
-The securing mechanism verification algorithm is as follows:
-        </p>
-
-        <ol class="algorithm">
-          <li>
-Set <var>result</var> to an empty object and initialize the
-following fields: <var>status</var> to `false`, <var>warnings</var> to an
-empty array, and <var>errors</var> to an empty array.
-          </li>
-          <li>
-Determine the specific mechanism for extracting the <a>conforming document</a>
-(<var>extractDocument</var>):
-            <ol class="algorithm">
-              <li>
-If the <var>inputMediaType</var> is `application/vc+ld+json` or
-`application/vp+ld+json`, the <var>extractDocument</var> function takes
-<var>inputBytes</var> as an input parameter, parses the value as JSON into
-an object, removes the `proof` property, and returns the result as an object.
-If JSON parsing fails, a <a href="#PARSING_ERROR">PARSING_ERROR</a> is appended
-to <var>result</var>.<var>errors</var>.
-              </li>
-              <li>
-If the <var>inputMediaType</var> is associated with the JOSE or COSE
-specifications, the [[?VC-JOSE-COSE]] specification defines a process for
-extracting the <a>conforming document</a>.
-<div class="issue" title="Document extraction process in vc-jose-cose">
-The process for extracting a conforming document is not clearly documented in
-the [[?VC-JOSE-COSE]] specification yet, but once it is, a link to that section
-of the specification will be included in this text.
-</div>
-              </li>
-              <li>
-Other extracting functions are possible. Specifications of such might be found
-in the <a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a>
-section of the Verifiable Credentials Specifications Directory [[?VC-SPECS]]
-or through other standards bodies or communities that utilize this
-specification, among other places.
-              </li>
-            </ol>
-          </li>
-          <li>
-Determine the specific cryptographic verification algorithm
-(<var>verifyProof</var>) required to verify the securing mechanism:
-            <ol class="algorithm">
-              <li>
-If the <var>inputMediaType</var> is `application/vc+ld+json` or
-`application/vp+ld+json`, the Verifiable Credential Data Integrity
-Specification [[?VC-DATA-INTEGRITY]] defines the
-<a data-cite="?VC-DATA-INTEGRITY#verify-proof">process for identifying
-a specific cryptography suite type</a> used for cryptographic verification by
-utilizing the `proof`.`type` property. A list of registered proof types can be
-found in the
-<a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a>
-section of the Verifiable Credentials Specifications Directory [[?VC-SPECS]].
-                <ol class="algorithm">
-                  <li>
-Set <var>securedDocument</var> to the result of a JSON parsing function that
-takes <var>inputBytes</var> as an input parameter, parses the value as JSON,
-and returns the result as an object. If JSON parsing fails,
-<var>result</var>.<var>status</var> is set to `false`, and a
-<a href="#PARSING_ERROR">PARSING_ERROR</a> is appended to
-<var>result</var>.<var>errors</var>.
-                  </li>
-                  <li>
-If <var>securedDocument</var> was successfully set in the previous step, set
-<var>result</var>.<var>status</var> to the result of passing
-<var>securedDocument</var>, along with any relevant function-specific options,
-to the <var>verifyProof</var> function. For example, the
-<var>expectedProofPurpose</var> option is set to `assertionMethod` when
-the conforming document is expected to be a <a>verifiable credential</a>,
-and if the <a>conforming document</a> is expected to be a
-<a>verifiable presentation</a>, the <var>expectedProofPurpose</var> option
-is set to `authentication` and the <var>domain</var> and <var>challenge</var>
-are also provided as options.
-                  </li>
-                </ol>
-              </li>
-              <li>
-If the <var>inputMediaType</var> is associated with the JOSE or COSE
-specifications, the [[?VC-JOSE-COSE]] specification defines a process for
-identification of a specific cryptography suite and cryptographic verification
-process.
-<div class="issue" title="Document verification process in vc-jose-cose">
-The process for securing mechanism verification is not clearly documented in
-the [[?VC-JOSE-COSE]] specification yet, but once it is, a link to that section
-of the specification will be included in this text.
-</div>
-                <ol class="algorithm">
-                  <li>
-Set <var>result</var>.<var>status</var> to the
-result of passing <var>inputBytes</var>, along with any relevant
-function-specific options, to the <var>verifyProof</var> function.
-                  </li>
-                </ol>
-              </li>
-              <li>
-Other proof verification functions are possible. Specifications of such might
-be found in the <a data-cite="?VC-SPECS#securing-mechanisms">Securing
-Mechanisms</a> section of the Verifiable Credentials Specifications Directory
-[[?VC-SPECS]] or through other standards bodies or communities that utilize
-this specification, among other places.
-                <ol class="algorithm">
-                  <li>
-Set <var>result</var>.<var>status</var> to the
-result of passing <var>inputBytes</var>, along with any relevant
-function-specific options, to the <var>verifyProof</var> function.
-                  </li>
-                </ol>
-              </li>
-            </ol>
-          </li>
-          <li>
-If <var>result</var>.<var>status</var> is set to
-`false`, add a <a href="#CRYPTOGRAPHIC_SECURITY_ERROR">
-  CRYPTOGRAPHIC_SECURITY_ERROR</a> to
-<var>result</var>.<var>errors</var>.
-          </li>
-          <li>
-If <var>result</var>.<var>status</var> is set to
-`true`:
-            <ol class="algorithm">
-              <li>
-Set <var>result</var>.<var>document</var> by passing
-<var>inputBytes</var> to the <var>extractDocument</var> function.
-              </li>
-              <li>
-Set <var>result</var>.<var>mediaType</var> to the media type
-associated with <var>result</var>.<var>document</var>.
-              </li>
-            </ol>
-          </li>
-          <li>
-Return <var>result</var>.
-          </li>
-        </ol>
 
       </section>
 
@@ -4844,8 +4675,7 @@ https://www.w3.org/TR/vc-data-model#PARSING_ERROR
 (-64)
           </dt>
           <dd>
-There was an error while parsing input. See Section
-<a href="#verify-securing-mechanism"></a>.
+There was an error while parsing input.
           </dd>
           <dt id="CRYPTOGRAPHIC_SECURITY_ERROR">
 https://www.w3.org/TR/vc-data-model#CRYPTOGRAPHIC_SECURITY_ERROR
@@ -4855,7 +4685,7 @@ https://www.w3.org/TR/vc-data-model#CRYPTOGRAPHIC_SECURITY_ERROR
 The securing mechanism for the document has detected a
 modification in the contents of the document since it was created;
 potential tampering detected. See Section
-<a href="#verify-securing-mechanism"></a>.
+<a href="#verification"></a>.
           </dd>
           <dt id="MALFORMED_VALUE_ERROR">
 https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE_ERROR
