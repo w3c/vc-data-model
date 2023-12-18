@@ -2001,37 +2001,64 @@ mechanisms are not mutually exclusive.
 
         <p>
 Securing mechanism specifications other than those
-referred to above might also be defined, as necessary. A securing mechanism
-specification:
+referred to above might also be defined, as necessary.
         </p>
 
-        <ul>
-          <li>
-MUST document normative algorithms that provide content integrity protection
-for <a>conforming documents</a>. The algorithms MAY be general in nature and
-MAY be used to secure data other than <a>conforming documents</a>.
-          </li>
-          <li>
-MUST provide a verification mechanism that returns only the information in the
-<a>conforming document</a> that has been secured. It MAY provide an
-additional mechanism to receive other information that might be helpful
-during validation or for debugging purposes. The concrete interface that is
-expected to be provided is detailed in the
-<a href="#verify-securing-mechanism">securing mechanism verification
-algorithm</a> section.
-          </li>
-          <li>
-SHOULD provide integrity protection for any information referenced by a URL that
-is critical to validation. Mechanisms that can achieve this protection are
-discussed in Section <a href="#integrity-of-related-resources"></a> and Section
+        <p>
+Securing mechanism specifications MUST document normative algorithms that
+provide content integrity protection for <a>conforming documents</a>. The
+algorithms MAY be general in nature and MAY be used to secure data other than
+<a>conforming documents</a>.
+        </p>
+
+        <p>
+Securing mechanism specifications MUST provide a verification mechanism that
+returns only the information in the <a>conforming document</a> that has been
+secured. It MAY provide an additional mechanism to receive other information
+that might be helpful during validation or for debugging purposes. A securing
+mechanism's verification algorithm MUST provide an interface that
+receives an sequence of bytes ([=byte sequence=] |inputBytes|) and a media type
+([=string=] |inputMediaType|) as inputs and returns a verification result with
+at least the following [=struct/items=]:
+        </p>
+
+        <dl>
+          <dt>[=boolean=] |status|</dt>
+          <dd>
+A verification status whose value is `true` if the verification succeeded and
+`false` if it did not.
+          </dd>
+          <dt>[=map=] |document|</dt>
+          <dd>
+A document that only contains information that was successfully secured.
+          </dd>
+          <dt>[=string=] |mediaType|</dt>
+          <dd>
+A media type as defined in [[RFC6838]].
+          </dd>
+          <dt>[=string=] |controller|</dt>
+          <dd>
+A verification method controller as defined in [[VC-CONTROLLER-DOCUMENT]].
+          </dd>
+          <dt>[=map=] |controllerDocument|</dt>
+          <dd>
+A controller document as defined in [[VC-CONTROLLER-DOCUMENT]].
+          </dd>
+        </dl>
+
+        <p>
+Securing mechanism specifications SHOULD provide integrity protection for any
+information referenced by a URL that is critical to validation. Mechanisms that
+can achieve this protection are discussed in Section
+<a href="#integrity-of-related-resources"></a> and Section
 <a href="#base-context"></a>.
-          </li>
-          <li>
-SHOULD register the securing mechanism in the
+        </p>
+
+        <p>
+Securing mechanism specifications SHOULD register the securing mechanism in the
 <a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section
 of the [[[?VC-SPECS]]] [[?VC-SPECS]].
-          </li>
-        </ul>
+        </p>
 
         <p class="note"
            title="Choice of securing mechanism is use-case dependent">
