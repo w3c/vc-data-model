@@ -632,7 +632,7 @@ which might be dependent on the syntax of the proof (for example, using the JSON
 Web Signature of a JSON Web Token for proofing a key holder), are an essential
 part of processing <a>verifiable credentials</a> and
 <a>verifiable presentations</a>. At the time of publication, Working Group
-members had implemented such protection using at least three proof mechanisms:
+members had implemented such protection using at least two proof mechanisms:
         </p>
 
         <ul>
@@ -800,7 +800,9 @@ disclosure scheme that does not reveal the <a>credential</a> identifier.
 <a>verifiable credential</a>, but abstracts the details about how <a>claims</a>
 are organized into information <a>graphs</a>, which are then organized into
 <a>verifiable credentials</a>. <a href="#info-graph-vc"></a> below shows a
-more complete depiction of a <a>verifiable credential</a>, which is normally
+more complete depiction of a <a>verifiable credential</a>
+secured with Data Integrity Proofs [[VC-DATA-INTEGRITY]].
+<a>Verifiable credentials</a> secured in this manner are
 composed of at least two information <a>graphs</a>. The first <a>graph</a>
 (the <a>verifiable credential graph</a>, in this case the <a>default graph</a>)
 expresses the <a>verifiable credential</a> itself, which contains credential
@@ -890,7 +892,10 @@ which are then organized into <a>verifiable presentations</a>.
         </p>
         <p>
 <a href="#info-graph-vp"></a> below shows a more complete depiction of a
-<a>verifiable presentation</a>, which is normally composed of at least four
+<a>verifiable presentation</a>
+secured with Data Integrity Proofs [[VC-DATA-INTEGRITY]].
+<a>Verifiable presentations</a>, secured in this manner are
+normally composed of at least four
 information <a>graphs</a>. The first of these <a>graphs</a>, the
 <a>verifiable presentation graph</a> (which is the <a>default graph</a>),
 expresses the <a>verifiable presentation</a> itself, and contains presentation
@@ -1175,7 +1180,7 @@ Subsequent items in the array MUST be composed of any combination of
           </dd>
         </dl>
         <p class="note">
-This specification requires for a <code>@context</code> <a>property</a>
+This specification requires a <code>@context</code> <a>property</a>
 to be present; this property is defined by [[JSON-LD]].
         </p>
         <pre class="example nohighlight" title="Usage of the @context property">
@@ -1194,8 +1199,7 @@ to be present; this property is defined by [[JSON-LD]].
       "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
       "name": "Example University"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -1414,16 +1418,6 @@ MUST have a <a>type</a> specified.
 <code>VerifiablePresentation</code> and, optionally, a more specific
 <a>verifiable presentation</a> <a>type</a>. For example,<br>
 <code>"type": ["VerifiablePresentation", "ExamplePresentation"]</code>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-<a href="#proofs-signatures">Proof</a>&nbsp;object
-              </td>
-              <td>
-A valid proof <a>type</a>. For example,<br>
-<code>"type": "DataIntegrityProof"</code>
               </td>
             </tr>
 
@@ -2048,7 +2042,9 @@ MAY be used to secure data other than <a>conforming documents</a>.
           </li>
           <li>
 MUST provide a verification mechanism that returns only the information in the
-<a>conforming document</a> that has been secured. It MAY provide an
+<a>conforming document</a> that has been secured.
+This does not include the proof and related data used to secure the information.
+It MAY provide an
 additional mechanism to receive other information that might be helpful
 during validation or for debugging purposes. The concrete interface that is
 expected to be provided is detailed in the
@@ -2066,72 +2062,21 @@ discussed in Section <a href="#integrity-of-related-resources"></a> and Section
 
         <p>
 Methods of securing <a>verifiable credentials</a> or
-<a>verifiable presentations</a> that embed a proof in the data model MUST use
-the <code>proof</code> <a>property</a>.
+<a>verifiable presentations</a> that embed a proof in the data model MAY use a
+the <code>proof</code> <a>property</a>,
+when specified by the securing mechanism.
         </p>
         <p>
 Methods of securing <a>verifiable credentials</a> or <a>verifiable
-presentations</a> that use an external proof MAY use the <code>proof</code>
+presentations</a> that use an external proof MAY include a <code>proof</code>
 <a>property</a>.
         </p>
-        <dl>
-          <dt><var>proof</var></dt>
-          <dd>
-            <p>
-One or more cryptographic proofs that can be used to detect tampering and verify
-the authorship of a <a>verifiable credential</a> or a <a>verifiable
-presentation</a>. Each proof is a separate <a>named graph</a>
-(referred to as a <dfn class="export">proof graph</dfn>) containing a single
-proof. The specific method used for an <a>embedded proof</a> MUST be identified
-using the <code>type</code> <a>property</a>.
-            </p>
             <p>
 A proof for a <a>verifiable credential</a> covers all <a>claims</a>
 included in the corresponding <a>verifiable credential graph</a>.
 See <a href="#presentations-0"></a> for the case when the property is used for a
 <a>verifiable presentation</a>.
             </p>
-          </dd>
-        </dl>
-
-        <p>
-Because the method used for a mathematical proof varies by representation
-language and the technology used, the set of name-value pairs that is expected
-as the value of the <code>proof</code> <a>property</a> will vary accordingly.
-For example, if digital signatures are used for the proof mechanism, the
-<code>proof</code> <a>property</a> is expected to have name-value pairs that
-include a signature, a reference to the signing entity, and a representation of
-the signing date. The example below uses Ed25519 digital signatures.
-        </p>
-
-        <pre class="example nohighlight"
-          title="Usage of the proof property on a verifiable credential">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"proof": {
-    "type": "Ed25519Signature2020",
-    "created": "2021-11-13T18:19:39Z",
-    "verificationMethod": "https://university.example/issuers/14#key-1",
-    "proofPurpose": "assertionMethod",
-    "proofValue": "z58DAdFfa9SkqZMVPxAQpic7ndSayn1PzZs6ZjWp1CktyGesjuTSwRdo
-                   WhAfGFCF5bppETSTojQCrfFPP2oumHKtz"
-  }</span>
-}
-        </pre>
 
         <p class="note">
 As discussed in Section <a href="#conformance"></a>, there are multiple viable
@@ -2308,26 +2253,18 @@ to not pertain to the <a>validation</a> of the <a>verifiable presentation</a>.
           <dd>
             <p>
                 The <a>verifiable presentation</a> MAY include a <code>proof</code>
-                <a>property</a>, which refers to a separate <a>named graph</a> containing a single proof.
-                The specific method used for the MUST be
-                identified using the <code>type</code> <a>property</a>.
-                <!-- If present, the value SHOULD be used to express a securing
-                mechanism, such as those listed in the
-                Verifiable Credentials Specifications Directory [[?VC-SPECS]]. -->
-                The proof covers of all claims in the following <a>graphs</a>:
+                <a>property</a>
+		when its use is specified by the securing mechanism used.
             </p>
-            <ul>
-              <li>the <a>verifiable presentation graph</a>;</li>
-              <li>all <a>verifiable credential graphs</a> referred to by the <code>verifiableCredential</code> property of the presentation, as well as their corresponding <a>proof graphs</a>.</li>
-            </ul>
           </dd>
         </dl>
 
         <p>
-The example below shows a <a>verifiable presentation</a>:
+The example below shows a <a>verifiable presentation</a>
+secured with Data Integrity Proofs [[VC-DATA-INTEGRITY]]:
         </p>
 
-        <pre class="example nohighlight" title="Basic structure of a presentation">
+        <pre class="example nohighlight" title="Basic structure of a presentation secured with Data Integrity">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2475,7 +2412,7 @@ self-asserted <a>verifiable credential</a> that is secured using the same
 mechanism as the <a>verifiable presentation</a>.
           </p>
 
-          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential">
+          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded Data Integrity proof, with a self-asserted verifiable credential">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2502,7 +2439,7 @@ self-asserted <a>verifiable credential</a> that holds <a>claims</a> about the
 <a>verifiable presentation</a>.
           </p>
 
-          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential about the verifiable presentation">
+          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded Data Integrity proof, with a self-asserted verifiable credential about the verifiable presentation">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2664,8 +2601,7 @@ see Section <a href="#zero-knowledge-proofs"></a>.
   <span class="highlight">"credentialSchema": {
     "id": "https://example.org/examples/degree",
     "type": "ZkpExampleSchema2018"
-  }</span>,
-  "proof": { <span class="comment">...</span> }
+  }</span>
 }
         </pre>
 
@@ -2843,7 +2779,8 @@ The <a>verifier</a> trusts the <a>issuer</a> to issue the <a>credential</a> that
 it received. To establish this trust, a <a>credential</a> is expected to either:
             <ul>
               <li>
-Include a <a href="#proofs-signatures">proof</a> establishing that the
+Secure the <a>credential</a> with
+a <a href="#proofs-signatures">proof</a> establishing that the
 <a>issuer</a> generated the <a>credential</a> (that is, it is a
 <a>verifiable credential</a>), or
               </li>
@@ -3470,9 +3407,8 @@ by a trusted issuer higher in the EBSI trust chain [?EBSI].
       "degree": {
       "type": "ExampleBachelorDegree",
       "name": "Bachelor of Science and Arts"
+      }
     }
-    },
-    "proof": { <span class="comment">...</span> }
   }],
   <span class="highlight">"termsOfUse": [{
     "type": "HolderPolicy",
@@ -3484,8 +3420,7 @@ by a trusted issuer higher in the EBSI trust chain [?EBSI].
       "target": "http://university.example/credentials/3732",
       "action": ["3rdPartyCorrelation"]
     }]
-  }]</span>,
-  "proof": [ ... ]
+  }]</span>
 }
         </pre>
 
@@ -3591,8 +3526,7 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
     "subjectPresence": "Physical",
     "documentPresence": "Physical",
     "licenseNumber": "123AB4567"
-  }]</span>,
-  "proof": { <span class="comment">...</span> }
+  }]</span>
 }
         </pre>
 
@@ -3607,13 +3541,13 @@ verification).
 
         <p class="note">
 The <code>evidence</code> <a>property</a> provides different and complementary
-information to the <code>proof</code> <a>property</a>. The <code>evidence</code>
+information to the securing mechanism utlized. The <code>evidence</code>
 <a>property</a> is used to express supporting information, such as documentary
 evidence, related to the integrity of the <a>verifiable credential</a>. In
-contrast, the <code>proof</code> <a>property</a> is used to express
+contrast, the securing mechanism is used to express
 machine-verifiable mathematical proofs related to the authenticity of the
 <a>issuer</a> and integrity of the <a>verifiable credential</a>. For more
-information about the <code>proof</code> <a>property</a>, see Section
+information about securing mechanisms, see Section
 <a href="#proofs-signatures"></a>.
         </p>
 
@@ -4182,10 +4116,10 @@ automatically typed to provide stronger type guarantees for use cases that
 require them.
             </li>
             <li>
-The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
-are defined as
-<a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph containers</a>.
-This means the creation of <a>named graphs</a> used to isolate sets of data
+The <code>verifiableCredential</code> <a>property</a>
+is defined as
+a <a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph container</a>.
+This means the creation of <a>named graphs</a> can be used to isolate sets of data
 asserted by different entities. This ensures, for example, proper cryptographic
 separation between the data graph provided by each <a>issuer</a>
 and the one provided by the <a>holder</a> presenting the <a>verifiable
@@ -4648,7 +4582,7 @@ Determine the specific mechanism for extracting the <a>conforming document</a>
 If the <var>inputMediaType</var> is `application/vc+ld+json` or
 `application/vp+ld+json`, the <var>extractDocument</var> function takes
 <var>inputBytes</var> as an input parameter, parses the value as JSON into
-an object, removes the `proof` property, and returns the result as an object.
+an object, removes any `proof` property, if present, and returns the result as a JSON object.
 If JSON parsing fails, a <a href="#PARSING_ERROR">PARSING_ERROR</a> is appended
 to <var>result</var>.<var>errors</var>.
               </li>
@@ -4698,13 +4632,7 @@ and returns the result as an object. If JSON parsing fails,
 If <var>securedDocument</var> was successfully set in the previous step, set
 <var>result</var>.<var>status</var> to the result of passing
 <var>securedDocument</var>, along with any relevant function-specific options,
-to the <var>verifyProof</var> function. For example, the
-<var>expectedProofPurpose</var> option is set to `assertionMethod` when
-the conforming document is expected to be a <a>verifiable credential</a>,
-and if the <a>conforming document</a> is expected to be a
-<a>verifiable presentation</a>, the <var>expectedProofPurpose</var> option
-is set to `authentication` and the <var>domain</var> and <var>challenge</var>
-are also provided as options.
+to the <var>verifyProof</var> function.
                   </li>
                 </ol>
               </li>
@@ -5060,12 +4988,10 @@ Not used at all, but instead replaced by short-lived, single-use bearer tokens.
         <h3>Signature-Based Correlation</h3>
 
         <p>
-The contents of <a>verifiable credentials</a> are secured using the
-<code>credential.proof</code> field. The <a>properties</a> in this field
+The contents of <a>verifiable credentials</a> are secured using a securing method.
+Values used to represent the securing method
 create a greater risk of correlation when the same values are used across more
-than one session or domain and the value does not change. Examples include the
-<code>verificationMethod</code>, <code>created</code>,
-<code>proofPurpose</code>, and <code>jws</code> fields.
+than one session or domain and the value does not change.
         </p>
 
         <p>
@@ -5893,8 +5819,7 @@ probably ought to be:
       "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
       "name": "Example University"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -5919,8 +5844,7 @@ protected are advised to use URL schemes that enforce content integrity.
       "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
       "name": "Example University"
     }
-  },
-  "proof": { <span class="comment">...</span> }
+  }
 }
         </pre>
 
@@ -5944,7 +5868,7 @@ attacks against their applications.
         <h3>Unsigned Claims</h3>
 
         <p>
-This specification allows <a>credentials</a> to be produced that do not contain
+This specification allows <a>credentials</a> to be produced that are not secured by
 signatures or proofs of any kind. These types of <a>credentials</a> are often
 useful for intermediate storage, or self-asserted information, which is
 analogous to filling out a form on a web page. Implementers should be aware that
@@ -6554,11 +6478,6 @@ The key is not suspended, revoked, or expired.
           <li>
 The cryptographic signature is expected to verify.
           </li>
-          <li>
-If the cryptographic suite expects a <code>proofPurpose</code> <a>property</a>,
-it is expected to exist and be a valid value, such as
-<code>assertionMethod</code>.
-          </li>
         </ul>
 
         <p class="note">
@@ -6568,15 +6487,7 @@ Signature <code>created</code> <a>property</a> establishes a date and time
 before which the <a>credential</a> should not be considered <a>verified</a>,
 distinct from the validity period of the credential. This property describes the
 validity of the proof, not of the credential.
-<br/><br/>
-The <code>verificationMethod</code> <a>property</a> specifies, for example, the
-public key that can be used to verify the digital signature. Dereferencing a
-public key URL reveals information about the controller of the key, which can
-be checked against the issuer of the <a>credential</a>. The
-<code>proofPurpose</code> <a>property</a> clearly expresses the purpose for
-the proof and ensures this information is protected by the signature. A proof is
-typically attached to a <a>verifiable presentation</a> for authentication
-purposes and to a <a>verifiable credential</a> as a method of assertion.
+The JWT <code>iat</code> claim likewise provides the time that the signature was made.
         </p>
       </section>
 
