@@ -628,8 +628,8 @@ properties MAY be ignored by <a>conforming issuer implementations</a> and/or
 
         <p>
 This document also contains examples that contain characters that are invalid
-JSON, such as inline comments (<code>//</code>) and the use of ellipsis
-(<code>...</code>) to denote information that adds little value to the example.
+JSON, such as inline comments (`//`) and the use of ellipsis
+(`...`) to denote information that adds little value to the example.
 Implementers are cautioned to remove this content if they desire to use the
 information as a valid document.
         </p>
@@ -863,7 +863,7 @@ which are then organized into <a>verifiable presentations</a>.
 information <a>graphs</a>. The first of these <a>graphs</a>, the
 <a>verifiable presentation graph</a> (which is the <a>default graph</a>),
 expresses the <a>verifiable presentation</a> itself, and contains presentation
-metadata. The <code>verifiableCredential</code> property in the <a>verifiable
+metadata. The `verifiableCredential` property in the <a>verifiable
 presentation graph</a> refers to one or more <a>verifiable credentials</a>, each
 being one of the second information <a>graphs</a>, i.e., a self-contained
 <a>verifiable credential graph</a> which in turn contains credential metadata
@@ -1113,12 +1113,12 @@ mean the same thing to each other. This might be referred to as
 attributes and values that are identified by <a>URLs</a> [[URL]]. However,
 those <a>URLs</a> can be long and not very human-friendly. In such cases,
 short-form human-friendly aliases can be more helpful. This specification uses
-the <code>@context</code> <a>property</a> to map such short-form aliases to the
+the `@context` <a>property</a> to map such short-form aliases to the
 <a>URLs</a> required by specific <a>verifiable credentials</a> and <a>verifiable
 presentations</a>.
        </p>
   <p class="note">
-In JSON-LD, the <code>@context</code> <a>property</a> can also be used to
+In JSON-LD, the `@context` <a>property</a> can also be used to
 communicate other details, such as datatype information, language information,
 transformation rules, and so on, which are beyond the needs of this
 specification, but might be useful in the future or to related work. For more
@@ -1128,15 +1128,15 @@ of the [[[JSON-LD]]] [[JSON-LD]] specification.
         </p>
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST include a
-<code>@context</code> <a>property</a>.
+`@context` <a>property</a>.
         </p>
 
         <dl>
           <dt><dfn class="export">@context</dfn></dt>
           <dd>
-The value of the <code>@context</code> <a>property</a> MUST be an ordered set
+The value of the `@context` <a>property</a> MUST be an ordered set
 where the first item is a <a>URL</a> with the value
-<code>https://www.w3.org/ns/credentials/v2</code>. For reference, a copy of
+`https://www.w3.org/ns/credentials/v2`. For reference, a copy of
 the base context is provided in Appendix <a href="#base-context"></a>.
 Subsequent items in the array MUST be composed of any combination of
 <a>URLs</a> and/or objects where each is processable as a
@@ -1144,7 +1144,7 @@ Subsequent items in the array MUST be composed of any combination of
           </dd>
         </dl>
         <p class="note">
-This specification requires for a <code>@context</code> <a>property</a>
+This specification requires for a `@context` <a>property</a>
 to be present; this property is defined by [[JSON-LD]].
         </p>
         <pre class="example nohighlight" title="Usage of the @context property">
@@ -1169,21 +1169,21 @@ to be present; this property is defined by [[JSON-LD]].
 
         <p>
 The example above uses the base context <a>URL</a>
-(<code>https://www.w3.org/ns/credentials/v2</code>) to establish that the
+(`https://www.w3.org/ns/credentials/v2`) to establish that the
 conversation is about a <a>verifiable credential</a>. The second <a>URL</a>
-(<code>https://www.w3.org/ns/credentials/examples/v2</code>) establishes that
+(`https://www.w3.org/ns/credentials/examples/v2`) establishes that
 the conversation is about examples.
         </p>
 
         <p class="note">
 This document uses the example context <a>URL</a>
-(<code>https://www.w3.org/ns/credentials/examples/v2</code>) for the purpose
+(`https://www.w3.org/ns/credentials/examples/v2`) for the purpose
 of demonstrating examples. Implementations are expected to not use this
 <a>URL</a> for any other purpose, such as in pilot or production systems.
         </p>
 
         <p>
-The data available at <code>https://www.w3.org/ns/credentials/v2</code> is a
+The data available at `https://www.w3.org/ns/credentials/v2` is a
 static document that is never updated and SHOULD be downloaded and cached. The
 associated human-readable vocabulary document for the Verifiable Credentials
 Data Model is available at
@@ -1200,31 +1200,31 @@ This concept is further expanded on in Section <a href="#extensibility"></a>.
 When expressing statements about a specific thing, such as a person, product, or
 organization, it can be useful to use a globally unique identifier for that thing.
 Globally unique identifiers enable others to express statements
-about the same thing. This specification defines the optional <code>id</code>
-<a>property</a> for such identifiers. The <code>id</code> <a>property</a>
+about the same thing. This specification defines the optional `id`
+<a>property</a> for such identifiers. The `id` <a>property</a>
 allows for the expression of statements about specific things in the
 <a>verifiable credential</a> and is set by an <a>issuer</a> when expressing
 objects in a <a>verifiable credential</a> or a <a>holder</a> when expressing
-objects in a <a>verifiable presentation</a>. Example <code>id</code> values
+objects in a <a>verifiable presentation</a>. Example `id` values
 include UUIDs (`urn:uuid:0c07c1ce-57cb-41af-bef2-1b932b986873`), HTTP URLs
 (`https://id.example/things#123`), and DIDs (`did:example:1234abcd`).
         </p>
 
         <p>
-<em>If</em> the <code>id</code> <a>property</a> is present:
+<em>If</em> the `id` <a>property</a> is present:
         </p>
 
         <ul>
           <li>
-The <code>id</code> <a>property</a> MUST express an identifier that others are
+The `id` <a>property</a> MUST express an identifier that others are
 expected to use when expressing statements about a specific thing identified
 by that identifier.
           </li>
           <li>
-The <code>id</code> <a>property</a> MUST NOT have more than one value.
+The `id` <a>property</a> MUST NOT have more than one value.
           </li>
           <li>
-The value of the <code>id</code> <a>property</a> MUST be a <a>URL</a> which
+The value of the `id` <a>property</a> MUST be a <a>URL</a> which
 MAY be dereferenced.
           </li>
         </ul>
@@ -1235,18 +1235,18 @@ where pseudonymity is required. Developers are encouraged to read Section
 <a href="#identifier-based-correlation"></a> carefully when considering such
 scenarios. There are also other types of correlation mechanisms documented in
 Section <a href="#privacy-considerations"></a> that create privacy concerns.
-Where privacy is a strong consideration, the <code>id</code> <a>property</a>
+Where privacy is a strong consideration, the `id` <a>property</a>
 MAY be omitted. Some use cases do not require, or explicitly require omitting,
-the <code>id</code> <a>property</a>.
+the `id` <a>property</a>.
         </p>
 
         <dl>
           <dt><dfn class="export">id</dfn></dt>
           <dd>
-The value of the <code>id</code> <a>property</a> MUST be a single <a>URL</a>.
-It is RECOMMENDED that the <a>URL</a> in the <code>id</code> be one which, if
+The value of the `id` <a>property</a> MUST be a single <a>URL</a>.
+It is RECOMMENDED that the <a>URL</a> in the `id` be one which, if
 dereferenced, results in a document containing machine-readable information
-about the <code>id</code>.
+about the `id`.
           </dd>
         </dl>
 
@@ -1300,7 +1300,7 @@ cryptographic keys, and other machine-readable information associated with a
 Software systems that process the kinds of objects specified in this document
 use type information to determine whether or not a provided
 <a>verifiable credential</a> or <a>verifiable presentation</a> is appropriate
-for the intended use case. This specification defines a <code>type</code>
+for the intended use case. This specification defines a `type`
 <a>property</a> for the expression of type information. This type information
 can be used during <a>validation</a> processes as described in Appendix
 <a href="#validation"></a>.
@@ -1308,8 +1308,8 @@ can be used during <a>validation</a> processes as described in Appendix
 
         <p>
 <a>Verifiable credentials</a> and <a>verifiable presentations</a> MUST have a
-<code>type</code> <a>property</a>. That is, any <a>credential</a> or
-<a>presentation</a> that does not have <code>type</code> <a>property</a>
+`type` <a>property</a>. That is, any <a>credential</a> or
+<a>presentation</a> that does not have `type` <a>property</a>
 <em>is not <a>verifiable</a></em>, so is neither a <a>verifiable credential</a>
 nor a <a>verifiable presentation</a>.
         </p>
@@ -1317,14 +1317,14 @@ nor a <a>verifiable presentation</a>.
         <dl>
           <dt><dfn class="export" data-lt="type|types">type</dfn></dt>
           <dd>
-The value of the <code>type</code> <a>property</a> MUST be, or map to (through
-interpretation of the <code>@context</code> property), one or more <a>URLs</a>.
+The value of the `type` <a>property</a> MUST be, or map to (through
+interpretation of the `@context` property), one or more <a>URLs</a>.
 If more than one <a>URL</a> is provided, the <a>URLs</a> MUST be interpreted
 as an unordered set. Syntactic conveniences SHOULD be used to ease developer
 usage. Such conveniences might include JSON-LD terms. It is RECOMMENDED that
-each <a>URL</a> in the <code>type</code> be one which, if dereferenced, results
+each <a>URL</a> in the `type` be one which, if dereferenced, results
 in a document containing machine-readable information about the
-<code>type</code>.
+`type`.
           </dd>
         </dl>
 
@@ -1368,9 +1368,9 @@ MUST have a <a>type</a> specified.
 <a>Verifiable credential</a>&nbsp;object
               </td>
               <td>
-<code>VerifiableCredential</code> and, optionally, a more specific
+`VerifiableCredential` and, optionally, a more specific
 <a>verifiable credential</a> <a>type</a>. For example,<br>
-<code>"type": ["VerifiableCredential", "ExampleDegreeCredential"]</code>
+`"type": ["VerifiableCredential", "ExampleDegreeCredential"]`
               </td>
             </tr>
 
@@ -1379,9 +1379,9 @@ MUST have a <a>type</a> specified.
 <a>Verifiable presentation</a>&nbsp;object
               </td>
               <td>
-<code>VerifiablePresentation</code> and, optionally, a more specific
+`VerifiablePresentation` and, optionally, a more specific
 <a>verifiable presentation</a> <a>type</a>. For example,<br>
-<code>"type": ["VerifiablePresentation", "ExamplePresentation"]</code>
+`"type": ["VerifiablePresentation", "ExamplePresentation"]`
               </td>
             </tr>
 
@@ -1391,7 +1391,7 @@ MUST have a <a>type</a> specified.
               </td>
               <td>
 A valid proof <a>type</a>. For example,<br>
-<code>"type": "DataIntegrityProof"</code>
+`"type": "DataIntegrityProof"`
               </td>
             </tr>
 
@@ -1401,7 +1401,7 @@ A valid proof <a>type</a>. For example,<br>
               </td>
               <td>
 A valid <a>credential</a> status <a>type</a>. For example,<br>
-<code>"type": "StatusList2021Entry"</code>
+`"type": "StatusList2021Entry"`
               </td>
             </tr>
 
@@ -1411,7 +1411,7 @@ A valid <a>credential</a> status <a>type</a>. For example,<br>
               </td>
               <td>
 A valid terms of use <a>type</a>. For example,<br>
-<code>"type": "ExampleTermsPolicy"</code>)
+`"type": "ExampleTermsPolicy"`)
               </td>
             </tr>
 
@@ -1421,7 +1421,7 @@ A valid terms of use <a>type</a>. For example,<br>
               </td>
               <td>
 A valid evidence <a>type</a>. For example,<br>
-<code>"type": "ExampleEvidence"</code>
+`"type": "ExampleEvidence"`
               </td>
             </tr>
 
@@ -1436,7 +1436,7 @@ Specifying the Type</a> and
 <a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 9: JSON-LD
 Grammar</a>. When using a JSON-LD context (see Section
 <a href="#extensibility"></a>), this specification aliases the
-<code>@type</code> keyword to <code>type</code> to make the JSON-LD documents
+`@type` keyword to `type` to make the JSON-LD documents
 more easily understood. While application developers and document authors do
 not need to understand the specifics of the JSON-LD type system, implementers
 of this specification who want to support interoperable extensibility, do.
@@ -1445,13 +1445,13 @@ of this specification who want to support interoperable extensibility, do.
         <p>
 All <a>credentials</a>, <a>presentations</a>, and encapsulated objects SHOULD
 specify, or be associated with, additional more narrow <a>types</a> (like
-<code>ExampleDegreeCredential</code>, for example) so software systems can
+`ExampleDegreeCredential`, for example) so software systems can
 more easily detect and process this additional information.
         </p>
 
         <p>
 When processing encapsulated objects defined in this specification, (for
-example, objects associated with the <code>credentialSubject</code> object or
+example, objects associated with the `credentialSubject` object or
 deeply nested therein), software systems SHOULD use the <a>type</a> information
 specified in encapsulating objects higher in the hierarchy. Specifically, an
 encapsulating object, such as a <a>credential</a>, SHOULD convey the associated
@@ -1460,27 +1460,27 @@ of an associated object based on the encapsulating object <a>type</a>.
         </p>
 
         <p>
-For example, a <a>credential</a> object with the <code>type</code> of
-<code>ExampleDegreeCredential</code>, signals to a <a>verifier</a> that the
-object associated with the <code>credentialSubject</code> property contains the
+For example, a <a>credential</a> object with the `type` of
+`ExampleDegreeCredential`, signals to a <a>verifier</a> that the
+object associated with the `credentialSubject` property contains the
 identifier for the:
         </p>
 
         <ul>
           <li>
-<a>Subject</a> in the <code>id</code> property.
+<a>Subject</a> in the `id` property.
           </li>
           <li>
-Type of degree in the <code>type</code> property.
+Type of degree in the `type` property.
           </li>
           <li>
-Title of the degree in the <code>name</code> property.
+Title of the degree in the `name` property.
           </li>
         </ul>
 
         <p>
 This enables implementers to rely on values associated with the
-<code>type</code> property for <a>verification</a> purposes. The expectation of
+`type` property for <a>verification</a> purposes. The expectation of
 <a>types</a> and their associated properties should be documented in at least a
 human-readable specification, and preferably, in an additional machine-readable
 representation.
@@ -1510,7 +1510,7 @@ are meant to serve these purposes.
           <dt><dfn class="export">name</dfn></dt>
           <dd>
 An OPTIONAL property that expresses the name of the <a>credential</a>. If
-present, the value of the <code>name</code> <a>property</a> MUST be a string or
+present, the value of the `name` <a>property</a> MUST be a string or
 a language value object as described in
 <a href="#language-and-base-direction"></a>. Ideally, the name of a
 <a>credential</a> is concise, human-readable, and could enable an individual to
@@ -1520,7 +1520,7 @@ that they might hold.
           <dt><dfn class="export">description</dfn></dt>
           <dd>
 An OPTIONAL property that conveys specific details about a <a>credential</a>. If
-present, the value of the <code>description</code> <a>property</a> MUST be a
+present, the value of the `description` <a>property</a> MUST be a
 string or a language value object as described in
 <a href="#language-and-base-direction"></a>. Ideally, the description of a
 <a>credential</a> is no more than a few sentences in length and conveys enough
@@ -1649,13 +1649,13 @@ respectively. See
 
         <p>
 A <a>verifiable credential</a> contains <a>claims</a> about one or more
-<a>subjects</a>. This specification defines a <code>credentialSubject</code>
+<a>subjects</a>. This specification defines a `credentialSubject`
 <a>property</a> for the expression of <a>claims</a> about one or more
 <a>subjects</a>.
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
+A <a>verifiable credential</a> MUST have a `credentialSubject`
 <a>property</a>.
         </p>
 
@@ -1663,11 +1663,11 @@ A <a>verifiable credential</a> MUST have a <code>credentialSubject</code>
           <dt><dfn class="export"
                    id="defn-credentialSubject">credentialSubject</dfn></dt>
           <dd>
-The value of the <code>credentialSubject</code> <a>property</a> is defined as a
+The value of the `credentialSubject` <a>property</a> is defined as a
 set of objects where each object MUST be the <a>subject</a> of one or more <a>claims</a>,
-which MUST be serialized inside the <code>credentialSubject</code> <a>property</a>.
+which MUST be serialized inside the `credentialSubject` <a>property</a>.
 Each object MAY
-also contain an <code>id</code> to identify the <a>subject</a>, as
+also contain an `id` to identify the <a>subject</a>, as
 described in Section <a href="#identifiers"></a>.
           </dd>
         </dl>
@@ -1698,7 +1698,7 @@ described in Section <a href="#identifiers"></a>.
 It is possible to express information related to multiple <a>subjects</a> in a
 <a>verifiable credential</a>. The example below specifies two <a>subjects</a>
 who are spouses. Note the use of array notation to associate multiple
-<a>subjects</a> with the <code>credentialSubject</code> property.
+<a>subjects</a> with the `credentialSubject` property.
         </p>
 
         <pre class="example nohighlight"
@@ -1735,14 +1735,14 @@ a <a>verifiable credential</a>.
         </p>
 
         <p>
-A <a>verifiable credential</a> MUST have an <code>issuer</code> <a>property</a>.
+A <a>verifiable credential</a> MUST have an `issuer` <a>property</a>.
         </p>
 
         <dl>
           <dt><var id="defn-issuer">issuer</var></dt>
           <dd>
-The value of the <code>issuer</code> <a>property</a> MUST be either a
-<a>URL</a>, or an object containing an <code>id</code> <a>property</a>
+The value of the `issuer` <a>property</a> MUST be either a
+<a>URL</a>, or an object containing an `id` <a>property</a>
 whose value is a <a>URL</a>; in either case, the issuer selects this
 <a>URL</a> to identify itself in a globally unambiguous
 way. It is RECOMMENDED that the <a>URL</a> be one which, if dereferenced,
@@ -1804,9 +1804,9 @@ associating an object with the issuer property:
         </pre>
 
         <p class="note">
-The value of the <code>issuer</code> <a>property</a> can also be a JWK (for
-example, <code>"https://example.com/keys/foo.jwk"</code>) or a <a>DID</a> (for
-example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
+The value of the `issuer` <a>property</a> can also be a JWK (for
+example, `"https://example.com/keys/foo.jwk"`) or a <a>DID</a> (for
+example, `"did:example:abfe13f712120431c276e12ecab"`).
         </p>
 
       </section>
@@ -1815,9 +1815,9 @@ example, <code>"did:example:abfe13f712120431c276e12ecab"</code>).
         <h3>Validity Period</h3>
 
         <p>
-This specification defines the <code>validFrom</code> <a>property</a> to help an
+This specification defines the `validFrom` <a>property</a> to help an
 issuer to express the date and time when a <a>credential</a> becomes valid and
-the <code>validUntil</code> <a>property</a> for expressing the date and time
+the `validUntil` <a>property</a> for expressing the date and time
 when a <a>credential</a> ceases to be valid.
         </p>
 
@@ -1832,24 +1832,24 @@ a particular point on the timeline.
         <dl>
           <dt><var id="defn-validFrom">validFrom</var></dt>
           <dd>
-If present, the value of the <code>validFrom</code> <a>property</a> MUST be an
+If present, the value of the `validFrom` <a>property</a> MUST be an
 [<a data-cite="XMLSCHEMA11-2#dateTime">XMLSCHEMA11-2</a>]
-<code>dateTimeStamp</code> string value representing the date and time the
+`dateTimeStamp` string value representing the date and time the
 <a>credential</a> becomes valid, which could be a date and time in the future or
 in the past. Note that this value represents the earliest point in time at which
-the information associated with the <code>credentialSubject</code>
+the information associated with the `credentialSubject`
 <a>property</a> becomes valid. If a `validUntil` value also exists, the
 `validFrom` value MUST express a datetime that is temporally the same or earlier
 than the datetime expressed by the `validUntil` value.
           </dd>
           <dt><var id="defn-validUntil">validUntil</var></dt>
           <dd>
-If present, the value of the <code>validUntil</code> <a>property</a> MUST be an
+If present, the value of the `validUntil` <a>property</a> MUST be an
 [<a data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>]
-<code>dateTimeStamp</code> string value representing the date and time the
+`dateTimeStamp` string value representing the date and time the
 <a>credential</a> ceases to be valid, which could be a date and time in the past
 or in the future. Note that this value represents the latest point in time at
-which the information associated with the <code>credentialSubject</code>
+which the information associated with the `credentialSubject`
 <a>property</a> is valid. If a `validFrom` value also exists, the `validUntil`
 value MUST express a datetime that is temporally the same or later than the
 datetime expressed by the `validFrom` value.
@@ -1880,10 +1880,10 @@ datetime expressed by the `validFrom` value.
         </pre>
 
         <p class="note">
-If <code>validFrom</code> and <code>validUntil</code> are not present, the
+If `validFrom` and `validUntil` are not present, the
 <a>verifiable credential</a> validity period is considered valid
 indefinitely. In such cases, the <a>verifiable credential</a> is assumed to be
-valid from the time the <code>verifiable credential</code> was created.
+valid from the time the `verifiable credential` was created.
         </p>
 
         <h4>Representing Time</h4>
@@ -1931,7 +1931,7 @@ values that are affected by Daylight Saving/Summer Time.
 This specification attempts to increase the number of universally recognized
 combinations of dates and times, and reduce the potential for
 misinterpretation of time values, by utilizing the
-<code>dateTimeStamp</code> construction first established by the [<a
+`dateTimeStamp` construction first established by the [<a
 data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification. In
 order to reduce misinterpretations between different time zones, all time values
 expressed in <a>conforming documents</a> SHOULD be specified in `dateTimeStamp`
@@ -1956,17 +1956,17 @@ an hour where the <a>verifiable credential</a> would not be valid.
         </p>
 
         <p>
-Implementers that desire to check <code>dateTimeStamp</code> values for validity
+Implementers that desire to check `dateTimeStamp` values for validity
 can use the regular expression provided below, which is reproduced from the [<a
 data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification for
 convenience. To avoid doubt, the regular expression in [[XMLSCHEMA11-2]] is the
 normative definition. Implementers are advised that not all
-<code>dateTimeStamp</code> values that pass the regular expression below are
+`dateTimeStamp` values that pass the regular expression below are
 valid moments in time. For example, the regular expression below allows for 31
 days in every month, which allows for leap years, and leap seconds, as well as
 days in places where they do not exist. That said, modern system libraries that
-generate <code>dateTimeStamp</code> values are often error-free in their
-generation of valid <code>dateTimeStamp</code> values. The regular
+generate `dateTimeStamp` values are often error-free in their
+generation of valid `dateTimeStamp` values. The regular
 expression shown below (minus the whitespace included here for readability),
 is often adequate when processing library-generated dates and times on
 modern systems.
@@ -2096,7 +2096,7 @@ the authorship of a <a>verifiable credential</a> or a <a>verifiable
 presentation</a>. Each proof is a separate <a>named graph</a>
 (referred to as a <dfn class="export">proof graph</dfn>) containing a single
 proof. The specific method used for an <a>embedded proof</a> MUST be identified
-using the <code>type</code> <a>property</a>.
+using the `type` <a>property</a>.
           </dd>
         </dl>
 
@@ -2110,17 +2110,17 @@ See <a href="#presentations-0"></a> for the case when the property is used for a
         <p>
 Methods of securing <a>verifiable credentials</a> or
 <a>verifiable presentations</a> that embed a proof in the data model MAY use
-the <code>proof</code> <a>property</a>. Methods of securing <a>verifiable
+the `proof` <a>property</a>. Methods of securing <a>verifiable
 credentials</a> or <a>verifiable presentations</a> that use an <a>enveloping
-proof</a> MAY use the <code>proof</code> <a>property</a>.
+proof</a> MAY use the `proof` <a>property</a>.
         </p>
 
         <p>
 Because the method used for a mathematical proof varies by representation
 language and the technology used, the set of name-value pairs that is expected
-as the value of the <code>proof</code> <a>property</a> will vary accordingly.
+as the value of the `proof` <a>property</a> will vary accordingly.
 For example, if digital signatures are used for the proof mechanism, the
-<code>proof</code> <a>property</a> is expected to have name-value pairs that
+`proof` <a>property</a> is expected to have name-value pairs that
 include a signature, a reference to the signing entity, and a representation of
 the signing date. The example below uses Ed25519 digital signatures.
         </p>
@@ -2160,7 +2160,7 @@ the signing date. The example below uses Ed25519 digital signatures.
         <h3>Status</h3>
 
         <p>
-This specification defines the following <code>credentialStatus</code>
+This specification defines the following `credentialStatus`
 <a>property</a> for the discovery of information about the current status of a
 <a>verifiable credential</a>, such as whether it is suspended or revoked.
         </p>
@@ -2168,16 +2168,16 @@ This specification defines the following <code>credentialStatus</code>
         <dl>
           <dt><var id="defn-credentialStatus">credentialStatus</var></dt>
           <dd>
-If present, the value of the <code>credentialStatus</code> <a>property</a> MUST
+If present, the value of the `credentialStatus` <a>property</a> MUST
 include the following:
 
             <ul>
               <li>
-<code>id</code> <a>property</a>, which MUST be a <a>URL</a> which MAY be
+`id` <a>property</a>, which MUST be a <a>URL</a> which MAY be
 dereferenced.
               </li>
               <li>
-<code>type</code> <a>property</a>, which expresses the <a>credential</a> status
+`type` <a>property</a>, which expresses the <a>credential</a> status
 type.
               </li>
             </ul>
@@ -2186,7 +2186,7 @@ type.
 
         <p>
 The precise content of the <a>credential</a> status information is determined by
-the specific <code>credentialStatus</code> <a>type</a> definition, and varies
+the specific `credentialStatus` <a>type</a> definition, and varies
 depending on factors such as whether it is simple to implement or if it is
 privacy-enhancing. It is expected that the value will provide enough information
 to determine the current status of the <a>credential</a> and that machine
@@ -2282,20 +2282,20 @@ The following properties are defined for a <a>verifiable presentation</a>:
         <dl>
           <dt><var>id</var></dt>
           <dd>
-The <code>id</code> <a>property</a> is optional. It MAY be used to provide a
+The `id` <a>property</a> is optional. It MAY be used to provide a
 unique identifier for the <a>verifiable presentation</a>. If present, the
 normative guidance in Section <a href="#identifiers"></a> MUST be followed.
           </dd>
           <dt><var>type</var></dt>
           <dd>
-The <code>type</code> <a>property</a> MUST be present. It is used to express the
+The `type` <a>property</a> MUST be present. It is used to express the
 type of <a>verifiable presentation</a>. One value of this property MUST be
-<code>VerifiablePresentation</code>, but additional types MAY be included. The
+`VerifiablePresentation`, but additional types MAY be included. The
 related normative guidance in Section <a href="#types"></a> MUST be followed.
           </dd>
           <dt><var id="defn-verifiableCredential">verifiableCredential</var></dt>
           <dd>
-The <code>verifiableCredential</code> <a>property</a> MAY be present. The value
+The `verifiableCredential` <a>property</a> MAY be present. The value
 MUST be one or more <a>verifiable credential</a> and/or
 <a href="#enveloped-verifiable-credentials">enveloped verifiable credential</a>
 objects (to be clear, the values MUST NOT be non-object values such as
@@ -2307,24 +2307,24 @@ See Section <a href="#verifiable-credential-graphs"></a> for further details.
           </dd>
           <dt><var id="defn-holder">holder</var></dt>
           <dd>
-The <a>verifiable presentation</a> MAY include a <code>holder</code>
+The <a>verifiable presentation</a> MAY include a `holder`
 <a>property</a>. If present, the value MUST be either a <a>URL</a> or an object
-containing an <code>id</code> <a>property</a>. It is RECOMMENDED that the
-<a>URL</a> in the <code>holder</code> or its <code>id</code> be one which, if
+containing an `id` <a>property</a>. It is RECOMMENDED that the
+<a>URL</a> in the `holder` or its `id` be one which, if
 dereferenced, results in a document containing machine-readable information
 about the <a>holder</a> that can be used to <a>verify</a> the information
 expressed in the <a>verifiable presentation</a>.
-If the <code>holder</code> <a>property</a> is absent, information about the
+If the `holder` <a>property</a> is absent, information about the
 <a>holder</a> is expected to either be obtained via the securing mechanism, or
 to not pertain to the <a>validation</a> of the <a>verifiable presentation</a>.
           </dd>
           <dt><var>proof</var></dt>
           <dd>
             <p>
-The <a>verifiable presentation</a> MAY include a <code>proof</code>
+The <a>verifiable presentation</a> MAY include a `proof`
 <a>property</a>, which refers to a separate <a>named graph</a> containing a
 single proof. The specific method used for the MUST be identified using the
-<code>type</code> <a>property</a>.
+`type` <a>property</a>.
 <!-- If present, the value SHOULD be used to express a securing mechanism, such
 as those listed in the Verifiable Credentials Specifications Directory
 [[?VC-SPECS]]. -->
@@ -2336,7 +2336,7 @@ the <a>verifiable presentation graph</a>;
               </li>
               <li>
 all <a>verifiable credential graphs</a> referred to by the
-<code>verifiableCredential</code> property of the presentation, as well as their
+`verifiableCredential` property of the presentation, as well as their
 corresponding <a>proof graphs</a>.
               </li>
             </ul>
@@ -2360,10 +2360,10 @@ The example below shows a <a>verifiable presentation</a>:
         </pre>
 
         <p>
-The contents of the <code>verifiableCredential</code> <a>property</a> shown
+The contents of the `verifiableCredential` <a>property</a> shown
 above are <a href="#verifiable-credential-graphs">verifiable credential
 graphs</a>, as described by this specification. The contents of the
-<code>proof</code> <a>property</a> are proof graphs, as described by the Data
+`proof` <a>property</a> are proof graphs, as described by the Data
 Integrity [[VC-DATA-INTEGRITY]] specification. An example of a <a>verifiable
 presentation</a> using the JWT proof mechanism is provided in the Securing
 Verifiable Credentials using JOSE and COSE [[?VC-JOSE-COSE]] specification.
@@ -2453,7 +2453,7 @@ A basic claim expressing that Pat is over the age of 21.
         <section>
           <h4>Presentations Including Holder Claims</h4>
           <p>
-A <a>holder</a> MAY use the <code>verifiableCredential</code> <a>property</a> in
+A <a>holder</a> MAY use the `verifiableCredential` <a>property</a> in
 a <a>verifiable presentation</a> to include <a>verifiable credentials</a> from
 any <a>issuer</a>, including themselves. When the <a>issuer</a> of a
 <a>verifiable credential</a> is the <a>holder</a>, the <a>claims</a> in that
@@ -2467,7 +2467,7 @@ The <a href="#dfn-subjects">subject(s)</a> of these self-asserted <a>claims</a>
 are not limited, so these <a>claims</a> can include statements about the
 <a>holder</a>, one of the other included <a>verifiable credentials</a>, or even
 the <a>verifiable presentation</a> in which the self-asserted <a>verifiable
-credential</a> is included. In each case, the <code>id</code> <a>property</a>
+credential</a> is included. In each case, the `id` <a>property</a>
 is used to identify the specific <a>subject</a>, in the object where the
 <a>claims</a> about it are made, just as it is done in
 <a>verifiable credentials</a> that are not self-asserted.
@@ -2475,7 +2475,7 @@ is used to identify the specific <a>subject</a>, in the object where the
           <p>
 A <a>verifiable presentation</a> that includes a self-asserted
 <a>verifiable credential</a> that is only secured using the same mechanism as
-the <a>verifiable presentation</a> MUST include a <code>holder</code>
+the <a>verifiable presentation</a> MUST include a `holder`
 <a>property</a>.
           </p>
           <p>
@@ -2485,8 +2485,8 @@ apply to self-asserted <a>verifiable credentials</a>.
           <p>
 When a self-asserted <a>verifiable credential</a> is secured using the same
 mechanism as the <a>verifiable presentation</a>, the value of the
-<code>issuer</code> <a>property</a> of the <a>verifiable credential</a>
-MUST be identical to the <code>holder</code> <a>property</a> of the
+`issuer` <a>property</a> of the <a>verifiable credential</a>
+MUST be identical to the `holder` <a>property</a> of the
 <a>verifiable presentation</a>.
           </p>
           <p>
@@ -2571,7 +2571,7 @@ format used in a zero-knowledge proof.
 
         <p>
 It is important to understand that data schemas serve a different purpose from
-the <code>@context</code> property, which neither enforces data structure or
+the `@context` property, which neither enforces data structure or
 data syntax, nor enables the definition of arbitrary encodings to alternate
 representation formats.
         </p>
@@ -2585,28 +2585,28 @@ the <a>verifiable credentials</a> that it issues:
           <dt><var id="defn-credentialSchema">credentialSchema</var></dt>
           <dd>
             <p>
-The value of the <code>credentialSchema</code> <a>property</a> MUST be one or
+The value of the `credentialSchema` <a>property</a> MUST be one or
 more data schemas that provide <a>verifiers</a> with enough information to
 determine whether the provided data conforms to the provided schema(s). Each
-<code>credentialSchema</code> MUST specify its <code>type</code> (for example,
-<code>JsonSchema</code>), and an <code>id</code> <a>property</a>
+`credentialSchema` MUST specify its `type` (for example,
+`JsonSchema`), and an `id` <a>property</a>
 that MUST be a <a>URL</a> identifying the schema file. The precise contents of
 each data schema is determined by the specific type definition.
             </p>
             <p>
 If multiple schemas are present, validity is determined according to the
-processing rules outlined by each associated <code>credentialSchema</code>
-<code>type</code> property.
+processing rules outlined by each associated `credentialSchema`
+`type` property.
             </p>
           </dd>
         </dl>
 
         <p class="note">
-The <code>credentialSchema</code> <a>property</a> provides an opportunity to
+The `credentialSchema` <a>property</a> provides an opportunity to
 annotate type definitions or lock them to specific versions of the vocabulary.
 Authors of <a>verifiable credentials</a> can include a static version of their
-vocabulary using <code>credentialSchema</code> that is locked to some content
-integrity protection mechanism. The <code>credentialSchema</code>
+vocabulary using `credentialSchema` that is locked to some content
+integrity protection mechanism. The `credentialSchema`
 <a>property</a> also makes it possible to perform syntactic checking on the
 <a>credential</a> and to use <a>verification</a> mechanisms such as JSON Schema
 [[?VC-JSON-SCHEMA]] validation.
@@ -2646,7 +2646,7 @@ integrity protection mechanism. The <code>credentialSchema</code>
 
         <p>
 In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code>, which points to a [[?VC-JSON-SCHEMA]] file that
+`credentialSchema`, which points to a [[?VC-JSON-SCHEMA]] file that
 can be used by a <a>verifier</a> to determine whether the
 <a>verifiable credential</a> is well-formed.
         </p>
@@ -2660,7 +2660,7 @@ Implementation Guidelines [[VC-IMP-GUIDE]] document.
         <p>
 Data schemas can also be used to specify mappings to other formats, such as
 those used to perform zero-knowledge proofs. For more information on using the
-<code>credentialSchema</code> <a>property</a> with zero-knowledge proofs,
+`credentialSchema` <a>property</a> with zero-knowledge proofs,
 see Section <a href="#zero-knowledge-proofs"></a>.
         </p>
 
@@ -2691,7 +2691,7 @@ see Section <a href="#zero-knowledge-proofs"></a>.
 
         <p>
 In the example above, the <a>issuer</a> is specifying a
-<code>credentialSchema</code> pointing to a means of transforming the input data
+`credentialSchema` pointing to a means of transforming the input data
 into a format which can then be used by a <a>verifier</a> to determine whether
 the proof provided with the <a>verifiable credential</a> is well-formed.
         </p>
@@ -3007,8 +3007,8 @@ Let us assume we start with the <a>verifiable credential</a> shown below.
 
         <p>
 This <a>verifiable credential</a> states that the <a>entity</a> associated with
-<code>did:example:abcdef1234567</code> has a <code>name</code> with a value of
-<code>Jane Doe</code>.
+`did:example:abcdef1234567` has a `name` with a value of
+`Jane Doe`.
         </p>
 
         <p>
@@ -3035,7 +3035,7 @@ as shown below.
 After this JSON-LD context is created, the developer publishes it somewhere so
 it is accessible to <a>verifiers</a> who will be processing the
 <a>verifiable credential</a>. Assuming the above JSON-LD context is published at
-<code>https://example.com/contexts/mycontext.jsonld</code>, we can extend this
+`https://example.com/contexts/mycontext.jsonld`, we can extend this
 example by including the context and adding the new <a>properties</a> and
 <a>credential</a> <a>type</a> to the <a>verifiable credential</a>.
         </p>
@@ -3108,16 +3108,16 @@ any term in the
 The only way to change the definition of existing terms is to introduce a new
 term that clears the active context within the scope of that new term. Authors
 that are interested in this feature should read about the
-<code>@protected</code> feature in the JSON-LD 1.1 specification.
+`@protected` feature in the JSON-LD 1.1 specification.
             </li>
           </ul>
 
           <p>
 A human-readable document describing the expected order of values for the
-<code>@context</code> <a>property</a> is expected to be published by any
+`@context` <a>property</a> is expected to be published by any
 implementer seeking interoperability. A machine-readable description
 (that is, a normal JSON-LD Context document) is expected to be published
-at the URL specified in the <code>@context</code> <a>property</a> by
+at the URL specified in the `@context` <a>property</a> by
 JSON-LD implementers seeking interoperability.
           </p>
         </section>
@@ -3143,7 +3143,7 @@ same at verification time as it is at issuing time, an implementer MAY include a
 property named <code id="defn-relatedResource">relatedResource</code> that
 stores an array of objects that describe additional integrity metadata about
 each resource referenced by the <a>verifiable credential</a>. If
-<code>relatedResource</code> is present, there MUST be an object in the array
+`relatedResource` is present, there MUST be an object in the array
 for each remote resource for each context used in the verifiable credential.
         </p>
         <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
@@ -3152,8 +3152,8 @@ debated in the VCWG. This requirement might be removed in future iterations of
 the specification.
         </p>
         <p>
-Each object in the <code>relatedResource</code> array MUST contain the
-following: the [[URL]] to the resource named <code>id</code> and the
+Each object in the `relatedResource` array MUST contain the
+following: the [[URL]] to the resource named `id` and the
 <code id="defn-digestSRI">digestSRI</code> information for the resource
 constructed using the method specified in
 <a href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource Integrity</a>.
@@ -3165,13 +3165,13 @@ Candidates for this mechanism include `digestSRI` and `digestMultibase`. There
 are arguments for and against unification that the WG is currently debating.
         </p>
         <p>
-There MUST NOT be more than one object in the <code>relatedResource</code> per
-<code>id</code>.
+There MUST NOT be more than one object in the `relatedResource` per
+`id`.
         </p>
         <p>
-An object in the <code>relatedResource</code> array MAY contain a property named
-<code>mediaType</code> that indicates the expected media type for the indicated
-<code>resource</code>. If a <code>mediaType</code> is included, its value
+An object in the `relatedResource` array MAY contain a property named
+`mediaType` that indicates the expected media type for the indicated
+`resource`. If a `mediaType` is included, its value
 SHOULD:
         </p>
         <ul>
@@ -3192,12 +3192,12 @@ Header.
         <p>
 Any object in the <a>verifiable credential</a> that contains an `id` [[URL]]
 property MAY be annotated with integrity information as specified in this
-section by inclusion of <code>digestSRI</code>
+section by inclusion of `digestSRI`
 in the object.
         </p>
         <p>
 Any objects for which selective disclosure is desired SHOULD NOT be included as
-an object in the <code>relatedResource</code> array.
+an object in the `relatedResource` array.
         </p>
         <p>
 Specification authors that write algorithms that fetch a resource based on the
@@ -3277,7 +3277,7 @@ implementation and inclusion in the specification.
 It is useful for systems to enable the manual or automatic refresh of an expired
 <a>verifiable credential</a>. For more information about validity periods for
 <a>verifiable credentials</a>, see Section <a href="#validity-periods"></a>.
-This specification defines a <code>refreshService</code> <a>property</a>, which
+This specification defines a `refreshService` <a>property</a>, which
 enables an <a>issuer</a> to include a link to a refresh service.
         </p>
         <p>
@@ -3295,12 +3295,12 @@ updates of the <a>credential</a>.
 The refresh service is only expected to be used when either the
 <a>credential</a> has expired or the <a>issuer</a> does not publish
 <a>credential</a> status information. <a>Issuers</a> are advised not to put the
-<code>refreshService</code> <a>property</a> in a <a>verifiable credential</a>
+`refreshService` <a>property</a> in a <a>verifiable credential</a>
 that does not contain public information or whose refresh service is not
 protected in some way.
         </p>
         <p class="note">
-Placing a <code>refreshService</code> <a>property</a> in a
+Placing a `refreshService` <a>property</a> in a
 <a>verifiable credential</a> so that it is available to <a>verifiers</a> can
 remove control and consent from the <a>holder</a> and allow the
 <a>verifiable credential</a> to be issued directly to the <a>verifier</a>,
@@ -3310,14 +3310,14 @@ thereby bypassing the <a>holder</a>.
         <dl>
           <dt><var id="defn-refreshService">refreshService</var></dt>
           <dd>
-The value of the <code>refreshService</code> <a>property</a> MUST be one or more
+The value of the `refreshService` <a>property</a> MUST be one or more
 refresh services that provides enough information to the recipient's software
 such that the recipient can refresh the <a>verifiable credential</a>. Each
-<code>refreshService</code> value MUST specify its <code>type</code> (for
-example, <code>ManualRefreshService2018</code>) and its <code>id</code>, which
+`refreshService` value MUST specify its `type` (for
+example, `ManualRefreshService2018`) and its `id`, which
 is the <a>URL</a> of the service. There is an expectation that machine readable
 information needs to be retrievable from the URL. The precise content of
-each refresh service is determined by the specific <code>refreshService</code>
+each refresh service is determined by the specific `refreshService`
 <a>type</a> definition.
           </dd>
         </dl>
@@ -3349,8 +3349,8 @@ each refresh service is determined by the specific <code>refreshService</code>
 
         <p>
 In the example above, the <a>issuer</a> specifies a manual
-<code>refreshService</code> that can be used by directing the <a>holder</a> or
-the <a>verifier</a> to <code>https://university.example/refresh/3732</code>.
+`refreshService` that can be used by directing the <a>holder</a> or
+the <a>verifier</a> to `https://university.example/refresh/3732`.
         </p>
 
       </section>
@@ -3373,12 +3373,12 @@ communicate the terms under which a <a>verifiable credential</a> or
 <a>verifiable presentation</a> was issued. The <a>issuer</a> places their terms
 of use inside the <a>verifiable credential</a>. The <a>holder</a> places their
 terms of use inside a <a>verifiable presentation</a>. This specification defines
-a <code>termsOfUse</code> <a>property</a> for expressing terms of use
+a `termsOfUse` <a>property</a> for expressing terms of use
 information.
         </p>
 
         <p>
-The value of the <code>termsOfUse</code> <a>property</a> might be used
+The value of the `termsOfUse` <a>property</a> might be used
 to tell the <a>verifier</a> any or all of the following, among other things:
         </p>
 
@@ -3404,15 +3404,15 @@ this particular <a>verifiable credential</a>
         <dl>
           <dt><var id="defn-termsOfUse">termsOfUse</var></dt>
           <dd>
-The value of the <code>termsOfUse</code> <a>property</a> MUST specify one or
+The value of the `termsOfUse` <a>property</a> MUST specify one or
 more terms of use policies under which the creator issued the <a>credential</a>
 or <a>presentation</a>. If the recipient (a <a>holder</a> or
 <a>verifier</a>) is not willing to adhere to the specified terms of use, then
 they do so on their own responsibility and might incur legal liability if they
-violate the stated terms of use. Each <code>termsOfUse</code> value MUST specify
-its <a>type</a>, for example, <code>IssuerPolicy</code>, and MAY specify its
-instance <code>id</code>. The precise contents of each term of use is determined
-by the specific <code>termsOfUse</code> <a>type</a> definition.
+violate the stated terms of use. Each `termsOfUse` value MUST specify
+its <a>type</a>, for example, `IssuerPolicy`, and MAY specify its
+instance `id`. The precise contents of each term of use is determined
+by the specific `termsOfUse` <a>type</a> definition.
           </dd>
         </dl>
 
@@ -3453,7 +3453,7 @@ by the specific <code>termsOfUse</code> <a>type</a> definition.
 In the example above, the <a>issuer</a> is asserting that as a European
 Blockchain Services Infrastructure (EBSI) accredited issuer, it complies with the EBSI
 policies as an accredited issuer and is registered in the EBSI register of trusted issuers.
-The <code>termsOfUse</code> <a>id</a> can be resolved by the <a>verifier</a> to confirm
+The `termsOfUse` <a>id</a> can be resolved by the <a>verifier</a> to confirm
 that the <a>issuer</a> has been issued an accreditation VC (in JWT format)
 by a trusted issuer higher in the EBSI trust chain [?EBSI].
         </p>
@@ -3511,9 +3511,9 @@ by a trusted issuer higher in the EBSI trust chain [?EBSI].
         </pre>
 
         <p>
-In the example above, the <a>holder</a> (the <code>assigner</code>), who is
+In the example above, the <a>holder</a> (the `assigner`), who is
 also the <a>subject</a>, expressed a term of use prohibiting the <a>verifier</a>
-(the <code>assignee</code>, <code>https://wineonline.example.org</code>) from
+(the `assignee`, `https://wineonline.example.org`) from
 using the information provided to correlate the <a>holder</a> or <a>subject</a>
 using a third-party service. If the <a>verifier</a> were to use a third-party
 service for correlation, they would violate the terms under which the
@@ -3561,21 +3561,21 @@ For example, an <a>issuer</a> could check physical documentation provided by the
         </p>
 
         <p>
-This specification defines the <code>evidence</code> <a>property</a> for
+This specification defines the `evidence` <a>property</a> for
 expressing evidence information.
         </p>
 
         <dl>
           <dt><dfn id="defn-evidence" class="export">evidence</dfn></dt>
           <dd>
-The value of the <code>evidence</code> <a>property</a> MUST be one or more
+The value of the `evidence` <a>property</a> MUST be one or more
 evidence schemes providing enough information for a <a>verifier</a> to determine
 whether the evidence gathered by the <a>issuer</a> meets its confidence
 requirements for relying on the <a>credential</a>. Each evidence scheme is
-identified by its <a>type</a>. The <code>id</code> <a>property</a> is optional,
+identified by its <a>type</a>. The `id` <a>property</a> is optional,
 but if present, SHOULD contain a URL that points to where more information about
 this instance of evidence can be found. The precise content of each evidence
-scheme is determined by the specific <code>evidence</code> <a>type</a>
+scheme is determined by the specific `evidence` <a>type</a>
 definition.
           </dd>
         </dl>
@@ -3617,7 +3617,7 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
         </pre>
 
         <p class="note">
-In this <code>evidence</code> example, the <a>issuer</a> is asserting that they
+In this `evidence` example, the <a>issuer</a> is asserting that they
 physically matched the <a>subject</a> of the <a>credential</a> to a physical
 copy of a driver's license with the stated license number. This driver's license
 was used in the issuance process to verify that "Example University" verified
@@ -3626,14 +3626,14 @@ verification).
         </p>
 
         <p class="note">
-The <code>evidence</code> <a>property</a> provides different and complementary
-information to the <code>proof</code> <a>property</a>. The <code>evidence</code>
+The `evidence` <a>property</a> provides different and complementary
+information to the `proof` <a>property</a>. The `evidence`
 <a>property</a> is used to express supporting information, such as documentary
 evidence, related to the integrity of the <a>verifiable credential</a>. In
-contrast, the <code>proof</code> <a>property</a> is used to express
+contrast, the `proof` <a>property</a> is used to express
 machine-verifiable mathematical proofs related to the authenticity of the
 <a>issuer</a> and integrity of the <a>verifiable credential</a>. For more
-information about the <code>proof</code> <a>property</a>, see Section
+information about the `proof` <a>property</a>, see Section
 <a href="#proofs-signatures"></a>.
         </p>
 
@@ -3704,7 +3704,7 @@ capabilities.
 When a <a>holder</a> has selectively disclosed a portion of a
 <a>verifiable credential</a>, it is important that the <a>verifier</a> check
 whether the information provided in the derived <a>verifiable credential</a> is
-compatible with the schema in the <code>credentialSchema</code>
+compatible with the schema in the `credentialSchema`
 <a>property</a> provided by the <a>issuer</a>. It is also possible for the
 <a>verifier</a> to provide a schema to the <a>holder</a> as part of a request
 for the <a>holder</a>'s data, and for the <a>verifier</a> to ensure that the
@@ -3713,7 +3713,7 @@ do not define such a request schema in this specification, but an example of one
 method for doing so is [[?PRES-EX]].
         </p>
         <p class="note">
-<code>credentialSchema</code> implementers are encouraged to consider the
+`credentialSchema` implementers are encouraged to consider the
 implications of selective disclosure credentials and provide guidance for
 processing depending on the construction. If a schema is not formed with
 selective disclosure in mind, then validation is likely to fail.
@@ -4075,16 +4075,16 @@ If present, the following properties are represented as a single value:
 
       <ul>
         <li>
-<code>id</code> <a>property</a>
+`id` <a>property</a>
         </li>
         <li>
-<code>issuer</code> <a>property</a>
+`issuer` <a>property</a>
         </li>
         <li>
-<code>validFrom</code> <a>property</a>
+`validFrom` <a>property</a>
         </li>
         <li>
-<code>validUntil</code> <a>property</a>.
+`validUntil` <a>property</a>.
         </li>
       </ul>
 
@@ -4109,7 +4109,7 @@ storage engines.
         <p>
 [[!JSON-LD]] is useful when extending the data model described in this
 specification. Instances of the data model are encoded in JSON-LD compacted
-form [[!JSON-LD]] and include the <code>@context</code> <a>property</a>. The
+form [[!JSON-LD]] and include the `@context` <a>property</a>. The
 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
 is described in detail in the [[!JSON-LD]] specification and its use is
 elaborated on in Section <a href="#contexts"></a> and
@@ -4120,10 +4120,10 @@ Section <a href="#extensibility"></a>.
 Multiple contexts MAY be used or combined to express any arbitrary information
 about <a>verifiable credentials</a> in idiomatic JSON. The
 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>,
-available at <code>https://www.w3.org/ns/credentials/v2</code>, is a static
+available at `https://www.w3.org/ns/credentials/v2`, is a static
 document that is never updated and can therefore be downloaded and cached client
 side. The associated vocabulary document for the Verifiable Credentials Data
-Model is available at <code>https://www.w3.org/2018/credentials</code>.
+Model is available at `https://www.w3.org/2018/credentials`.
         </p>
 
         <p>
@@ -4191,8 +4191,8 @@ noteworthy syntactic sugars provided by [[!JSON-LD]] are:
 
           <ul>
             <li>
-The <code>@id</code> and <code>@type</code> keywords are aliased to
-<code>id</code> and <code>type</code> respectively, enabling developers to use
+The `@id` and `@type` keywords are aliased to
+`id` and `type` respectively, enabling developers to use
 this specification as idiomatic JSON.
             </li>
             <li>
@@ -4201,7 +4201,7 @@ automatically typed to provide stronger type guarantees for use cases that
 require them.
             </li>
             <li>
-The <code>verifiableCredential</code> and <code>proof</code> <a>properties</a>
+The `verifiableCredential` and `proof` <a>properties</a>
 are defined as
 <a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph
 containers</a>. This means the creation of <a>named graphs</a> used to isolate
@@ -4212,9 +4212,9 @@ credential</a> to ensure the provenance of the information for each graph is
 preserved.
             </li>
             <li>
-The <code>@protected</code> properties feature of [[!JSON-LD]] 1.1 is used to
+The `@protected` properties feature of [[!JSON-LD]] 1.1 is used to
 ensure that terms defined by this specification cannot be overridden. This means
-that as long as the same <code>@context</code> declaration is made at the top of
+that as long as the same `@context` declaration is made at the top of
 a <a>verifiable credential</a> or <a>verifiable presentation</a>,
 interoperability is guaranteed for all terms understood by users of the data
 model whether or not they use a [[!JSON-LD]] processor.
@@ -4231,7 +4231,7 @@ cases requiring lists and arrays to follow the guidance on
           </p>
           <p>
 In general, a JSON array is ordered, while a JSON-LD array is not ordered unless
-that array uses the <code>@list</code> keyword.
+that array uses the `@list` keyword.
           </p>
           <p class="note">
 While it is possible to use this data model without any JSON-LD processing,
@@ -4389,7 +4389,7 @@ headers and when indicating content types.
           <p>
 Nonetheless, HTTP servers might ignore the accept header and return another
 content type, or return an error code such as
-<a data-cite="RFC7231#section-6.5.13"><code>415 Unsupported Media Type</code></a>.
+<a data-cite="RFC7231#section-6.5.13">`415 Unsupported Media Type`</a>.
           </p>
         </section>
 
@@ -4859,7 +4859,7 @@ policy.
 
         <p>
 Data associated with <a>verifiable credentials</a> stored in the
-<code>credential.credentialSubject</code> field is susceptible to privacy
+`credential.credentialSubject` field is susceptible to privacy
 violations when shared with <a>verifiers</a>. Personally identifying data, such
 as a government-issued identifier, shipping address, and full name, can be
 easily used to determine, track, and correlate an <a>entity</a>. Even
@@ -4872,7 +4872,7 @@ and de-anonymizing capabilities.
 Implementers are strongly advised to warn <a>holders</a> when they share data
 with these kinds of characteristics. <a>Issuers</a> are strongly advised to
 provide privacy-protecting <a>verifiable credentials</a> when possible. For
-example, issuing <code>ageOver</code> <a>verifiable credentials</a> instead of
+example, issuing `ageOver` <a>verifiable credentials</a> instead of
 date of birth <a>verifiable credentials</a> when a <a>verifier</a> wants to
 determine whether an <a>entity</a> is over the age of 18.
         </p>
@@ -4893,14 +4893,14 @@ the data in a <a>verifiable credential</a> while at rest.
 
         <p>
 <a>Subjects</a> of <a>verifiable credentials</a> are identified using the
-<code>credential.credentialSubject.id</code> field. The identifiers used to
+`credential.credentialSubject.id` field. The identifiers used to
 identify a <a>subject</a> create a greater risk of correlation when the
 identifiers are long-lived or used across more than one web domain.
         </p>
 
         <p>
 Similarly, disclosing the <a>credential</a> identifier
-(<code>credential.id</code>) leads to situations where multiple
+(`credential.id`) leads to situations where multiple
 <a>verifiers</a>, or an <a>issuer</a> and a <a>verifier</a>, can collude to
 correlate the <a>holder</a>. If <a>holders</a> want to reduce correlation, they
 should use <a>verifiable credential</a> schemes that allow hiding the
@@ -4934,11 +4934,11 @@ Not used at all, but instead replaced by short-lived, single-use bearer tokens.
 
         <p>
 The contents of <a>verifiable credentials</a> are secured using the
-<code>credential.proof</code> field. The <a>properties</a> in this field
+`credential.proof` field. The <a>properties</a> in this field
 create a greater risk of correlation when the same values are used across more
 than one session or domain and the value does not change. Examples include the
-<code>verificationMethod</code>, <code>created</code>,
-<code>proofPurpose</code>, and <code>jws</code> fields.
+`verificationMethod`, `created`,
+`proofPurpose`, and `jws` fields.
         </p>
 
         <p>
@@ -5067,7 +5067,7 @@ that meets the needs of <a>verifiers</a> without providing specific information
 about a <a>subject</a>.
         </p>
         <p>
-For example, this document uses the <code>ageOver</code> <a>property</a>
+For example, this document uses the `ageOver` <a>property</a>
 instead of a specific birthdate, which constitutes much stronger PII. If
 retailers in a specific market commonly require purchasers to be older than a
 certain age, an <a>issuer</a> trusted in that market might choose to offer a
@@ -5111,7 +5111,7 @@ containing every attribute that appears on a driver's license, as well as a set
 of <a>verifiable credentials</a> where every <a>verifiable credential</a>
 contains only a single attribute, such as a person's birthday. It could also
 issue more abstract <a>verifiable credentials</a> (for example, a
-<a>verifiable credential</a> containing only an <code>ageOver</code> attribute).
+<a>verifiable credential</a> containing only an `ageOver` attribute).
 One possible adaptation would be for <a>issuers</a> to provide secure HTTP
 endpoints for retrieving single-use <a>bearer credentials</a> that promote the
 pseudonymous usage of <a>verifiable credentials</a>. Implementers that find this
@@ -5161,8 +5161,8 @@ not a concern or would not result in large economic or reputational losses.
         <p>
 <a>Verifiable credentials</a> that are <a>bearer credentials</a> are made
 possible by not specifying the <a>subject</a> identifier, expressed using the
-<code>id</code> <a>property</a>, which is nested in the
-<code>credentialSubject</code> <a>property</a>. For example, the following
+`id` <a>property</a>, which is nested in the
+`credentialSubject` <a>property</a>. For example, the following
 <a>verifiable credential</a> is a <a>bearer credential</a>:
         </p>
 
@@ -5560,7 +5560,7 @@ automatic.
         </p>
 
         <p>
-For example, an <code>ageOver</code> <a>verifiable credential</a> is useful for
+For example, an `ageOver` <a>verifiable credential</a> is useful for
 gaining access to a bar. If an <a>issuer</a> issues such a
 <a>verifiable credential</a> with a very short validity period and an automatic
 renewal mechanism, then the <a>issuer</a> could possibly correlate the behavior
@@ -5994,7 +5994,7 @@ that the <a>holder</a> might have in the transaction.
 Similarly, an <a>issuer</a> could make use of a
 <a href="#terms-of-use">termsOfUse</a> property to stipulate how and when a
 credential might be used. A <a>holder</a> using credentials outside of the
-scopes defined in the <code>termsOfUse</code> would be considered unauthorized
+scopes defined in the `termsOfUse` would be considered unauthorized
 use.
         </p>
         <p class="note">
@@ -6115,8 +6115,8 @@ specific base direction.
         <pre class="example nohighlight" title="Design pattern for natural language strings">
 "<a>property</a>": {
   "@value": "<span class="highlight">The string value</span>",
-  "@language": "<code>LANGUAGE</code>"
-  "@direction": "<code>DIRECTION</code>"
+  "@language": "`LANGUAGE`"
+  "@direction": "`DIRECTION`"
 }
         </pre>
 
@@ -6138,7 +6138,7 @@ book in the English language without specifying a text direction.
         <pre class="example nohighlight" title="Expressing natural language text as English">
 "title": {
   "@value": "<span class="highlight">HTML and CSS: Designing and Creating Websites</span>",
-  "@language": "<code>en</code>"
+  "@language": "`en`"
 }
         </pre>
 
@@ -6150,8 +6150,8 @@ base direction of right-to-left.
         <pre class="example nohighlight" title="Arabic text with a base direction of right-to-left">
 "title": {
   "@value": "<span class="highlight" dir="rtl" lang="ar">HTML و CSS: تصميم و إنشاء مواقع الويب</span>",
-  "@language": "<code>ar</code>",
-  "@direction": "<code>rtl</code>"
+  "@language": "`ar`",
+  "@direction": "`rtl`"
 }
         </pre>
 
@@ -6170,12 +6170,12 @@ property:
 "title": [
   {
     "@value": "<span class="highlight">HTML and CSS: Designing and Creating Websites</span>",
-    "@language": "<code>en</code>"
+    "@language": "`en`"
   },
   {
     "@value": "<span class="highlight" dir="rtl" lang="ar">HTML و CSS: تصميم و إنشاء مواقع الويب</span>",
-    "@language": "<code>ar</code>",
-    "@direction": "<code>rtl</code>"
+    "@language": "`ar`",
+    "@direction": "`rtl`"
   }
 ]
         </pre>
@@ -6210,7 +6210,7 @@ annotations, the contents of the string might require additional structure or
 markup in order to be presented correctly. It is possible to use markup
 languages, such as HTML, to label spans of text in different languages or to
 supply string-internal markup needed for proper display of <a>bidirectional
-text</a>. It is also possible to use the <code>rdf:HTML</code> datatype to
+text</a>. It is also possible to use the `rdf:HTML` datatype to
 encode such values accurately in JSON-LD.
         </p>
 
@@ -6226,7 +6226,7 @@ processing language and base direction information.
           </li>
           <li>
 Increases the security attack surface when utilizing this data model because
-blindly processing HTML could result in executing a <code>script</code> tag that
+blindly processing HTML could result in executing a `script` tag that
 an attacker injected at some point during the data production process.
           </li>
         </ul>
@@ -6266,7 +6266,7 @@ like to receive. The type of a credential is expressed via the
 type is expected to contain specific <a>properties</a> that can be used to
 determine whether or not the <a>presentation</a> meets a set of processing rules
 that the <a>verifier</a> is executing. By requesting
-<a>verifiable credentials</a> of a particular <code>type</code>, the
+<a>verifiable credentials</a> of a particular `type`, the
 <a>verifier</a> is able to gather specific information from the <a>holder</a>,
 which originated  with the <a>issuer</a> of each <a>verifiable credential</a>,
 that will enable it to determine the next stage of an interaction with a
@@ -6279,13 +6279,13 @@ that will enable it to determine the next stage of an interaction with a
 
         <p>
 In the <a>verifiable credentials</a> presented by a <a>holder</a>, the value
-associated with the <code>id</code> <a>property</a> for each
-<code>credentialSubject</code> is expected to identify a <a>subject</a> to the
+associated with the `id` <a>property</a> for each
+`credentialSubject` is expected to identify a <a>subject</a> to the
 <a>verifier</a>. If the <a>holder</a> is also the <a>subject</a>, then
 the <a>verifier</a> could authenticate the <a>holder</a> if they have
 public key metadata related to the <a>holder</a>. The <a>verifier</a> could then
 authenticate the <a>holder</a> using a signature generated by the <a>holder</a>
-contained in the <a>verifiable presentation</a>. The <code>id</code>
+contained in the <a>verifiable presentation</a>. The `id`
 <a>property</a> is optional. <a>Verifiers</a> could use other <a>properties</a>
 in a <a>verifiable credential</a> to uniquely identify a <a>subject</a>.
         </p>
@@ -6302,7 +6302,7 @@ Guidelines [[VC-IMP-GUIDE]] document.
         <h3>Issuer</h3>
 
         <p>
-The value associated with the <code>issuer</code> <a>property</a> is expected
+The value associated with the `issuer` <a>property</a> is expected
 to identify an <a>issuer</a> that is known to and trusted by the
 <a>verifier</a>.
         </p>
@@ -6327,12 +6327,12 @@ issuers in addition to, or instead of, the mapping described above.
       <section class="informative">
         <h4>Holder</h4>
         <p>
-The value associated with the <code>holder</code> <a>property</a> is expected
+The value associated with the `holder` <a>property</a> is expected
 to be usable to identify the <a>holder</a> to the <a>verifier</a>.
         </p>
         <p>
 Often relevant metadata about the <a>holder</a>, as identified by the value of
-the <code>holder</code> <a>property</a>, is available to, or retrievable by, the
+the `holder` <a>property</a>, is available to, or retrievable by, the
 <a>verifier</a>. For example, a <a>holder</a> can publish information containing
 the verification material used to secure
 <a>verifiable presentations</a>. This metadata is expected to be used when
@@ -6391,7 +6391,7 @@ material used to verify the integrity of that <a>verifiable presentation</a>.
         <h3>Issuance Date</h3>
 
         <p>
-The <code>validFrom</code> is expected to be within an expected range for the
+The `validFrom` is expected to be within an expected range for the
 <a>verifier</a>. For example, a <a>verifier</a> can check that the start of
 the validity period for a <a>verifiable credential</a> is not in the future.
         </p>
@@ -6439,25 +6439,25 @@ The key is not suspended, revoked, or expired.
 The cryptographic signature is expected to verify.
           </li>
           <li>
-If the cryptographic suite expects a <code>proofPurpose</code> <a>property</a>,
+If the cryptographic suite expects a `proofPurpose` <a>property</a>,
 it is expected to exist and be a valid value, such as
-<code>assertionMethod</code>.
+`assertionMethod`.
           </li>
         </ul>
 
         <p class="note">
 The digital signature provides a number of protections, other than tamper
 resistance, which are not immediately obvious. For example, a Linked Data
-Signature <code>created</code> <a>property</a> establishes a date and time
+Signature `created` <a>property</a> establishes a date and time
 before which the <a>credential</a> should not be considered <a>verified</a>,
 distinct from the validity period of the credential. This property describes the
 validity of the proof, not of the credential.
 <br/><br/>
-The <code>verificationMethod</code> <a>property</a> specifies, for example, the
+The `verificationMethod` <a>property</a> specifies, for example, the
 public key that can be used to verify the digital signature. Dereferencing a
 public key URL reveals information about the controller of the key, which can
 be checked against the issuer of the <a>credential</a>. The
-<code>proofPurpose</code> <a>property</a> clearly expresses the purpose for
+`proofPurpose` <a>property</a> clearly expresses the purpose for
 the proof and ensures this information is protected by the signature. A proof is
 typically attached to a <a>verifiable presentation</a> for authentication
 purposes and to a <a>verifiable credential</a> as a method of assertion.
@@ -6468,13 +6468,13 @@ purposes and to a <a>verifiable credential</a> as a method of assertion.
         <h3>Validity Periods</h3>
 
         <p>
-The <a>verifier</a> expects that the <code>validFrom</code> and
-<code>validUntil</code> properties will be within a certain range. For example,
+The <a>verifier</a> expects that the `validFrom` and
+`validUntil` properties will be within a certain range. For example,
 a <a>verifier</a> can check that the end of the validity period of a
 <a>verifiable credential</a> is not in the past. Because some credentials can be
 useful for secondary purposes even if their original validity period has
-expired, validity period, as expressed using the <code>validFrom</code> and
-<code>validUntil</code> properties, is always considered a component of
+expired, validity period, as expressed using the `validFrom` and
+`validUntil` properties, is always considered a component of
 validation, which is performed <em>after</em> verification.
         </p>
       </section>
@@ -6483,9 +6483,9 @@ validation, which is performed <em>after</em> verification.
         <h3>Status</h3>
 
         <p>
-If the <code>credentialStatus</code> property is available, the status of a
+If the `credentialStatus` property is available, the status of a
 <a>verifiable credential</a> is expected to be evaluated by the <a>verifier</a>
-according to the <code>credentialStatus</code> <a>type</a> definition for the
+according to the `credentialStatus` <a>type</a> definition for the
 <a>verifiable credential</a> and the <a>verifier's</a> own status evaluation
 criteria. For example, a <a>verifier</a> can ensure the status of the
 <a>verifiable credential</a> is not "withdrawn for cause by the <a>issuer</a>".
@@ -6496,11 +6496,11 @@ criteria. For example, a <a>verifier</a> can ensure the status of the
         <h3>Schema</h3>
 
         <p>
-If the <code>credentialSchema</code> property is available, the schema of a
+If the `credentialSchema` property is available, the schema of a
 <a>verifiable credential</a> is expected to be evaluated by the <a>verifier</a>
-according to the <code>credentialSchema</code> <a>type</a> definition for the
+according to the `credentialSchema` <a>type</a> definition for the
 <a>verifiable credential</a> and the <a>verifier's</a> own schema evaluation
-criteria. For example, if the <code>credentialSchema</code>'s <code>type</code>
+criteria. For example, if the `credentialSchema`'s `type`
 value is [[?VC-JSON-SCHEMA]], then a <a>verifier</a> can ensure a credential's
 data is valid against the given JSON Schema.
         </p>
@@ -6513,9 +6513,9 @@ data is valid against the given JSON Schema.
 Fitness for purpose is about whether the custom <a>properties</a> in the
 <a>verifiable credential</a> are appropriate for the <a>verifier's</a> purpose.
 For example, if a <a>verifier</a> needs to determine whether a <a>subject</a> is
-older than 21 years of age, they might rely on a specific <code>birthdate</code>
+older than 21 years of age, they might rely on a specific `birthdate`
 <a>property</a>, or on more abstract <a>properties</a>, such as
-<code>ageOver</code>.
+`ageOver`.
         </p>
 
         <p>
@@ -6553,10 +6553,10 @@ to ensure the timely transition of this specification to a Recommendation.
         </p>
         <p>
 Implementations MUST treat the base context value, located at
-<code>https://www.w3.org/ns/credentials/v2</code>, as already retrieved;
+`https://www.w3.org/ns/credentials/v2`, as already retrieved;
 the following value is the SHA-384 digest of the resource
 computed and encoded according to the [[SRI]] definition of `digest`:
-<strong><code>vxRgTREj3/ZmDabpiTX+Au4UXY8GDhyCSFNw+UQtdtISDyO/znDUY+FTg8rNsGXJ</code></strong>.
+<strong>`vxRgTREj3/ZmDabpiTX+Au4UXY8GDhyCSFNw+UQtdtISDyO/znDUY+FTg8rNsGXJ`</strong>.
 It is strongly advised that all JSON-LD Context URLs used by an
 application utilize the same mechanism, or a functionally equivalent mechanism,
 to ensure end-to-end security. Implementations are expected to throw errors
@@ -6661,8 +6661,8 @@ https://www.w3.org/2018/credentials#<br>
               <td>
 https://www.w3.org/2018/credentials/index.jsonld<br><br>
 sha256: `z52TgKqh2nqTCuACI8lCvhRdjwxQjeVmuOMCDCEijq4=`<br><br>
-sha3-512: <code>m8Ss+jgZiyL2Ws/ICJcWjHFd9PccJWsXPvMatBOhrH<wbr>
-h0qCBrzfgO2zO1OQQbTL7zoPgLseIbcxJJpunD2bkoRA==</code>
+sha3-512: `m8Ss+jgZiyL2Ws/ICJcWjHFd9PccJWsXPvMatBOhrH<wbr>
+h0qCBrzfgO2zO1OQQbTL7zoPgLseIbcxJJpunD2bkoRA==`
               </td>
             </tr>
             <tr>
@@ -6673,8 +6673,8 @@ https://w3id.org/security#<br>
               <td>
 https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld<br><br>
 sha256: `LEaoTyf796eTaSlYWjfPe3Yb+poCW9TjWYTbFDmC0tc=`<br><br>
-sha3-512: <code>f4DhJ3xhT8nT+GZ8UUZi4QC+HT//wXE2fRTgUP4UNw<wbr>
-e4kvel2PFfd6jcofHBm9BjwEiGzVFGv4K+fFTKXRD2NA==</code>
+sha3-512: `f4DhJ3xhT8nT+GZ8UUZi4QC+HT//wXE2fRTgUP4UNw<wbr>
+e4kvel2PFfd6jcofHBm9BjwEiGzVFGv4K+fFTKXRD2NA==`
               </td>
             </tr>
           </tbody>
@@ -6804,7 +6804,7 @@ by the end of the Candidate Recommendation phase.
         </p>
 
         <section>
-            <h4>The <code>sriString</code> Datatype</h4>
+            <h4>The `sriString` Datatype</h4>
 
             <p>
 The string provides the integrity information for a resource using the method
@@ -6853,24 +6853,24 @@ The canonical mapping consists of the lexical-to-value mapping.
 The <a>verifiable credential</a> and <a>verifiable presentation</a> data models
 leverage a variety of underlying technologies including [[JSON-LD]] and
 [[?VC-JSON-SCHEMA]]. This section will provide a comparison of the
-<code>@context</code>, <code>type</code>, and <code>credentialSchema</code>
+`@context`, `type`, and `credentialSchema`
 properties, and cover some of the more specific use cases where it is possible
 to use these features of the data model.
         </p>
 
         <p>
-The <code>type</code> property is used to uniquely identify the type of the
+The `type` property is used to uniquely identify the type of the
 <a>verifiable credential</a> in which it appears, i.e., to indicate which set of
 claims the <a>verifiable credential</a> contains. This property, and the value
-<code>VerifiableCredential</code> within the set of its values, are mandatory.
+`VerifiableCredential` within the set of its values, are mandatory.
 Whilst it is good practice to include one additional value depicting the unique
 subtype of this <a>verifiable credential</a>, it is permitted to either omit or
 include additional type values in the array. Many verifiers will request a
 <a>verifiable credential</a> of a specific subtype, then omitting the subtype
 value could make it more difficult for verifiers to inform the holder which
 <a>verifiable credential</a> they require. When a <a>verifiable credential</a>
-has multiple subtypes, listing all of them in the <code>type</code>
-property is sensible. The usage of the <code>type</code> property in a
+has multiple subtypes, listing all of them in the `type`
+property is sensible. The usage of the `type` property in a
 [[JSON-LD]] representation of a <a>verifiable credential</a> enables to enforce
 the semantics of the <a>verifiable credential</a> because the machine is able to
 check the semantics. With [[JSON-LD]], the technology is not only describing the
@@ -6878,14 +6878,14 @@ categorization of the set of claims, the technology is also conveying the
 structure and semantics of the sub-graph of the properties in the graph. In
 [[JSON-LD]], this represents the type of the node in the graph which is why some
 [[JSON-LD]] representations of a <a>verifiable credential</a> will use the
-<code>type</code> property on many objects in the <a>verifiable credential</a>.
+`type` property on many objects in the <a>verifiable credential</a>.
         </p>
 
         <p>
-The primary purpose of the <code>@context</code> property, from a [[JSON-LD]]
+The primary purpose of the `@context` property, from a [[JSON-LD]]
 perspective, is to convey the meaning of the data and term definitions of the
 data in a <a>verifiable credential</a>, in a machine readable way. The
-<code>@context</code> property is used to map the globally unique URLs for
+`@context` property is used to map the globally unique URLs for
 properties in <a>verifiable credentials</a> and <a>verifiable presentations</a>
 into short-form alias names, making [[JSON-LD]] representations more
 human-friendly to read. From a [[JSON-LD]] perspective, this mapping also allows
@@ -6895,16 +6895,16 @@ data, by enhancing how the data in the <a>verifiable credential</a> or
 This is useful for telling machines how to relate the meaning of data to other
 data in an ecosystem where parties are unable to coordinate. This property, with
 the first value in the set being
-<code>https://www.w3.org/ns/credentials/v2</code>, is mandatory.
+`https://www.w3.org/ns/credentials/v2`, is mandatory.
         </p>
 
         <p>
-Since the <code>@context</code> property is used to map data to a graph
-data model, and the <code>type</code> property in [[JSON-LD]] is used to
-describe nodes within the graph, the <code>type</code> property becomes
+Since the `@context` property is used to map data to a graph
+data model, and the `type` property in [[JSON-LD]] is used to
+describe nodes within the graph, the `type` property becomes
 even more important when using the two properties in combination. For example,
-if the <code>type</code> property is not included within the resolved
-<code>@context</code> resource using [[JSON-LD]], it could lead to claims being
+if the `type` property is not included within the resolved
+`@context` resource using [[JSON-LD]], it could lead to claims being
 dropped and/or their integrity no longer being protected during production and
 consumption of the <a>verifiable credential</a>. Alternatively, it could lead to
 errors being raised during production or consumption of a <a>verifiable
@@ -6915,11 +6915,11 @@ credential</a> or <a>verifiable presentation</a>.
         </p>
 
         <p>
-The primary purpose of the <code>credentialSchema</code> property is to define
+The primary purpose of the `credentialSchema` property is to define
 the structure of the <a>verifiable credential</a>, and the datatypes for the
-values of each property that appears. A <code>credentialSchema</code> is useful
+values of each property that appears. A `credentialSchema` is useful
 for defining the contents and structure of a set of claims in a <a>verifiable
-credential</a>, whereas [[JSON-LD]] and a <code>@context</code> in a
+credential</a>, whereas [[JSON-LD]] and a `@context` in a
 <a>verifiable credential</a> are best used only for conveying the semantics and
 term definitions of the data, and can be used to define the structure of the
 <a>verifiable credential</a> as well.
@@ -6928,15 +6928,15 @@ term definitions of the data, and can be used to define the structure of the
         <p>
 While it is possible to use some [[JSON-LD]] features to allude to the contents
 of the <a>verifiable credential</a>, it's not generally suggested to use
-<code>@context</code> to constrain the data types of the data model. For
-example, <code>"@type": "@json"</code> is useful for leaving the semantics
+`@context` to constrain the data types of the data model. For
+example, `"@type": "@json"` is useful for leaving the semantics
 open-ended and not strictly defined. This can be dangerous if the implementer is
 looking to constrain the data type of the claims in the
 <a>credential</a>, and is expected not to be used.
           </p>
 
         <p>
-When the <code>credentialSchema</code> and <code>@context</code> properties
+When the `credentialSchema` and `@context` properties
 are used in combination, both producers and consumers can be more confident
 about the expected contents and data types of the <a>verifiable credential</a>
 and <a>verifiable presentation</a>.
@@ -6955,7 +6955,7 @@ for review, approval, and registration with IANA.
       <section id="vc-ld-media-type">
         <h2>application/vc+ld+json</h2>
         <p>
-This specification registers the <code>application/vc+ld+json</code> Media Type
+This specification registers the `application/vc+ld+json` Media Type
 specifically for identifying documents conforming to the Verifiable Credentials
 format.
         </p>
@@ -6975,9 +6975,9 @@ format.
           <tr>
             <td>Encoding considerations: </td>
             <td>
-Resources that use the "<code>application/vc+ld+json</code>" Media Type are
+Resources that use the "`application/vc+ld+json`" Media Type are
 required to conform to all of the requirements for the
-"<code>application/ld+json</code>" Media Type and are therefore subject to the
+"`application/ld+json`" Media Type and are therefore subject to the
 same encoding considerations specified in Section 11 of [[RFC7159]].
             </td>
           </tr>
@@ -7016,7 +7016,7 @@ document</a>.
       <section id="vp-ld-media-type">
         <h2>application/vp+ld+json</h2>
         <p>
-This specification registers the <code>application/vp+ld+json</code> Media
+This specification registers the `application/vp+ld+json` Media
 Type specifically for identifying documents conforming to the Verifiable
 Presentations format.
         </p>
@@ -7036,9 +7036,9 @@ Presentations format.
           <tr>
             <td>Encoding considerations: </td>
             <td>
-Resources that use the "<code>application/vp+ld+json</code>" Media Type are
+Resources that use the "`application/vp+ld+json`" Media Type are
 required to conform to all of the requirements for the
-"<code>application/ld+json</code>" Media Type and are therefore subject to the
+"`application/ld+json`" Media Type and are therefore subject to the
 same encoding considerations specified in Section 11 of [[RFC7159]].
             </td>
           </tr>
@@ -7258,8 +7258,8 @@ libraries.
 
         <li>
 Loosen the requirement to allow <a>URLs</a> that cannot be dereferenced in the
-<code>id</code> property of the <code>credentialStatus</code> and
-<code>refreshService</code> sections of the data model.
+`id` property of the `credentialStatus` and
+`refreshService` sections of the data model.
         </li>
 
         <li>
