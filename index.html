@@ -2089,7 +2089,7 @@ if so, how it is to be used.
         </p>
 
         <dl>
-          <dt><var>proof</var></dt>
+          <dt>|proof|</dt>
           <dd>
 One or more cryptographic proofs that can be used to detect tampering and verify
 the authorship of a <a>verifiable credential</a> or a <a>verifiable
@@ -2280,13 +2280,13 @@ The following properties are defined for a <a>verifiable presentation</a>:
         </p>
 
         <dl>
-          <dt><var>id</var></dt>
+          <dt>|id|</dt>
           <dd>
 The `id` <a>property</a> is optional. It MAY be used to provide a
 unique identifier for the <a>verifiable presentation</a>. If present, the
 normative guidance in Section <a href="#identifiers"></a> MUST be followed.
           </dd>
-          <dt><var>type</var></dt>
+          <dt>|type|</dt>
           <dd>
 The `type` <a>property</a> MUST be present. It is used to express the
 type of <a>verifiable presentation</a>. One value of this property MUST be
@@ -2318,7 +2318,7 @@ If the `holder` <a>property</a> is absent, information about the
 <a>holder</a> is expected to either be obtained via the securing mechanism, or
 to not pertain to the <a>validation</a> of the <a>verifiable presentation</a>.
           </dd>
-          <dt><var>proof</var></dt>
+          <dt>|proof|</dt>
           <dd>
             <p>
 The <a>verifiable presentation</a> MAY include a `proof`
@@ -4545,35 +4545,35 @@ versions of this specification.
 This section contains an algorithm that <a>conforming verifier
 implementations</a> MUST run when verifying a <a>verifiable credential</a> or a
 <a>verifiable presentation</a>. This algorithm takes a sequence of bytes
-([=byte sequence=] <var>inputBytes</var>) or a document
-([=map=] <var>inputDocument</var>) and a media type
-([=string=] <var>inputMediaType</var>) as inputs, and returns a [=map=]
+([=byte sequence=] |inputBytes|) or a document
+([=map=] |inputDocument|) and a media type
+([=string=] |inputMediaType|) as inputs, and returns a [=map=]
 that contains the following:
         </p>
 
         <ul>
           <li>
-a status ([=boolean=] <var>status</var>)
+a status ([=boolean=] |status|)
           </li>
           <li>
-a <a>conforming document</a> ([=map=] <var>document</var>)
+a <a>conforming document</a> ([=map=] |document|)
           </li>
           <li>
-a media type ([=string=] <var>mediaType</var>)
+a media type ([=string=] |mediaType|)
           </li>
           <li>
 a controller of the verification method associated with the securing mechanism
-([=string=] <var>controller</var>)
+([=string=] |controller|)
           </li>
           <li>
 a controller document that is associated with the verification method used
-to verify the securing mechanism ([=map=] <var>controllerDocument</var>)
+to verify the securing mechanism ([=map=] |controllerDocument|)
           </li>
           <li>
-zero or more warnings ([=list=] of <a>ProblemDetails</a> <var>warnings</var>)
+zero or more warnings ([=list=] of <a>ProblemDetails</a> |warnings|)
           </li>
           <li>
-zero or more errors ([=list=] of <a>ProblemDetails</a> <var>errors</var>)
+zero or more errors ([=list=] of <a>ProblemDetails</a> |errors|)
           </li>
         </ul>
 
@@ -4605,31 +4605,31 @@ inputs for finding matching proofs to be verified.
                 </div>
               </li>
               <li>
-Set <var>result</var> to the result of passing <var>inputBytes</var> and
-|inputMediaType| to the <var>verifyProof</var> function. If the call was
-successful, <var>result</var> will contain the <var>status</var>,
-<var>document</var>, <var>mediaType</var>, <var>controller</var>,
-<var>controllerDocument</var>, <var>warnings</var>, and <var>errors</var>
+Set |result| to the result of passing |inputBytes| and
+|inputMediaType| to the |verifyProof| function. If the call was
+successful, |result| will contain the |status|,
+|document|, |mediaType|, |controller|,
+|controllerDocument|, |warnings|, and |errors|
 properties.
               </li>
               <li>
-If <var>result</var>.<var>status</var> is set to `false`, add a
+If |result|.|status| is set to `false`, add a
 <a href="#CRYPTOGRAPHIC_SECURITY_ERROR">CRYPTOGRAPHIC_SECURITY_ERROR</a> to
-<var>result</var>.<var>errors</var>.
+|result|.|errors|.
               </li>
             </ol>
           </li>
           <li>
-If <var>result</var>.<var>status</var> is set to `true`, ensure that
-<var>result</var>.<var>document</var> is a <a>conforming document</a>. If it is
-not, set <var>result</var>.<var>status</var> to `false`, remove the
-<var>document</var> property from <var>result</var>, and add at least
+If |result|.|status| is set to `true`, ensure that
+|result|.|document| is a <a>conforming document</a>. If it is
+not, set |result|.|status| to `false`, remove the
+|document| property from |result|, and add at least
 one <a href="#MALFORMED_VALUE_ERROR">MALFORMED_VALUE_ERROR</a> to
-<var>result</var>.<var>errors</var>. Other warnings and errors MAY be included
+|result|.|errors|. Other warnings and errors MAY be included
 to aid any debugging process.
           </li>
           <li>
-Return <var>result</var>.
+Return |result|.
           </li>
         </ol>
 
