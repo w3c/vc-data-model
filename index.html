@@ -775,10 +775,10 @@ are organized into information [=graphs=], which are then organized into
 [=verifiable credential=] using an [=embedded proof=] based on [[?VC-DATA-INTEGRITY]].
 It is composed of at least two information [=graphs=].
 The first [=graph=] (the [=verifiable credential graph=], in this case the [=default graph=])
-expresses the [=verifiable credential=] itself through credential metadata and other [=claims=].
+expresses the [=verifiable credential=] itself, through [=credential=] metadata and other [=claims=].
 The second [=graph=], referred to by the <code>proof</code> property, is the [=proof graph=]
 of the [=verifiable credential=], and is a separate [=named graph=].
-The [=proof graph=] expresses the digital proof, which is, in this case, a digital
+The [=proof graph=] expresses the digital proof, which, in this case, is a digital
 signature.
         </p>
 
@@ -807,8 +807,8 @@ based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
         <p>
           <a href="#info-graph-vc-jwt"></a> below shows the same [=verifiable credential=]
           as <a href="#info-graph-vc"></a>, but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
-          The payload contains a single information graph, namely the the [=verifiable credential graph=]
-          containing credential metadata and other [=claims=].
+          The payload contains a single information graph, that being the [=verifiable credential graph=]
+          containing [=credential=] metadata and other [=claims=].
         </p>
         
         <figure id="info-graph-vc-jwt">
@@ -818,13 +818,13 @@ based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
                       The 'Header' label is connected, with an arrow, to a separate rectangle 
                       on the right hand side containing three text fields: 'kid: https://example.com/keys/#1234',
                       'alg: E384', and 'cty: vc+ld+json'. 
-                      The 'Payload' label of the left side is connected, with an arrow, to a separate rectangle, 
+                      The 'Payload' label on the left side is connected, with an arrow, to a separate rectangle, 
                       containing a single graph. 
                       The rectangle has a label: 'verifiable credential graph (serialized in JSON)'
                       The claims in the graph include 'Credential 123' as a subject 
-                      with 4 properties: 'type' of value 'ExampleAlumniCredential',
-                      'issuer' of 'Example University', 'validFrom' of '2010-01-01T19:23:24Z', and
-                      'credentialSubject' of 'Pat', who also has an 'alumniOf' property with value of
+                      with 4 properties: 'type' with value 'ExampleAlumniCredential',
+                      'issuer' with value 'Example University', 'validFrom' with value '2010-01-01T19:23:24Z', and
+                      'credentialSubject' with value 'Pat', who also has an 'alumniOf' property with value
                       'Example University'.
                       Finally, the 'Signature' label on the left side is connected, with an 
                       arrow, to a separate rectangle, containing a single text field:
@@ -897,21 +897,20 @@ which are then organized into [=verifiable presentations=].
 [=verifiable presentation=] using an <a>embedded proof</a>
 based on [[?VC-DATA-INTEGRITY]].
 It is composed of at least four information [=graphs=].
-The first of these [=graphs=], the [=verifiable presentation graph=]
+The first of these information [=graphs=], the [=verifiable presentation graph=]
 (which is the [=default graph=]), expresses the [=verifiable presentation=]
-itself through presentation metadata.
-The verifiable presentation refers, via the <code>verifiableCredential</code> property,
+itself through [=presentation=] metadata.
+The [=verifiable presentation=] refers, via the <code>verifiableCredential</code> property,
 to a [=verifiable credential=].
-This credential is a self-contained [=verifiable credential graph=] containing
-credential metadata and other [=claims=].
-This credential refers to a verifiable credential [=proof graph=] via a <code>proof</code> property,
-expressing the proof of the credential (usually a digital signature).
-This [=verifiable credential graph=], linked to the [=proof graph=], constitute
-the second and third information graphs, respectively, and are both separate [=named graphs=].
-The presentation also refers, via the <code>proof</code> property, to
-the fourth information [=named graph=], namely the presentation's [=proof graph=].
-This presentation proof graph represents the digital signature of the verifiable presentation graph,
-the credential graph, and the proof graph linked from the credential graph.
+This credential is a self-contained [=verifiable credential graph=] containing [=credential=] metadata and other [=claims=].
+This [=credential=] refers to a [=verifiable credential=] [=proof graph=] via a <code>proof</code> property,
+expressing the proof (usually a digital signature) of the [=credential=].
+This [=verifiable credential graph=], and its linked [=proof graph=], constitute
+the second and third information [=graphs=], respectively, and are both separate [=named graphs=].
+The [=presentation=] also refers, via the <code>proof</code> property, to
+the [=presentation=]'s [=proof graph=], which is the fourth information [=named graph=].
+This [=presentation=] [=proof graph=] represents the digital signature of the [=verifiable presentation graph=],
+the [=credential graph=], and the [=proof graph=] linked from the [=credential graph=].
         </p>
 
         <figure id="info-graph-vp">
@@ -932,7 +931,7 @@ d28348djsj3239, a 'nonce' of 'd28348djsj3239', and 'proofValue' of
 'p2KaZ...8Fj3K='. This graph is annotated with the parenthetical remark '(a
 named graph)'">
           <figcaption style="text-align: center;">
-Information graphs associated with a basic verifiable presentation using an [=embedded proof=]
+Information [=graphs=] associated with a basic [=verifiable presentation=] that is using an [=embedded proof=]
 based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
           </figcaption>
         </figure>
@@ -941,10 +940,10 @@ based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
           <a href="#info-graph-vp-jwt"></a> below shows the same [=verifiable presentation=]
           as <a href="#info-graph-vp"></a>, but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
           The payload contains only two information graphs: the [=verifiable presentation graph=]
-          expressing the [=verifiable presentation=] itself through presentation metadata,
+          expressing the [=verifiable presentation=] itself through presentation metadata;
           and the corresponding [=verifiable credential graph=], referred to by
           the <code>verifiableCredential</code> property.
-          The verifiable credential graph contains credential metadata and other claims.
+          The [=verifiable credential graph=] contains [=credential=] metadata and other [=claims=].
         </p>
         
         <figure id="info-graph-vp-jwt">
@@ -970,7 +969,7 @@ based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
                       arrow, to a separate rectangle, containing a single text field:
                       'XaOOh4ljklxH7L99RTVSfOl...'.">
           <figcaption style="text-align: center;">
-            Information graphs associated with a basic verifiable presentation, using an [=enveloping proof=]
+            Information graphs associated with a basic [=verifiable presentation=] that is using an [=enveloping proof=]
             based on [[[VC-JOSE-COSE]]] [[?VC-JOSE-COSE]].
           </figcaption>
         </figure>
@@ -981,9 +980,9 @@ It is possible to have a [=presentation=], such as a business persona, which
 draws on multiple [=credentials=] about different [=subjects=] that are
 often, but not required to be, related.
 This is achieved by using the <code>verifiableCredential</code> property to
-refer to multiple verifiable credentials. In the [=embedded proof=] case this means adding several verifiable credential
-graphs, each with its own, separate proof graph; the number of information graphs becomes then six, eight, etc.
-In the [=enveloping proof=] case the additional verifiable credential graphs are added to the same payload.
+refer to multiple [=verifiable credentials=]. When using an [=embedded proof=], this means adding one or more [=verifiable credential graphs=],
+each with its own, separate [=proof graph=]; the number of information [=graphs=] thus becomes six, eight, etc.
+When using an [=enveloping proof=], the additional [=verifiable credential graphs=] are added to the same payload.
         </p>
 
       </section>
