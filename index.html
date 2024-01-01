@@ -892,7 +892,7 @@ Basic components of a verifiable presentation.
 [=verifiable credentials=] are organized into information [=graphs=],
 which are then organized into [=verifiable presentations=].
         </p>
-        <p>
+        <p id="info-graph-vp-explanation">
 <a href="#info-graph-vp"></a> below shows a more complete depiction of a
 [=verifiable presentation=] using an <a>embedded proof</a>
 based on [[?VC-DATA-INTEGRITY]].
@@ -924,11 +924,11 @@ graph is annotated with the parenthetical remark '(the default graph)'. This
 graph is connected, through 'verifiableCredential', to the part of the figure
 which is identical to Figure 6, except that the verifiable credential graph is
 annotated to be a named graph instead of a default graph.
-The verifiable presentation proof graph, has and object with 'Signature 8910'
+The verifiable presentation proof graph has and object with 'Signature 8910'
 with 5 properties: 'type' of DataIntegrityProof, 'verificationMethod' of Example
-Presenter Public Key 11, 'created' of 2018-01-15T12:43:56Z, 'challenge' of
-d28348djsj3239, a 'nonce' of 'd28348djsj3239', and 'proofValue' of
-'p2KaZ...8Fj3K='. This graph is annotated with the parenthetical remark '(a
+Presenter Public Key 11, 'created' of 2018-01-15T12:43:56Z, 
+a 'nonce' of 'd28348djsj3239', and 'proofValue' of
+'zp2KaZ...8Fj3K='. This graph is annotated with the parenthetical remark '(a
 named graph)'">
           <figcaption style="text-align: center;">
 Information [=graphs=] associated with a basic [=verifiable presentation=] that is using an [=embedded proof=]
@@ -976,13 +976,13 @@ based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
 
 
         <p class="note">
-It is possible to have a [=presentation=], such as a business persona, which
+It is possible to have a [=presentation=], such as a collection of university credentials, which
 draws on multiple [=credentials=] about different [=subjects=] that are
 often, but not required to be, related.
 This is achieved by using the <code>verifiableCredential</code> property to
-refer to multiple [=verifiable credentials=]. When using an [=embedded proof=], this means adding one or more [=verifiable credential graphs=],
-each with its own, separate [=proof graph=]; the number of information [=graphs=] thus becomes six, eight, etc.
-When using an [=enveloping proof=], the additional [=verifiable credential graphs=] are added to the same payload.
+refer to multiple [=verifiable credentials=]. 
+See <a href="#info-graph-vp-mult-creds"></a>, a variant of <a href="#info-graph-vp"></a> above,
+for more details.
         </p>
 
       </section>
@@ -7163,6 +7163,45 @@ expected to be a valid
 document</a>.
         </p>
       </section>
+
+    </section>
+
+    <section class="appendix informative">
+      <h2>Additional Diagrams</h2>
+
+      <p id="info-graph-vp-mult-creds-expl">
+        <a href="#info-graph-vp-mult-creds"></a> below is a variant of <a href="#info-graph-vp"></a>:
+        a [=verifiable presentation=] referring to two [=verifiable credentials=], and using <a>embedded proofs</a> based on [[?VC-DATA-INTEGRITY]]. 
+        Each [=verifiable credential graph=] is connected to 
+        its own separate [=proof graph=]; the <code>verifiableCredential</code> property is used
+        to connect the [=verifiable presentation=] to the [=verifiable credential graphs=].
+        The [=presentation=] [=proof graph=] represents the digital signature of the [=verifiable presentation graph=], both [=verifiable credential graphs=], and the [=proof graphs=] linked from the [=verifiable credential graphs=]. The complete [=verifiable presentation=]
+        consists, in this case, of six information [=graphs=].
+      </p>
+
+      <figure id="info-graph-vp-mult-creds">
+        <img style="margin: auto; display: block; width: 100%;" src="diagrams/vp-graph-mult-creds.svg" alt="Diagram with a
+      'verifiable presentation graph' on top connected via a 'proof' to
+      a 'verifiable presentation proof graph on the bottom.  The verifiable
+      presentation graph has and object 'Presentation ABC' with 3 properties: 'type'
+      of value VerifiablePresentation, 'termsOfUse' of value 'Do Not Archive'. The
+      graph is annotated with the parenthetical remark '(the default graph)'. This
+      graph is connected, through 'verifiableCredential', to the part of the figure
+      that consists two variants of Figure 6 (one is identical, the other with
+      minor changes on the labels referring to validity dates, name of the person,
+      and the values for the nonce and the signature values), 
+      except that the verifiable credential graphs are
+      annotated to be nameds graphs instead of a default graph.
+      The verifiable presentation proof graph has and object with 'Signature 8920'
+      with 5 properties: 'type' of DataIntegrityProof, 'verificationMethod' of Example
+      Presenter Public Key 11, 'created' of 2024-01-02T12:43:56Z, a 'nonce' of 'hasdkyruod87j', 
+      and 'proofValue' of 'zpewJHoan87='. This graph is annotated with the parenthetical remark '(a
+      named graph)'">
+        <figcaption style="text-align: center;">
+          A variant of <a href="#info-graph-vp"></a>: information [=graphs=] associated with a [=verifiable presentation=] referring to two 
+          verifiable credentials, using an [=embedded proof=] based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
+        </figcaption>
+      </figure>
 
     </section>
 
