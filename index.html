@@ -1746,9 +1746,9 @@ The value of the `issuer` [=property=] MUST be either a
 whose value is a [=URL=]; in either case, the issuer selects this
 [=URL=] to identify itself in a globally unambiguous
 way. It is RECOMMENDED that the [=URL=] be one which, if dereferenced,
-results in a controller document [[?VC-CONTROLLER-DOCUMENT]] about the
-[=issuer=] that can be used to [=verify=] the information expressed in
-the [=credential=].
+results in a controller document, as defined in [[VC-DATA-INTEGRITY]] or
+[[VC-JOSE-COSE]], about the [=issuer=] that can be used to [=verify=] the
+information expressed in the [=credential=].
           </dd>
         </dl>
 
@@ -4000,11 +4000,13 @@ A media type as defined in [[RFC6838]].
           </dd>
           <dt>[=string=] |controller|</dt>
           <dd>
-A verification method controller as defined in [[VC-CONTROLLER-DOCUMENT]].
+A verification method controller as defined in [[VC-DATA-INTEGRITY]] or
+[[VC-JOSE-COSE]].
           </dd>
           <dt>[=map=] |controllerDocument|</dt>
           <dd>
-A controller document as defined in [[VC-CONTROLLER-DOCUMENT]].
+A controller document as defined in [[VC-DATA-INTEGRITY]] or
+[[VC-JOSE-COSE]].
           </dd>
         </dl>
 
@@ -4023,7 +4025,7 @@ of the [[[?VC-SPECS]]] [[?VC-SPECS]].
         </p>
 
         <p class="note"
-            title="Choice of securing mechanism is use-case dependent">
+           title="Choice of securing mechanism is use-case dependent">
 There are multiple acceptable securing mechanisms, and this specification does
 not mandate any particular securing mechanism for use with
 [=verifiable credentials=] or [=verifiable presentations=].
@@ -4034,6 +4036,17 @@ securing mechanism options, which are:
 can be found in the
 <a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section
 of the [[[?VC-SPECS]]] [[?VC-SPECS]].
+        </p>
+
+        <p class="issue atrisk"
+           title="Controller document reference might change">
+The Working Group is currently attempting to align the definitions of a
+controller document between [[[?DID-CORE]]], [[[VC-DATA-INTEGRITY]]], and
+[[[VC-JOSE-COSE]]]. The goal is to have one specification that each of the
+previously stated specifications, and this specification, can reference for
+the normative statements related to controller documents. The normative
+references to controller documents are expected to change during the
+Candidate Recommendation phase.
         </p>
 
       </section>
