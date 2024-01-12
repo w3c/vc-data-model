@@ -1226,7 +1226,7 @@ Subsequent items in the array MUST be composed of any combination of
           </dd>
         </dl>
         <p class="note">
-This specification requires for a `@context` [=property=]
+This specification requires a `@context` [=property=]
 to be present; this property is defined by [[JSON-LD11]].
         </p>
         <pre class="example nohighlight" title="Usage of the @context property">
@@ -1464,16 +1464,6 @@ MUST have a [=type=] specified.
 `VerifiablePresentation` and, optionally, a more specific
 [=verifiable presentation=] [=type=]. For example,<br>
 `"type": ["VerifiablePresentation", "ExamplePresentation"]`
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-<a href="#proofs-signatures">Proof</a>&nbsp;object
-              </td>
-              <td>
-A valid proof [=type=]. For example,<br>
-`"type": "DataIntegrityProof"`
               </td>
             </tr>
 
@@ -2475,7 +2465,7 @@ self-asserted [=verifiable credential=] that is secured using the same
 mechanism as the [=verifiable presentation=].
           </p>
 
-          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential">
+          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded Data Integrity proof, with a self-asserted verifiable credential">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2502,7 +2492,7 @@ self-asserted [=verifiable credential=] that holds [=claims=] about the
 [=verifiable presentation=].
           </p>
 
-          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded proof, with a self-asserted verifiable credential about the verifiable presentation">
+          <pre class="example nohighlight" title="A verifiable presentation, secured with an embedded Data Integrity proof, with a self-asserted verifiable credential about the verifiable presentation">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2664,8 +2654,7 @@ see Section <a href="#zero-knowledge-proofs"></a>.
   <span class="highlight">"credentialSchema": {
     "id": "https://example.org/examples/degree",
     "type": "ZkpExampleSchema2018"
-  }</span>,
-  "proof": { <span class="comment">...</span> }
+  }</span>
 }
         </pre>
 
@@ -2845,7 +2834,7 @@ The [=verifier=] trusts the [=issuer=] to issue the [=credential=] that
 it received. To establish this trust, a [=credential=] is expected to either:
             <ul>
               <li>
-Include a <a href="#proofs-signatures">proof</a> establishing that the
+Secure the [=credential=] with a <a href="#securing-mechanisms">securing mechanism</a> establishing that the
 [=issuer=] generated the [=credential=] (that is, it is a
 [=verifiable credential=]), or
               </li>
@@ -3597,15 +3586,15 @@ verification).
         </p>
 
         <p class="note">
-The `evidence` [=property=] provides different and complementary
-information to the `proof` [=property=]. The `evidence`
+The `evidence` [=property=] provides information that is different from and
+information to the securing mechanism utilized. The `evidence`
 [=property=] is used to express supporting information, such as documentary
 evidence, related to the integrity of the [=verifiable credential=]. In
-contrast, the `proof` [=property=] is used to express
+contrast, the securing mechanism is used to express
 machine-verifiable mathematical proofs related to the authenticity of the
 [=issuer=] and integrity of the [=verifiable credential=]. For more
-information about the `proof` [=property=], see Section
-<a href="#proofs-signatures"></a>.
+information about securing mechanisms, see Section
+<a href="#securing-mechanisms"></a>.
         </p>
 
       </section>
@@ -4032,9 +4021,9 @@ algorithms MAY be general in nature and MAY be used to secure data other than
 Securing mechanism specifications MUST provide a verification mechanism that
 returns only the information in the [=conforming document=] that has been
 secured, without any securing mechanism information included, such as `proof` or
-JOSE/COSE metadata. Specifications MAY provide additional mechanisms to convey
+JOSE/COSE header parameters and signatures. Specifications MAY provide additional mechanisms to convey
 other information that might be helpful (for example, during validation or for
-debugging purposes), such as securing mechanism metadata. A securing mechanism's
+debugging purposes), such as securing mechanism data. A securing mechanism's
 verification algorithm MUST provide an interface that receives a sequence of
 bytes ([=byte sequence=] |inputBytes|) or a document ([=map=] |inputDocument|)
 and a media type ([=string=] |inputMediaType|) as inputs and returns a
@@ -4054,16 +4043,6 @@ A document that only contains information that was successfully secured.
           <dt>[=string=] |mediaType|</dt>
           <dd>
 A media type as defined in [[RFC6838]].
-          </dd>
-          <dt>[=string=] |controller|</dt>
-          <dd>
-A verification method controller as defined in [[VC-DATA-INTEGRITY]] or
-[[VC-JOSE-COSE]].
-          </dd>
-          <dt>[=map=] |controllerDocument|</dt>
-          <dd>
-A controller document as defined in [[VC-DATA-INTEGRITY]] or
-[[VC-JOSE-COSE]].
           </dd>
         </dl>
 
@@ -4295,10 +4274,10 @@ automatically typed to provide stronger type guarantees for use cases that
 require them.
             </li>
             <li>
-The `verifiableCredential` and `proof` [=properties=]
-are defined as
+The `verifiableCredential` [=property=]
+is defined as a
 <a href="https://www.w3.org/TR/json-ld11/#graph-containers">JSON-LD 1.1 graph
-containers</a>. This means the creation of [=named graphs=] used to isolate
+container</a>. This requires the creation of [=named graphs=], used to isolate
 sets of data asserted by different entities. This ensures, for example, proper
 cryptographic separation between the data graph provided by each [=issuer=]
 and the one provided by the [=holder=] presenting the <a>verifiable
@@ -5003,12 +4982,10 @@ Not used at all, but instead replaced by short-lived, single-use bearer tokens.
         <h3>Signature-Based Correlation</h3>
 
         <p>
-The contents of [=verifiable credentials=] are secured using the
-`credential.proof` field. The [=properties=] in this field
+The contents of a [=credential=] are secured using a securing mechanism.
+Values used to represent the securing mechanism
 create a greater risk of correlation when the same values are used across more
-than one session or domain and the value does not change. Examples include the
-`verificationMethod`, `created`,
-`proofPurpose`, and `jws` fields.
+than one session or domain and the value does not change.
         </p>
 
         <p>
@@ -5885,7 +5862,7 @@ attacks against their applications.
         <h3>Unsigned Claims</h3>
 
         <p>
-This specification allows [=credentials=] to be produced that do not contain
+This specification allows [=credentials=] to be produced that are not secured by
 signatures or proofs of any kind. These types of [=credentials=] are often
 useful for intermediate storage, or self-asserted information, which is
 analogous to filling out a form on a web page. Implementers should be aware that
@@ -6509,9 +6486,7 @@ The key is not suspended, revoked, or expired.
 The cryptographic signature is expected to verify.
           </li>
           <li>
-If the cryptographic suite expects a `proofPurpose` [=property=],
-it is expected to exist and be a valid value, such as
-`assertionMethod`.
+Any additional requirements defined by the securing mechanism are satisfied.
           </li>
         </ul>
 
@@ -6522,6 +6497,7 @@ Signature `created` [=property=] establishes a date and time
 before which the [=credential=] should not be considered [=verified=],
 distinct from the validity period of the credential. This property describes the
 validity of the proof, not of the credential.
+The JWT <code>iat</code> claim likewise provides the time that the signature was made.
 <br/><br/>
 The `verificationMethod` [=property=] specifies, for example, the
 public key that can be used to verify the digital signature. Dereferencing a
