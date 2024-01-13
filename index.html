@@ -776,7 +776,7 @@ are organized into information [=graphs=], which are then organized into
 It is composed of at least two information [=graphs=].
 The first of these information [=graphs=], the [=verifiable credential graph=] (which is the [=default graph=]),
 expresses the [=verifiable credential=] itself, through [=credential=] metadata and other [=claims=].
-The second information [=graph=], referred to by the <code>proof</code> property, is the <dfn>proof graph</dfn>
+The second information [=graph=], referred to by the `proof` property, is the <dfn>proof graph</dfn>
 of the [=verifiable credential=], and is a separate [=named graph=].
 The [=proof graph=] expresses the digital proof, which, in this case, is a digital
 signature.
@@ -800,38 +800,41 @@ parenthetical remark '(the default graph)', the verifiable credential proof
 graph is annotated with the parenthetical remark '(a named graph)'.">
           <figcaption style="text-align: center;">
 Information graphs associated with a basic verifiable credential, using an [=embedded proof=]
-based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
+based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
           </figcaption>
         </figure>
 
         <p>
           <a href="#info-graph-vc-jwt"></a> below shows the same [=verifiable credential=]
-          as <a href="#info-graph-vc"></a>, but using JOSE based on [[?VC-JOSE-COSE]].
+          as <a href="#info-graph-vc"></a>, but using JOSE based on [[?VC-JOSE-COSE]].
           The payload contains a single information graph, that being the [=verifiable credential graph=]
           containing [=credential=] metadata and other [=claims=].
         </p>
 
         <figure id="info-graph-vc-jwt">
-          <img style="margin: auto; display: block; width: 100%;" src="diagrams/vc-jwt.svg" alt="Diagram with, on the left,
-                      a box, labeled as 'SD-JWT (Decoded)', and with three textual labels
-                      stacked vertically, namely 'Header', 'Payload', and 'Signature'.
-                      The 'Header' label is connected, with an arrow, to a separate rectangle
-                      on the right hand side containing six text fields: 'kid: aB8J-_Z',
-                      'alg: ES384', and 'cty: vc+ld+json', iss: https://example.com, iat: 1704690029, and typ: vc+ld+json+sd-jwt
-                      The 'Payload' label on the left side is connected, with an arrow, to a separate rectangle,
-                      containing a single graph.
-                      The rectangle has a label: 'verifiable credential graph (serialized in JSON)'
-                      The claims in the graph include 'Credential 123' as a subject
-                      with 4 properties: 'type' with value 'ExampleAlumniCredential',
-                      'issuer' with value 'Example University', 'validFrom' with value '2010-01-01T19:23:24Z', and
-                      'credentialSubject' with value 'Pat', who also has an 'alumniOf' property with value
-                      'Example University'.
-                      Finally, the 'Signature' label on the left side is connected, with an
-                      arrow, to a separate rectangle, containing a single text field:
-                      'DtEhU3ljbEg8L38VWAfUA...'.">
+          <img style="margin: auto; display: block; width: 100%;"
+               src="diagrams/vc-jwt.svg"
+               alt="Diagram with, on the left, a box, labeled as
+'SD-JWT (Decoded)', and with three textual labels stacked vertically,
+namely 'Header', 'Payload', and 'Signature'. The 'Header' label is
+connected, with an arrow, to a separate rectangle on the right hand
+side containing six text fields: 'kid: aB8J-_Z', 'alg: ES384', and
+'cty: vc+ld+json', iss: https://example.com, iat: 1704690029, and typ:
+vc+ld+json+sd-jwt The 'Payload' label on the left side is connected,
+with an arrow, to a separate rectangle, containing a single graph. The
+rectangle has a label: 'verifiable credential graph (serialized in
+JSON)' The claims in the graph include 'Credential 123' as a subject
+with 4 properties: 'type' with value 'ExampleAlumniCredential',
+'issuer' with value 'Example University', 'validFrom' with value
+'2010-01-01T19:23:24Z', and 'credentialSubject' with value 'Pat', who
+also has an 'alumniOf' property with value 'Example University'.
+Finally, the 'Signature' label on the left side is connected, with an
+arrow, to a separate rectangle, containing a single text field:
+'DtEhU3ljbEg8L38VWAfUA...'.
+          ">
           <figcaption style="text-align: center;">
             Information graphs associated with a basic verifiable credential, using an [=enveloping proof=]
-            based on [[[VC-JOSE-COSE]]] [[?VC-JOSE-COSE]].
+            based on [[[VC-JOSE-COSE]]] [[?VC-JOSE-COSE]].
           </figcaption>
         </figure>
 
@@ -895,19 +898,19 @@ which are then organized into [=verifiable presentations=].
         <p id="info-graph-vp-explanation">
 <a href="#info-graph-vp"></a> below shows a more complete depiction of a
 [=verifiable presentation=] using an <a>embedded proof</a>
-based on [[?VC-DATA-INTEGRITY]].
+based on [[?VC-DATA-INTEGRITY]].
 It is composed of at least four information [=graphs=].
 The first of these information [=graphs=], the [=verifiable presentation graph=]
 (which is the [=default graph=]), expresses the [=verifiable presentation=]
 itself through [=presentation=] metadata.
-The [=verifiable presentation=] refers, via the <code>verifiableCredential</code> property,
+The [=verifiable presentation=] refers, via the `verifiableCredential` property,
 to a [=verifiable credential=].
 This [=credential=] is a self-contained [=verifiable credential graph=] containing [=credential=] metadata and other [=claims=].
-This [=credential=] refers to a [=verifiable credential=] [=proof graph=] via a <code>proof</code> property,
+This [=credential=] refers to a [=verifiable credential=] [=proof graph=] via a `proof` property,
 expressing the proof (usually a digital signature) of the [=credential=].
 This [=verifiable credential graph=], and its linked [=proof graph=], constitute
 the second and third information [=graphs=], respectively, and each is a separate [=named graph=].
-The [=presentation=] also refers, via the <code>proof</code> property, to
+The [=presentation=] also refers, via the `proof` property, to
 the [=presentation=]'s [=proof graph=], which is the fourth information [=graph=] (another [=named graph=]).
 This [=presentation=] [=proof graph=] represents the digital signature of the [=verifiable presentation graph=],
 the [=verifiable credential graph=], and the [=proof graph=] linked from the [=verifiable credential graph=].
@@ -932,45 +935,51 @@ Presenter Public Key 11'; 'created' with value '2018-01-15T12:43:56Z';
 named graph)'">
           <figcaption style="text-align: center;">
 Information [=graphs=] associated with a basic [=verifiable presentation=] that is using an [=embedded proof=]
-based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
+based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
           </figcaption>
         </figure>
 
         <p>
-          <a href="#info-graph-vp-jwt"></a> below shows the same [=verifiable presentation=]
-          as <a href="#info-graph-vp"></a>, but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
-          The payload contains only two information graphs: the [=verifiable presentation graph=]
-          expressing the [=verifiable presentation=] itself through presentation metadata;
-          and the corresponding [=verifiable credential graph=], referred to by
-          the `verifiableCredential` property.
-          The [=verifiable credential graph=] contains a single
-          <a href="#defn-EnvelopedVerifiableCredential">`EnvelopedVerifiableCredential`</a> instance
-          referring, via a `data:` URL [[RFC2397]], to the verifiable credential secured via
-          an [=enveloping proof=] shown on <a href="#info-graph-vc-jwt"></a>.
+<a href="#info-graph-vp-jwt"></a> below shows the same [=verifiable
+presentation=] as <a href="#info-graph-vp"></a>, but using an [=enveloping
+proof=] based on [[?VC-JOSE-COSE]]. The payload contains only two information
+graphs: the [=verifiable presentation graph=] expressing the [=verifiable
+presentation=] itself through presentation metadata; and the corresponding
+[=verifiable credential graph=], referred to by the `verifiableCredential`
+property. The [=verifiable credential graph=] contains a single
+<a
+href="#defn-EnvelopedVerifiableCredential">`EnvelopedVerifiableCredential`</a>
+instance referring, via a `data:` URL [[RFC2397]], to the verifiable credential
+secured via an [=enveloping proof=] shown on <a href="#info-graph-vc-jwt"></a>.
         </p>
 
         <figure id="info-graph-vp-jwt">
-          <img style="margin: auto; display: block; width: 100%;" src="diagrams/vp-jwt.svg" alt="Diagram with, on the left,
-                      a box, labeled as 'JWT (Decoded)', and with three textual labels
-                      stacked vertically, namely 'Header', 'Payload', and 'Signature'.
-                      The 'Header' label is connected, with an arrow, to a separate rectangle
-                       on the right hand side containing six text fields: 'kid: aB8J-_Z',
-                      'alg: ES384', and 'cty: vc+ld+json', iss: https://example.com, iat: 1704690029, and typ: vp+ld+json+sd-jwt
-                      The 'Payload' label of the left side is connected, with an arrow, to a separate rectangle,
-                      consisting of two related graphs (stacked vertically) connected
-                      by a an arrow labeled 'verifiableCredential'.
-                      The two graphs have each a label 'verifiable presentation graph (serialized in JSON)' and
-                      'verifiable credential graph (serialized in JSON)', respectively.
-                      The top graph in the rectangle has and object 'Presentation ABC' with 3 properties: 'type'
-                      of value VerifiablePresentation, 'termsOfUse' of value 'Do Not Archive'.
-                      The bottom graph includes 'data:application/vc+ld+json+sd-jwt;QzVjV...RMjU' as a subject
-                      with a single property: 'type' of value `EnvelopedVerifiableCredential`.
-                      Finally, the 'Signature' label on the left side is connected, with an
-                      arrow, to a separate rectangle, containing a single text field:
-                      'XaOOh4ljklxH7L99RTVSfOl...'.">
+          <img style="margin: auto; display: block; width: 100%;"
+               src="diagrams/vp-jwt.svg"
+               alt="Diagram with, on the left, a box, labeled as
+'JWT (Decoded)', and with three textual labels stacked vertically,
+namely 'Header', 'Payload', and 'Signature'. The 'Header' label is
+connected, with an arrow, to a separate rectangle on the right hand
+side containing six text fields: 'kid: aB8J-_Z', 'alg: ES384', and
+'cty: vc+ld+json', iss: https://example.com, iat: 1704690029, and typ:
+vp+ld+json+sd-jwt The 'Payload' label of the left side is connected,
+with an arrow, to a separate rectangle, consisting of two related
+graphs (stacked vertically) connected by a an arrow labeled
+'verifiableCredential'. The two graphs have each a label 'verifiable
+presentation graph (serialized in JSON)' and 'verifiable credential
+graph (serialized in JSON)', respectively. The top graph in the
+rectangle has and object 'Presentation ABC' with 3 properties: 'type'
+of value VerifiablePresentation, 'termsOfUse' of value 'Do Not
+Archive'. The bottom graph includes
+'data:application/vc+ld+json+sd-jwt;QzVjV...RMjU' as a subject with a
+single property: 'type' of value `EnvelopedVerifiableCredential`.
+Finally, the 'Signature' label on the left side is connected, with an
+arrow, to a separate rectangle, containing a single text field:
+'XaOOh4ljklxH7L99RTVSfOl...'.
+          ">
           <figcaption style="text-align: center;">
             Information graphs associated with a basic [=verifiable presentation=] that is using an [=enveloping proof=]
-            based on JOSE [[?VC-JOSE-COSE]]. The `data:` URL refers to
+            based on JOSE [[?VC-JOSE-COSE]]. The `data:` URL refers to
             the [=verifiable credential=] shown on <a href="#info-graph-vc-jwt"></a>.
           </figcaption>
         </figure>
@@ -6497,7 +6506,7 @@ Signature `created` [=property=] establishes a date and time
 before which the [=credential=] should not be considered [=verified=],
 distinct from the validity period of the credential. This property describes the
 validity of the proof, not of the credential.
-The JWT <code>iat</code> claim likewise provides the time that the signature was made.
+The JWT `iat` claim likewise provides the time that the signature was made.
 <br/><br/>
 The `verificationMethod` [=property=] specifies, for example, the
 public key that can be used to verify the digital signature. Dereferencing a
@@ -6867,7 +6876,7 @@ The `sriString` datatype is defined as follows:
               <dt>The lexical space</dt>
               <dd>
 See the <a href="https://www.w3.org/TR/SRI/#the-integrity-attribute">ABNF
-grammar</a>, defining the `integrity` attribute in the [[SRI]] specification,
+grammar</a>, defining the `integrity` attribute in the [[SRI]] specification,
 for the restrictions on the string format.
               </dd>
               <dt>The value space</dt>
@@ -7128,9 +7137,9 @@ document</a>.
       <p>
         <a href="#info-graph-vp-mult-creds"></a> below is a variant of <a href="#info-graph-vp"></a>:
         a [=verifiable presentation=] referring to two [=verifiable credentials=], and using <a>embedded proofs</a>
-        based on [[?VC-DATA-INTEGRITY]].
+        based on [[?VC-DATA-INTEGRITY]].
         Each [=verifiable credential graph=] is connected to
-        its own separate [=proof graph=]; the <code>verifiableCredential</code> property is used
+        its own separate [=proof graph=]; the `verifiableCredential` property is used
         to connect the [=verifiable presentation=] to the [=verifiable credential graphs=].
         The [=presentation=] [=proof graph=] represents the digital signature of the [=verifiable presentation graph=],
         both [=verifiable credential graphs=], and the [=proof graphs=] linked from the [=verifiable credential graphs=].
@@ -7139,24 +7148,28 @@ document</a>.
       </p>
 
       <figure id="info-graph-vp-mult-creds">
-      <img style="margin: auto; display: block; width: 100%;" src="diagrams/vp-graph-mult-creds.svg" alt="Diagram with a
-            'verifiable presentation graph' on top, connected via a 'proof' to
-            a 'verifiable presentation proof graph' on the bottom. The verifiable
-            presentation graph has an object, 'Presentation ABC', with 3 properties: 'type'
-            with value 'VerifiablePresentation'; 'termsOfUse' with value 'Do Not Archive';
-            and two instances of 'verifiableCredential', detailed below. This
-            graph is annotated with a parenthetical remark, '(the default graph)'. This
-            graph is connected, through 'verifiableCredential', to the part of the figure
-            that consists two variants of Figure 6 (one is identical; the other has
-            minor differences in the labels referring to validity dates, the name of the person,
-            and the values for the nonce and the signature),
-            except that these verifiable credential graphs are
-            annotated to be named graphs instead of a default graph.
-            The verifiable presentation proof graph has an object labeled 'Signature 8920'
-            with 5 properties: 'type' with value 'DataIntegrityProof'; 'verificationMethod' with value 'Example
-            Presenter Public Key 11'; 'created' with value '2024-01-02T12:43:56Z'; 'nonce' with value 'hasdkyruod87j';
-            and 'proofValue' with value 'zpewJHoan87='. This graph is annotated with the parenthetical remark '(a
-            named graph)'">
+      <img style="margin: auto; display: block; width: 100%;"
+           src="diagrams/vp-graph-mult-creds.svg"
+           alt="
+Diagram with a 'verifiable presentation graph' on top, connected via a
+'proof' to a 'verifiable presentation proof graph' on the bottom. The
+verifiable presentation graph has an object, 'Presentation ABC', with 3
+properties: 'type' with value 'VerifiablePresentation'; 'termsOfUse' with
+value 'Do Not Archive'; and two instances of 'verifiableCredential',
+detailed below. This graph is annotated with a parenthetical remark, '(the
+default graph)'. This graph is connected, through 'verifiableCredential',
+to the part of the figure that consists two variants of Figure 6 (one is
+identical; the other has minor differences in the labels referring to
+validity dates, the name of the person, and the values for the nonce and
+the signature), except that these verifiable credential graphs are
+annotated to be named graphs instead of a default graph. The verifiable
+presentation proof graph has an object labeled 'Signature 8920' with 5
+properties: 'type' with value 'DataIntegrityProof'; 'verificationMethod'
+with value 'Example Presenter Public Key 11'; 'created' with value
+'2024-01-02T12:43:56Z'; 'nonce' with value 'hasdkyruod87j'; and
+'proofValue' with value 'zpewJHoan87='. This graph is annotated with the
+parenthetical remark '(a named graph)'
+            ">
       <figcaption style="text-align: center;">
         A variant of <a href="#info-graph-vp"></a>: information [=graphs=] associated with a [=verifiable presentation=]
         referring to two
@@ -7166,38 +7179,44 @@ document</a>.
 
       <p>
         <a href="#info-graph-vp-jwt-mult-creds"></a> below shows the same [=verifiable presentation=]
-        as <a href="#info-graph-vp-mult-creds"></a>, but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
+        as <a href="#info-graph-vp-mult-creds"></a>, but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
         Each [=verifiable credential graph=] contains a single
         <a href="#defn-EnvelopedVerifiableCredential">`EnvelopedVerifiableCredential`</a> instance,
-        referring, via a <code>data:</code> URL [[RFC2397]], to a verifiable credential secured via
+        referring, via a `data:` URL [[RFC2397]], to a verifiable credential secured via
         an [=enveloping proof=]</a>.
       </p>
 
       <figure id="info-graph-vp-jwt-mult-creds">
-        <img style="margin: auto; display: block; width: 100%;" src="diagrams/vp-jwt-mult-creds.svg" alt="Diagram with, on the left,
-                      a box, labeled as 'JWT (Decoded)', and with three textual labels
-                      stacked vertically, namely 'Header', 'Payload', and 'Signature'.
-                      The 'Header' label is connected, with an arrow, to a separate rectangle
-                       on the right hand side containing six text fields: 'kid: aB8J-_Z',
-                      'alg: ES384', and 'cty: vc+ld+json', iss: https://example.com, iat: 1704690029, and typ: vp+ld+json+sd-jwt
-                      The 'Payload' label of the left side is connected, with an arrow, to a separate rectangle,
-                      consisting of three related graphs (stacked vertically) connected
-                      by two arrows labeled 'verifiableCredential' starting from the top graph and connecting it
-                      to the two other graphs, respectively. The top graph has a label
-                      'verifiable presentation graph (serialized in JSON)'; the other two are both labeled by
-                      'verifiable credential graph (serialized in JSON)'.
-                      The top graph in the rectangle has and object 'Presentation ABC' with 3 properties: 'type'
-                      of value VerifiablePresentation, 'termsOfUse' of value 'Do Not Archive'.
-                      One of the the bottom graphs includes 'data:application/vc+ld+json+sd-jwt;QzVjV...RMjU' as a subject
-                      with a single property: 'type' of value `EnvelopedVerifiableCredential`.
-                      The last bottom graph is identical other, except for the subject which is labeled as
-                      'data:application/vc+ld+json+sd-jwt;RkOyT...KjOl'.
-                      Finally, the 'Signature' label on the left side is connected, with an
-                      arrow, to a separate rectangle, containing a single text field:
-                      'cYjaSdfIoJH45NIqw3MYnasGIba...'.">
+        <img style="margin: auto; display: block; width: 100%;"
+             src="diagrams/vp-jwt-mult-creds.svg"
+             alt="
+Diagram with, on the left, a box, labeled as 'JWT (Decoded)', and with
+three textual labels stacked vertically, namely 'Header', 'Payload', and
+'Signature'. The 'Header' label is connected, with an arrow, to a
+separate rectangle on the right hand side containing six text fields:
+'kid: aB8J-_Z', 'alg: ES384', and 'cty: vc+ld+json', iss:
+https://example.com, iat: 1704690029, and typ: vp+ld+json+sd-jwt The
+'Payload' label of the left side is connected, with an arrow, to a
+separate rectangle, consisting of three related graphs (stacked
+vertically) connected by two arrows labeled 'verifiableCredential'
+starting from the top graph and connecting it to the two other graphs,
+respectively. The top graph has a label 'verifiable presentation graph
+(serialized in JSON)'; the other two are both labeled by 'verifiable
+credential graph (serialized in JSON)'. The top graph in the rectangle
+has and object 'Presentation ABC' with 3 properties: 'type' of value
+VerifiablePresentation, 'termsOfUse' of value 'Do Not Archive'. One of
+the the bottom graphs includes
+'data:application/vc+ld+json+sd-jwt;QzVjV...RMjU' as a subject with a
+single property: 'type' of value `EnvelopedVerifiableCredential`. The
+last bottom graph is identical other, except for the subject which is
+labeled as 'data:application/vc+ld+json+sd-jwt;RkOyT...KjOl'. Finally,
+the 'Signature' label on the left side is connected, with an arrow, to a
+separate rectangle, containing a single text field:
+'cYjaSdfIoJH45NIqw3MYnasGIba...'.
+        ">
         <figcaption style="text-align: center;">
           A variant of <a href="#info-graph-vp-jwt"></a>: information [=graphs=] associated with a [=verifiable presentation=]
-          referring to two verifiable credentials using [=enveloping proofs=] based on JOSE [[?VC-JOSE-COSE]].
+          referring to two verifiable credentials using [=enveloping proofs=] based on JOSE [[?VC-JOSE-COSE]].
         </figcaption>
       </figure>
 
