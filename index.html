@@ -3290,25 +3290,61 @@ these extension points.
         <section>
           <h4>Semantic Interoperability</h4>
 
+          <p>
+            When defining new terms in an application-dependent vocabulary, developers MUST use unique [=URLs=] to identify the terms.
+            It is RECOMMENDED to re-use, whenever possible, terms—and their corresponding URLs—defined by well-known, public vocabularies,
+            such as [[[?DCTERMS]]] [[?DCTERMS]] or [[[?schema-org]]] [[?schema-org]]. 
+            If that is not possible, developers MUST <em>define</em> a new URL for each term. 
+            When doing so, general [[LINKED-DATA]] principles must be followed, in particular:
+          </p>
+
           <ul>
-            <li>
-JSON-LD-based processors MUST produce an error when a JSON-LD context redefines
-any term in the
-<a href="https://www.w3.org/TR/json-ld/#dfn-active-context">active context</a>.
-The only way to change the definition of existing terms is to introduce a new
-term that clears the active context within the scope of that new term. Authors
-that are interested in this feature should read about the
-`@protected` feature in the JSON-LD 1.1 specification.
-            </li>
-          </ul>
+              <li>
+                A human-readable documentation MUST be published, describing the semantics and
+                the constraints on the use of each term.</li>
+              <li>
+                  It is RECOMMENDED to also publish the collection of all new terms as a machine-readable vocabulary 
+                  using [[[?RDF-SCHEMA]]] [[?RDF-SCHEMA]] (and, if necessary, OWL2 [[?OWL2-OVERVIEW]]).
+              </li>
+              <li>
+                  It MUST be possible to dereference the URL of a term, resulting in its description and/or formal definition.   
+              </li> 
+          </ul>       
+             
+          <p>
+            Developers SHOULD follow the <a data-cite="?LD-BP#vocabulary-checklist">detailed checklist</a> in
+            [[[?LD-BP]]] [[?LD-BP]] when defining a new vocabulary.
+          </p>
+          <p>
+              Furthermore, a machine-readable description (that is, a 
+              <a data-cite="JSON-LD11#dfn-context">JSON-LD Context document</a>) MUST be published at the URL specified
+              in the `@context` [=property=] for the vocabulary. 
+              This context MUST map each term to its corresponding URL, possibly accompanied by further
+              constraints like the type of the property value. A human-readable document describing the expected order of values for
+              the `@context` [=property=] is also expected to be published by any implementer seeking interoperability.     
+          </p>
+
+          <p class="note">
+              When processing the <a data-cite="JSON-LD11#dfn-active-context">active context</a> defined by the base JSON-LD Context
+              document <a href="#dfn-context">defined in this specification</a>, compliant JSON-LD-based processors produce an error when a JSON-LD context 
+              <em>redefines</em> any term.
+              The only way to change the definition of existing terms is to introduce a new term that clears the active context within
+              the scope of that new term. 
+              Authors that are interested in this feature should read about the <a data-cite="JSON-LD11#protected-term-definitions">`@protected`</a> 
+              keyword in the JSON-LD 1.1 specification.
+          </p>
 
           <p>
-A human-readable document describing the expected order of values for the
-`@context` [=property=] is expected to be published by any
-implementer seeking interoperability. A machine-readable description
-(that is, a normal JSON-LD Context document) is expected to be published
-at the URL specified in the `@context` [=property=] by
-JSON-LD implementers seeking interoperability.
+              The base JSON-LD Context file for this specification also includes an extra feature, using the 
+              <a data-cite="JSON-LD11/#default-vocabulary">`@vocab`</a> keyword, which ensures
+              that any undefined term in a [=verifiable credential=] or a [=verifiable presentation=] is automatically mapped to a
+              URL prefixed with `https://www.w3.org/ns/credentials/issuer-dependent#`. 
+              The purpose is to allow early experimentation with terms during the development phase, without
+              the necessity to provide a formal definition in every cycle of that experimentation. 
+              However, developers SHOULD NOT use this feature in production; this
+              could lead to name clashes, yielding semantic ambiguities with other applications. 
+              Instead, they SHOULD define all the
+              terms, as described earlier in this section, to achieve proper interoperability.  
           </p>
         </section>
       </section>
