@@ -147,7 +147,7 @@ Decentralized Identifier (DID) scheme.
 ```
 {
   "@context": [
-    "https://w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v1",
     "https://example.com/examples/v1"
   ],
   "id": "http://example.edu/credentials/1872",
@@ -174,7 +174,7 @@ The following is an example verifiable credential that supports ZKPs.
 ```
 {
   "@context": [
-    "https://w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/v1",
     "ctx:sov:anoncred:v1",
     "ctx:sov:GppHbMLLeKNYRhcQiXh3GjP2Yh",
   ],
@@ -229,7 +229,7 @@ and the payload as well as the final JWS compact serialization (base64 encoded).
   "nonce": "660!6345FSer",
   "vc": {
     "@context": [
-      "https://w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/v1",
       "https://example.com/examples/v1"
     ],
     "type": ["VerifiableCredential", "UniversityDegreeCredential"],
