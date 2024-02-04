@@ -640,7 +640,219 @@ information as a valid document.
     <section class="normative">
       <h2>Terminology</h2>
 
-      <div data-include="./terms.html"></div>
+      <p>
+The following terms are used to describe concepts in this specification.
+      </p>
+
+      <dl class="termlist definitions">
+        <dt><dfn data-lt="claims">claim</dfn></dt>
+        <dd>
+An assertion made about a <a>subject</a>.
+        </dd>
+        <dt><dfn data-lt="credential|credentials">credential</dfn></dt>
+        <dd>
+A set of one or more <a>claims</a> made by an <a>issuer</a>. The <a>claims</a>
+in a credential can be about different <a>subjects</a>. The definition of
+credential used in this specification differs from,
+<a href="https://csrc.nist.gov/glossary/term/credential">NIST's definitions of
+credential</a>.
+        </dd>
+        <dt><dfn>data minimization</dfn></dt>
+        <dd>
+The act of limiting the amount of shared data strictly to the minimum
+necessary to successfully accomplish a task or goal.
+        </dd>
+        <dt><dfn data-lt="decentralized identifiers|DID|DIDs">decentralized identifier</dfn></dt>
+        <dd>
+A portable URL-based identifier, also known as a <strong><em>DID</em></strong>,
+associated with an <a>entity</a>. These identifiers are most often used in a
+<a>verifiable credential</a> and are associated with <a>subjects</a> such that a
+<a>verifiable credential</a> itself can be easily ported from one
+<a>repository</a> to another without the need to reissue the <a>credential</a>.
+An example of a DID is `did:example:123456abcdef`.
+        </dd>
+        <dt><dfn class="lint-ignore" data-lt="decentralized identifier documents|DID document|DID documents">decentralized identifier document</dfn></dt>
+        <dd>
+Also referred to as a <strong><em>DID document</em></strong>, this is a document
+that is accessible using a <a>verifiable data registry</a> and contains
+information related to a specific <a>decentralized identifier</a>, such as the
+associated <a>repository</a> and public key information.
+        </dd>
+        <dt><dfn data-lt="default graph">default graph</dfn></dt>
+        <dd>
+The <a>graph</a> containing all <a>claims</a> that are not explicitly part of
+a <a>named graph</a>.
+        </dd>
+        <dt><dfn data-lt="predicates|derived predicates">derived predicate</dfn></dt>
+        <dd>
+A verifiable, boolean assertion about the value of another attribute in a
+<a>verifiable credential</a>. These are useful in zero-knowledge-proof-style
+<a>verifiable presentations</a> because they can limit information disclosure.
+For example, if a <a>verifiable credential</a> contains an attribute for
+expressing a specific height in centimeters, a derived predicate might reference
+the height attribute in the <a>verifiable credential</a> demonstrating that the
+<a>issuer</a> attests to a height value meeting the minimum height requirement,
+without actually disclosing the specific height value. For example, the
+<a>subject</a> is taller than 150 centimeters.
+        </dd>
+        <dt><dfn class="lint-ignore">digital signature</dfn></dt>
+        <dd>
+A mathematical scheme for demonstrating the authenticity of a digital message.
+        </dd>
+        <dt><dfn data-lt="entities|entity's">entity</dfn></dt>
+        <dd>
+Anything that can be referenced in statements as an abstract or concrete noun.
+Entities include but are not limited to people, organizations, physical things,
+documents, abstract concepts, fictional characters, and arbitrary text. Any
+entity might perform roles in the ecosystem, if it is capable of doing so. Note
+that some entities fundamentally cannot take actions, e.g., the string "abc"
+cannot issue credentials.
+        </dd>
+        <dt><dfn data-lt="graphs">graph</dfn></dt>
+        <dd>
+A set of claims, forming a network of information composed of <a>subjects</a>
+and their relationship to other <a>subjects</a> or data. Each <a>claim</a> is
+part of a graph; this is either explicit in the case of <a>named graphs</a>, or
+implicit for the <a>default graph</a>.
+        </dd>
+        <dt><dfn data-lt="holders|holder's|holders'">holder</dfn></dt>
+        <dd>
+A role an <a>entity</a> might perform by possessing one or more
+<a>verifiable credentials</a> and generating <a>verifiable presentations</a>
+from them. A holder is often, but not always, a <a>subject</a> of the
+<a>verifiable credentials</a> they are holding. Holders store their
+<a>credentials</a> in <a>credential repositories</a>.
+        </dd>
+        <dt><dfn class="lint-ignore"
+                data-lt="identities|identity's">identity</dfn></dt>
+        <dd>
+The means for keeping track of <a>entities</a> across contexts. Digital
+identities enable tracking and customization of <a>entity</a> interactions
+across digital contexts, typically using identifiers and attributes. Unintended
+distribution or use of identity information can compromise privacy. Collection
+and use of such information should follow the principle of
+<a>data minimization</a>.
+        </dd>
+        <dt><dfn data-lt="identity providers|idp">identity provider</dfn></dt>
+        <dd>
+An identity provider, sometimes abbreviated as <em>IdP</em>, is a system for
+creating, maintaining, and managing identity information for <a>holders</a>,
+while providing authentication services to <a>relying party</a> applications
+within a federation or distributed network. In this case the <a>holder</a> is
+always the <a>subject</a>. Even if the <a>verifiable credentials</a> are bearer
+<a>credentials</a>, it is assumed the <a>verifiable credentials</a> remain with
+the <a>subject</a>, and if they are not, they were stolen by an attacker. This
+specification does not use this term unless comparing or mapping the concepts in
+this document to other specifications. This specification decouples the
+<a>identity provider</a> concept into two distinct concepts: the <a>issuer</a>
+and the <a>holder</a>.
+        </dd>
+        <dt><dfn data-lt="issuers|issuer's">issuer</dfn></dt>
+        <dd>
+A role an <a>entity</a> can perform by asserting <a>claims</a> about one or
+more <a>subjects</a>, creating a <a>verifiable credential</a> from these
+<a>claims</a>, and transmitting the <a>verifiable credential</a> to a
+<a>holder</a>.
+        </dd>
+        <dt><dfn data-lt="named graphs">named graph</dfn></dt>
+        <dd>
+A <a>graph</a> associated with specific properties, such as
+`verifiableCredential`. These properties
+result in separate <a>graphs</a> that contain all <a>claims</a> defined in the
+corresponding JSON objects.
+        </dd>
+        <dt><dfn data-lt="presentation|presentations">presentation</dfn></dt>
+        <dd>
+Data derived from one or more <a>verifiable credentials</a>, issued by one or
+more <a>issuers</a>, that is shared with a specific <a>verifier</a>.
+        </dd>
+        <dt><dfn data-lt="credential repository|credential repositories|repositories">repository</dfn></dt>
+        <dd>
+A program, such as a storage vault or personal <a>verifiable credential</a>
+wallet, that stores and protects access to <a>holders'</a>
+<a>verifiable credentials</a>.
+        </dd>
+        <dt><dfn>selective disclosure</dfn></dt>
+        <dd>
+The ability of a <a>holder</a> to make fine-grained decisions about what
+information to share.
+        </dd>
+        <dt><dfn data-lt="subjects|subject's">subject</dfn></dt>
+        <dd>
+A thing about which <a>claims</a> are made.
+        </dd>
+        <dt><dfn class="lint-ignore">user agent</dfn></dt>
+        <dd>
+A program, such as a browser or other Web client, that mediates the
+communication between <a>holders</a>, <a>issuers</a>, and <a>verifiers</a>.
+        </dd>
+        <dt><dfn data-lt="claim validation">validation</dfn></dt>
+        <dd>
+The assurance that a <a>claim</a> from a specific <a>issuer</a> satisfies the
+business requirements of a <a>verifier</a> for a particular use. This
+specification defines how verifiers verify <a>verifiable credentials</a> and
+<a>verifiable presentations</a>.<br/>
+It also specifies that <a>verifiers</a> validate claims in <a>verifiable
+credentials</a> before relying on them. However, the means for such validation
+vary widely and are outside the scope of this specification. It is expected
+that <a>verifiers</a> will trust certain <a>issuers</a> for certain claims and
+apply their own rules to determine which claims in which <a>credentials</a>
+are suitable for use by their systems.
+        </dd>
+        <dt><dfn data-lt="verifiable credential|verifiable credentials|vc|vcs">verifiable credential</dfn></dt>
+        <dd>
+A verifiable credential is a tamper-evident credential that has authorship that
+can be cryptographically verified. Verifiable credentials can be used to build
+<a>verifiable presentations</a>, which can also be cryptographically verified.
+        </dd>
+        <dt><dfn data-lt="verifiable data registries">verifiable data registry</dfn></dt>
+        <dd>
+A role a system might perform by mediating the creation and <a>verification</a>
+of identifiers, keys, and other relevant data, such as
+<a>verifiable credential</a> schemas, revocation registries, issuer public keys,
+and so on, which might be required to use <a>verifiable credentials</a>. Some
+configurations might require correlatable identifiers for <a>subjects</a>. Some
+registries, such as ones for UUIDs and public keys, might just act as namespaces
+for identifiers.
+        </dd>
+        <dt><dfn data-lt="verifiable presentation|verifiable presentations|vp|vps">verifiable presentation</dfn></dt>
+        <dd>
+A verifiable presentation is a tamper-evident presentation encoded in such a way
+that authorship of the data can be trusted after a process of cryptographic
+verification. Certain types of verifiable presentations might contain data that
+is synthesized from, but do not contain, the original <a>verifiable
+credentials</a> (for example, zero-knowledge proofs).
+        </dd>
+        <dt><dfn data-lt="verify|verified|verifying|verifiable|verifiability">verification</dfn></dt>
+        <dd>
+The evaluation of whether a <a>verifiable credential</a> or <a>verifiable
+presentation</a> is an authentic and current statement of the issuer or
+presenter, respectively. This includes checking that: the credential (or
+presentation) conforms to the specification; the proof method is satisfied; and,
+if present, the status check succeeds. Verification of a credential does not
+imply evaluation of the truth of <a>claims</a> encoded in the credential.
+        </dd>
+        <dt><dfn data-lt="verifier|verifiers|verifier's|credential verifiers|credential verifier's">verifier</dfn></dt>
+        <dd>
+A role an <a>entity</a> performs by receiving one or more
+<a>verifiable credentials</a>, optionally inside a
+<a>verifiable presentation</a> for processing. Other specifications might refer
+to this concept as a <dfn data-lt="relying parties">relying party</dfn>.
+        </dd>
+        <dt><dfn data-lt="verification material">verification material</dfn></dt>
+        <dd>
+Information that could be a cryptographic public key or any other data used to
+verify a proof.
+        </dd>
+        <dt><dfn data-lt="URL|URLs">URL</dfn></dt>
+        <dd>
+A Uniform Resource Locator, as defined by [[URL]]. URLs can be dereferenced such
+that they result in a resource, such as a document. The rules for dereferencing,
+or fetching, a URL are defined by the URL [=url/scheme=]. This specification
+does not use the term URI or IRI because those terms have been deemed to be
+confusing to Web developers.
+        </dd>
+      </dl>
     </section>
 
     <section class="informative">
