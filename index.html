@@ -4430,14 +4430,14 @@ base media type, `application/vc+ld+json`.
 
         <p>
 As elaborated upon in Section
-<a href="#credential-type-specific-processing"></a>, some software applications
+<a href="#type-specific-credential-processing"></a>, some software applications
 might not perform generalized JSON-LD processing. Authors of [=conforming
 documents=] are advised that interoperability might be reduced if JSON-LD
 keywords in the `@context` value are used to globally affect values in a
 [=verifiable credential=] or [=verifiable presentation=], such as by
 globally setting the `@base` keyword. For example, globally setting these values
 might trigger a failure in a mis-implemented JSON Schema check on the `@context`
-value in an implementation that is performing [=credential type-specific
+value in an implementation that is performing [=type-specific credential
 processing=] and not expecting the `@base` value to be expressed in the
 `@context` value.
         </p>
@@ -4445,7 +4445,7 @@ processing=] and not expecting the `@base` value to be expressed in the
         <p>
 In order to increase interoperability, [=conforming document=] authors are
 urged to not use JSON-LD features that are not easily detected when performing
-[=credential type-specific processing=]. These features include:
+[=type-specific credential processing=]. These features include:
         </p>
 
         <ul>
@@ -4689,18 +4689,18 @@ content type, or return an error code such as
       </section>
 
         <section class="informative">
-          <h2>Credential Type-Specific Processing</h2>
+          <h2>Type-Specific Credential Processing</h2>
 
           <p>
 <dfn>General JSON-LD processing</dfn> is defined as a mechanism that utilizes a
 JSON-LD software library to process a [=conforming document=] by performing
 various <a data-cite="?JSON-LD11#forms-of-json-ld">transformations</a>.
-<dfn>Credential type-specific processing</dfn> is defined as a lighter-weight
+<dfn>Type-specific credential processing</dfn> is defined as a lighter-weight
 mechanism for processing [=conforming documents=], that doesn't require
 a JSON-LD software library. Some consumers of [=verifiable credentials=]
 only need to consume credentials with specific types. These consumers can use
-credential-type-specific processing instead of generalized processing. Scenarios
-where credential-type-specific processing can be desirable include, but are not
+type-specific credential processing instead of generalized processing. Scenarios
+where type-specific credential processing can be desirable include, but are not
 limited to, the following:
           </p>
 
@@ -4732,7 +4732,7 @@ structured media type suffix.
           </ul>
 
           <p>
-That is, [=credential type-specific processing=] is allowed as long as the
+That is, [=type-specific credential processing=] is allowed as long as the
 document being consumed or produced is a [=conforming document=]. If this
 type of processing is desired, an implementer is advised to follow this rule:
           </p>
@@ -4749,7 +4749,7 @@ contents are appropriate for the intended use case.
           <p>
 Using static context files with a JSON Schema is one acceptable approach to
 implementing the rule above. This can ensure proper term identification,
-typing, and order, when performing [=credential type-specific processing=].
+typing, and order, when performing [=type-specific credential processing=].
           </p>
 
           <p>
@@ -4757,7 +4757,7 @@ The rule above guarantees semantic interoperability between the two processing
 mechanisms for mapping literal JSON keys to URIs via the `@context` mechanism.
 While [=general JSON-LD processing=] can use previously unseen `@context`
 values provided in its algorithms to verify that all terms are correctly
-specified, implementations that perform [=credential type-specific
+specified, implementations that perform [=type-specific credential
 processing=] only accept specific `@context` values which the implementation
 is engineered ahead of time to understand, resulting in the same semantics
 without invoking any JSON-LD APIs. In other words, the context in which the data
@@ -7469,7 +7469,7 @@ Add dependency on [[?INFRA]] for algorithm section.
 Add requirements for securing mechanism specifications.
         </li>
         <li>
-Clarify how to perform credential type-specific processing.
+Clarify how to perform type-specific credential processing.
         </li>
         <li>
 Add mechanism to embed enveloped verifiable credentials in verifiable
@@ -7522,7 +7522,7 @@ Clarify the difference between a "credential" and a "verifiable credential".
 Add section on how to ensure ecosystem compatibility.
         </li>
         <li>
-Add section on credential-type-specific processing.
+Add section on type-specific credential processing.
         </li>
         <li>
 Add section on validation and relevance to holders.
