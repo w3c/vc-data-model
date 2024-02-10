@@ -3389,12 +3389,9 @@ thereby bypassing the [=holder=].
 The value of the `refreshService` [=property=] MUST be one or more
 refresh services that provides enough information to the recipient's software
 such that the recipient can refresh the [=verifiable credential=]. Each
-`refreshService` value MUST specify its `type` (for
-example, `ManualRefreshService2018`) and its `id`, which
-is the [=URL=] of the service. There is an expectation that machine readable
-information needs to be retrievable from the URL. The precise content of
-each refresh service is determined by the specific `refreshService`
-[=type=] definition.
+`refreshService` value MUST specify its `type`. The precise content of each
+refresh service is determined by the specific `refreshService` [=type=]
+definition.
           </dd>
         </dl>
 
@@ -3408,7 +3405,7 @@ each refresh service is determined by the specific `refreshService`
   "id": "http://university.example/credentials/3732",
   "type": ["VerifiableCredential", "ExampleDegreeCredential"],
   "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
+  "validFrom": "2020-01-01T19:23:24Z",
   "credentialSubject": {
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "degree": {
@@ -3417,16 +3414,18 @@ each refresh service is determined by the specific `refreshService`
     }
   },
   <span class="highlight">"refreshService": {
-    "id": "https://university.example/refresh/3732",
-    "type": "ManualRefreshService2018"
+    "type": "VerifiableCredentialRefreshService2021",
+    "url": "https://university.example/flows/refresh-degree",
+    "validFrom": "2021-09-01T19:23:24Z",
+    "validUntil": "2022-02-01T19:23:24Z"
   }</span>
 }
         </pre>
 
         <p>
-In the example above, the [=issuer=] specifies a manual
-`refreshService` that can be used by directing the [=holder=] or
-the [=verifier=] to `https://university.example/refresh/3732`.
+In the example above, the [=issuer=] specifies an automatic
+`refreshService` that can be used by directing the [=holder=] to
+`https://university.example/flows/refresh-degree`.
         </p>
 
       </section>
