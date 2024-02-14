@@ -4131,10 +4131,10 @@ secured, without any securing mechanism information included, such as `proof` or
 JOSE/COSE header parameters and signatures. Specifications MAY provide additional mechanisms to convey
 other information that might be helpful (for example, during validation or for
 debugging purposes), such as securing mechanism data. A securing mechanism's
-verification algorithm MUST provide an interface that receives a sequence of
-bytes ([=byte sequence=] |inputBytes|) or a document ([=map=] |inputDocument|)
-and a media type ([=string=] |inputMediaType|) as inputs and returns a
-verification result with at least the following [=struct/items=]:
+verification algorithm MUST provide an interface that receives inputs of a media
+type ([=string=] |inputMediaType|) paired with either a sequence of bytes 
+([=byte sequence=] |inputBytes|) or a document ([=map=] |inputDocument|), and
+returns a verification result with at least the following [=struct/items=]:
         </p>
 
         <dl>
@@ -4726,11 +4726,10 @@ versions of this specification.
         <p>
 This section contains an algorithm that [=conforming verifier
 implementations=] MUST run when verifying a [=verifiable credential=] or a
-[=verifiable presentation=]. This algorithm takes a sequence of bytes
-([=byte sequence=] |inputBytes|) or a document
-([=map=] |inputDocument|) and a media type
-([=string=] |inputMediaType|) as inputs, and returns a [=map=]
-that contains the following:
+[=verifiable presentation=]. This algorithm takes inputs of a media
+type ([=string=] |inputMediaType|) paired with either a sequence of bytes 
+([=byte sequence=] |inputBytes|) or a document ([=map=] |inputDocument|), 
+and returns a [=map=] that contains the following:
         </p>
 
         <ul>
@@ -4782,7 +4781,7 @@ might need to be more formally defined. At present, no implementation has
 had an issue determining the proper |verifyProof| algorithm to use, but the
 Working Group is attempting to see if saying more here would be worthwhile.
 Additional example language could be added that says that an implementation
-might have an allow list of acceptable cryptosuites -- and these will be used as
+might have an allow list of acceptable cryptosuites — and these will be used as
 inputs for finding matching proofs to be verified.
                 </div>
               </li>
