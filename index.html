@@ -3682,7 +3682,51 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
   }</span>
 }
         </pre>
-
+ <pre class="example nohighlight" title="Example of evidence supporting a skill achievement credential">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2",
+    "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json"
+  ],
+  "id": "http://1edtech.edu/credentials/3732",
+  "type": [
+    "VerifiableCredential",
+    "OpenBadgeCredential"
+  ],
+  "issuer": {
+    "id": "https://1edtech.edu/issuers/565049",
+    "type": "Profile"
+  },
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "type": "AchievementSubject",
+    "name": "Alice Smith",
+    "activityEndDate": "2023-12-02T00:00:00Z",
+    "activityStartDate": "2023-12-01T00:00:00Z",
+    "awardedDate": "2024-01-01T00:00:00Z",
+    "achievement": [{
+      "id": "urn:uuid:d46e8ef1-c647-419b-be18-5e045d1c4e64",
+      "type": ["Achievement"],
+      "name": "Basic Barista Training",
+      "criteria": {
+        "narrative": "Team members are nominated for this badge by their supervisors, after passing the Basic Barista Training course."
+      },
+      "description": "This achievement certifies that the bearer is proficient in basic barista skills."
+    }]
+  },
+  "evidence": [{
+      <span class='comment'>// url to an externally hosted evidence file/artifact</span>
+      "id": "https://videos.example.com/training/alice-espresso.mp4",
+      "type": ["Evidence"],
+       "name": "Talk-aloud video of double espresso preparation",
+      "description": "This is a talk-aloud video of Alice demonstrating preparation of a double espresso drink.",
+      <span class='comment'>// digest hash of the mp4 video file</span>
+       "digestSRI": "sha384-zNNbQTWCSUSi0bbz7dbua...OHdzwELMYO9Mz68M26"
+    } 
+  ]
+}
+</pre>
         <p class="note">
 In this `evidence` example, the [=issuer=] is asserting that they
 physically matched the [=subject=] of the [=credential=] to a physical
