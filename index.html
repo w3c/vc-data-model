@@ -2225,14 +2225,16 @@ WyJ1Ynd6bi1kS19tMzRSMGI0SG84QTBBIiwgInR5cGUiLCAiQmFjaGVsb3JEZWdyZWUiXQ
         <h3>Status</h3>
 
         <p>
-This specification defines the `credentialStatus` [=property=] for the
-discovery of information about the status of a [=verifiable credential=], such
-as whether it is suspended or revoked.
+This specification defines the
+<strong id="defn-credentialStatus">credentialStatus</strong> [=property=] for
+the discovery of information related to the status of a [=verifiable
+credential=], such as whether it is suspended or revoked.
         </p>
 
         <p>
-The following properties are defined for object values associated with the
-<strong id="defn-credentialStatus">credentialStatus</strong> [=property=]:
+If present, the value associated with the `credentialStatus` [=property=] is a
+single object or a set of one or more objects. Each object MUST include at
+least the following [=properties=]:
         </p>
 
         <dl>
@@ -2266,7 +2268,7 @@ could contain a link to an external document which notes whether or not the
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
-    "https://w3id.org/vc/status-list/2021/v1"
+    "https://www.w3.org/ns/credentials/examples/v2"
   ],
   "id": "http://university.example/credentials/3732",
   "type": ["VerifiableCredential", "ExampleDegreeCredential"],
@@ -2288,6 +2290,51 @@ could contain a link to an external document which notes whether or not the
   }</span>
 }
         </pre>
+
+        <p>
+It is possible for a [=credential=] to have more than one status associated
+with it, such as whether it has been revoked or suspended.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Usage of multiple entries for the status property">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://license.example/credentials/9837",
+  "type": ["VerifiableCredential", "ExampleDrivingLicenseCredential"],
+  "issuer": "https://license.example/issuers/48",
+  "validFrom": "2020-03-14T12:10:42Z",
+  "credentialSubject": {
+    "id": "did:example:f1c276e12ec21ebfeb1f712ebc6",
+    "license": {
+      "type": "ExampleDrivingLicense",
+      "name": "License to Drive a Car"
+    }
+  },
+  <span class="highlight">"credentialStatus": [{
+    "id": "https://license.example/credentials/status/84#14278",
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "14278",
+    "statusListCredential": "https://license.example/credentials/status/84"
+  }, {
+    "id": "https://license.example/credentials/status/84#82938",
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "suspension",
+    "statusListIndex": "82938",
+    "statusListCredential": "https://license.example/credentials/status/84"
+  }]</span>
+}
+        </pre>
+
+        <p>
+Implementers are cautioned that [=credentials=] with multiple status entries
+might contain conflicting information and reconciling those conflicts is a
+part of the [=validation=] process.
+        </p>
 
         <p>
 Defining the data model, formats, and protocols for status schemes are out of
