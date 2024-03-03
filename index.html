@@ -2507,6 +2507,46 @@ enveloped [=verifiable credential=]:
         </section>
 
         <section>
+          <h4>Enveloped Verifiable Presentations</h4>
+
+          <p>
+It is possible to express a [=verifiable presentation=] that has been secured
+using a securing mechanism that "envelopes" the payload, such as
+[[[?VC-JOSE-COSE]]] [[?VC-JOSE-COSE]]. This can be accomplished by using an
+object that has a `type` of `EnvelopedVerifiablePresentation`.
+          </p>
+
+          <dl>
+            <dt id="defn-EnvelopedVerifiablePresentation">EnvelopedVerifiablePresentation</dt>
+            <dd>
+Used to express an enveloped [=verifiable presentation=].
+The `@context` property of the object MUST be present and include a context,
+such as the <a href="#base-context">base context for this specification</a>,
+that defines at least the `id`, `type`, and `EnvelopedVerifiablePresentation`
+terms as defined by the base context provided by this specification. The `id`
+value of the object MUST be a `data:` URL [[RFC2397]] that expresses a secured
+[=verifiable presentation=] using an
+<a href="#dfn-enveloping-proof">enveloping</a> security scheme, such as
+[[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]]. The `type` value of the object MUST be
+`EnvelopedVerifiablePresentation`.
+            </dd>
+          </dl>
+
+        <p>
+The example below shows an enveloped [=verifiable presentation=]:
+        </p>
+
+        <pre class="example nohighlight" title="Basic structure of an enveloped verifiable presentation">
+{
+  "@context": "https://www.w3.org/ns/credentials/v2",
+  <span class="highlight">"id": "data:application/vp+ld+json+jwt;eyJraWQiO...zhwGfQ",
+  "type": "EnvelopedVerifiablePresentation"</span>
+}
+        </pre>
+
+        </section>
+
+        <section>
           <h4>Presentations Using Derived Credentials</h4>
 
           <p>
