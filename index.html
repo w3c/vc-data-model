@@ -6547,19 +6547,35 @@ data fields in this specification by [=verifiers=].
         <h3>Credential Type</h3>
 
         <p>
-When a [=verifier=] requests one or more [=verifiable credentials=]
-from a [=holder=], they can specify the type of credential(s) that they would
-like to receive. The type of a credential is expressed via the
-<a href="#types">type</a> property. A [=verifiable credential=] of a specific
-type is expected to contain specific [=properties=] that can be used to
-determine whether or not the [=presentation=] meets a set of processing rules
-that the [=verifier=] is executing. By requesting
-[=verifiable credentials=] of a particular `type`, the
-[=verifier=] is able to gather specific information from the [=holder=],
-which originated  with the [=issuer=] of each [=verifiable credential=],
-that will enable it to determine the next stage of an interaction with a
-[=holder=].
+When a [=verifier=] requests one or more [=verifiable credentials=] from a
+[=holder=], they can specify the <a href="#types">type</a> of credential(s)
+that they would like to receive. Credential types, as well as validation schemas
+for the type and each of its [=claims=], are defined by specification authors
+and are published in places like the [[[VC-SPECS]]].
         </p>
+
+        <p>
+The type of a credential is expressed via the <a href="#types">type</a>
+property. A [=verifiable credential=] of a specific type is expected to contain
+specific [=properties=] that can be used to determine whether or not the
+[=presentation=] meets a set of processing rules that the [=verifier=] is
+executing. By requesting [=verifiable credentials=] of a particular `type`, the
+[=verifier=] is able to gather specific information from the [=holder=], which
+originated  with the [=issuer=] of each [=verifiable credential=], that will
+enable it to determine the next stage of an interaction with a [=holder=].
+        </p>
+
+        <p>
+When a [=verifier=] requests a [=verifiable credential=] of a specific type,
+there will be a set of mandatory and optional [=claims=] that are associated
+with that type. It is expected that a [=verifier=] will fail to validate
+[=claims=] that are mandatory that are not included and will ignore any
+[=claim=] that is not associated with the specific type. In other words, a
+[=verifier=] will perform input validation on the [=verifiable credential=] it
+receives and will reject malformed input based on the credential type
+specification.
+        </p>
+
       </section>
 
       <section class="informative">
