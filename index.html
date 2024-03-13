@@ -6977,24 +6977,23 @@ implementer feedback that requires the referenced URLs to be modified.
         <p>
 Implementations that depend on RDF vocabulary processing MUST ensure that the
 following vocabulary URLs used in the base context ultimately resolve to the
-following files, which are normative. Other semantically equivalent
+following files when loading the JSON-LD serializations, which are normative. Other semantically equivalent
 serializations of the vocabulary files MAY be used by implementations.
-Cryptographic hashes are provided for all content to ensure that developers can
-verify that the contents of each file are correct.
+Cryptographic hashes are provided for all the JSON-LD content to ensure that developers can
+verify that the content of each file is correct.
         </p>
 
         <table class="simple">
           <thead>
             <tr>
-              <th>URL and Media Type</th>
-              <th>Content and Hashes</th>
+              <th>URL</th>
+              <th>JSON-LD Content and Hashes</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-https://www.w3.org/2018/credentials#<br>
-`application/ld+json`
+https://www.w3.org/2018/credentials#
               </td>
               <td>
 https://www.w3.org/2018/credentials/index.jsonld<br><br>
@@ -7005,8 +7004,7 @@ h0qCBrzfgO2zO1OQQbTL7zoPgLseIbcxJJpunD2bkoRA==</code>
             </tr>
             <tr>
               <td>
-https://w3id.org/security#<br>
-`application/ld+json`
+https://w3id.org/security#
               </td>
               <td>
 https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld<br><br>
@@ -7019,9 +7017,10 @@ e4kvel2PFfd6jcofHBm9BjwEiGzVFGv4K+fFTKXRD2NA==</code>
         </table>
 
         <p>
-It is possible to confirm the cryptographic digests listed above by running the
-following command from a modern Unix command interface line:
-`curl -sL -H "Accept: &lt;MEDIA_TYPE>" &lt;DOCUMENT_URL> | openssl dgst -&ltDIGEST_ALGORITHM> -binary | openssl base64 -nopad -a`
+It is possible to confirm the cryptographic digests listed above by running 
+a command like the following (replacing `&lt;DOCUMENT_URL>` and `&lt;DIGEST_ALGORITHM>`
+with appropriate values) through a modern UNIX-like OS command line interface:
+`curl -sL -H "Accept: application/ld+json" &lt;DOCUMENT_URL> | openssl dgst -&lt;DIGEST_ALGORITHM> -binary | openssl base64 -nopad -a`
         </p>
 
         <p class="note"
