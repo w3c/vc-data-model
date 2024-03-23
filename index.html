@@ -6397,6 +6397,54 @@ propriety of [=credential=] use, stakeholders are urged to assess the
 specific context of their intended application.
         </p>
       </section>
+
+      <section class="informative">
+        <h3>Code Injection</h3>
+
+        <p>
+It is possible to include data in [=verifiable credentials=] that include
+executable code or scripting languages. Authors of verifiable credentials are
+advised to avoid doing so, unless necessary, and the risks have been mitigated
+to the extent possible.
+        </p>
+
+        <p>
+For example, when a single natural language string contains multiple languages
+or annotations, the contents of the string might require additional structure or
+markup in order to be presented correctly. It is possible to use markup
+languages, such as HTML, to label spans of text in different languages or to
+supply string-internal markup needed for proper display of [=bidirectional
+text=]. It is also possible to use the `rdf:HTML` datatype to encode such values
+accurately in JSON-LD.
+        </p>
+
+        <p>
+Despite the ability to encode information as HTML, implementers are strongly
+discouraged from doing this because it:
+        </p>
+
+        <ul>
+          <li>
+Requires some version of an HTML processor, which increases the burden of
+processing language and base direction information.
+          </li>
+          <li>
+Increases the security attack surface when utilizing this data model because
+naively processing HTML could result in executing a `script` tag that
+an attacker injected at some point during the data production process.
+          </li>
+        </ul>
+
+        <p>
+If implementers feel they need to use HTML, or other markup languages capable of
+containing executable scripts, to address a specific use case, they are advised
+to analyze how an attacker would use the markup to mount injection attacks
+against a consumer of the markup and then deploy mitigations against the
+identified attacks such as running the HTML rendering engine in a sandbox with
+no ability to have access to the network.
+        </p>
+      </section>
+
     </section>
 
     <section class="informative">
@@ -6576,45 +6624,6 @@ associated with them SHOULD be treated as if the language value is `undefined`
 (language tag "`und`"). Natural language string values that do not have a base
 direction associated with them SHOULD be treated as if the direction value is
 "`auto`".
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Complex Language Markup</h3>
-
-        <p>
-When a single natural language string contains multiple languages or
-annotations, the contents of the string might require additional structure or
-markup in order to be presented correctly. It is possible to use markup
-languages, such as HTML, to label spans of text in different languages or to
-supply string-internal markup needed for proper display of [=bidirectional
-text=]. It is also possible to use the `rdf:HTML` datatype to
-encode such values accurately in JSON-LD.
-        </p>
-
-        <p>
-Despite the ability to encode information as HTML, implementers are strongly
-discouraged from doing this because it:
-        </p>
-
-        <ul>
-          <li>
-Requires some version of an HTML processor, which increases the burden of
-processing language and base direction information.
-          </li>
-          <li>
-Increases the security attack surface when utilizing this data model because
-blindly processing HTML could result in executing a `script` tag that
-an attacker injected at some point during the data production process.
-          </li>
-        </ul>
-
-        <p>
-If implementers feel they must use HTML, or other markup languages capable of
-containing executable scripts, to address a specific use case, they are advised
-to analyze how an attacker would use the markup to mount injection attacks
-against a consumer of the markup and then deploy mitigations against the
-identified attacks.
         </p>
       </section>
 
