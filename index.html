@@ -286,7 +286,7 @@ Information related to the type of [=credential=] this is (for example, a
 Dutch passport, an American driving license, or a health insurance card)
           </li>
           <li>
-Information related to specific attributes or properties being asserted by
+Information related to specific properties being asserted by
 the issuing authority about the [=subject=] (for example, nationality,
 the classes of vehicle entitled to drive, or date of birth)
           </li>
@@ -570,7 +570,7 @@ from them. A holder is often, but not always, a [=subject=] of the
         <dd>
 The means for keeping track of [=entities=] across contexts. Digital
 identities enable tracking and customization of [=entity=] interactions
-across digital contexts, typically using identifiers and attributes. Unintended
+across digital contexts, typically using identifiers and properties. Unintended
 distribution or use of identity information can compromise privacy. Collection
 and use of such information should follow the principle of
 [=data minimization=].
@@ -1081,7 +1081,7 @@ tooling to start issuing, holding, and verifying prototype credentials.
 It is expected that a developer will change `MyPrototypeCredential` below to
 the type of credential they would like to create. Since
 [=verifiable credentials=] talk about subjects, each property-value pair in
-the `credentialSubject` object expresses a particular attribute of the
+the `credentialSubject` object expresses a particular property of the
 credential subject. Once a developer has added a number of these property-value
 combinations, the modified object can be sent to [=verifiable credential=]
 issuer software and a [=verifiable credential=] will be created for the
@@ -1123,7 +1123,7 @@ mean the same thing to each other. This might be referred to as
         </p>
         <p>
 [=Verifiable credentials=] and [=verifiable presentations=] have many
-attributes and values that are identified by [=URLs=] [[URL]]. However,
+properties and values that are identified by [=URLs=] [[URL]]. However,
 those [=URLs=] can be long and not very human-friendly. In such cases,
 short-form human-friendly aliases can be more helpful. This specification uses
 the `@context` [=property=] to map such short-form aliases to the
@@ -1572,9 +1572,9 @@ respectively. See
         </p>
 
         <p class="note">
-The `@direction` attributes in the examples below are not required
+The `@direction` property in the examples below are not required
 for the associated single-language strings, as their default directions are the
-same as those set in the attribute. We include the `@direction` attributes here
+same as those set in the value. We include the `@direction` property here
 for clarity of demonstration, and to make copy+paste+edit deliver functional
 results. Implementers are encouraged to read the section on
 <a data-cite="JSON-LD11#string-internationalization">JSON-LD String Internationalization</a>
@@ -3788,9 +3788,9 @@ have at least a draft specification that is being incubated in a community group
               <td>`confidenceMethod`</td>
               <td>
 A property used for specifying one or more methods that a verifier might use to
-increase their confidence that the value of an attribute in or of a verifiable
+increase their confidence that the value of a property in or of a verifiable
 credential or verifiable presentation is accurate, including but not limited to
-attributes such as `initialRecipient` (a/k/a `issuee`), `presenter`,
+properties such as `initialRecipient` (a/k/a `issuee`), `presenter`,
 `authorizedPresenter`, `holder`, etc. The associated vocabulary URL MUST be
 `https://www.w3.org/2018/credentials#confidenceMethod`.
                 <p class="issue" title="(AT RISK) Reservation depends on implementations">
@@ -5175,11 +5175,11 @@ than is necessary to establish that the person is above a certain age.
 It is considered best practice for [=issuers=] to atomize information or use
 a signature scheme that allows for [=selective disclosure=]. For example, an
 [=issuer=] of driver's licenses could issue a [=verifiable credential=]
-containing every attribute that appears on a driver's license, as well as a set
+containing every property that appears on a driver's license, as well as a set
 of [=verifiable credentials=] where every [=verifiable credential=]
-contains only a single attribute, such as a person's birthday. It could also
+contains only a single property, such as a person's birthday. It could also
 issue more abstract [=verifiable credentials=] (for example, a
-[=verifiable credential=] containing only an `ageOver` attribute).
+[=verifiable credential=] containing only an `ageOver` property).
 One possible adaptation would be for [=issuers=] to provide secure HTTP
 endpoints for retrieving single-use [=bearer credentials=] that promote the
 pseudonymous usage of [=verifiable credentials=]. Implementers that find this
@@ -5619,7 +5619,7 @@ that insist on collection and long-term retention of personally identifiable
 information can cause harm to individuals and organizations if that same
 information is compromised and accessed by an attacker. The technologies
 described by this specification enable [=holders=] to more-readily prove
-attributes about themselves and others, reducing the need for long-term data
+properties about themselves and others, reducing the need for long-term data
 retention by [=verifiers=]. Alternatives include keeping logs that the
 information was collected and checked, as well as random tests to ensure
 that compliance regimes are operating as expected.
@@ -5953,7 +5953,7 @@ While the data model outlines the structure and data elements necessary for a
 authorization of presented [=credentials=]. To address this concern,
 implementers might need to explore supplementary methods, such as binding
 [=verifiable credentials=] to strong authentication mechanisms or using
-additional attributes in [=verifiable presentations=]
+additional properties in [=verifiable presentations=]
 to enable proof of control.
         </p>
       </section>
@@ -6253,7 +6253,7 @@ MUST contain a `@value` property whose value is a string, and SHOULD contain a
 `@language` property whose value is a string containing a well-formed
 `Language-Tag` as defined by [[BCP47]], and MAY contain a `@direction` property
 whose value is a [=base direction=] string defined by the `@direction`
-attribute in [[JSON-LD11]]. The language value object MUST NOT include any other
+property in [[JSON-LD11]]. The language value object MUST NOT include any other
 keys beyond `@value`, `@language`, and `@direction`.
         </p>
 
