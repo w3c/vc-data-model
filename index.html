@@ -2999,17 +2999,18 @@ The [=verifiable credentials=] trust model is as follows:
         <ul>
           <li>
 The [=verifier=] trusts the [=issuer=] to issue the [=credential=] that
-it received. To establish this trust, a [=credential=] is expected to either:
+it received after verification has been performed. 
+To establish this trust, a [=credential=] is expected to either:
             <ul>
               <li>
-Secure the [=credential=] with a <a href="#securing-mechanisms">securing mechanism</a> establishing that the
+Be secured with a <a href="#securing-mechanisms">securing mechanism</a> establishing that the
 [=issuer=] generated the [=credential=] (that is, it is a
 [=verifiable credential=]), or
               </li>
               <li>
 Have been transmitted in a way clearly establishing that the [=issuer=]
-generated the [=verifiable credential=] and that the
-[=verifiable credential=] was not tampered with in transit or storage. This
+generated the [=credential=] and that the
+[=credential=] was not tampered with in transit or storage. This
 trust could be weakened depending on the risk assessment of the [=verifier=].
               </li>
             </ul>
@@ -3017,13 +3018,36 @@ trust could be weakened depending on the risk assessment of the [=verifier=].
           <li>
 All [=entities=] trust the [=verifiable data registry=] to be
 tamper-evident and to be a correct record of which data is controlled by which
-[=entities=].
+[=entities=]. This is typically achieved by the method of its publication. 
+This could be by a peer to peer protocol from a trusted publisher, or 
+on a publicly accessible and well known web site (with a content hash), 
+or on a blockchain etc. When entities publish meta data about themselves
+they can be integrity protected by signing with the entity's private key.
           </li>
           <li>
 The [=holder=] and [=verifier=] trust the [=issuer=] to issue
 true (that is, not false) [=credentials=] about the [=subject=], and to
 revoke them quickly when appropriate.
           </li>
+          <li>
+The [=holder=] may trust the [=issuer=] because the [=holder=] already
+has a pre-existing trust relationship with the [=issuer], for example, 
+an employee is provided with an employment [=verifiable credential=] by 
+an employer, or a citizen is issued with an electronic passport by 
+their government. 
+        <p>
+Where no pre-existing trust relationship exists, the [=holder] should 
+have some out of band means of determining if the [=issuer] can be trusted 
+to issue the [=verifiable credential=] that it provides.
+        </p>
+        <p>
+Note. It is not always necessary for the holder to trust the issuer, 
+since the issued [=verifiable credential=] may be an assertion about 
+a subject who is not the holder, or about no-one, and the [=holder] 
+may be willing to relay this information to a [=verifier] without 
+being held accountable for its veracity.
+        </p>
+        </li>
           <li>
 The [=holder=] trusts the [=repository=] to store [=credentials=]
 securely, to not release them to anyone other than the [=holder=], and to not
@@ -3045,7 +3069,16 @@ the:
 [=Issuer=] does not need to know or trust the [=verifier=].
           </li>
         </ul>
-
+       <p>
+How [=verifiers] decide which [=issuers] to trust is out of the scope of 
+this recommendation. However some [=issuers], e.g. well known organisations, 
+may be implicitly trusted by many [=verifiers] because of their reputation. 
+Some [=issuers] and [=verifiers] may be members of a specific community in which
+all community members trust each other as a result of the rules of membership. 
+Some [=verifiers] may trust a specific trust service provider whose 
+responsibility is to vet [=issuers] and list them in a trust list e.g. 
+as specified in ETSI TS 119 612 [[ETSI]].
+        </p>
         <p>
 By decoupling the trust between the [=identity provider=] and the
 [=relying party=] a more flexible and dynamic trust model is created such
