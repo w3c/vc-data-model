@@ -1382,7 +1382,7 @@ where pseudonymity is required. Developers are encouraged to read Section
 <a href="#identifier-based-correlation"></a> carefully when considering such
 scenarios. There are also other types of access and correlation mechanisms documented
 in Section <a href="#privacy-considerations"></a> that create privacy concerns.
-Where privacy is a strong consideration, it is permissible to omit the 
+Where privacy is a strong consideration, it is permissible to omit the
 `id` [=property=]. Some use cases do not need, or explicitly need to omit,
 the `id` [=property=]. Similarly, special attention is to be given to the choice between
 publicly resolvable URLs and other forms of identifiers. Publicly resolvable URLs can
@@ -3000,7 +3000,8 @@ or [=verifier=].
         <h3>Trust Model</h3>
 
         <p>
-The [=verifiable credentials=] trust model is as follows:
+The [=verifiable credentials=] trust model is based on the following
+expectations:
         </p>
 
         <ul>
@@ -3026,9 +3027,9 @@ depending on the risk assessment by the [=verifier=].
           <li>
 All [=entities=] expect the [=verifiable data registry=] to be tamper-evident
 and to be a correct record of which data is controlled by which
-[=entities=]. This is typically achieved by the method of its publication. 
-This could be via a peer-to-peer protocol from a trusted publisher, 
-a publicly accessible and well known web site (with a content hash), 
+[=entities=]. This is typically achieved by the method of its publication.
+This could be via a peer-to-peer protocol from a trusted publisher,
+a publicly accessible and well known web site (with a content hash),
 a blockchain, etc. When entities publish metadata about themselves,
 the publication can be integrity-protected by being signed with the
 entity's private key.
@@ -3042,7 +3043,7 @@ quickly if and when they no longer stand by those [=claims=].
 The [=holder=] might trust the [=issuer=]'s [=claims=] because the [=holder=]
 has a pre-existing trust relationship with the [=issuer=]. For example, an
 employer might provide an employee with an employment [=verifiable credential=],
-or a government might issue an electronic passport to a citizen. 
+or a government might issue an electronic passport to a citizen.
         <p>
 Where no pre-existing trust relationship exists, the [=holder=] might
 have some out-of-band means of determining whether the [=issuer=] is
@@ -3066,16 +3067,16 @@ subsequently present them to a [=verifier=]), and to not corrupt nor lose
 
         <p>
 This trust model differentiates itself from other trust models by ensuring
-the:
+the following:
         </p>
 
         <ul>
           <li>
-[=Issuer=] and the [=verifier=] do not need to trust the
-[=repository=]
+The [=issuer=] and [=verifier=] do not need to know anything about the
+[=repository=].
           </li>
           <li>
-[=Issuer=] does not need to know or trust the [=verifier=].
+The [=issuer=] does not need to know anything about the [=verifier=].
           </li>
         </ul>
        <p>
@@ -3091,15 +3092,14 @@ list such as those specified in [[[ETSI-TRUST-LISTS]]] [[?ETSI-TRUST-LISTS]] or 
 Approved Trust List</a>.
         </p>
         <p>
-By decoupling the trust between the [=identity provider=] and the
-[=relying party=] a more flexible and dynamic trust model is created such
-that market competition and customer choice is increased.
+By decoupling the expectations between the [=issuer=] and the [=verifier=],
+a more flexible and dynamic trust model is created, such that market
+competition and customer choice is increased.
         </p>
 
         <p>
 For more information about how this trust model interacts with various threat
-models studied by the Working Group, see the Verifiable Credentials Use Cases
-document [[VC-USE-CASES]].
+models studied by the Working Group, see the [[[VC-USE-CASES]]] [[VC-USE-CASES]].
         </p>
 
         <p class="note">
@@ -5335,7 +5335,7 @@ properties of the cryptography used.
       </section>
 
       <section class="informative">
-        <h3>Long-Lived Identifier-Based Correlation</h3>
+        <h3>Long-Lived-Identifier-Based Correlation</h3>
 
         <p>
 [=Verifiable credentials=] might contain long-lived identifiers that could
@@ -5890,7 +5890,7 @@ The data expressed in [=verifiable credentials=] and
 [=verifiable presentations=] are valuable since they contain authentic
 statements made by trusted third parties, such as [=issuers=], or
 individuals, such as [=holders=] and [=subjects=]. The storage and
-acessibility of this data can inadvertently create honeypots of 
+acessibility of this data can inadvertently create honeypots of
 sensitive data for malicious actors. These adversaries often seek to
 exploit such resevoirs of sensitive information, aiming to
 acquire and exchange that data for financial gain.
@@ -5901,9 +5901,9 @@ necessary to issue [=verifiable credentials=] to [=holders=] and
 manage the status and revocation of those credentials. Similarly,
 [=issuers=] are advised to avoid the practice of creating publicly
 resolvable credentials that include personally identifiable information
-(PII) or other sensitive data. Software implementers are advised 
-to safeguarded [=verifiable credentials=] using robust consent 
-and access control measures, ensuring that they remain 
+(PII) or other sensitive data. Software implementers are advised
+to safeguarded [=verifiable credentials=] using robust consent
+and access control measures, ensuring that they remain
 inaccessible to unauthorized entities.
         </p>
         <p>
@@ -6435,7 +6435,7 @@ accurately in JSON-LD.
 Despite the ability to encode information as HTML, implementers are strongly
 discouraged from doing so, for the following reasons:
         </p>
-        
+
         <ul>
           <li>
 It requires some version of an HTML processor, which increases the burden of
