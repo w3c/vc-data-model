@@ -42,6 +42,24 @@ var vcwg = {
       status: "WD",
       publisher: "Verifiable Credentials Working Group"
     },
+    "ETSI": {
+      title: "Electronic Signatures and Infrastructures (ESI); Trusted Lists",
+      href: ["https://www.etsi.org/deliver/etsi_ts/119600_119699/119612/02.01.01_60/ts_119612v020101p.pdf"],
+      authors: "ETSI",
+      status: "ETSI Standard TS 119 612 V2.1.1 (2015-07)",
+      publisher: "ETSI"
+    },
+    "VC-DATA-INTEGRITY": {
+      title: "Verifiable Credential Data Integrity",
+      href: "https://www.w3.org/TR/vc-data-integrity/",
+      authors: [
+        "Manu Sporny",
+        "Dave Longley",
+        "Mike Prorock"
+      ],
+      status: "WD",
+      publisher: "Verifiable Credentials Working Group"
+    },
     "VC-CONTROLLER-DOCUMENT": {
       title: "Verifiable Credential Controller Document",
       href: "https://w3c.github.io/vc-controller-document/",
