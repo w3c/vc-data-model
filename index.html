@@ -791,14 +791,15 @@ expected to be added to the graph.
         <h3>Credentials</h3>
 
         <p>
-A [=credential=] is a set of one or more [=claims=] made by the same
-[=entity=]. [=Credentials=] might also include an identifier and metadata
-to describe properties of the [=credential=], such as the
-[=issuer=], the validity date and time period, a representative image,
-[=verification material=], the revocation
-mechanism, and so on. The metadata might be signed by the [=issuer=]. A
-[=verifiable credential=] is a set of tamper-evident [=claims=] and
-metadata that cryptographically prove who issued it.
+A [=credential=] is a set of one or more [=claims=] made by the same [=entity=].
+[=Credentials=] might also include an identifier and metadata to describe
+properties of the [=credential=], such as the [=issuer=], the validity date and
+time period, a representative image, [=verification material=], status
+information, and so on. The metadata might be signed by the [=issuer=]. A
+[=verifiable credential=] is a set of tamper-evident [=claims=] and metadata
+that cryptographically prove who issued it. Examples of [=verifiable
+credentials=] include digital employee identification cards, digital birth
+certificates, and digital educational certificates.
         </p>
 
         <figure id="basic-vc">
@@ -812,19 +813,6 @@ Basic components of a verifiable credential.
         </figure>
 
         <p>
-Examples of [=verifiable credentials=] include digital employee
-identification cards, digital birth certificates, and digital educational
-certificates.
-        </p>
-
-        <p class="note">
-[=Credential=] identifiers are often used to identify specific instances
-of a [=credential=]. These identifiers can also be used for correlation. A
-[=holder=] wanting to minimize correlation is advised to use a selective
-disclosure scheme that does not reveal the [=credential=] identifier.
-        </p>
-
-        <p>
 <a href="#basic-vc"></a> above shows the basic components of a
 [=verifiable credential=], but abstracts the details about how [=claims=]
 are organized into information [=graphs=], which are then organized into
@@ -832,14 +820,17 @@ are organized into information [=graphs=], which are then organized into
 </p>
         <p>
 <a href="#info-graph-vc"></a> below shows a more complete depiction of a
-[=verifiable credential=] using an [=embedded proof=] based on [[?VC-DATA-INTEGRITY]].
-It is composed of at least two information [=graphs=].
-The first of these information [=graphs=], the [=verifiable credential graph=] (which is the [=default graph=]),
-expresses the [=verifiable credential=] itself, through [=credential=] metadata and other [=claims=].
-The second information [=graph=], referred to by the `proof` property, is the <dfn>proof graph</dfn>
-of the [=verifiable credential=], and is a separate [=named graph=].
-The [=proof graph=] expresses the digital proof, which, in this case, is a digital
-signature.
+[=verifiable credential=] using an [=embedded proof=] based on
+[[[?VC-DATA-INTEGRITY]]]. It is composed of at least two information [=graphs=].
+The first of these information [=graphs=], the [=verifiable credential graph=]
+(which is the [=default graph=]), expresses the [=verifiable credential=]
+itself, through [=credential=] metadata and other [=claims=]. The second
+information [=graph=], referred to by the `proof` property, is the
+<dfn>proof graph</dfn> of the [=verifiable credential=], and is a separate
+[=named graph=]. The [=proof graph=] expresses the digital proof, which, in this
+case, is a digital signature. Readers that are interested in the need for
+multiple information graphs can refer to Section
+[[[#verifiable-credential-graphs]]].
         </p>
 
         <figure id="info-graph-vc">
@@ -897,6 +888,13 @@ arrow, to a separate rectangle, containing a single text field:
             based on [[[VC-JOSE-COSE]]] [[?VC-JOSE-COSE]].
           </figcaption>
         </figure>
+
+        <p class="note">
+[=Credential=] identifiers are often used to identify specific instances
+of a [=credential=]. These identifiers can also be used for correlation. A
+[=holder=] wanting to minimize correlation is advised to use a selective
+disclosure scheme that does not reveal the [=credential=] identifier.
+        </p>
 
         <p class="note">
 It is possible to have a [=credential=], such as a marriage certificate,
