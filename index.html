@@ -1306,9 +1306,9 @@ information can be used during [=validation=] processes as described in Appendix
           <dt><dfn class="export" data-lt="type|types">type</dfn></dt>
           <dd>
 The value of the `type` [=property=] MUST be one or more
-<a href="https://www.w3.org/TR/json-ld/#dfn-term">terms</a> and/or absolute
-[=URLs=] (<a data-cite="URL#absolute-url-string">absolute url string</a>). If
-more than one value is provided, the order does not matter.
+<a data-cite="JSON-LD11#dfn-term">terms</a> and/or
+<a data-cite="URL#absolute-url-string">absolute URL strings</a>. If more than
+one value is provided, the order does not matter.
           </dd>
         </dl>
 
@@ -1424,13 +1424,13 @@ more easily detect and process this additional information.
         </p>
 
         <p>
-When processing encapsulated objects defined in this specification, (for
-example, objects associated with the `credentialSubject` object or
-deeply nested therein), software systems SHOULD use the [=type=] information
-specified in encapsulating objects higher in the hierarchy. Specifically, an
-encapsulating object, such as a [=credential=], SHOULD convey the associated
-object [=types=] so that [=verifiers=] can quickly determine the contents
-of an associated object based on the encapsulating object [=type=].
+When processing encapsulated objects defined in this specification, such as
+objects associated with the `credentialSubject` object or deeply nested therein,
+software systems SHOULD use the [=type=] information specified in encapsulating
+objects higher in the hierarchy. Specifically, an encapsulating object, such as
+a [=credential=], SHOULD convey the associated object [=types=] so that
+[=verifiers=] can quickly determine the contents of an associated object based
+on the encapsulating object [=type=].
         </p>
 
         <p>
@@ -1454,16 +1454,24 @@ Title of the degree in the `name` property.
 
         <p>
 This enables implementers to rely on values associated with the `type` property
-for [=verification=] purposes. [=Types=], and their associated properties, are
-expected to be documented in at least a human-readable specification, and
-preferably, in an additional machine-readable representation.
+for [=verification=] purposes. Object types, and their associated values, are
+expected to be documented in at least a human-readable specification that can
+be found at the [=URL=] for the type. For example, the human-readable
+definition for the `BitstringStatusList` type can be found at
+<a href="https://www.w3.org/ns/credentials/status/#BitstringStatusList">
+https://www.w3.org/ns/credentials/status/#BitstringStatusList</a>. It is also
+suggested that a
+<a href="https://www.w3.org/ns/credentials/status/index.jsonld">
+machine-readable version</a> be provided, through HTTP content negotiation, at
+the same URL.
         </p>
 
-        <p class="note">
-The type system used in the data model described in this specification allows
-for multiple ways to associate types with data. Implementers and authors are
-urged to read the section on typing in the Verifiable Credentials
-Implementation Guidelines [[?VC-IMP-GUIDE]].
+        <p class="note" title="Creating new verifiable credential types">
+Explaining how to create new types of [=verifiable credentials=] is beyond
+the scope of this specification. Readers that are interested in doing so are
+advised to read the Section on
+<a data-cite="?VC-IMP-GUIDE#creating-new-credential-types">
+Creating New Credential Types</a> in the [[[?VC-IMP-GUIDE]]].
         </p>
 
       </section>
