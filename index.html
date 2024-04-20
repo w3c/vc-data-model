@@ -791,14 +791,15 @@ expected to be added to the graph.
         <h3>Credentials</h3>
 
         <p>
-A [=credential=] is a set of one or more [=claims=] made by the same
-[=entity=]. [=Credentials=] might also include an identifier and metadata
-to describe properties of the [=credential=], such as the
-[=issuer=], the validity date and time period, a representative image,
-[=verification material=], the revocation
-mechanism, and so on. The metadata might be signed by the [=issuer=]. A
-[=verifiable credential=] is a set of tamper-evident [=claims=] and
-metadata that cryptographically prove who issued it.
+A [=credential=] is a set of one or more [=claims=] made by the same [=entity=].
+[=Credentials=] might also include an identifier and metadata to describe
+properties of the [=credential=], such as the [=issuer=], the validity date and
+time period, a representative image, [=verification material=], status
+information, and so on. The metadata might be signed by the [=issuer=]. A
+[=verifiable credential=] is a set of tamper-evident [=claims=] and metadata
+that cryptographically prove who issued it. Examples of [=verifiable
+credentials=] include digital employee identification cards, digital birth
+certificates, and digital educational certificates.
         </p>
 
         <figure id="basic-vc">
@@ -812,19 +813,6 @@ Basic components of a verifiable credential.
         </figure>
 
         <p>
-Examples of [=verifiable credentials=] include digital employee
-identification cards, digital birth certificates, and digital educational
-certificates.
-        </p>
-
-        <p class="note">
-[=Credential=] identifiers are often used to identify specific instances
-of a [=credential=]. These identifiers can also be used for correlation. A
-[=holder=] wanting to minimize correlation is advised to use a selective
-disclosure scheme that does not reveal the [=credential=] identifier.
-        </p>
-
-        <p>
 <a href="#basic-vc"></a> above shows the basic components of a
 [=verifiable credential=], but abstracts the details about how [=claims=]
 are organized into information [=graphs=], which are then organized into
@@ -832,14 +820,17 @@ are organized into information [=graphs=], which are then organized into
 </p>
         <p>
 <a href="#info-graph-vc"></a> below shows a more complete depiction of a
-[=verifiable credential=] using an [=embedded proof=] based on [[?VC-DATA-INTEGRITY]].
-It is composed of at least two information [=graphs=].
-The first of these information [=graphs=], the [=verifiable credential graph=] (which is the [=default graph=]),
-expresses the [=verifiable credential=] itself, through [=credential=] metadata and other [=claims=].
-The second information [=graph=], referred to by the `proof` property, is the <dfn>proof graph</dfn>
-of the [=verifiable credential=], and is a separate [=named graph=].
-The [=proof graph=] expresses the digital proof, which, in this case, is a digital
-signature.
+[=verifiable credential=] using an [=embedded proof=] based on
+[[[?VC-DATA-INTEGRITY]]]. It is composed of at least two information [=graphs=].
+The first of these information [=graphs=], the [=verifiable credential graph=]
+(which is the [=default graph=]), expresses the [=verifiable credential=]
+itself, through [=credential=] metadata and other [=claims=]. The second
+information [=graph=], referred to by the `proof` property, is the
+<dfn>proof graph</dfn> of the [=verifiable credential=], and is a separate
+[=named graph=]. The [=proof graph=] expresses the digital proof, which, in this
+case, is a digital signature. Readers that are interested in the need for
+multiple information graphs can refer to Section
+[[[#verifiable-credential-graphs]]].
         </p>
 
         <figure id="info-graph-vc">
@@ -897,6 +888,13 @@ arrow, to a separate rectangle, containing a single text field:
             based on [[[VC-JOSE-COSE]]] [[?VC-JOSE-COSE]].
           </figcaption>
         </figure>
+
+        <p class="note">
+[=Credential=] identifiers are often used to identify specific instances
+of a [=credential=]. These identifiers can also be used for correlation. A
+[=holder=] wanting to minimize correlation is advised to use a selective
+disclosure scheme that does not reveal the [=credential=] identifier.
+        </p>
 
         <p class="note">
 It is possible to have a [=credential=], such as a marriage certificate,
@@ -1231,7 +1229,7 @@ where pseudonymity is required. Developers are encouraged to read Section
 <a href="#identifier-based-correlation"></a> carefully when considering such
 scenarios. There are also other types of access and correlation mechanisms documented
 in Section <a href="#privacy-considerations"></a> that create privacy concerns.
-Where privacy is a strong consideration, it is permissible to omit the 
+Where privacy is a strong consideration, it is permissible to omit the
 `id` [=property=]. Some use cases do not need, or explicitly need to omit,
 the `id` [=property=]. Similarly, special attention is to be given to the choice between
 publicly resolvable URLs and other forms of identifiers. Publicly resolvable URLs can
@@ -2783,7 +2781,7 @@ The [=verifier=] expects the [=issuer=] to verifiably issue the
 either of the following:
             <ul>
               <li>
-An [=issuer=] is expected to secure a [=credential=] with a 
+An [=issuer=] is expected to secure a [=credential=] with a
 <a href="#securing-mechanisms">securing mechanism</a> which establishes
 that the [=issuer=] generated the [=credential=]. (In other words, an
 [=issuer=] is expected to [=issue=] a [=verifiable credential=].)
@@ -5628,7 +5626,7 @@ The data expressed in [=verifiable credentials=] and
 [=verifiable presentations=] are valuable since they contain authentic
 statements made by trusted third parties, such as [=issuers=], or
 individuals, such as [=holders=] and [=subjects=]. The storage and
-acessibility of this data can inadvertently create honeypots of 
+acessibility of this data can inadvertently create honeypots of
 sensitive data for malicious actors. These adversaries often seek to
 exploit such resevoirs of sensitive information, aiming to
 acquire and exchange that data for financial gain.
@@ -5639,9 +5637,9 @@ necessary to issue [=verifiable credentials=] to [=holders=] and
 manage the status and revocation of those credentials. Similarly,
 [=issuers=] are advised to avoid the practice of creating publicly
 resolvable credentials that include personally identifiable information
-(PII) or other sensitive data. Software implementers are advised 
-to safeguarded [=verifiable credentials=] using robust consent 
-and access control measures, ensuring that they remain 
+(PII) or other sensitive data. Software implementers are advised
+to safeguarded [=verifiable credentials=] using robust consent
+and access control measures, ensuring that they remain
 inaccessible to unauthorized entities.
         </p>
         <p>
@@ -6173,7 +6171,7 @@ accurately in JSON-LD.
 Despite the ability to encode information as HTML, implementers are strongly
 discouraged from doing so, for the following reasons:
         </p>
-        
+
         <ul>
           <li>
 It requires some version of an HTML processor, which increases the burden of
