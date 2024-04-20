@@ -1292,30 +1292,23 @@ Software systems that process the kinds of objects specified in this document
 use type information to determine whether or not a provided
 [=verifiable credential=] or [=verifiable presentation=] is appropriate
 for the intended use case. This specification defines a `type`
-[=property=] for the expression of type information. This type information
-can be used during [=validation=] processes as described in Appendix
-<a href="#validation"></a>.
+[=property=] for the expression of object type information. This type
+information can be used during [=validation=] processes as described in Appendix
+[[[#validation-0]]].
         </p>
 
         <p>
-[=Verifiable credentials=] and [=verifiable presentations=] MUST have a
-`type` [=property=]. That is, any [=credential=] or
-[=presentation=] that does not have `type` [=property=]
-<em>is not [=verifiable=]</em>, so is neither a [=verifiable credential=]
-nor a [=verifiable presentation=].
+[=Verifiable credentials=] and [=verifiable presentations=] MUST express a
+`type` [=property=] with an associated value.
         </p>
 
         <dl>
           <dt><dfn class="export" data-lt="type|types">type</dfn></dt>
           <dd>
-The value of the `type` [=property=] MUST be, or map to (through
-interpretation of the `@context` property), one or more [=URLs=].
-If more than one [=URL=] is provided, the [=URLs=] MUST be interpreted
-as an unordered set. Syntactic conveniences SHOULD be used to ease developer
-usage. Such conveniences might include JSON-LD terms. It is RECOMMENDED that
-each [=URL=] in the `type` be one which, if dereferenced, results
-in a document containing machine-readable information about the
-`type`.
+The value of the `type` [=property=] MUST be one or more
+<a href="https://www.w3.org/TR/json-ld/#dfn-term">terms</a> and/or absolute
+[=URLs=] (<a data-cite="URL#absolute-url-string">absolute url string</a>). If
+more than one value is provided, the order does not matter.
           </dd>
         </dl>
 
@@ -1392,7 +1385,7 @@ A valid [=credential=] status [=type=]. For example,<br>
               </td>
               <td>
 A valid terms of use [=type=]. For example,<br>
-`"type": "ExampleTermsPolicy"`)
+`"type": "ExampleTermsPolicy"`
               </td>
             </tr>
 
@@ -1460,11 +1453,10 @@ Title of the degree in the `name` property.
         </ul>
 
         <p>
-This enables implementers to rely on values associated with the
-`type` property for [=verification=] purposes. The expectation of
-[=types=] and their associated properties should be documented in at least a
-human-readable specification, and preferably, in an additional machine-readable
-representation.
+This enables implementers to rely on values associated with the `type` property
+for [=verification=] purposes. [=Types=], and their associated properties, are
+expected to be documented in at least a human-readable specification, and
+preferably, in an additional machine-readable representation.
         </p>
 
         <p class="note">
