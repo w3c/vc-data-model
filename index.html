@@ -1115,27 +1115,18 @@ and context files that happen to fit their use case. They can explore the
         <p>
 When two software systems need to exchange data, they need to use terminology
 that both systems understand. As an analogy, consider how two people
-communicate. Both people must use the same language and the words they use must
-mean the same thing to each other. This might be referred to as
-<em>the context of a conversation</em>.
+communicate effectively by using the same language where the words they use,
+such as "name" and "website", mean the same thing to each individual. This is
+sometimes referred to as <em>the context of a conversation</em>. This
+specification uses a similar concept to achieve similar results for software
+systems by establishing a context in which to communicate.
         </p>
         <p>
-[=Verifiable credentials=] and [=verifiable presentations=] have many
-properties and values that are identified by [=URLs=] [[URL]]. However,
-those [=URLs=] can be long and not very human-friendly. In such cases,
-short-form human-friendly aliases can be more helpful. This specification uses
-the `@context` [=property=] to map such short-form aliases to the
-[=URLs=] required by specific [=verifiable credentials=] and [=verifiable
-presentations=].
-       </p>
-  <p class="note">
-In JSON-LD, the `@context` [=property=] can also be used to
-communicate other details, such as datatype information, language information,
-transformation rules, and so on, which are beyond the needs of this
-specification, but might be useful in the future or to related work. For more
-information, see
-<a href="https://www.w3.org/TR/json-ld11/#the-context">Section 3.1: The Context</a>
-of the [[[JSON-LD11]]] [[JSON-LD11]] specification.
+Software systems that process [=verifiable credentials=] and [=verifiable
+presentations=] identify terminology by using [=URLs=] [[URL]] for each term.
+However, those [=URLs=] can be long and not very human-friendly and short-form,
+human-friendly aliases can be more helpful. This specification uses the
+`@context` [=property=] to map such short-form aliases to the [=URLs=].
         </p>
         <p>
 [=Verifiable credentials=] and [=verifiable presentations=] MUST include a
@@ -1145,11 +1136,10 @@ of the [[[JSON-LD11]]] [[JSON-LD11]] specification.
         <dl>
           <dt><dfn class="export">@context</dfn></dt>
           <dd>
-The value of the `@context` [=property=] MUST be an ordered set
+The value of the `@context` [=property=] MUST be an [=ordered set=]
 where the first item is a [=URL=] with the value
-`https://www.w3.org/ns/credentials/v2`. For reference, a copy of
-the base context is provided in Appendix <a href="#base-context"></a>.
-Subsequent items in the array MUST be composed of any combination of
+`https://www.w3.org/ns/credentials/v2`.
+Subsequent items in the [=ordered set=] MUST be composed of any combination of
 [=URLs=] and/or objects where each is processable as a
 <a data-cite="JSON-LD11#the-context">JSON-LD Context</a>.
           </dd>
@@ -1178,25 +1168,33 @@ Subsequent items in the array MUST be composed of any combination of
         <p>
 The example above uses the base context [=URL=]
 (`https://www.w3.org/ns/credentials/v2`) to establish that the
-conversation is about a [=verifiable credential=]. The second [=URL=]
-(`https://www.w3.org/ns/credentials/examples/v2`) establishes that
-the conversation is about examples.
-        </p>
-
-        <p class="note">
-This document uses the example context [=URL=]
-(`https://www.w3.org/ns/credentials/examples/v2`) for the purpose
-of demonstrating examples. Implementations are expected to not use this
-[=URL=] for any other purpose, such as in pilot or production systems.
+data exchange is about a [=verifiable credential=].
         </p>
 
         <p>
-The data available at `https://www.w3.org/ns/credentials/v2` is a
-static document that is never updated and SHOULD be downloaded and cached. The
-associated human-readable vocabulary document for the Verifiable Credentials
-Data Model is available at
+The second [=URL=] (`https://www.w3.org/ns/credentials/examples/v2`) is used for
+the purpose of demonstrating examples. Implementations are expected to not use
+this [=URL=] for any other purpose, such as in pilot or production systems.
+        </p>
+
+        <p>
+The data available at `https://www.w3.org/ns/credentials/v2` is a static
+document that is never updated and SHOULD be downloaded and cached. For
+reference, a copy of the base context is provided in Appendix
+[[[#base-context]]]. The associated human-readable vocabulary document for
+the Verifiable Credentials Data Model is available at
 <a href="https://www.w3.org/2018/credentials/">https://www.w3.org/2018/credentials/</a>.
 This concept is further expanded on in Section <a href="#extensibility"></a>.
+        </p>
+
+        <p class="note" title="See JSON-LD for more information about @context.">
+In JSON-LD, the `@context` [=property=] can also be used to
+communicate other details, such as datatype information, language information,
+transformation rules, and so on, which are beyond the needs of this
+specification, but might be useful in the future or to related work. For more
+information, see
+<a href="https://www.w3.org/TR/json-ld11/#the-context">Section 3.1: The Context</a>
+of the [[[JSON-LD11]]] [[JSON-LD11]] specification.
         </p>
 
       </section>
