@@ -5211,59 +5211,65 @@ make purchases without revealing more PII than necessary.
 
         <p>
 Privacy violations occur when information divulged in one context leaks into
-another. Accepted best practice for preventing such violations is to limit the
-information requested, and received, to the absolute minimum necessary. This
-data minimization approach is required by regulation in multiple jurisdictions,
-including the Health Insurance Portability and Accountability Act (HIPAA) in the
-United States and the General Data Protection Regulation (GDPR) in the European
-Union.
+another. One accepted best practice for preventing such a violation is for
+[=verifiers=] to limit the information requested, and received, to the absolute
+minimum necessary for a particular transaction. This data minimization approach
+is required by regulation in multiple jurisdictions, including the Health
+Insurance Portability and Accountability Act (HIPAA) in the United States and
+the General Data Protection Regulation (GDPR) in the European Union.
         </p>
         <p>
 With [=verifiable credentials=], data minimization for [=issuers=] means
-limiting the content of a [=verifiable credential=] to the minimum required
-by potential [=verifiers=] for expected use. For [=verifiers=], data
-minimization means limiting the scope of the information requested or
-required for accessing services.
+limiting the content of a [=verifiable credential=] to the minimum required by
+potential [=verifiers=] for expected use. For [=verifiers=], data minimization
+means limiting the scope of the information requested or required for accessing
+services.
         </p>
         <p>
 For example, a driver's license containing a driver's ID number, height, weight,
-birthday, and home address is a [=credential=] containing more information
-than is necessary to establish that the person is above a certain age.
+birthday, and home address expressed as a [=verifiable credential=] contains
+more information than is necessary to establish that the person is above a
+certain age.
         </p>
 
         <p>
-It is considered best practice for [=issuers=] to atomize information or use
-a signature scheme that allows for [=selective disclosure=]. For example, an
+It is considered best practice for [=issuers=] to atomize information or use a
+securing mechanism that allows for [=selective disclosure=]. For example, an
 [=issuer=] of driver's licenses could issue a [=verifiable credential=]
-containing every property that appears on a driver's license, as well as a set
-of [=verifiable credentials=] where every [=verifiable credential=]
-contains only a single property, such as a person's birthday. It could also
-issue more abstract [=verifiable credentials=] (for example, a
-[=verifiable credential=] containing only an `ageOver` property).
-One possible adaptation would be for [=issuers=] to provide secure HTTP
-endpoints for retrieving single-use [=bearer credentials=] that promote the
-pseudonymous usage of [=verifiable credentials=]. Implementers that find this
-impractical or unsafe, should consider using [=selective disclosure=] schemes
-that eliminate dependence on [=issuers=] at proving time and reduce temporal
-correlation risk from [=issuers=].
+containing every property that appears on a driver's license and allow each
+property to be selectively disclosed by the [=holder=]. It could also issue more
+abstract [=verifiable credentials=] (for example, a [=verifiable credential=]
+containing only an `ageOver` property). One possible adaptation would be for
+[=issuers=] to provide secure HTTP endpoints for retrieving single-use [=bearer
+credentials=] that promote the pseudonymous usage of [=verifiable credentials=].
+Implementers that find this impractical or unsafe, might consider using
+[=selective disclosure=] schemes that eliminate dependence on [=issuers=] at
+proving time and reduce temporal correlation risk from [=issuers=].
         </p>
 
         <p>
 [=Verifiers=] are urged to only request information that is absolutely
 necessary for a specific transaction to occur. This is important for at least
-two reasons. It:
+two reasons.
         </p>
 
         <ul>
           <li>
-Reduces the liability on the [=verifier=] for handling highly sensitive
-information that it does not need to.
+It reduces the liability on the [=verifier=] for handling highly sensitive
+information that it does not need to, and
           </li>
           <li>
-Enhances the privacy of the individual by only asking for information required
-for a specific transaction.
+it enhances the privacy of the individual by only asking for information
+required for a specific transaction.
           </li>
         </ul>
+
+        <p>
+Implementers of software used by [=holders=] are urged to disclose what
+information is being requested by a [=verifier=] such that a [=holder=] can
+push back on the over-collection of information that is unnecessary for the
+transaction.
+        </p>
 
         <p class="note">
 While it is possible to practice the principle of minimum disclosure, it might
