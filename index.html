@@ -641,10 +641,10 @@ specification defines how verifiers verify [=verifiable credentials=] and
 [=verifiable presentations=].<br/>
 It also specifies that [=verifiers=] validate claims in [=verifiable
 credentials=] before relying on them. However, the means for such validation
-vary widely and are outside the scope of this specification. It is expected
-that [=verifiers=] will trust certain [=issuers=] for certain claims and
-apply their own rules to determine which claims in which [=credentials=]
-are suitable for use by their systems.
+vary widely and are outside the scope of this specification. [=Verifiers=]
+trust certain [=issuers=] for certain claims and apply their own rules to
+determine which claims in which [=credentials=] are suitable for use by their
+systems.
         </dd>
         <dt><dfn class="export">verifiable credential</dfn></dt>
         <dd>
@@ -1076,14 +1076,14 @@ tooling to start issuing, holding, and verifying prototype credentials.
         </p>
 
         <p>
-It is expected that a developer will change `MyPrototypeCredential` below to
-the type of credential they would like to create. Since
-[=verifiable credentials=] talk about subjects, each property-value pair in
-the `credentialSubject` object expresses a particular property of the
-credential subject. Once a developer has added a number of these property-value
-combinations, the modified object can be sent to [=verifiable credential=]
-issuer software and a [=verifiable credential=] will be created for the
-developer. From a prototyping standpoint, that is all a developer needs to do.
+A developer will change `MyPrototypeCredential` below to the type of credential
+they would like to create. Since [=verifiable credentials=] talk about subjects,
+each property-value pair in the `credentialSubject` object expresses a
+particular property of the credential subject. Once a developer has added a
+number of these property-value combinations, the modified object can be sent to
+[=verifiable credential=] issuer software and a [=verifiable credential=] will
+be created for the developer. From a prototyping standpoint, that is all a
+developer needs to do.
         </p>
 
         <pre class="example nohighlight" title="A template for creating prototype verifiable credentials">
@@ -1273,12 +1273,11 @@ also known as a [=DID=].
         <p class="note">
 As of this publication, [=DIDs=] are a new type of identifier that are not
 necessary for [=verifiable credentials=] to be useful. Specifically,
-[=verifiable credentials=] do not depend on [=DIDs=] and [=DIDs=] do
-not depend on [=verifiable credentials=]. However, it is expected that many
-[=verifiable credentials=] will use [=DIDs=] and that software libraries
-implementing this specification will probably need to resolve [=DIDs=].
-[=DID=]-based URLs are used for expressing identifiers associated with
-[=subjects=], [=issuers=], [=holders=], credential status lists,
+[=verifiable credentials=] do not depend on [=DIDs=] and [=DIDs=] do not depend
+on [=verifiable credentials=]. However, many [=verifiable credentials=] will use
+[=DIDs=] and software libraries implementing this specification will need to
+resolve [=DIDs=]. [=DID=]-based URLs are used for expressing identifiers
+associated with [=subjects=], [=issuers=], [=holders=], credential status lists,
 cryptographic keys, and other machine-readable information associated with a
 [=verifiable credential=].
         </p>
@@ -2106,11 +2105,11 @@ guidance in Section <a href="#types"></a> MUST be followed.
 The precise content of the [=credential=] status information is determined by
 the specific `credentialStatus` [=type=] definition, and varies
 depending on factors such as whether it is simple to implement or if it is
-privacy-enhancing. It is expected that the value will provide enough information
-to determine the current status of the [=credential=] and that machine
-readable information will be retrievable from the URL. For example, the object
-could contain a link to an external document which notes whether or not the
-[=credential=] is suspended or revoked.
+privacy-enhancing. The value will provide enough information to determine the
+current status of the [=credential=] and that machine readable information will
+be retrievable from the URL. For example, the object could contain a link to an
+external document which notes whether or not the [=credential=] is suspended or
+revoked.
         </p>
 
         <pre class="example nohighlight"
@@ -2346,8 +2345,8 @@ dereferenced, results in a document containing machine-readable information
 about the [=holder=] that can be used to [=verify=] the information
 expressed in the [=verifiable presentation=].
 If the `holder` [=property=] is absent, information about the
-[=holder=] is expected to either be obtained via the securing mechanism, or
-to not pertain to the [=validation=] of the [=verifiable presentation=].
+[=holder=] is obtained either via the securing mechanism, or
+does not pertain to the [=validation=] of the [=verifiable presentation=].
           </dd>
         </dl>
 
@@ -2776,17 +2775,16 @@ The [=verifier=] expects the [=issuer=] to verifiably issue the
 either of the following:
             <ul>
               <li>
-An [=issuer=] is expected to secure a [=credential=] with a
-<a href="#securing-mechanisms">securing mechanism</a> which establishes
-that the [=issuer=] generated the [=credential=]. (In other words, an
-[=issuer=] is expected to [=issue=] a [=verifiable credential=].)
+An [=issuer=] secures a [=credential=] with a
+<a href="#securing-mechanisms">securing mechanism</a> which establishes that the
+[=issuer=] generated the [=credential=]. In other words, an [=issuer=]
+[=issues=] a [=verifiable credential=].
               </li>
               <li>
-A [=credential=] is expected to be transmitted in a way that clearly
-establishes that the [=issuer=] generated the [=credential=], and that
-the [=credential=] was not tampered with in transit nor storage. This
-expectation could be weakened, depending on the risk assessment by the
-[=verifier=].
+A [=credential=] is transmitted in a way that clearly establishes that the
+[=issuer=] generated the [=credential=], and that the [=credential=] was not
+tampered with in transit nor storage. This expectation could be weakened,
+depending on the risk assessment by the [=verifier=].
               </li>
             </ul>
           </li>
@@ -4492,9 +4490,9 @@ system.
         <section class="informative">
           <h2>HTTP</h2>
           <p>
-It is expected that HTTP endpoints will use the media types associated with
-[=verifiable credentials=] and [=verifiable presentations=] in accept
-headers and when indicating content types.
+HTTP clients and servers use media types associated with [=verifiable
+credentials=] and [=verifiable presentations=] in accept headers and when
+indicating content types.
           </p>
           <p>
 Nonetheless, HTTP servers might ignore the accept header and return another
@@ -6399,22 +6397,22 @@ and are published in places like the [[[VC-SPECS]]].
 
         <p>
 The type of a credential is expressed via the <a href="#types">type</a>
-property. A [=verifiable credential=] of a specific type is expected to contain
-specific [=properties=] (which might be deeply nested) that can be used to determine whether or not the
-[=presentation=] satisfies a set of processing rules that the [=verifier=]
-executes. By requesting [=verifiable credentials=] of a particular `type`, the
-[=verifier=] is able to gather specific information from the [=holder=], which
-originated with the [=issuer=] of each [=verifiable credential=], that will
-enable the [=verifier=] to determine the next stage of an interaction with a [=holder=].
+property. A [=verifiable credential=] of a specific type contains specific
+[=properties=] (which might be deeply nested) that can be used to determine
+whether or not the [=presentation=] satisfies a set of processing rules that the
+[=verifier=] executes. By requesting [=verifiable credentials=] of a particular
+`type`, the [=verifier=] is able to gather specific information from the
+[=holder=], which originated with the [=issuer=] of each [=verifiable
+credential=], that will enable the [=verifier=] to determine the next stage of
+an interaction with a [=holder=].
         </p>
 
         <p>
 When a [=verifier=] requests a [=verifiable credential=] of a specific type,
 there will be a set of mandatory and optional [=claims=] that are associated
-with that type. It is expected that a [=verifier=]'s validation of a
-[=verifiable credential=] will fail when mandatory [=claims=] are not
-included, and that any [=claim=] that is not associated with the specific
-type will be ignored. In other words, a
+with that type. A [=verifier=]'s validation of a [=verifiable credential=] will
+fail when mandatory [=claims=] are not included, and that any [=claim=] that is
+not associated with the specific type will be ignored. In other words, a
 [=verifier=] will perform input validation on the [=verifiable credential=] it
 receives and will reject malformed input based on the credential type
 specification.
@@ -6427,15 +6425,14 @@ specification.
 
         <p>
 In the [=verifiable credentials=] presented by a [=holder=], the value
-associated with the `id` [=property=] for each
-`credentialSubject` is expected to identify a [=subject=] to the
-[=verifier=]. If the [=holder=] is also the [=subject=], then
-the [=verifier=] could authenticate the [=holder=] if they have
-[=verification=] metadata related to the [=holder=]. The [=verifier=]
-could then authenticate the [=holder=] using a signature generated by the [=holder=]
-contained in the [=verifiable presentation=]. The `id`
-[=property=] is optional. [=Verifiers=] could use other [=properties=]
-in a [=verifiable credential=] to uniquely identify a [=subject=].
+associated with the `id` [=property=] for each `credentialSubject` identifies a
+[=subject=] to the [=verifier=]. If the [=holder=] is also the [=subject=], then
+the [=verifier=] could authenticate the [=holder=] if they have [=verification=]
+metadata related to the [=holder=]. The [=verifier=] could then authenticate the
+[=holder=] using a signature generated by the [=holder=] contained in the
+[=verifiable presentation=]. The `id` [=property=] is optional. [=Verifiers=]
+could use other [=properties=] in a [=verifiable credential=] to uniquely
+identify a [=subject=].
         </p>
 
         <p class="note">
@@ -6450,9 +6447,8 @@ Guidelines [[VC-IMP-GUIDE]] document.
         <h3>Issuer</h3>
 
         <p>
-The value associated with the `issuer` [=property=] is expected
-to identify an [=issuer=] that is known to and trusted by the
-[=verifier=].
+The value associated with the `issuer` [=property=] identifies an [=issuer=]
+to the [=verifier=].
         </p>
 
         <p>
@@ -6475,15 +6471,15 @@ issuers in addition to, or instead of, the mapping described above.
       <section class="informative">
         <h4>Holder</h4>
         <p>
-The value associated with the `holder` [=property=] is expected
-to be usable to identify the [=holder=] to the [=verifier=].
+The value associated with the `holder` [=property=] is used to identify the
+[=holder=] to the [=verifier=].
         </p>
         <p>
 Often relevant metadata about the [=holder=], as identified by the value of
 the `holder` [=property=], is available to, or retrievable by, the
 [=verifier=]. For example, a [=holder=] can publish information containing
 the [=verification material=] used to secure [=verifiable presentations=]. This
-metadata is expected to be used when checking proofs on [=verifiable presentations=].
+metadata is used when checking proofs on [=verifiable presentations=].
 Some cryptographic identifiers contain all necessary metadata in the identifier itself.
 In those cases, no additional metadata is required. Other identifiers use verifiable data
 registries where such metadata is automatically published for use by
@@ -6583,7 +6579,7 @@ authentication or encryption, of the cryptographic public key.
 The public key is not suspended, revoked, or expired.
           </li>
           <li>
-The digital signature is expected to verify.
+The digital signature verifies.
           </li>
           <li>
 Any additional requirements defined by the securing mechanism are satisfied.
@@ -7128,9 +7124,9 @@ This media type can be used for credentials secured using an
 [=enveloping proof=].
         </p>
         <p>
-A [[JSON-LD11]] context is expected to be present in the body of the document, and
-as indicated by the presence of `ld+json` in the media type, the credential is
-expected to be a valid
+A [[JSON-LD11]] context is expected to be present in the body of the document,
+and as indicated by the presence of `ld+json` in the media type, the credential
+is expected to be a valid
 <a href="https://www.w3.org/TR/json-ld11/#dfn-json-ld-document">JSON-LD
 document</a>.
         </p>
