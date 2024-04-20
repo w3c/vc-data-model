@@ -5930,72 +5930,28 @@ confirmation of the validity of all [=verification material=] before using it.
         <p>
 [=Verifiable credentials=] often contain URLs to data that resides outside of
 the [=verifiable credential=] itself. Linked content that exists outside a
-[=verifiable credential=], such as images, JSON-LD Contexts, JSON Schemas,
-and other machine-readable data, are often not protected against tampering
-because the data resides outside of the protection of the
+[=verifiable credential=], such as images, JSON-LD extension contexts,
+JSON Schemas, and other machine-readable data, are not protected by default
+against tampering because the data resides outside of the protection of the
 <a href="#securing-mechanisms">securing mechanism</a> on the
-[=verifiable credential=]. For example, the content retrievable by
-dereferencing the following highlighted links is not integrity protected, but
-probably ought to be:
-        </p>
-
-        <pre class="example nohighlight"
-          title="Non-content-integrity protected links">
-{
-  "@context": [
-    <span class="highlight">"https://www.w3.org/ns/credentials/v2"</span>,
-    <span class="highlight">"https://www.w3.org/ns/credentials/examples/v2"</span>
-  ],
-  "id": "http://university.example/credentials/58473",
-  "type": ["VerifiableCredential", "ExampleAlumniCredential"],
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "image": <span class="highlight">"https://university.example/images/58473"</span>,
-    "alumniOf": {
-      "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
-      "name": "Example University"
-    }
-  }
-}
-        </pre>
-
-        <p>
-While this specification does not recommend any specific content integrity
-protection, document authors who want to ensure links to content are integrity
-protected are advised to use URL schemes that enforce content integrity.
-        </p>
-
-        <pre class="example nohighlight" title="Content-integrity protection for links to external data">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2<span class="highlight">?hl=z3aq31uzgnZBuWNzUB</span>",
-    "https://www.w3.org/ns/credentials/examples/v2<span class="highlight">?hl=z8guWNzUBnZBu3aq31</span>"
-  ],
-  "id": "http://university.example/credentials/58473",
-  "type": ["VerifiableCredential", "ExampleAlumniCredential"],
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "image": <span class="highlight">"https://example.com/image"</span>,
-    "alumniOf": {
-      "id": "did:example:c276e12ec21ebfeb1f712ebc6f1",
-      "name": "Example University"
-    }
-  }
-}
-        </pre>
-
-        <p class="note">
-It is debatable whether the JSON-LD Contexts above need protection because
-production implementations are expected to ship with static copies of important
-JSON-LD Contexts.
+[=verifiable credential=].
         </p>
 
         <p>
-While the example above is one way to achieve content integrity protection,
-there are other solutions that might be better suited for certain applications.
+This specification provides an optional mechanism, contained in Section
+[[[#integrity-of-related-resources]]], that is capable of ensuring the content
+integrity for external resources. While this mechanism need not be utilized
+for external resources that do not affect the security of the
+[=verifiable credential=], it is strongly suggested for external resources
+that could result in a security issue if the external content changes.
+        </p>
+
+        <p>
 Implementers are urged to understand how links to external machine-readable
 content that are not content-integrity protected could result in successful
-attacks against their applications.
+attacks against their applications and utilize the content integrity protection
+mechanism provided by this specification if a security issue could occur
+if the external resource is changed.
         </p>
 
       </section>
