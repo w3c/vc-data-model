@@ -3098,17 +3098,23 @@ is also desirable to know that the contents of the JSON-LD context(s) used in
 the [=verifiable credential=] are the same when used by both the [=issuer=] and
 [=verifier=].
         </p>
+
+        <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
+The requirement that contexts be listed in `relatedResource` is currently being
+debated in the VCWG. This requirement might be removed in future iterations of
+the specification.
+        </p>
+
         <p>
-To extend integrity protection to a related resource, a
-[=verifiable credential=], an author MAY include the `relatedResource`
-property:
+To extend integrity protection to a related resource, an [=issuer=] of a
+[=verifiable credential=] MAY include the `relatedResource` property:
         </p>
 
         <dl>
           <dt id="defn-relatedResource">relatedResource</dt>
           <dd>
 The value of the `relatedResource` property MUST be associated with one or
-more objects containing the following values:
+more objects of the following form:
             <table class="simple">
               <thead>
                 <th>Property</th>
@@ -3118,9 +3124,9 @@ more objects containing the following values:
                 <tr>
                   <td>`id`</td>
                   <td>
-The REQUIRED identifier for the resource, as defined in Section
-[[[#identifiers]]]. The value MUST be unique among the list of related
-resource objects.
+The identifier for the resource is REQUIRED and conforms to the format defined
+in Section [[[#identifiers]]]. The value MUST be unique among the list of
+related resource objects.
                   </td>
                 </tr>
                 <tr>
@@ -3145,16 +3151,10 @@ A cryptographic digest, as defined in [[[VC-DATA-INTEGRITY]]].
                 </tr>
               </tbody>
             </table>
-Each value associated with `relatedResource` MUST contain at least a `digestSRI`
-or `digestMultibase` value.
+Each object associated with `relatedResource` MUST contain at least a
+`digestSRI` or `digestMultibase` value.
           </dd>
         </dl>
-
-        <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
-The requirement that contexts be listed in `relatedResource` is currently being
-debated in the VCWG. This requirement might be removed in future iterations of
-the specification.
-        </p>
 
         <p class="issue" title="Unification of cryptographic hash expression formats are under discussion">
 The Working Group is currently attempting to determine whether cryptographic hash
@@ -3165,7 +3165,7 @@ are arguments for and against unification that the WG is currently debating.
 
         <p>
 If a `mediaType` is listed, implementations that retrieve the resource
-over [[[?HTTP]]] SHOULD:
+using [[[?RFC9110]]] SHOULD:
         </p>
         <ul>
           <li>
@@ -3177,7 +3177,7 @@ use the media type in the `Content-Type` HTTP Header.
         </ul>
 
         <p>
-Any object in the [=verifiable credential=] that contains an `id` [[URL]]
+Any object in the [=verifiable credential=] that contains an `id`
 property MAY be annotated with integrity information as specified in this
 section.
         </p>
