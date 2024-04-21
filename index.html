@@ -5023,38 +5023,54 @@ to protect personally identifiable information.
         <h3>Identifier-Based Correlation</h3>
 
         <p>
+[=Verifiable credentials=] might contain long-lived identifiers that could be
+used to correlate individuals. These types of identifiers include [=subject=]
+identifiers, email addresses, government-issued identifiers, organization-issued
+identifiers, addresses, healthcare vitals, and many other sorts of long-lived
+identifiers. Implementers of software used by [=holders=] are advised to strive
+to detect identifiers in [=verifiable credentials=] containing information that
+could be used to correlate individuals and warn [=holders=] when they are
+getting ready to share this information. The rest of this section elaborates
+on guidance related to the use of long-lived identifiers.
+        </p>
+
+        <p>
 [=Subjects=] of [=verifiable credentials=] are identified using the `id`
 property, as defined in Section [[[#identifiers]]], and are used in places such
 as the `credentialSubject.id` property. The identifiers used to identify a
 [=subject=] create a greater risk of correlation when the identifiers are
-long-lived or used across more than one web domain.
+long-lived or used across more than one web domain. Other types of identifiers
+that fall into this category are email addresses, government-issued identifiers,
+and organization-issued identifiers.
         </p>
 
         <p>
 Similarly, disclosing the [=credential=] identifier (such as in
-[[[#example-usage-of-the-id-property]]]) leads to
-situations where multiple [=verifiers=], or an [=issuer=] and a [=verifier=],
-can collude to correlate the [=holder=]. If [=holders=] want to reduce
-correlation, they are advised to use [=verifiable credentials=] from [=issuers=]
-that allow selectively disclosing correlating identifiers in a [=verifiable
-presentation=]. Such approaches expect the [=holder=] to generate the identifier
-and might even allow hiding the identifier from the [=issuer=] through the use
-of techniques like
+[[[#example-usage-of-the-id-property]]]) leads to situations where multiple
+[=verifiers=], or an [=issuer=] and a [=verifier=], can collude to correlate the
+[=holder=].
+        </p>
+
+        <p>
+If [=holders=] want to reduce correlation, they are advised to use [=verifiable
+credentials=] from [=issuers=] that allow selectively disclosing correlating
+identifiers in a [=verifiable presentation=]. Such approaches expect the
+[=holder=] to generate the identifier and might even allow hiding the identifier
+from the [=issuer=] through the use of techniques like
 <a href="https://en.wikipedia.org/wiki/Blind_signature">blind signatures</a>,
 while still keeping the identifier embedded and signed in the [=verifiable
 credential=].
         </p>
 
         <p>
-Securing mechanism specification authors are advised to avoid enabling
+[=Securing mechanism=] specification authors are advised to avoid enabling
 identifier-based correlation by designing their technologies, when possible,
 to avoid the use of correlating identifiers.
         </p>
 
         <p>
-If strong anti-correlation properties are a requirement in a
-[=verifiable credentials=] system, it is strongly advised that identifiers
-are either:
+If strong anti-correlation properties are a requirement in a [=verifiable
+credentials=] system, it is strongly advised that identifiers are either:
         </p>
 
         <ul>
@@ -5116,26 +5132,6 @@ properties of the cryptography used. See Sections
 [[[#long-lived-identifier-based-correlation]]],
 [[[#metadata-based-correlation]]], [[[#correlation-during-validation]]],
 and most of the other sections in Section [[[#privacy-considerations]]].
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Long-Lived-Identifier-Based Correlation</h3>
-
-        <p>
-[=Verifiable credentials=] might contain long-lived identifiers that could
-be used to correlate individuals. These types of identifiers include
-[=subject=] identifiers, email addresses, government-issued identifiers,
-organization-issued identifiers, addresses, healthcare vitals,
-[=verifiable credential=]-specific JSON-LD contexts, and many other sorts of
-long-lived identifiers.
-        </p>
-
-        <p>
-Organizations providing software to [=holders=] should strive to identify
-fields in [=verifiable credentials=] containing information that could be
-used to correlate individuals and warn [=holders=] when this information is
-shared.
         </p>
       </section>
 
