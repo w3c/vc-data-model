@@ -5057,22 +5057,32 @@ to protect personally identifiable information.
         <h3>Identifier-Based Correlation</h3>
 
         <p>
-[=Subjects=] of [=verifiable credentials=] are identified using the
-`credential.credentialSubject.id` field. The identifiers used to
-identify a [=subject=] create a greater risk of correlation when the
-identifiers are long-lived or used across more than one web domain.
+[=Subjects=] of [=verifiable credentials=] are identified using the `id`
+property, as defined in Section [[[#identifiers]]], and are used in places such
+as the `credentialSubject.id` property. The identifiers used to identify a
+[=subject=] create a greater risk of correlation when the identifiers are
+long-lived or used across more than one web domain.
         </p>
 
         <p>
-Similarly, disclosing the [=credential=] identifier
-(`credential.id`) leads to situations where multiple
-[=verifiers=], or an [=issuer=] and a [=verifier=], can collude to
-correlate the [=holder=]. If [=holders=] want to reduce correlation, they
-should use [=verifiable credential=] schemes that allow hiding the
-identifier during [=verifiable presentation=]. Such schemes expect the
-[=holder=] to generate the identifier and might even allow hiding the
-identifier from the [=issuer=], while still keeping the identifier embedded
-and signed in the [=verifiable credential=].
+Similarly, disclosing the [=credential=] identifier (such as in
+[[[#example-usage-of-the-id-property]]]) leads to
+situations where multiple [=verifiers=], or an [=issuer=] and a [=verifier=],
+can collude to correlate the [=holder=]. If [=holders=] want to reduce
+correlation, they are advised to use [=verifiable credentials=] from [=issuers=]
+that allow selectively disclosing correlating identifiers in a [=verifiable
+presentation=]. Such approaches expect the [=holder=] to generate the identifier
+and might even allow hiding the identifier from the [=issuer=] through the use
+of techniques like
+<a href="https://en.wikipedia.org/wiki/Blind_signature">blind signatures</a>,
+while still keeping the identifier embedded and signed in the [=verifiable
+credential=].
+        </p>
+
+        <p>
+Securing mechanism specification authors are advised to avoid enabling
+identifier-based correlation by designing their technologies, when possible,
+to avoid the use of correlating identifiers.
         </p>
 
         <p>
@@ -5082,6 +5092,9 @@ are either:
         </p>
 
         <ul>
+          <li>
+Selectively disclosable
+          </li>
           <li>
 Bound to a single origin
           </li>
