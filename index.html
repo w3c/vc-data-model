@@ -1057,11 +1057,11 @@ See Appendix <a href="#additional-diagrams-for-verifiable-presentations"></a> fo
           title="Presentations can be presented by issuers and verifiers">
 As described in Section [[[#ecosystem-overview]]], an [=entity=] can take
 on one or more roles as they step through a particular credential exchange.
-While a [=holder=] is typically expected to generate [=presentations=], a
+While a [=holder=] is typically expected to generate [=presentations=], an
 [=issuer=] or [=verifier=] might generate a presentation to identify itself
 to a [=holder=]. This might occur if the [=holder=] needs higher assurance
 from the [=issuer=] or [=verifier=] before handing over sensitive information
-contained in a [=verifiable presentation=].
+as part of a [=verifiable presentation=].
         </p>
 
       </section>
@@ -1136,7 +1136,7 @@ systems by establishing a context in which to communicate.
         <p>
 Software systems that process [=verifiable credentials=] and [=verifiable
 presentations=] identify terminology by using [=URLs=] [[URL]] for each term.
-However, those [=URLs=] can be long and not very human-friendly and short-form,
+However, those [=URLs=] can be long and not very human-friendly, while short-form,
 human-friendly aliases can be more helpful. This specification uses the
 `@context` [=property=] to map such short-form aliases to the [=URLs=].
         </p>
@@ -1152,7 +1152,7 @@ The value of the `@context` [=property=] MUST be an [=ordered set=]
 where the first item is a [=URL=] with the value
 `https://www.w3.org/ns/credentials/v2`.
 Subsequent items in the [=ordered set=] MUST be composed of any combination of
-[=URLs=] and/or objects where each is processable as a
+[=URLs=] and/or objects, where each is processable as a
 <a data-cite="JSON-LD11#the-context">JSON-LD Context</a>.
           </dd>
         </dl>
@@ -1191,7 +1191,7 @@ this [=URL=] for any other purpose, such as in pilot or production systems.
 
         <p>
 The data available at `https://www.w3.org/ns/credentials/v2` is a static
-document that is never updated and SHOULD be downloaded and cached. For
+document that is never updated, and SHOULD be downloaded once and cached. For
 reference, a copy of the base context is provided in Appendix
 [[[#base-context]]]. The associated human-readable vocabulary document for
 the Verifiable Credentials Data Model is available at
@@ -1224,7 +1224,7 @@ allows for the expression of statements about specific things in the
 [=verifiable credential=] and is set by an [=issuer=] when expressing
 objects in a [=verifiable credential=] or a [=holder=] when expressing
 objects in a [=verifiable presentation=]. The `id` [=property=] expresses an
-identifier that others are expected to use when expressing statements about a
+identifier that others are expected to use when expressing statements about the
 specific thing identified by that identifier. Example `id` values
 include UUIDs (`urn:uuid:0c07c1ce-57cb-41af-bef2-1b932b986873`), HTTP URLs
 (`https://id.example/things#123`), and DIDs (`did:example:1234abcd`).
@@ -1247,7 +1247,7 @@ grant access to potentially sensitive information if not used judiciously.
           <dt><dfn class="export">id</dfn></dt>
           <dd>
 The `id` [=property=] is OPTIONAL. If present, the value of the `id`
-[=property=] MUST be a single [=URL=] which MAY be dereferenced. It is
+[=property=] MUST be a single [=URL=], which MAY be dereferenceable. It is
 RECOMMENDED that the [=URL=] in the `id` be one which, if dereferenceable, results
 in a document containing machine-readable information about the `id`.
           </dd>
@@ -2119,7 +2119,7 @@ The precise content of the [=credential=] status information is determined by
 the specific `credentialStatus` [=type=] definition, and varies
 depending on factors such as whether it is simple to implement or if it is
 privacy-enhancing. The value will provide enough information to determine the
-current status of the [=credential=] and that machine readable information will
+current status of the [=credential=] and whether machine readable information will
 be retrievable from the URL. For example, the object could contain a link to an
 external document which notes whether or not the [=credential=] is suspended or
 revoked.
@@ -2354,7 +2354,7 @@ dereferenced, results in a document containing machine-readable information
 about the [=holder=] that can be used to [=verify=] the information
 expressed in the [=verifiable presentation=].
 If the `holder` [=property=] is absent, information about the
-[=holder=] is obtained either via the securing mechanism, or
+[=holder=] either is obtained via the securing mechanism, or
 does not pertain to the [=validation=] of the [=verifiable presentation=].
           </dd>
         </dl>
@@ -4013,7 +4013,7 @@ If conceptually aligned digital credential formats can be transformed into a
 are considered <em>"compatible with the W3C Verifiable Credentials
 ecosystem"</em>. Specification authors are advised to adhere to the following
 rules when documenting transformations that enable compatibility with the
-Verifiable Credentials ecosystem. The transformation specification
+Verifiable Credentials ecosystem. The transformation specification —
         </p>
 
         <ul>
@@ -5045,7 +5045,7 @@ shared with [=verifiers=]. Personally identifying data, such as a
 government-issued identifier, shipping address, and full name, can be easily
 used to determine, track, and correlate an [=entity=]. Even information that
 does not seem to be personally identifiable, such as the combination of a
-birthdate and a postal code, has very powerful correlation and de-anonymizing
+birthdate and a postal code, has very powerful correlation and de-anonymization
 capabilities.
         </p>
 
@@ -5054,7 +5054,7 @@ Implementers of software used by [=holders=] are strongly advised to warn
 [=holders=] when they share data with these kinds of characteristics.
 [=Issuers=] are strongly advised to provide privacy-protecting [=verifiable
 credentials=] when possible. For example, issuing `ageOver` [=verifiable
-credentials=] instead of date of birth [=verifiable credentials=] when a
+credentials=] instead of `dateOfBirth` [=verifiable credentials=] for use when a
 [=verifier=] wants to determine whether an [=entity=] is over the age of 18.
         </p>
 
@@ -5131,7 +5131,8 @@ to avoid the use of correlating identifiers that cannot be selectively disclosed
 
         <p>
 If strong anti-correlation properties are a requirement in a [=verifiable
-credentials=] system, it is strongly advised that identifiers are either:
+credentials=] system, it is strongly advised that identifiers are one or more
+of the following:
         </p>
 
         <ul>
@@ -5158,7 +5159,7 @@ The contents of a [=verifiable credential=] are secured using a [=securing
 mechanism=]. Values used to represent the securing mechanism create a greater
 risk of correlation when the same values are used across more than one session
 or domain and the value does not change. Examples of these sorts of values
-include:
+include the following:
         </p>
 
         <ul>
@@ -5191,7 +5192,7 @@ contained in a [=verifiable credential=] that defeats the anti-correlation
 properties of the cryptography used. See Sections
 [[[#personally-identifiable-information]]], [[[#identifier-based-correlation]]],
 [[[#metadata-based-correlation]]], [[[#correlation-during-validation]]],
-and most of the other sections in Section [[[#privacy-considerations]]].
+and most of the other subsections of Section [[[#privacy-considerations]]].
         </p>
       </section>
 
@@ -5343,23 +5344,23 @@ proving time and reduce temporal correlation risk from [=issuers=].
         <p>
 [=Verifiers=] are urged to only request information that is absolutely
 necessary for a specific transaction to occur. This is important for at least
-two reasons.
+two reasons:
         </p>
 
         <ul>
           <li>
 It reduces the liability on the [=verifier=] for handling highly sensitive
-information that it does not need to, and
+information that it does not need to handle.
           </li>
           <li>
-it enhances the privacy of the individual by only asking for information
-required for a specific transaction.
+It enhances the privacy of the individual by only asking for information
+that is necessary for a specific transaction.
           </li>
         </ul>
 
         <p>
 Implementers of software used by [=holders=] are urged to disclose what
-information is being requested by a [=verifier=] such that a [=holder=] can
+information is being requested by a [=verifier=], such that a [=holder=] can
 push back on the over-collection of information that is unnecessary for the
 transaction.
         </p>
@@ -5758,7 +5759,7 @@ manage the status and revocation of those credentials. Similarly,
 [=issuers=] are advised to avoid the practice of creating publicly
 resolvable credentials that include personally identifiable information
 (PII) or other sensitive data. Software implementers are advised
-to safeguarded [=verifiable credentials=] using robust consent
+to safeguard [=verifiable credentials=] using robust consent
 and access control measures, ensuring that they remain
 inaccessible to unauthorized entities.
         </p>
@@ -5997,7 +5998,7 @@ against tampering because the data resides outside of the protection of the
 
         <p>
 This specification provides an optional mechanism, contained in Section
-[[[#integrity-of-related-resources]]], that is capable of ensuring the content
+[[[#integrity-of-related-resources]]], that is capable of ensuring content
 integrity for external resources. While this mechanism need not be utilized
 for external resources that do not affect the security of the
 [=verifiable credential=], it is strongly suggested for external resources
@@ -6007,7 +6008,7 @@ that could result in a security issue if the external content changes.
         <p>
 Implementers are urged to understand how links to external machine-readable
 content that are not content-integrity protected could result in successful
-attacks against their applications and utilize the content integrity protection
+attacks against their applications, and utilize the content integrity protection
 mechanism provided by this specification if a security issue could occur
 if the external resource is changed.
         </p>
@@ -6494,7 +6495,7 @@ an interaction with a [=holder=].
 When a [=verifier=] requests a [=verifiable credential=] of a specific type,
 there will be a set of mandatory and optional [=claims=] that are associated
 with that type. A [=verifier=]'s validation of a [=verifiable credential=] will
-fail when mandatory [=claims=] are not included, and that any [=claim=] that is
+fail when mandatory [=claims=] are not included, and any [=claim=] that is
 not associated with the specific type will be ignored. In other words, a
 [=verifier=] will perform input validation on the [=verifiable credential=] it
 receives and will reject malformed input based on the credential type
