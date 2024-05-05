@@ -3125,110 +3125,85 @@ interoperability.
       <section>
         <h2>Integrity of Related Resources</h2>
         <p>
-When including a link to an external resource in a [=verifiable credential=], it
-is desirable to know whether the resource has been modified after the
-[=verifiable credential=] was issued. This applies to cases where there is an
-external resource that is remotely retrieved, as well as to cases where the
-[=issuer=] and/or [=verifier=] might have local cached copies of a resource. It
-is also desirable to know that the contents of the JSON-LD context(s) used in
-the [=verifiable credential=] are the same when used by both the [=issuer=] and
-[=verifier=].
+When including a link to an external resource in a [=verifiable credential=],
+it is desirable to know whether the resource that is pointed to is the same at
+signing time as it is at verification time. This applies to cases where there is
+an external resource that is remotely retrieved as well as to cases where the
+[=issuer=] and/or [=verifier=] may have local cached copies of a resource.
         </p>
-
+        <p>
+It is also desirable to know that the contents of the JSON-LD context(s) used in
+the [=verifiable credential=] are the same when used by both the
+[=issuer=] and [=verifier=].
+        </p>
+        <p>
+To validate that a resource referenced by a [=verifiable credential=] is the
+same at verification time as it is at issuing time, an implementer MAY include a
+property named <code id="defn-relatedResource">relatedResource</code> that
+stores an array of objects that describe additional integrity metadata about
+each resource referenced by the [=verifiable credential=]. If
+`relatedResource` is present, there MUST be an object in the array
+for each remote resource for each context used in the verifiable credential.
+        </p>
         <p class="issue" title="Mandatory listing of contexts in relatedResouce are under debate.">
 The requirement that contexts be listed in `relatedResource` is currently being
 debated in the VCWG. This requirement might be removed in future iterations of
 the specification.
         </p>
-
         <p>
-To extend integrity protection to a related resource, an [=issuer=] of a
-[=verifiable credential=] MAY include the `relatedResource` property:
+Each object in the `relatedResource` array MUST contain the
+following: the [[URL]] to the resource named `id` and the
+<code id="defn-digestSRI">digestSRI</code> information for the resource
+constructed using the method specified in
+<a href="https://www.w3.org/TR/SRI/#integrity-metadata">Subresource Integrity</a>.
         </p>
-
-        <dl>
-          <dt id="defn-relatedResource">relatedResource</dt>
-          <dd>
-The value of the `relatedResource` property MUST be associated with one or
-more objects of the following form:
-            <table class="simple">
-              <thead>
-                <th>Property</th>
-                <th>Description</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>`id`</td>
-                  <td>
-The identifier for the resource is REQUIRED and conforms to the format defined
-in Section [[[#identifiers]]]. The value MUST be unique among the list of
-related resource objects.
-                  </td>
-                </tr>
-                <tr>
-                  <td>`mediaType`</td>
-                  <td>
-An OPTIONAL valid media type as listed in the
-<a href="https://www.iana.org/assignments/media-types/media-types.xhtml">
-IANA Media Types</a> registry.
-                  </td>
-                </tr>
-                <tr>
-                  <td>`digestSRI`</td>
-                  <td>
-A cryptographic digest, as defined in [[[SRI]]].
-                  </td>
-                </tr>
-                <tr>
-                  <td>`digestMultibase`</td>
-                  <td>
-A cryptographic digest, as defined in [[[VC-DATA-INTEGRITY]]].
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-Each object associated with `relatedResource` MUST contain at least a
-`digestSRI` or `digestMultibase` value.
-          </dd>
-        </dl>
-
         <p class="issue" title="Unification of cryptographic hash expression formats are under discussion">
 The Working Group is currently attempting to determine whether cryptographic hash
 expression formats can be unified across all of the VCWG core specifications.
 Candidates for this mechanism include `digestSRI` and `digestMultibase`. There
 are arguments for and against unification that the WG is currently debating.
         </p>
-
         <p>
-If a `mediaType` is listed, implementations that retrieve the resource
-using [[[?RFC9110]]] SHOULD:
+There MUST NOT be more than one object in the `relatedResource` per
+`id`.
+        </p>
+        <p>
+An object in the `relatedResource` array MAY contain a property named
+`mediaType` that indicates the expected media type for the indicated
+`resource`. If a `mediaType` is included, its value
+SHOULD:
         </p>
         <ul>
           <li>
-use the media type in the `Accept` HTTP Header, and
+be a valid media type as listed in the
+<a href="https://www.iana.org/assignments/media-types/media-types.xhtml">
+IANA Media Types</a> registry
           </li>
           <li>
-use the media type in the `Content-Type` HTTP Header.
+be used when retrieving the content, such as via the `Accept` HTTP Header
+          </li>
+          <li>
+match the retrieved content media type, such as via the `Content-Type` HTTP
+Header.
           </li>
         </ul>
 
         <p>
-Any object in the [=verifiable credential=] that contains an `id`
+Any object in the [=verifiable credential=] that contains an `id` [[URL]]
 property MAY be annotated with integrity information as specified in this
-section.
+section by inclusion of `digestSRI`
+in the object.
         </p>
-
         <p>
-Any objects for which selective disclosure or unlinkable disclosure is desired
-SHOULD NOT be included as an object in the `relatedResource` array.
+Any objects for which selective disclosure is desired SHOULD NOT be included as
+an object in the `relatedResource` array.
         </p>
-
         <p>
 Specification authors that write algorithms that fetch a resource based on the
 `id` of an object inside a [=conforming document=] need to consider whether
 that resource's content is vital to the validity of that document. If it is, the
-specification MUST produce a validation error unless the resource matches the
-expected media type and cryptographic digest.
+specification MUST produce a validation error unless the resource has the
+expected media type and its bytes hash to the expected digest.
         </p>
         <p>
 Implementers are urged to consult appropriate sources, such as the
@@ -3236,7 +3211,7 @@ Implementers are urged to consult appropriate sources, such as the
 FIPS 180-4 Secure Hash Standard</a> and the
 <a href="https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF">
 Commercial National Security Algorithm Suite 2.0</a> to ensure that they are
-choosing a current and reliable hash algorithm. At the time of this writing
+chosing a current and reliable hash algorithm. At the time of this writing
 `sha384` SHOULD be considered the minimum strength hash algorithm for use by
 implementers.
         </p>
@@ -3244,17 +3219,16 @@ implementers.
 The working group is discussing if we will adopt more aspects of subresource
 integrity as defined in [[SRI]] is adopted into the [[JSON-LD11]] specification as
 noted in that specifications <a href="https://www.w3.org/TR/json-ld11/#security">
-current security considerations</a> of that specification, the
-approach described in this section can serve as an additional check towards
-ensuring that a cached context used when issuing
-a [=verifiable credential=] matches the remote resource.
+current security considerations</a> of that specification, this hash in the VC
+can serve as an additional check towards ensuring that a cached context used
+when issuing the VC matches the remote resource.
         </p>
         <p>
 An example of a related resource integrity object referencing JSON-LD contexts.
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of the relatedResource and digestSRI property">
+          title="Usage of the relatedResource property">
 "relatedResource": [{
   "id": "https://www.w3.org/ns/credentials/v2",
   "digestSRI":
@@ -3277,8 +3251,9 @@ integrity protected image.
   "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
   "image": {
     "id": "https://university.example.org/images/58473",
+    "digestSRI":
+      "sha384-ZfAwuJmMgoX3s86L7x9XSPi3AEbiz6S/5SyGHJPCxWHs5NEth/c5S9QoS1zZft+J",
     "mediaType": "application/svg+xml",
-    "digestMultibase": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n"
   },
   ...
 }
