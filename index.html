@@ -2786,8 +2786,8 @@ either of the following:
               <li>
 An [=issuer=] secures a [=credential=] with a
 <a href="#securing-mechanisms">securing mechanism</a> which establishes that the
-[=issuer=] generated the [=credential=]. In other words, an [=issuer=]
-issues a [=verifiable credential=].
+[=issuer=] generated the [=credential=]. In other words, an [=issuer=] issues a
+[=verifiable credential=].
               </li>
               <li>
 A [=credential=] is transmitted in a way that clearly establishes that the
@@ -2800,6 +2800,11 @@ depending on the risk assessment by the [=verifier=].
           <li>
 All [=entities=] expect the [=verifiable data registry=] to be tamper-evident
 and to be a correct record of which data is controlled by which [=entities=].
+This is typically achieved by the method of its publication. This could be via a
+peer-to-peer protocol from a trusted publisher, a publicly accessible and well
+known web site (with a content hash), a blockchain, etc. When entities publish
+metadata about themselves, the publication can be integrity-protected by being
+secured using with the entity's private key.
           </li>
           <li>
 The [=holder=] and [=verifier=] expect the [=issuer=] to stand by [=claims=]
@@ -2807,10 +2812,28 @@ it makes in [=credentials=] about the [=subject=], and to revoke [=credentials=]
 quickly if and when they no longer stand by those [=claims=].
           </li>
           <li>
-The [=holder=] expects the [=credential repository=] to store [=credentials=] securely,
-to not release [=credentials=] to anyone other than the [=holder=] (which may
-subsequently present them to a [=verifier=]), and to not corrupt nor lose
-[=credentials=] while they are in its care.
+The [=holder=] might trust the [=issuer=]'s [=claims=] because the [=holder=]
+has a pre-existing trust relationship with the [=issuer=]. For example, an
+employer might provide an employee with an employment [=verifiable credential=],
+or a government might issue an electronic passport to a citizen.
+        <p>
+Where no pre-existing trust relationship exists, the [=holder=] might
+have some out-of-band means of determining whether the [=issuer=] is
+qualified to issue the [=verifiable credential=] being provided.
+        </p>
+        <p>
+Note: It is not always necessary for the [=holder=] to trust the [=issuer=],
+since the issued [=verifiable credential=] might be an assertion about
+a [=subject=] who is not the [=holder=], or about no-one, and the [=holder=]
+might be willing to relay this information to a [=verifier=] without
+being held accountable for its veracity.
+        </p>
+        </li>
+          <li>
+The [=holder=] expects the [=credential repository=] to store [=credentials=]
+securely, to not release [=credentials=] to anyone other than the [=holder=]
+(which may subsequently present them to a [=verifier=]), and to not corrupt nor
+lose [=credentials=] while they are in its care.
           </li>
         </ul>
 
