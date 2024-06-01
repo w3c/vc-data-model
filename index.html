@@ -3285,19 +3285,22 @@ grammar defined in the [[[SRI]]] specification,
 attribute</a>.
                   </td>
                 </tr>
+                <tr>
+                  <td>`digestMultibase`</td>
+                  <td>
+One or more cryptographic digests, as defined by the `digestMultibase`
+property in the [[[VC-DATA-INTEGRITY]]]
+specification, <a data-cite="VC-DATA-INTEGRITY#resource-integrity">
+Section 2.6: Resource Integrity</a>.
+                  </td>
+                </tr>
+
               </tbody>
             </table>
 Each object associated with `relatedResource` MUST contain at least a
-`digestSRI` value.
+`digestSRI` or a `digestMultibase` value.
           </dd>
         </dl>
-
-        <p class="issue atrisk" data-number="1489">
-The Working Group is currently attempting to determine whether cryptographic hash
-expression formats can be unified across all of the VCWG core specifications.
-Candidates for this mechanism include `digestSRI` and `digestMultibase`. There
-are arguments for and against unification that the WG is currently debating.
-        </p>
 
         <p>
 If a `mediaType` is listed, implementations that retrieve the resource
@@ -3316,7 +3319,7 @@ media type.
         <p>
 Any object in the [=verifiable credential=] that contains an `id`
 property MAY be annotated with integrity information by adding the
-`digestSRI` and `mediaType` properties.
+`digestSRI`, `digestMultibase`, and, optionally, the `mediaType` property.
         </p>
 
         <p>
@@ -3364,6 +3367,17 @@ An example of a related resource integrity object referencing JSON-LD contexts.
   "id": "https://www.w3.org/ns/credentials/examples/v2",
   "digestSRI":
     "sha384-zNNbQTWCSUSi0bbz7dbua+RcENv7C6FvlmYJ1Y+I727HsPOHdzwELMYO9Mz68M26",
+}]
+        </pre>
+
+        <pre class="example nohighlight"
+          title="Usage of the relatedResource and digestMultibase property">
+"relatedResource": [{
+  "id": "https://www.w3.org/ns/credentials/v2",
+  "digestMultibase": "uEres1usWcWCmW7uolIW2uA0CjQ8iRV14eGaZStJL73Vz",
+},{
+  "id": "https://www.w3.org/ns/credentials/examples/v2",
+  "digestMultibase": "uElc5P7xp1u-5ubXcnLa5iAsJRDYKv-Lq9FnJ5YzyJ518",
 }]
         </pre>
 
@@ -3756,7 +3770,7 @@ non-credential data might be supported by the specification, see the
       "name": "Talk-aloud video of double espresso preparation",
       "description": "This is a talk-aloud video of Alice demonstrating preparation of a double espresso drink.",
       <span class='comment'>// digest hash of the mp4 video file</span>
-      "digestSRI": "sha384-zNNbQTWCSUSi0bbz7dbua...OHdzwELMYO9Mz68M26"
+      "digestMultibase": "uELq9FnJ5YLa5iAszyJ518bXcnlc5P7xp1u-5uJRDYKvc"
     }
   ]
 }
