@@ -3637,15 +3637,6 @@ appropriate section of the Verifiable Credentials Implementation Guidelines
       <section>
         <h3>Evidence</h3>
 
-        <p class="issue atrisk" data-number="1437" title="Feature depends on demonstration of independent implementations">
-This feature is at risk and will be removed from the specification if at least
-two independent, interoperable implementations are not demonstrated for a
-single extension type by the end of the Candidate Recommendation Phase. If
-this feature is removed, the property will be included in Section
-<a href="#reserved-extension-points"></a>, in anticipation of future
-implementation and inclusion in the specification.
-        </p>
-
         <p>
 Evidence can be included by an [=issuer=] to provide the [=verifier=] with
 additional supporting information in a [=verifiable credential=]. This could
@@ -3688,39 +3679,10 @@ non-credential data might be supported by the specification, see the
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of the evidence property">
+             title="Example of evidence supporting a skill achievement credential">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"evidence": {
-    "id": "https://university.example/evidence/f2aeec97-fc0d-42bf-8ca7-0548192d4231",
-    "type": ["DocumentVerification"],
-    "verifier": "https://university.example/issuers/14",
-    "evidenceDocument": "DriversLicense",
-    "subjectPresence": "Physical",
-    "documentPresence": "Physical",
-    "licenseNumber": "123AB4567"
-  }</span>
-}
-        </pre>
- <pre class="example nohighlight" title="Example of evidence supporting a skill achievement credential">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2",
     "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json"
   ],
   "id": "http://1edtech.edu/credentials/3732",
@@ -3978,21 +3940,6 @@ A property used for specifying one or more methods that a verifier might use to
 increase their confidence that the value of a property in or of a verifiable
 credential or verifiable presentation is accurate. The associated vocabulary
 URL MUST be `https://www.w3.org/2018/credentials#confidenceMethod`.
-              </td>
-            </tr>
-            <tr>
-              <td>`evidence`</td>
-              <td>
-A property used for specifying the evidence that was presented in order to
-issue the credential. The associated vocabulary URL MUST be
-`https://www.w3.org/2018/credentials#evidence`.
-                <p class="issue atrisk" data-number="1437" title="Reservation depends on implementations">
-This property reservation might be deleted in favor of an existing section
-in the specification if at least one specification with two independent
-implementations are demonstrated by the end of the Candidate Recommendation
-Phase. If that does not occur, this reservation will remain, but the existing
-section in the specification will be removed.
-                </p>
               </td>
             </tr>
             <tr>
@@ -6978,10 +6925,7 @@ and other specifications that benefit from such definitions:
               </td>
               <td>
 Serves as a superclass for specific evidence types that are placed into the
-<a href="#evidence">evidence</a> property. <span class="issue atrisk">This
-superclass is at risk and will be removed if at least two independent
-implementations for the superclass are not identified by the end of the
-Candidate Recommendation phase.</span>
+<a href="#evidence">evidence</a> property.
               </td>
             </tr>
             <tr id="bc-credential-schema">
