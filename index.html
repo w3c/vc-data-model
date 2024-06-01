@@ -1491,16 +1491,6 @@ A valid [=credential=] status [=type=]. For example,<br>
 
             <tr>
               <td>
-<a href="#terms-of-use">termsOfUse</a>&nbsp;object
-              </td>
-              <td>
-A valid terms of use [=type=]. For example,<br>
-`"type": "ExampleTermsPolicy"`
-              </td>
-            </tr>
-
-            <tr>
-              <td>
 <a href="#evidence">evidence</a>&nbsp;object
               </td>
               <td>
@@ -3152,7 +3142,7 @@ documents with implementations, or enabling aggressive caching of contexts.
 Implementers are advised to pay close attention to the extension points in this
 specification, such as in Sections <a href="#proofs-signatures"></a>,
 <a href="#status"></a>, <a href="#data-schemas"></a>,<a href="#refreshing"></a>,
-<a href="#terms-of-use"></a>, and <a href="#evidence"></a>. While this
+and <a href="#evidence"></a>. While this
 specification does not define concrete implementations for those extension
 points, the Verifiable Credential Specifications Directory [[?VC-SPECS]]
 provides an unofficial, curated list of extensions that developers can use from
@@ -3455,176 +3445,6 @@ Placing a `refreshService` [=property=] in a
 remove control and consent from the [=holder=] and allow the
 [=verifiable credential=] to be issued directly to the [=verifier=],
 thereby bypassing the [=holder=].
-        </p>
-
-      </section>
-
-      <section>
-        <h3>Terms of Use</h3>
-
-        <p>
-Terms of use can be utilized by an [=issuer=] or a [=holder=] to
-communicate the terms under which a [=verifiable credential=] or
-[=verifiable presentation=] was issued. The [=issuer=] places their terms
-of use inside the [=verifiable credential=]. The [=holder=] places their
-terms of use inside a [=verifiable presentation=]. This specification defines
-a `termsOfUse` [=property=] for expressing terms of use
-information.
-        </p>
-
-        <p>
-The value of the `termsOfUse` [=property=] might be used
-to tell the [=verifier=] any or all of the following, among other things:
-        </p>
-
-        <ul>
-          <li>
-the procedures or policies that were used in issuing the [=verifiable
-credential=], by providing, for example, a pointer to a public location
-(to avoid "phone home" privacy issues) where these procedures or policies
-can be found, or the name of the standard that defines them
-          </li>
-          <li>
-the rules and policies of the [=issuer=] that apply to the presentation
-of this [=verifiable credential=] to a [=verifier=], by providing,
-for example, a pointer to a public location (to avoid "phone home" privacy
-issues) where these rules or policies can be found
-          </li>
-          <li>
-the identity of the entity under whose authority the [=issuer=] issued
-this particular [=verifiable credential=]
-          </li>
-        </ul>
-
-        <dl>
-          <dt><var id="defn-termsOfUse">termsOfUse</var></dt>
-          <dd>
-The value of the `termsOfUse` [=property=] MUST specify one or
-more terms of use policies under which the creator issued the [=credential=]
-or [=presentation=]. If the recipient (a [=holder=] or
-[=verifier=]) is not willing to adhere to the specified terms of use, then
-they do so on their own responsibility and might incur legal liability if they
-violate the stated terms of use. Each `termsOfUse` value MUST specify
-its [=type=], for example, `IssuerPolicy`, and MAY specify its
-instance `id`. The precise contents of each term of use is determined
-by the specific `termsOfUse` [=type=] definition.
-          </dd>
-        </dl>
-
-        <pre class="example nohighlight"
-          title="Usage of the termsOfUse property by an issuer">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "urn:did:123456",
-  "type": [
-    "VerifiableCredential",
-    "EbsiTermsOfUseExample"
-  ],
-  "issuer": "did:ebsi:zz7XsC9ixAXuZecoD9sZEM1",
-  "validFrom": "2021-11-01T00:00:00Z",
-  "validUntil": "2021-10-30T00:00:00Z",
-  "credentialSubject": {
-    "id": "did:key:z2dmzD81cgPx8Vki7JbuuMmFYrWPgYoytykUZ3eyqht1j9KbrDt4zxXoDrBWYFiATYZ8G9JMeEXC7Kki24fbTwtsJbGe5qcbkYFunSzcDokMRmj8UJ1PbdCGh33mf97K3To89bMzd15qrYq3VkDztoZqfmujkJVpvTbqoXWXqxmzNDbvMJ",
-    "personalIdentifier": "IT/DE/1234",
-    "familyName": "Castafiori",
-    "firstName": "Bianca",
-    "dateOfBirth": "1930-10-01"
-  },
-  "credentialSchema": {
-    "id": "https://api-test.ebsi.eu/trusted-schemas-registry/v2/schemas/z3MgUFUkb722uq4x3dv5yAJmnNmzDFeK5UC8x83QoeLJM",
-    "type": "JsonSchema"
-  },
-  "termsOfUse": {
-    "id": "https://api-test.ebsi.eu/trusted-issuers-registry/v4/issuers/did:ebsi:zz7XsC9ixAXuZecoD9sZEM1/attributes/7201d95fef05f72667f5454c2192da2aa30d9e052eeddea7651b47718d6f31b0",
-    "type": "IssuanceCertificate"
-  }
-}
-        </pre>
-
-        <p>
-In the example above, the [=issuer=] is asserting that as a European
-Blockchain Services Infrastructure (EBSI) accredited issuer, it complies with the EBSI
-policies as an accredited issuer and is registered in the EBSI register of trusted issuers.
-The `termsOfUse` [=id=] can be resolved by the [=verifier=] to confirm
-that the [=issuer=] has been issued an accreditation VC (in JWT format)
-by a trusted issuer higher in the EBSI trust chain [?EBSI].
-        </p>
-
-        <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2",
-    {
-        "@protected": true,
-        "VerifiablePresentationTermsOfUseExtension": {
-          "@id": "https://www.w3.org/2018/credentials/examples#VerifiablePresentationExtension",
-          "@context": {
-            "@protected": true,
-            "termsOfUse": {
-              "@id": "https://www.w3.org/2018/credentials#termsOfUse",
-              "@type": "@id"
-            }
-          }
-        }
-    }
-  ],
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiablePresentation"],
-  "verifiableCredential": [{
-    "@context": [
-      "https://www.w3.org/ns/credentials/v2",
-      "https://www.w3.org/ns/credentials/examples/v2"
-    ],
-    "id": "http://university.example/credentials/3732",
-    "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-    "issuer": "https://university.example/issuers/14",
-    "validFrom": "2010-01-01T19:23:24Z",
-    "credentialSubject": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "degree": {
-        "type": "ExampleBachelorDegree",
-        "name": "Bachelor of Science and Arts"
-      }
-    }
-  }],
-  <span class="highlight">"termsOfUse": [{
-    "type": "HolderPolicy",
-    "id": "http://example.com/policies/credential/6",
-    "profile": "http://example.com/profiles/credential",
-    "prohibition": [{
-      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "assignee": "https://wineonline.example.org/",
-      "target": "http://university.example/credentials/3732",
-      "action": ["3rdPartyCorrelation"]
-    }]
-  }]</span>
-}
-        </pre>
-
-        <p>
-In the example above, the [=holder=] (the `assigner`), who is
-also the [=subject=], expressed a term of use prohibiting the [=verifier=]
-(the `assignee`, `https://wineonline.example.org`) from
-using the information provided to correlate the [=holder=] or [=subject=]
-using a third-party service. If the [=verifier=] were to use a third-party
-service for correlation, they would violate the terms under which the
-[=holder=] created the [=presentation=].
-        </p>
-
-        <p>
-This feature is also expected to be used by government-issued
-[=verifiable credentials=] to instruct digital wallets to limit their use to
-similar government organizations in an attempt to protect citizens from
-unexpected usage of sensitive data. Similarly, some
-[=verifiable credentials=] issued by private industry are expected to limit
-usage to within departments inside the organization, or during business hours.
-Implementers are urged to read more about this rapidly evolving feature in the
-appropriate section of the Verifiable Credentials Implementation Guidelines
-[[?VC-IMP-GUIDE]] document.
         </p>
 
       </section>
@@ -3965,13 +3785,6 @@ visual, auditory, haptic, or other format. The associated vocabulary URL MUST be
               <td>
 A property used for specifying the terms of use for a credential. The associated
 vocabulary URL MUST be `https://www.w3.org/2018/credentials#termsOfUse`.
-                <p class="issue atrisk" data-number="1437" title="Reservation depends on implementations">
-This property reservation might be deleted in favor of an existing section
-in the specification if at least one specification with two independent
-implementations are demonstrated by the end of the Candidate Recommendation
-Phase. If that does not occur, this reservation will remain, but the existing
-section in the specification will be removed.
-                </p>
               </td>
             </tr>
           </tbody>
@@ -6226,13 +6039,6 @@ without proper consent, such as by selling the data to a data broker, that would
 constitute an unauthorized use of the data, violating an expectation of privacy
 that the [=holder=] might have in the transaction.
         </p>
-        <p>
-Similarly, an [=issuer=] could make use of a
-<a href="#terms-of-use">termsOfUse</a> property to stipulate how and when a
-credential might be used. A [=holder=] using credentials outside of the
-scopes defined in the `termsOfUse` would be considered unauthorized
-use.
-        </p>
         <p class="note"
            title="Digital Rights Management is out of scope">
 Further study is required to determine how a [=holder=] can assert and
@@ -7031,11 +6837,7 @@ the `renderMethod` property.
               </td>
               <td>
 Serves as a superclass for specific terms of use types that are placed into
-the <a href="#terms-of-use">termsOfUse</a> property.
-<span class="issue atrisk">This superclass is at risk and will be removed if
-at least two independent implementations for the superclass are not identified
-by the end of the Candidate Recommendation phase.
-</span>
+the `termsOfUse` property.
               </td>
             </tr>
           </tbody>
