@@ -11,7 +11,7 @@
     <script src='https://www.w3.org/Tools/respec/respec-w3c' class='remove'></script>
     <script src="./common.js" class="remove"></script>
     <script class="remove"
-      src="https://cdn.jsdelivr.net/gh/digitalbazaar/respec-vc@3.0.0/dist/main.js"></script>
+      src="https://cdn.jsdelivr.net/gh/digitalbazaar/respec-vc@3.1.0/dist/main.js"></script>
 
     <script class="remove">
       var respecConfig = {
@@ -6836,9 +6836,15 @@ to ensure the timely transition of this specification to a Recommendation.
         <p>
 Implementations MUST treat the base context value, located at
 `https://www.w3.org/ns/credentials/v2`, as already retrieved;
-the following value is the SHA-384 digest of the resource
-computed and encoded according to the [[SRI]] definition of `digest`:
-<strong>`vxRgTREj3/ZmDabpiTX+Au4UXY8GDhyCSFNw+UQtdtISDyO/znDUY+FTg8rNsGXJ`</strong>.
+the following value is the hexadecimal encoded SHA2-256 digest value of the base
+context file: <code><span class="vc-hash"
+data-hash-url="https://www.w3.org/ns/credentials/v2"
+data-hash-format="openssl dgst -sha256" /></code>. It is possible to confirm
+the cryptographic digest above by running the following command from a modern
+Unix command interface line:
+`curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha256`.
+        </p>
+        <p>
 It is strongly advised that all JSON-LD Context URLs used by an
 application utilize the same mechanism, or a functionally equivalent mechanism,
 to ensure end-to-end security. Implementations are expected to throw errors
@@ -6855,16 +6861,6 @@ transformation to RDF</a>, are expected to do so without experiencing any
 errors. If such operations are performed and result in an error,
 the [=verifiable credential=] or [=verifiable presentation=] MUST result
 in a verification failure.
-        </p>
-        <p>
-It is possible to confirm the SHA-384 digest above by running the following
-command from a modern Unix command interface line:
-`curl -s https://www.w3.org/ns/credentials/v2 | openssl dgst -sha384 -binary | openssl base64 -A`
-        </p>
-        <p>
-More details regarding this hash encoding method can be found in the <a
-href="https://www.w3.org/TR/SRI/#integrity-metadata">integrity metadata</a>
-section of [[SRI]].
         </p>
         <p class="note" title="See errata if hash value changes are detected">
 It is extremely unlikely that the files that have associated cryptographic hash
@@ -6883,28 +6879,28 @@ This information might include at least:
         </p>
         <ol>
           <li>
-The contents of the credential itself, which is secured in
+The contents of the credential itself, which are secured in
 [=verifiable credentials=] and [=verifiable presentations=] by using
-mechanisms such as [[VC-JOSE-COSE]] and [[VC-DATA-INTEGRITY]].
+securing mechanisms. See Section [[[#securing-mechanisms]]] for further
+information.
           </li>
           <li>
 The content in a credential whose meaning depends on a link to an external URL,
 such as a JSON-LD Context, which can be secured by using a local static copy
-or a cryptographic digest of the file.
+or a cryptographic digest of the file. See Section
+[[[#integrity-of-related-resources]]] for more details.
           </li>
         </ol>
         <p>
-Verifiers are warned that other data that is referenced from within a
-credential, such as resources that are linked to via URLs, are not
+[=Verifiers=] are warned that other data that is referenced from within a
+[=credential=], such as resources that are linked to via URLs, are not
 cryptographically protected by default. It is considered a best practice to
 ensure that the same sorts of protections are provided for any URL that is
 critical to the security of the [=verifiable credential=] through the use of
-permanently cached files and/or cryptographic hashes. See the
-<a data-cite="?vc-imp-guide/#content-integrity">Content Integrity</a>
-section of the Verifiable Credential Implementation Guide for further
-information. Ultimately, knowing the cryptographic digest of any linked external
-content enables a [=verifier=] to confirm that the content is the same
-as what the [=issuer=] or [=holder=] intended.
+permanently cached files and/or cryptographic hashes. Ultimately, knowing the
+cryptographic digest of any linked external content enables a [=verifier=] to
+confirm that the content is the same as what the [=issuer=] or [=holder=]
+intended.
         </p>
       </section>
 
@@ -6930,27 +6926,26 @@ to ensure that developers can verify that the content of each file is correct.
         <table class="simple">
           <thead>
             <tr>
-              <th>URL</th>
               <th>JSON-LD Documents and Hashes</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-https://www.w3.org/2018/credentials#
-              </td>
-              <td>
-https://www.w3.org/2018/credentials/index.jsonld<br><br>
-sha256: `z52TgKqh2nqTCuACI8lCvhRdjwxQjeVmuOMCDCEijq4=`<br><br>
+<strong>URL:</strong> https://www.w3.org/2018/credentials#<br>
+<strong>Resolved Document:</strong> https://www.w3.org/2018/credentials/index.jsonld<br>
+<strong>SHA2-256 Digest:</strong> <code><span class="vc-hash"
+  data-hash-url="https://www.w3.org/2018/credentials/index.jsonld"
+  data-hash-format="openssl dgst -sha256" /></code>
               </td>
             </tr>
             <tr>
               <td>
-https://w3id.org/security#
-              </td>
-              <td>
-https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld<br><br>
-sha256: `LEaoTyf796eTaSlYWjfPe3Yb+poCW9TjWYTbFDmC0tc=`<br><br>
+<strong>URL:</strong> https://w3id.org/security#<br>
+<strong>Resolved Document:</strong> https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld<br>
+<strong>SHA2-256 Digest:</strong> <code><span class="vc-hash"
+  data-hash-url="https://w3c.github.io/vc-data-integrity/vocab/security/vocabulary.jsonld"
+  data-hash-format="openssl dgst -sha256" /></code>
               </td>
             </tr>
           </tbody>
@@ -6960,7 +6955,7 @@ sha256: `LEaoTyf796eTaSlYWjfPe3Yb+poCW9TjWYTbFDmC0tc=`<br><br>
 It is possible to confirm the cryptographic digests listed above by running
 a command like the following, replacing `&lt;DOCUMENT_URL>`
 with the appropriate value, through a modern UNIX-like OS command line interface:
-`curl -sL -H "Accept: application/ld+json" &lt;DOCUMENT_URL> | openssl dgst -sha256 -binary | openssl base64 -nopad -a`
+`curl -sL -H "Accept: application/ld+json" &lt;DOCUMENT_URL> | openssl dgst -sha256`
         </p>
 
         <p class="note"
