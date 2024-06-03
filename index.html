@@ -12,10 +12,6 @@
     <script src="./common.js" class="remove"></script>
     <script class="remove"
       src="https://cdn.jsdelivr.net/gh/digitalbazaar/respec-vc@3.0.0/dist/main.js"></script>
-    <script class="removeOnSave"
-      src="https://unpkg.com/reqlist/lib/reqlist.js"></script>
-    <link class="removeOnSave" rel="stylesheet" type="text/css"
-      href="https://unpkg.com/reqlist/lib/reqlist.css" />
 
     <script class="remove">
       var respecConfig = {
@@ -45,7 +41,66 @@
         // previousMaturity:  "WD",
 
         // extend the bibliography entries
-        localBiblio: vcwg.localBiblio,
+        localBiblio: {
+          "VC-SPECS": {
+            title: "Verifiable Credential Specifications Directory",
+            href: "https://w3c.github.io/vc-specs-dir/",
+            authors: [
+              "Manu Sporny"
+            ],
+            status: "ED",
+            publisher: "W3C Verifiable Credentials Working Group"
+          },
+          "ETSI-TRUST-LISTS": {
+            title: "Electronic Signatures and Infrastructures (ESI); Trusted Lists",
+            href: ["https://www.etsi.org/deliver/etsi_ts/119600_119699/119612/02.01.01_60/ts_119612v020101p.pdf"],
+            authors: ["ETSI"],
+            status: "ETSI Standard TS 119 612 V2.1.1 (2015-07)",
+            publisher: "ETSI"
+          },
+          "VC-CONTROLLER-DOCUMENT": {
+            title: "Verifiable Credential Controller Document",
+            href: "https://w3c.github.io/vc-controller-document/",
+            authors: [
+              "Manu Sporny",
+              "Dave Longley",
+              "Markus Sabadello",
+              "Drummond Reed",
+              "Orie Steele",
+              "Christopher Allen",
+              "Michael B. Jones"
+            ],
+            status: "ED",
+            publisher: "Verifiable Credentials Working Group"
+          },
+          'DEMOGRAPHICS': {
+            title: 'Simple Demographics Often Identify People Uniquely',
+            href: 'https://dataprivacylab.org/projects/identifiability/paper1.pdf',
+            authors: ['Latanya Sweeney'],
+            publisher: 'Data Privacy Lab'
+          },
+          "NIST-SP-800-57-Part-1": {
+            title: "Recommendation for Key Management: Part 1 – General",
+            authors: ["Elaine Barker"],
+            date: "May 2020",
+            publisher: "National Institute of Standards and Technology",
+            href: "https://doi.org/10.6028/NIST.SP.800-57pt1r5"
+          },
+          'VC-JSON-SCHEMA': {
+            title: 'Verifiable Credentials JSON Schema Specification',
+            href: 'https://www.w3.org/TR/vc-json-schema/',
+            authors: ['Gabe Cohen', 'Orie Steele'],
+            status: 'FPWD',
+            publisher: 'W3C Verifiable Credentials Working Group'
+          },
+          'PRES-EX': {
+            title: 'Presentation Exchange 2.0.0',
+            href: 'https://identity.foundation/presentation-exchange/spec/v2.0.0/',
+            authors: ['Daniel Buchner', 'Brent Zundel', 'Martin Riedel', 'Kim Hamilton Duffy'],
+            status: 'DIF Ratified Specification',
+            publisher: 'Decentralized Identity Foundation'
+          }
+        },
         doJsonLd: true,
 
         // Uncomment these to use the respec extension that generates a list of
@@ -179,6 +234,33 @@ ol.algorithm li:before {
   font-weight: bold;
   counter-increment: numsection;
   content: counters(numsection, ".") ") ";
+}
+
+table.simple {
+    border-collapse: collapse;
+    margin: 25px 0;
+    min-width: 400px;
+    border: 1px solid #dddddd;
+}
+table.simple thead tr {
+    background-color: #005a9c;
+    color: #ffffff;
+    text-align: left;
+}
+table.simple th,
+table.simple td {
+    padding: 12px 15px;
+    vertical-align: top;
+    text-align: left;
+}
+table.simple tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+table.simple tbody tr:nth-of-type(even) {
+    background-color: #00000008;
+}
+table.simple tbody tr:last-of-type {
+    border-bottom: 2px solid #005a9c;
 }
     </style>
   </head>
@@ -362,47 +444,41 @@ specification:
         <dl>
           <dt>[=holder=]</dt>
           <dd>
-A role an [=entity=] might perform by possessing one or more
-[=verifiable credentials=] and generating [=verifiable presentations=]
-from them. Example holders include students, employees, and customers.
+A role an [=entity=] might perform by possessing one or more [=verifiable
+credentials=] and generating [=verifiable presentations=] from them. A holder is
+often, but not always, a [=subject=] of the [=verifiable credentials=] they are
+holding. Holders store their [=credentials=] in [=credential repositories=].
+Example holders include students, employees, and customers.
           </dd>
           <dt>[=issuer=]</dt>
           <dd>
-A role an [=entity=] performs by asserting [=claims=] about one or
-more [=subjects=], creating a [=verifiable credential=] from these
-[=claims=], and transmitting the [=verifiable credential=] to a
-[=holder=]. Example issuers include corporations, non-profit organizations,
-trade associations, governments, and individuals.
+A role an [=entity=] can perform by asserting [=claims=] about one or more
+[=subjects=], creating a [=verifiable credential=] from these [=claims=], and
+transmitting the [=verifiable credential=] to a [=holder=]. Example issuers
+include corporations, non-profit organizations, trade associations, governments,
+and individuals.
           </dd>
           <dt>[=subject=]</dt>
           <dd>
-An [=entity=] about which [=claims=] are made. Example subjects include
-human beings, animals, and things. In many cases the [=holder=] of a
-[=verifiable credential=] is the subject, but in certain cases it is not. For
-example, a parent (the [=holder=]) might hold the
-[=verifiable credentials=] of a child (the [=subject=]), or a pet owner
-(the [=holder=]) might hold the [=verifiable credentials=] of their pet
-(the [=subject=]). For more information about these special cases, see the
-<a href="https://www.w3.org/TR/vc-imp-guide/#subject-holder-relationships">
-Subject-Holder Relationships</a> section in the Verifiable Credentials
-Implementation Guide [[VC-IMP-GUIDE]].
+A thing about which [=claims=] are made. Example subjects include human beings,
+animals, and things.
           </dd>
           <dt>[=verifier=]</dt>
           <dd>
-A role an [=entity=] performs by receiving one or more
-[=verifiable credentials=], optionally inside a
-[=verifiable presentation=], for processing. Example verifiers include
-employers, security personnel, and websites.
+A role an [=entity=] performs by receiving one or more [=verifiable
+credentials=], optionally inside a [=verifiable presentation=] for processing.
+Example verifiers include employers, security personnel, and websites.
           </dd>
           <dt>[=verifiable data registry=]</dt>
           <dd>
-A role a system might perform by mediating the creation and [=verification=]
-of identifiers, [=verification material=], and other relevant data, such as
-[=verifiable credential=] schemas, revocation registries,
-and so on, which might be required to use [=verifiable credentials=]. Some
-configurations might require correlatable identifiers for [=subjects=].
-Example verifiable data registries include trusted databases, decentralized
-databases, government ID databases, and distributed ledgers. Often
+A role a system might perform by mediating the creation and [=verification=] of
+identifiers, [=verification material=], and other relevant data, such as
+[=verifiable credential=] schemas, revocation registries, and so on, which might
+be required to use [=verifiable credentials=]. Some configurations might require
+correlatable identifiers for [=subjects=]. Some registries, such as ones for
+UUIDs and [=verification material=], might just act as namespaces for
+identifiers. Example verifiable data registries include trusted databases,
+decentralized databases, government ID databases, and distributed ledgers. Often
 there is more than one type of verifiable data registry utilized in an
 ecosystem.
           </dd>
@@ -420,12 +496,23 @@ ecosystem.
           </figcaption>
         </figure>
 
-        <p class="note">
+        <p class="note" title="Other types of ecosystems exist">
 <a href="#roles"></a> above provides an example ecosystem in which to ground the
 rest of the concepts in this specification. Other ecosystems exist, such as
 protected environments or proprietary systems, where
 [=verifiable credentials=] also provide benefit.
         </p>
+
+        <p class="note" title="Subjects are not always Holders">
+In many cases the [=holder=] of a [=verifiable credential=] is the subject, but
+in certain cases it is not. For example, a parent (the [=holder=]) might hold
+the [=verifiable credentials=] of a child (the [=subject=]), or a pet owner (the
+[=holder=]) might hold the [=verifiable credentials=] of their pet (the
+[=subject=]). For more information about these special cases, see the
+<a href="https://w3c.github.io/vc-imp-guide/#subject-holder-relationships">
+Subject-Holder Relationships</a> section in the [[[VC-IMP-GUIDE]]].
+        </p>
+
         <p>
 For a deeper exploration of the [=verifiable credentials=] ecosystem, along with
 a concrete lifecycle example, please refer to [[[VC-USE-CASES]]] [[?VC-USE-CASES]].
@@ -610,8 +697,8 @@ more [=issuers=], that is shared with a specific [=verifier=].
         </dd>
         <dt><dfn class="export" data-lt="credential repositories">credential repository</dfn></dt>
         <dd>
-A program, such as a storage vault or personal [=verifiable credential=]
-wallet, that stores and protects access to [=holders'=]
+Software, such as a file system, storage vault, or personal [=verifiable
+credential=] wallet, that stores and protects access to [=holders'=]
 [=verifiable credentials=].
         </dd>
         <dt><dfn class="export">selective disclosure</dfn></dt>
@@ -889,7 +976,8 @@ arrow, to a separate rectangle, containing a single text field:
           </figcaption>
         </figure>
 
-        <p class="note">
+        <p class="note"
+           title="Credential identifiers can lead to unwanted correlation">
 [=Credential=] identifiers can be used to identify specific instances
 of a [=credential=]. These identifiers could also be used for unwanted
 correlation. A [=holder=] wanting to minimize correlation is advised
@@ -897,12 +985,14 @@ to use a selective disclosure scheme that does not reveal the
 [=credential=] identifier.
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Credentials can refer to multiple subjects">
 It is possible to have a [=credential=], such as a marriage certificate,
 containing multiple [=claims=] about different [=subjects=] that are not
 required to be related.
         </p>
-        <p class="note">
+        <p class="note"
+           title="Credentials do not have to be about the holder">
 It is possible to have a [=credential=] that does not contain any
 [=claims=] about the [=entity=] to which the [=credential=] was issued.
 For example, a [=credential=] that only contains [=claims=] about a
@@ -1199,7 +1289,8 @@ the Verifiable Credentials Data Model is available at
 This concept is further expanded on in Section <a href="#extensibility"></a>.
         </p>
 
-        <p class="note" title="See JSON-LD for more information about @context.">
+        <p class="note"
+           title="See JSON-LD for more information about @context.">
 In JSON-LD, the `@context` [=property=] can also be used to
 communicate other details, such as datatype information, language information,
 transformation rules, and so on, which are beyond the needs of this
@@ -1230,7 +1321,8 @@ include UUIDs (`urn:uuid:0c07c1ce-57cb-41af-bef2-1b932b986873`), HTTP URLs
 (`https://id.example/things#123`), and DIDs (`did:example:1234abcd`).
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Identifiers of any kind increase correlatability">
 Developers should remember that identifiers might be harmful in scenarios
 where pseudonymity is required. Developers are encouraged to read Section
 <a href="#identifier-based-correlation"></a> carefully when considering such
@@ -1282,7 +1374,8 @@ thing the [=claims=] are about) and uses a [=decentralized identifier=],
 also known as a [=DID=].
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Decentralized Identifiers are optional">
 As of this publication, [=DIDs=] are a new type of identifier that are not
 necessary for [=verifiable credentials=] to be useful. Specifically,
 [=verifiable credentials=] do not depend on [=DIDs=] and [=DIDs=] do not depend
@@ -1413,7 +1506,8 @@ A valid evidence [=type=]. For example,<br>
           </tbody>
         </table>
 
-        <p class="note">
+        <p class="note"
+           title="The Verifiable Credentials Data Model is based on JSON-LD">
 The [=type=] system for the Verifiable Credentials Data Model is the same as
 for [[JSON-LD11]] and is detailed in
 <a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 3.5:
@@ -1477,7 +1571,8 @@ machine-readable version</a> be provided, through HTTP content negotiation, at
 the same URL.
         </p>
 
-        <p class="note" title="Creating new verifiable credential types">
+        <p class="note"
+           title="See the Implementation Guide for creating new credential types">
 Explaining how to create new types of [=verifiable credentials=] is beyond
 the scope of this specification. Readers that are interested in doing so are
 advised to read the section on
@@ -1558,7 +1653,8 @@ respectively. See
 <a href="#language-and-base-direction"></a> for further information.
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="@direction is not required for single-language strings">
 The `@direction` property in the examples below is not required
 for the associated single-language strings, as their default directions are the
 same as those set by the `@direction` value. We include the `@direction` property here
@@ -1805,7 +1901,8 @@ associating an object with the issuer property:
 }
         </pre>
 
-        <p class="note">
+        <p class="note"
+           title="The identifier for an issuer can be any URL">
 The value of the `issuer` [=property=] can also be a JWK (for
 example, `"https://example.com/keys/foo.jwk"`) or a [=DID=] (for
 example, `"did:example:abfe13f712120431c276e12ecab"`).
@@ -1881,7 +1978,8 @@ datetime expressed by the `validFrom` value.
 }
         </pre>
 
-        <p class="note">
+        <p class="note"
+           title="Validity start period for Verifiable Credentials">
 If `validFrom` and `validUntil` are not present, the
 [=verifiable credential=] validity period is considered valid
 indefinitely. In such cases, the [=verifiable credential=] is assumed to be
@@ -2496,7 +2594,8 @@ Some selective disclosure schemes can share a subset of [=claims=]
 derived from a [=verifiable credential=].
           </p>
 
-          <p class="note">
+          <p class="note"
+             title="Presentations using Zero-Knowledge Proofs are possible">
 For an example of a ZKP-style [=verifiable presentation=] containing
 derived data instead of directly embedded [=verifiable credentials=], see
 Section <a href="#zero-knowledge-proofs"></a>.
@@ -2662,7 +2761,8 @@ processing rules outlined by each associated `credentialSchema`
           </dd>
         </dl>
 
-        <p class="note">
+        <p class="note"
+           title="Credential type-specific syntax checking is possible">
 The `credentialSchema` [=property=] provides an opportunity to
 annotate type definitions or lock them to specific versions of the vocabulary.
 Authors of [=verifiable credentials=] can include a static version of their
@@ -2712,10 +2812,10 @@ can be used by a [=verifier=] to determine whether the
 [=verifiable credential=] is well-formed.
         </p>
 
-        <p class="note" >
+        <p class="note"
+           title="See Implementation Guide for details on JSON Schema">
 For information about linkages to JSON Schema [[?VC-JSON-SCHEMA]] or other
-optional schema validation mechanisms, see the Verifiable Credentials
-Implementation Guidelines [[VC-IMP-GUIDE]] document.
+optional schema validation mechanisms, see the [[[VC-IMP-GUIDE]]] document.
         </p>
 
         <p>
@@ -2876,7 +2976,8 @@ For more information about how this trust model interacts with various threat
 models studied by the Working Group, see the [[[VC-USE-CASES]]] [[VC-USE-CASES]].
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Trust model differs from the traditional Certificate Authority system">
 The data model detailed in this specification does not imply a transitive trust
 model, such as that provided by more traditional Certificate Authority trust
 models. In the Verifiable Credentials Data Model, a [=verifier=] either
@@ -3095,7 +3196,8 @@ human-readable document describing the expected order of values for the
 seeking interoperability.
           </p>
 
-          <p class="note">
+          <p class="note"
+             title="Term redefinition is not allowed">
 When processing the <a data-cite="JSON-LD11#dfn-active-context">active
 context</a> defined by the base JSON-LD Context document <a
 href="#dfn-context">defined in this specification</a>, compliant JSON-LD-based
@@ -3305,7 +3407,8 @@ The refresh service is only expected to be used when either the
 that does not contain public information or whose refresh service is not
 protected in some way.
         </p>
-        <p class="note">
+        <p class="note"
+           title="Non-authenticated credential refresh">
 Placing a `refreshService` [=property=] in a
 [=verifiable credential=] so that it is available to [=verifiers=] can
 remove control and consent from the [=holder=] and allow the
@@ -3577,10 +3680,11 @@ definition.
           </dd>
         </dl>
 
-        <p class="note">
+        <p class="note"
+           title="See Implementation Guide for strategies for providing evidence">
 For information about how attachments and references to [=credentials=] and
 non-credential data might be supported by the specification, see the
-Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
+[[[VC-IMP-GUIDE]]] document.
         </p>
 
         <pre class="example nohighlight"
@@ -3657,16 +3761,13 @@ Verifiable Credentials Implementation Guidelines [[VC-IMP-GUIDE]] document.
   ]
 }
 </pre>
-        <p class="note">
-In this `evidence` example, the [=issuer=] is asserting that they
-physically matched the [=subject=] of the [=credential=] to a physical
-copy of a driver's license with the stated license number. This driver's license
-was used in the issuance process to verify that "Example University" verified
-the subject before issuance of the credential and how they did so (physical
-verification).
+        <p>
+In the `evidence` example above, the [=issuer=] is asserting that they have
+video of the [=subject=] of the [=credential=] demonstrating the achievement.
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Evidence has a different purpose from securing mechanisms">
 The `evidence` [=property=] provides information that is different from and
 information to the securing mechanism utilized. The `evidence`
 [=property=] is used to express supporting information, such as documentary
@@ -3746,7 +3847,8 @@ derived [=verifiable credential=] is compatible with that schema as well. We
 do not define such a request schema in this specification, but an example of one
 method for doing so is [[?PRES-EX]].
         </p>
-        <p class="note">
+        <p class="note"
+           title="Take care when designing schemas for selective disclosure">
 `credentialSchema` implementers are encouraged to consider the
 implications of selective disclosure credentials and provide guidance for
 processing depending on the construction. If a schema is not formed with
@@ -3858,13 +3960,6 @@ In order to avoid collisions regarding how the following properties are used,
 implementations MUST specify a `type` property in the value associated with the
 reserved property. For more information related to adding `type` information,
 see Section <a href="#types"></a>.
-        </p>
-        <p class="issue atrisk" data-number="1437" title="Extension points under consideration by the Working Group">
-The working group is discussing if additional extension points
-will be reserved in <a href="https://www.w3.org/ns/credentials/v2">https://www.w3.org/ns/credentials/v2</a>.
-<br/><br/>
-The working group currently plans to only reserve extension points that
-have at least a draft specification that is being incubated in a community group.
         </p>
 
         <table class="simple">
@@ -4393,7 +4488,8 @@ cases requiring lists and arrays to follow the guidance on
 In general, a JSON array is ordered, while a JSON-LD array is not ordered unless
 that array uses the `@list` keyword.
           </p>
-          <p class="note">
+          <p class="note"
+             title="Array order might not matter">
 While it is possible to use this data model without any JSON-LD processing,
 those who do so and make use of arrays need to be aware that unless the above
 guidance is followed, the order of items in an array cannot be guaranteed in
@@ -4923,7 +5019,8 @@ Therefore there is not one approach to privacy that works for all use cases.
 Privacy solutions are use case specific.
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Proof of age might be insufficient for some use cases">
 Even for those wanting to remain anonymous when purchasing alcohol, photo
 identification might still be required to provide appropriate assurance to the
 merchant. The merchant might not need to know your name or other details (other
@@ -5220,8 +5317,8 @@ transmit [=verifiable credentials=] on behalf of a [=holder=].
         </p>
 
         <p>
-The Oblivious HTTP protocol [[?OHTTP]] is one mechanism that implementers might
-consider using when fetching external resources that are associated with a
+The Oblivious HTTP protocol [[?RFC9458]] is one mechanism that implementers
+might consider using when fetching external resources that are associated with a
 [=verifiable credential=] or a [=verifiable presentation=].
 Oblivious HTTP allows a client to make multiple requests to an origin server
 without that server being able to link those requests to that client or even to
@@ -5339,7 +5436,8 @@ push back on the over-collection of information that is unnecessary for the
 transaction.
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Minimum disclosure can still lead to unique identification">
 While it is possible to practice the principle of minimum disclosure, it might
 be impossible to avoid the strong identification of an individual for
 specific use cases during a single session or over multiple sessions. The
@@ -6175,7 +6273,8 @@ credential might be used. A [=holder=] using credentials outside of the
 scopes defined in the `termsOfUse` would be considered unauthorized
 use.
         </p>
-        <p class="note">
+        <p class="note"
+           title="Digital Rights Management is out of scope">
 Further study is required to determine how a [=holder=] can assert and
 enforce authorized use of their data after [=presentation=].
         </p>
@@ -6381,7 +6480,8 @@ base direction of right-to-left.
 }
         </pre>
 
-        <p class="note">
+        <p class="note"
+           title="Properly rendering internationalized text is challenging">
 The text above would most likely be rendered incorrectly as left-to-right
 without the explicit expression of language and direction because many systems
 use the first character of a text string to determine its [=base direction=].
@@ -6493,10 +6593,10 @@ could use other [=properties=] in a [=verifiable credential=] to uniquely
 identify a [=subject=].
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Authentication is out of scope">
 For information on how authentication and WebAuthn might work with
-[=verifiable credentials=], see the Verifiable Credentials Implementation
-Guidelines [[VC-IMP-GUIDE]] document.
+[=verifiable credentials=], see the [[[VC-IMP-GUIDE]]] document.
         </p>
 
       </section>
@@ -6549,7 +6649,8 @@ See the <a data-cite="VC-IMP-GUIDE/#subject-holder-relationships"></a> and
 [=subject=] and [=holder=].
         </p>
 
-        <p class="note">
+        <p class="note"
+           title="Validation is the process of applying business rules">
 Validation is the process by which verifiers apply business rules to
 evaluate the propriety of a particular use of a [=verifiable credential=].
         </p>
