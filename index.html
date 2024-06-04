@@ -3372,15 +3372,6 @@ An example of a related resource integrity object referencing JSON-LD contexts.
       <section>
         <h3>Refreshing</h3>
 
-        <p class="issue atrisk" data-number="1437" title="Feature depends on demonstration of independent implementations">
-This feature is at risk and will be removed from the specification if at least
-two independent, interoperable implementations are not demonstrated for a
-single extension type by the end of the Candidate Recommendation Phase. If
-this feature is removed, the property will be included in Section
-<a href="#reserved-extension-points"></a>, in anticipation of future
-implementation and inclusion in the specification.
-        </p>
-
         <p>
 It is useful for systems to enable the manual or automatic refresh of an expired
 [=verifiable credential=]. For more information about validity periods for
@@ -3407,14 +3398,6 @@ The refresh service is only expected to be used when either the
 that does not contain public information or whose refresh service is not
 protected in some way.
         </p>
-        <p class="note"
-           title="Non-authenticated credential refresh">
-Placing a `refreshService` [=property=] in a
-[=verifiable credential=] so that it is available to [=verifiers=] can
-remove control and consent from the [=holder=] and allow the
-[=verifiable credential=] to be issued directly to the [=verifier=],
-thereby bypassing the [=holder=].
-        </p>
 
         <dl>
           <dt><var id="defn-refreshService">refreshService</var></dt>
@@ -3432,34 +3415,40 @@ definition.
           title="Usage of the refreshService property by an issuer">
 {
   "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2",
-    "https://w3id.org/vc-refresh-service/v1"
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/age/v1",
+    "https://w3id.org/security/suites/ed25519-2020/v1"
   ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2020-01-01T19:23:24Z",
+  "type": ["VerifiableCredential", "AgeVerificationCredential"],
+  "issuer": "did:key:z6MksFxi8wnHkNq4zgEskSZF45SuWQ4HndWSAVYRRGe9qDks",
+  "issuanceDate": "2024-04-03T00:00:00.000Z",
+  "expirationDate": "2024-12-15T00:00:00.000Z",
+  "name": "Age Verification Credential",
   "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
+    "overAge": 21
   },
   <span class="highlight">"refreshService": {
     "type": "VerifiableCredentialRefreshService2021",
-    "url": "https://university.example/workflows/refresh-degree",
-    "validFrom": "2021-09-01T19:23:24Z",
-    "validUntil": "2022-02-01T19:23:24Z"
+    "url": "https://registration.provider.example/flows/reissue-age-token",
+    "refreshToken": "z2BJYfNtmWRiouWhDrbDQmC2zicUPBxsPg"
   }</span>
 }
         </pre>
 
         <p>
 In the example above, the [=issuer=] specifies an automatic
-`refreshService` that can be used by directing the [=holder=] to
-`https://university.example/workflows/refresh-degree`.
+`refreshService` that can be used by POSTing the [=verifiable credential=] to
+the refresh service `url`. Note that this particular verifiable credential is
+not intended to be shared with anyone except for the original issuer.
+        </p>
+
+        <p class="note"
+           title="Non-authenticated credential refresh">
+Placing a `refreshService` [=property=] in a
+[=verifiable credential=] so that it is available to [=verifiers=] can
+remove control and consent from the [=holder=] and allow the
+[=verifiable credential=] to be issued directly to the [=verifier=],
+thereby bypassing the [=holder=].
         </p>
 
       </section>
@@ -3986,21 +3975,6 @@ URL MUST be `https://www.w3.org/2018/credentials#confidenceMethod`.
 A property used for specifying the evidence that was presented in order to
 issue the credential. The associated vocabulary URL MUST be
 `https://www.w3.org/2018/credentials#evidence`.
-                <p class="issue atrisk" data-number="1437" title="Reservation depends on implementations">
-This property reservation might be deleted in favor of an existing section
-in the specification if at least one specification with two independent
-implementations are demonstrated by the end of the Candidate Recommendation
-Phase. If that does not occur, this reservation will remain, but the existing
-section in the specification will be removed.
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td>`refreshService`</td>
-              <td>
-A property used for specifying how a credential can be refreshed. The
-associated vocabulary URL MUST be
-`https://www.w3.org/2018/credentials#refreshService`.
                 <p class="issue atrisk" data-number="1437" title="Reservation depends on implementations">
 This property reservation might be deleted in favor of an existing section
 in the specification if at least one specification with two independent
@@ -7018,10 +6992,6 @@ the `confidenceMethod` property.
               <td>
 Serves as a superclass for specific refresh service types that are placed into
 the <a href="#refreshing">credentialRefresh</a> property.
-<span class="issue atrisk">This superclass is at risk and will be removed if
-at least two independent implementations for the superclass are not identified
-by the end of the Candidate Recommendation phase.
-</span>
               </td>
             </tr>
             <tr id="bc-render-method">
