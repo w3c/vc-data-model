@@ -4246,37 +4246,37 @@ can achieve this protection are discussed in Section
 
         <p>
 Securing mechanism specifications that create new types of [=embedded proofs=]
-MUST specify a [=property=] for securing both [=verifiable credentials=] and
-[=verifiable presentations=]. The requirements for the property used by the
-embedded securing mechanism are as follows:
+MUST specify a separate and securable [=proof graph=], and a [=property=] 
+that relates the [=verifiable credential=] or [=verifiable
+presentation=] to that [=proof graph=]. 
+The requirement on the securing mechanism and its related property
+are as follows.
         </p>
-
         <ul>
           <li>
-The property MUST relate the [=verifiable credential=] or [=verifiable
-presentation=] to a separable and securable [=proof graph=].
-          </li>
-          <li>
-The property MUST define all terms used by the [=proof graph=]. For example,
+The securing mechanism MUST define all terms used by the [=proof graph=]. For example,
 the mechanism could define vocabulary specifications and `@context` files
 in the same manner as they are utilized by this specification.
           </li>
           <li>
-In a [=verifiable credential=], the property MUST secure the
-[=default graph=].
-          </li>
-          <li>
-In a [=verifiable presentation=], the property MUST secure all
-graphs in the [=presentation=] not referred to by the property itself,
-including each [=verifiable credential=] and any of its related [=proof graphs=].
-          </li>
-          <li>
-The `proof` property as defined in [[VC-DATA-INTEGRITY]] MAY be used by the
-embedded securing mechanism.
+The securing mechanism MUST secure all graphs in the [=verifiable credential=] or the [=verifiable
+presentation=] except for the [=proof graphs=] appearing as values of the [=property=] instance.
           </li>
         </ul>
 
-        <p>
+      <p>
+The `proof` property as defined in [[VC-DATA-INTEGRITY]] MAY be used by the
+embedded securing mechanism.
+      </p>
+
+      <p class="note">
+        The requirement on securing all graphs means, for Verifiable Presentations, that the property must 
+        secure all graphs in the [=presentation=] not referred to by the property itself,
+        including each [=verifiable credential=] and any of its related [=proof graphs=].
+        See <a href="#info-graph-vp"></a> or <a href="#info-graph-vp-mult-creds"></a> as examples.
+      </p>
+
+      <p>
 Securing mechanism specifications SHOULD register the securing mechanism in the
 <a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section
 of the [[[?VC-SPECS]]] [[?VC-SPECS]].
