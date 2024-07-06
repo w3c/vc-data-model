@@ -4789,10 +4789,10 @@ versions of this specification.
         <p>
 This section contains an algorithm that [=conforming verifier
 implementations=] MUST run when verifying a [=verifiable credential=] or a
-[=verifiable presentation=]. This algorithm takes inputs of a media
-type ([=string=] |inputMediaType|) paired with either a sequence of bytes
-([=byte sequence=] |inputBytes|) or a document ([=map=] |inputDocument|),
-and returns a [=map=] that contains the following:
+[=verifiable presentation=]. This algorithm takes a media
+type ([=string=] |inputMediaType|) and secured data
+([=byte sequence=] or [=map=] |securedData|) and returns a [=map=] that
+contains the following:
         </p>
 
         <ul>
@@ -4839,12 +4839,10 @@ the securing mechanism. The |verifyProof| function MUST implement the interface
 described in <a href="#securing-mechanism-specifications"></a>.
               </li>
               <li>
-Set |result| to the result of passing |inputBytes| and
-|inputMediaType| to the |verifyProof| function. If the call was
-successful, |result| will contain the |status|,
-|document|, |mediaType|, |controller|,
-|controllerDocument|, |warnings|, and |errors|
-properties.
+Set |result| to the result of passing |inputMediaType| and |securedData| and to
+the |verifyProof| function. If the call was successful, |result| will contain
+the |status|, |document|, |mediaType|, |controller|, |controllerDocument|,
+|warnings|, and |errors| properties.
               </li>
               <li>
 If |result|.|status| is set to `false`, add a
