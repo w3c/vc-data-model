@@ -1172,7 +1172,7 @@ document.
 
         <p>
 This specification is designed to ease the prototyping of new types of
-[=verifiable credentials=]. Developers can copy the template below and paste it
+[=verifiable credential=]. Developers can copy the template below and paste it
 into common [=verifiable credential=] tooling to start issuing, holding, and
 verifying prototype credentials.
         </p>
@@ -1183,7 +1183,7 @@ they would like to create. Since [=verifiable credentials=] talk about subjects,
 each property-value pair in the `credentialSubject` object expresses a
 particular property of the credential subject. Once a developer has added a
 number of these property-value combinations, the modified object can be sent to
-the [=verifiable credential=] issuer software and a [=verifiable credential=]
+the [=verifiable credential=] issuer software, and a [=verifiable credential=]
 will be created for the developer. From a prototyping standpoint, that is all a
 developer needs to do.
         </p>
@@ -1206,9 +1206,9 @@ developer needs to do.
 Once a developer has prototyped their credential to a point where they believe
 all of the credential properties are stable, it is advised that they generate
 vocabulary and context files for their application and publish them at stable
-URLs so that other developers can use the same vocabulary and context to achieve
+URLs, so that other developers can use the same vocabulary and context to achieve
 interoperability. The `https://www.w3.org/ns/credentials/examples/v2` URL above
-will then be replaced with the URL to an application-specific context. This
+would then be replaced with the URL of an application-specific context. This
 process is covered in Section <a href="#extensibility"></a>. Alternatively,
 developers can reuse existing vocabulary and context files that happen to fit
 their use case. They can explore the [[[VC-SPECS]]] [[VC-SPECS]] for reusable
@@ -4406,10 +4406,10 @@ might not perform generalized JSON-LD processing. Authors of [=conforming
 documents=] are advised that interoperability might be reduced if JSON-LD
 keywords in the `@context` value are used to globally affect values in a
 [=verifiable credential=] or [=verifiable presentation=], such as by
-setting the `@base` or `@vocab` keyword. For example, setting these values
-might trigger a failure in a mis-implemented JSON Schema check on the `@context`
+setting either or both of the `@base` or `@vocab` keywords. For example, setting these values
+might trigger a failure in a mis-implemented JSON Schema test of the `@context`
 value in an implementation that is performing [=type-specific credential
-processing=] and not expecting the `@base` value or `@vocab` value to be
+processing=] and not expecting the `@base` and/or `@vocab` value to be
 expressed in the `@context` value.
         </p>
 
@@ -4422,14 +4422,14 @@ urged to not use JSON-LD features that are not easily detected when performing
         <ul>
           <li>
 In-line declaration of JSON-LD keywords in the `@context` value that globally
-modify document term and value processing, such as setting `@base` or `@vocab`,
+modify document term and value processing, such as setting `@base` or `@vocab`
           </li>
           <li>
 Use of JSON-LD contexts that override declarations in previous contexts, such as
-resetting `@vocab`,
+resetting `@vocab`
           </li>
           <li>
-In-line declaration of JSON-LD contexts in the `@context` property, and
+In-line declaration of JSON-LD contexts in the `@context` property
           </li>
           <li>
 Use of full URLs for JSON-LD terms and types (e.g.,
@@ -4437,21 +4437,21 @@ Use of full URLs for JSON-LD terms and types (e.g.,
 `https://vocab.example/myvocab#SomeNewType`) instead of the short forms of
 any such values (e.g., `VerifiableCredential` or `SomeNewType`) that are
 explicitly defined as JSON-LD `@context` mappings (e.g.,
-`https://www.w3.org/ns/credentials/v2`).
+`https://www.w3.org/ns/credentials/v2`)
           </li>
         </ul>
 
         <p>
-While this specification warns against the usage of `@vocab`, there are
-legitimate usages of the feature, such as to ease experimentation, development,
-and localized deployment. If an application developer desires to use `@vocab` in
-production, which is strongly advised against, they are urged to understand that
-any usage of `@vocab` will disable undefined term error reporting, and
-subsequent usage will override previous `@vocab` declarations. Subsequent usage
-of `@vocab` changes the semantics of the information contained in the document
-and so it is important to understand how these changes will affect the
+While this specification cautions against the use of `@vocab`, there are
+legitimate uses of the feature, such as to ease experimentation, development,
+and localized deployment. If an application developer wants to use `@vocab` in
+production — even though strongly advised against — they are urged to understand that
+any use of `@vocab` will disable reporting of "undefined term" errors, and
+later use(s) will override any previous `@vocab` declaration(s). Different values
+of `@vocab` can change the semantics of the information contained in the document,
+so it is important to understand whether and how these changes will affect the
 application being developed. Application developers MUST understand every
-JSON-LD context used by their application to the extent that it affects
+JSON-LD context used by their application, at least to the extent that it affects
 the semantics of the terms that are used by their application.
         </p>
 
