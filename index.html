@@ -4400,11 +4400,11 @@ might not perform generalized JSON-LD processing. Authors of [=conforming
 documents=] are advised that interoperability might be reduced if JSON-LD
 keywords in the `@context` value are used to globally affect values in a
 [=verifiable credential=] or [=verifiable presentation=], such as by
-globally setting the `@base` keyword. For example, globally setting these values
+setting the `@base` or `@vocab` keyword. For example, setting these values
 might trigger a failure in a mis-implemented JSON Schema check on the `@context`
 value in an implementation that is performing [=type-specific credential
-processing=] and not expecting the `@base` value to be expressed in the
-`@context` value.
+processing=] and not expecting the `@base` value or `@vocab` value to be
+expressed in the `@context` value.
         </p>
 
         <p>
@@ -4415,20 +4415,23 @@ urged to not use JSON-LD features that are not easily detected when performing
 
         <ul>
           <li>
-Use of JSON-LD keywords in the `@context` value that globally modify document
-value processing, such as global settings of `@base`
+In-line declaration of JSON-LD keywords in the `@context` value that globally
+modify document term and value processing, such as setting `@base` or `@vocab`,
           </li>
           <li>
-In-line declaration of JSON-LD contexts in the `@context` property.
+Use of JSON-LD contexts that override declarations in previous contexts, such as
+resetting `@vocab`,
+          </li>
+          <li>
+In-line declaration of JSON-LD contexts in the `@context` property, and
           </li>
           <li>
 Use of full URLs for JSON-LD terms and types (e.g.,
 `https://www.w3.org/2018/credentials#VerifiableCredential` or
 `https://vocab.example/myvocab#SomeNewType`) instead of the short forms of
 any such values (e.g., `VerifiableCredential` or `SomeNewType`) that are
-either explicitly defined as JSON-LD `@context` mappings (e.g.,
-`https://www.w3.org/ns/credentials/v2`) or are implicitly defined via the
-`@vocab` feature that applies to all undefined terms.
+explicitly defined as JSON-LD `@context` mappings (e.g.,
+`https://www.w3.org/ns/credentials/v2`).
           </li>
        </ul>
 
