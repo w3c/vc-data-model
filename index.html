@@ -4246,37 +4246,37 @@ can achieve this protection are discussed in Section
 
         <p>
 Securing mechanism specifications that create new types of [=embedded proofs=]
-MUST specify a [=property=] for securing both [=verifiable credentials=] and
-[=verifiable presentations=]. The requirements for the property used by the
-embedded securing mechanism are as follows:
+MUST specify a [=property=] that relates the [=verifiable credential=] or [=verifiable
+presentation=] to a [=proof graph=]. 
+The requirements on the securing mechanism are as follow:
         </p>
-
         <ul>
           <li>
-The property MUST relate the [=verifiable credential=] or [=verifiable
-presentation=] to a separable and securable [=proof graph=].
-          </li>
-          <li>
-The property MUST define all terms used by the [=proof graph=]. For example,
+The securing mechanism MUST define all terms used by the [=proof graph=]. For example,
 the mechanism could define vocabulary specifications and `@context` files
 in the same manner as they are utilized by this specification.
           </li>
           <li>
-In a [=verifiable credential=], the property MUST secure the
-[=default graph=].
+The securing mechanism MUST secure all graphs in the [=verifiable credential=] or the [=verifiable
+presentation=], except for any [=proof graphs=] securing the [=verifiable credential=] 
+or the [=verifiable presentation=] itself.
           </li>
-          <li>
-In a [=verifiable presentation=], the property MUST secure the
-[=default graph=] of the [=presentation=] as well as every [=proof graph=]
-related to each [=verifiable credential=] in the [=presentation=].
-          </li>
-          <li>
-The `proof` property as defined in [[VC-DATA-INTEGRITY]] MAY be used by the
-embedded securing mechanism.
-          </li>
+
         </ul>
 
-        <p>
+      <p class="note">
+The last requirement means that the securing mechanism secures the [=default graph=] and, 
+for [=verifiable presentations=], each [=verifiable credential=] of the presentation, together with 
+their respective [=proof graphs=].
+See also <a href="#info-graph-vp"></a> or <a href="#info-graph-vp-mult-creds"></a>.
+      </p>
+
+      <p>
+The `proof` property as defined in [[VC-DATA-INTEGRITY]] MAY be used by the
+embedded securing mechanism.
+      </p>
+
+      <p>
 Securing mechanism specifications SHOULD register the securing mechanism in the
 <a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section
 of the [[[?VC-SPECS]]] [[?VC-SPECS]].
