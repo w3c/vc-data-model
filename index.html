@@ -3524,16 +3524,16 @@ by the specific `termsOfUse` [=type=] definition.
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
+    "https://EBSI_JSON_LD_CONTEXT_GOES_HERE/v2"
   ],
   "id": "urn:did:123456",
   "type": [
     "VerifiableCredential",
-    "EbsiTermsOfUseExample"
+    "EBSI_VC_TYPE_GOES_HERE"
   ],
   "issuer": "did:ebsi:zz7XsC9ixAXuZecoD9sZEM1",
-  "validFrom": "2021-11-01T00:00:00Z",
-  "validUntil": "2021-10-30T00:00:00Z",
+  "validFrom": "2024-11-01T00:00:00Z",
+  "validUntil": "2025-10-30T00:00:00Z",
   "credentialSubject": {
     "id": "did:key:z2dmzD81cgPx8Vki7JbuuMmFYrWPgYoytykUZ3eyqht1j9KbrDt4zxXoDrBWYFiATYZ8G9JMeEXC7Kki24fbTwtsJbGe5qcbkYFunSzcDokMRmj8UJ1PbdCGh33mf97K3To89bMzd15qrYq3VkDztoZqfmujkJVpvTbqoXWXqxmzNDbvMJ",
     "personalIdentifier": "IT/DE/1234",
@@ -3542,97 +3542,30 @@ by the specific `termsOfUse` [=type=] definition.
     "dateOfBirth": "1930-10-01"
   },
   "credentialSchema": {
-    "id": "https://api-test.ebsi.eu/trusted-schemas-registry/v2/schemas/z3MgUFUkb722uq4x3dv5yAJmnNmzDFeK5UC8x83QoeLJM",
+    "id": "https://code.europa.eu/ebsi/json-schema/-/raw/db67c771b96715c23ddf384abcfef33d6174d494/schemas/vcdm2.0/trust-model/schema.json",
     "type": "JsonSchema"
   },
   "termsOfUse": {
-    "id": "https://api-test.ebsi.eu/trusted-issuers-registry/v4/issuers/did:ebsi:zz7XsC9ixAXuZecoD9sZEM1/attributes/7201d95fef05f72667f5454c2192da2aa30d9e052eeddea7651b47718d6f31b0",
-    "type": "IssuanceCertificate"
+    "type": "TrustFrameworkPolicy",
+    "trustFramework": "EBSI_TRUST_FRAMEWORK_URI_GOES_HERE",
+    "policyId": "EBSI_POLICY_ID_URI_GOES_HERE"
   }
 }
         </pre>
 
         <p>
-In the example above, the [=issuer=] is asserting that as a European
-Blockchain Services Infrastructure (EBSI) accredited issuer, it complies with the EBSI
-policies as an accredited issuer and is registered in the EBSI register of trusted issuers.
-The `termsOfUse` [=id=] can be resolved by the [=verifier=] to confirm
-that the [=issuer=] has been issued an accreditation VC (in JWT format)
-by a trusted issuer higher in the EBSI trust chain [?EBSI].
-        </p>
-
-        <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2",
-    {
-        "@protected": true,
-        "VerifiablePresentationTermsOfUseExtension": {
-          "@id": "https://www.w3.org/2018/credentials/examples#VerifiablePresentationExtension",
-          "@context": {
-            "@protected": true,
-            "termsOfUse": {
-              "@id": "https://www.w3.org/2018/credentials#termsOfUse",
-              "@type": "@id"
-            }
-          }
-        }
-    }
-  ],
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiablePresentation"],
-  "verifiableCredential": [{
-    "@context": [
-      "https://www.w3.org/ns/credentials/v2",
-      "https://www.w3.org/ns/credentials/examples/v2"
-    ],
-    "id": "http://university.example/credentials/3732",
-    "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-    "issuer": "https://university.example/issuers/14",
-    "validFrom": "2010-01-01T19:23:24Z",
-    "credentialSubject": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "degree": {
-        "type": "ExampleBachelorDegree",
-        "name": "Bachelor of Science and Arts"
-      }
-    }
-  }],
-  <span class="highlight">"termsOfUse": [{
-    "type": "HolderPolicy",
-    "id": "http://example.com/policies/credential/6",
-    "profile": "http://example.com/profiles/credential",
-    "prohibition": [{
-      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "assignee": "https://wineonline.example.org/",
-      "target": "http://university.example/credentials/3732",
-      "action": ["3rdPartyCorrelation"]
-    }]
-  }]</span>
-}
-        </pre>
-
-        <p>
-In the example above, the [=holder=] (the `assigner`), who is
-also the [=subject=], expressed a term of use prohibiting the [=verifier=]
-(the `assignee`, `https://wineonline.example.org`) from
-using the information provided to correlate the [=holder=] or [=subject=]
-using a third-party service. If the [=verifier=] were to use a third-party
-service for correlation, they would violate the terms under which the
-[=holder=] created the [=presentation=].
+In the example above, the [=issuer=] is asserting that EBSI_DESCRIPTION_GOES_HERE.
         </p>
 
         <p>
-This feature is also expected to be used by government-issued
-[=verifiable credentials=] to instruct digital wallets to limit their use to
-similar government organizations in an attempt to protect citizens from
-unexpected usage of sensitive data. Similarly, some
-[=verifiable credentials=] issued by private industry are expected to limit
-usage to within departments inside the organization, or during business hours.
-Implementers are urged to read more about this rapidly evolving feature in the
-appropriate section of the Verifiable Credentials Implementation Guidelines
-[[?VC-IMP-GUIDE]] document.
+This feature is expected to be used by government-issued [=verifiable
+credentials=] to instruct digital wallets to limit their use to similar
+government organizations in an attempt to protect citizens from unexpected usage
+of sensitive data. Similarly, some [=verifiable credentials=] issued by private
+industry are expected to limit usage to within departments inside the
+organization, or during business hours. Implementers are urged to read more
+about this evolving feature in the appropriate section of the Verifiable
+Credentials Implementation Guidelines [[?VC-IMP-GUIDE]] document.
         </p>
 
       </section>
