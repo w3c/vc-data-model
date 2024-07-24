@@ -4882,15 +4882,16 @@ For each |contextValue| expressed in every `@context` property, ensure that
 either:
             <ol class="algorithm">
               <li>
-The |contextValue| exists in |approvedContexts| and matches a cryptographic
-hash associated with the matching approved context, or
+The |contextValue| exists in |approvedContexts| and matches an exact value
+or a cryptographic hash associated with the matching approved context, or
               </li>
               <li>
-optionally, for the context values that do not exist in |approvedContexts|,
-remove the |contextValue| from the `@context` property values. Set
-|result|.|document| to the result of running the
-<a data-cite="JSON-LD11-API#compaction-algorithm">
-JSON-LD Compaction Algorithm</a> with the modified |inputDocument| as input.
+optionally, if any of the context values do not exist in |approvedContexts|,
+clone the `@context` property and remove each context value that was
+not in |approvedContext| from the clone. Set |result|.|document| to
+the result of running the <a data-cite="JSON-LD11-API#compaction-algorithm">
+JSON-LD Compaction Algorithm</a> with the |inputDocument| and
+the cloned and modified context as inputs.
               </li>
             </ol>
           </li>
