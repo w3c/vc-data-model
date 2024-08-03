@@ -3512,39 +3512,57 @@ by the specific `termsOfUse` [=type=] definition.
         <pre class="example nohighlight"
           title="Usage of the termsOfUse property by an issuer">
 {
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://EBSI_JSON_LD_CONTEXT_GOES_HERE/v2"
-  ],
-  "id": "urn:did:123456",
-  "type": [
-    "VerifiableCredential",
-    "EBSI_VC_TYPE_GOES_HERE"
-  ],
-  "issuer": "did:ebsi:zz7XsC9ixAXuZecoD9sZEM1",
-  "validFrom": "2024-11-01T00:00:00Z",
-  "validUntil": "2025-10-30T00:00:00Z",
-  "credentialSubject": {
-    "id": "did:key:z2dmzD81cgPx8Vki7JbuuMmFYrWPgYoytykUZ3eyqht1j9KbrDt4zxXoDrBWYFiATYZ8G9JMeEXC7Kki24fbTwtsJbGe5qcbkYFunSzcDokMRmj8UJ1PbdCGh33mf97K3To89bMzd15qrYq3VkDztoZqfmujkJVpvTbqoXWXqxmzNDbvMJ",
-    "personalIdentifier": "IT/DE/1234",
-    "familyName": "Castafiori",
-    "firstName": "Bianca",
-    "dateOfBirth": "1930-10-01"
-  },
-  "credentialSchema": {
-    "id": "https://code.europa.eu/ebsi/json-schema/-/raw/db67c771b96715c23ddf384abcfef33d6174d494/schemas/vcdm2.0/trust-model/schema.json",
-    "type": "JsonSchema"
-  },
-  "termsOfUse": {
-    "type": "TrustFrameworkPolicy",
-    "trustFramework": "EBSI_TRUST_FRAMEWORK_URI_GOES_HERE",
-    "policyId": "EBSI_POLICY_ID_URI_GOES_HERE"
+  {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://www.w3.org/ns/credentials/undefined-terms/v2"
+    ],
+    "id": "urn:uuid:08e26d22-8dca-4558-9c14-6e7aa7275b9b",
+    "type": [
+      "VerifiableCredential",
+      "VerifiableAttestation",
+      "VerifiableTrustModel",
+      "VerifiableAuthorisationForTrustChain"
+    ],
+    "issuer": "did:ebsi:zZeKyEJfUTGwajhNyNX928z",
+    "validFrom": "2021-11-01T00:00:00Z",
+    "validUntil": "2024-06-22T14:11:44Z",
+    "credentialSubject": {
+      "id": "did:ebsi:zvHWX359A3CvfJnCYaAiAde",
+      "reservedAttributeId": "60ae46e4fe9adffe0bc83c5e5be825aafe6b5246676398cd1ac36b8999e088a8",
+      "permissionFor": [{
+        "schemaId": "https://api-test.ebsi.eu/trusted-schemas-registry/v3/schemas/zHgbyz9ajVuSProgyMhsiwpcp8g8aVLFRNARm51yyYZp6",
+        "types": [
+          "VerifiableCredential",
+          "VerifiableAttestation",
+          "WorkCertificate"
+        ],
+        "jurisdiction": "https://publications.europa.eu/resource/authority/atu/EUR"
+      }]
+    },<span class="highlight">
+    "termsOfUse": {
+      "type": "TrustFrameworkPolicy",
+      "trustFramework": "Employment&Life",
+      "policyId": "https://example.com/policies/125",
+      "legalBasis": "professional qualifications directive"
+    }</span>,
+    "credentialStatus": {
+      "id": "https://api-test.ebsi.eu/trusted-issuers-registry/v5/issuers/did:ebsi:zvHWX359A3CvfJnCYaAiAde/attributes/60ae46e4fe9adffe0bc83c5e5be825aafe6b5246676398cd1ac36b8999e088a8",
+      "type": "EbsiAccreditationEntry"
+    },
+    "credentialSchema": {
+      "id": "https://api-test.ebsi.eu/trusted-schemas-registry/v3/schemas/zCSHSDwrkkd32eNjQsMCc1h8cnFaxyTXP5ByozyVQXZoH",
+      "type": "JsonSchema"
+    }
   }
 }
         </pre>
 
         <p>
-In the example above, the [=issuer=] is asserting that EBSI_DESCRIPTION_GOES_HERE.
+In the example above, the [=issuer=] is asserting that the legal basis
+under which the [=verifiable credential=] has been issued is the
+"professional qualifications directive" using the "Employment&Life" trust
+framework, with a specific link to the policy.
         </p>
 
         <p>
