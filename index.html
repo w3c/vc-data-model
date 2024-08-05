@@ -1182,6 +1182,69 @@ resources.
       </section>
 
       <section>
+        <h3>Verifiable Credentials</h3>
+
+        <p>
+[=Verifiable credentials=] are used to express properties of one or more
+[=subjects=] as well as properties of the [=credential=] itself. The following
+properties are defined in this specification for a [=verifiable credential=]:
+        </p>
+
+        <dl>
+          <dt>@context</dt>
+          <dd>
+Defined in Section [[[#contexts]]].
+          </dd>
+          <dt>id</dt>
+          <dd>
+Defined in Section [[[#identifiers]]].
+          </dd>
+          <dt>type</dt>
+          <dd>
+Defined in Section [[[#types]]].
+          </dd>
+          <dt>name</dt>
+          <dd>
+Defined in Section [[[#names-and-descriptions]]].
+          </dd>
+          <dt>description</dt>
+          <dd>
+Defined in Section [[[#names-and-descriptions]]].
+          </dd>
+          <dt>issuer</dt>
+          <dd>
+Defined in Section [[[#issuer]]].
+          </dd>
+          <dt>credentialSubject</dt>
+          <dd>
+Defined in Section [[[#credential-subject]]].
+          </dd>
+          <dt>validFrom</dt>
+          <dd>
+Defined in Section [[[#validity-period]]].
+          </dd>
+          <dt>validUntil</dt>
+          <dd>
+Defined in Section [[[#validity-period]]].
+          </dd>
+          <dt>status</dt>
+          <dd>
+Defined in Section [[[#status]]].
+          </dd>
+          <dt>credentialSchema</dt>
+          <dd>
+Defined in Section [[[#data-schemas]]].
+          </dd>
+        </dl>
+
+        <p>
+A [=verifiable credential=] can be extended to have additional properties
+through the extension mechanism defined in Section [[[#extensibility]]].
+        </p>
+
+      </section>
+
+      <section>
         <h3>Contexts</h3>
 
         <p>
@@ -1730,85 +1793,6 @@ in the [[[JSON-LD11]]] specification.
       </section>
 
       <section>
-        <h3>Credential Subject</h3>
-
-        <p>
-A [=verifiable credential=] contains [=claims=] about one or more [=subjects=].
-This specification defines a `credentialSubject` [=property=] for the expression
-of [=claims=] about one or more [=subjects=].
-        </p>
-
-        <p>
-A [=verifiable credential=] MUST contain a `credentialSubject` [=property=].
-        </p>
-
-        <dl>
-          <dt><dfn class="export"
-                   id="defn-credentialSubject">credentialSubject</dfn></dt>
-          <dd>
-The value of the `credentialSubject` [=property=] is a set of objects where each
-object MUST be the [=subject=] of one or more [=claims=], which MUST be
-serialized inside the `credentialSubject` [=property=]. Each object MAY also
-contain an `id` [=property=] to identify the [=subject=], as described in
-Section [[[#identifiers]]].
-          </dd>
-        </dl>
-
-        <pre class="example nohighlight vc"
-          title="Usage of the credentialSubject property"
-          data-vc-vm="https://university.example/issuers/565049#key-1">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/565049",
-  "validFrom": "2010-01-01T00:00:00Z",
-  <span class="highlight">"credentialSubject"</span>: {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  }
-}
-        </pre>
-
-        <p>
-It is possible to express information related to multiple [=subjects=] in a
-[=verifiable credential=]. The example below specifies two [=subjects=]
-who are spouses. Note the use of array notation to associate multiple
-[=subjects=] with the `credentialSubject` property.
-        </p>
-
-        <pre class="example nohighlight"
-          title="Specifying multiple subjects in a verifiable credential">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "RelationshipCredential"],
-  "issuer": "https://example.com/issuer/123",
-  "validFrom": "2010-01-01T00:00:00Z",
-  "credentialSubject": <span class="highlight">[{
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "name": "Jayden Doe",
-    "spouse": "did:example:c276e12ec21ebfeb1f712ebc6f1"
-  }, {
-    "id": "https://subject.example/subject/8675",
-    "name": "Morgan Doe",
-    "spouse": "https://subject.example/subject/7421"
-  }]</span>
-}
-        </pre>
-
-      </section>
-
-      <section>
         <h3>Issuer</h3>
 
         <p>
@@ -1895,6 +1879,85 @@ example, `"did:example:abfe13f712120431c276e12ecab"`).
       </section>
 
       <section>
+        <h3>Credential Subject</h3>
+
+        <p>
+A [=verifiable credential=] contains [=claims=] about one or more [=subjects=].
+This specification defines a `credentialSubject` [=property=] for the expression
+of [=claims=] about one or more [=subjects=].
+        </p>
+
+        <p>
+A [=verifiable credential=] MUST contain a `credentialSubject` [=property=].
+        </p>
+
+        <dl>
+          <dt><dfn class="export"
+                   id="defn-credentialSubject">credentialSubject</dfn></dt>
+          <dd>
+The value of the `credentialSubject` [=property=] is a set of objects where each
+object MUST be the [=subject=] of one or more [=claims=], which MUST be
+serialized inside the `credentialSubject` [=property=]. Each object MAY also
+contain an `id` [=property=] to identify the [=subject=], as described in
+Section [[[#identifiers]]].
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight vc"
+          title="Usage of the credentialSubject property"
+          data-vc-vm="https://university.example/issuers/565049#key-1">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/565049",
+  "validFrom": "2010-01-01T00:00:00Z",
+  <span class="highlight">"credentialSubject"</span>: {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  }
+}
+        </pre>
+
+        <p>
+It is possible to express information related to multiple [=subjects=] in a
+[=verifiable credential=]. The example below specifies two [=subjects=]
+who are spouses. Note the use of array notation to associate multiple
+[=subjects=] with the `credentialSubject` property.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Specifying multiple subjects in a verifiable credential">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "RelationshipCredential"],
+  "issuer": "https://example.com/issuer/123",
+  "validFrom": "2010-01-01T00:00:00Z",
+  "credentialSubject": <span class="highlight">[{
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Jayden Doe",
+    "spouse": "did:example:c276e12ec21ebfeb1f712ebc6f1"
+  }, {
+    "id": "https://subject.example/subject/8675",
+    "name": "Morgan Doe",
+    "spouse": "https://subject.example/subject/7421"
+  }]</span>
+}
+        </pre>
+
+      </section>
+
+      <section>
         <h3>Validity Period</h3>
 
         <p>
@@ -1969,104 +2032,6 @@ If `validFrom` and `validUntil` are not present, the
 indefinitely. In such cases, the [=verifiable credential=] is assumed to be
 valid from the time the `verifiable credential` was created.
         </p>
-
-      </section>
-
-      <section>
-        <h3>Securing Mechanisms</h3>
-
-        <p>
-This specification recognizes two classes of
-<dfn class="export" data-lt="securing mechanism">securing mechanisms</dfn>:
-those that use enveloping proofs and those that use embedded proofs.
-        </p>
-
-        <p>
-An <dfn class="export">enveloping proof</dfn> is one that wraps a serialization
-of this data model. One such RECOMMENDED enveloping proof mechanism is defined
-in [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]].
-        </p>
-
-        <p>
-An <dfn class="export">embedded proof</dfn> is a mechanism where the proof is
-included in the serialization of the data model. One such RECOMMENDED embedded
-proof mechanism is defined in [[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]].
-        </p>
-
-        <p>
-These two classes of securing mechanisms are not mutually exclusive. Additional
-securing mechanism specifications might also be defined according to the rules
-in Section [[[#securing-mechanism-specifications]]].
-        </p>
-
-        <pre class="example nohighlight"
-          title="A verifiable credential utilizing an embedded proof">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "did:example:6fb1f712ebe12c27cc26eebfe11",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "https://subject.example/subject/3921",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"proof": {
-    "type": "DataIntegrityProof",
-    "cryptosuite": "eddsa-rdfc-2022",
-    "created": "2021-11-13T18:19:39Z",
-    "verificationMethod": "https://university.example/issuers/14#key-1",
-    "proofPurpose": "assertionMethod",
-    "proofValue": "z58DAdFfa9SkqZMVPxAQp...jQCrfFPP2oumHKtz"
-  }</span>
-}
-        </pre>
-
-        <pre class="example nohighlight"
-          title="A verifiable credential that uses an enveloping proof in SD-JWT format">
-eyJhbGciOiJFUzM4NCIsImtpZCI6IkdOV2FBTDJQVlVVMkpJVDg5bTZxMGM3U3ZjNDBTLWJ2UjFTT0
-Q3REZCb1UiLCJ0eXAiOiJ2YytsZCtqc29uK3NkLWp3dCIsImN0eSI6InZjK2xkK2pzb24ifQ
-.
-eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwcz
-ovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvZXhhbXBsZXMvdjIiXSwiaXNzdWVyIjoiaHR0cHM6
-Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJ2YWxpZEZyb20iOiIyMDEwLTAxLT
-AxVDE5OjIzOjI0WiIsImNyZWRlbnRpYWxTY2hlbWEiOnsiX3NkIjpbIlNFOHp4bmduZTNNbWEwLUNm
-S2dlYW1rNUVqU1NfOXRaNlN5NDdBdTdxRWMiLCJjT3lySEVrSlZwdEtSdURtNkNZVTREajJvRkExd0
-JQRjFHcTJnWEo1NXpzIl19LCJjcmVkZW50aWFsU3ViamVjdCI6eyJkZWdyZWUiOnsibmFtZSI6IkJh
-Y2hlbG9yIG9mIFNjaWVuY2UgYW5kIEFydHMiLCJfc2QiOlsibVNfSVBMa0JHcTIxbVA3Z0VRaHhOck
-E0ZXNMc1ZKQ1E5QUpZNDFLLVRQSSJdfSwiX3NkIjpbIlhTSG9iU05Md01PVl9QNkhQMHNvMnZ1clNy
-VXZ3UURYREJHQWtyTXk3TjgiXX0sIl9zZCI6WyJQNE5qWHFXa2JOc1NfRzdvdmlLdm1NOG0yckhDTm
-5XVVV2SXZBbW9jb2RZIiwieFNvSHBKUXlCNGV1dmg4SkFJdDFCd1pjNFVEOHY5S3ZOTmVLMk9OSjFC
-QSJdLCJfc2RfYWxnIjoic2hhLTI1NiIsImlzcyI6Imh0dHBzOi8vdW5pdmVyc2l0eS5leGFtcGxlL2
-lzc3VlcnMvNTY1MDQ5IiwiaWF0IjoxNzAzNjI1OTAxLCJleHAiOjE3MzUyNDgzMDEsImNuZiI6eyJq
-d2siOnsia3R5IjoiRUMiLCJjcnYiOiJQLTM4NCIsImFsZyI6IkVTMzg0IiwieCI6Inl1Zlo1SFUzcU
-NfOTRMbkI3Zklzd0hmT0swQlJra0Z5bzVhd1QyX21ld0tJWUpLMVNfR0QySVB3UjRYUTZpdFEiLCJ5
-IjoiRmEtV2pOd2NLQ1RWWHVDU2tCY3RkdHJOYzh6bXdBTTZWOWxudmxxd1QyQnRlQ0ZHNmR6ZDJoMF
-VjeXluTDg0dCJ9fX0
-.
-M7BFJB9LEV_xEylSJpP00fd_4WjrOlXshh0dUv3QgOzw2MEGIfSfi9PoCkHJH7TI0InsqkD6XZVz38
-MpeDKekgBW-RoDdJmxnifYOEJhKpJ5EN9PvA007UPi9QCaiEzX
-~
-WyJFX3F2V09NWVQ1Z3JNTkprOHNXN3BBIiwgImlkIiwgImh0dHA6Ly91bml2ZXJzaXR5LmV4YW1wbG
-UvY3JlZGVudGlhbHMvMTg3MiJd
-~
-WyJTSEc4WnpfRDVRbFMwU0ZrZFUzNXlRIiwgInR5cGUiLCBbIlZlcmlmaWFibGVDcmVkZW50aWFsIi
-wgIkV4YW1wbGVBbHVtbmlDcmVkZW50aWFsIl1d
-~
-WyJqZzJLRno5bTFVaGFiUGtIaHV4cXRRIiwgImlkIiwgImh0dHBzOi8vZXhhbXBsZS5vcmcvZXhhbX
-BsZXMvZGVncmVlLmpzb24iXQ
-~
-WyItQmhzaE10UnlNNUVFbGt4WGVXVm5nIiwgInR5cGUiLCAiSnNvblNjaGVtYSJd~WyJ0SEFxMEUwN
-nY2ckRuUlNtSjlSUWRBIiwgImlkIiwgImRpZDpleGFtcGxlOjEyMyJd
-~
-WyJ1Ynd6bi1kS19tMzRSMGI0SG84QTBBIiwgInR5cGUiLCAiQmFjaGVsb3JEZWdyZWUiXQ
-        </pre>
 
       </section>
 
@@ -2216,65 +2181,100 @@ from the [=issuer=] that can be used by the [=issuer=] to deduce
       </section>
 
       <section>
-        <h3>Verifiable Credentials</h3>
+        <h3>Securing Mechanisms</h3>
 
         <p>
-[=Verifiable credentials=] are used to express properties of one or more [=subjects=]
-as well as properties of the [=credential=] itself. The following properties
-are defined in this specification for a [=verifiable credential=]:
+This specification recognizes two classes of
+<dfn class="export" data-lt="securing mechanism">securing mechanisms</dfn>:
+those that use enveloping proofs and those that use embedded proofs.
         </p>
-
-        <dl>
-          <dt>@context</dt>
-          <dd>
-Defined in Section [[[#contexts]]].
-          </dd>
-          <dt>id</dt>
-          <dd>
-Defined in Section [[[#identifiers]]].
-          </dd>
-          <dt>type</dt>
-          <dd>
-Defined in Section [[[#types]]].
-          </dd>
-          <dt>name</dt>
-          <dd>
-Defined in Section [[[#names-and-descriptions]]].
-          </dd>
-          <dt>description</dt>
-          <dd>
-Defined in Section [[[#names-and-descriptions]]].
-          </dd>
-          <dt>issuer</dt>
-          <dd>
-Defined in Section [[[#issuer]]].
-          </dd>
-          <dt>validFrom</dt>
-          <dd>
-Defined in Section [[[#validity-period]]].
-          </dd>
-          <dt>validUntil</dt>
-          <dd>
-Defined in Section [[[#validity-period]]].
-          </dd>
-          <dt>status</dt>
-          <dd>
-Defined in Section [[[#status]]].
-          </dd>
-          <dt>credentialSchema</dt>
-          <dd>
-Defined in Section [[[#data-schemas]]].
-          </dd>
-          <dt>credentialSubject</dt>
-          <dd>
-Defined in Section [[[#credential-subject]]].
-          </dd>
-        </dl>
 
         <p>
-A [=verifiable credential=] can be extended to have additional properties
-through the extension mechanism defined in Section [[[#extensibility]]].
+An <dfn class="export">enveloping proof</dfn> is one that wraps a serialization
+of this data model. One such RECOMMENDED enveloping proof mechanism is defined
+in [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]].
         </p>
+
+        <p>
+An <dfn class="export">embedded proof</dfn> is a mechanism where the proof is
+included in the serialization of the data model. One such RECOMMENDED embedded
+proof mechanism is defined in [[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]].
+        </p>
+
+        <p>
+These two classes of securing mechanisms are not mutually exclusive. Additional
+securing mechanism specifications might also be defined according to the rules
+in Section [[[#securing-mechanism-specifications]]].
+        </p>
+
+        <pre class="example nohighlight"
+          title="A verifiable credential utilizing an embedded proof">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "did:example:6fb1f712ebe12c27cc26eebfe11",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "https://subject.example/subject/3921",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  <span class="highlight">"proof": {
+    "type": "DataIntegrityProof",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "created": "2021-11-13T18:19:39Z",
+    "verificationMethod": "https://university.example/issuers/14#key-1",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "z58DAdFfa9SkqZMVPxAQp...jQCrfFPP2oumHKtz"
+  }</span>
+}
+        </pre>
+
+        <pre class="example nohighlight"
+          title="A verifiable credential that uses an enveloping proof in SD-JWT format">
+eyJhbGciOiJFUzM4NCIsImtpZCI6IkdOV2FBTDJQVlVVMkpJVDg5bTZxMGM3U3ZjNDBTLWJ2UjFTT0
+Q3REZCb1UiLCJ0eXAiOiJ2YytsZCtqc29uK3NkLWp3dCIsImN0eSI6InZjK2xkK2pzb24ifQ
+.
+eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwcz
+ovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvZXhhbXBsZXMvdjIiXSwiaXNzdWVyIjoiaHR0cHM6
+Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJ2YWxpZEZyb20iOiIyMDEwLTAxLT
+AxVDE5OjIzOjI0WiIsImNyZWRlbnRpYWxTY2hlbWEiOnsiX3NkIjpbIlNFOHp4bmduZTNNbWEwLUNm
+S2dlYW1rNUVqU1NfOXRaNlN5NDdBdTdxRWMiLCJjT3lySEVrSlZwdEtSdURtNkNZVTREajJvRkExd0
+JQRjFHcTJnWEo1NXpzIl19LCJjcmVkZW50aWFsU3ViamVjdCI6eyJkZWdyZWUiOnsibmFtZSI6IkJh
+Y2hlbG9yIG9mIFNjaWVuY2UgYW5kIEFydHMiLCJfc2QiOlsibVNfSVBMa0JHcTIxbVA3Z0VRaHhOck
+E0ZXNMc1ZKQ1E5QUpZNDFLLVRQSSJdfSwiX3NkIjpbIlhTSG9iU05Md01PVl9QNkhQMHNvMnZ1clNy
+VXZ3UURYREJHQWtyTXk3TjgiXX0sIl9zZCI6WyJQNE5qWHFXa2JOc1NfRzdvdmlLdm1NOG0yckhDTm
+5XVVV2SXZBbW9jb2RZIiwieFNvSHBKUXlCNGV1dmg4SkFJdDFCd1pjNFVEOHY5S3ZOTmVLMk9OSjFC
+QSJdLCJfc2RfYWxnIjoic2hhLTI1NiIsImlzcyI6Imh0dHBzOi8vdW5pdmVyc2l0eS5leGFtcGxlL2
+lzc3VlcnMvNTY1MDQ5IiwiaWF0IjoxNzAzNjI1OTAxLCJleHAiOjE3MzUyNDgzMDEsImNuZiI6eyJq
+d2siOnsia3R5IjoiRUMiLCJjcnYiOiJQLTM4NCIsImFsZyI6IkVTMzg0IiwieCI6Inl1Zlo1SFUzcU
+NfOTRMbkI3Zklzd0hmT0swQlJra0Z5bzVhd1QyX21ld0tJWUpLMVNfR0QySVB3UjRYUTZpdFEiLCJ5
+IjoiRmEtV2pOd2NLQ1RWWHVDU2tCY3RkdHJOYzh6bXdBTTZWOWxudmxxd1QyQnRlQ0ZHNmR6ZDJoMF
+VjeXluTDg0dCJ9fX0
+.
+M7BFJB9LEV_xEylSJpP00fd_4WjrOlXshh0dUv3QgOzw2MEGIfSfi9PoCkHJH7TI0InsqkD6XZVz38
+MpeDKekgBW-RoDdJmxnifYOEJhKpJ5EN9PvA007UPi9QCaiEzX
+~
+WyJFX3F2V09NWVQ1Z3JNTkprOHNXN3BBIiwgImlkIiwgImh0dHA6Ly91bml2ZXJzaXR5LmV4YW1wbG
+UvY3JlZGVudGlhbHMvMTg3MiJd
+~
+WyJTSEc4WnpfRDVRbFMwU0ZrZFUzNXlRIiwgInR5cGUiLCBbIlZlcmlmaWFibGVDcmVkZW50aWFsIi
+wgIkV4YW1wbGVBbHVtbmlDcmVkZW50aWFsIl1d
+~
+WyJqZzJLRno5bTFVaGFiUGtIaHV4cXRRIiwgImlkIiwgImh0dHBzOi8vZXhhbXBsZS5vcmcvZXhhbX
+BsZXMvZGVncmVlLmpzb24iXQ
+~
+WyItQmhzaE10UnlNNUVFbGt4WGVXVm5nIiwgInR5cGUiLCAiSnNvblNjaGVtYSJd~WyJ0SEFxMEUwN
+nY2ckRuUlNtSjlSUWRBIiwgImlkIiwgImRpZDpleGFtcGxlOjEyMyJd
+~
+WyJ1Ynd6bi1kS19tMzRSMGI0SG84QTBBIiwgInR5cGUiLCAiQmFjaGVsb3JEZWdyZWUiXQ
+        </pre>
 
       </section>
 
