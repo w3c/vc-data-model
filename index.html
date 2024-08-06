@@ -2232,8 +2232,7 @@ each data schema is determined by the specific type definition.
             </p>
             <p>
 If multiple schemas are present, validity is determined according to the
-processing rules outlined by each associated `credentialSchema`
-`type` property.
+processing rules outlined by each associated `type` property.
             </p>
           </dd>
         </dl>
@@ -2283,56 +2282,11 @@ integrity protection mechanism. The `credentialSchema`
         </pre>
 
         <p>
-In the example above, the [=issuer=] is specifying a
-`credentialSchema`, which points to a [[?VC-JSON-SCHEMA]] file that
-can be used by a [=verifier=] to determine whether the
-[=verifiable credential=] is well-formed.
+In the example above, the [=issuer=] is specifying two `credentialSchema`
+objects, each of which point to a JSON Schema [[?VC-JSON-SCHEMA]] file that can
+be used by a [=verifier=] to determine whether the [=verifiable credential=] is
+well-formed.
         </p>
-
-        <p class="note"
-           title="See Implementation Guide for details on JSON Schema">
-For information about linkages to JSON Schema [[?VC-JSON-SCHEMA]] or other
-optional schema validation mechanisms, see the [[[VC-IMP-GUIDE]]] document.
-        </p>
-
-        <p>
-Data schemas can also be used to specify mappings to other formats, such as
-those used to perform zero-knowledge proofs. For more information on using the
-`credentialSchema` [=property=] with zero-knowledge proofs,
-see Section [[[#zero-knowledge-proofs]]].
-        </p>
-
-        <pre class="example nohighlight" title="Usage of the credentialSchema property to perform zero-knowledge validation">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/examples/degree",
-    "type": "ZkpExampleSchema2018"
-  }</span>
-}
-        </pre>
-
-        <p>
-In the example above, the [=issuer=] is specifying a
-`credentialSchema` pointing to a means of transforming the input data
-into a format which can then be used by a [=verifier=] to determine whether
-the proof provided with the [=verifiable credential=] is well-formed.
-        </p>
-
 
       </section>
 
