@@ -188,7 +188,7 @@
             companyURL: "https://www.transmute.industries/",
             note: "v2.0", w3cid: 109171}
         ],
-        xref: ["URL", "I18N-GLOSSARY", "INFRA"],
+        xref: ["URL", "I18N-GLOSSARY", "INFRA", "CONTROLLER-DOCUMENT"],
         lint: { "informative-dfn": false },
         maxTocLevel: 3,
         inlineCSS: true
@@ -364,7 +364,7 @@ Information related to the issuing authority (for example, a city government,
 national agency, or certification body)
           </li>
           <li>
-Information related to the type of [=credential=] this is (for example, a
+Information related to the type of [=credential=] (for example, a
 Dutch passport, an American driving license, or a health insurance card)
           </li>
           <li>
@@ -373,7 +373,9 @@ the issuing authority about the [=subject=] (for example, nationality,
 the classes of vehicle entitled to drive, or date of birth)
           </li>
           <li>
-Evidence related to how the [=credential=] was derived
+Evidence related to how the qualifications required for the [=credential=]
+to be issued were met by the [=subject=] (for example, a measurement,
+proof of citizenship, or test result)
           </li>
           <li>
 Information related to constraints on the credential (for example,
@@ -409,7 +411,7 @@ with which disparate sources of digital data can be collected and correlated,
 comprise a privacy concern that the use of [=verifiable=] and easily
 machine-readable [=credentials=] threatens to make worse. This document
 outlines and attempts to address a number of these issues in Section
-<a href="#privacy-considerations"></a>. Examples of how to use this data model
+[[[#privacy-considerations]]]. Examples of how to use this data model
 using privacy-enhancing technologies, such as zero-knowledge proofs, are also
 provided throughout this document.
         </p>
@@ -497,10 +499,24 @@ ecosystem.
         </figure>
 
         <p class="note" title="Other types of ecosystems exist">
-<a href="#roles"></a> above provides an example ecosystem in which to ground the
+[[[#roles]]] above provides an example ecosystem in which to ground the
 rest of the concepts in this specification. Other ecosystems exist, such as
 protected environments or proprietary systems, where
 [=verifiable credentials=] also provide benefit.
+        </p>
+
+        <p>
+The ecosystem provided in this specification is in contrast to a typical
+two-party, or federated identity provider, model. An identity provider,
+sometimes abbreviated as <em>IdP</em>, is a system for creating, maintaining,
+and managing identity information for [=holders=], while providing
+authentication services to [=relying party=] applications within a federation or
+distributed network. In a federated identity model, the [=holder=] is tightly
+bound to the identity provider. This specification does not use the "identity
+provider", "federated identity", or "relying party" terminology unless comparing
+or mapping the concepts in this document to other specifications. This
+specification decouples the identity provider concept into two distinct
+concepts: the [=issuer=] and the [=holder=].
         </p>
 
         <p class="note" title="Subjects are not always Holders">
@@ -525,14 +541,14 @@ A <dfn>conforming document</dfn> is a
 <a data-cite="JSON-LD11-API#compaction-algorithms">compacted</a> JSON-LD
 document that complies with all of the relevant "MUST" statements in this
 specification. Specifically, the relevant normative "MUST" statements in
-Sections <a href="#basic-concepts"></a>, <a href="#advanced-concepts"></a>, and
-<a href="#syntaxes"></a> of this document MUST be enforced.
+Sections [[[#basic-concepts]]], [[[#advanced-concepts]]], and
+[[[#syntaxes]]] of this document MUST be enforced.
 A conforming document is either a [=verifiable credential=] that MUST be
 serialized using the `application/vc` media type or a
 [=verifiable presentation=] that MUST be serialized using the
 `application/vp` media type. A conforming document MUST be
 secured by at least one securing mechanism as described in Section
-<a href="#securing-mechanisms"></a>.
+[[[#securing-mechanisms]]].
         </p>
 
         <p>
@@ -540,14 +556,14 @@ A <dfn class="lint-ignore">conforming issuer implementation</dfn> produces
 [=conforming documents=], MUST include all required properties in the
 [=conforming documents=] that it produces, and MUST secure the [=conforming
 documents=] it produces using a securing mechanism as described in Section
-<a href="#securing-mechanisms"></a>.
+[[[#securing-mechanisms]]].
         </p>
 
         <p>
 A <dfn class="lint-ignore">conforming verifier implementation</dfn>
 consumes [=conforming documents=], MUST perform [=verification=] on a
 [=conforming document=] as described in Section
-<a href="#securing-mechanisms"></a>, MUST check that each
+[[[#securing-mechanisms]]], MUST check that each
 required property satisfies the normative requirements for that property, and
 MUST produce errors when non-[=conforming documents=] are detected.
         </p>
@@ -598,11 +614,6 @@ credential used in this specification differs from,
 <a href="https://csrc.nist.gov/glossary/term/credential">NIST's definitions of
 credential</a>.
         </dd>
-        <dt><dfn>data minimization</dfn></dt>
-        <dd>
-The act of limiting the amount of shared data strictly to the minimum
-necessary to successfully accomplish a task or goal.
-        </dd>
         <dt><dfn data-lt="decentralized identifiers|DID|DIDs">decentralized identifier</dfn></dt>
         <dd>
 A portable URL-based identifier, also known as a <strong><em>DID</em></strong>,
@@ -652,30 +663,6 @@ from them. A holder is often, but not always, a [=subject=] of the
 [=verifiable credentials=] they are holding. Holders store their
 [=credentials=] in [=credential repositories=].
         </dd>
-        <dt><dfn class="lint-ignore"
-                data-lt="identities|identity's">identity</dfn></dt>
-        <dd>
-The means for keeping track of [=entities=] across contexts. Digital
-identities enable tracking and customization of [=entity=] interactions
-across digital contexts, typically using identifiers and properties. Unintended
-distribution or use of identity information can compromise privacy. Collection
-and use of such information should follow the principle of
-[=data minimization=].
-        </dd>
-        <dt><dfn data-lt="identity providers|idp">identity provider</dfn></dt>
-        <dd>
-An identity provider, sometimes abbreviated as <em>IdP</em>, is a system for
-creating, maintaining, and managing identity information for [=holders=],
-while providing authentication services to [=relying party=] applications
-within a federation or distributed network. In this case the [=holder=] is
-always the [=subject=]. Even if the [=verifiable credentials=] are bearer
-[=credentials=], it is assumed the [=verifiable credentials=] remain with
-the [=subject=], and if they are not, they were stolen by an attacker. This
-specification does not use this term unless comparing or mapping the concepts in
-this document to other specifications. This specification decouples the
-[=identity provider=] concept into two distinct concepts: the [=issuer=]
-and the [=holder=].
-        </dd>
         <dt><dfn class="export" data-lt="issuers|issuer's">issuer</dfn></dt>
         <dd>
 A role an [=entity=] can perform by asserting [=claims=] about one or
@@ -722,21 +709,20 @@ communication between [=holders=], [=issuers=], and [=verifiers=].
         </dd>
         <dt><dfn class="export" data-lt="claim validation|validate">validation</dfn></dt>
         <dd>
-The assurance that a [=claim=] from a specific [=issuer=] satisfies the
-business requirements of a [=verifier=] for a particular use. This
-specification defines how verifiers verify [=verifiable credentials=] and
-[=verifiable presentations=].<br/>
-It also specifies that [=verifiers=] validate claims in [=verifiable
-credentials=] before relying on them. However, the means for such validation
-vary widely and are outside the scope of this specification. [=Verifiers=]
-trust certain [=issuers=] for certain claims and apply their own rules to
-determine which claims in which [=credentials=] are suitable for use by their
-systems.
+The assurance that a [=claim=] from a specific [=issuer=] satisfies the business
+requirements of a [=verifier=] for a particular use. This specification defines
+how verifiers verify [=verifiable credentials=] and [=verifiable
+presentations=]. It also specifies that [=verifiers=] validate claims in
+[=verifiable credentials=] before relying on them. However, the means for such
+validation vary widely and are outside the scope of this specification.
+[=Verifiers=] trust certain [=issuers=] for certain claims and apply their own
+rules to determine which claims in which [=credentials=] are suitable for use by
+their systems.
         </dd>
         <dt><dfn class="export">verifiable credential</dfn></dt>
         <dd>
-A verifiable credential is a tamper-evident credential that has authorship that
-can be cryptographically verified. Verifiable credentials can be used to build
+A tamper-evident [=credential=] that has authorship that can be
+cryptographically verified. Verifiable credentials can be used to build
 [=verifiable presentations=], which can also be cryptographically verified.
         </dd>
         <dt><dfn class="export" data-lt="verifiable data registries">verifiable data registry</dfn></dt>
@@ -751,20 +737,20 @@ as namespaces for identifiers.
         </dd>
         <dt><dfn class="export">verifiable presentation</dfn></dt>
         <dd>
-A verifiable presentation is a tamper-evident presentation encoded in such a way
-that authorship of the data can be trusted after a process of cryptographic
+A tamper-evident presentation of information encoded in such a way that
+authorship of the data can be trusted after a process of cryptographic
 verification. Certain types of verifiable presentations might contain data that
-is synthesized from, but do not contain, the original [=verifiable
-credentials=] (for example, zero-knowledge proofs).
+is synthesized from, but do not contain, the original [=verifiable credentials=]
+(for example, zero-knowledge proofs).
         </dd>
         <dt><dfn class="export" data-lt="verify|verified|verifying|verifiable|verifiability">verification</dfn></dt>
         <dd>
 The evaluation of whether a [=verifiable credential=] or [=verifiable
-presentation=] is an authentic and current statement of the issuer or
-presenter, respectively. This includes checking that: the credential (or
-presentation) conforms to the specification; the proof method is satisfied; and,
-if present, the status check succeeds. Verification of a credential does not
-imply evaluation of the truth of [=claims=] encoded in the credential.
+presentation=] is an authentic and current statement of the issuer or presenter,
+respectively. This includes checking that: the credential or presentation
+conforms to the specification; the securing mechanism is satisfied; and, if
+present, the status check succeeds. Verification of a credential does not imply
+evaluation of the truth of [=claims=] encoded in the credential.
         </dd>
         <dt><dfn class="export" data-lt="verifier|verifiers|verifier's|credential verifiers|credential verifier's">verifier</dfn></dt>
         <dd>
@@ -781,11 +767,11 @@ a digital signature associated with a [=verifiable credential=].
         </dd>
         <dt><dfn data-lt="URL|URLs">URL</dfn></dt>
         <dd>
-A Uniform Resource Locator, as defined by [[URL]]. URLs can be dereferenced such
-that they result in a resource, such as a document. The rules for dereferencing,
-or fetching, a URL are defined by the URL [=url/scheme=]. This specification
-does not use the term URI or IRI because those terms have been deemed to be
-confusing to Web developers.
+A Uniform Resource Locator, as defined by the [[[URL]]]. URLs can be
+dereferenced such that they result in a resource, such as a document. The rules
+for dereferencing, or fetching, a URL are defined by the URL [=url/scheme=].
+This specification does not use the term URI or IRI because those terms have
+been deemed to be confusing to Web developers.
         </dd>
       </dl>
     </section>
@@ -811,7 +797,7 @@ have associated media types. The concrete difference between these concepts
 credential=] and [=verifiable presentation=] &mdash; is simply the fact
 that the "verifiable" objects are secured in a way that is cryptographically
 verifiable, and the others are not. For more details, see Section
-<a href="#securing-mechanisms"></a>.
+[[[#securing-mechanisms]]].
       </p>
 
       <section class="informative">
@@ -834,10 +820,10 @@ The basic structure of a claim.
         </figure>
 
         <p>
-The data model for [=claims=], illustrated in <a href="#basic-structure"></a>
+The data model for [=claims=], illustrated in [[[#basic-structure]]]
 above, is powerful and can be used to express a large variety of statements. For
 example, whether someone graduated from a particular university can be expressed
-as shown in <a href="#basic-example"></a> below.
+as shown in [[[#basic-example]]] below.
         </p>
 
         <figure id="basic-example">
@@ -852,7 +838,7 @@ A basic claim expressing that Pat is an alumni of "Example University".
         <p>
 Individual [=claims=] can be merged together to express a [=graph=] of
 information about a [=subject=]. The example shown in
-<a href="#multiple-claims"></a> below extends the previous [=claim=] by
+[[[#multiple-claims]]] below extends the previous [=claim=] by
 adding the [=claims=] that Pat knows Sam and that Sam is employed as a
 professor.
         </p>
@@ -886,7 +872,7 @@ information, and so on. A
 [=verifiable credential=] is a set of tamper-evident [=claims=] and metadata
 that cryptographically prove who issued it. Examples of [=verifiable
 credentials=] include, but are not limited to, digital employee identification
-cards, digital birth certificates, and digital educational certificates.
+cards, digital driver's licenses, and digital educational certificates.
         </p>
 
         <figure id="basic-vc">
@@ -900,13 +886,13 @@ Basic components of a verifiable credential.
         </figure>
 
         <p>
-<a href="#basic-vc"></a> above shows the basic components of a
+[[[#basic-vc]]] above shows the basic components of a
 [=verifiable credential=], but abstracts the details about how [=claims=]
 are organized into information [=graphs=], which are then organized into
 [=verifiable credentials=].
 </p>
         <p>
-<a href="#info-graph-vc"></a> below shows a more complete depiction of a
+[[[#info-graph-vc]]] below shows a more complete depiction of a
 [=verifiable credential=] using an [=embedded proof=] based on
 [[[?VC-DATA-INTEGRITY]]]. It is composed of at least two information [=graphs=].
 The first of these information [=graphs=], the [=verifiable credential graph=]
@@ -943,10 +929,10 @@ based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
         </figure>
 
         <p>
-          <a href="#info-graph-vc-jwt"></a> below shows the same [=verifiable credential=]
-          as <a href="#info-graph-vc"></a>, but using JOSE based on [[?VC-JOSE-COSE]].
-          The payload contains a single information graph, that being the [=verifiable credential graph=]
-          containing [=credential=] metadata and other [=claims=].
+[[[#info-graph-vc-jwt]]] below shows the same [=verifiable credential=]
+as [[[#info-graph-vc]]], but secured using JOSE [[?VC-JOSE-COSE]]. The
+payload contains a single information graph, that being the [=verifiable
+credential graph=] containing [=credential=] metadata and other [=claims=].
         </p>
 
         <figure id="info-graph-vc-jwt">
@@ -976,28 +962,6 @@ arrow, to a separate rectangle, containing a single text field:
           </figcaption>
         </figure>
 
-        <p class="note"
-           title="Credential identifiers can lead to unwanted correlation">
-[=Credential=] identifiers can be used to identify specific instances
-of a [=credential=]. These identifiers could also be used for unwanted
-correlation. A [=holder=] wanting to minimize correlation is advised
-to use a selective disclosure scheme that does not reveal the
-[=credential=] identifier.
-        </p>
-
-        <p class="note"
-           title="Credentials can refer to multiple subjects">
-It is possible to have a [=credential=], such as a marriage certificate,
-containing multiple [=claims=] about different [=subjects=] that are not
-required to be related.
-        </p>
-        <p class="note"
-           title="Credentials do not have to be about the holder">
-It is possible to have a [=credential=] that does not contain any
-[=claims=] about the [=entity=] to which the [=credential=] was issued.
-For example, a [=credential=] that only contains [=claims=] about a
-specific dog, but is issued to its owner.
-        </p>
       </section>
 
       <section class="informative">
@@ -1015,16 +979,15 @@ online gaming persona, their family persona, or an incognito persona.
         <p>
 A [=verifiable presentation=] is <dfn class="lint-ignore">created</dfn> by a
 [=holder=], can express data from multiple [=verifiable credentials=], and can
-contain arbitrary additional data encoded as JSON-LD. They are used to present
-[=claims=] to a [=verifier=]. It is also possible to present [=verifiable
-credentials=] directly.
+contain arbitrary additional data. They are used to present [=claims=] to a
+[=verifier=]. It is also possible to present [=verifiable credentials=]
+directly.
         </p>
 
         <p>
-The data in a [=presentation=] is often about the same [=subject=], but
-might have been issued by multiple [=issuers=]. The aggregation of this
-information typically expresses an aspect of a person, organization, or
-[=entity=].
+The data in a [=presentation=] is often about the same [=subject=], but might
+have been issued by multiple [=issuers=]. The aggregation of this information
+expresses an aspect of a person, organization, or [=entity=].
         </p>
 
         <figure id="basic-vp">
@@ -1038,15 +1001,15 @@ Basic components of a verifiable presentation.
         </figure>
 
         <p>
-<a href="#basic-vp"></a> above shows the components of a
+[[[#basic-vp]]] above shows the components of a
 [=verifiable presentation=], but abstracts the details about how
 [=verifiable credentials=] are organized into information [=graphs=],
 which are then organized into [=verifiable presentations=].
         </p>
         <p id="info-graph-vp-explanation">
-<a href="#info-graph-vp"></a> below shows a more complete depiction of a
+[[[#info-graph-vp]]] below shows a more complete depiction of a
 [=verifiable presentation=] using an [=embedded proof=]
-based on [[?VC-DATA-INTEGRITY]].
+based on [[[?VC-DATA-INTEGRITY]]].
 It is composed of at least four information [=graphs=].
 The first of these information [=graphs=], the [=verifiable presentation graph=]
 (which is the [=default graph=]), expresses the [=verifiable presentation=]
@@ -1083,13 +1046,13 @@ Presenter Public Key 11'; 'created' with value '2018-01-15T12:43:56Z';
 named graph)'">
           <figcaption style="text-align: center;">
 Information [=graphs=] associated with a basic [=verifiable presentation=] that is using an [=embedded proof=]
-based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
+based on [[[VC-DATA-INTEGRITY]]].
           </figcaption>
         </figure>
 
         <p>
-<a href="#info-graph-vp-jwt"></a> below shows the same [=verifiable
-presentation=] as <a href="#info-graph-vp"></a>, but using an [=enveloping
+[[[#info-graph-vp-jwt]]] below shows the same [=verifiable
+presentation=] as [[[#info-graph-vp]]], but using an [=enveloping
 proof=] based on [[?VC-JOSE-COSE]]. The payload contains only two information
 graphs: the [=verifiable presentation graph=] expressing the [=verifiable
 presentation=] itself through presentation metadata; and the corresponding
@@ -1098,7 +1061,7 @@ property. The [=verifiable credential graph=] contains a single
 <a
 href="#defn-EnvelopedVerifiableCredential">`EnvelopedVerifiableCredential`</a>
 instance referring, via a `data:` URL [[RFC2397]], to the verifiable credential
-secured via an [=enveloping proof=] shown on <a href="#info-graph-vc-jwt"></a>.
+secured via an [=enveloping proof=] shown on [[[#info-graph-vc-jwt]]].
         </p>
 
         <figure id="info-graph-vp-jwt">
@@ -1126,9 +1089,10 @@ arrow, to a separate rectangle, containing a single text field:
 'XaOOh4ljklxH7L99RTVSfOl...'.
           ">
           <figcaption style="text-align: center;">
-            Information graphs associated with a basic [=verifiable presentation=] that is using an [=enveloping proof=]
-            based on JOSE [[?VC-JOSE-COSE]]. The `data:` URL refers to
-            the [=verifiable credential=] shown on <a href="#info-graph-vc-jwt"></a>.
+Information graphs associated with a basic [=verifiable presentation=] that is
+using an [=enveloping proof=] based on [[[?VC-JOSE-COSE]]]. The `data:` URL
+refers to the [=verifiable credential=] shown on
+[[[#info-graph-vc-jwt]]].
           </figcaption>
         </figure>
 
@@ -1140,7 +1104,7 @@ draws on multiple [=credentials=] about different [=subjects=] that are
 often, but not required to be, related.
 This is achieved by using the `verifiableCredential` property to
 refer to multiple [=verifiable credentials=].
-See Appendix <a href="#additional-diagrams-for-verifiable-presentations"></a> for more details.
+See Appendix [[[#additional-diagrams-for-verifiable-presentations]]] for more details.
         </p>
 
         <p class="note"
@@ -1163,7 +1127,7 @@ as part of a [=verifiable presentation=].
 
       <p>
 This section introduces some basic concepts for the specification, in
-preparation for Section <a href="#advanced-concepts"></a> later in the
+preparation for Section [[[#advanced-concepts]]] later in the
 document.
       </p>
 
@@ -1183,8 +1147,8 @@ they would like to create. Since [=verifiable credentials=] talk about subjects,
 each property-value pair in the `credentialSubject` object expresses a
 particular property of the credential subject. Once a developer has added a
 number of these property-value combinations, the modified object can be sent to
-the [=verifiable credential=] issuer software, and a [=verifiable credential=]
-will be created for the developer. From a prototyping standpoint, that is all a
+a [=conforming issuer implementation=], and a [=verifiable credential=] will be
+created for the developer. From a prototyping standpoint, that is all a
 developer needs to do.
         </p>
 
@@ -1209,10 +1173,85 @@ vocabulary and context files for their application and publish them at stable
 URLs, so that other developers can use the same vocabulary and context to achieve
 interoperability. The `https://www.w3.org/ns/credentials/examples/v2` URL above
 would then be replaced with the URL of a use-case-specific context. This
-process is covered in Section <a href="#extensibility"></a>. Alternatively,
+process is covered in Section [[[#extensibility]]]. Alternatively,
 developers can reuse existing vocabulary and context files that happen to fit
 their use case. They can explore the [[[VC-SPECS]]] [[VC-SPECS]] for reusable
 resources.
+        </p>
+
+      </section>
+
+      <section>
+        <h3>Verifiable Credentials</h3>
+
+        <p>
+[=Verifiable credentials=] are used to express properties of one or more
+[=subjects=] as well as properties of the [=credential=] itself. The following
+properties are defined in this specification for a [=verifiable credential=]:
+        </p>
+
+        <dl>
+          <dt>@context</dt>
+          <dd>
+Defined in Section [[[#contexts]]].
+          </dd>
+          <dt>id</dt>
+          <dd>
+Defined in Section [[[#identifiers]]].
+          </dd>
+          <dt>type</dt>
+          <dd>
+Defined in Section [[[#types]]].
+          </dd>
+          <dt>name</dt>
+          <dd>
+Defined in Section [[[#names-and-descriptions]]].
+          </dd>
+          <dt>description</dt>
+          <dd>
+Defined in Section [[[#names-and-descriptions]]].
+          </dd>
+          <dt>issuer</dt>
+          <dd>
+Defined in Section [[[#issuer]]].
+          </dd>
+          <dt>credentialSubject</dt>
+          <dd>
+Defined in Section [[[#credential-subject]]].
+          </dd>
+          <dt>validFrom</dt>
+          <dd>
+Defined in Section [[[#validity-period]]].
+          </dd>
+          <dt>validUntil</dt>
+          <dd>
+Defined in Section [[[#validity-period]]].
+          </dd>
+          <dt>status</dt>
+          <dd>
+Defined in Section [[[#status]]].
+          </dd>
+          <dt>credentialSchema</dt>
+          <dd>
+Defined in Section [[[#data-schemas]]].
+          </dd>
+          <dt>refreshService</dt>
+          <dd>
+Defined in Section [[[#refreshing]]].
+          </dd>
+          <dt>termsOfUse</dt>
+          <dd>
+Defined in Section [[[#terms-of-use]]].
+          </dd>
+          <dt>evidence</dt>
+          <dd>
+Defined in Section [[[#evidence]]].
+          </dd>
+        </dl>
+
+        <p>
+A [=verifiable credential=] can be extended to have additional properties
+through the extension mechanism defined in Section [[[#extensibility]]].
         </p>
 
       </section>
@@ -1231,14 +1270,19 @@ systems by establishing a context in which to communicate.
         </p>
         <p>
 Software systems that process [=verifiable credentials=] and [=verifiable
-presentations=] identify terminology by using [=URLs=] [[URL]] for each term.
-However, those [=URLs=] can be long and not very human-friendly, while short-form,
+presentations=] identify terminology by using [=URLs=] for each term. However,
+those [=URLs=] can be long and not very human-friendly, while short-form,
 human-friendly aliases can be more helpful. This specification uses the
 `@context` [=property=] to map such short-form aliases to the [=URLs=].
         </p>
         <p>
 [=Verifiable credentials=] and [=verifiable presentations=] MUST include a
-`@context` [=property=].
+`@context` [=property=]. Application developers MUST understand every JSON-LD
+context used by their application, at least to the extent that it affects the
+meaning of the terms that are used by their application. One mechanism for
+doing so is described in the Section on
+<a data-cite="VC-DATA-INTEGRITY#validating-contexts">Validating Contexts</a> in
+the [[[VC-DATA-INTEGRITY]]] specification.
         </p>
 
         <dl>
@@ -1275,8 +1319,14 @@ Subsequent items in the [=ordered set=] MUST be composed of any combination of
 
         <p>
 The example above uses the base context [=URL=]
-(`https://www.w3.org/ns/credentials/v2`) to establish that the
-data exchange is about a [=verifiable credential=].
+(`https://www.w3.org/ns/credentials/v2`) to establish that the data exchange is
+about a [=verifiable credential=]. This concept is further expanded on in
+Section [[[#extensibility]]]. The data available at
+`https://www.w3.org/ns/credentials/v2` is a permanently cacheable static
+document with instructions for processing it provided in Appendix
+[[[#base-context]]]. The associated human-readable vocabulary document for the
+Verifiable Credentials Data Model is available at
+<a href="https://www.w3.org/2018/credentials/">https://www.w3.org/2018/credentials/</a>.
         </p>
 
         <p>
@@ -1285,25 +1335,11 @@ the purpose of demonstrating examples. Implementations are expected to not use
 this [=URL=] for any other purpose, such as in pilot or production systems.
         </p>
 
-        <p>
-The data available at `https://www.w3.org/ns/credentials/v2` is a static
-document that is never updated, and SHOULD be downloaded once and cached. For
-reference, a copy of the base context is provided in Appendix
-[[[#base-context]]]. The associated human-readable vocabulary document for
-the Verifiable Credentials Data Model is available at
-<a href="https://www.w3.org/2018/credentials/">https://www.w3.org/2018/credentials/</a>.
-This concept is further expanded on in Section <a href="#extensibility"></a>.
-        </p>
-
         <p class="note"
            title="See JSON-LD for more information about @context.">
-In JSON-LD, the `@context` [=property=] can also be used to
-communicate other details, such as datatype information, language information,
-transformation rules, and so on, which are beyond the needs of this
-specification, but might be useful in the future or to related work. For more
-information, see
-<a href="https://www.w3.org/TR/json-ld11/#the-context">Section 3.1: The Context</a>
-of the [[[JSON-LD11]]] [[JSON-LD11]] specification.
+The `@context` [=property=] is further elaborated upon in
+<a data-cite="?JSON-LD11#the-context">Section 3.1: The Context</a>
+of the [[[JSON-LD11]]] specification.
         </p>
 
       </section>
@@ -1331,9 +1367,9 @@ include UUIDs (`urn:uuid:0c07c1ce-57cb-41af-bef2-1b932b986873`), HTTP URLs
            title="Identifiers of any kind increase correlatability">
 Developers should remember that identifiers might be harmful in scenarios
 where pseudonymity is required. Developers are encouraged to read Section
-<a href="#identifier-based-correlation"></a> carefully when considering such
+[[[#identifier-based-correlation]]] carefully when considering such
 scenarios. There are also other types of access and correlation mechanisms documented
-in Section <a href="#privacy-considerations"></a> that create privacy concerns.
+in Section [[[#privacy-considerations]]] that create privacy concerns.
 Where privacy is a strong consideration, it is permissible to omit the
 `id` [=property=]. Some use cases do not need, or explicitly need to omit,
 the `id` [=property=]. Similarly, special attention is to be given to the choice between
@@ -1382,15 +1418,15 @@ also known as a [=DID=].
 
         <p class="note"
            title="Decentralized Identifiers are optional">
-As of this publication, [=DIDs=] are a new type of identifier that are not
-necessary for [=verifiable credentials=] to be useful. Specifically,
-[=verifiable credentials=] do not depend on [=DIDs=] and [=DIDs=] do not depend
-on [=verifiable credentials=]. However, many [=verifiable credentials=] will use
-[=DIDs=] and software libraries implementing this specification will need to
-resolve [=DIDs=]. [=DID=]-based URLs are used for expressing identifiers
-associated with [=subjects=], [=issuers=], [=holders=], credential status lists,
-cryptographic keys, and other machine-readable information associated with a
-[=verifiable credential=].
+[=DIDs=] are type of identifier that are not necessary for [=verifiable
+credentials=] to be useful. Specifically, [=verifiable credentials=] do not
+depend on [=DIDs=] and [=DIDs=] do not depend on [=verifiable credentials=].
+However, many [=verifiable credentials=] will use [=DIDs=] and software
+libraries implementing this specification will need to resolve [=DIDs=].
+[=DID=]-based URLs are used for expressing identifiers associated with
+[=subjects=], [=issuers=], [=holders=], credential status lists, cryptographic
+keys, and other machine-readable information associated with a [=verifiable
+credential=].
         </p>
       </section>
 
@@ -1464,7 +1500,7 @@ MUST have a [=type=] specified.
               <td>
 `VerifiableCredential` and, optionally, a more specific
 [=verifiable credential=] [=type=]. For example,<br>
-`"type": ["VerifiableCredential", "ExampleDegreeCredential"]`
+`"type": ["VerifiableCredential", "OpenBadgeCredential"]`
               </td>
             </tr>
 
@@ -1475,7 +1511,7 @@ MUST have a [=type=] specified.
               <td>
 `VerifiablePresentation` and, optionally, a more specific
 [=verifiable presentation=] [=type=]. For example,<br>
-`"type": ["VerifiablePresentation", "ExamplePresentation"]`
+`"type": "VerifiablePresentation"`
               </td>
             </tr>
 
@@ -1495,7 +1531,7 @@ A valid [=credential=] status [=type=]. For example,<br>
               </td>
               <td>
 A valid terms of use [=type=]. For example,<br>
-`"type": "ExampleTermsPolicy"`
+`"type": "TrustFrameworkPolicy"`
               </td>
             </tr>
 
@@ -1505,7 +1541,27 @@ A valid terms of use [=type=]. For example,<br>
               </td>
               <td>
 A valid evidence [=type=]. For example,<br>
-`"type": "ExampleEvidence"`
+`"type": "Evidence"`
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+<a href="#refreshing">refreshService</a>&nbsp;object
+              </td>
+              <td>
+A valid refreshService [=type=]. For example,<br>
+`"type": "VerifiableCredentialRefreshService2021"`
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+<a href="#data-schemas">credentialSchema</a>&nbsp;object
+              </td>
+              <td>
+A valid credentialSchema [=type=]. For example,<br>
+`"type": "JsonSchema"`
               </td>
             </tr>
 
@@ -1515,12 +1571,12 @@ A valid evidence [=type=]. For example,<br>
         <p class="note"
            title="The Verifiable Credentials Data Model is based on JSON-LD">
 The [=type=] system for the Verifiable Credentials Data Model is the same as
-for [[JSON-LD11]] and is detailed in
+for [[[JSON-LD11]]] and is detailed in
 <a href="https://www.w3.org/TR/json-ld/#specifying-the-type">Section 3.5:
 Specifying the Type</a> and
 <a href="https://www.w3.org/TR/json-ld/#json-ld-grammar">Section 9: JSON-LD
 Grammar</a>. When using a JSON-LD context (see Section
-<a href="#extensibility"></a>), this specification aliases the
+[[[#extensibility]]]), this specification aliases the
 `@type` keyword to `type` to make the JSON-LD documents
 more easily understood. While application developers and document authors do
 not need to understand the specifics of the JSON-LD type system, implementers
@@ -1605,7 +1661,7 @@ are meant to serve these purposes.
 An OPTIONAL property that expresses the name of the [=credential=]. If
 present, the value of the `name` [=property=] MUST be a string or
 a language value object as described in
-<a href="#language-and-base-direction"></a>. Ideally, the name of a
+[[[#language-and-base-direction]]]. Ideally, the name of a
 [=credential=] is concise, human-readable, and could enable an individual to
 quickly differentiate one [=credential=] from any other [=credentials=]
 that they might hold.
@@ -1615,7 +1671,7 @@ that they might hold.
 An OPTIONAL property that conveys specific details about a [=credential=]. If
 present, the value of the `description` [=property=] MUST be a
 string or a language value object as described in
-<a href="#language-and-base-direction"></a>. Ideally, the description of a
+[[[#language-and-base-direction]]]. Ideally, the description of a
 [=credential=] is no more than a few sentences in length and conveys enough
 information about the [=credential=] to remind an individual of its contents
 without their having to look through the entirety of the [=claims=].
@@ -1656,7 +1712,7 @@ To express a string with language and [=base direction=] information,
 one can use an object that contains the `@value`, `@language`, and `@direction`
 properties to express the text value, language tag, and base direction,
 respectively. See
-<a href="#language-and-base-direction"></a> for further information.
+[[[#language-and-base-direction]]] for further information.
         </p>
 
         <p class="note"
@@ -1666,8 +1722,8 @@ for the associated single-language strings, as their default directions are the
 same as those set by the `@direction` value. We include the `@direction` property here
 for clarity of demonstration, and to make copy+paste+edit deliver functional
 results. Implementers are encouraged to read the section on
-<a data-cite="JSON-LD11#string-internationalization">JSON-LD String Internationalization</a>
-in the JSON-LD 1.1 specification [[JSON-LD11]].
+<a data-cite="JSON-LD11#string-internationalization">String Internationalization</a>
+in the [[[JSON-LD11]]] specification.
         </p>
 
         <pre class="example nohighlight"
@@ -1749,88 +1805,6 @@ in the JSON-LD 1.1 specification [[JSON-LD11]].
       </section>
 
       <section>
-        <h3>Credential Subject</h3>
-
-        <p>
-A [=verifiable credential=] contains [=claims=] about one or more
-[=subjects=]. This specification defines a `credentialSubject`
-[=property=] for the expression of [=claims=] about one or more
-[=subjects=].
-        </p>
-
-        <p>
-A [=verifiable credential=] MUST have a `credentialSubject`
-[=property=].
-        </p>
-
-        <dl>
-          <dt><dfn class="export"
-                   id="defn-credentialSubject">credentialSubject</dfn></dt>
-          <dd>
-The value of the `credentialSubject` [=property=] is defined as a
-set of objects where each object MUST be the [=subject=] of one or more [=claims=],
-which MUST be serialized inside the `credentialSubject` [=property=].
-Each object MAY
-also contain an `id` to identify the [=subject=], as
-described in Section <a href="#identifiers"></a>.
-          </dd>
-        </dl>
-
-        <pre class="example nohighlight vc"
-          title="Usage of the credentialSubject property"
-          data-vc-vm="https://university.example/issuers/565049#key-1">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/565049",
-  "validFrom": "2010-01-01T00:00:00Z",
-  <span class="highlight">"credentialSubject"</span>: {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  }
-}
-        </pre>
-
-        <p>
-It is possible to express information related to multiple [=subjects=] in a
-[=verifiable credential=]. The example below specifies two [=subjects=]
-who are spouses. Note the use of array notation to associate multiple
-[=subjects=] with the `credentialSubject` property.
-        </p>
-
-        <pre class="example nohighlight"
-          title="Specifying multiple subjects in a verifiable credential">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "RelationshipCredential"],
-  "issuer": "https://example.com/issuer/123",
-  "validFrom": "2010-01-01T00:00:00Z",
-  "credentialSubject": <span class="highlight">[{
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "name": "Jayden Doe",
-    "spouse": "did:example:c276e12ec21ebfeb1f712ebc6f1"
-  }, {
-    "id": "https://subject.example/subject/8675",
-    "name": "Morgan Doe",
-    "spouse": "https://subject.example/subject/7421"
-  }]</span>
-}
-        </pre>
-
-      </section>
-
-      <section>
         <h3>Issuer</h3>
 
         <p>
@@ -1849,10 +1823,10 @@ The value of the `issuer` [=property=] MUST be either a
 [=URL=], or an object containing an `id` [=property=]
 whose value is a [=URL=]; in either case, the issuer selects this
 [=URL=] to identify itself in a globally unambiguous
-way. It is RECOMMENDED that the [=URL=] be one which, if dereferenced,
-results in a controller document, as defined in [[VC-DATA-INTEGRITY]] or
-[[VC-JOSE-COSE]], about the [=issuer=] that can be used to [=verify=] the
-information expressed in the [=credential=].
+way. It is RECOMMENDED that the [=URL=] be one which, if dereferenced, results
+in a controller document, as defined in [[CONTROLLER-DOCUMENT]], about the
+[=issuer=] that can be used to [=verify=] the information expressed in the
+[=credential=].
           </dd>
         </dl>
 
@@ -1913,6 +1887,85 @@ The value of the `issuer` [=property=] can also be a JWK (for
 example, `"https://example.com/keys/foo.jwk"`) or a [=DID=] (for
 example, `"did:example:abfe13f712120431c276e12ecab"`).
         </p>
+
+      </section>
+
+      <section>
+        <h3>Credential Subject</h3>
+
+        <p>
+A [=verifiable credential=] contains [=claims=] about one or more [=subjects=].
+This specification defines a `credentialSubject` [=property=] for the expression
+of [=claims=] about one or more [=subjects=].
+        </p>
+
+        <p>
+A [=verifiable credential=] MUST contain a `credentialSubject` [=property=].
+        </p>
+
+        <dl>
+          <dt><dfn class="export"
+                   id="defn-credentialSubject">credentialSubject</dfn></dt>
+          <dd>
+The value of the `credentialSubject` [=property=] is a set of objects where each
+object MUST be the [=subject=] of one or more [=claims=], which MUST be
+serialized inside the `credentialSubject` [=property=]. Each object MAY also
+contain an `id` [=property=] to identify the [=subject=], as described in
+Section [[[#identifiers]]].
+          </dd>
+        </dl>
+
+        <pre class="example nohighlight vc"
+          title="Usage of the credentialSubject property"
+          data-vc-vm="https://university.example/issuers/565049#key-1">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "https://university.example/issuers/565049",
+  "validFrom": "2010-01-01T00:00:00Z",
+  <span class="highlight">"credentialSubject"</span>: {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  }
+}
+        </pre>
+
+        <p>
+It is possible to express information related to multiple [=subjects=] in a
+[=verifiable credential=]. The example below specifies two [=subjects=]
+who are spouses. Note the use of array notation to associate multiple
+[=subjects=] with the `credentialSubject` property.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Specifying multiple subjects in a verifiable credential">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "RelationshipCredential"],
+  "issuer": "https://example.com/issuer/123",
+  "validFrom": "2010-01-01T00:00:00Z",
+  "credentialSubject": <span class="highlight">[{
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "name": "Jayden Doe",
+    "spouse": "did:example:c276e12ec21ebfeb1f712ebc6f1"
+  }, {
+    "id": "https://subject.example/subject/8675",
+    "name": "Morgan Doe",
+    "spouse": "https://subject.example/subject/7421"
+  }]</span>
+}
+        </pre>
 
       </section>
 
@@ -1992,199 +2045,6 @@ indefinitely. In such cases, the [=verifiable credential=] is assumed to be
 valid from the time the `verifiable credential` was created.
         </p>
 
-        <h4>Representing Time</h4>
-
-        <p>
-Implementers are urged to understand that representing and processing time
-values is not as straight-forward as it might seem and have a variety of
-idiosyncrasies that are not immediately obvious nor uniformly observed in
-different regions of the world. For example:
-        </p>
-
-        <ul>
-          <li>
-Calendaring systems other than the Gregorian calendar are actively used by
-various regions.
-          </li>
-          <li>
-When processing Daylight Saving/Summer Time, it is important to understand that
-1) it is not observed in all regions, 2) it does not necessarily begin or end on
-the same day or at the same time of day, and 3) the amount or direction of the
-adjustment does not always match other similar regions.
-          </li>
-          <li>
-Leap seconds might not be taken into account in all software systems, especially
-for dates and times that precede the introduction of the leap second. Leap
-seconds can affects highly sensitive systems that depend on the exact
-millisecond offset from the epoch. However, note that for most applications the
-only moment in time that is affected is the one second period of the leap second
-itself. That is, the moment after the most recent leap second can always be
-represented as the first moment of the next day (for example,
-`2023-01-01T00:00:00Z`), regardless of whether the system in question
-understands leap seconds.
-          </li>
-        </ul>
-
-        <p>
-These are just a few examples that illustrate that the actual time of day, as
-would be seen on a clock on the wall, can exist in one region but not exist in
-another region. For this reason, implementers are urged to use time values
-that are more universal, such as values anchored to the `Z` time zone over
-values that are affected by Daylight Saving/Summer Time.
-        </p>
-
-        <p>
-This specification attempts to increase the number of universally recognized
-combinations of dates and times, and reduce the potential for
-misinterpretation of time values, by utilizing the
-`dateTimeStamp` construction first established by the [<a
-data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification. In
-order to reduce misinterpretations between different time zones, all time values
-expressed in [=conforming documents=] SHOULD be specified in `dateTimeStamp`
-format, either in Universal Coordinated Time (UTC), denoted by a `Z` at the end
-of the value, or with a time zone offset relative to UTC. Time values that are
-incorrectly serialized without an offset MUST be interpreted as UTC. Examples of
-valid time zone offsets relative to UTC include `Z`, `+01:00`, `-08:00`, and
-`+14:00`. See the regular expression at the end of this section for a formal
-definition of all acceptable values.
-        </p>
-
-        <p>
-Time zone definitions are occasionally changed by their governing body. When
-replacing or issuing new [=verifiable credentials=], implementers are advised
-to ensure that changes to local time zone rules do not result in unexpected gaps
-in validity. For example, consider the zone `America/Los_Angeles`, which has
-a raw offset of UTC-8 and had voted to stop observing daylight savings time in
-the year 2024. A given [=verifiable credential=] that had a `validUtil`
-value of `2024-07-12T12:00:00-07:00`, might be re-issued to have a
-`validFrom` value of `2024-07-12T12:00:00-08:00`, which would create a gap of
-an hour where the [=verifiable credential=] would not be valid.
-        </p>
-
-        <p>
-Implementers that desire to check `dateTimeStamp` values for validity
-can use the regular expression provided below, which is reproduced from the [<a
-data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification for
-convenience. To avoid doubt, the regular expression in [[XMLSCHEMA11-2]] is the
-normative definition. Implementers are advised that not all
-`dateTimeStamp` values that pass the regular expression below are
-valid moments in time. For example, the regular expression below allows for 31
-days in every month, which allows for leap years, and leap seconds, as well as
-days in places where they do not exist. That said, modern system libraries that
-generate `dateTimeStamp` values are often error-free in their
-generation of valid `dateTimeStamp` values. The regular
-expression shown below (minus the whitespace included here for readability),
-is often adequate when processing library-generated dates and times on
-modern systems.
-        </p>
-
-        <pre class="example nohighlight"
-          title="Regular expression to detect a valid XML Schema 1.1: Part 2 dateTimeStamp">
--?([1-9][0-9]{3,}|0[0-9]{3})
--(0[1-9]|1[0-2])
--(0[1-9]|[12][0-9]|3[01])
-T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))
-(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))
-        </pre>
-
-      </section>
-
-      <section>
-        <h3>Securing Mechanisms</h3>
-
-        <p>
-This specification recognizes two classes of
-<dfn class="export" data-lt="securing mechanism">securing mechanisms</dfn>:
-those that use enveloping proofs and those that use embedded proofs.
-        </p>
-
-        <p>
-An <dfn class="export">enveloping proof</dfn> is one that wraps a serialization
-of this data model. One such RECOMMENDED enveloping proof mechanism is defined
-in [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]].
-        </p>
-
-        <p>
-An <dfn class="export">embedded proof</dfn> is a mechanism where the proof is
-included in the serialization of the data model. One such RECOMMENDED embedded
-proof mechanism is defined in [[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]].
-        </p>
-
-        <p>
-These two classes of securing mechanisms are not mutually exclusive. Additional
-securing mechanism specifications might also be defined according to the rules
-in Section <a href="#securing-mechanism-specifications"></a>.
-        </p>
-
-        <pre class="example nohighlight"
-          title="A verifiable credential utilizing an embedded proof">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://example.gov/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "did:example:6fb1f712ebe12c27cc26eebfe11",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "https://subject.example/subject/3921",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"proof": {
-    "type": "DataIntegrityProof",
-    "cryptosuite": "eddsa-rdfc-2022",
-    "created": "2021-11-13T18:19:39Z",
-    "verificationMethod": "https://university.example/issuers/14#key-1",
-    "proofPurpose": "assertionMethod",
-    "proofValue": "z58DAdFfa9SkqZMVPxAQp...jQCrfFPP2oumHKtz"
-  }</span>
-}
-        </pre>
-
-        <pre class="example nohighlight"
-          title="A verifiable credential that uses an enveloping proof in SD-JWT format">
-eyJhbGciOiJFUzM4NCIsImtpZCI6IkdOV2FBTDJQVlVVMkpJVDg5bTZxMGM3U3ZjNDBTLWJ2UjFTT0
-Q3REZCb1UiLCJ0eXAiOiJ2YytsZCtqc29uK3NkLWp3dCIsImN0eSI6InZjK2xkK2pzb24ifQ
-.
-eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwcz
-ovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvZXhhbXBsZXMvdjIiXSwiaXNzdWVyIjoiaHR0cHM6
-Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJ2YWxpZEZyb20iOiIyMDEwLTAxLT
-AxVDE5OjIzOjI0WiIsImNyZWRlbnRpYWxTY2hlbWEiOnsiX3NkIjpbIlNFOHp4bmduZTNNbWEwLUNm
-S2dlYW1rNUVqU1NfOXRaNlN5NDdBdTdxRWMiLCJjT3lySEVrSlZwdEtSdURtNkNZVTREajJvRkExd0
-JQRjFHcTJnWEo1NXpzIl19LCJjcmVkZW50aWFsU3ViamVjdCI6eyJkZWdyZWUiOnsibmFtZSI6IkJh
-Y2hlbG9yIG9mIFNjaWVuY2UgYW5kIEFydHMiLCJfc2QiOlsibVNfSVBMa0JHcTIxbVA3Z0VRaHhOck
-E0ZXNMc1ZKQ1E5QUpZNDFLLVRQSSJdfSwiX3NkIjpbIlhTSG9iU05Md01PVl9QNkhQMHNvMnZ1clNy
-VXZ3UURYREJHQWtyTXk3TjgiXX0sIl9zZCI6WyJQNE5qWHFXa2JOc1NfRzdvdmlLdm1NOG0yckhDTm
-5XVVV2SXZBbW9jb2RZIiwieFNvSHBKUXlCNGV1dmg4SkFJdDFCd1pjNFVEOHY5S3ZOTmVLMk9OSjFC
-QSJdLCJfc2RfYWxnIjoic2hhLTI1NiIsImlzcyI6Imh0dHBzOi8vdW5pdmVyc2l0eS5leGFtcGxlL2
-lzc3VlcnMvNTY1MDQ5IiwiaWF0IjoxNzAzNjI1OTAxLCJleHAiOjE3MzUyNDgzMDEsImNuZiI6eyJq
-d2siOnsia3R5IjoiRUMiLCJjcnYiOiJQLTM4NCIsImFsZyI6IkVTMzg0IiwieCI6Inl1Zlo1SFUzcU
-NfOTRMbkI3Zklzd0hmT0swQlJra0Z5bzVhd1QyX21ld0tJWUpLMVNfR0QySVB3UjRYUTZpdFEiLCJ5
-IjoiRmEtV2pOd2NLQ1RWWHVDU2tCY3RkdHJOYzh6bXdBTTZWOWxudmxxd1QyQnRlQ0ZHNmR6ZDJoMF
-VjeXluTDg0dCJ9fX0
-.
-M7BFJB9LEV_xEylSJpP00fd_4WjrOlXshh0dUv3QgOzw2MEGIfSfi9PoCkHJH7TI0InsqkD6XZVz38
-MpeDKekgBW-RoDdJmxnifYOEJhKpJ5EN9PvA007UPi9QCaiEzX
-~
-WyJFX3F2V09NWVQ1Z3JNTkprOHNXN3BBIiwgImlkIiwgImh0dHA6Ly91bml2ZXJzaXR5LmV4YW1wbG
-UvY3JlZGVudGlhbHMvMTg3MiJd
-~
-WyJTSEc4WnpfRDVRbFMwU0ZrZFUzNXlRIiwgInR5cGUiLCBbIlZlcmlmaWFibGVDcmVkZW50aWFsIi
-wgIkV4YW1wbGVBbHVtbmlDcmVkZW50aWFsIl1d
-~
-WyJqZzJLRno5bTFVaGFiUGtIaHV4cXRRIiwgImlkIiwgImh0dHBzOi8vZXhhbXBsZS5vcmcvZXhhbX
-BsZXMvZGVncmVlLmpzb24iXQ
-~
-WyItQmhzaE10UnlNNUVFbGt4WGVXVm5nIiwgInR5cGUiLCAiSnNvblNjaGVtYSJd~WyJ0SEFxMEUwN
-nY2ckRuUlNtSjlSUWRBIiwgImlkIiwgImRpZDpleGFtcGxlOjEyMyJd
-~
-WyJ1Ynd6bi1kS19tMzRSMGI0SG84QTBBIiwgInR5cGUiLCAiQmFjaGVsb3JEZWdyZWUiXQ
-        </pre>
-
       </section>
 
       <section>
@@ -2208,13 +2068,13 @@ are defined for every object:
           <dd>
 The `id` [=property=] is OPTIONAL. It MAY be used to provide a
 unique identifier for the credential status object. If present, the
-normative guidance in Section <a href="#identifiers"></a> MUST be followed.
+normative guidance in Section [[[#identifiers]]] MUST be followed.
           </dd>
           <dt>type</dt>
           <dd>
 The `type` [=property=] is REQUIRED. It is used to express the
 type of status information expressed by the object. The related normative
-guidance in Section <a href="#types"></a> MUST be followed.
+guidance in Section [[[#types]]] MUST be followed.
           </dd>
         </dl>
 
@@ -2312,85 +2172,232 @@ status checking.
         </p>
 
         <p>
-Specification authors that create status schemes are provided the following
-guideline:
+Credential status specifications MUST NOT enable tracking of individuals, such
+as an [=issuer=] being notified (either directly or indirectly) when a
+[=verifier=] is interested in a specific [=holder=] or [=subject=]. Unacceptable
+approaches include "phoning home," such that every use of a credential contacts
+the [=issuer=] of the credential to check the status for a specific individual,
+or "pseudonymity reduction", such that every use of the credential causes a
+request for information from the [=issuer=] that can be used by the [=issuer=]
+to deduce [=verifier=] interest in a specific individual.
         </p>
-
-        <ul>
-          <li>
-Status schemes MUST NOT be implemented in ways that enable tracking of
-individuals, such as an [=issuer=] being notified (either directly or
-indirectly) when a [=verifier=] is interested in a particular [=holder=]
-or [=subject=]. Unacceptable approaches include "phoning home," such that
-every use of a credential contacts the [=issuer=] of the credential to
-check the status for a specific individual, or "pseudonymity reduction,"
-such that every use of the credential causes a request for information
-from the [=issuer=] that can be used by the [=issuer=] to deduce
-[=verifier=] interest in a specific individual.
-          </li>
-        </ul>
 
       </section>
 
       <section>
-        <h3>Verifiable Credentials</h3>
+        <h3>Data Schemas</h3>
 
         <p>
-[=Verifiable credentials=] are used to express properties of one or more [=subjects=]
-as well as properties of the [=credential=] itself. The following properties
-are defined in this specification for a [=verifiable credential=]:
+Data schemas are useful when enforcing a specific structure on a given
+collection of data. There are at least two types of data schemas that this
+specification considers:
+        </p>
+
+        <ul>
+          <li>
+Data verification schemas, which are used to establish that the structure
+and contents of a [=credential=] or [=verifiable credential=] conform to a
+published schema.
+          </li>
+          <li>
+Data encoding schemas, which are used to map the contents of a
+[=verifiable credential=] to an alternative representation format, such as a
+format used in a zero-knowledge proof.
+          </li>
+        </ul>
+
+        <p>
+It is important to understand that data schemas serve a different purpose from
+the `@context` property, which neither enforces data structure or
+data syntax, nor enables the definition of arbitrary encodings to alternate
+representation formats.
+        </p>
+        <p>
+This specification defines the following [=property=] for the expression of a
+data schema, which can be included by an [=issuer=] in
+the [=verifiable credentials=] that it issues:
         </p>
 
         <dl>
-          <dt>@context</dt>
+          <dt><var id="defn-credentialSchema">credentialSchema</var></dt>
           <dd>
-Defined in Section [[[#contexts]]].
-          </dd>
-          <dt>id</dt>
-          <dd>
-Defined in Section [[[#identifiers]]].
-          </dd>
-          <dt>type</dt>
-          <dd>
-Defined in Section [[[#types]]].
-          </dd>
-          <dt>name</dt>
-          <dd>
-Defined in Section [[[#names-and-descriptions]]].
-          </dd>
-          <dt>description</dt>
-          <dd>
-Defined in Section [[[#names-and-descriptions]]].
-          </dd>
-          <dt>issuer</dt>
-          <dd>
-Defined in Section [[[#issuer]]].
-          </dd>
-          <dt>validFrom</dt>
-          <dd>
-Defined in Section [[[#validity-period]]].
-          </dd>
-          <dt>validUntil</dt>
-          <dd>
-Defined in Section [[[#validity-period]]].
-          </dd>
-          <dt>status</dt>
-          <dd>
-Defined in Section [[[#status]]].
-          </dd>
-          <dt>credentialSchema</dt>
-          <dd>
-Defined in Section [[[#data-schemas]]].
-          </dd>
-          <dt>credentialSubject</dt>
-          <dd>
-Defined in Section [[[#credential-subject]]].
+            <p>
+The value of the `credentialSchema` [=property=] MUST be one or
+more data schemas that provide [=verifiers=] with enough information to
+determine whether the provided data conforms to the provided schema(s). Each
+`credentialSchema` MUST specify its `type` (for example,
+`JsonSchema`), and an `id` [=property=]
+that MUST be a [=URL=] identifying the schema file. The precise contents of
+each data schema is determined by the specific type definition.
+            </p>
+            <p>
+If multiple schemas are present, validity is determined according to the
+processing rules outlined by each associated `type` property.
+            </p>
           </dd>
         </dl>
 
+        <p class="note"
+           title="Credential type-specific syntax checking is possible">
+The `credentialSchema` [=property=] provides an opportunity to
+annotate type definitions or lock them to specific versions of the vocabulary.
+Authors of [=verifiable credentials=] can include a static version of their
+vocabulary using `credentialSchema` that is locked to some content
+integrity protection mechanism. The `credentialSchema`
+[=property=] also makes it possible to perform syntactic checking on the
+[=credential=] and to use [=verification=] mechanisms such as JSON Schema
+[[?VC-JSON-SCHEMA]] validation.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Usage of the credentialSchema property to perform JSON schema validation">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://university.example/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential", "ExamplePersonCredential"],
+  "issuer": "https://university.example/issuers/14",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    },
+    "alumniOf": {
+      "name": "Example University"
+    }
+  },
+  <span class="highlight">"credentialSchema": [{
+    "id": "https://example.org/examples/degree.json",
+    "type": "JsonSchema"
+  },
+  {
+    "id": "https://example.org/examples/alumni.json",
+    "type": "JsonSchema"
+  }]</span>
+}
+        </pre>
+
         <p>
-A [=verifiable credential=] can be extended to have additional properties
-through the extension mechanism defined in Section [[[#extensibility]]].
+In the example above, the [=issuer=] is specifying two `credentialSchema`
+objects, each of which point to a JSON Schema [[?VC-JSON-SCHEMA]] file that can
+be used by a [=verifier=] to determine whether the [=verifiable credential=] is
+well-formed.
+        </p>
+
+      </section>
+
+      <section>
+        <h3>Securing Mechanisms</h3>
+
+        <p>
+This specification recognizes two classes of
+<dfn class="export" data-lt="securing mechanism">securing mechanisms</dfn>:
+those that use enveloping proofs and those that use embedded proofs.
+        </p>
+
+        <p>
+An <dfn class="export">enveloping proof</dfn> is one that wraps a serialization
+of this data model. One such RECOMMENDED enveloping proof mechanism is defined
+in [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]].
+        </p>
+
+        <p>
+An <dfn class="export">embedded proof</dfn> is a mechanism where the proof is
+included in the serialization of the data model. One such RECOMMENDED embedded
+proof mechanism is defined in [[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]].
+        </p>
+
+        <p>
+These two classes of securing mechanisms are not mutually exclusive. Additional
+securing mechanism specifications might also be defined according to the rules
+in Section [[[#securing-mechanism-specifications]]].
+        </p>
+
+        <pre class="example nohighlight"
+          title="A verifiable credential utilizing an embedded proof">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://www.w3.org/ns/credentials/examples/v2"
+  ],
+  "id": "http://example.gov/credentials/3732",
+  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+  "issuer": "did:example:6fb1f712ebe12c27cc26eebfe11",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "https://subject.example/subject/3921",
+    "degree": {
+      "type": "ExampleBachelorDegree",
+      "name": "Bachelor of Science and Arts"
+    }
+  },
+  <span class="highlight">"proof": {
+    "type": "DataIntegrityProof",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "created": "2021-11-13T18:19:39Z",
+    "verificationMethod": "https://university.example/issuers/14#key-1",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "z58DAdFfa9SkqZMVPxAQp...jQCrfFPP2oumHKtz"
+  }</span>
+}
+        </pre>
+
+        <p>
+The [=embedded proof=] above secures the original [=credential=] by decorating
+the original data with a digital signature via the `proof` property, resulting
+in a [=verifiable credential=] that is easy to manage in modern programming
+environments and database systems.
+        </p>
+
+        <pre class="example nohighlight"
+          title="A verifiable credential that uses an enveloping proof in SD-JWT format">
+eyJhbGciOiJFUzM4NCIsImtpZCI6IkdOV2FBTDJQVlVVMkpJVDg5bTZxMGM3U3ZjNDBTLWJ2UjFTT0
+Q3REZCb1UiLCJ0eXAiOiJ2YytsZCtqc29uK3NkLWp3dCIsImN0eSI6InZjK2xkK2pzb24ifQ
+.
+eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJodHRwcz
+ovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvZXhhbXBsZXMvdjIiXSwiaXNzdWVyIjoiaHR0cHM6
+Ly91bml2ZXJzaXR5LmV4YW1wbGUvaXNzdWVycy81NjUwNDkiLCJ2YWxpZEZyb20iOiIyMDEwLTAxLT
+AxVDE5OjIzOjI0WiIsImNyZWRlbnRpYWxTY2hlbWEiOnsiX3NkIjpbIlNFOHp4bmduZTNNbWEwLUNm
+S2dlYW1rNUVqU1NfOXRaNlN5NDdBdTdxRWMiLCJjT3lySEVrSlZwdEtSdURtNkNZVTREajJvRkExd0
+JQRjFHcTJnWEo1NXpzIl19LCJjcmVkZW50aWFsU3ViamVjdCI6eyJkZWdyZWUiOnsibmFtZSI6IkJh
+Y2hlbG9yIG9mIFNjaWVuY2UgYW5kIEFydHMiLCJfc2QiOlsibVNfSVBMa0JHcTIxbVA3Z0VRaHhOck
+E0ZXNMc1ZKQ1E5QUpZNDFLLVRQSSJdfSwiX3NkIjpbIlhTSG9iU05Md01PVl9QNkhQMHNvMnZ1clNy
+VXZ3UURYREJHQWtyTXk3TjgiXX0sIl9zZCI6WyJQNE5qWHFXa2JOc1NfRzdvdmlLdm1NOG0yckhDTm
+5XVVV2SXZBbW9jb2RZIiwieFNvSHBKUXlCNGV1dmg4SkFJdDFCd1pjNFVEOHY5S3ZOTmVLMk9OSjFC
+QSJdLCJfc2RfYWxnIjoic2hhLTI1NiIsImlzcyI6Imh0dHBzOi8vdW5pdmVyc2l0eS5leGFtcGxlL2
+lzc3VlcnMvNTY1MDQ5IiwiaWF0IjoxNzAzNjI1OTAxLCJleHAiOjE3MzUyNDgzMDEsImNuZiI6eyJq
+d2siOnsia3R5IjoiRUMiLCJjcnYiOiJQLTM4NCIsImFsZyI6IkVTMzg0IiwieCI6Inl1Zlo1SFUzcU
+NfOTRMbkI3Zklzd0hmT0swQlJra0Z5bzVhd1QyX21ld0tJWUpLMVNfR0QySVB3UjRYUTZpdFEiLCJ5
+IjoiRmEtV2pOd2NLQ1RWWHVDU2tCY3RkdHJOYzh6bXdBTTZWOWxudmxxd1QyQnRlQ0ZHNmR6ZDJoMF
+VjeXluTDg0dCJ9fX0
+.
+M7BFJB9LEV_xEylSJpP00fd_4WjrOlXshh0dUv3QgOzw2MEGIfSfi9PoCkHJH7TI0InsqkD6XZVz38
+MpeDKekgBW-RoDdJmxnifYOEJhKpJ5EN9PvA007UPi9QCaiEzX
+~
+WyJFX3F2V09NWVQ1Z3JNTkprOHNXN3BBIiwgImlkIiwgImh0dHA6Ly91bml2ZXJzaXR5LmV4YW1wbG
+UvY3JlZGVudGlhbHMvMTg3MiJd
+~
+WyJTSEc4WnpfRDVRbFMwU0ZrZFUzNXlRIiwgInR5cGUiLCBbIlZlcmlmaWFibGVDcmVkZW50aWFsIi
+wgIkV4YW1wbGVBbHVtbmlDcmVkZW50aWFsIl1d
+~
+WyJqZzJLRno5bTFVaGFiUGtIaHV4cXRRIiwgImlkIiwgImh0dHBzOi8vZXhhbXBsZS5vcmcvZXhhbX
+BsZXMvZGVncmVlLmpzb24iXQ
+~
+WyItQmhzaE10UnlNNUVFbGt4WGVXVm5nIiwgInR5cGUiLCAiSnNvblNjaGVtYSJd~WyJ0SEFxMEUwN
+nY2ckRuUlNtSjlSUWRBIiwgImlkIiwgImRpZDpleGFtcGxlOjEyMyJd
+~
+WyJ1Ynd6bi1kS19tMzRSMGI0SG84QTBBIiwgInR5cGUiLCAiQmFjaGVsb3JEZWdyZWUiXQ
+        </pre>
+
+        <p>
+The [=enveloping proof=] above secures the original [=credential=] by
+encapsulating the original data in a digital signature envelope, resulting in a
+[=verifiable credential=] that can be processed using tooling that understands
+the SD-JWT format.
         </p>
 
       </section>
@@ -2427,14 +2434,14 @@ The following properties are defined for a [=verifiable presentation=]:
           <dd>
 The `id` [=property=] is optional. It MAY be used to provide a
 unique identifier for the [=verifiable presentation=]. If present, the
-normative guidance in Section <a href="#identifiers"></a> MUST be followed.
+normative guidance in Section [[[#identifiers]]] MUST be followed.
           </dd>
           <dt>|type|</dt>
           <dd>
 The `type` [=property=] MUST be present. It is used to express the
 type of [=verifiable presentation=]. One value of this property MUST be
 `VerifiablePresentation`, but additional types MAY be included. The
-related normative guidance in Section <a href="#types"></a> MUST be followed.
+related normative guidance in Section [[[#types]]] MUST be followed.
           </dd>
           <dt><var id="defn-verifiableCredential">verifiableCredential</var></dt>
           <dd>
@@ -2446,7 +2453,7 @@ numbers, strings, or URLs). These types of objects are called
 <a href="#verifiable-credential-graphs">verifiable credential graphs</a> and
 MUST express information that is secured using a
 <a href="#securing-mechanisms">securing mechanism</a>.
-See Section <a href="#verifiable-credential-graphs"></a> for further details.
+See Section [[[#verifiable-credential-graphs]]] for further details.
           </dd>
           <dt><var id="defn-holder">holder</var></dt>
           <dd>
@@ -2604,7 +2611,7 @@ derived from a [=verifiable credential=].
              title="Presentations using Zero-Knowledge Proofs are possible">
 For an example of a ZKP-style [=verifiable presentation=] containing
 derived data instead of directly embedded [=verifiable credentials=], see
-Section <a href="#zero-knowledge-proofs"></a>.
+Section [[[#zero-knowledge-proofs]]].
           </p>
 
           <figure>
@@ -2713,165 +2720,13 @@ self-asserted [=verifiable credential=] that holds [=claims=] about the
         </section>
       </section>
 
-      <section>
-        <h3>Data Schemas</h3>
-
-        <p>
-Data schemas are useful when enforcing a specific structure on a given
-collection of data. There are at least two types of data schemas that this
-specification considers:
-        </p>
-
-        <ul>
-          <li>
-Data verification schemas, which are used to establish that the structure
-and contents of a [=credential=] or [=verifiable credential=] conform to a
-published schema.
-          </li>
-          <li>
-Data encoding schemas, which are used to map the contents of a
-[=verifiable credential=] to an alternative representation format, such as a
-format used in a zero-knowledge proof.
-          </li>
-        </ul>
-
-        <p>
-It is important to understand that data schemas serve a different purpose from
-the `@context` property, which neither enforces data structure or
-data syntax, nor enables the definition of arbitrary encodings to alternate
-representation formats.
-        </p>
-        <p>
-This specification defines the following [=property=] for the expression of a
-data schema, which can be included by an [=issuer=] in
-the [=verifiable credentials=] that it issues:
-        </p>
-
-        <dl>
-          <dt><var id="defn-credentialSchema">credentialSchema</var></dt>
-          <dd>
-            <p>
-The value of the `credentialSchema` [=property=] MUST be one or
-more data schemas that provide [=verifiers=] with enough information to
-determine whether the provided data conforms to the provided schema(s). Each
-`credentialSchema` MUST specify its `type` (for example,
-`JsonSchema`), and an `id` [=property=]
-that MUST be a [=URL=] identifying the schema file. The precise contents of
-each data schema is determined by the specific type definition.
-            </p>
-            <p>
-If multiple schemas are present, validity is determined according to the
-processing rules outlined by each associated `credentialSchema`
-`type` property.
-            </p>
-          </dd>
-        </dl>
-
-        <p class="note"
-           title="Credential type-specific syntax checking is possible">
-The `credentialSchema` [=property=] provides an opportunity to
-annotate type definitions or lock them to specific versions of the vocabulary.
-Authors of [=verifiable credentials=] can include a static version of their
-vocabulary using `credentialSchema` that is locked to some content
-integrity protection mechanism. The `credentialSchema`
-[=property=] also makes it possible to perform syntactic checking on the
-[=credential=] and to use [=verification=] mechanisms such as JSON Schema
-[[?VC-JSON-SCHEMA]] validation.
-        </p>
-
-        <pre class="example nohighlight"
-          title="Usage of the credentialSchema property to perform JSON schema validation">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential", "ExamplePersonCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    },
-    "alumniOf": {
-      "name": "Example University"
-    }
-  },
-  <span class="highlight">"credentialSchema": [{
-    "id": "https://example.org/examples/degree.json",
-    "type": "JsonSchema"
-  },
-  {
-    "id": "https://example.org/examples/alumni.json",
-    "type": "JsonSchema"
-  }]</span>
-}
-        </pre>
-
-        <p>
-In the example above, the [=issuer=] is specifying a
-`credentialSchema`, which points to a [[?VC-JSON-SCHEMA]] file that
-can be used by a [=verifier=] to determine whether the
-[=verifiable credential=] is well-formed.
-        </p>
-
-        <p class="note"
-           title="See Implementation Guide for details on JSON Schema">
-For information about linkages to JSON Schema [[?VC-JSON-SCHEMA]] or other
-optional schema validation mechanisms, see the [[[VC-IMP-GUIDE]]] document.
-        </p>
-
-        <p>
-Data schemas can also be used to specify mappings to other formats, such as
-those used to perform zero-knowledge proofs. For more information on using the
-`credentialSchema` [=property=] with zero-knowledge proofs,
-see Section <a href="#zero-knowledge-proofs"></a>.
-        </p>
-
-        <pre class="example nohighlight" title="Usage of the credentialSchema property to perform zero-knowledge validation">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/examples/degree",
-    "type": "ZkpExampleSchema2018"
-  }</span>
-}
-        </pre>
-
-        <p>
-In the example above, the [=issuer=] is specifying a
-`credentialSchema` pointing to a means of transforming the input data
-into a format which can then be used by a [=verifier=] to determine whether
-the proof provided with the [=verifiable credential=] is well-formed.
-        </p>
-
-
-      </section>
-
     </section>
 
     <section>
       <h2>Advanced Concepts</h2>
 
       <p>
-Building on the concepts introduced in Section <a href="#basic-concepts"></a>,
+Building on the concepts introduced in Section [[[#basic-concepts]]],
 this section explores more complex topics about [=verifiable credentials=].
       </p>
 
@@ -3150,9 +3005,9 @@ documents with implementations, or enabling aggressive caching of contexts.
 
         <p>
 Implementers are advised to pay close attention to the extension points in this
-specification, such as in Sections <a href="#proofs-signatures"></a>,
-<a href="#status"></a>, <a href="#data-schemas"></a>,<a href="#refreshing"></a>,
-<a href="#terms-of-use"></a>, and <a href="#evidence"></a>. While this
+specification, such as in Sections [[[#proofs-signatures]]],
+[[[#status]]], [[[#data-schemas]]], [[[#refreshing]]],
+[[[#terms-of-use]]], and [[[#evidence]]]. While this
 specification does not define concrete implementations for those extension
 points, the Verifiable Credential Specifications Directory [[?VC-SPECS]]
 provides an unofficial, curated list of extensions that developers can use from
@@ -3379,7 +3234,7 @@ An example of a related resource integrity object referencing JSON-LD contexts.
         <p>
 It is useful for systems to enable the manual or automatic refresh of an expired
 [=verifiable credential=]. For more information about validity periods for
-[=verifiable credentials=], see Section <a href="#validity-periods"></a>.
+[=verifiable credentials=], see Section [[[#validity-periods]]].
 This specification defines a `refreshService` [=property=], which
 enables an [=issuer=] to include a link to a refresh service.
         </p>
@@ -3512,117 +3367,68 @@ by the specific `termsOfUse` [=type=] definition.
         <pre class="example nohighlight"
           title="Usage of the termsOfUse property by an issuer">
 {
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "urn:did:123456",
-  "type": [
-    "VerifiableCredential",
-    "EbsiTermsOfUseExample"
-  ],
-  "issuer": "did:ebsi:zz7XsC9ixAXuZecoD9sZEM1",
-  "validFrom": "2021-11-01T00:00:00Z",
-  "validUntil": "2021-10-30T00:00:00Z",
-  "credentialSubject": {
-    "id": "did:key:z2dmzD81cgPx8Vki7JbuuMmFYrWPgYoytykUZ3eyqht1j9KbrDt4zxXoDrBWYFiATYZ8G9JMeEXC7Kki24fbTwtsJbGe5qcbkYFunSzcDokMRmj8UJ1PbdCGh33mf97K3To89bMzd15qrYq3VkDztoZqfmujkJVpvTbqoXWXqxmzNDbvMJ",
-    "personalIdentifier": "IT/DE/1234",
-    "familyName": "Castafiori",
-    "firstName": "Bianca",
-    "dateOfBirth": "1930-10-01"
-  },
-  "credentialSchema": {
-    "id": "https://api-test.ebsi.eu/trusted-schemas-registry/v2/schemas/z3MgUFUkb722uq4x3dv5yAJmnNmzDFeK5UC8x83QoeLJM",
-    "type": "JsonSchema"
-  },
-  "termsOfUse": {
-    "id": "https://api-test.ebsi.eu/trusted-issuers-registry/v4/issuers/did:ebsi:zz7XsC9ixAXuZecoD9sZEM1/attributes/7201d95fef05f72667f5454c2192da2aa30d9e052eeddea7651b47718d6f31b0",
-    "type": "IssuanceCertificate"
+  {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://www.w3.org/ns/credentials/undefined-terms/v2"
+    ],
+    "id": "urn:uuid:08e26d22-8dca-4558-9c14-6e7aa7275b9b",
+    "type": [
+      "VerifiableCredential",
+      "VerifiableAttestation",
+      "VerifiableTrustModel",
+      "VerifiableAuthorisationForTrustChain"
+    ],
+    "issuer": "did:ebsi:zZeKyEJfUTGwajhNyNX928z",
+    "validFrom": "2021-11-01T00:00:00Z",
+    "validUntil": "2024-06-22T14:11:44Z",
+    "credentialSubject": {
+      "id": "did:ebsi:zvHWX359A3CvfJnCYaAiAde",
+      "reservedAttributeId": "60ae46e4fe9adffe0bc83c5e5be825aafe6b5246676398cd1ac36b8999e088a8",
+      "permissionFor": [{
+        "schemaId": "https://api-test.ebsi.eu/trusted-schemas-registry/v3/schemas/zHgbyz9ajVuSProgyMhsiwpcp8g8aVLFRNARm51yyYZp6",
+        "types": [
+          "VerifiableCredential",
+          "VerifiableAttestation",
+          "WorkCertificate"
+        ],
+        "jurisdiction": "https://publications.europa.eu/resource/authority/atu/EUR"
+      }]
+    },<span class="highlight">
+    "termsOfUse": {
+      "type": "TrustFrameworkPolicy",
+      "trustFramework": "Employment&Life",
+      "policyId": "https://example.com/policies/125",
+      "legalBasis": "professional qualifications directive"
+    }</span>,
+    "credentialStatus": {
+      "id": "https://api-test.ebsi.eu/trusted-issuers-registry/v5/issuers/did:ebsi:zvHWX359A3CvfJnCYaAiAde/attributes/60ae46e4fe9adffe0bc83c5e5be825aafe6b5246676398cd1ac36b8999e088a8",
+      "type": "EbsiAccreditationEntry"
+    },
+    "credentialSchema": {
+      "id": "https://api-test.ebsi.eu/trusted-schemas-registry/v3/schemas/zCSHSDwrkkd32eNjQsMCc1h8cnFaxyTXP5ByozyVQXZoH",
+      "type": "JsonSchema"
+    }
   }
 }
         </pre>
 
         <p>
-In the example above, the [=issuer=] is asserting that as a European
-Blockchain Services Infrastructure (EBSI) accredited issuer, it complies with the EBSI
-policies as an accredited issuer and is registered in the EBSI register of trusted issuers.
-The `termsOfUse` [=id=] can be resolved by the [=verifier=] to confirm
-that the [=issuer=] has been issued an accreditation VC (in JWT format)
-by a trusted issuer higher in the EBSI trust chain [?EBSI].
-        </p>
-
-        <pre class="example nohighlight" title="Usage of the termsOfUse property by a holder">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2",
-    {
-        "@protected": true,
-        "VerifiablePresentationTermsOfUseExtension": {
-          "@id": "https://www.w3.org/2018/credentials/examples#VerifiablePresentationExtension",
-          "@context": {
-            "@protected": true,
-            "termsOfUse": {
-              "@id": "https://www.w3.org/2018/credentials#termsOfUse",
-              "@type": "@id"
-            }
-          }
-        }
-    }
-  ],
-  "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-  "type": ["VerifiablePresentation"],
-  "verifiableCredential": [{
-    "@context": [
-      "https://www.w3.org/ns/credentials/v2",
-      "https://www.w3.org/ns/credentials/examples/v2"
-    ],
-    "id": "http://university.example/credentials/3732",
-    "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-    "issuer": "https://university.example/issuers/14",
-    "validFrom": "2010-01-01T19:23:24Z",
-    "credentialSubject": {
-      "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "degree": {
-        "type": "ExampleBachelorDegree",
-        "name": "Bachelor of Science and Arts"
-      }
-    }
-  }],
-  <span class="highlight">"termsOfUse": [{
-    "type": "HolderPolicy",
-    "id": "http://example.com/policies/credential/6",
-    "profile": "http://example.com/profiles/credential",
-    "prohibition": [{
-      "assigner": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-      "assignee": "https://wineonline.example.org/",
-      "target": "http://university.example/credentials/3732",
-      "action": ["3rdPartyCorrelation"]
-    }]
-  }]</span>
-}
-        </pre>
-
-        <p>
-In the example above, the [=holder=] (the `assigner`), who is
-also the [=subject=], expressed a term of use prohibiting the [=verifier=]
-(the `assignee`, `https://wineonline.example.org`) from
-using the information provided to correlate the [=holder=] or [=subject=]
-using a third-party service. If the [=verifier=] were to use a third-party
-service for correlation, they would violate the terms under which the
-[=holder=] created the [=presentation=].
+In the example above, the [=issuer=] is asserting that the legal basis
+under which the [=verifiable credential=] has been issued is the
+"professional qualifications directive" using the "Employment&Life" trust
+framework, with a specific link to the policy.
         </p>
 
         <p>
-This feature is also expected to be used by government-issued
-[=verifiable credentials=] to instruct digital wallets to limit their use to
-similar government organizations in an attempt to protect citizens from
-unexpected usage of sensitive data. Similarly, some
-[=verifiable credentials=] issued by private industry are expected to limit
-usage to within departments inside the organization, or during business hours.
-Implementers are urged to read more about this rapidly evolving feature in the
-appropriate section of the Verifiable Credentials Implementation Guidelines
-[[?VC-IMP-GUIDE]] document.
+This feature is expected to be used by government-issued [=verifiable
+credentials=] to instruct digital wallets to limit their use to similar
+government organizations in an attempt to protect citizens from unexpected usage
+of sensitive data. Similarly, some [=verifiable credentials=] issued by private
+industry are expected to limit usage to within departments inside the
+organization, or during business hours. Implementers are urged to read more
+about this evolving feature in the appropriate section of the Verifiable
+Credentials Implementation Guidelines [[?VC-IMP-GUIDE]] document.
         </p>
 
       </section>
@@ -3731,7 +3537,7 @@ contrast, the securing mechanism is used to express
 machine-verifiable mathematical proofs related to the authenticity of the
 [=issuer=] and integrity of the [=verifiable credential=]. For more
 information about securing mechanisms, see Section
-<a href="#securing-mechanisms"></a>.
+[[[#securing-mechanisms]]].
         </p>
 
       </section>
@@ -3871,6 +3677,104 @@ leak information that would enable the [=verifier=] to correlate a
 
       </section>
 
+      <section class="normative">
+        <h3>Representing Time</h3>
+
+        <p>
+Implementers are urged to understand that representing and processing time
+values is not as straight-forward as it might seem and have a variety of
+idiosyncrasies that are not immediately obvious nor uniformly observed in
+different regions of the world. For example:
+        </p>
+
+        <ul>
+          <li>
+Calendaring systems other than the Gregorian calendar are actively used by
+various regions.
+          </li>
+          <li>
+When processing Daylight Saving/Summer Time, it is important to understand that
+1) it is not observed in all regions, 2) it does not necessarily begin or end on
+the same day or at the same time of day, and 3) the amount or direction of the
+adjustment does not always match other similar regions.
+          </li>
+          <li>
+Leap seconds might not be taken into account in all software systems, especially
+for dates and times that precede the introduction of the leap second. Leap
+seconds can affects highly sensitive systems that depend on the exact
+millisecond offset from the epoch. However, note that for most applications the
+only moment in time that is affected is the one second period of the leap second
+itself. That is, the moment after the most recent leap second can always be
+represented as the first moment of the next day (for example,
+`2023-01-01T00:00:00Z`), regardless of whether the system in question
+understands leap seconds.
+          </li>
+        </ul>
+
+        <p>
+These are just a few examples that illustrate that the actual time of day, as
+would be seen on a clock on the wall, can exist in one region but not exist in
+another region. For this reason, implementers are urged to use time values
+that are more universal, such as values anchored to the `Z` time zone over
+values that are affected by Daylight Saving/Summer Time.
+        </p>
+
+        <p>
+This specification attempts to increase the number of universally recognized
+combinations of dates and times, and reduce the potential for
+misinterpretation of time values, by utilizing the
+`dateTimeStamp` construction first established by the [<a
+data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification. In
+order to reduce misinterpretations between different time zones, all time values
+expressed in [=conforming documents=] SHOULD be specified in `dateTimeStamp`
+format, either in Universal Coordinated Time (UTC), denoted by a `Z` at the end
+of the value, or with a time zone offset relative to UTC. Time values that are
+incorrectly serialized without an offset MUST be interpreted as UTC. Examples of
+valid time zone offsets relative to UTC include `Z`, `+01:00`, `-08:00`, and
+`+14:00`. See the regular expression at the end of this section for a formal
+definition of all acceptable values.
+        </p>
+
+        <p>
+Time zone definitions are occasionally changed by their governing body. When
+replacing or issuing new [=verifiable credentials=], implementers are advised
+to ensure that changes to local time zone rules do not result in unexpected gaps
+in validity. For example, consider the zone `America/Los_Angeles`, which has
+a raw offset of UTC-8 and had voted to stop observing daylight savings time in
+the year 2024. A given [=verifiable credential=] that had a `validUtil`
+value of `2024-07-12T12:00:00-07:00`, might be re-issued to have a
+`validFrom` value of `2024-07-12T12:00:00-08:00`, which would create a gap of
+an hour where the [=verifiable credential=] would not be valid.
+        </p>
+
+        <p>
+Implementers that desire to check `dateTimeStamp` values for validity
+can use the regular expression provided below, which is reproduced from the [<a
+data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification for
+convenience. To avoid doubt, the regular expression in [[XMLSCHEMA11-2]] is the
+normative definition. Implementers are advised that not all
+`dateTimeStamp` values that pass the regular expression below are
+valid moments in time. For example, the regular expression below allows for 31
+days in every month, which allows for leap years, and leap seconds, as well as
+days in places where they do not exist. That said, modern system libraries that
+generate `dateTimeStamp` values are often error-free in their
+generation of valid `dateTimeStamp` values. The regular
+expression shown below (minus the whitespace included here for readability),
+is often adequate when processing library-generated dates and times on
+modern systems.
+        </p>
+
+        <pre class="example nohighlight"
+          title="Regular expression to detect a valid XML Schema 1.1: Part 2 dateTimeStamp">
+-?([1-9][0-9]{3,}|0[0-9]{3})
+-(0[1-9]|1[0-2])
+-(0[1-9]|[12][0-9]|3[01])
+T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))
+(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))
+        </pre>
+
+      </section>
+
       <section class="informative">
         <h3>Authorization</h3>
 
@@ -3914,7 +3818,7 @@ specification describing their implementation.
 In order to avoid collisions regarding how the following properties are used,
 implementations MUST specify a `type` property in the value associated with the
 reserved property. For more information related to adding `type` information,
-see Section <a href="#types"></a>.
+see Section [[[#types]]].
         </p>
 
         <table class="simple">
@@ -3941,13 +3845,6 @@ URL MUST be `https://www.w3.org/2018/credentials#confidenceMethod`.
 A property used for specifying how a credential can be refreshed. The
 associated vocabulary URL MUST be
 `https://www.w3.org/2018/credentials#refreshService`.
-                <p class="issue atrisk" data-number="1437" title="Reservation depends on implementations">
-This property reservation might be deleted in favor of an existing section
-in the specification if at least one specification with two independent
-implementations are demonstrated by the end of the Candidate Recommendation
-Phase. If that does not occur, this reservation will remain, but the existing
-section in the specification will be removed.
-                </p>
               </td>
             </tr>
             <tr>
@@ -3963,13 +3860,6 @@ visual, auditory, haptic, or other format. The associated vocabulary URL MUST be
               <td>
 A property used for specifying the terms of use for a credential. The associated
 vocabulary URL MUST be `https://www.w3.org/2018/credentials#termsOfUse`.
-                <p class="issue atrisk" data-number="1437" title="Reservation depends on implementations">
-This property reservation might be deleted in favor of an existing section
-in the specification if at least one specification with two independent
-implementations are demonstrated by the end of the Candidate Recommendation
-Phase. If that does not occur, this reservation will remain, but the existing
-section in the specification will be removed.
-                </p>
               </td>
             </tr>
           </tbody>
@@ -4043,8 +3933,8 @@ a [=conforming document=].
           <li>
 SHOULD ensure that all semantics utilized in the transformed
 [=conforming document=] follow best practices for Linked Data. See
-Section <a href="#getting-started"></a>, Section
-<a href="#extensibility"></a>, and Linked Data Best Practices [[?LD-BP]]
+Section [[[#getting-started]]], Section
+[[[#extensibility]]], and Linked Data Best Practices [[?LD-BP]]
 for additional guidance.
           </li>
         </ul>
@@ -4106,7 +3996,7 @@ global identifier, such as a URL.
         <h3>Securing Mechanism Specifications</h3>
 
         <p>
-As described in Section <a href="#securing-mechanisms"></a>, there are
+As described in Section [[[#securing-mechanisms]]], there are
 multiple strategies that an implementer can use when securing a
 [=conforming document=]. In order to maximize utility and interoperability,
 specification authors that desire to author new ways of securing
@@ -4150,23 +4040,12 @@ A media type as defined in [[RFC6838]].
           </dd>
         </dl>
 
-        <p class="issue atrisk"
-           title="Controller document reference might change">
-The Working Group is currently attempting to align the definitions of a
-controller document between [[[?DID-CORE]]], [[[?VC-DATA-INTEGRITY]]], and
-[[[?VC-JOSE-COSE]]]. The goal is to have one specification that each of the
-previously stated specifications, and this specification, can reference for
-the normative statements related to controller documents. The normative
-references to controller documents are expected to change during the
-Candidate Recommendation phase.
-        </p>
-
         <p>
 Securing mechanism specifications SHOULD provide integrity protection for any
 information referenced by a URL that is critical to validation. Mechanisms that
 can achieve this protection are discussed in Section
-<a href="#integrity-of-related-resources"></a> and Section
-<a href="#base-context"></a>.
+[[[#integrity-of-related-resources]]] and Section
+[[[#base-context]]].
         </p>
 
         <p>
@@ -4193,7 +4072,7 @@ or the [=verifiable presentation=] itself.
 The last requirement means that the securing mechanism secures the [=default graph=] and,
 for [=verifiable presentations=], each [=verifiable credential=] of the presentation, together with
 their respective [=proof graphs=].
-See also <a href="#info-graph-vp"></a> or <a href="#info-graph-vp-mult-creds"></a>.
+See also [[[#info-graph-vp]]] or [[[#info-graph-vp-mult-creds]]].
       </p>
 
       <p>
@@ -4230,8 +4109,8 @@ of the [[[?VC-SPECS]]] [[?VC-SPECS]].
 
       <p>
 The data model as described in Sections
-<a href="#core-data-model"></a>, <a href="#basic-concepts"></a>, and
-<a href="#advanced-concepts"></a> is the canonical structural representation of
+[[[#core-data-model]]], [[[#basic-concepts]]], and
+[[[#advanced-concepts]]] is the canonical structural representation of
 a [=verifiable credential=] or [=verifiable presentation=]. All
 serializations are representations of that data model in a specific format. This
 section specifies how the data model is realized in JSON-LD for
@@ -4274,108 +4153,36 @@ or an array of values.
         <h3>JSON-LD</h3>
 
         <p>
-[[!JSON-LD11]] is a JSON-based format used to serialize
-<a href="https://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>.
-Linked Data is modeled using Resource Description Framework (RDF).
-RDF [[?RDF11-CONCEPTS]] is a technology for modeling graphs of statements. Each statement is a
+JSON-LD is a JSON-based format [[!JSON-LD11]] used to serialize
+<a href="https://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. Linked
+Data is modeled using Resource Description Framework (RDF) [[?RDF11-CONCEPTS]].
+RDF is a technology for modeling graphs of statements. Each statement is a
 single <i>subject→property→value</i> (also known as
-<i>entity→attribute→value</i>) relationship, which is referred to
-as a <a>claim</a> in this specification. JSON-LD [[?JSON-LD11]] is a technology that enables
-the expression of RDF using idiomatic JSON, enabling developers familiar with
-JSON to write applications that consume RDF as JSON. In general, subjects are
+<i>entity→attribute→value</i>) relationship, which is referred to as a
+<a>claim</a> in this specification. JSON-LD is a technology that enables the
+expression of RDF using idiomatic JSON, enabling developers familiar with JSON
+to write applications that consume RDF as JSON. In general, subjects are
 expressed as JSON objects with each property and value of the subject as a JSON
-key and value, respectively. A special affordance is made to express an
-identifier of a subject, if necessary, using the <code>id</code> key in this
-specification. See
+key and value, respectively. See
 <a data-cite="?JSON-LD11#relationship-to-rdf">Relationship of JSON-LD to RDF</a>
 for more details.
           </p>
         <p>
-[[!JSON-LD11]] is useful when extending the data model described in this
-specification. Instances of the data model are encoded in JSON-LD compacted
-form [[!JSON-LD11]] and include the `@context` [=property=]. The
+JSON-LD is useful when extending the data model described in this
+specification. The concept of the
 <a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
-is described in detail in the [[!JSON-LD11]] specification and its use is
-elaborated on in Section <a href="#contexts"></a> and
-Section <a href="#extensibility"></a>.
+is described in detail in the JSON-LD specification and its use is
+elaborated on in Section [[[#contexts]]] and
+Section [[[#extensibility]]].
         </p>
 
         <p>
 Multiple contexts MAY be used or combined to express any arbitrary information
-about [=verifiable credentials=] in idiomatic JSON. The
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>,
-available at `https://www.w3.org/ns/credentials/v2`, is a static
-document that is never updated and can therefore be downloaded and cached client
-side. The associated vocabulary document for the Verifiable Credentials Data
-Model is available at `https://www.w3.org/2018/credentials`.
-        </p>
-
-        <p>
-This specification restricts the usage of JSON-LD representations of
-the data model. JSON-LD <a
-href="https://www.w3.org/TR/json-ld/#compacted-document-form">compacted document
-form</a> MUST be utilized for all representations of the data model in the
-base media type, `application/vc`.
-        </p>
-
-        <p>
-As elaborated upon in Section
-<a href="#type-specific-credential-processing"></a>, some software applications
-might not perform generalized JSON-LD processing. Authors of [=conforming
-documents=] are advised that interoperability might be reduced if JSON-LD
-keywords in the `@context` value are used to globally affect values in a
-[=verifiable credential=] or [=verifiable presentation=], such as by
-setting either or both of the `@base` or `@vocab` keywords. For example, setting these values
-might trigger a failure in a mis-implemented JSON Schema test of the `@context`
-value in an implementation that is performing [=type-specific credential
-processing=] and not expecting the `@base` and/or `@vocab` value to be
-expressed in the `@context` value.
-        </p>
-
-        <p>
-In order to increase interoperability, [=conforming document=] authors are
-urged to not use JSON-LD features that are not easily detected when performing
-[=type-specific credential processing=]. These features include:
-        </p>
-
-        <ul>
-          <li>
-In-line declaration of JSON-LD keywords in the `@context` value that globally
-modify document term and value processing, such as setting `@base` or `@vocab`
-          </li>
-          <li>
-Use of JSON-LD contexts that override declarations in previous contexts, such as
-resetting `@vocab`
-          </li>
-          <li>
-In-line declaration of JSON-LD contexts in the `@context` property
-          </li>
-          <li>
-Use of full URLs for JSON-LD terms and types (e.g.,
-`https://www.w3.org/2018/credentials#VerifiableCredential` or
-`https://vocab.example/myvocab#SomeNewType`) instead of the short forms of
-any such values (e.g., `VerifiableCredential` or `SomeNewType`) that are
-explicitly defined as JSON-LD `@context` mappings (e.g.,
-`https://www.w3.org/ns/credentials/v2`)
-          </li>
-        </ul>
-
-        <p>
-While this specification cautions against the use of `@vocab`, there are
-legitimate uses of the feature, such as to ease experimentation, development,
-and localized deployment. If an application developer wants to use `@vocab` in
-production, which is advised against to reduce term collisions and leverage the benefits
-of semantic interoperability, they are urged to understand that any use of `@vocab` will
-disable reporting of "undefined term" errors, and
-later use(s) will override any previous `@vocab` declaration(s). Different values
-of `@vocab` can change the semantics of the information contained in the document,
-so it is important to understand whether and how these changes will affect the
-application being developed. Application developers MUST understand every
-JSON-LD context used by their application, at least to the extent that it affects
-the semantics of the terms that are used by their application. Applications MAY
-use JSON-LD <a data-cite="JSON-LD11-API#compaction-algorithms">compaction
-algorithms</a> to transform a document that uses an unknown JSON-LD context
-to one that does not, so the new document's terms will match expectations.
+about [=verifiable credentials=] in idiomatic JSON. The base
+<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a> for
+this specification is `https://www.w3.org/ns/credentials/v2`. The associated
+vocabulary document for the Verifiable Credentials Data Model is available at
+`https://www.w3.org/2018/credentials`.
         </p>
 
         <section>
@@ -4424,6 +4231,75 @@ model whether or not they use a [[!JSON-LD11]] processor.
             </li>
           </ul>
         </section>
+
+        <section>
+          <h3>Restrictions on JSON-LD</h3>
+
+          <p>
+This specification restricts the usage of JSON-LD representations of
+the data model. JSON-LD <a
+href="https://www.w3.org/TR/json-ld/#compacted-document-form">compacted document
+form</a> MUST be utilized for all representations of the data model using the
+`application/vc` base media type.
+          </p>
+
+          <p>
+As elaborated upon in Section
+[[[#type-specific-credential-processing]]], some software applications
+might not perform generalized JSON-LD processing. Authors of [=conforming
+documents=] are advised that interoperability might be reduced if JSON-LD
+keywords in the `@context` value are used to globally affect values in a
+[=verifiable credential=] or [=verifiable presentation=], such as by
+setting either or both of the `@base` or `@vocab` keywords. For example, setting these values
+might trigger a failure in a mis-implemented JSON Schema test of the `@context`
+value in an implementation that is performing [=type-specific credential
+processing=] and not expecting the `@base` and/or `@vocab` value to be
+expressed in the `@context` value.
+          </p>
+
+          <p>
+In order to increase interoperability, [=conforming document=] authors are
+urged to not use JSON-LD features that are not easily detected when performing
+[=type-specific credential processing=]. These features include:
+          </p>
+
+          <ul>
+            <li>
+In-line declaration of JSON-LD keywords in the `@context` value that globally
+modify document term and value processing, such as setting `@base` or `@vocab`
+            </li>
+            <li>
+Use of JSON-LD contexts that override declarations in previous contexts, such as
+resetting `@vocab`
+            </li>
+            <li>
+In-line declaration of JSON-LD contexts in the `@context` property
+            </li>
+            <li>
+Use of full URLs for JSON-LD terms and types (e.g.,
+`https://www.w3.org/2018/credentials#VerifiableCredential` or
+`https://vocab.example/myvocab#SomeNewType`) instead of the short forms of
+any such values (e.g., `VerifiableCredential` or `SomeNewType`) that are
+explicitly defined as JSON-LD `@context` mappings (e.g.,
+`https://www.w3.org/ns/credentials/v2`)
+            </li>
+          </ul>
+
+          <p>
+While this specification cautions against the use of `@vocab`, there are
+legitimate uses of the feature, such as to ease experimentation, development,
+and localized deployment. If an application developer wants to use `@vocab` in
+production, which is advised against to reduce term collisions and leverage the benefits
+of semantic interoperability, they are urged to understand that any use of `@vocab` will
+disable reporting of "undefined term" errors, and
+later use(s) will override any previous `@vocab` declaration(s). Different values
+of `@vocab` can change the semantics of the information contained in the document,
+so it is important to understand whether and how these changes will affect the
+application being developed.
+          </p>
+
+        </section>
+
         <section>
           <h3>Lists and Arrays</h3>
           <p>
@@ -4498,7 +4374,7 @@ followed when defining or using media types with [=verifiable credentials=].
         </p>
         <p>
 There are two media types associated with the core data model, which are
-listed in the Section <a href="#iana-considerations"></a>:
+listed in the Section [[[#iana-considerations]]]:
 `application/vc` and `application/vp`.
         </p>
         <p>
@@ -4651,7 +4527,7 @@ ensure
             </li>
             <li>
 When performing JSON Schema validation, as described in Section
-<a href="#data-schemas"></a>.
+[[[#data-schemas]]].
             </li>
             <li>
 When serializing or deserializing [=verifiable credentials=] or
@@ -4781,7 +4657,7 @@ Set the |verifyProof| function by using the |inputMediaType| and the
 the [[[?VC-SPECS]]] [[?VC-SPECS]], or other mechanisms known to the
 implementation, to determine the cryptographic suite to use when verifying
 the securing mechanism. The |verifyProof| function MUST implement the interface
-described in <a href="#securing-mechanism-specifications"></a>.
+described in [[[#securing-mechanism-specifications]]].
               </li>
               <li>
 If the |verifyProof| function expects a [=byte sequence=], provide
@@ -4879,7 +4755,7 @@ https://www.w3.org/TR/vc-data-model#CRYPTOGRAPHIC_SECURITY_ERROR
 The securing mechanism for the document has detected a
 modification in the contents of the document since it was created;
 potential tampering detected. See Section
-<a href="#verification"></a>.
+[[[#verification]]].
           </dd>
           <dt id="MALFORMED_VALUE_ERROR">
 https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE_ERROR
@@ -4889,7 +4765,7 @@ https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE_ERROR
 The value associated with a particular [=property=] is malformed. The
 name of the [=property=] and the path to the property SHOULD be provided
 in the [=ProblemDetails=] object. See Section
-<a href="#verification"></a>.
+[[[#verification]]].
           </dd>
           <dt id="RANGE_ERROR">
 https://www.w3.org/TR/vc-data-model#RANGE_ERROR
@@ -5210,7 +5086,7 @@ and most of the other subsections of Section [[[#privacy-considerations]]].
 
         <p>
 The use of different extension points described in Section
-<a href="#basic-concepts"></a> and Section <a href="#advanced-concepts"></a>
+[[[#basic-concepts]]] and Section [[[#advanced-concepts]]]
 can serve as an unintentional or unwanted correlation mechanism if the number
 of [=issuers=] using a specific extension type or combination of types
 is relatively small.
@@ -5830,7 +5706,7 @@ that compliance regimes are operating as expected.
         <h3>Frequency of Claim Issuance</h3>
 
         <p>
-As detailed in Section <a href="#usage-patterns"></a>, usage patterns can be
+As detailed in Section [[[#usage-patterns]]], usage patterns can be
 correlated into certain types of behavior. Part of this correlation is
 mitigated when a [=holder=] uses a [=verifiable credential=] without the
 knowledge of the [=issuer=]. [=Issuers=] can defeat this protection
@@ -6466,6 +6342,40 @@ property:
   }
 ]
         </pre>
+
+        <pre class="example nohighlight" title="Example dual language credential">
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://achievement.example/multilingual/v2"
+  ],
+  "type": [ "VerifiableCredential", "ExampleAchievementCredential" ],
+  "issuer": {
+    "id": "did:example:2g55q912ec3476eba2l9812ecbfe",
+    "type": "Profile"
+  },
+  "validFrom": "2024-03-14T22:32:52Z",
+  "validUntil": "2025-01-01T00:00:00Z",
+
+  "credentialSubject": {
+    "type": [ "AchievementSubject" ],
+    "achievement": {
+      "id": "urn:uuid:9a652678-4616-475d-af12-aca21cfbe06d",
+      "type": [ "Achievement" ],
+      "name": {
+        "en": "Successful installation of the Example application",
+        "es": "Instalación exitosa de la aplicación Example"
+      },
+      "criteria": {
+        "narrative": {
+          "es": "Instaló exitosamente de la aplicación Example.",
+          "en": "Successfully installed the Example application."
+        }
+      }
+    }
+  }
+}
+        </pre>
       </section>
 
       <section class="substantive">
@@ -6573,7 +6483,7 @@ to the [=verifier=].
         <p>
 Metadata related to the `issuer` [=property=] is available to the
 [=verifier=] through the <a href="#verification">verification
-algorithm</a> as defined in Section <a href="#verification"></a>.
+algorithm</a> as defined in Section [[[#verification]]].
 This metadata includes identification of the verified controller of the
 verification method used by the securing mechanism to secure each [=verifiable
 credential=] or [=verifiable presentation=], of which the controller is
@@ -7033,10 +6943,6 @@ the `renderMethod` property.
               <td>
 Serves as a superclass for specific terms of use types that are placed into
 the <a href="#terms-of-use">termsOfUse</a> property.
-<span class="issue atrisk">This superclass is at risk and will be removed if
-at least two independent implementations for the superclass are not identified
-by the end of the Candidate Recommendation phase.
-</span>
               </td>
             </tr>
           </tbody>
@@ -7324,16 +7230,17 @@ document</a>.
       <h2>Additional Diagrams for Verifiable Presentations</h2>
 
       <p>
-        <a href="#info-graph-vp-mult-creds"></a> below is a variant of <a href="#info-graph-vp"></a>:
-        a [=verifiable presentation=] referring to two [=verifiable credentials=], and using [=embedded proofs=]
-        based on [[?VC-DATA-INTEGRITY]].
-        Each [=verifiable credential graph=] is connected to
-        its own separate [=proof graph=]; the `verifiableCredential` property is used
-        to connect the [=verifiable presentation=] to the [=verifiable credential graphs=].
-        The [=presentation=] [=proof graph=] represents the digital signature of the [=verifiable presentation graph=],
-        both [=verifiable credential graphs=], and the [=proof graphs=] linked from the [=verifiable credential graphs=].
-        The complete [=verifiable presentation=]
-        consists, in this case, of six information [=graphs=].
+[[[#info-graph-vp-mult-creds]]] below is a variant of [[[#info-graph-vp]]]: a
+[=verifiable presentation=] referring to two [=verifiable credentials=], and
+using [=embedded proofs=] based on [[?VC-DATA-INTEGRITY]]. Each [=verifiable
+credential graph=] is connected to its own separate [=proof graph=]; the
+`verifiableCredential` property is used to connect the [=verifiable
+presentation=] to the [=verifiable credential graphs=]. The [=presentation=]
+[=proof graph=] represents the digital signature of the [=verifiable
+presentation graph=], both [=verifiable credential graphs=], and the [=proof
+graphs=] linked from the [=verifiable credential graphs=]. The complete
+[=verifiable presentation=] consists, in this case, of six information
+[=graphs=].
       </p>
 
       <figure id="info-graph-vp-mult-creds">
@@ -7360,15 +7267,15 @@ with value 'Example Presenter Public Key 11'; 'created' with value
 parenthetical remark '(a named graph)'
             ">
       <figcaption style="text-align: center;">
-        A variant of <a href="#info-graph-vp"></a>: information [=graphs=] associated with a [=verifiable presentation=]
+        A variant of [[[#info-graph-vp]]]: information [=graphs=] associated with a [=verifiable presentation=]
         referring to two
         verifiable credentials, using an [=embedded proof=] based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
       </figcaption>
       </figure>
 
       <p>
-        <a href="#info-graph-vp-jwt-mult-creds"></a> below shows the same [=verifiable presentation=]
-        as <a href="#info-graph-vp-mult-creds"></a>, but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
+        [[[#info-graph-vp-jwt-mult-creds]]] below shows the same [=verifiable presentation=]
+        as [[[#info-graph-vp-mult-creds]]], but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
         Each [=verifiable credential graph=] contains a single
         <a href="#defn-EnvelopedVerifiableCredential">`EnvelopedVerifiableCredential`</a> instance,
         referring, via a `data:` URL [[RFC2397]], to a verifiable credential secured via
@@ -7404,7 +7311,7 @@ separate rectangle, containing a single text field:
 'cYjaSdfIoJH45NIqw3MYnasGIba...'.
         ">
         <figcaption style="text-align: center;">
-          A variant of <a href="#info-graph-vp-jwt"></a>: information [=graphs=] associated with a [=verifiable presentation=]
+          A variant of [[[#info-graph-vp-jwt]]]: information [=graphs=] associated with a [=verifiable presentation=]
           referring to two verifiable credentials using [=enveloping proofs=] based on JOSE [[?VC-JOSE-COSE]].
         </figcaption>
       </figure>
