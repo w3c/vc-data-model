@@ -2172,23 +2172,15 @@ status checking.
         </p>
 
         <p>
-Specification authors that create status schemes are provided the following
-guideline:
+Credential status specifications MUST NOT enable tracking of individuals, such
+as an [=issuer=] being notified (either directly or indirectly) when a
+[=verifier=] is interested in a specific [=holder=] or [=subject=]. Unacceptable
+approaches include "phoning home," such that every use of a credential contacts
+the [=issuer=] of the credential to check the status for a specific individual,
+or "pseudonymity reduction", such that every use of the credential causes a
+request for information from the [=issuer=] that can be used by the [=issuer=]
+to deduce [=verifier=] interest in a specific individual.
         </p>
-
-        <ul>
-          <li>
-Status schemes MUST NOT be implemented in ways that enable tracking of
-individuals, such as an [=issuer=] being notified (either directly or
-indirectly) when a [=verifier=] is interested in a particular [=holder=]
-or [=subject=]. Unacceptable approaches include "phoning home," such that
-every use of a credential contacts the [=issuer=] of the credential to
-check the status for a specific individual, or "pseudonymity reduction,"
-such that every use of the credential causes a request for information
-from the [=issuer=] that can be used by the [=issuer=] to deduce
-[=verifier=] interest in a specific individual.
-          </li>
-        </ul>
 
       </section>
 
@@ -2240,8 +2232,7 @@ each data schema is determined by the specific type definition.
             </p>
             <p>
 If multiple schemas are present, validity is determined according to the
-processing rules outlined by each associated `credentialSchema`
-`type` property.
+processing rules outlined by each associated `type` property.
             </p>
           </dd>
         </dl>
@@ -2291,56 +2282,11 @@ integrity protection mechanism. The `credentialSchema`
         </pre>
 
         <p>
-In the example above, the [=issuer=] is specifying a
-`credentialSchema`, which points to a [[?VC-JSON-SCHEMA]] file that
-can be used by a [=verifier=] to determine whether the
-[=verifiable credential=] is well-formed.
+In the example above, the [=issuer=] is specifying two `credentialSchema`
+objects, each of which point to a JSON Schema [[?VC-JSON-SCHEMA]] file that can
+be used by a [=verifier=] to determine whether the [=verifiable credential=] is
+well-formed.
         </p>
-
-        <p class="note"
-           title="See Implementation Guide for details on JSON Schema">
-For information about linkages to JSON Schema [[?VC-JSON-SCHEMA]] or other
-optional schema validation mechanisms, see the [[[VC-IMP-GUIDE]]] document.
-        </p>
-
-        <p>
-Data schemas can also be used to specify mappings to other formats, such as
-those used to perform zero-knowledge proofs. For more information on using the
-`credentialSchema` [=property=] with zero-knowledge proofs,
-see Section [[[#zero-knowledge-proofs]]].
-        </p>
-
-        <pre class="example nohighlight" title="Usage of the credentialSchema property to perform zero-knowledge validation">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/3732",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2010-01-01T19:23:24Z",
-  "credentialSubject": {
-    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  },
-  <span class="highlight">"credentialSchema": {
-    "id": "https://example.org/examples/degree",
-    "type": "ZkpExampleSchema2018"
-  }</span>
-}
-        </pre>
-
-        <p>
-In the example above, the [=issuer=] is specifying a
-`credentialSchema` pointing to a means of transforming the input data
-into a format which can then be used by a [=verifier=] to determine whether
-the proof provided with the [=verifiable credential=] is well-formed.
-        </p>
-
 
       </section>
 
@@ -2400,6 +2346,13 @@ in Section [[[#securing-mechanism-specifications]]].
 }
         </pre>
 
+        <p>
+The [=embedded proof=] above secures the original [=credential=] by decorating
+the original data with a digital signature via the `proof` property, resulting
+in a [=verifiable credential=] that is easy to manage in modern programming
+environments and database systems.
+        </p>
+
         <pre class="example nohighlight"
           title="A verifiable credential that uses an enveloping proof in SD-JWT format">
 eyJhbGciOiJFUzM4NCIsImtpZCI6IkdOV2FBTDJQVlVVMkpJVDg5bTZxMGM3U3ZjNDBTLWJ2UjFTT0
@@ -2439,6 +2392,13 @@ nY2ckRuUlNtSjlSUWRBIiwgImlkIiwgImRpZDpleGFtcGxlOjEyMyJd
 ~
 WyJ1Ynd6bi1kS19tMzRSMGI0SG84QTBBIiwgInR5cGUiLCAiQmFjaGVsb3JEZWdyZWUiXQ
         </pre>
+
+        <p>
+The [=enveloping proof=] above secures the original [=credential=] by
+encapsulating the original data in a digital signature envelope, resulting in a
+[=verifiable credential=] that can be processed using tooling that understands
+the SD-JWT format.
+        </p>
 
       </section>
 
