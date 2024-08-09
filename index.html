@@ -1884,7 +1884,7 @@ associating an object with the issuer property:
         <p class="note"
            title="The identifier for an issuer can be any URL">
 The value of the `issuer` [=property=] can also be a JWK (for
-example, `"https://example.com/keys/foo.jwk"`) or a [=DID=] (for
+example, `"https://jwk.example/keys/foo.jwk"`) or a [=DID=] (for
 example, `"did:example:abfe13f712120431c276e12ecab"`).
         </p>
 
@@ -1953,7 +1953,7 @@ who are spouses. Note the use of array notation to associate multiple
   ],
   "id": "http://university.example/credentials/3732",
   "type": ["VerifiableCredential", "RelationshipCredential"],
-  "issuer": "https://example.com/issuer/123",
+  "issuer": "https://issuer.example/issuer/123",
   "validFrom": "2010-01-01T00:00:00Z",
   "credentialSubject": <span class="highlight">[{
     "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
@@ -2870,18 +2870,17 @@ data model.
           <li>
 Extend the machine-readable vocabularies used to describe information in the
 data model, without the use of a centralized system for doing so, through the
-use of [[?LINKED-DATA]].
+use of Linked Data [[?LINKED-DATA]].
           </li>
           <li>
-Support multiple types of cryptographic proof formats through the use of JOSE or
-COSE [[VC-JOSE-COSE]], Data Integrity Proofs [[VC-DATA-INTEGRITY]], and a
-variety of cryptographic suites listed in the Verifiable Credential
-Specifications Directory [[?VC-SPECS]].
+Support multiple types of cryptographic proof formats through the use of
+[[[VC-JOSE-COSE]]], [[[VC-DATA-INTEGRITY]]], and a variety of cryptographic
+suites listed in the [[[?VC-SPECS]]].
           </li>
           <li>
 Provide all of the extensibility mechanisms outlined above in a data format that
 is popular with software developers and web page authors, and is enabled through
-the use of [[JSON-LD11]].
+the use of [[[JSON-LD11]]].
           </li>
         </ul>
 
@@ -2900,7 +2899,7 @@ extensibility and program correctness are achieved.
         </p>
 
         <p>
-Let us assume we start with the [=verifiable credential=] shown below.
+Let us assume we start with the [=credential=] shown below.
         </p>
 
         <pre class="example nohighlight vc"
@@ -2911,9 +2910,9 @@ Let us assume we start with the [=verifiable credential=] shown below.
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2"
   ],
-  "id": "http://example.com/credentials/4643",
+  "id": "http://vc.example/credentials/4643",
   "type": ["VerifiableCredential"],
-  "issuer": "https://example.com/issuers/14",
+  "issuer": "https://issuer.example/issuers/14",
   "validFrom": "2018-02-24T05:28:04Z",
   "credentialSubject": {
     "id": "did:example:abcdef1234567",
@@ -2942,8 +2941,8 @@ as shown below.
         <pre class="example nohighlight" title="A JSON-LD context">
 {
   "@context": {
-    "referenceNumber": "https://example.com/vocab#referenceNumber",
-    "favoriteFood": "https://example.com/vocab#favoriteFood"
+    "referenceNumber": "https://extension.example/vocab#referenceNumber",
+    "favoriteFood": "https://extension.example/vocab#favoriteFood"
   }
 }
         </pre>
@@ -2952,7 +2951,7 @@ as shown below.
 After this JSON-LD context is created, the developer publishes it somewhere so
 it is accessible to [=verifiers=] who will be processing the
 [=verifiable credential=]. Assuming the above JSON-LD context is published at
-`https://example.com/contexts/mycontext.jsonld`, we can extend this
+`https://extension.example/contexts/mycontext.jsonld`, we can extend this
 example by including the context and adding the new [=properties=] and
 [=credential=] [=type=] to the [=verifiable credential=].
         </p>
@@ -2963,11 +2962,11 @@ example by including the context and adding the new [=properties=] and
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2",
-    <span class="highlight">"https://example.com/contexts/mycontext.jsonld"</span>
+    <span class="highlight">"https://extension.example/contexts/mycontext.jsonld"</span>
   ],
-  "id": "http://example.com/credentials/4643",
+  "id": "http://vc.example/credentials/4643",
   "type": ["VerifiableCredential", "CustomExt12"],
-  "issuer": "https://example.com/issuers/14",
+  "issuer": "https://issuer.example/issuers/14",
   "validFrom": "2018-02-24T05:28:04Z",
   <span class="highlight">"referenceNumber": 83294847,</span>
   "credentialSubject": {
@@ -3398,7 +3397,7 @@ by the specific `termsOfUse` [=type=] definition.
     "termsOfUse": {
       "type": "TrustFrameworkPolicy",
       "trustFramework": "Employment&Life",
-      "policyId": "https://example.com/policies/125",
+      "policyId": "https://policy.example/policies/125",
       "legalBasis": "professional qualifications directive"
     }</span>,
     "credentialStatus": {
@@ -3512,7 +3511,7 @@ non-credential data might be supported by the specification, see the
   },
   "evidence": [{
       <span class='comment'>// url to an externally hosted evidence file/artifact</span>
-      "id": "https://videos.example.com/training/alice-espresso.mp4",
+      "id": "https://videos.example/training/alice-espresso.mp4",
       "type": ["Evidence"],
       "name": "Talk-aloud video of double espresso preparation",
       "description": "This is a talk-aloud video of Alice demonstrating preparation of a double espresso drink.",
