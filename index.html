@@ -2954,7 +2954,7 @@ as shown below.
 After this JSON-LD context is created, the developer publishes it somewhere so
 it is accessible to [=verifiers=] who will be processing the
 [=verifiable credential=]. Assuming the above JSON-LD context is published at
-`https://extension.example/contexts/mycontext.jsonld`, we can extend this
+`https://extension.example/my-contexts/v1`, we can extend this
 example by including the context and adding the new [=properties=] and
 [=credential=] [=type=] to the [=verifiable credential=].
         </p>
@@ -2965,7 +2965,7 @@ example by including the context and adding the new [=properties=] and
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://www.w3.org/ns/credentials/examples/v2",
-    <span class="highlight">"https://extension.example/contexts/mycontext.jsonld"</span>
+    <span class="highlight">"https://extension.example/my-contexts/v1"</span>
   ],
   "id": "http://vc.example/credentials/4643",
   "type": ["VerifiableCredential", "CustomExt12"],
@@ -2983,7 +2983,7 @@ example by including the context and adding the new [=properties=] and
         <p>
 This example demonstrates extending the Verifiable Credentials Data Model in a
 permissionless and decentralized way. The mechanism shown also ensures that
-[=verifiable credentials=] created in this way provide a mechanism to prevent
+[=verifiable credentials=] created in this way provide a way to prevent
 namespace conflicts and semantic ambiguity.
         </p>
 
@@ -2998,22 +2998,24 @@ specifically not the domain of this specification.
         </p>
 
         <p>
-Developers are urged to ensure that extension JSON-LD contexts are highly
-available. Implementations that cannot dereference a context will produce an
-error. Strategies for ensuring that extension JSON-LD contexts are always
-available include using content-addressed URLs for contexts, bundling context
-documents with implementations, or enabling aggressive caching of contexts.
+Extension specification authors are urged to ensure that their documents, such
+as JSON-LD Contexts, are highly available. Developers using these documents
+might use software that produces errors when these documents cannot be
+retrieved. Strategies for ensuring that extension JSON-LD contexts are always
+available include bundling these documents with implementations, aggressively
+caching, or using content-addressed URLs for contexts. These approaches are
+covered in further detail in Appendix
+[[[#contexts-vocabularies-types-and-credential-schemas]]].
         </p>
 
         <p>
 Implementers are advised to pay close attention to the extension points in this
-specification, such as in Sections [[[#proofs-signatures]]],
-[[[#status]]], [[[#data-schemas]]], [[[#refreshing]]],
-[[[#terms-of-use]]], and [[[#evidence]]]. While this
-specification does not define concrete implementations for those extension
-points, the Verifiable Credential Specifications Directory [[?VC-SPECS]]
-provides an unofficial, curated list of extensions that developers can use from
-these extension points.
+specification, such as in Sections [[[#status]]], [[[#data-schemas]]],
+[[[#securing-mechanisms]]], [[[#refreshing]]], [[[#terms-of-use]]], and
+[[[#evidence]]]. While this specification does not define concrete
+implementations for those extension points, the Verifiable Credential
+Specifications Directory [[?VC-SPECS]] provides an unofficial, curated list of
+extensions that developers can use from these extension points.
         </p>
 
         <section>
