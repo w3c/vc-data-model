@@ -3002,9 +3002,10 @@ Extension specification authors are urged to ensure that their documents, such
 as JSON-LD Contexts, are highly available. Developers using these documents
 might use software that produces errors when these documents cannot be
 retrieved. Strategies for ensuring that extension JSON-LD contexts are always
-available include bundling these documents with implementations, aggressively
-caching, or using content-addressed URLs for contexts. These approaches are
-covered in further detail in Appendix
+available include bundling these documents with implementations, content
+distribution networks with long caching timeframes, or using
+content-addressed URLs for contexts. These approaches are covered in further
+detail in Appendix
 [[[#contexts-vocabularies-types-and-credential-schemas]]].
         </p>
 
@@ -3018,38 +3019,42 @@ Specifications Directory [[?VC-SPECS]] provides an unofficial, curated list of
 extensions that developers can use from these extension points.
         </p>
 
-        <section>
+        <section class="notoc">
           <h4>Semantic Interoperability</h4>
 
           <p>
-When defining new terms in an application-specific vocabulary, developers MUST
-use globally unambiguous [=URLs=] to identify the terms. Whenever possible, it
-is RECOMMENDED to re-use terms — and their corresponding URLs — defined by
-well-known, public vocabularies, such as [[[?DCTERMS]]] [[?DCTERMS]] or
-[[[?schema-org]]] [[?schema-org]]. If that is not possible, authors MUST
-<em>define</em> a new URL for each term. When doing so, the general guidelines
-for [[LINKED-DATA]] are expected to be followed, in particular:
+When defining new terms in an application-specific vocabulary, vocabulary
+authors SHOULD follow the <a data-cite="?LD-BP#vocabulary-checklist">detailed
+checklist</a> in [[[?LD-BP]]]. Specifically, the following guidance is of
+particular importance:
           </p>
 
           <ul>
+            <li>
+Whenever possible, it is RECOMMENDED to re-use terms — and their corresponding
+URLs — defined by well-known, public vocabularies, such as [[[?SCHEMA-ORG]]].
+            </li>
+            <li>
+New terms MUST <em>define</em> a new URL for each term. When doing so, the
+general guidelines for [[LINKED-DATA]] are expected to be followed, in
+particular:
+            </li>
+            <ul>
               <li>
 Human-readable documentation MUST be published, describing the semantics of and
 the constraints on the use of each term.
               </li>
               <li>
 It is RECOMMENDED to also publish the collection of all new terms as a
-machine-readable vocabulary using [[[?RDF-SCHEMA]]] [[?RDF-SCHEMA]].
+machine-readable vocabulary using [[[?RDF-SCHEMA]]].
               </li>
               <li>
 It SHOULD be possible to dereference the URL of a term, resulting in its
 description and/or formal definition.
               </li>
+            </ul>
           </ul>
 
-          <p>
-Developers SHOULD follow the <a data-cite="?LD-BP#vocabulary-checklist">detailed
-checklist</a> in [[[?LD-BP]]] [[?LD-BP]] when defining a new vocabulary.
-          </p>
           <p>
 Furthermore, a machine-readable description (that is, a
 <a data-cite="JSON-LD11#dfn-context">JSON-LD Context document</a>) MUST be
@@ -3065,13 +3070,13 @@ seeking interoperability.
              title="Term redefinition is not allowed">
 When processing the <a data-cite="JSON-LD11#dfn-active-context">active
 context</a> defined by the base JSON-LD Context document <a
-href="#dfn-context">defined in this specification</a>, compliant JSON-LD-based
-processors produce an error when a JSON-LD context
-<em>redefines</em> any term. The only way to change the definition of existing
-terms is to introduce a new term that clears the active context within the scope
-of that new term. Authors that are interested in this feature should read about
-the <a data-cite="JSON-LD11#protected-term-definitions">`@protected`</a>
-keyword in the JSON-LD 1.1 specification.
+href="#base-context">defined in this specification</a>, compliant JSON-LD-based
+processors produce an error when a JSON-LD context <em>redefines</em> any term.
+The only way to change the definition of existing terms is to introduce a new
+term that clears the active context within the scope of that new term. Authors
+that are interested in this feature should read about the
+<a data-cite="JSON-LD11#protected-term-definitions">@protected
+keyword</a> in the JSON-LD 1.1 specification.
           </p>
 
           <p>
