@@ -3447,43 +3447,48 @@ Credentials Implementation Guidelines [[?VC-IMP-GUIDE]] document.
 
         <p>
 Evidence can be included by an [=issuer=] to provide the [=verifier=] with
-additional supporting information in a [=verifiable credential=]. This could
-be used by the [=verifier=] to establish the confidence with which it relies
-on the claims in the [=verifiable credential=].
-        </p>
-        <p>
-For example, an [=issuer=] could check physical documentation provided by the
-[=subject=] or perform a set of background checks before issuing the
-[=credential=]. In certain scenarios, this information is useful to the
-[=verifier=] when determining the risk associated with relying on a given
-[=credential=].
+additional supporting information in a [=verifiable credential=]. This could be
+used by the [=verifier=] to establish the confidence with which it relies on the
+claims in the [=verifiable credential=]. For example, an [=issuer=] could check
+physical documentation provided by the [=subject=] or perform a set of
+background checks before issuing the [=credential=]. In certain scenarios, this
+information is useful to the [=verifier=] when determining the risk associated
+with relying on a given [=credential=].
         </p>
 
         <p>
-This specification defines the `evidence` [=property=] for
-expressing evidence information.
+This specification defines the `evidence` [=property=] for expressing evidence
+information.
         </p>
 
         <dl>
           <dt><dfn id="defn-evidence" class="export">evidence</dfn></dt>
           <dd>
-The value of the `evidence` [=property=] MUST be one or more
-evidence schemes providing enough information for a [=verifier=] to determine
-whether the evidence gathered by the [=issuer=] meets its confidence
-requirements for relying on the [=credential=]. Each evidence scheme is
-identified by its [=type=]. The `id` [=property=] is optional,
-but if present, SHOULD contain a URL that points to where more information about
-this instance of evidence can be found. The precise content of each evidence
-scheme is determined by the specific `evidence` [=type=]
-definition.
+If present, the value associated with the `evidence` [=property=] is a single
+object or a set of one or more objects. The following [=properties=] are defined
+for every evidence object:
+            <dl>
+              <dt>id</dt>
+              <dd>
+The `id` [=property=] is OPTIONAL. It MAY be used to provide a unique identifier
+for the evidence object. If present, the normative guidance in Section
+[[[#identifiers]]] MUST be followed.
+              </dd>
+              <dt>type</dt>
+              <dd>
+The `type` [=property=] is REQUIRED. It is used to express the type of evidence
+information expressed by the object. The related normative guidance in Section
+[[[#types]]] MUST be followed.
+              </dd>
+            </dl>
           </dd>
         </dl>
 
         <p class="note"
            title="See Implementation Guide for strategies for providing evidence">
 For information about how attachments and references to [=credentials=] and
-non-credential data might be supported by the specification, see the
-[[[VC-IMP-GUIDE]]] document.
+non-credential data might be supported by the specification, see Section
+[[[#integrity-of-related-resources]]].
         </p>
 
         <pre class="example nohighlight"
@@ -3539,14 +3544,12 @@ video of the [=subject=] of the [=credential=] demonstrating the achievement.
         <p class="note"
            title="Evidence has a different purpose from securing mechanisms">
 The `evidence` [=property=] provides information that is different from and
-information to the securing mechanism utilized. The `evidence`
-[=property=] is used to express supporting information, such as documentary
-evidence, related to the integrity of the [=verifiable credential=]. In
-contrast, the securing mechanism is used to express
-machine-verifiable mathematical proofs related to the authenticity of the
-[=issuer=] and integrity of the [=verifiable credential=]. For more
-information about securing mechanisms, see Section
-[[[#securing-mechanisms]]].
+information to the securing mechanism utilized. The `evidence` [=property=] is
+used to express supporting information, such as documentary evidence, related to
+the [=verifiable credential=]. In contrast, the securing mechanism is used to
+express machine-verifiable mathematical proofs related to the authenticity of
+the [=issuer=] and integrity of the [=verifiable credential=]. For more
+information about securing mechanisms, see Section [[[#securing-mechanisms]]].
         </p>
 
       </section>
