@@ -3598,6 +3598,13 @@ identifiers to the [=verifier=].
           </li>
         </ul>
         <p>
+Specification authors that create
+<a href="#securing-mechanisms">securing mechanisms</a> MUST NOT design them in
+such a way that they leak information that would enable the [=verifier=] to
+correlate a [=holder=] across multiple [=verifiable presentations=] to different
+[=verifiers=].
+        </p>
+        <p>
 Not all capabilities are supported in all zero-knowledge proof mechanisms.
 Specific details about the capabilities and techniques provided by a particular
 zero knowledge proof mechanism, along with any normative requirements for using
@@ -3652,11 +3659,98 @@ credentials in a ZKP [=presentation=].
         </figure>
 
         <p>
-Specification authors that create
-<a href="#securing-mechanisms">securing mechanisms</a> MUST NOT design them in
-such a way that they leak information that would enable the [=verifier=] to
-correlate a [=holder=] across multiple [=verifiable presentations=] to different
-[=verifiers=].
+An example of a [=verifiable credential=] and a [=verifiable presentation=]
+using the [[[?VC-DI-BBS]]] unlinkable selective disclosure securing mechanism is
+shown below.
+        </p>
+
+        <pre class="example nohighlight"
+             title="Verifiable credential using the Data Integrity BBS Cryptosuite with a Base Proof">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v2",
+    "https://w3id.org/citizenship/v3"
+  ],
+  "type": ["VerifiableCredential", "PermanentResidentCard"],
+  "issuer": {
+    "id": "did:web:credentials.utopia.example",
+    "image": "data:image/png;base64,iVBORw0KGgo...YII="
+  },
+  "identifier": "83627465",
+  "name": "Permanent Resident Card",
+  "description": "Government of Utopia Permanent Resident Card.",
+  "validFrom": "2024-08-01T00:00:00Z",
+  "validUntil": "2029-12-01T00:00:00Z",
+  "credentialSubject": {
+    "type": ["PermanentResident", "Person"],
+    "givenName": "JANE",
+    "familyName": "SMITH",
+    "gender": "Female",
+    "image": "data:image/png;base64,iVBORw0KGgoAA...Jggg==",
+    "residentSince": "2015-01-01",
+    "lprCategory": "C09",
+    "lprNumber": "999-999-999",
+    "commuterClassification": "C1",
+    "birthCountry": "Arcadia",
+    "birthDate": "1978-07-17"
+  },
+  "proof": <span class="highlight">{
+    "type": "DataIntegrityProof",
+    "verificationMethod": "did:web:playground.alpha.chapi.io#zUC75LjjCLGKRxSissX1nAebRDmY4Bv4T6MAbzgaap9Q8rAGf6SEjc2Hf4nH6bUPDwky3GWoYcUjMCcEqRRQfXEiNwfeDwNYLoeqk1J1W2Ye8vCdwv4fSd8AZ1yS6UoNzcsQoPS",
+    "cryptosuite": "bbs-2023",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "u2V0ChVhQjYs9O7wUb3KRSMaIRX7jmafVHYDPYBLD4ta85_qmuXTBU_t2Ir7pNujwRE6fERsBUEZRSjJjtI-hqOqDs3VvBvH6gd3o2KeUS2V_zpuphPpYQEkapOeQgRTak9lHKSTqEQqa4j2lyHqekEeGvzPlqcHQGFccGifvLUXtP59jCuGJ86HDA9HL5kDzUT6n4Gi50HlYYIzNqhbjIxlqOuxO2IgIppSTWjQGeer34-PmKnOzKX8m_9DHPhif7TUf5uTV4OQWdhb0SxHnJ-CPu_z9FJ5ACekBQhz6YWS0_CY6j_ibucXzeVfZwLv1W47pjbt-l1Vl5VggSn2xVt69Q0GD9mPKpOhkKV_hyOL7i6haf7bq-gOKAwWDZy9pc3N1ZXJtL2lzc3VhbmNlRGF0ZW8vZXhwaXJhdGlvbkRhdGU"
+  }</span>
+}
+        </pre>
+
+        <p>
+The example above is a [=verifiable credential=] where the [=issuer=] has
+enabled a BBS-based unlinkable disclosure scheme to create a base proof that
+can then be used by the [=holder=] to create a derived proof that reveals only
+particular pieces of information from the original [=verifiable credential=].
+        </p>
+
+        <pre class="example nohighlight"
+             title="Verifiable presentation using the Data Integrity BBS Cryptosuite with a derived credential and proof">
+{
+  @context: "https://www.w3.org/2018/credentials/v2"
+  type: "VerifiablePresentation",
+  verifiableCredential: {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v2",
+      "https://w3id.org/citizenship/v3"
+    ],
+    "type": ["VerifiableCredential", "PermanentResidentCard"],
+    "issuer": {
+      "id": "did:web:issuer.utopia.example",
+      "image": "data:image/png;base64,iVBORw0KGgo...YII="
+    },
+    "name": "Permanent Resident Card",
+    "description": "Government of Utopia Permanent Resident Card.",
+    "validFrom": "2024-08-01T00:00:00Z",
+    "validUntil": "2029-12-01T00:00:00Z",
+    "credentialSubject": {
+      "type": ["PermanentResident", "Person"],
+      "birthCountry": "Arcadia"
+    },
+    "proof": <span class="highlight">{
+      type: "DataIntegrityProof",
+      verificationMethod: "did:web:issuer.utopia.example#zUC75LjjCLGKRxSissX1nAebRDmY4Bv4T6MAbzgaap9Q8rAGf6SEjc2Hf4nH6bUPDwky3GWoYcUjMCcEqRRQfXEiNwfeDwNYLoeqk1J1W2Ye8vCdwv4fSd8AZ1yS6UoNzcsQoPS",
+      cryptosuite: "bbs-2023",
+      proofPurpose: "assertionMethod",
+      proofValue: "u2V0DhVkCkLdnshxHtgeHJBBUGPBqcEooPp9ahgqs08RsoqW5EJFmsi70jqf2X368VcmfdJdYcYJwObPIg5dlyaoBm34N9BqcZ4RlTZvgwX79ivGnqLALC0EqKn2wOj5hRO76xUakfLGIcT4mE-G7CxA1FTs8sRCWy5p6FozelBYiZU2YlhUpJ7pBwelZ9wnlcbj4q-KyxAj5GU2iWp7-FxU-E624DmdT-yvCkAGRRrYej6lMwg7jB9uCHypOXXH2dVZ-jpf74YBaE4rMTxPFh60GN4o3S65F1fMsJbEMLdrXa8Vs6ZSlmveUcY1X7oPr1UIxo17ehVTCjOxWunYqrtLi9cVkYOD2s9XMk1oFVWBB3UY29axXQQXlZVfvTIUsfVc667mnlYbF7a-ko_SUfeY2n3s1DOAap5keeNU0v2KVPCbxA2WGz7UJy4xJv2a8olMOWPKjAEUruCx_dsbyicd-9KGwhYoUEO3HoAzmtI6qXVhMbJKxPrhtcp8hOdD9izVS5ed4CxHNaDGPSopF_MBwjxwPcpUufNNNdQwesrbtFJo0-P-1CrX_jSxKFMle2b3t24UbHRbZw7QnX4OG-SSVucem5jpMXTDFZ8PLFCqXX0zncJ_MQ-_u-liE-MwJu3ZemsXBp1JoB2twS0TqDVzSWR7bpFZKI9_07fKUAmQNSV_no9iAgYRLuPrnnsW1gQgCV-nNqzbcCOpzkHdCqro6nPSATq5Od3Einfc683gm5VGWxIldM0aBPytOymNz7PIZ6wkgcMABMe5Vw46B54ftW-TN5YZPDmCJ_kt7Mturn0OeQr9KJCu7S0I-SN14mL9KtGE1XDnIeR-C_YZhSA3vX4923v1l3vNFsKasqy9iEPHKM0hcogABAQCGAAECBAUGhAMJCgtYUnsiY2hhbGxlbmdlIjoiNGd2OFJyaERPdi1OSHByYlZNQlM1IiwiZG9tYWluIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmFscGhhLmNoYXBpLmlvIn0"
+    }</span>
+  }
+}
+        </pre>
+
+        <p>
+The [=verifiable presentation=] above includes a [=verifiable credential=] that
+contains an unlinkable subset of the information from the previous example and a
+derived proof that the [=verifier=] can use to verify that the information
+originated from the expected [=issuer=] and is bound to this particular
+exchange of information.
         </p>
 
       </section>
