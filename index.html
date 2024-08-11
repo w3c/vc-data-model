@@ -3558,41 +3558,43 @@ information about securing mechanisms, see Section [[[#securing-mechanisms]]].
         <h3>Zero-Knowledge Proofs</h3>
 
         <p>
-Zero-knowledge proofs are cryptographic methods which enable a user to prove
-knowledge of a value without disclosing the actual value. This data model
-supports being secured with the use of zero-knowledge proof mechanisms.
+Zero-knowledge proofs are <a href="#securing-mechanisms">securing mechanisms</a>
+which enable a [=holder=] to prove that they hold a [=verifiable credential=]
+containing a value without disclosing the actual value such as being able to
+prove that an individual is over the age of 25 without revealing their birthday.
+This data model supports being secured using zero-knowledge proofs.
         </p>
         <p>
-Some capabilities that are compatible with [=verifiable credentials=] which
-are made possible by zero-knowledge proof mechanisms:
+Some capabilities that are compatible with [=verifiable credentials=] which are
+made possible by zero-knowledge proof mechanisms include:
         </p>
         <ul>
           <li>
-Selective disclosure of the properties in a [=verifiable credential=] by the
-[=holder=] to a [=verifier=]. This allows a [=holder=] to provide a
-[=verifier=] with precisely the information they need and nothing more.
-This also enables the production of a derived [=verifiable credential=] that
-is formatted according to the [=verifier's=] data schema without needing to
-involve the [=issuer=] during presentation. This provides a great deal of
-flexibility for [=holders=] to use their issued
-[=verifiable credentials=].
+[=Selective disclosure=] of the properties in a [=verifiable credential=] by the
+[=holder=] to a [=verifier=]. This allows a [=holder=] to provide a [=verifier=]
+with precisely the information they need and nothing more. This also enables the
+production of a derived [=verifiable credential=] that is formatted according to
+the [=verifier's=] data schema without needing to involve the [=issuer=] during
+presentation. This provides a great deal of flexibility for [=holders=] to use
+their issued [=verifiable credentials=].
           </li>
           <li>
-Blinding of the signature value that is shared with a [=verifier=]. Blinded
-signatures allow for [=unlinkable disclosure=], which remove a common source of
-[=holder=] correlation during multiple presentations to one or more
-[=verifiers=]. This allows a [=holder=] to share a different signature
-value with each presentation, which in turn reduces the amount of data shared.
+[=Unlinkable disclosure=] of the properties in a [=verifiable credential=] by
+the [=holder=] to a [=verifier=]. Blinded signatures allow for [=unlinkable
+disclosure=], which remove a common source of [=holder=] correlation during
+multiple presentations to one or more [=verifiers=]. This allows a [=holder=] to
+share a different signature value with each presentation, which in turn reduces
+the amount of data shared.
           </li>
           <li>
-Privacy preserving identification of the [=holder=] and/or [=subject=].
-This allows a [=holder=] to prove that a [=credential=] was issued to
-them, or a [=subject=] to prove that a [=credential=] was issued about
-them, without sharing an identifier. This also reduces the amount of data
+Non-correlatable identification of the [=holder=] and/or [=subject=]. This
+allows a [=holder=] to prove that a [=credential=] was issued to them, or a
+[=subject=] to prove that a [=credential=] was issued about them, without
+sharing a correlatable identifier. This also reduces the amount of data
 necessary to be shared. This capability can also be used to combine multiple
-[=verifiable credentials=] from multiple [=issuers=] into a single
-[=verifiable presentation=] without revealing [=verifiable credential=] or
-[=subject=] identifiers to the [=verifier=].
+[=verifiable credentials=] from multiple [=issuers=] into a single [=verifiable
+presentation=] without revealing [=verifiable credential=] or [=subject=]
+identifiers to the [=verifier=].
           </li>
         </ul>
         <p>
@@ -3601,39 +3603,16 @@ Specific details about the capabilities and techniques provided by a particular
 zero knowledge proof mechanism, along with any normative requirements for using
 them with [=verifiable credentials=], would be found in a specification for
 securing [=verifiable credentials=] with that zero-knowledge proof mechanism.
+For an example of such a specification, refer to the [[[?VC-DI-BBS]]].
         </p>
         <p>
-We note that in most instances, for [=holder=] to make use of zero knowledge
-mechanisms with [=verifiable credentials=] requires an [=issuer=] to
-secure the [=verifiable credential=] in a manner that supports these
-capabilities.
-        </p>
-        <p>
-When a [=holder=] has selectively disclosed a portion of a
-[=verifiable credential=], it is important that the [=verifier=] check
-whether the information provided in the derived [=verifiable credential=] is
-compatible with the schema in the `credentialSchema`
-[=property=] provided by the [=issuer=]. It is also possible for the
-[=verifier=] to provide a schema to the [=holder=] as part of a request
-for the [=holder=]'s data, and for the [=verifier=] to ensure that the
-derived [=verifiable credential=] is compatible with that schema as well. We
-do not define such a request schema in this specification, but an example of one
-method for doing so is [[?PRES-EX]].
-        </p>
-        <p class="note"
-           title="Take care when designing schemas for selective disclosure">
-`credentialSchema` implementers are encouraged to consider the
-implications of selective disclosure credentials and provide guidance for
-processing depending on the construction. If a schema is not formed with
-selective disclosure in mind, then validation is likely to fail.
+We note that in most instances, for the [=holder=] to make use of zero knowledge
+mechanisms with [=verifiable credentials=], the [=issuer=] is required to secure
+the [=verifiable credential=] in a manner that supports these capabilities.
         </p>
         <p>
 The diagram below highlights how the data model might be used to issue and
 present [=verifiable credentials=] in zero-knowledge.
-        </p>
-        <p class="issue">
-Examples of leveraging <a href="https://w3c.github.io/vc-di-bbs/">vc-di-bbs</a>,
-will be added here in the future, or this section will be removed.
         </p>
 
         <figure>
@@ -3673,19 +3652,12 @@ credentials in a ZKP [=presentation=].
         </figure>
 
         <p>
-The following guideline is provided for authors who create
-<a href="#securing-mechanisms">securing mechanisms</a>
-specifications that provide unlinkability:
-        </p>
-
-        <ul>
-          <li>
-Unlinkable securing mechanisms MUST NOT be designed in such a way that they
-leak information that would enable the [=verifier=] to correlate a
-[=holder=] across multiple [=verifiable presentations=] to different
+Specification authors that create
+<a href="#securing-mechanisms">securing mechanisms</a> MUST NOT design them in
+such a way that they leak information that would enable the [=verifier=] to
+correlate a [=holder=] across multiple [=verifiable presentations=] to different
 [=verifiers=].
-          </li>
-        </ul>
+        </p>
 
       </section>
 
