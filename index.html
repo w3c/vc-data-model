@@ -322,7 +322,7 @@ benefits physical [=credentials=] provide us in the real world.
       </p>
 
       <p>
-This specification standardizes expressing [=credentials=] on the
+This specification standardizes a way of expressing [=credentials=] on the
 Web, ensuring they are cryptographically secure, privacy-respecting, and
 machine-verifiable.
       </p>
@@ -340,7 +340,7 @@ The components that constitute a [=verifiable credential=]
 The components that constitute a [=verifiable presentation=]
         </li>
         <li>
-An ecosystem where one expects that [=verifiable credentials=]
+An ecosystem where one [=verifiable credentials=]
 and [=verifiable presentations=] are useful
         </li>
       </ul>
@@ -376,8 +376,8 @@ the classes of vehicle entitled to drive, or date of birth)
           </li>
           <li>
 Evidence demonstrating how the [=subject=] met the qualifications required
-for issuing the [=credential=] (e.g., a measurement, proof of citizenship,
-or test result)
+for issuing the [=credential=] (for example, a measurement, proof of 
+citizenship, or test result)
           </li>
           <li>
 Information related to constraints on the credential (for example,
@@ -610,7 +610,7 @@ An assertion made about a [=subject=].
 A set of one or more [=claims=] made by an [=issuer=]. The [=claims=]
 in a credential can be about different [=subjects=]. The definition of
 credential used in this specification differs from,
-<a href="https://csrc.nist.gov/glossary/term/credential">NIST's definition of
+<a href="https://csrc.nist.gov/glossary/term/credential">NIST's definitions of
 credential</a>.
         </dd>
         <dt><dfn data-lt="decentralized identifiers|DID|DIDs">decentralized identifier</dfn></dt>
@@ -794,7 +794,7 @@ this specification. However, the concepts of a [=verifiable credential=] or a
 have associated media types. The concrete difference between these concepts
 &mdash; between [=credential=] and [=presentation=] vs. [=verifiable
 credential=] and [=verifiable presentation=] &mdash; is simply the fact
-that the "verifiable" objects are secured in a cryptographically
+that the "verifiable" objects are secured in a cryptographic
 way, and the others are not. For more details, see Section
 [[[#securing-mechanisms]]].
       </p>
@@ -830,7 +830,7 @@ as shown in [[[#basic-example]]] below.
             src="diagrams/claim-example.svg" alt="Pat has an alumniOf
             property whose value is Example University">
           <figcaption style="text-align: center;">
-A basic claim expressing that Pat is an alumnus of "Example University".
+A basic claim expressing that Pat is an alum of "Example University".
           </figcaption>
         </figure>
 
@@ -1177,7 +1177,7 @@ interoperability with other developers. The
 would then be replaced with the URL of a use-case-specific context. This
 process is covered in Section [[[#extensibility]]]. Alternatively,
 developers can reuse existing vocabulary and context files that happen to fit
-their use-case. They can explore the [[[VC-SPECS]]] [[VC-SPECS]] for reusable
+their use case. They can explore the [[[VC-SPECS]]] [[VC-SPECS]] for reusable
 resources.
         </p>
 
@@ -1370,7 +1370,7 @@ include UUIDs (`urn:uuid:0c07c1ce-57cb-41af-bef2-1b932b986873`), HTTP URLs
 
         <p class="note"
            title="Identifiers of any kind increase correlatability">
-Developers should remember that identifiers might be harmful
+Developers are reminded that identifiers might be harmful
 when pseudonymity is required. When considering such scenarios, developers are
 encouraged to read Section [[[#identifier-based-correlation]]] carefully
 There are also other types of access and correlation mechanisms documented
@@ -2002,8 +2002,8 @@ If present, the value of the `validFrom` [=property=] MUST be a
 the past. Note that this value represents the earliest point in time at which
 the information associated with the `credentialSubject`
 [=property=] becomes valid. If a `validUntil` value also exists, the
-`validFrom` value MUST express a date-time that is temporally the same or earlier
-than the date-time expressed by the `validUntil` value.
+`validFrom` value MUST express a point in time that is temporally the same or earlier
+than the point in time expressed by the `validUntil` value.
           </dd>
           <dt><var id="defn-validUntil">validUntil</var></dt>
           <dd>
@@ -2014,8 +2014,8 @@ If present, the value of the `validUntil` [=property=] MUST be a
 or the future. Note that this value represents the latest point in time at
 which the information associated with the `credentialSubject`
 [=property=] is valid. If a `validFrom` value also exists, the `validUntil`
-value MUST express a date-time that is temporally the same or later than the
-date-time expressed by the `validFrom` value.
+value MUST express a point in time that is temporally the same or later than the
+point in time expressed by the `validFrom` value.
           </dd>
         </dl>
 
@@ -2549,7 +2549,7 @@ enveloped [=verifiable credential=]:
 It is possible that an implementer might want to process the object described in
 this section and the enveloped presentation expressed by the `id` value in an
 RDF environment and create linkages between the objects that are relevant to
-RDF. The desire and mechanisms for doing so are use-case dependent and will,
+RDF. The desire and mechanisms for doing so are use case dependent and will,
 thus, be implementation dependent.
           </p>
 
@@ -3284,14 +3284,14 @@ definition.
           title="Usage of the refreshService property by an issuer">
 {
   "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2",
-    "https://w3id.org/age/v1"
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/age/v1",
+    "https://w3id.org/security/suites/ed25519-2020/v1"
   ],
   "type": ["VerifiableCredential", "AgeVerificationCredential"],
   "issuer": "did:key:z6MksFxi8wnHkNq4zgEskSZF45SuWQ4HndWSAVYRRGe9qDks",
-  "validFrom": "2024-04-03T00:00:00.000Z",
-  "validUntil": "2024-12-15T00:00:00.000Z",
+  "issuanceDate": "2024-04-03T00:00:00.000Z",
+  "expirationDate": "2024-12-15T00:00:00.000Z",
   "name": "Age Verification Credential",
   "credentialSubject": {
     "overAge": 21
@@ -4620,7 +4620,7 @@ type of processing is desired, an implementer is advised to follow this rule:
 Ensure that all values associated with a `@context` property are in the
 expected order, the contents of the context files match known good
 cryptographic hashes for each file, and domain experts have deemed that the
-contents are appropriate for the intended use-case.
+contents are appropriate for the intended use case.
             </li>
           </ul>
 
@@ -4867,7 +4867,7 @@ environments.
 
         <p>
 It is important to recognize there is a spectrum of privacy ranging from
-pseudonymous to strongly identified. Depending on the use-case, people have
+pseudonymous to strongly identified. Depending on the use case, people have
 different comfort levels about what information they are willing to provide
 and what information can be derived from what is provided.
         </p>
@@ -4894,7 +4894,7 @@ person is above a specific age. Alternatively, for medical prescriptions
 written by a doctor for a patient, the pharmacy fulfilling the prescription is
 required to more strongly identify the medical professional and the patient.
 Therefore there is not one approach to privacy that works for all use cases.
-Privacy solutions are use-case specific.
+Privacy solutions are use case specific.
         </p>
 
         <p class="note"
@@ -5024,7 +5024,7 @@ when shared. To combat this leakage, the [=verifiable credential=], and the
 securing mechanism, need to be specifically designed to avoid correlation.
 [=Verifiable credentials=] that are specifically designed to prevent the leakage
 of personally identifiable information do exist. Individuals and implementers
-are urged to prefer these credentials over ones that are not designed
+are urged to prefer these credential types over ones that are not designed
 to protect personally identifiable information.
         </p>
       </section>
@@ -5993,10 +5993,10 @@ if the external resource is changed.
 
         <p>
 This specification allows [=credentials=] to be produced that are not secured by
-signatures or proofs of any kind. These [=credentials=] are often
+signatures or proofs of any kind. These class of [=credentials=] are often
 useful for intermediate storage, or self-asserted information, which is
 analogous to filling out a form on a web page. Implementers should be aware that
-these [=credentials=] are not [=verifiable=] because the
+these [=credential=] types are not [=verifiable=] because the
 authorship either is not known or cannot be trusted.
         </p>
       </section>
@@ -6093,7 +6093,7 @@ meant for use might create exploitable security vulnerabilities. Validity
 periods shorter than the timeframe where the information expressed by the
 [=verifiable credential=] is expected to be used creates a burden on
 [=holders=] and [=verifiers=]. It is therefore important to set validity
-periods for [=verifiable credentials=] that are appropriate to the use-case
+periods for [=verifiable credentials=] that are appropriate to the use case
 and the expected lifetime for the information contained in the
 [=verifiable credential=].
         </p>
@@ -6237,7 +6237,7 @@ an attacker injected at some point during the data production process.
 
         <p>
 If implementers feel they need to use HTML, or other markup languages capable of
-containing executable scripts, to address a specific use-case, they are advised
+containing executable scripts, to address a specific use case, they are advised
 to analyze how an attacker could use the markup to mount injection attacks
 against a consumer of the markup, and then deploy mitigations against the
 identified attacks, such as running the HTML rendering engine in a sandbox with
