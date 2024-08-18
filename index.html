@@ -6036,10 +6036,21 @@ A [=verifier=] might wish to ensure that a [=verifiable presentation=] is
 not used more than a certain number of times. For example, a [=verifiable
 credential=] representing an event ticket, might allow entry to multiple
 individuals if presented multiple times, undermining the purpose of the ticket
-from the perspective of its issuer. To prevent against such attacks,
-[=holders=] can make use of techniques such as including a
-<a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> during
-presentation, or adding an expiry timestamp to reduce the window of attack.
+from the perspective of its issuer. To prevent such replay attacks, 
+[=verifiers=] should require [=holders=] to include additional security 
+measures in their presentations. These may include:
+          <ul>
+            <li>
+  A <a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a> 
+  or challenge provided by the verifier, which the holder must incorporate 
+  into the presentation. The verifier should enforce nonce uniqueness to 
+  prevent replay.
+            </li>
+            <li>
+  An expiry timestamp, limiting the window during which the presentation 
+  is valid.
+            </li>
+          </ul>
         </p>
         <h4>Spoofing Attack</h4>
 
