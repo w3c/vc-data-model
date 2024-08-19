@@ -17,7 +17,7 @@
       var respecConfig = {
         group: "vc",
 
-        // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
+        // specification status (for example, WD, LCWD, NOTE, etc.). If in doubt use ED.
         specStatus: "CRD",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
@@ -644,7 +644,7 @@ Anything that can be referenced in statements as an abstract or concrete noun.
 Entities include but are not limited to people, organizations, physical things,
 documents, abstract concepts, fictional characters, and arbitrary text. Any
 entity might perform roles in the ecosystem, if it can do so. Note
-that some entities fundamentally cannot take actions, e.g., the string "abc"
+that some entities fundamentally cannot take actions, for example, the string "abc"
 cannot issue credentials.
         </dd>
         <dt><dfn data-lt="graphs">graph</dfn></dt>
@@ -3039,21 +3039,21 @@ URLs — defined by well-known, public vocabularies, such as [[[?SCHEMA-ORG]]].
 New terms MUST <em>define</em> a new URL for each term. When doing so, the
 general guidelines for [[LINKED-DATA]] are expected to be followed, in
 particular:
-            </li>
-            <ul>
-              <li>
+              <ul>
+                <li>
 Human-readable documentation MUST be published, describing the semantics of and
 the constraints on the use of each term.
-              </li>
-              <li>
+                </li>
+                <li>
 It is RECOMMENDED to also publish the collection of all new terms as a
 machine-readable vocabulary using [[[?RDF-SCHEMA]]].
-              </li>
-              <li>
+                </li>
+                <li>
 It SHOULD be possible to dereference the URL of a term, resulting in its
 description and/or formal definition.
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </li>
           </ul>
 
           <p>
@@ -3780,7 +3780,7 @@ adjustment does not always match other similar regions.
           <li>
 Leap seconds might not be taken into account in all software systems, especially
 for dates and times that precede the introduction of the leap second. Leap
-seconds can affects highly sensitive systems that depend on the exact
+seconds can affect highly sensitive systems that depend on the exact
 millisecond offset from the epoch. However, note that for most applications the
 only moment in time that is affected is the one second period of the leap second
 itself. That is, the moment after the most recent leap second can always be
@@ -3880,11 +3880,10 @@ on top of this specification.
         <p>
 This specification reserves a number of [=properties=] to serve as possible
 extension points. While some implementers signaled interest in these properties,
-their inclusion in this specification was considered to be premature. Some of
-these extension points were originally defined in previous versions of this
-specification, while others were not. It is important to note that none of these
-properties are defined by this specification. Consequently, implementers are
-cautioned that use of these properties is considered experimental.
+their inclusion in this specification was considered to be premature. It is
+important to note that none of these properties are defined by this
+specification. Consequently, implementers are cautioned that use of these
+properties is considered experimental.
         </p>
         <p>
 Implementers MAY use these properties, but SHOULD expect them and/or
@@ -4034,7 +4033,7 @@ and/or properties, can lead to a corrupted data set.
 To ensure that data from different [=verifiable credentials=] are not
 accidentally co-mingled, the concept of a <dfn class="export">verifiable
 credential graph</dfn> is used to encapsulate each [=verifiable credential=].
-For simple [=verifiable credentials=], i.e., when the JSON-LD document
+For simple [=verifiable credentials=], that is, when the JSON-LD document
 contains a single credential with, possibly, associated proofs, this graph is
 the [=default graph=]. For [=presentations=], each value associated with
 the `verifiableCredential` property of the [=presentation=] is a separate
@@ -4172,52 +4171,45 @@ of the [[[?VC-SPECS]]] [[?VC-SPECS]].
       <h2>Syntaxes</h2>
 
       <p>
-The data model as described in Sections
-[[[#core-data-model]]], [[[#basic-concepts]]], and
-[[[#advanced-concepts]]] is the canonical structural representation of
-a [=verifiable credential=] or [=verifiable presentation=]. All
-serializations are representations of that data model in a specific format. This
-section specifies how the data model is realized in JSON-LD for
-`application/vc`, the base media type for Verifiable Credentials.
-Although syntactic mappings are only provided for JSON-LD, applications and
-services can use any other data representation syntax (such as XML, YAML, or
-CBOR) that is capable of being mapped back to `application/vc`. As the
-[=verification=] and [=validation=] requirements are defined in terms of
-the data model, all serialization syntaxes have to be deterministically
-translated to the data model for processing, [=validation=], or comparison.
+The data model as described in Sections [[[#core-data-model]]],
+[[[#basic-concepts]]], and [[[#advanced-concepts]]] is the canonical structural
+representation of a [=verifiable credential=] or [=verifiable presentation=].
+All syntaxes are representations of that data model in a specific format. This
+section specifies how the data model is serialized in JSON-LD for
+`application/vc` and `application/vp`, the base media types for [=verifiable
+credentials=] and [=verifiable presentations=], respectively. Although syntactic
+mappings are only provided for JSON-LD, applications and services can use any
+other data representation syntax (such as XML, YAML, or CBOR) that is capable of
+being mapped back to `application/vc` or `application/vp`. As the
+[=verification=] and [=validation=] requirements are defined in terms of the
+data model, all serialization syntaxes have to be deterministically translated
+to the data model for processing, [=validation=], or comparison.
       </p>
 
       <p>
 The expected arity of the property values in this specification, and the
 resulting datatype which holds those values, can vary depending on the property.
-If present, the following properties are represented as a single value:
-      </p>
-
-      <ul>
-        <li>
-`id` [=property=]
-        </li>
-        <li>
-`issuer` [=property=]
-        </li>
-        <li>
-`validFrom` [=property=]
-        </li>
-        <li>
-`validUntil` [=property=].
-        </li>
-      </ul>
-
-      <p>
-All other properties, if present, are represented as either a single value
-or an array of values.
+If present, the following properties are represented as a single value: `id`
+(Section [[[#identifiers]]]), `issuer` (Section [[[#issuer]]]), and
+`validFrom`/`validUntil` (Section [[[#validity-period]]]). All other properties,
+if present, are represented as either a single value or an array of values.
       </p>
 
       <section>
         <h3>JSON-LD</h3>
 
         <p>
-JSON-LD is a JSON-based format [[!JSON-LD11]] used to serialize
+This specification uses [[[JSON-LD11]]] to serialize the data model described in
+this specification. JSON-LD is useful because it enables the expression of the
+<a href="#core-data-model">graph-based data model</a> on which [=verifiable
+credentials=] are based,
+<a href="https://en.wikipedia.org/wiki/Semantic_technology">machine-readable
+semantics</a>, and is also useful when extending the data model (see Sections
+[[[#core-data-model]]] and [[[#extensibility]]]).
+        </p>
+
+        <p>
+JSON-LD is a JSON-based format used to serialize
 <a href="https://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. Linked
 Data is modeled using Resource Description Framework (RDF) [[?RDF11-CONCEPTS]].
 RDF is a technology for modeling graphs of statements. Each statement is a
@@ -4225,28 +4217,9 @@ single <i>subject→property→value</i> (also known as
 <i>entity→attribute→value</i>) relationship, which is referred to as a
 <a>claim</a> in this specification. JSON-LD is a technology that enables the
 expression of RDF using idiomatic JSON, enabling developers familiar with JSON
-to write applications that consume RDF as JSON. In general, subjects are
-expressed as JSON objects with each property and value of the subject as a JSON
-key and value, respectively. See
+to write applications that consume RDF as JSON. See
 <a data-cite="?JSON-LD11#relationship-to-rdf">Relationship of JSON-LD to RDF</a>
 for more details.
-          </p>
-        <p>
-JSON-LD is useful when extending the data model described in this
-specification. The concept of the
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
-is described in detail in the JSON-LD specification and its use is
-elaborated on in Section [[[#contexts]]] and
-Section [[[#extensibility]]].
-        </p>
-
-        <p>
-Multiple contexts MAY be used or combined to express any arbitrary information
-about [=verifiable credentials=] in idiomatic JSON. The base
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a> for
-this specification is `https://www.w3.org/ns/credentials/v2`. The associated
-vocabulary document for the Verifiable Credentials Data Model is available at
-`https://www.w3.org/2018/credentials`.
         </p>
 
         <section>
@@ -4340,11 +4313,11 @@ resetting `@vocab`
 In-line declaration of JSON-LD contexts in the `@context` property
             </li>
             <li>
-Use of full URLs for JSON-LD terms and types (e.g.,
+Use of full URLs for JSON-LD terms and types (for example,
 `https://www.w3.org/2018/credentials#VerifiableCredential` or
 `https://vocab.example/myvocab#SomeNewType`) instead of the short forms of
-any such values (e.g., `VerifiableCredential` or `SomeNewType`) that are
-explicitly defined as JSON-LD `@context` mappings (e.g.,
+any such values (for example, `VerifiableCredential` or `SomeNewType`) that are
+explicitly defined as JSON-LD `@context` mappings (for example,
 `https://www.w3.org/ns/credentials/v2`)
             </li>
           </ul>
@@ -4522,17 +4495,11 @@ of their associated media type, are expected to perform appropriate checks to
 ensure that payloads conform with the requirements for their use in a given
 system.
           </p>
-        </section>
-        <section class="informative">
-          <h2>HTTP</h2>
           <p>
 HTTP clients and servers use media types associated with [=verifiable
 credentials=] and [=verifiable presentations=] in accept headers and when
-indicating content types.
-          </p>
-          <p>
-Nonetheless, HTTP servers might ignore the accept header and return another
-content type, or return an error code such as
+indicating content types. Nonetheless, HTTP servers might ignore the accept
+header and return another content type, or return an error code such as
 <a data-cite="RFC7231#section-6.5.13">`415 Unsupported Media Type`</a>.
           </p>
         </section>
@@ -4877,11 +4844,11 @@ and what information can be derived from what is provided.
             src="diagrams/privacy-spectrum.svg" alt="Horizontal bar with
             red on the left, orange in the middle, and green on the
             right.  The red has the text 'Highly correlatable (global
-            IDs), e.g., government ID, shipping address, credit card
+            IDs), for example, government ID, shipping address, credit card
             number'.  The orange has the text 'Correlatable via collusion
-            (personally identifiable info), e.g., name, birthday, zip
+            (personally identifiable info), for example, name, birthday, zip
             code'.  The green has the text 'Non-correlatable
-            (pseudonyms), e.g., age over 21'.">
+            (pseudonyms), for example, age over 21'.">
           <figcaption style="text-align: center;">
 Privacy spectrum ranging from pseudonymous to fully identified.
           </figcaption>
@@ -5935,7 +5902,7 @@ in the management of cryptographic keys is a large subject and the reader is
 referred to [[NIST-SP-800-57-Part-1]] for more extensive recommendations and
 discussion. As strongly recommended in both [[FIPS-186-5]] and
 [[NIST-SP-800-57-Part-1]], a private signing key is not to be used for multiple
-purposes, e.g., a private signing key is not to be used for encryption as well
+purposes, for example, a private signing key is not to be used for encryption as well
 as signing.
         </p>
         <p>
@@ -7088,7 +7055,7 @@ to use these features of the data model.
 
         <p>
 The `type` property is used to uniquely identify the type of the
-[=verifiable credential=] in which it appears, i.e., to indicate which set of
+[=verifiable credential=] in which it appears, that is, to indicate which set of
 claims the [=verifiable credential=] contains. This property, and the value
 `VerifiableCredential` within the set of its values, are mandatory.
 Whilst it is good practice to include one additional value depicting the unique
