@@ -4171,52 +4171,45 @@ of the [[[?VC-SPECS]]] [[?VC-SPECS]].
       <h2>Syntaxes</h2>
 
       <p>
-The data model as described in Sections
-[[[#core-data-model]]], [[[#basic-concepts]]], and
-[[[#advanced-concepts]]] is the canonical structural representation of
-a [=verifiable credential=] or [=verifiable presentation=]. All
-serializations are representations of that data model in a specific format. This
-section specifies how the data model is realized in JSON-LD for
-`application/vc`, the base media type for Verifiable Credentials.
-Although syntactic mappings are only provided for JSON-LD, applications and
-services can use any other data representation syntax (such as XML, YAML, or
-CBOR) that is capable of being mapped back to `application/vc`. As the
-[=verification=] and [=validation=] requirements are defined in terms of
-the data model, all serialization syntaxes have to be deterministically
-translated to the data model for processing, [=validation=], or comparison.
+The data model as described in Sections [[[#core-data-model]]],
+[[[#basic-concepts]]], and [[[#advanced-concepts]]] is the canonical structural
+representation of a [=verifiable credential=] or [=verifiable presentation=].
+All syntaxes are representations of that data model in a specific format. This
+section specifies how the data model is serialized in JSON-LD for
+`application/vc` and `application/vp`, the base media types for [=verifiable
+credentials=] and [=verifiable presentations=], respectively. Although syntactic
+mappings are only provided for JSON-LD, applications and services can use any
+other data representation syntax (such as XML, YAML, or CBOR) that is capable of
+being mapped back to `application/vc` or `application/vp`. As the
+[=verification=] and [=validation=] requirements are defined in terms of the
+data model, all serialization syntaxes have to be deterministically translated
+to the data model for processing, [=validation=], or comparison.
       </p>
 
       <p>
 The expected arity of the property values in this specification, and the
 resulting datatype which holds those values, can vary depending on the property.
-If present, the following properties are represented as a single value:
-      </p>
-
-      <ul>
-        <li>
-`id` [=property=]
-        </li>
-        <li>
-`issuer` [=property=]
-        </li>
-        <li>
-`validFrom` [=property=]
-        </li>
-        <li>
-`validUntil` [=property=].
-        </li>
-      </ul>
-
-      <p>
-All other properties, if present, are represented as either a single value
-or an array of values.
+If present, the following properties are represented as a single value: `id`
+(Section [[[#identifiers]]]), `issuer` (Section [[[#issuer]]]), and
+`validFrom`/`validUntil` (Section [[[#validity-period]]]). All other properties,
+if present, are represented as either a single value or an array of values.
       </p>
 
       <section>
         <h3>JSON-LD</h3>
 
         <p>
-JSON-LD is a JSON-based format [[!JSON-LD11]] used to serialize
+This specification uses [[[JSON-LD11]]] to serialize the data model described in
+this specification. JSON-LD is useful because it enables the expression of the
+<a href="#core-data-model">graph-based data model</a> on which [=verifiable
+credentials=] are based,
+<a href="https://en.wikipedia.org/wiki/Semantic_technology">machine-readable
+semantics</a>, and is also useful when extending the data model (see Sections
+[[[#core-data-model]]] and [[[#extensibility]]]).
+        </p>
+
+        <p>
+JSON-LD is a JSON-based format used to serialize
 <a href="https://www.w3.org/TR/ld-glossary/#linked-data">Linked Data</a>. Linked
 Data is modeled using Resource Description Framework (RDF) [[?RDF11-CONCEPTS]].
 RDF is a technology for modeling graphs of statements. Each statement is a
@@ -4224,28 +4217,9 @@ single <i>subject→property→value</i> (also known as
 <i>entity→attribute→value</i>) relationship, which is referred to as a
 <a>claim</a> in this specification. JSON-LD is a technology that enables the
 expression of RDF using idiomatic JSON, enabling developers familiar with JSON
-to write applications that consume RDF as JSON. In general, subjects are
-expressed as JSON objects with each property and value of the subject as a JSON
-key and value, respectively. See
+to write applications that consume RDF as JSON. See
 <a data-cite="?JSON-LD11#relationship-to-rdf">Relationship of JSON-LD to RDF</a>
 for more details.
-          </p>
-        <p>
-JSON-LD is useful when extending the data model described in this
-specification. The concept of the
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
-is described in detail in the JSON-LD specification and its use is
-elaborated on in Section [[[#contexts]]] and
-Section [[[#extensibility]]].
-        </p>
-
-        <p>
-Multiple contexts MAY be used or combined to express any arbitrary information
-about [=verifiable credentials=] in idiomatic JSON. The base
-<a href="https://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a> for
-this specification is `https://www.w3.org/ns/credentials/v2`. The associated
-vocabulary document for the Verifiable Credentials Data Model is available at
-`https://www.w3.org/2018/credentials`.
         </p>
 
         <section>
