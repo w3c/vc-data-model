@@ -4436,8 +4436,8 @@ regardless of the media type used to communicate it.
 
           <p>
 At times, developers or systems might use lower precision media types to convey
-[=verifiable credentials=] or [=verifiable presentations=]. Some of the
-reasons for use of lower precision media types include:
+[=verifiable credentials=] or [=verifiable presentations=]. Some of the reasons
+for use of lower precision media types include:
           </p>
 
           <ul>
@@ -4461,11 +4461,10 @@ example, `application/json` instead of `application/vp`,
 Implementers are urged to not raise errors when it is possible to determine the
 intended media type from a payload, provided that the media type used is
 acceptable in the given protocol. For example, if an application only accepts
-payloads that conform to the rules associated with the `application/vc`
-media type, but the payload is tagged with `application/json` or
-`application/ld+json` instead, the application might perform the following
-steps to determine whether the payload also conforms to the higher precision
-media type:
+payloads that conform to the rules associated with the `application/vc` media
+type, but the payload is tagged with `application/json` or `application/ld+json`
+instead, the application might perform the following steps to determine whether
+the payload also conforms to the higher precision media type:
           </p>
 
           <ol>
@@ -4477,18 +4476,18 @@ Ensure that the first element of the `@context` property matches
 `https://www.w3.org/2018/credentials/v2`.
             </li>
             <li>
-Assume an `application/vp` media type if the JSON document contains a
-top-level `type` property containing a `VerifiablePresentation` element. Additional
+Assume an `application/vp` media type if the JSON document contains a top-level
+`type` property containing a `VerifiablePresentation` element. Additional
 subsequent checks are still expected to be performed (according to this
-specification) to ensure the payload expresses a conformant Verifiable
-Presentation.
+specification) to ensure the payload expresses a conformant
+[=verifiable presentation=].
             </li>
             <li>
-Assume an `application/vc` media type if the JSON document contains a
-top-level `type` property containing a `VerifiableCredential` element. Additional
+Assume an `application/vc` media type if the JSON document contains a top-level
+`type` property containing a `VerifiableCredential` element. Additional
 subsequent checks are still expected to be performed (according to this
-specification) to ensure the payload expresses a conformant Verifiable
-Credential.
+specification) to ensure the payload expresses a conformant
+[=verifiable credential=].
             </li>
           </ol>
 
@@ -4507,9 +4506,9 @@ system.
           <p>
 HTTP clients and servers use media types associated with [=verifiable
 credentials=] and [=verifiable presentations=] in accept headers and when
-indicating content types. Nonetheless, HTTP servers might ignore the accept
-header and return another content type, or return an error code such as
-<a data-cite="RFC7231#section-6.5.13">`415 Unsupported Media Type`</a>.
+indicating content types. Implementers are warned that HTTP servers might ignore
+the accept header and return another content type, or return an error code such
+as <a data-cite="RFC7231#section-6.5.13">`415 Unsupported Media Type`</a>.
           </p>
         </section>
       </section>
