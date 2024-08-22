@@ -4340,9 +4340,9 @@ application being developed.
         <section class="notoc">
           <h3>Lists and Arrays</h3>
           <p>
-Lists, arrays, and even lists of lists, are possible when using [[JSON-LD11]] 1.1.
-We encourage those who want RDF semantics in use
-cases requiring lists and arrays to follow the guidance on
+Lists, arrays, and even lists of lists, are possible when using [[[JSON-LD11]]].
+We encourage those who want RDF semantics in use cases requiring lists and
+arrays to follow the guidance on
 <a href="https://www.w3.org/TR/json-ld11/#lists">lists in JSON-LD 1.1</a>.
           </p>
           <p>
@@ -4351,14 +4351,15 @@ that array uses the `@list` keyword.
           </p>
           <p class="note"
              title="Array order might not matter">
-While it is possible to use this data model without any JSON-LD processing,
-those who do so and make use of arrays need to be aware that unless the above
-guidance is followed, the order of items in an array cannot be guaranteed in
-JSON-LD. This might lead to unexpected behavior.
+While it is possible to use this data model by performing [=type-specific
+credential processing=], those who do so and make use of arrays need to be aware
+that unless the above guidance is followed, the order of items in an array
+are not guaranteed in JSON-LD. This might lead to unexpected behavior.
           </p>
           <p>
-If JSON structure or ordering is important to your application,
-we recommend you mark such elements as `@json` via an `@context`.
+If JSON structure or ordering is important to your application, we recommend you
+mark such elements as `@json` via an `@context` that is specific to your
+use case. An example of such a declaration is shown below.
           </p>
           <pre class="example" title="A @context file that defines a matrix as an embedded JSON data structure">
 {
@@ -4371,6 +4372,14 @@ we recommend you mark such elements as `@json` via an `@context`.
     }
 }
           </pre>
+
+          <p>
+When the context shown above is used in the example below, by including the
+`https://website.example/matrix/v1` context in the `@context` property, the
+value in `credentialSubject.matrix` retains its JSON semantics; the exact order
+of all elements in the two dimensional matrix is preserved.
+          </p>
+
           <pre class="example" title="A verifiable credential with an embedded JSON data structure">
 {
   "@context": [
