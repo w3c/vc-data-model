@@ -4221,18 +4221,19 @@ to write applications that consume RDF as JSON. See
 for more details.
         </p>
 
-        <section>
-          <h3>Syntactic Sugar</h3>
+        <section class="notoc">
+          <h3>Notable JSON-LD Features</h3>
 
           <p>
-In general, the data model and syntaxes described in this document are
-designed such that developers can copy and paste examples to incorporate
-[=verifiable credentials=] into their software systems. The design goal of
-this approach is to provide a low barrier to entry while still ensuring global
-interoperability between a heterogeneous set of software systems. This section
-describes some of these approaches, which will likely go unnoticed by most
-developers, but whose details will be of interest to implementers. The most
-noteworthy syntactic sugars provided by [[!JSON-LD11]] are:
+In general, the data model and syntax described in this document enables
+developers to largely treat [=verifiable credentials=] as JSON documents,
+allowing them to copy and paste examples, with minor modification, into their
+software systems. The design goal of this approach is to provide a low barrier
+to entry while still ensuring global interoperability between a heterogeneous
+set of software systems. This section describes some of the JSON-LD features
+that are used to make this possible, which will likely go unnoticed by most
+developers, but whose details might be of interest to implementers. The most
+noteworthy features in [[[JSON-LD11]]] used by this specification include:
           </p>
 
           <ul>
@@ -4258,25 +4259,25 @@ credential=] to ensure the provenance of the information for each graph is
 preserved.
             </li>
             <li>
-The `@protected` properties feature of [[!JSON-LD11]] 1.1 is used to
-ensure that terms defined by this specification cannot be overridden. This means
-that as long as the same `@context` declaration is made at the top of
-a [=verifiable credential=] or [=verifiable presentation=],
-interoperability is guaranteed for all terms understood by users of the data
-model whether or not they use a [[!JSON-LD11]] processor.
+The `@protected` properties feature of [[[!JSON-LD11]]] is used to ensure that
+terms defined by this specification cannot be overridden. This means that as
+long as the same `@context` declaration is made at the top of a [=verifiable
+credential=] or [=verifiable presentation=], interoperability is guaranteed for
+all terms understood by users of the data model whether or not they use a
+[[[!JSON-LD11]]] processor.
             </li>
           </ul>
         </section>
 
-        <section>
+        <section class="notoc">
           <h3>Restrictions on JSON-LD</h3>
 
           <p>
-This specification restricts the usage of JSON-LD representations of
-the data model. JSON-LD <a
+In order to increase interoperability, this specification restricts the usage of
+JSON-LD representations of the data model. JSON-LD <a
 href="https://www.w3.org/TR/json-ld/#compacted-document-form">compacted document
 form</a> MUST be utilized for all representations of the data model using the
-`application/vc` base media type.
+`application/vc` or `application/vp` media type.
           </p>
 
           <p>
@@ -4316,7 +4317,7 @@ Use of full URLs for JSON-LD terms and types (for example,
 `https://www.w3.org/2018/credentials#VerifiableCredential` or
 `https://vocab.example/myvocab#SomeNewType`) instead of the short forms of
 any such values (for example, `VerifiableCredential` or `SomeNewType`) that are
-explicitly defined as JSON-LD `@context` mappings (for example,
+explicitly defined in JSON-LD `@context` mappings (for example, in
 `https://www.w3.org/ns/credentials/v2`)
             </li>
           </ul>
@@ -4336,7 +4337,7 @@ application being developed.
 
         </section>
 
-        <section>
+        <section class="notoc">
           <h3>Lists and Arrays</h3>
           <p>
 Lists, arrays, and even lists of lists, are possible when using [[JSON-LD11]] 1.1.
@@ -4421,7 +4422,7 @@ to protect the integrity of these media types. Do not assume security of content
 regardless of the media type used to communicate it.
         </p>
 
-        <section class="informative">
+        <section class="informative notoc">
           <h3>Media Type Precision</h3>
 
           <p>
