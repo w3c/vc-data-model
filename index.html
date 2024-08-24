@@ -42,9 +42,9 @@
 
         // extend the bibliography entries
         localBiblio: {
-          "VC-SPECS": {
-            title: "Verifiable Credential Specifications Directory",
-            href: "https://w3c.github.io/vc-specs-dir/",
+          "VC-EXTENSIONS": {
+            title: "Verifiable Credential Extensions",
+            href: "https://w3c.github.io/vc-extensions/",
             authors: [
               "Manu Sporny"
             ],
@@ -1178,8 +1178,8 @@ interoperability with other developers. The
 would then be replaced with the URL of a use-case-specific context. This
 process is covered in Section [[[#extensibility]]]. Alternatively,
 developers can reuse existing vocabulary and context files that happen to fit
-their use case. They can explore the [[[VC-SPECS]]] [[VC-SPECS]] for reusable
-resources.
+their use case. They can explore the [[[VC-EXTENSIONS]]]
+for reusable resources.
         </p>
 
       </section>
@@ -2169,11 +2169,10 @@ therefore out of scope for this specification.
         </p>
 
         <p>
-Defining the data model, formats, and protocols for status schemes is out of
-the scope of this specification. A Verifiable Credential Specifications Directory
-[[?VC-SPECS]] contains available status schemes
-for implementers who want to implement [=verifiable credential=]
-status checking.
+Defining the data model, formats, and protocols for status schemes is out of the
+scope of this specification. The [[[?VC-EXTENSIONS]]] document contains
+available status schemes for implementers who want to implement [=verifiable
+credential=] status checking.
         </p>
 
         <p>
@@ -2880,7 +2879,7 @@ use of Linked Data [[?LINKED-DATA]].
           <li>
 Support multiple types of cryptographic proof formats through the use of
 [[[VC-JOSE-COSE]]], [[[VC-DATA-INTEGRITY]]], and a variety of cryptographic
-suites listed in the [[[?VC-SPECS]]].
+suites listed in the [[[?VC-EXTENSIONS]]] document.
           </li>
           <li>
 Provide all of the extensibility mechanisms outlined above in a data format that
@@ -3016,9 +3015,9 @@ Implementers are advised to pay close attention to the extension points in this
 specification, such as in Sections [[[#status]]], [[[#data-schemas]]],
 [[[#securing-mechanisms]]], [[[#refreshing]]], [[[#terms-of-use]]], and
 [[[#evidence]]]. While this specification does not define concrete
-implementations for those extension points, the Verifiable Credential
-Specifications Directory [[?VC-SPECS]] provides an unofficial, curated list of
-extensions that developers can use from these extension points.
+implementations for those extension points, the [[[?VC-EXTENSIONS]]] document
+provides an unofficial, curated list of extensions that developers can use from
+these extension points.
         </p>
 
         <section class="notoc">
@@ -3933,9 +3932,9 @@ visual, auditory, haptic, or other format. The associated vocabulary URL MUST be
         <p>
 An unofficial list of specifications that are associated with the extension
 points defined in this specification, as well as the reserved extension points
-defined in this section, can be found in the Verifiable Credentials
-Specifications Directory [[?VC-SPECS]]. Items in the directory that refer to
-reserved extension points SHOULD be treated as experimental.
+defined in this section, can be found in the [[[?VC-EXTENSIONS]]]. Items in the
+directory that refer to reserved extension points SHOULD be treated as
+experimental.
         </p>
 
       </section>
@@ -4146,8 +4145,8 @@ embedded securing mechanism.
 
       <p>
 Securing mechanism specifications SHOULD register the securing mechanism in the
-<a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section
-of the [[[?VC-SPECS]]] [[?VC-SPECS]].
+<a data-cite="?VC-EXTENSIONS#securing-mechanisms">Securing Mechanisms</a>
+section of the [[[?VC-EXTENSIONS]]] document.
         </p>
 
         <p class="note"
@@ -4160,8 +4159,8 @@ securing mechanism options, which are:
 [[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]] and [[[VC-JOSE-COSE]]]
 [[VC-JOSE-COSE]]. Other securing mechanisms that are known to the community
 can be found in the
-<a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section
-of the [[[?VC-SPECS]]] [[?VC-SPECS]].
+<a data-cite="?VC-EXTENSIONS#securing-mechanisms">Securing Mechanisms</a>
+section of the [[[?VC-EXTENSIONS]]] document.
         </p>
 
       </section>
@@ -4694,10 +4693,10 @@ Ensure that the securing mechanism has properly protected the
             <ol class="algorithm">
              <li>
 Set the |verifyProof| function by using the |inputMediaType| and the
-<a data-cite="?VC-SPECS#securing-mechanisms">Securing Mechanisms</a> section of
-the [[[?VC-SPECS]]] [[?VC-SPECS]], or other mechanisms known to the
-implementation, to determine the cryptographic suite to use when verifying
-the securing mechanism. The |verifyProof| function MUST implement the interface
+<a data-cite="?VC-EXTENSIONS#securing-mechanisms">Securing Mechanisms</a>
+section of the [[[?VC-EXTENSIONS]]] document, or other mechanisms known to the
+implementation, to determine the cryptographic suite to use when verifying the
+securing mechanism. The |verifyProof| function MUST implement the interface
 described in [[[#securing-mechanism-specifications]]].
               </li>
               <li>
@@ -6013,18 +6012,18 @@ A [=verifier=] might wish to ensure that a [=verifiable presentation=] is
 not used more than a certain number of times. For example, a [=verifiable
 credential=] representing an event ticket might allow entry to multiple
 individuals if presented multiple times, undermining the purpose of the ticket
-from the perspective of its [=issuer=]. To prevent such replay attacks, 
+from the perspective of its [=issuer=]. To prevent such replay attacks,
 [=verifiers=] require [=holders=] to include additional security measures
 in their [=verifiable presentations=]. Examples include the following:
           <ul>
             <li>
-A <a href="https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication">challenge</a> 
+A <a href="https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication">challenge</a>
 provided by the [=verifier=], which the [=holder=] incorporates into
 a [=verifiable presentation=]. The [=verifier=] enforces challenge
 uniqueness to prevent replay attacks.
             </li>
             <li>
-A <a href="#validity-period">validity period</a>, limiting the window 
+A <a href="#validity-period">validity period</a>, limiting the window
 during which the [=verifiable presentation=] is valid.
             </li>
           </ul>
@@ -6473,7 +6472,7 @@ When a [=verifier=] requests one or more [=verifiable credentials=] from a
 [=holder=], they can specify the <a href="#types">type</a> of credential(s)
 that they would like to receive. Credential types, as well as validation schemas
 for each type and each of their [=claims=], are defined by specification authors
-and are published in places like the [[[VC-SPECS]]].
+and are published in places like the [[[VC-EXTENSIONS]]].
         </p>
 
         <p>
