@@ -85,3 +85,16 @@ bundle exec jekyll serve --watch --force_polling
 
 You should be able to see the page build errors in detail upon running the
 command above.
+
+### Local Development
+
+This spec is built with [`respec`](https://respec.org/).
+
+To develop locally, first install `respec`. After installing `respec`, you 
+can build the spec locally using the following command, run from the project's root:
+
+```sh
+respec --localhost index.html out.html --verbose -e
+```
+
+Next open up `out.html` in a web browser and review the document.
