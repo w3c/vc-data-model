@@ -90,7 +90,7 @@ command above.
 
 This spec is built with [`respec`](https://respec.org/).
 
-To develop locally, first install `respec`. After installing `respec`, you 
+To develop locally, first install `respec`; then, you 
 can build the spec locally using the following command, run from the project's root:
 
 ```sh
