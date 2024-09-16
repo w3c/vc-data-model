@@ -5813,11 +5813,7 @@ tooling that directly usable by their software to provide privacy guarantees.
 [=Verifiable credentials=] rely on a high degree of trust in [=issuers=].
 The degree to which a [=holder=] might take advantage of possible privacy
 protections often depends strongly on the support an [=issuer=] provides for
-such features. In many cases, privacy protections which make use of zero-knowledge
-proofs, data minimization techniques, bearer credentials, abstract claims, and
-protections against signature-based correlation require active support by the
-[=issuer=], who need to incorporate those capabilities into the [=verifiable
-credentials=] they issue.
+such features. In many cases, privacy protections which make use of zero-knowledge proofs, data minimization techniques, bearer credentials, abstract claims, and protections against signature-based correlation require active support by the [=issuer=], who need to incorporate those capabilities into the [=verifiable credentials=] they issue.
         </p>
         <p>
 It is crucial to note that [=holders=] not only depend on [=issuer=]
@@ -5858,38 +5854,24 @@ trusted entities without needing to disclose the exact [=issuer=].
       <h2>Security Considerations</h2>
 
       <p>
-There are a number of security considerations that [=issuers=],
-[=holders=], and [=verifiers=] should be aware of when processing data
-described by this specification. Ignoring or not understanding the implications
-of this section can result in security vulnerabilities.
+[=Issuers=], [=holders=], and [=verifiers=] should be aware of a number of security considerations when processing data described by this specification. Ignoring or not understanding the implications of this section can result in security vulnerabilities.
       </p>
 
       <p>
-While this section attempts to highlight a broad set of security considerations,
-it is not a complete list. Implementers are urged to seek the advice of security
-and cryptography professionals when implementing mission critical systems using
-the technology outlined in this specification.
+While this section highlights a broad set of security considerations, it is a partial list. Implementers of mission-critical systems using the technology described in this specification are strongly encouraged to consult security and cryptography professionals for comprehensive guidance.
       </p>
 
       <section class="informative">
         <h3>Cryptography Suites and Libraries</h3>
 
         <p>
-Some aspects of the data model described in this specification can be
-protected through the use of cryptography. It is important for implementers to
-understand the cryptography suites and libraries used to create and process
-[=credentials=] and [=presentations=]. Implementing and auditing
-cryptography systems generally requires substantial experience. Effective
+Cryptography can protect some aspects of the data model described in this specification. It is important for implementers to understand the cryptography suites and libraries used to create and process [=credentials=] and [=presentations=]. Implementing and auditing cryptography systems generally requires substantial experience. Effective
 <a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a> can also
 help remove bias from security reviews.
         </p>
 
         <p>
-Cryptography suites and libraries have a shelf life and eventually fall to
-new attacks and technology advances. Production quality systems need to take
-this into account and ensure mechanisms exist to easily and proactively upgrade
-expired or broken cryptography suites and libraries, and to invalidate
-and replace existing [=credentials=]. Regular monitoring is important to
+Cryptography suites and libraries have a shelf life and eventually succumb to new attacks and technological advances. Production quality systems need to take this into account and ensure mechanisms exist to easily and proactively upgrade expired or broken cryptography suites and libraries and invalidate and replace existing [=credentials=]. Regular monitoring is important to
 ensure the long term viability of systems processing [=credentials=].
         </p>
       </section>
@@ -5897,15 +5879,7 @@ ensure the long term viability of systems processing [=credentials=].
       <section class="informative">
         <h3>Key Management</h3>
         <p>
-The security of most digital signature algorithms, which are used to secure
-[=verifiable credentials=] and [=verifiable presentations=], is dependent
-on the quality and protection of their <em>private signing keys</em>. Guidance
-in the management of cryptographic keys is a large subject and the reader is
-referred to [[NIST-SP-800-57-Part-1]] for more extensive recommendations and
-discussion. As strongly recommended in both [[FIPS-186-5]] and
-[[NIST-SP-800-57-Part-1]], a private signing key is not to be used for multiple
-purposes, for example, a private signing key is not to be used for encryption
-as well as signing.
+The security of most digital signature algorithms, used to secure [=verifiable credentials=] and [=verifiable presentations=], depends on the quality and protection of their <em>private signing keys</em>. The management of cryptographic keys encompasses a vast and complex field. For comprehensive recommendations and in-depth discussion, readers are directed to [[NIST-SP-800-57-Part-1]]. As strongly recommended in both [[FIPS-186-5]] and [[NIST-SP-800-57-Part-1]], a private signing key is not to be used for multiple purposes; for example, a private signing key is not to be used for encryption as well as signing.
         </p>
         <p>
 [[NIST-SP-800-57-Part-1]] strongly advises that private signing keys and
@@ -5913,8 +5887,8 @@ as well as signing.
 a <em>cryptoperiod</em> is &quot;the time span during which a specific key is
 authorized for use by legitimate entities or the keys for a given system will
 remain in effect.&quot; [[NIST-SP-800-57-Part-1]] gives extensive
-guidance on cryptoperiods for different key types under different situations,
-and generally recommends a 1-3 year cryptoperiod for a private signing key.
+guidance on cryptoperiods for different key types under various situations
+and recommends a 1-3 year cryptoperiod for a private signing key.
         </p>
         <p>
 To deal with potential private key compromises, [[NIST-SP-800-57-Part-1]]
@@ -5929,8 +5903,8 @@ confirmation of the validity of all [=verification material=] before using it.
         <h3>Content Integrity Protection</h3>
 
         <p>
-[=Verifiable credentials=] often contain URLs to data that resides outside of
-the [=verifiable credential=] itself. Linked content that exists outside a
+[=Verifiable credentials=] often contain URLs to data that resides outside
+the [=verifiable credential=]. Linked content that exists outside a
 [=verifiable credential=], such as images, JSON-LD extension contexts,
 JSON Schemas, and other machine-readable data, are not protected by default
 against tampering because the data resides outside of the protection of the
@@ -5940,19 +5914,11 @@ against tampering because the data resides outside of the protection of the
 
         <p>
 This specification provides an optional mechanism, contained in Section
-[[[#integrity-of-related-resources]]], that is capable of ensuring content
-integrity for external resources. While this mechanism need not be utilized
-for external resources that do not affect the security of the
-[=verifiable credential=], it is strongly suggested for external resources
-that could result in a security issue if the external content changes.
+[[[#integrity-of-related-resources]]] for ensuring content integrity of external resources. This mechanism proves unnecessary for external resources that don't impact the [=verifiable credential=]'s security. However, its implementation becomes crucial for external resources where content changes could potentially introduce security vulnerabilities.
         </p>
 
         <p>
-Implementers are urged to understand how links to external machine-readable
-content that are not content-integrity protected could result in successful
-attacks against their applications, and utilize the content integrity
-protection mechanism provided by this specification if a security issue could
-occur if the external resource is changed.
+Implementers need to recognize the potential security risks associated with unprotected links to external machine-readable content. These vulnerabilities could lead to successful attacks on their applications. In cases where changes to external resources might compromise security, implementers would benefit from employing the content integrity protection mechanism outlined in this specification.
         </p>
 
       </section>
@@ -5961,12 +5927,7 @@ occur if the external resource is changed.
         <h3>Unsigned Claims</h3>
 
         <p>
-This specification allows [=credentials=] to be produced that are not secured by
-signatures or proofs of any kind. These classes of [=credential=] are often
-useful for intermediate storage or self-asserted information, which is
-analogous to filling out a form on a web page. Implementers ought to be aware
-that these [=credential=] types are not [=verifiable=] because the
-authorship either is not known or cannot be trusted.
+This specification enables the creation of [=credentials=] without signatures or proofs. These [=credential=] classes are often useful for intermediate storage or self-asserted information, analogous to filling out a form on a web page. Implementers ought to be aware that these [=credential=] types are not [=verifiable=] because the authorship either is unknown or cannot be trusted.
         </p>
       </section>
 
@@ -5978,9 +5939,7 @@ The data model does not inherently prevent
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">Man-in-the-Middle (MITM)</a>,
 <a href="https://en.wikipedia.org/wiki/Replay_attack">replay</a>, and
 <a href="https://en.wikipedia.org/wiki/Spoofing_attack">spoofing</a> attacks.
-Both online and offline use cases might be susceptible to these types of
-attacks, where an adversary intercepts, modifies, re-uses, and/or replicates the
-[=verifiable credential=] data during transmission or storage.
+Both online and offline use cases might be susceptible to these attacks, where an adversary intercepts, modifies, re-uses, and/or replicates the [=verifiable credential=] data during transmission or storage.
         </p>
         <h4>Man-in-the-Middle (MITM) Attack</h4>
 
@@ -5990,19 +5949,17 @@ A [=verifier=] might need to ensure it is the intended recipient of a
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">
 man-in-the-middle attack</a>. Some <a href="#securing-mechanisms">securing
 mechanisms</a>, like [[VC-JOSE-COSE]] or [[VC-DATA-INTEGRITY]], provide an
-option to specify the intended audience or domain of a [=presentation=],
-which can help reduce this risk.
+option to specify a [=presentation=]'s intended audience or domain, which can help reduce this risk.
         </p>
         <p>
-Alternate approaches such as token binding [[RFC8471]], which ties the request
+Alternate approaches, such as token binding [[RFC8471]], which ties the request
 for a [=verifiable presentation=] to the response, can secure the protocol.
 Any unsecured protocol is susceptible to man-in-the-middle attacks.
         </p>
         <h4>Replay Attack</h4>
 
         <p>
-A [=verifier=] might wish to ensure that a [=verifiable presentation=] is
-not used more than a certain number of times. For example, a [=verifiable
+A [=verifier=] might wish to limit the number of times that one can use a [=verifiable presentation=]. For example, a [=verifiable
 credential=] representing an event ticket might allow entry to multiple
 individuals if presented multiple times, undermining the purpose of the ticket
 from the perspective of its [=issuer=]. To prevent such replay attacks,
@@ -6024,7 +5981,7 @@ during which the [=verifiable presentation=] is valid.
         <h4>Spoofing Attack</h4>
 
         <p>
-A [=verifier=] has a vested interest in knowing that a [=holder=] is
+[=Verifiers=] have a vested interest in knowing that a [=holder=] is
 authorized to present the claims inside of a [=verifiable presentation=].
 While the data model outlines the structure and data elements necessary for a
 [=verifiable credential=], it does not include a mechanism to ascertain the
@@ -6040,25 +5997,15 @@ to enable proof of control.
 
         <p>
 It is considered best practice for [=issuers=] to atomize information in a
-[=credential=], or use a signature scheme that allows for selective
+[=credential=] or use a signature scheme that allows for selective
 disclosure. In the case of atomization, if it is not done securely by the
 [=issuer=], the [=holder=] might bundle together different
-[=credentials=] in a way that was not intended by the [=issuer=].
+[=credentials=] in a way that the [=issuer=] did not intend.
         </p>
 
         <p>
-For example, a university might issue two [=verifiable credentials=] to a
-person, each containing two [=properties=], which must be taken together
-to designate the "role" of that person in a given "department", such as "Staff
-Member" in the "Department of Computing", or "Post Graduate Student" in the
-"Department of Economics". If these [=verifiable credentials=] are atomized
-to put only one of these [=properties=] into each [=credential=] , then
-the university would issue four [=credentials=] to the person, each
-containing one of the following designations: "Staff Member", "Post Graduate
-Student", "Department of Computing", and "Department of Economics". The
-[=holder=] might then transfer the "Staff Member" and "Department of
-Economics" [=verifiable credentials=] to a [=verifier=], which together
-would comprise a false [=claim=].
+Consider a university issuing two [=verifiable credentials=] to an individual. Each [=credential=] contains two properties that, when combined, indicate the person's "role" in a specific "department." For instance, one [=credential=] pair might designate "Staff Member" in the "Department of Computing," while another could signify "Post Graduate Student" in the "Department of Economics."
+Atomizing these [=verifiable credentials=] results in the university issuing four separate [=credentials=] to the individual. Each [=credential=] contains a single designation: "Staff Member", "Post Graduate Student", "Department of Computing", or "Department of Economics". The [=holder=] might then transfer the "Staff Member" and "Department of Economics" [=verifiable credentials=] to a [=verifier=], which, together, would comprise a false [=claim=].
         </p>
       </section>
 
@@ -6066,16 +6013,11 @@ would comprise a false [=claim=].
         <h3>Highly Dynamic Information</h3>
 
         <p>
-When [=verifiable credentials=] are issued for highly dynamic information,
-implementers should ensure the validity periods are set appropriately. Validity
-periods longer than the timeframe where the [=verifiable credential=] is
-meant for use might create exploitable security vulnerabilities. Validity
+For [=verifiable credentials=] containing highly dynamic information, careful consideration of validity periods becomes crucial. Issuing [=verifiable credentials=] with validity periods extending beyond their intended use creates potential security vulnerabilities that malicious actors could exploit. Validity
 periods shorter than the timeframe where the information expressed by the
 [=verifiable credential=] is expected to be used creates a burden on
-[=holders=] and [=verifiers=]. It is therefore important to set validity
-periods for [=verifiable credentials=] that are appropriate to the use case
-and the expected lifetime for the information contained in the
-[=verifiable credential=].
+[=holders=] and [=verifiers=]. It is, therefore, important to set validity
+periods for [=verifiable credentials=] appropriate to the use case and the expected lifetime for the information contained in the [=verifiable credential=].
         </p>
       </section>
 
@@ -6083,10 +6025,7 @@ and the expected lifetime for the information contained in the
         <h3>Device Theft and Impersonation</h3>
 
         <p>
-When [=verifiable credentials=] are stored on a device and that
-device is lost or stolen, it might be possible for an attacker to gain access
-to systems using the victim's [=verifiable credentials=]. Ways to mitigate
-this type of attack include:
+Storing [=verifiable credentials=] on a device poses risks if the device is lost or stolen. An attacker gaining possession of such a device potentially acquires unauthorized access to systems using the victim's [=verifiable credentials=]. Ways to mitigate this type of attack include:
         </p>
 
         <ul>
@@ -6112,45 +6051,23 @@ All or any combination of the above.
 
         <p>
 Furthermore, instances of impersonation can manifest in various forms,
-including situations where an [=entity=] attempts to disavow their actions.
-Elevating the level of trust and security within the realm of [=verifiable
-credentials=] entails more than just averting impersonation; it involves the
-implementation of non-repudiation mechanisms. These mechanisms solidify an
-[=entity's=] responsibility for their actions or transactions, thereby
-reinforcing accountability and deterring malicious behaviors. The attainment of
-non-repudiation is a multifaceted endeavor, encompassing an array of techniques
-ranging from <a href="#securing-mechanisms">securing mechanisms</a>, proofs of
-possession, and authentication schemes in a variety of protocols designed to
-foster trust and reliability.
+including situations where an [=entity=] attempts to disavow its actions.
+Elevating trust and security within the realm of [=verifiable credentials=] entails more than just averting impersonation; it involves implementing non-repudiation mechanisms. These mechanisms solidify an [=entity's=] responsibility for its actions or transactions, reinforcing accountability and deterring malicious behaviors. The attainment of non-repudiation is a multifaceted endeavor, encompassing an array of techniques including <a href="#securing-mechanisms">securing mechanisms</a>, proofs of possession, and authentication schemes in various protocols designed to foster trust and reliability.
         </p>
       </section>
       <section class="informative">
         <h3>Acceptable Use</h3>
 
         <p>
-Ensuring that there is alignment between an [=entity's=] actions, such as
-[=presentation=], and the intended purpose of those actions, is of
-importance. It involves having the authorization to make use of [=verifiable
-credentials=] as well as using [=credentials=] in a manner that adheres to
-their designated scope(s) and objective(s). Two critical aspects that arise
-within this context are <i>Unauthorized Use</i> and <i>Inappropriate Use</i>.
+Ensuring alignment between an [=entity's=] actions, such as [=presentation=], and the intended purpose of those actions, is essential. It involves having the authorization to use [=verifiable credentials=] and using [=credentials=] in a manner that adheres to their designated scope(s) and objective(s). Two critical aspects in this context are <i>Unauthorized Use</i> and <i>Inappropriate Use</i>.
         </p>
         <h4>Unauthorized Use</h4>
         <p>
-Any attempt by entities to make use of [=verifiable credentials=] and
-[=verifiable presentations=] outside of their intended use can be seen as
-unauthorized. One class of unauthorized use is a <i>confidentiality
-violation</i>. Consider an example where a [=holder=] shares a [=verifiable
-presentation=] with a [=verifier=] to establish their age and residency
-status. If the [=verifier=] then proceeds to exploit the [=holder's=] data
-without proper consent, such as by selling the data to a data broker, that
-would constitute an unauthorized use of the data, violating an expectation of
-privacy that the [=holder=] might have in the transaction.
+Entities utilizing [=verifiable credentials=] and [=verifiable presentations=] beyond their intended purpose engage in unauthorized activity. One class of unauthorized use is a <i>confidentiality violation</i>. Consider an example where a [=holder=] shares a [=verifiable presentation=] with a [=verifier=] to establish their age and residency status. If the [=verifier=] then proceeds to exploit the [=holder's=] datawithout proper consent, such as by selling the data to a data broker, that would constitute an unauthorized use of the data, violating an expectation of privacy that the [=holder=] might have in the transaction.
         </p>
         <p>
-Similarly, an [=issuer=] could make use of a
-<a href="#terms-of-use">termsOfUse</a> property to stipulate how and when a
-credential might be used. A [=holder=] using credentials outside of the
+Similarly, an [=issuer=] can employ a
+<a href="#terms-of-use">termsOfUse</a> property to specify how and when one might use a [=credential=]. A [=holder=] using [=credentials=] outside of the
 scopes defined in the `termsOfUse` would be considered unauthorized
 use.
         </p>
@@ -6164,15 +6081,12 @@ enforce authorized use of their data after [=presentation=].
 While valid cryptographic signatures and successful status checks signify the
 reliability of [=credentials=], they do not signify that all
 [=credentials=] are interchangeable for all contexts. It is crucial that
-[=verifiers=] also <a href="#validation">validate</a> any claims which
-might be relevant, considering the source and nature of the claim as well as
-privilege or service for which the credential is presented.
+[=verifiers=] also <a href="#validation">validate</a> any relevant claims, considering the source and nature of the claim alongside the privilege or service for which the [=holder=] presents the credential.
         </p>
         <p>
 For instance, in scenarios where a certified medical diagnosis is required, a
 self-asserted [=credential=] carrying the necessary data might not suffice
-because it lacks validity from an authoritative medical source. To ensure the
-propriety of [=credential=] use, stakeholders are urged to assess the
+because it lacks validity from an authoritative medical source. To ensure proper [=credential=] use, stakeholders need to assess the
 <a href="#dfn-credential">credential's</a> relevance and authority within the
 specific context of their intended application.
         </p>
@@ -6182,25 +6096,18 @@ specific context of their intended application.
         <h3>Code Injection</h3>
 
         <p>
-It is possible for data in [=verifiable credentials=] to include
-executable code or scripting languages. Authors of verifiable credentials are
-advised to avoid doing so, unless necessary, and the risks have been mitigated
-to the extent possible.
+Data in [=verifiable credentials=] can include injectable code or code from scripting languages. Authors of verifiable credentials benefit from avoiding such inclusions unless necessary and only after mitigating associated risks to the fullest extent possible.
+
         </p>
 
         <p>
-For example, when a single natural language string contains multiple languages
-or annotations, the contents of the string might require additional structure or
-markup in order to be presented correctly. It is possible to use markup
-languages, such as HTML, to label spans of text in different languages or to
-supply string-internal markup needed for the proper display of [=bidirectional
-text=]. It is also possible to use the `rdf:HTML` datatype to encode such values
-accurately in JSON-LD.
+For example, a single natural language string containing multiple languages or annotations often requires additional structure or markup for correct presentation. Markup languages, such as HTML, can label text spans in different languages or supply string-internal markup needed to display [=bidirectional
+text=] properly. It is also possible to use the `rdf:HTML` datatype to encode such values accurately in JSON-LD.
         </p>
 
         <p>
 Despite the ability to encode information as HTML, implementers are strongly
-discouraged from doing so, for the following reasons:
+discouraged from doing so for the following reasons:
         </p>
 
         <ul>
@@ -6219,9 +6126,7 @@ tag that an attacker injected at some point during the data production process.
 If implementers feel they need to use HTML, or other markup languages capable of
 containing executable scripts, to address a specific use case, they are advised
 to analyze how an attacker could use the markup to mount injection attacks
-against a consumer of the markup, and then deploy mitigations against the
-identified attacks, such as running the HTML rendering engine in a sandbox with
-no ability to access the network.
+against a consumer of the markup. This analysis should be followed by the proactive deployment of mitigations against the identified attacks, such as running the HTML rendering engine in a sandbox with no ability to access the network.
         </p>
       </section>
 
