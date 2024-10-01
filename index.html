@@ -3205,12 +3205,13 @@ SHOULD NOT be included as an object in the `relatedResource` array.
         </p>
 
         <p>
-Specification authors that write algorithms that fetch a resource based on the
-`id` of an object inside a [=conforming document=] need to consider whether
-that resource's content is vital to the validity of that document. If it is, the
-specification MUST produce a validation error unless the resource matches the
-expected media type and cryptographic digest.
+A [=conforming verifier implementation=] that makes use of a resource based on
+the `id` of an object inside a [=conforming document=] with a corresponding
+cryptographic digest MUST check the digest against the retrieved resource. If
+the digest of the retrieved resource does not match the one provided by the
+[=issuer=], the [=conforming verifier implementation=] MUST produce an error.
         </p>
+
         <p>
 Implementers are urged to consult appropriate sources, such as the
 <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf">
