@@ -11,7 +11,13 @@ The generation of the final files is done via a github action (see `/.github/wor
 - `vocabulary.yml`: the core vocabulary specification. _Any change on the vocabulary must be made by modifying this file;_ see the separate [description](https://github.com/w3c/yml2vocab) of the underlying YAML format.
 - `vocabulary.drawio`: the vocabulary diagram in the [draw.io](https://www.drawio.com/) format. _Any change on the vocabulary diagram must be made by modifying this file._ 
   
-    The corresponding application can be downloaded and used directly, or added to Google Docs. Note that, due to some bug in the software the exported SVG file must be ran through a [post-processing script](https://github.com/iherman/drawio-svg/), to be downloaded and run separately.
+    The corresponding application can be downloaded and used directly, or added to Google Docs. For the exact options to be used for the SVG export, see the screen dump below. Note that, due to some bug in the software the exported SVG file must be ran through a [post-processing script](https://github.com/iherman/drawio-svg/), to be downloaded and run separately.
 - `vocabulary.svg`: the SVG file for the vocabulary, generated from `vocabulary.drawio`.
 - `template.html`: an HTML template file used by the script; it is the skeleton of the final HTML format based on [ReSpec](https://respec.org/docs/). If the file is modified, care should be taken not to change the core structure and the various, possibly empty, HTML elements with `@id` values. The script fills those elements with content when generating the `vocabulary.html` file (and removes any sections that remain empty after processing).
 
+
+### Exporting SVG from drawio
+
+See the screen dump below:
+
+<img src="drawio_screendump.png" width="30%">
