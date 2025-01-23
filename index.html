@@ -11,14 +11,14 @@
     <script src='https://www.w3.org/Tools/respec/respec-w3c' class='remove'></script>
     <script src="./common.js" class="remove"></script>
     <script class="remove"
-      src="https://cdn.jsdelivr.net/gh/digitalbazaar/respec-vc@3.3.4/dist/main.js"></script>
+      src="https://cdn.jsdelivr.net/gh/digitalbazaar/respec-vc@3.3.5/dist/main.js"></script>
 
     <script class="remove">
       var respecConfig = {
         group: "vc",
 
         // specification status (for example, WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus: "CRD",
+        specStatus: "CR",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName: "vc-data-model-2.0",
@@ -27,8 +27,8 @@
         //subtitle: "Expressing information with verifiable provenance",
 
         // if you wish the publication date to be other than today, set this
-        //publishDate: "2024-01-23",
-        crEnd: "2024-03-23",
+        publishDate: "2024-12-19",
+        crEnd: "2024-01-19",
         //prEnd: "2019-10-01",
         implementationReportURI: "https://w3c.github.io/vc-data-model-2.0-test-suite/",
         //errata: "https://w3c.github.io/vc-data-model/errata.html",
@@ -288,6 +288,14 @@ the <a href="https://w3c.github.io/vc-data-model-2.0-test-suite/">
 implementation report</a> for more details.
       </p>
 
+      <p class="atrisk issue"
+        title="Features with less than two independent implementations">
+Any feature with less than two independent implementations in the
+<a href="https://w3c.github.io/vc-data-model-2.0-test-suite/">
+implementation report</a> is an "at risk" feature and might be
+removed before the transition to W3C Proposed Recommendation.
+      </p>
+
       <p>
 Comments regarding this specification are welcome at any time.
 Please file issues directly on
@@ -305,30 +313,24 @@ if that is not possible.
       <h2>Introduction</h2>
 
       <p>
-[=Credentials=] are integral to our daily lives; driver's licenses confirm
-our capability to operate motor vehicles, university degrees assert our level
-of education, and government-issued passports permit travel between countries.
-This specification provides a mechanism to express these sorts of
-[=credentials=] on the Web in cryptographically secure, privacy-respecting,
-and machine-verifiable way. These [=credentials=] provide
-benefits to us when used in the physical world, but their use on the Web
-continues to be elusive.
+[=Credentials=] are integral to our daily lives: driver's licenses confirm
+our capability to operate motor vehicles; university degrees assert our level
+of education; and government-issued passports attest to our citizenship when
+traveling between countries. This specification provides a mechanism for
+expressing these sorts of [=credentials=] on the Web in a way that is
+cryptographically secure, privacy respecting, and machine verifiable. These
+[=credentials=] provide benefits to us when used in the physical world, but
+their use on the Web continues to be elusive.
       </p>
 
       <p>
-It is currently difficult to express education qualifications, healthcare
-data, financial account details, and other third-party [=verified=]
-machine-readable personal information on the Web. The challenge of expressing
-digital [=credentials=] on the Web hinders our ability to receive the same
-benefits physical [=credentials=] provide us in the real world.
+It is currently difficult to express educational qualifications, healthcare
+data, financial account details, and other third-party-[=verified=]
+personal information in a machine readable way on the Web. The challenge of
+expressing digital [=credentials=] on the Web hinders our ability to receive
+the same benefits from them that physical [=credentials=] provide in the
+real world.
       </p>
-
-      <p>
-This specification standardizes a way of expressing [=credentials=] on the
-Web, ensuring they are cryptographically secure, privacy-respecting, and
-machine-verifiable.
-      </p>
-
       <p>
 For those unfamiliar with the concepts related to
 [=verifiable credentials=], the following sections provide an overview of:
@@ -342,7 +344,7 @@ The components that constitute a [=verifiable credential=]
 The components that constitute a [=verifiable presentation=]
         </li>
         <li>
-An ecosystem where one [=verifiable credentials=]
+An ecosystem where [=verifiable credentials=]
 and [=verifiable presentations=] are useful
         </li>
       </ul>
@@ -374,12 +376,12 @@ Dutch passport, an American driving license, or a health insurance card)
           <li>
 Information related to specific properties asserted by
 the issuing authority about the [=subject=] (for example, nationality,
-the classes of vehicle entitled to drive, or date of birth)
+date of birth, or the classes of vehicle they're qualified to drive)
           </li>
           <li>
-Evidence demonstrating how the [=subject=] met the qualifications required
-for issuing the [=credential=] (for example, a measurement, proof of
-citizenship, or test result)
+Evidence by which a [=subject=] was demonstrated to have satisfied the
+qualifications required for issuance of the [=credential=] (for example,
+a measurement, proof of citizenship, or test result)
           </li>
           <li>
 Information related to constraints on the credential (for example,
@@ -389,8 +391,8 @@ validity period, or terms of use).
 
         <p>
 A [=verifiable credential=] can represent all the same information that a
-physical [=credential=] represents. The addition of technologies, such as
-digital signatures, makes [=verifiable credentials=] more tamper-evident and
+physical [=credential=] represents. Adding technologies such as
+digital signatures can make [=verifiable credentials=] more tamper-evident and
 trustworthy than their physical counterparts.
         </p>
 
@@ -427,8 +429,8 @@ or [=presentation=] as being able to be [=verified=] by a [=verifier=],
 as defined in this document. Verifiability of a credential does not imply
 the truth of [=claims=] encoded therein. Instead, upon establishing the
 authenticity and currency of a [=verifiable credential=] or
-[=verifiable presentation=], a [=verifier=] validates the included claims using their own
-business rules before relying on them. Such reliance only occurs after
+[=verifiable presentation=], a [=verifier=] validates the included [=claims=] using
+their own business rules before relying on them. Such reliance only occurs after
 evaluating the issuer, the proof, the subject, and the claims against one or
 more verifier policies.
         </p>
@@ -484,7 +486,7 @@ correlatable identifiers for [=subjects=]. Some registries, such as ones for
 UUIDs and [=verification material=], might just act as namespaces for
 identifiers. Examples of verifiable data registries include trusted databases,
 decentralized databases, government ID databases, and distributed ledgers. Often,
-more than one type of verifiable data registry utilized in an ecosystem.
+more than one type of verifiable data registry used in an ecosystem.
           </dd>
         </dl>
 
@@ -496,7 +498,8 @@ more than one type of verifiable data registry utilized in an ecosystem.
                three parties can use information from a logical
                verifiable data registry">
           <figcaption style="text-align: center;">
-            The roles and information flows forming the basis for this specification.
+            The roles and information flows forming the basis for this
+            specification.
           </figcaption>
         </figure>
 
@@ -532,7 +535,7 @@ Subject-Holder Relationships</a> section in the [[[VC-IMP-GUIDE]]].
 
         <p>
 For a deeper exploration of the [=verifiable credentials=] ecosystem and
-a concrete lifecycle example, please refer to [[[VC-USE-CASES]]] [[?VC-USE-CASES]].
+a concrete lifecycle example, please refer to [[[VC-OVERVIEW]]] [[?VC-OVERVIEW]].
         </p>
       </section>
 
@@ -960,8 +963,9 @@ arrow, to a separate rectangle, containing a single text field:
 'DtEhU3ljbEg8L38VWAfUA...'.
           ">
           <figcaption style="text-align: center;">
-            Information graphs associated with a basic verifiable credential, using an [=enveloping proof=]
-            based on [[[VC-JOSE-COSE]]] [[?VC-JOSE-COSE]].
+            Information graphs associated with a basic verifiable credential,
+            using an [=enveloping proof=] based on [[[VC-JOSE-COSE]]]
+            [[?VC-JOSE-COSE]].
           </figcaption>
         </figure>
 
@@ -1305,7 +1309,7 @@ Subsequent items in the [=ordered set=] MUST be composed of any combination of
           </dd>
         </dl>
 
-        <pre class="example nohighlight" title="Usage of the @context property">
+        <pre class="example nohighlight" title="Use of the @context property">
 {
   <span class="highlight">"@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -1380,10 +1384,11 @@ There are also other types of access and correlation mechanisms documented
 in Section [[[#privacy-considerations]]] that create privacy concerns.
 Where privacy is a vital consideration, it is permissible to omit the
 `id` [=property=]. Some use cases do not need or explicitly need to omit,
-the `id` [=property=]. Similarly, special attention is to be given to the choice between
-publicly resolvable URLs and other forms of identifiers. Publicly resolvable URLs can
-facilitate ease of verification and interoperability, yet they might also inadvertently
-grant access to potentially sensitive information if not used judiciously.
+the `id` [=property=]. Similarly, special attention is to be given to the choice
+between publicly resolvable URLs and other forms of identifiers. Publicly
+resolvable URLs can facilitate ease of verification and interoperability, yet
+they might also inadvertently grant access to potentially sensitive information
+if not used judiciously.
         </p>
         <dl>
           <dt><dfn class="export">id</dfn></dt>
@@ -1395,7 +1400,7 @@ in a document containing machine-readable information about the `id`.
           </dd>
         </dl>
 
-        <pre class="example nohighlight vc" title="Usage of the id property"
+        <pre class="example nohighlight vc" title="Use of the id property"
           data-vc-vm="https://university.example/issuers/565049#key-1">
 {
   "@context": [
@@ -1466,7 +1471,7 @@ one value is provided, the order does not matter.
           </dd>
         </dl>
 
-        <pre class="example nohighlight vc" title="Usage of the type property"
+        <pre class="example nohighlight vc" title="Use of the type property"
           data-vc-vm="https://university.example/issuers/565049#key-1">
 {
   "@context": [
@@ -1636,7 +1641,7 @@ definition for the `BitstringStatusList` type can be found at
 <a href="https://www.w3.org/ns/credentials/status/#BitstringStatusList">
 https://www.w3.org/ns/credentials/status/#BitstringStatusList</a>. It is also
 suggested that a
-<a href="https://www.w3.org/ns/credentials/status/index.jsonld">
+<a href="https://www.w3.org/ns/credentials/status/v1">
 machine-readable version</a> be provided through HTTP content negotiation at
 the same URL.
         </p>
@@ -1687,7 +1692,7 @@ without having to look through the entirety of the [=claims=].
         </dl>
 
         <pre class="example nohighlight vc"
-          title="Usage of the name and description property"
+          title="Use of the name and description properties"
           data-vc-vm="https://university.example/issuers/565049#key-1">
 {
   "@context": [
@@ -1727,15 +1732,15 @@ respectively. See
            title="@direction is not required for single-language strings">
 The `@direction` property in the examples below is not required
 for the associated single-language strings, as their default directions are the
-same as those set by the `@direction` value. We include the `@direction` property here
-for clarity of demonstration and to make copy+paste+edit deliver functional
-results. Implementers are encouraged to read the section on
+same as those set by the `@direction` value. We include the `@direction`
+property here for clarity of demonstration and to make copy+paste+edit deliver
+functional results. Implementers are encouraged to read the section on
 <a data-cite="JSON-LD11#string-internationalization">String Internationalization</a>
 in the [[[JSON-LD11]]] specification.
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of the name and description property">
+          title="Use of the name and description properties">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -1838,7 +1843,7 @@ in a controller document, as defined in [[CONTROLLER-DOCUMENT]], about the
           </dd>
         </dl>
 
-        <pre class="example nohighlight vc" title="Usage of issuer property"
+        <pre class="example nohighlight vc" title="Use of the issuer property"
           data-vc-vm="https://university.example/issuers/14#key-1">
 {
   "@context": [
@@ -1865,7 +1870,7 @@ associating an object with the issuer property:
         </p>
 
         <pre class="example nohighlight vc"
-          title="Usage of issuer expanded property"
+          title="Expanded use of the issuer property"
           data-vc-vm="did:example:76e12ec712ebc6f1c221ebfeb1f#key-1">
 {
   "@context": [
@@ -1924,7 +1929,7 @@ Section [[[#identifiers]]].
         </dl>
 
         <pre class="example nohighlight vc"
-          title="Usage of the credentialSubject property"
+          title="Use of the credentialSubject property"
           data-vc-vm="https://university.example/issuers/565049#key-1">
 {
   "@context": [
@@ -2005,8 +2010,8 @@ If present, the value of the `validFrom` [=property=] MUST be a
 the past. Note that this value represents the earliest point in time at which
 the information associated with the `credentialSubject`
 [=property=] becomes valid. If a `validUntil` value also exists, the
-`validFrom` value MUST express a point in time that is temporally the same or earlier
-than the point in time expressed by the `validUntil` value.
+`validFrom` value MUST express a point in time that is temporally the same or
+earlier than the point in time expressed by the `validUntil` value.
           </dd>
           <dt><var id="defn-validUntil">validUntil</var></dt>
           <dd>
@@ -2023,7 +2028,7 @@ point in time expressed by the `validFrom` value.
         </dl>
 
         <pre class="example nohighlight vc"
-          title="Usage of validFrom and validUntil property"
+          title="Use of the validFrom and validUntil properties"
           data-vc-vm="https://university.example/issuers/14#key-1">
 {
   "@context": [
@@ -2097,7 +2102,7 @@ external document that notes whether the [=credential=] is suspended or revoked.
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of the status property">
+          title="Use of the status property">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2130,7 +2135,7 @@ with it, such as whether it has been revoked or suspended.
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of multiple entries for the status property">
+          title="Use of multiple entries for the status property">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2256,7 +2261,7 @@ integrity protection mechanism. The `credentialSchema`
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of the credentialSchema property to perform JSON schema validation">
+          title="Using the credentialSchema property to perform JSON schema validation">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2324,7 +2329,7 @@ in Section [[[#securing-mechanism-specifications]]].
         </p>
 
         <pre class="example nohighlight"
-          title="A verifiable credential utilizing an embedded proof">
+          title="A verifiable credential using an embedded proof">
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
@@ -2662,11 +2667,10 @@ All of the normative requirements defined for [=verifiable credentials=]
 apply to self-asserted [=verifiable credentials=].
           </p>
           <p>
-When a self-asserted [=verifiable credential=] is secured using the same
-mechanism as the [=verifiable presentation=], the value of the
-`issuer` [=property=] of the [=verifiable credential=]
-MUST be identical to the `holder` [=property=] of the
-[=verifiable presentation=].
+A [=verifiable credential=] in a [=verifiable presentation=] is considered
+self-asserted when the value of the `issuer` [=property=] of the
+[=verifiable credential=] is identical to the value of the `holder`
+[=property=] of the [=verifiable presentation=].
           </p>
           <p>
 The example below shows a [=verifiable presentation=] that embeds a
@@ -2683,7 +2687,10 @@ mechanism as the [=verifiable presentation=].
   "type": ["VerifiablePresentation", "ExamplePresentation"],
   "holder": "did:example:12345678",
   "verifiableCredential": [{
-    "@context": "https://www.w3.org/ns/credentials/v2",
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://www.w3.org/ns/credentials/examples/v2"
+    ],
     "type": ["VerifiableCredential", "ExampleFoodPreferenceCredential"],
     "issuer": "did:example:12345678",
     "credentialSubject": {
@@ -2711,7 +2718,10 @@ self-asserted [=verifiable credential=] holding [=claims=] about the
   <span class="highlight">"id": "urn:uuid:313801ba-24b7-11ee-be02-ff560265cf9b"</span>,
   "holder": "did:example:12345678",
   "verifiableCredential": [{
-    "@context": "https://www.w3.org/ns/credentials/v2",
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://www.w3.org/ns/credentials/examples/v2"
+    ],
     "type": ["VerifiableCredential", "ExampleAssertCredential"],
     "issuer": "did:example:12345678",
     "credentialSubject": {
@@ -2779,7 +2789,7 @@ it makes in [=credentials=] about the [=subject=], and to revoke [=credentials=]
 quickly if and when they no longer stand by those [=claims=].
           </li>
           <li>
-The [=holder=] might trust the [=issuer=]'s [=claims=] because the [=holder=]
+The [=holder=] might trust the [=issuer's=] [=claims=] because the [=holder=]
 has a pre-existing trust relationship with the [=issuer=]. For example, an
 employer might provide an employee with an employment [=verifiable credential=],
 or a government might issue an electronic passport to a citizen.
@@ -3194,12 +3204,14 @@ SHOULD NOT be included as an object in the `relatedResource` array.
         </p>
 
         <p>
-Specification authors that write algorithms that fetch a resource based on the
-`id` of an object inside a [=conforming document=] need to consider whether
-that resource's content is vital to the validity of that document. If it is, the
-specification MUST produce a validation error unless the resource matches the
-expected media type and cryptographic digest.
+A [=conforming verifier implementation=] that makes use of a resource based on
+the `id` of a `relatedResource` object inside a [=conforming document=] with a
+corresponding cryptographic digest appearing in a `relatedResource` object value
+MUST compute the digest of the retrieved resource. If the digest provided by the
+[=issuer=] does not match the digest computed for the retrieved resource, the
+[=conforming verifier implementation=] MUST produce an error.
         </p>
+
         <p>
 Implementers are urged to consult appropriate sources, such as the
 <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf">
@@ -3215,26 +3227,34 @@ An example of a related resource integrity object referencing JSON-LD contexts.
         </p>
 
         <pre class="example nohighlight"
-          title="Usage of the relatedResource and digestSRI property">
+          title="Use of the digestSRI property (base64-encoded SHA2-384)">
 "relatedResource": [{
   "id": "https://www.w3.org/ns/credentials/v2",
   "digestSRI":
-    "sha384-lHKDHh0msc6pRx8PhDOMkNtSI8bOfsp4giNbUrw71nXXLf13nTqNJoRp3Nx+ArVK"
+    "<span class='vc-hash'
+           data-hash-url='https://www.w3.org/ns/credentials/v2'
+           data-hash-format='sri sha2-384'></span>"
 },{
   "id": "https://www.w3.org/ns/credentials/examples/v2",
   "digestSRI":
-    "sha384-zNNbQTWCSUSi0bbz7dbua+RcENv7C6FvlmYJ1Y+I727HsPOHdzwELMYO9Mz68M26"
+    "<span class='vc-hash'
+           data-hash-url='https://www.w3.org/ns/credentials/examples/v2'
+           data-hash-format='sri sha2-384'></span>"
 }]
         </pre>
 
         <pre class="example nohighlight"
-          title="Usage of the relatedResource and digestMultibase property">
+          title="Use of the digestMultibase property (base64-url-nopad-encoded SHA2-256)">
 "relatedResource": [{
   "id": "https://www.w3.org/ns/credentials/v2",
-  "digestMultibase": "uEres1usWcWCmW7uolIW2uA0CjQ8iRV14eGaZStJL73Vz"
+  "digestMultibase": "<span class='vc-hash'
+    data-hash-url='https://www.w3.org/ns/credentials/v2'
+    data-hash-format='multihash sha2-256'></span>"
 },{
   "id": "https://www.w3.org/ns/credentials/examples/v2",
-  "digestMultibase": "uElc5P7xp1u-5ubXcnLa5iAsJRDYKv-Lq9FnJ5YzyJ518"
+  "digestMultibase": "<span class='vc-hash'
+    data-hash-url='https://www.w3.org/ns/credentials/examples/v2'
+    data-hash-format='multihash sha2-256'></span>"
 }]
         </pre>
 
@@ -3283,17 +3303,16 @@ definition.
         </dl>
 
         <pre class="example nohighlight"
-          title="Usage of the refreshService property by an issuer">
+          title="Use of the refreshService property by an issuer">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v1",
-    "https://w3id.org/age/v1",
-    "https://w3id.org/security/suites/ed25519-2020/v1"
+    "https://www.w3.org/ns/credentials/v2",
+    "https://w3id.org/age/v1"
   ],
   "type": ["VerifiableCredential", "AgeVerificationCredential"],
   "issuer": "did:key:z6MksFxi8wnHkNq4zgEskSZF45SuWQ4HndWSAVYRRGe9qDks",
-  "issuanceDate": "2024-04-03T00:00:00.000Z",
-  "expirationDate": "2024-12-15T00:00:00.000Z",
+  "validFrom": "2024-04-03T00:00:00.000Z",
+  "validUntil": "2024-12-15T00:00:00.000Z",
   "name": "Age Verification Credential",
   "credentialSubject": {
     "overAge": 21
@@ -3328,7 +3347,7 @@ thereby bypassing the [=holder=].
         <h3>Terms of Use</h3>
 
         <p>
-Terms of use can be utilized by an [=issuer=] or a [=holder=] to
+Terms of use can be used by an [=issuer=] or a [=holder=] to
 communicate the terms under which a [=verifiable credential=] or
 [=verifiable presentation=] was issued. The [=issuer=] places their terms
 of use inside the [=verifiable credential=]. The [=holder=] places their
@@ -3377,7 +3396,7 @@ by the specific `termsOfUse` [=type=] definition.
         </dl>
 
         <pre class="example nohighlight"
-          title="Usage of the termsOfUse property by an issuer">
+          title="Use of the termsOfUse property by an issuer">
 {
   {
     "@context": [
@@ -3435,9 +3454,9 @@ framework, with a specific link to the policy.
         <p>
 This feature is expected to be used by government-issued [=verifiable
 credentials=] to instruct digital wallets to limit their use to similar
-government organizations in an attempt to protect citizens from unexpected usage
+government organizations in an attempt to protect citizens from unexpected use
 of sensitive data. Similarly, some [=verifiable credentials=] issued by private
-industry are expected to limit usage to within departments inside the
+industry are expected to limit use to within departments inside the
 organization, or during business hours. Implementers are urged to read more
 about this evolving feature in the appropriate section of the Verifiable
 Credentials Implementation Guidelines [[?VC-IMP-GUIDE]] document.
@@ -3547,7 +3566,7 @@ video of the [=subject=] of the [=credential=] demonstrating the achievement.
         <p class="note"
            title="Evidence has a different purpose from securing mechanisms">
 The `evidence` [=property=] provides information that is different from and
-information to the securing mechanism utilized. The `evidence` [=property=] is
+information to the securing mechanism used. The `evidence` [=property=] is
 used to express supporting information, such as documentary evidence, related to
 the [=verifiable credential=]. In contrast, the securing mechanism is used to
 express machine-verifiable mathematical proofs related to the authenticity of
@@ -3671,7 +3690,7 @@ shown below.
              title="Verifiable credential using the Data Integrity BBS Cryptosuite with a Base Proof">
 {
   "@context": [
-    "https://www.w3.org/2018/credentials/v2",
+    "https://www.w3.org/ns/credentials/v2",
     "https://w3id.org/citizenship/v3"
   ],
   "type": ["VerifiableCredential", "PermanentResidentCard"],
@@ -3717,11 +3736,11 @@ particular pieces of information from the original [=verifiable credential=].
         <pre class="example nohighlight"
              title="Verifiable presentation using the Data Integrity BBS Cryptosuite with a derived credential and proof">
 {
-  @context: "https://www.w3.org/2018/credentials/v2"
+  @context: "https://www.w3.org/ns/credentials/v2"
   type: "VerifiablePresentation",
   verifiableCredential: {
     "@context": [
-      "https://www.w3.org/2018/credentials/v2",
+      "https://www.w3.org/ns/credentials/v2",
       "https://w3id.org/citizenship/v3"
     ],
     "type": ["VerifiableCredential", "PermanentResidentCard"],
@@ -3803,7 +3822,7 @@ values that are affected by Daylight Saving/Summer Time.
         <p>
 This specification attempts to increase the number of universally recognized
 combinations of dates and times, and reduce the potential for
-misinterpretation of time values, by utilizing the
+misinterpretation of time values, by using the
 `dateTimeStamp` construction first established by the [<a
 data-cite="XMLSCHEMA11-2#dateTimeStamp">XMLSCHEMA11-2</a>] specification. In
 order to reduce misinterpretations between different time zones, all time values
@@ -3996,7 +4015,7 @@ algorithm to the data model in this specification results in
 a [=conforming document=].
           </li>
           <li>
-SHOULD ensure that all semantics utilized in the transformed
+SHOULD ensure that all semantics used in the transformed
 [=conforming document=] follow best practices for Linked Data. See
 Section [[[#getting-started]]], Section
 [[[#extensibility]]], and Linked Data Best Practices [[?LD-BP]]
@@ -4007,7 +4026,7 @@ for additional guidance.
         <p class="note" title="What constitutes a verifiable credential?">
 Readers are advised that a digital credential is only considered compatible with
 the W3C Verifiable Credentials ecosystem if it is a [=conforming document=]
-and it utilizes at least one securing mechanism, as described by their
+and it uses at least one securing mechanism, as described by their
 respective requirements in this specification. While some communities might call
 some digital credential formats that are not [=conforming documents=]
 "verifiable credentials", doing so does NOT make that digital credential
@@ -4115,28 +4134,28 @@ can achieve this protection are discussed in Section
 
         <p>
 A securing mechanism specification that creates a new type of [=embedded proof=]
-MUST specify a [=property=] that relates the [=verifiable credential=] or [=verifiable
-presentation=] to a [=proof graph=].
+MUST specify a [=property=] that relates the [=verifiable credential=] or
+[=verifiable presentation=] to a [=proof graph=].
 The requirements on the securing mechanism are as follow:
         </p>
         <ul>
           <li>
-The securing mechanism MUST define all terms used by the [=proof graph=]. For example,
-the mechanism could define vocabulary specifications and `@context` files
-in the same manner as they are utilized by this specification.
+The securing mechanism MUST define all terms used by the [=proof graph=]. For
+example, the mechanism could define vocabulary specifications and `@context`
+files in the same manner as they are used by this specification.
           </li>
           <li>
-The securing mechanism MUST secure all graphs in the [=verifiable credential=] or the [=verifiable
-presentation=], except for any [=proof graphs=] securing the [=verifiable credential=]
-or the [=verifiable presentation=] itself.
+The securing mechanism MUST secure all graphs in the [=verifiable credential=]
+or the [=verifiable presentation=], except for any [=proof graphs=] securing
+the [=verifiable credential=] or the [=verifiable presentation=] itself.
           </li>
 
         </ul>
 
       <p class="note">
-The last requirement means that the securing mechanism secures the [=default graph=] and,
-for [=verifiable presentations=], each [=verifiable credential=] of the presentation, together with
-their respective [=proof graphs=].
+The last requirement means that the securing mechanism secures the [=default
+graph=] and, for [=verifiable presentations=], each [=verifiable credential=]
+of the presentation, together with their respective [=proof graphs=].
 See also [[[#info-graph-vp]]] or [[[#info-graph-vp-mult-creds]]].
       </p>
 
@@ -4276,10 +4295,10 @@ all terms understood by users of the data model whether or not they use a
           <h3>Restrictions on JSON-LD</h3>
 
           <p>
-In order to increase interoperability, this specification restricts the usage of
+In order to increase interoperability, this specification restricts the use of
 JSON-LD representations of the data model. JSON-LD <a
 href="https://www.w3.org/TR/json-ld/#compacted-document-form">compacted document
-form</a> MUST be utilized for all representations of the data model using the
+form</a> MUST be used for all representations of the data model using the
 `application/vc` or `application/vp` media type.
           </p>
 
@@ -4290,11 +4309,11 @@ might not perform generalized JSON-LD processing. Authors of [=conforming
 documents=] are advised that interoperability might be reduced if JSON-LD
 keywords in the `@context` value are used to globally affect values in a
 [=verifiable credential=] or [=verifiable presentation=], such as by
-setting either or both of the `@base` or `@vocab` keywords. For example, setting these values
-might trigger a failure in a mis-implemented JSON Schema test of the `@context`
-value in an implementation that is performing [=type-specific credential
-processing=] and not expecting the `@base` and/or `@vocab` value to be
-expressed in the `@context` value.
+setting either or both of the `@base` or `@vocab` keywords. For example, setting
+these values might trigger a failure in a mis-implemented JSON Schema test of
+the `@context` value in an implementation that is performing [=type-specific
+credential processing=] and not expecting the `@base` and/or `@vocab` value to
+be expressed in the `@context` value.
           </p>
 
           <p>
@@ -4329,9 +4348,9 @@ explicitly defined in JSON-LD `@context` mappings (for example, in
 While this specification cautions against the use of `@vocab`, there are
 legitimate uses of the feature, such as to ease experimentation, development,
 and localized deployment. If an application developer wants to use `@vocab` in
-production, which is advised against to reduce term collisions and leverage the benefits
-of semantic interoperability, they are urged to understand that any use of `@vocab` will
-disable reporting of "undefined term" errors, and
+production, which is advised against to reduce term collisions and leverage the
+benefits of semantic interoperability, they are urged to understand that any use
+of `@vocab` will disable reporting of "undefined term" errors, and
 later use(s) will override any previous `@vocab` declaration(s). Different values
 of `@vocab` can change the semantics of the information contained in the document,
 so it is important to understand whether and how these changes will affect the
@@ -4476,7 +4495,7 @@ Parse the payload as a JSON document.
             </li>
             <li>
 Ensure that the first element of the `@context` property matches
-`https://www.w3.org/2018/credentials/v2`.
+`https://www.w3.org/ns/credentials/v2`.
             </li>
             <li>
 Assume an `application/vp` media type if the JSON document contains a top-level
@@ -4548,7 +4567,7 @@ with any other JSON-formatted data.
           </p>
 
           <p>
-<dfn>General JSON-LD processing</dfn> is defined as a mechanism that utilizes a
+<dfn>General JSON-LD processing</dfn> is defined as a mechanism that uses a
 JSON-LD software library to process a [=conforming document=] by performing
 various <a data-cite="?JSON-LD11#forms-of-json-ld">transformations</a>.
 <dfn>Type-specific credential processing</dfn> is defined as a lighter-weight
@@ -4631,7 +4650,7 @@ exchange happens is explicitly stated for both processing mechanisms by using
       <p>
 This section contains algorithms that can be used by implementations to perform
 common operations, such as [=verification=]. Conformance requirements phrased as
-algorithms utilize normative concepts from the [[[INFRA]]] [[INFRA]]. See the
+algorithms use normative concepts from the [[[INFRA]]] [[INFRA]]. See the
 section on <a data-cite="INFRA#algorithm-conformance">Algorithm Conformance</a>
 in the [[[INFRA]]] for more guidance on implementation requirements.
       </p>
@@ -4704,7 +4723,7 @@ described in [[[#securing-mechanism-specifications]]].
               <li>
 If the |verifyProof| function expects a [=byte sequence=], provide
 |inputMediaType| and |inputData| to the algorithm. If the |verifyProof| function
-expects a [=map=], provide |inputMediaType| and the result of [=parsing JSON
+expects a [=map=], provide |inputMediaType| and the result of [=parse JSON
 bytes to an Infra value=] given |inputData|. Set |result| to the result of the
 call to the |verifyProof| function. If the call was successful, |result| will
 contain the |status|, |document|, |mediaType|, |controller|,
@@ -4758,12 +4777,6 @@ properties:
 The `type` [=property=] MUST be present and its value MUST be a [=URL=]
 identifying the type of problem.
           </dd>
-          <dt>code</dt>
-          <dd>
-The `code` [=property=] is OPTIONAL. If present, its value MUST be an integer
-that identifies the type of the problem. Integer codes are useful in systems
-that only provide integer return values.
-          </dd>
           <dt>title</dt>
           <dd>
 The `title` [=property=] MUST be present and its value SHOULD provide a short
@@ -4777,21 +4790,18 @@ longer human-readable string for the problem.
         </dl>
 
         <p>
-The following problem description types and codes are defined by this
-specification:
+The following problem description types are defined by this specification:
         </p>
 
         <dl>
           <dt id="PARSING_ERROR">
 https://www.w3.org/TR/vc-data-model#PARSING_ERROR
-(-64)
           </dt>
           <dd>
 There was an error while parsing input.
           </dd>
           <dt id="CRYPTOGRAPHIC_SECURITY_ERROR">
 https://www.w3.org/TR/vc-data-model#CRYPTOGRAPHIC_SECURITY_ERROR
-(-65)
           </dt>
           <dd>
 The securing mechanism for the document has detected a
@@ -4801,7 +4811,6 @@ potential tampering detected. See Section
           </dd>
           <dt id="MALFORMED_VALUE_ERROR">
 https://www.w3.org/TR/vc-data-model#MALFORMED_VALUE_ERROR
-(-66)
           </dt>
           <dd>
 The value associated with a particular [=property=] is malformed. The
@@ -4811,7 +4820,6 @@ in the [=ProblemDetails=] object. See Section
           </dd>
           <dt id="RANGE_ERROR">
 https://www.w3.org/TR/vc-data-model#RANGE_ERROR
-(-67)
           </dt>
           <dd>
 A provided value is outside of the expected range of an associated value,
@@ -4822,7 +4830,7 @@ of the array.
 
         <p>
 Implementations MAY extend the [=ProblemDetails=] object by specifying
-additional types, codes, or properties. See the
+additional types or properties. See the
 <a data-cite="RFC9457#name-extension-members">Extension Member</a> section
 in [[RFC9457]] for further guidance on using this mechanism.
         </p>
@@ -4846,8 +4854,8 @@ environments.
         <p>
 It is important to recognize there is a spectrum of privacy ranging from
 pseudonymous to strongly identified. Depending on the use case, people have
-different comfort levels about what information they are willing to provide
-and what information can be derived from what is provided.
+different comfort levels about the information they are willing to provide
+and the information that can be derived from it.
         </p>
 
         <figure>
@@ -4866,29 +4874,29 @@ Privacy spectrum ranging from pseudonymous to fully identified.
         </figure>
 
         <p>
-For example, most people probably want to remain anonymous when purchasing
-alcohol because the regulatory check required is solely based on whether a
-person is above a specific age. Alternatively, for medical prescriptions
-written by a doctor for a patient, the pharmacy fulfilling the prescription is
-required to more strongly identify the medical professional and the patient.
-Therefore there is not one approach to privacy that works for all use cases.
 Privacy solutions are use case specific.
+For example, many people would prefer to remain anonymous when purchasing
+alcohol because the regulation is only to verify whether a purchaser is
+above a specific age. In contrast, when filling prescriptions written by
+a medical professional for a patient, the pharmacy is legally required
+to more strongly identify both the prescriber and the patient. No single
+approach to privacy works for all use cases.
         </p>
 
         <p class="note"
            title="Proof of age might be insufficient for some use cases">
-Even for those wanting to remain anonymous when purchasing alcohol, photo
-identification might still be required to provide appropriate assurance to the
-merchant. The merchant might not need to know your name or other details (other
-than that you are over a specific age), but in many cases just proof of age
-might still be insufficient to meet regulations.
+Even those who want to remain anonymous when purchasing alcohol might need
+to provide photo identification to appropriately assure the merchant. The
+merchant might not need to know your name or any details other than that
+you are over a specific age, but in many cases, simple proof of age might
+be insufficient to meet regulations.
         </p>
 
         <p>
 The Verifiable Credentials Data Model strives to support the full privacy
 spectrum and does not take philosophical positions on the correct level of
-anonymity for any specific transaction. The following sections provide guidance
-for implementers who want to avoid specific scenarios that are hostile to
+anonymity for any specific transaction. The following sections will guide
+implementers who want to avoid specific scenarios that are hostile to
 privacy.
         </p>
       </section>
@@ -4911,8 +4919,8 @@ Examples include the following:
           <li>
 An [=issuer's=]
 <a href="https://www.w3.org/TR/UAAG20/#def-user-agent">user agent</a>
-(issuer software), such as an online education platform, is expected to only
-issue [=verifiable credentials=] to individuals that the issuer asserts
+(issuer software), such as an online education platform, is expected to
+issue [=verifiable credentials=] only to individuals that the issuer asserts
 have completed their educational program.
           </li>
           <li>
@@ -4927,38 +4935,36 @@ the platform by such individuals.
 A [=holder's=]
 <a href="https://www.w3.org/TR/UAAG20/#def-user-agent">user agent</a>
 (holder software), such as a digital wallet, is expected to only divulge
-information to a [=verifier=] when the [=holder=] has consented to
-the release of that information.
+information to a [=verifier=] when the [=holder=] consents to
+releasing that information.
           </li>
         </ul>
 
         <p>
 The examples above are not exhaustive, and the users in these roles can also
-expect a variety of other things from the software they use to achieve their
-goals. In short, the software is expected to operate in the best interests
-of the user, and a violation of that expectation is a violation of trust
-that will result in the software being replaced by something that does not
-violate that trust. Implementers are strongly advised to write software that
-does not violate the trust of the users it will serve. Implementers are
-also advised to provide auditing features in the software that they create
-such that the users, or trusted third parties, can check whether the software
-is indeed behaving in their best interests.
+expect various other things from the software they use to achieve their
+goals. In short, the user expects the software to operate in the user's best
+interests; any violations of this expectation breach trust and can lead to the
+software's replacement with a more trustworthy alternative. Implementers are
+strongly encouraged to create software that preserves user trust. Additionally,
+they are encouraged to include auditing features that enable users or trusted
+third parties to verify that the software is operating in alignment with their
+best interests.
         </p>
 
         <p>
-Readers are advised that some software, such as a website that provides services
+Readers are advised that some software, like a website providing services
 to a single [=verifier=] and multiple [=holders=], might operate as a
 <a href="https://www.w3.org/TR/UAAG20/#def-user-agent">user agent</a> to both
-roles, but might not always be able to simultaneously operate in the best
-interests of all parties. For example, if that website detects an attempt at
-fraudulent [=verifiable credential=] use among multiple [=holders=], it
-might report such an anomaly to the [=verifier=], which might be considered
-to not be in the best interest of the [=holder=] committing the violation,
-but would be in the best interest of the [=verifier=] as well as any
-[=holders=] <em>not</em> committing such a violation. It is strongly advised
-that when software operates in this manner, that it is made clear in whose best
-interest the software is operating through mechanisms such as a website usage
-policy.
+roles but might not always be able to operate simultaneously in the best
+interests of all parties. For example, suppose a website detects an attempt at
+fraudulent [=verifiable credential=] use among multiple [=holders=]. In that
+case, it might report such an anomaly to the [=verifier=], which might be
+considered not to be in all [=holders'=] best interest, but would be in the
+best interest of the [=verifier=] and any [=holders=] <em>not</em> committing
+such a violation. It is imperative that when software operates in this manner,
+it is made clear in whose best interest(s) the software is operating, through
+mechanisms such as a website use policy.
         </p>
       </section>
 
@@ -4967,12 +4973,12 @@ policy.
 
         <p>
 Data associated with [=verifiable credentials=] stored in the
-`credential.credentialSubject` property is susceptible to privacy violations when
-shared with [=verifiers=]. Personally identifying data, such as a
-government-issued identifier, shipping address, and full name, can be easily
+`credential.credentialSubject` property is susceptible to privacy violations
+when shared with [=verifiers=]. Personally identifying data, such as a
+government-issued identifier, shipping address, or full name, can be easily
 used to determine, track, and correlate an [=entity=]. Even information that
-does not seem to be personally identifiable, such as the combination of a
-birthdate and a postal code, has very powerful correlation and de-anonymization
+does not seem personally identifiable, such as the combination of a
+birthdate and a postal code, has powerful correlation and de-anonymization
 capabilities.
         </p>
 
@@ -4980,30 +4986,30 @@ capabilities.
 Implementers of software used by [=holders=] are strongly advised to warn
 [=holders=] when they share data with these kinds of characteristics.
 [=Issuers=] are strongly advised to provide privacy-protecting [=verifiable
-credentials=] when possible. For example, issuing `ageOver` [=verifiable
+credentials=] when possible — for example, by issuing `ageOver` [=verifiable
 credentials=] instead of `dateOfBirth` [=verifiable credentials=] for use when a
-[=verifier=] wants to determine whether an [=entity=] is over the age of 18.
+[=verifier=] wants to determine whether an [=entity=] is at least 18 years of age.
         </p>
 
         <p>
 Because a [=verifiable credential=] often contains personally identifiable
 information (PII), implementers are strongly advised to use mechanisms while
-storing and transporting [=verifiable credentials=] that protect the data
-from those who should not access it. Mechanisms that could be considered include
+storing and transporting [=verifiable credentials=] that protect the data from
+those who ought not have access to it. Mechanisms that could be considered include
 Transport Layer Security (TLS) or other means of encrypting the data while in
-transit, as well as encryption or data access control mechanisms to protect
-the data in a [=verifiable credential=] while at rest.
+transit, as well as encryption or access control mechanisms to protect
+the data in a [=verifiable credential=] when at rest.
         </p>
 
         <p>
-In general, individuals are advised to assume that a [=verifiable credential=],
+Generally, individuals are advised to assume that a [=verifiable credential=],
 like most physical credentials, will leak personally identifiable information
-when shared. To combat this leakage, the [=verifiable credential=], and the
-securing mechanism, need to be specifically designed to avoid correlation.
-[=Verifiable credentials=] that are specifically designed to prevent the leakage
-of personally identifiable information do exist. Individuals and implementers
-are urged to prefer these credential types over ones that are not designed
-to protect personally identifiable information.
+when shared. To combat such leakage, [=verifiable credentials=] and their
+securing mechanisms need to be carefully designed to prevent correlation.
+[=Verifiable credentials=] specifically designed to protect against leakage
+of personally identifiable information are available. Individuals and
+implementers are encouraged to choose these credential types over those not
+designed to protect personally identifiable information.
         </p>
       </section>
 
@@ -5014,37 +5020,37 @@ to protect personally identifiable information.
 [=Verifiable credentials=] might contain long-lived identifiers that could be
 used to correlate individuals. These identifiers include [=subject=]
 identifiers, email addresses, government-issued identifiers, organization-issued
-identifiers, addresses, healthcare vitals, and many other sorts of long-lived
-identifiers. Implementers of software used by [=holders=] are advised to strive
-to detect identifiers in [=verifiable credentials=] containing information that
-could be used to correlate individuals and warn [=holders=] when they are
-getting ready to share this information. The rest of this section elaborates
-on guidance related to the use of long-lived identifiers.
+identifiers, addresses, healthcare vitals, and many other long-lived
+identifiers. Implementers of software for [=holders=] are encouraged to
+detect identifiers in [=verifiable credentials=] that could be used
+to correlate individuals and to warn [=holders=] before they share this
+information. The rest of this section elaborates on guidance related to
+using long-lived identifiers.
         </p>
 
         <p>
 [=Subjects=] of [=verifiable credentials=] are identified using the `id`
-property, as defined in Section [[[#identifiers]]], and are used in places such
+property, as defined in Section [[[#identifiers]]] and used in places such
 as the `credentialSubject.id` property. The identifiers used to identify a
-[=subject=] create a greater risk of correlation when the identifiers are
+[=subject=] create a greater correlation risk when the identifiers are
 long-lived or used across more than one web domain. Other types of identifiers
 that fall into this category are email addresses, government-issued identifiers,
 and organization-issued identifiers.
         </p>
 
         <p>
-Similarly, disclosing the [=credential=] identifier (such as in
-[[[#example-usage-of-the-id-property]]]) leads to situations where multiple
+Similarly, disclosing the [=credential=] identifier (as in
+[[[#example-use-of-the-id-property]]]) can lead to situations where multiple
 [=verifiers=], or an [=issuer=] and a [=verifier=], can collude to correlate the
 [=holder=].
         </p>
 
         <p>
-If [=holders=] want to reduce correlation, they are advised to use [=verifiable
-credentials=] from [=issuers=] that allow selectively disclosing correlating
+[=Holders=] aiming to reduce correlation are encouraged to use [=verifiable
+credentials=] from [=issuers=] that support selectively disclosing correlating
 identifiers in a [=verifiable presentation=]. Such approaches expect the
 [=holder=] to generate the identifier and might even allow hiding the identifier
-from the [=issuer=] through the use of techniques like
+from the [=issuer=] through techniques like
 <a href="https://en.wikipedia.org/wiki/Blind_signature">blind signatures</a>,
 while still keeping the identifier embedded and signed in the [=verifiable
 credential=].
@@ -5052,14 +5058,14 @@ credential=].
 
         <p>
 [=Securing mechanism=] specification authors are advised to avoid enabling
-identifier-based correlation by designing their technologies, when possible,
-to avoid the use of correlating identifiers that cannot be selectively disclosed.
+identifier-based correlation by designing their technologies to avoid the use
+of correlating identifiers that cannot be selectively disclosed.
         </p>
 
         <p>
-If strong anti-correlation properties are a requirement in a [=verifiable
-credentials=] system, it is strongly advised that identifiers are one or more
-of the following:
+If strong anti-correlation properties are required in a [=verifiable
+credentials=] system, it is essential that identifiers meet one or more
+of the following criteria:
         </p>
 
         <ul>
@@ -5073,7 +5079,7 @@ Bound to a single origin
 Single-use
           </li>
           <li>
-Not used at all, but instead replaced by short-lived, single-use bearer tokens.
+Not used and instead replaced by short-lived, single-use bearer tokens.
           </li>
         </ul>
       </section>
@@ -5083,43 +5089,41 @@ Not used at all, but instead replaced by short-lived, single-use bearer tokens.
 
         <p>
 The contents of a [=verifiable credential=] are secured using a [=securing
-mechanism=]. Values used to represent the securing mechanism create a greater
-risk of correlation when the same values are used across more than one session
-or domain and the value does not change. Examples of these sorts of values
-include the following:
+mechanism=]. Values representing the securing mechanism pose a greater
+risk of correlation when they remain the same across multiple sessions
+or domains. Examples of these include the following values:
         </p>
 
         <ul>
           <li>
-the binary value of the digital signature,
+the binary value of the digital signature
           </li>
           <li>
-timestamp information associated with when the digital signature was created,
-and
+timestamp information associated with the creation of the digital signature
           </li>
           <li>
-cryptographic material, such as a public key identifier, associated with the
-digital signature.
+cryptographic material associated with the digital signature, such as
+a public key identifier
           </li>
         </ul>
 
         <p>
-If strong anti-correlation properties are required, it is advised that
-[=issuers=] produce [=verifiable credentials=] where the
-signature values and metadata can be regenerated for each
-[=verifiable presentation=] using technologies that support unlinkable
-disclosure, such as the [[[?VC-DI-BBS]]] specification. It is advised that, if
-possible, [=verifiers=] prefer [=verifiable presentations=] that use this
-technology in order to enhance the privacy for [=holders=] and [=subjects=].
+When strong anti-correlation properties are required, [=issuers=] are encouraged
+to produce [=verifiable credentials=] where signature values and metadata can
+be regenerated for each [=verifiable presentation=]. This can be achieved using
+technologies that support unlinkable disclosure, such as the [[[?VC-DI-BBS]]]
+specification. When possible, [=verifiers=] are encouraged to prefer
+[=verifiable presentations=] that use this technology in order to enhance
+privacy for [=holders=] and [=subjects=].
         </p>
 
         <p class="note" title="Unlinkability is not a complete solution">
-Even when using unlinkable signatures, information might still be
-contained in a [=verifiable credential=] that defeats the anti-correlation
-properties of the cryptography used. See Sections
-[[[#personally-identifiable-information]]], [[[#identifier-based-correlation]]],
-[[[#metadata-based-correlation]]], [[[#correlation-during-validation]]],
-and most of the other subsections of Section [[[#privacy-considerations]]].
+Even with unlinkable signatures, a [=verifiable credential=] might contain
+other information that undermines the anti-correlation properties of the
+cryptography used. See Sections [[[#personally-identifiable-information]]],
+[[[#identifier-based-correlation]]], [[[#metadata-based-correlation]]],
+[[[#correlation-during-validation]]], and most other subsections of
+Section [[[#privacy-considerations]]].
         </p>
       </section>
 
@@ -5127,25 +5131,24 @@ and most of the other subsections of Section [[[#privacy-considerations]]].
         <h3>Metadata-based Correlation</h3>
 
         <p>
-The use of different extension points described in Section
-[[[#basic-concepts]]] and Section [[[#advanced-concepts]]]
-can serve as an unintentional or unwanted correlation mechanism if the number
-of [=issuers=] using a specific extension type or combination of types
-is relatively small.
-For example, the use of certain types of cryptography that are only used by
-particular nation states, or revocation formats used by specific jurisdictions,
-or credential types used by specific localities, can be used as a mechanism
-to reduce the pseudonymity that a [=holder=] might expect to have when
-performing a selective disclosure of information to a [=verifier=].
+Different extension points, such as those described in Section
+[[[#basic-concepts]]] and Section [[[#advanced-concepts]]], can
+unintentionally or undesirably serve as a correlation mechanism, if relatively
+few [=issuers=] use a specific extension type or combination of types.
+For example, using certain cryptographic methods unique to particular
+nation-states, revocation formats specific to certain jurisdictions,
+or credential types employed by specific localities, can serve as mechanisms
+that reduce the pseudonymity a [=holder=] might expect when selectively
+disclosing information to a [=verifier=].
         </p>
 
         <p>
-[=Issuers=] are urged to reduce metadata-based correlation possibilities when
-issuing [=verifiable credentials=] that are expected to be used in a
-pseudonymous fashion by reducing the types of extensions that can be used to
-narrow the pseudonymity of the [=holder=]. Using credential types,
-extensions, and technology profiles that have global use is preferred over ones
-that have national use, which are preferred over ones that only have local use.
+[=Issuers=] are encouraged to minimize metadata-based correlation risks when
+issuing [=verifiable credentials=] intended for pseudonymous use by limiting
+the types of extensions that could reduce the [=holder's=] pseudonymity.
+Credential types, extensions, and technology profiles with global adoption are
+most preferable, followed by those with national use; those with only local
+use are least preferable.
         </p>
       </section>
 
@@ -5153,36 +5156,36 @@ that have national use, which are preferred over ones that only have local use.
         <h3>Device Tracking and Fingerprinting</h3>
 
         <p>
-There are mechanisms external to [=verifiable credentials=] that are used to
-track and correlate individuals on the Internet and the Web. Some of these
+There are mechanisms external to [=verifiable credentials=] that
+track and correlate individuals on the Internet and the Web. These
 mechanisms include Internet protocol (IP) address tracking, web browser
 fingerprinting, evercookies, advertising network trackers, mobile network
 position information, and in-application Global Positioning System (GPS) APIs.
 Using [=verifiable credentials=] cannot prevent the use of these other
-tracking technologies. Also, when these technologies are used in conjunction
-with [=verifiable credentials=], new correlatable information could be
-discovered. For example, a birthday coupled with a GPS position can be used to
-strongly correlate an individual across multiple websites.
+tracking technologies; rather, using these technologies alongside
+[=verifiable credentials=] can reveal new correlatable information. For
+instance, a birthdate combined with a GPS position can strongly correlate
+an individual across multiple websites.
         </p>
 
         <p>
-It is recommended that privacy-respecting systems prevent the use of these
-other tracking technologies when [=verifiable credentials=] are being used.
-In some cases, tracking technologies might need to be disabled on devices that
+Privacy-respecting systems ought to aim to prevent the combination of other
+tracking technologies with [=verifiable credentials=]. In some instances,
+tracking technologies might need to be disabled on devices that
 transmit [=verifiable credentials=] on behalf of a [=holder=].
         </p>
 
         <p>
-The Oblivious HTTP protocol [[?RFC9458]] is one mechanism that implementers
-might consider using when fetching external resources that are associated with a
+The Oblivious HTTP protocol [[?RFC9458]] is one mechanism implementers
+might consider using when fetching external resources associated with a
 [=verifiable credential=] or a [=verifiable presentation=].
 Oblivious HTTP allows a client to make multiple requests to an origin server
 without that server being able to link those requests to that client or even to
 identify those requests as having come from a single client, while placing only
-limited trust in the nodes used to forward the messages. Hence, Oblivious HTTP
-is one privacy-preserving mechanism that can be used to reduce the possibility
-of device tracking and fingerprinting. Concrete examples for how Oblivious HTTP
-can benefit ecosystem participants are included below.
+limited trust in the nodes used to forward the messages. Oblivious HTTP
+is one privacy-preserving mechanism that can reduce the possibility
+of device tracking and fingerprinting. Below are some concrete examples of
+ways that Oblivious HTTP can benefit ecosystem participants.
         </p>
 
         <ul>
@@ -5191,12 +5194,12 @@ A [=holder=] using a digital wallet can reduce the chances that they
 will be tracked by a 3rd party when accessing external links within a
 [=verifiable credential=] stored in their digital wallet.
 For example, a digital wallet might fetch and render linked images, or
-check the validity of a [=verifiable credential=] by fetching an
-externally linked revocation list.
+it might check the validity of a [=verifiable credential=] by fetching
+an externally linked revocation list.
           </li>
           <li>
-A [=verifier=] can reduce signalling to an [=issuer=] that the
-[=verifier=] has received a specific [=verifiable credential=].
+A [=verifier=] can reduce its likelihood of signaling to an [=issuer=]
+that the [=verifier=] has received a specific [=verifiable credential=].
 For example, a [=verifier=] might fetch an externally linked revocation
 list while performing status checks on a [=verifiable credential=].
           </li>
@@ -5207,23 +5210,23 @@ list while performing status checks on a [=verifiable credential=].
         <h3>Favor Abstract Claims</h3>
 
         <p>
-To enable recipients of [=verifiable credentials=] to use them in a variety of
-circumstances without revealing more PII than necessary for transactions,
-[=issuers=] are advised to limit the information published in a [=verifiable
-credential=] to a minimal set needed for the expected purposes. One way to avoid
+[=Issuers=] are encouraged to limit the information included in a [=verifiable
+credential=] to the smallest set required for the intended purposes, so as to
+allow recipients to use them in various situations without disclosing more
+personally identifiable information (PII) than necessary. One way to avoid
 placing PII in a [=verifiable credential=] is to use an abstract [=property=]
-that meets the needs of [=verifiers=] without providing overly-specific
+that meets the needs of [=verifiers=] without providing overly specific
 information about a [=subject=].
         </p>
         <p>
 For example, this document uses the `ageOver` [=property=]
-instead of a specific birthdate, which represents more sensitive PII. If
-retailers in a specific market commonly require purchasers to be older than a
-certain age, an [=issuer=] trusted in that market might choose to offer
-[=verifiable credentials=] claiming that [=subjects=] have met that
-requirement instead of offering [=verifiable credentials=] containing
-[=claims=] about the customers' birthdays. This enables individual customers to
-make purchases without revealing more PII than necessary.
+instead of a specific birthdate, which would represent more sensitive PII. If
+retailers in a particular market commonly require purchasers to be older than
+a certain age, an [=issuer=] trusted in that market might choose to offer
+[=verifiable credentials=] that claim that [=subjects=] have met that
+requirement rather than offering [=verifiable credentials=] that contain
+[=claims=] about the customers' birthdays. This practice enables individual
+customers to make purchases without disclosing more PII than necessary.
         </p>
       </section>
 
@@ -5233,18 +5236,18 @@ make purchases without revealing more PII than necessary.
         <p>
 Privacy violations occur when information divulged in one context leaks into
 another. One accepted best practice for preventing such a violation is for
-[=verifiers=] to limit the information requested, and received, to the absolute
-minimum necessary for a particular transaction. This data minimization approach
-is required by regulations in multiple jurisdictions, including the Health
-Insurance Portability and Accountability Act (HIPAA) in the United States and
-the General Data Protection Regulation (GDPR) in the European Union.
+[=verifiers=] to limit the information requested and received, to the absolute
+minimum necessary for a particular transaction. Regulations in multiple
+jurisdictions, including the Health Insurance Portability and Accountability
+Act (HIPAA) in the United States and the General Data Protection Regulation
+(GDPR) in the European Union, mandate this data minimization approach.
         </p>
         <p>
 With [=verifiable credentials=], data minimization for [=issuers=] means
 limiting the content of a [=verifiable credential=] to the minimum required by
 potential [=verifiers=] for expected use. For [=verifiers=], data minimization
-means limiting the scope of the information requested or required for accessing
-services.
+means restricting the scope of information requested or required for
+accessing services.
         </p>
         <p>
 For example, a driver's license containing a driver's ID number, height, weight,
@@ -5257,20 +5260,20 @@ certain age.
 It is considered best practice for [=issuers=] to atomize information or use a
 securing mechanism that allows for [=selective disclosure=]. For example, an
 [=issuer=] of driver's licenses could issue a [=verifiable credential=]
-containing every property that appears on a driver's license and allow each
-property to be selectively disclosed by the [=holder=]. It could also issue more
+containing every property that appears on a driver's license, and allow the
+[=holder=] to disclose each property selectively. It could also issue more
 abstract [=verifiable credentials=] (for example, a [=verifiable credential=]
 containing only an `ageOver` property). One possible adaptation would be for
 [=issuers=] to provide secure HTTP endpoints for retrieving single-use [=bearer
-credentials=] that promote the pseudonymous usage of [=verifiable credentials=].
-Implementers that find this impractical or unsafe, might consider using
+credentials=] that promote the pseudonymous use of [=verifiable credentials=].
+Implementers that find this impractical or unsafe might consider using
 [=selective disclosure=] schemes that eliminate dependence on [=issuers=] at
-proving time and reduce temporal correlation risk from [=issuers=].
+proving time and reduce the risk of temporal correlation by [=issuers=].
         </p>
 
         <p>
-[=Verifiers=] are urged to only request information that is absolutely
-necessary for a specific transaction to occur. This is important for at least
+[=Verifiers=] are urged to only request information that is strictly necessary
+for a specific transaction to occur. This is important for at least
 two reasons:
         </p>
 
@@ -5280,20 +5283,20 @@ It reduces the liability on the [=verifier=] for handling highly sensitive
 information that it does not need to handle.
           </li>
           <li>
-It enhances the privacy of the individual by only asking for information
-that is necessary for a specific transaction.
+It enhances the [=subject's=] and/or [=holder's=] privacy by only asking for
+information that is necessary for a specific transaction.
           </li>
         </ul>
 
         <p>
-Implementers of software used by [=holders=] are urged to disclose what
-information is being requested by a [=verifier=], such that a [=holder=] can
-decline to share specific requested information that is unnecessary for the
-transaction. Additionally, logs of information shared with [=verifiers=] are
-strongly encouraged to be available to [=holders=] such that the information
-might be shared with authorities if a [=holder=] believes that they are a
-victim of overreach or coercion to share more than necessary for a particular
-transaction.
+Implementers of software used by [=holders=] are encouraged to disclose the
+information being requested by a [=verifier=], allowing the [=holder=] to
+decline to share specific information that is unnecessary for the
+transaction. Implementers of software used by [=holders=] are also advised
+to give [=holders=] access to logs of information shared with [=verifiers=],
+enabling the [=holders=] to provide this information to authorities if they
+believe that they have been subjected to information overreach or coerced to
+share more information than necessary for a particular transaction.
         </p>
 
         <p class="note"
@@ -5311,11 +5314,11 @@ principle in real-world scenarios.
 
         <p>
 A <dfn data-lt="bearer credentials">bearer credential</dfn> is a
-privacy-enhancing piece of information, such as a concert ticket, which entitles
-the [=holder=] of the bearer credential to a specific resource without
-divulging sensitive information about the [=holder=]. Bearer credentials are
-often used in low-risk use cases where the sharing of the bearer credential is
-not a concern or would not result in large economic or reputational losses.
+privacy-enhancing piece of information, such as a concert ticket, that entitles
+its [=holder=] to a specific resource without requiring the [=holder=] to
+divulge sensitive information. In low-risk scenarios, entities often use bearer
+credentials where multiple [=holders=] presenting the same [=verifiable credential=]
+is not a concern or would not result in large economic or reputational losses.
         </p>
 
         <p>
@@ -5327,7 +5330,7 @@ possible by not specifying the [=subject=] identifier, expressed using the
         </p>
 
         <pre class="example nohighlight vc"
-          title="Usage of issuer properties"
+          title="Use of issuer properties"
           data-vc-vm="https://university.example/issuers/14#keys-1">
 {
   "@context": [
@@ -5349,13 +5352,14 @@ possible by not specifying the [=subject=] identifier, expressed using the
         </pre>
 
         <p>
-While [=bearer credentials=] can be privacy-enhancing, they must be carefully
-crafted so as not accidentally divulge more information than the [=holder=]
-of the [=bearer credential=] expects. For example, repeated use of the same
-[=bearer credential=] across multiple sites enables these sites to
-potentially collude to unduly track or correlate the [=holder=]. Likewise,
-information that might seem non-identifying, such as a birthdate and postal
-code, can be used to statistically identify an individual when used together in
+While [=bearer credentials=] are privacy-enhancing, [=issuers=] still need to
+take care in their design to avoid unintentionally divulging more information
+than the [=holder=] of the [=bearer credential=] expects. For example,
+repeated use of the same [=bearer credential=] across multiple sites can
+enable these sites to collude in illicitly tracking or correlating the
+[=holder=]. Similarly, information that might seem non-identifying, such as
+a birthdate and postal code, can be used together to statistically identify
+an individual when used in
 the same [=bearer credential=] or session.
         </p>
 
@@ -5377,16 +5381,17 @@ Are not unduly correlatable.
         </ul>
 
         <p>
-[=Holders=] should be warned by their software if [=bearer credentials=]
-containing sensitive information are issued or requested, or if there is a
-correlation risk when combining two or more [=bearer credentials=] across one
-or more sessions. While it might be impossible to detect all correlation risks,
+[=Holders=] ought to be warned by their software if it detects that [=bearer credentials=]
+containing sensitive information have been issued or requested, or that a
+correlation risk is posed by the combination of two or more [=bearer
+credentials=] across one
+or more sessions. While detecting all correlation risks might be impossible,
 some might certainly be detectable.
         </p>
 
         <p>
-[=Verifiers=] should not request [=bearer credentials=] that can be used
-to unduly correlate the [=holder=].
+[=Verifiers=] ought not request [=bearer credentials=] known to carry
+information which can be used to illicitly correlate the [=holder=].
         </p>
       </section>
 
@@ -5395,8 +5400,8 @@ to unduly correlate the [=holder=].
 
         <p>
 When processing [=verifiable credentials=], [=verifiers=]
-evaluate any relevant [=claims=] before relying upon them. This
-evaluation might be done in any manner desired, as long as it satisfies
+evaluate relevant [=claims=] before relying upon them. This
+evaluation might be done in any manner desired as long as it satisfies
 the requirements of the [=verifier=] doing the validation.
 Many verifiers will perform the checks listed in Appendix [[[#validation]]] as
 well as a variety of specific business process checks such as:
@@ -5434,11 +5439,11 @@ knowledge.
         <p>
 [=Issuers=] are urged to not use mechanisms, such as [=credential=]
 revocation lists that are unique per [=credential=], during the
-[=verification=] process that could lead to privacy violations. Organizations
-providing software to [=holders=] should warn when [=credentials=] include
+[=verification=] process, which could lead to privacy violations. Organizations
+providing software to [=holders=] ought to warn when [=credentials=] include
 information that could lead to privacy violations during the verification
-process. [=Verifiers=] should consider rejecting [=credentials=] that
-produce privacy violations or that enable bad privacy practices.
+process. [=Verifiers=] are urged to consider rejecting [=credentials=] that
+produce privacy violations or that enable substandard privacy practices.
         </p>
       </section>
 
@@ -5448,12 +5453,12 @@ produce privacy violations or that enable bad privacy practices.
         <p>
 When a [=holder=] receives a [=verifiable credential=] from an
 [=issuer=], the [=verifiable credential=] needs to be stored somewhere
-(for example, in a [=credential repository=]). [=Holders=] are warned that
-the information in a [=verifiable credential=] is sensitive in nature and
-highly individualized, making it a high value target for data mining. Services
-that advertise free storage of [=verifiable credentials=] might in fact be
-mining personal data and selling it to organizations wanting to build
-individualized profiles on people and organizations.
+(for example, in a [=credential repository=]). [=Holders=] need to be aware
+that the information in a [=verifiable credential=] can be sensitive and highly
+individualized, making it a prime target for data mining. Services offering
+"free of charge" storage of [=verifiable credentials=] might mine personal data
+and sell it to organizations interesting in building individualized profiles
+on people and organizations.
         </p>
         <p>
 [=Holders=] need to be aware of the terms of service for their
@@ -5481,10 +5486,10 @@ expectations.
         </ul>
 
         <p>
-In addition to the mitigations above, the participation of civil society and
-regulators in the analysis and auditing of vendors can also ensure that there
-are legal protections in place, and enforced, for individuals affected by
-practices that are not aligned with their best interests.
+In addition to the mitigations above, civil society and regulatory
+participation in vendor analysis and auditing can help ensure that legal
+protections are enacted and enforced for individuals affected by practices
+that are not aligned with their best interests.
         </p>
       </section>
 
@@ -5492,48 +5497,50 @@ practices that are not aligned with their best interests.
         <h3>Aggregation of Credentials</h3>
 
         <p>
-Holding two pieces of information about the same [=subject=] almost always
-reveals more about the [=subject=] than just the sum of the two pieces, even
-when the information is delivered through different channels. The aggregation of
-[=verifiable credentials=] is a privacy risk and all participants in
+Having two pieces of information about the same [=subject=] often reveals
+more about the [=subject=] than the combination of those two pieces, even
+when the pieces are delivered through different channels. Aggregating
+[=verifiable credentials=] poses a privacy risk, and all participants in
 the ecosystem need to be aware of the risks of data aggregation.
         </p>
 
         <p>
-For example, if two [=bearer credentials=], one for an email address and then
-one stating the [=holder=] is over the age of 21, are provided across
-multiple sessions, the [=verifier=] of the information now has a unique
-identifier as well as age-related information for that individual. It is now
-easy to create and build a profile for the [=holder=] such that more and more
-information is leaked over time. Aggregation of [=credentials=] can also be
-performed across multiple sites in collusion with each other, leading to privacy
-violations.
+For example, suppose two [=bearer credentials=], one for an email address and
+one stating the [=holder=] is over 21, are provided to the same [=verifier=]
+across multiple sessions. The [=verifier=] of the information now has a unique
+identifier (the email address) along with age-related ("over 21") information
+for that individual. It is now easy to create a profile for the [=holder=],
+building it by adding more and more information as it leaks over time.
+Aggregation of such [=credentials=] can also be performed by multiple sites
+in collusion with each other, leading to privacy violations.
         </p>
 
         <p>
-From a technological perspective, preventing aggregation of information is a
-very difficult privacy problem to address. While new cryptographic techniques,
-such as zero-knowledge proofs, are being proposed as solutions to the problem
-of aggregation and correlation, the existence of long-lived identifiers and
-browser tracking techniques defeats even the most modern cryptographic
+From a technological perspective, preventing information aggregation is a
+challenging privacy problem. While new cryptographic techniques, such as
+zero-knowledge proofs, are being proposed as solutions to aggregation and
+correlation issues, the existence of long-lived identifiers and
+browser-tracking techniques defeats even the most modern cryptographic
 techniques.
         </p>
 
         <p>
-The solution to the privacy implications of correlation or aggregation tends not
-to be technological in nature, but policy driven instead. Therefore, if a
-[=holder=] does not want information about them to be aggregated, they must
-express this in the [=verifiable presentations=] they transmit.
+The solution to the privacy implications of correlation or aggregation tends
+not to be technological in nature, but policy-driven instead. Therefore, if a
+[=holder=] wishes to avoid the aggregation of their information, they need to
+express this in the [=verifiable presentations=] they transmit, and
+by the [=holders=] and [=verifiers=] to whom they transmit their
+[=verifiable presentations=].
         </p>
       </section>
 
       <section class="informative">
-        <h3>Usage Patterns</h3>
+        <h3>Patterns of Use</h3>
 
         <p>
-Despite the best efforts to assure privacy, actually using
+Despite best efforts by all involved to assure privacy, using
 [=verifiable credentials=] can potentially lead to de-anonymization and a
-loss of privacy. This correlation can occur when:
+loss of privacy. This correlation can occur when any of the following occurs:
         </p>
 
         <ul>
@@ -5544,19 +5551,19 @@ same individual.
           </li>
           <li>
 The same [=verifiable credential=] is presented to different
-[=verifiers=], and either those [=verifiers=] collude or a third party
+[=verifiers=], and either those [=verifiers=] collude, or a third party
 has access to transaction records from both [=verifiers=]. An observant
 party could infer that the individual presenting the
 [=verifiable credential=] is the same person at both services. That is, the
-accounts are controlled by the same person.
+same person controls both accounts.
           </li>
           <li>
 A [=subject=] identifier of a [=credential=] refers to the same
 [=subject=] across multiple [=presentations=] or [=verifiers=]. Even
 when different [=credentials=] are presented, if the [=subject=]
 identifier is the same, [=verifiers=] (and those with access to
-[=verifier=] logs) could infer that the [=holder=] of the
-[=credential=] is the same person.
+[=verifier=] logs) could infer that the [=credentials=]' [=subjects=]
+are the same entity.
           </li>
           <li>
 The underlying information in a [=credential=] can be used to identify an
@@ -5569,12 +5576,11 @@ can potentially correlate the [=subject=] of that [=credential=] with an
 established profile. For more information, see [[DEMOGRAPHICS]].
           </li>
           <li>
-Passing the identifier of a [=credential=] to a centralized revocation
-server. The centralized server can correlate the [=credential=] usage across
-interactions. For example, if a [=credential=] is used for proof of age in
-this manner, the centralized service could know everywhere that
-[=credential=] was presented (all liquor stores, bars, adult stores, lottery
-purchases, and so on).
+Passing the identifier of a [=credential=] to a centralized revocation server.
+The centralized server can correlate uses of the [=credential=] across
+interactions. For example, if a [=credential=] is used to prove age in this
+manner, the centralized service could know everywhere that [=credential=] was
+presented (all liquor stores, bars, adult stores, lottery sellers, and so on).
           </li>
         </ul>
 
@@ -5595,39 +5601,38 @@ it is not contacted when revocation checks are performed.
           </li>
           <li>
 Specification authors designing revocation mechanisms that do not depend on
-submitting a unique identifier for a [=verifiable credential=]. For example, by
-using a privacy-preserving revocation list instead of a query API.
+submitting a unique identifier for a [=verifiable credential=] to a query API,
+and instead use, for example, a privacy-preserving revocation list.
           </li>
           <li>
-[=Issuers=] avoiding the association of personally identifiable information with
-any specific long-lived [=subject=] identifier.
+[=Issuers=] avoiding the association of personally identifiable information
+with any specific long-lived [=subject=] identifier.
           </li>
         </ul>
 
         <p>
-It is understood that these mitigation techniques are not always practical
-or even compatible with necessary usage. Sometimes correlation is a
-requirement.
+Unfortunately, these mitigation techniques are only sometimes practical or
+even compatible with necessary use. Sometimes, correlation is a requirement.
         </p>
         <p>
-For example, in some prescription drug monitoring programs, usage monitoring is
-a requirement. Enforcement entities need to be able to confirm that individuals
+For example, in some prescription drug monitoring programs, monitoring prescription
+use is a requirement. Enforcement entities need to be able to confirm that individuals
 are not cheating the system to get multiple prescriptions for controlled
-substances. This statutory or regulatory need to correlate usage overrides
-individual privacy concerns.
+substances. This statutory or regulatory need to correlate prescription
+use overrides individual privacy concerns.
         </p>
 
         <p>
 [=Verifiable credentials=] will also be used to intentionally correlate
-individuals across services, for example, when using a common persona to log in
-to multiple services, so all activity on each of those services is
+individuals across services. For example, when using a common persona to log in
+to multiple services, all activity on each of those services is
 intentionally linked to the same individual. This is not a privacy issue as
 long as each of those services uses the correlation in the expected manner.
         </p>
 
         <p>
-Privacy violations of [=verifiable credential=] usage occur when unintended or
-unexpected correlation arises from the presentation of those
+Privacy violations related to the use of [=verifiable credentials=] occur when
+unintended or unexpected correlation arises from the presentation of those
 [=verifiable credentials=].
         </p>
       </section>
@@ -5636,16 +5641,16 @@ unexpected correlation arises from the presentation of those
         <h3>Legal Processes</h3>
 
         <p>
-It is possible, through legal processes, for [=issuers=], [=holders=], and/or
-[=verifiers=] to be compelled to disclose private information to authorities,
-such as law enforcement. It is also possible for the same private
-information to be accidentally disclosed to an unauthorized party through a
-software bug or security failure. Authors of legal processes and compliance
-regimes are advised to draft guidelines that notify the [=subjects=] involved
-when their private information is purposefully or accidentally disclosed to a
-third party. Providers of software services are advised to be transparent about
-known circumstances that might cause such private information to be shared with
-a third party, and about the identity of any such third party.
+Legal processes can compel [=issuers=], [=holders=], and [=verifiers=] to
+disclose private information to authorities, such as law enforcement. It is
+also possible for the same private information to be accidentally disclosed
+to an unauthorized party through a software bug or security failure. Authors
+of legal processes and compliance regimes are advised to draft guidelines that
+require notifying the [=subjects=] involved when their private information is
+intentionally or accidentally disclosed to a third party. Providers of software
+services are advised to be transparent about known circumstances that might
+cause such private information to be shared with a third party, as well as the
+identity of any such third party.
         </p>
       </section>
 
@@ -5655,13 +5660,13 @@ a third party, and about the identity of any such third party.
         <p>
 When a [=holder=] chooses to share information with a [=verifier=], it
 might be the case that the [=verifier=] is acting in bad faith and requests
-information that could be used to harm the [=holder=]. For example, a
+information that could harm the [=holder=]. For example, a
 [=verifier=] might ask for a bank account number, which could then be used
 with other information to defraud the [=holder=] or the bank.
         </p>
 
         <p>
-[=Issuers=] should strive to tokenize as much information as possible such
+[=Issuers=] ought to strive to tokenize as much information as possible so
 that if a [=holder=] accidentally transmits [=credentials=] to the wrong
 [=verifier=], the situation is not catastrophic.
         </p>
@@ -5675,16 +5680,16 @@ checking token to a [=holder=]. The [=holder=] would then include the
 [=verifiable credential=] in a [=verifiable presentation=] and bind the
 token to a credit checking agency using a digital signature. The
 [=verifier=] could then wrap the [=verifiable presentation=] in their
-digital signature, and hand it back to the issuer to dynamically check the
-account balance.
+digital signature and hand it back to the issuer to check the
+account balance dynamically.
         </p>
 
         <p>
 Using this approach, even if a [=holder=] shares the account balance token
-with the wrong party, an attacker cannot discover the bank account number, nor
-the exact value in the account. And given the validity period for the
-counter-signature, does not gain access to the token for more than a few
-minutes.
+with the wrong party, an attacker cannot discover the bank account number or
+the exact value of the account. Also, given the validity period of the
+counter-signature, the attacker gains access to the token for only a
+few minutes.
         </p>
       </section>
 
@@ -5694,19 +5699,19 @@ minutes.
         <p>
 The data expressed in [=verifiable credentials=] and
 [=verifiable presentations=] are valuable since they contain authentic
-statements made by trusted third parties, such as [=issuers=], or
-individuals, such as [=holders=] and [=subjects=]. The storage and
-acessibility of this data can inadvertently create honeypots of
+statements made by trusted third parties (such as [=issuers=]) or
+individuals (such as [=holders=] or [=subjects=]). The storage and
+accessibility of this data can inadvertently create honeypots of
 sensitive data for malicious actors. These adversaries often seek to
-exploit such resevoirs of sensitive information, aiming to
+exploit such reservoirs of sensitive information, aiming to
 acquire and exchange that data for financial gain.
         </p>
         <p>
 [=Issuers=] are advised to retain the minimum amount of data
 necessary to issue [=verifiable credentials=] to [=holders=] and
-manage the status and revocation of those credentials. Similarly,
-[=issuers=] are advised to avoid the practice of creating publicly
-resolvable credentials that include personally identifiable information
+to manage the status and revocation of those credentials. Similarly,
+[=issuers=] are advised to avoid creating publicly
+accessible credentials that include personally identifiable information
 (PII) or other sensitive data. Software implementers are advised
 to safeguard [=verifiable credentials=] using robust consent
 and access control measures, ensuring that they remain
@@ -5714,33 +5719,33 @@ inaccessible to unauthorized entities.
         </p>
         <p>
 [=Holders=] are advised to use implementations that appropriately
-encrypt their data both in transit and at rest, and protect sensitive
+encrypt their data in transit and at rest and protect sensitive
 material (such as cryptographic secrets) in ways that cannot be easily
-extracted from hardware devices. Furthermore, it is suggested that
-[=holders=] store and manipulate their data only on devices that they
+extracted from hardware or other devices. It is further suggested that
+[=holders=] store and manipulate their data only on devices they
 control, away from centralized systems, to reduce the likelihood of
-attack on their data, or large-scale theft if an attack is successful.
-Furthermore, [=holders=] are encouraged to rigorously control access to
-their credentials and presentations, allowing access only to those
+an attack on their data or inclusion in a large-scale theft if an attack is
+successful. Furthermore, [=holders=] are encouraged to rigorously control
+access to their credentials and presentations, allowing access only to those
 with explicit authorization.
         </p>
         <p>
-[=Verifiers=] are advised to only ask for data necessary for a particular
-transaction and to not retain any data beyond the needs of any particular
+[=Verifiers=] are advised to ask only for data necessary for a particular
+transaction and to retain no data beyond the needs of any particular
 transaction.
         </p>
         <p>
-Regulators are advised to rethink audit requirements such that more
-privacy-preserving mechanisms can be used to achieve similar levels of
+Regulators are advised to reconsider existing audit requirements such that
+mechanisms that better preserve privacy can be used to achieve similar
 enforcement and audit capabilities. For example, audit-focused regulations
-that insist on collection and long-term retention of personally identifiable
-information can cause harm to individuals and organizations if that same
-information is compromised and accessed by an attacker. The technologies
-described by this specification enable [=holders=] to more-readily prove
-properties about themselves and others, reducing the need for long-term data
-retention by [=verifiers=]. Alternatives include keeping logs that the
-information was collected and checked, as well as random tests to ensure
-that compliance regimes are operating as expected.
+that insist on the collection and long-term retention of personally
+identifiable information can cause harm to individuals and organizations
+if that same information is later compromised and accessed by an attacker.
+The technologies described by this specification enable [=holders=] to
+prove properties about themselves and others more readily, reducing the
+need for long-term data retention by [=verifiers=]. Alternatives include
+keeping logs that the information was collected and checked, as well as
+random tests to ensure that compliance regimes are operating as expected.
         </p>
       </section>
 
@@ -5748,8 +5753,8 @@ that compliance regimes are operating as expected.
         <h3>Frequency of Claim Issuance</h3>
 
         <p>
-As detailed in Section [[[#usage-patterns]]], usage patterns can be
-correlated into certain types of behavior. Part of this correlation is
+As detailed in Section [[[#patterns-of-use]]], patterns of use can be
+correlated with certain types of behavior. This correlation is partially
 mitigated when a [=holder=] uses a [=verifiable credential=] without the
 knowledge of the [=issuer=]. [=Issuers=] can defeat this protection
 however, by making their [=verifiable credentials=] short lived and renewal
@@ -5757,18 +5762,18 @@ automatic.
         </p>
 
         <p>
-For example, an `ageOver` [=verifiable credential=] is useful for
+For example, an `ageOver` [=verifiable credential=] is helpful in
 gaining access to a bar. If an [=issuer=] issues such a
 [=verifiable credential=] with a very short validity period and an automatic
-renewal mechanism, then the [=issuer=] could possibly correlate the behavior
-of the [=holder=] in a way that negatively impacts the [=holder=].
+renewal mechanism, then the [=issuer=] could correlate the [=holder's=]
+behavior in a way that negatively impacts the [=holder=].
         </p>
 
         <p>
-Organizations providing software to [=holders=] should warn them if they
+Organizations providing software to [=holders=] ought to warn them if they
 repeatedly use [=credentials=] with short lifespans, which could result in
-behavior correlation. [=Issuers=] should avoid issuing [=credentials=] in
-a way that enables them to correlate usage patterns.
+behavior correlation. [=Issuers=] ought to avoid issuing [=credentials=] that
+enable them to correlate patterns of use.
         </p>
       </section>
 
@@ -5778,12 +5783,12 @@ a way that enables them to correlate usage patterns.
         <p>
 An ideal privacy-respecting system would require only the information necessary
 for interaction with the [=verifier=] to be disclosed by the [=holder=].
-The [=verifier=] would then record that the disclosure requirement was met
-and forget any sensitive information that was disclosed. In many cases,
+The [=verifier=] then records that the disclosure requirement has been met
+and discards any sensitive information disclosed. In many cases,
 competing priorities, such as regulatory burden, prevent this ideal system from
-being employed. In other cases, long-lived identifiers prevent single use. The
-design of any [=verifiable credentials=] ecosystem, however, should strive
-to be as privacy-respecting as possible by preferring single-use
+being employed. In other instances, long-lived identifiers prevent single use.
+The designer of any [=verifiable credentials=] ecosystem ought to strive
+to make it as privacy-respecting as possible by preferring single-use
 [=verifiable credentials=] whenever possible.
         </p>
 
@@ -5804,13 +5809,13 @@ to steal, making the entire ecosystem safer to operate within.
         <p>
 In an ideal private browsing scenario, no PII will be revealed. Because many
 [=credentials=] include PII, organizations providing software to
-[=holders=] should warn them about the possibility of revealing this
-information if they use [=credentials=] and [=presentations=]
-while in private browsing mode. As each browser vendor handles private browsing
-differently, and some browsers might not have this feature at all, it is
-important for implementers to not depend on private browsing mode to provide
-any privacy protections. Instead, implementers are advised to depend on
-tooling that is directly usable by their software to provide privacy guarantees.
+[=holders=] ought to warn them about the possibility of this information
+being revealed if they use [=credentials=] and [=presentations=] while in
+private browsing mode. As each browser vendor handles private browsing
+differently, and some browsers might not have this feature, it is
+important that implementers not depend on private browsing mode to provide
+any privacy protections. Instead, implementers are advised to rely on
+tooling that directly usable by their software to provide privacy guarantees.
         </p>
 
       </section>
@@ -5819,46 +5824,46 @@ tooling that is directly usable by their software to provide privacy guarantees.
         <h3>Issuer Cooperation Impacts on Privacy</h3>
 
         <p>
-It cannot be overstated that [=verifiable credentials=] rely on a high degree
-of trust in [=issuers=]. The degree to which a [=holder=] might take
-advantage of possible privacy protections often depends strongly on the support
-an [=issuer=] provides for such features. In many cases, privacy protections
-which make use of zero-knowledge proofs, data minimization techniques, bearer
-credentials, abstract claims, and protections against signature-based
-correlation, require the [=issuer=] to actively support such capabilities and
-incorporate them into the [=verifiable credentials=] they issue.
+[=Verifiable credentials=] rely on a high degree of trust in [=issuers=].
+The degree to which a [=holder=] might take advantage of possible privacy
+protections often depends strongly on the support an [=issuer=] provides for
+such features. In many cases, privacy protections which make use of
+zero-knowledge proofs, data minimization techniques, bearer credentials,
+abstract claims, and protections against signature-based correlation require
+active support by the [=issuer=], who need to incorporate those capabilities
+into the [=verifiable credentials=] they issue.
         </p>
         <p>
-It should also be noted that, in addition to a reliance on [=issuer=]
+It is crucial to note that [=holders=] not only depend on [=issuer=]
 participation to provide [=verifiable credential=] capabilities that help
-preserve [=holder=] and [=subject=] privacy, [=holders=] rely on
-[=issuers=] to not deliberately subvert privacy protections. For example, an
+preserve [=holder=] and [=subject=] privacy, but also rely on [=issuers=] to
+not deliberately subvert these privacy protections. For example, an
 [=issuer=] might sign [=verifiable credentials=] using a signature scheme
 that protects against signature-based correlation. This would protect the
 [=holder=] from being correlated by the signature value as it is shared among
 [=verifiers=]. However, if the [=issuer=] creates a unique key for each
 issued [=credential=], it might be possible for the [=issuer=] to track
-[=presentations=] of the [=credential=], regardless of a [=verifier=]'s
+[=presentations=] of the [=credential=], regardless of a [=verifier's=]
 inability to do so.
         </p>
         <p>
 In addition to previously described privacy protections an [=issuer=] might
-use, [=issuers=] need to also be aware of data they leak associated with
+offer, [=issuers=] need to be aware of data they leak that is associated with
 identifiers and claim types they use when issuing [=credentials=]. One
-example of this would be an [=issuer=] issuing drivers licenses which reveal
+example of this would be an [=issuer=] issuing driver's licenses which reveal
 both the location(s) in which they have jurisdiction and the location of the
 [=subject's=] residence. [=Verifiers=] might take advantage of this by
 requesting a [=credential=] to check that the [=subject=] is licensed to
-drive, when in fact they are interested in metadata <em>about</em> the
+drive when, in fact, they are interested in metadata <em>about</em> the
 credential, such as which [=issuer=] issued the credential, and tangential
 information that might have been leaked by the [=issuer=], such as the
-subject's home address. To mitigate such leakage, [=issuers=] might choose to
+[=subject's=] home address. To mitigate such leakage, [=issuers=] might
 use common identifiers to mask specific location information or other sensitive
-metadata; for example, a shared issuer identifier at a state or nation level,
-instead of at the level of a county, city, town, or other smaller municipality.
-Further, [=holder=] attestation mechanisms can be used by [=verifiers=] to
-preserve privacy, by providing proofs that an [=issuer=] exists in a set of
-trusted entities, without needing to disclose the exact [=issuer=].
+metadata; for example, a shared [=issuer=] identifier at a state or national
+level instead of at the level of a county, city, town, or other smaller
+municipality. Further, [=verifiers=] can use [=holder=] attestation mechanisms
+to preserve privacy, by providing proof that an [=issuer=] exists in a set of
+trusted entities without needing to disclose the exact [=issuer=].
         </p>
       </section>
     </section>
@@ -5867,38 +5872,38 @@ trusted entities, without needing to disclose the exact [=issuer=].
       <h2>Security Considerations</h2>
 
       <p>
-There are a number of security considerations that [=issuers=],
-[=holders=], and [=verifiers=] should be aware of when processing data
-described by this specification. Ignoring or not understanding the implications
-of this section can result in security vulnerabilities.
+[=Issuers=], [=holders=], and [=verifiers=] should be aware of a number of
+security considerations when processing data described by this specification.
+Ignoring or not understanding the implications of this section can result in
+security vulnerabilities.
       </p>
 
       <p>
-While this section attempts to highlight a broad set of security considerations,
-it is not a complete list. Implementers are urged to seek the advice of security
-and cryptography professionals when implementing mission critical systems using
-the technology outlined in this specification.
+While this section highlights a broad set of security considerations, it is a
+partial list. Implementers of mission-critical systems using the technology
+described in this specification are strongly encouraged to consult security and
+cryptography professionals for comprehensive guidance.
       </p>
 
       <section class="informative">
         <h3>Cryptography Suites and Libraries</h3>
 
         <p>
-Some aspects of the data model described in this specification can be
-protected through the use of cryptography. It is important for implementers to
-understand the cryptography suites and libraries used to create and process
-[=credentials=] and [=presentations=]. Implementing and auditing
-cryptography systems generally requires substantial experience. Effective
+Cryptography can protect some aspects of the data model described in this
+specification. It is important for implementers to understand the cryptography
+suites and libraries used to create and process [=credentials=] and
+[=presentations=]. Implementing and auditing cryptography systems generally
+requires substantial experience. Effective
 <a href="https://en.wikipedia.org/wiki/Red_team">red teaming</a> can also
 help remove bias from security reviews.
         </p>
 
         <p>
-Cryptography suites and libraries have a shelf life and eventually fall to
-new attacks and technology advances. Production quality systems need to take
+Cryptography suites and libraries have a shelf life and eventually succumb to
+new attacks and technological advances. Production quality systems need to take
 this into account and ensure mechanisms exist to easily and proactively upgrade
-expired or broken cryptography suites and libraries, and to invalidate
-and replace existing [=credentials=]. Regular monitoring is important to
+expired or broken cryptography suites and libraries, and to invalidate and
+replace existing [=credentials=]. Regular monitoring is important to
 ensure the long term viability of systems processing [=credentials=].
         </p>
       </section>
@@ -5906,15 +5911,15 @@ ensure the long term viability of systems processing [=credentials=].
       <section class="informative">
         <h3>Key Management</h3>
         <p>
-The security of most digital signature algorithms, which are used to secure
-[=verifiable credentials=] and [=verifiable presentations=], is dependent
-on the quality and protection of their <em>private signing keys</em>. Guidance
-in the management of cryptographic keys is a large subject and the reader is
-referred to [[NIST-SP-800-57-Part-1]] for more extensive recommendations and
-discussion. As strongly recommended in both [[FIPS-186-5]] and
+The security of most digital signature algorithms, used to secure [=verifiable
+credentials=] and [=verifiable presentations=], depends on the quality and
+protection of their <em>private signing keys</em>. The management of
+cryptographic keys encompasses a vast and complex field. For comprehensive
+recommendations and in-depth discussion, readers are directed to
+[[NIST-SP-800-57-Part-1]]. As strongly recommended in both [[FIPS-186-5]] and
 [[NIST-SP-800-57-Part-1]], a private signing key is not to be used for multiple
-purposes, for example, a private signing key is not to be used for encryption as well
-as signing.
+purposes; for example, a private signing key is not to be used for encryption
+as well as signing.
         </p>
         <p>
 [[NIST-SP-800-57-Part-1]] strongly advises that private signing keys and
@@ -5922,8 +5927,8 @@ as signing.
 a <em>cryptoperiod</em> is &quot;the time span during which a specific key is
 authorized for use by legitimate entities or the keys for a given system will
 remain in effect.&quot; [[NIST-SP-800-57-Part-1]] gives extensive
-guidance on cryptoperiods for different key types under different situations,
-and generally recommends a 1-3 year cryptoperiod for a private signing key.
+guidance on cryptoperiods for different key types under various conditions
+and recommends a one to three year cryptoperiod for a private signing key.
         </p>
         <p>
 To deal with potential private key compromises, [[NIST-SP-800-57-Part-1]]
@@ -5938,30 +5943,31 @@ confirmation of the validity of all [=verification material=] before using it.
         <h3>Content Integrity Protection</h3>
 
         <p>
-[=Verifiable credentials=] often contain URLs to data that resides outside of
-the [=verifiable credential=] itself. Linked content that exists outside a
-[=verifiable credential=], such as images, JSON-LD extension contexts,
-JSON Schemas, and other machine-readable data, are not protected by default
+[=Verifiable credentials=] often contain URLs to data that resides outside
+the [=verifiable credential=]. Linked content that exists outside a
+[=verifiable credential=] &mdash; such as images, JSON-LD extension contexts,
+JSON Schemas, and other machine-readable data &mdash; is not protected
 against tampering because the data resides outside of the protection of the
 <a href="#securing-mechanisms">securing mechanism</a> on the
 [=verifiable credential=].
         </p>
 
         <p>
-This specification provides an optional mechanism, contained in Section
-[[[#integrity-of-related-resources]]], that is capable of ensuring content
-integrity for external resources. While this mechanism need not be utilized
-for external resources that do not affect the security of the
-[=verifiable credential=], it is strongly suggested for external resources
-that could result in a security issue if the external content changes.
+Section [[[#integrity-of-related-resources]]] of this specification provides an
+optional mechanism for ensuring the integrity of the content of external
+resources. This mechanism is not necessary for external resources that do not
+impact the [=verifiable credential=]'s security. However, its implementation
+is crucial for external resources where content changes could potentially
+introduce security vulnerabilities.
         </p>
 
         <p>
-Implementers are urged to understand how links to external machine-readable
-content that are not content-integrity protected could result in successful
-attacks against their applications, and utilize the content integrity protection
-mechanism provided by this specification if a security issue could occur
-if the external resource is changed.
+Implementers need to recognize the potential security risks associated with
+unprotected URLs of external machine-readable content. Such vulnerabilities
+could lead to successful attacks on their applications. Where changes to
+external resources might compromise security, implementers will benefit by
+employing the content integrity protection mechanism outlined in this
+specification.
         </p>
 
       </section>
@@ -5970,12 +5976,11 @@ if the external resource is changed.
         <h3>Unsigned Claims</h3>
 
         <p>
-This specification allows [=credentials=] to be produced that are not secured by
-signatures or proofs of any kind. These class of [=credentials=] are often
-useful for intermediate storage, or self-asserted information, which is
-analogous to filling out a form on a web page. Implementers should be aware that
-these [=credential=] types are not [=verifiable=] because the
-authorship either is not known or cannot be trusted.
+This specification enables the creation of [=credentials=] without signatures
+or proofs. These [=credential=] classes are often useful for intermediate
+storage or self-asserted information, analogous to filling out a form on a web
+page. Implementers ought to be aware that these [=credential=] types are not
+[=verifiable=] because the authorship either is unknown or cannot be trusted.
         </p>
       </section>
 
@@ -5987,9 +5992,9 @@ The data model does not inherently prevent
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">Man-in-the-Middle (MITM)</a>,
 <a href="https://en.wikipedia.org/wiki/Replay_attack">replay</a>, and
 <a href="https://en.wikipedia.org/wiki/Spoofing_attack">spoofing</a> attacks.
-Both online and offline use cases might be susceptible to these types of
-attacks, where an adversary intercepts, modifies, re-uses, and/or replicates the
-[=verifiable credential=] data during transmission or storage.
+Both online and offline use cases might be susceptible to these attacks, where
+an adversary intercepts, modifies, re-uses, and/or replicates the [=verifiable
+credential=] data during transmission or storage.
         </p>
         <h4>Man-in-the-Middle (MITM) Attack</h4>
 
@@ -5998,22 +6003,23 @@ A [=verifier=] might need to ensure it is the intended recipient of a
 [=verifiable presentation=] and not the target of a
 <a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">
 man-in-the-middle attack</a>. Some <a href="#securing-mechanisms">securing
-mechanisms</a>, like [[VC-JOSE-COSE]] or [[VC-DATA-INTEGRITY]], provide an
-option to specify the intended audience or domain of a [=presentation=],
-which can help reduce this risk.
+mechanisms</a>, like [[[VC-JOSE-COSE]]] [[VC-JOSE-COSE]] and
+[[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]], provide an
+option to specify a [=presentation=]'s intended audience or domain, which can
+help reduce this risk.
         </p>
         <p>
-Alternate approaches such as token binding [[RFC8471]], which ties the request
-for a [=verifiable presentation=] to the response, can secure the protocol.
+Other approaches, such as token binding [[RFC8471]], which ties the request for
+a [=verifiable presentation=] to the response, can help secure the protocol.
 Any unsecured protocol is susceptible to man-in-the-middle attacks.
         </p>
         <h4>Replay Attack</h4>
 
         <p>
-A [=verifier=] might wish to ensure that a [=verifiable presentation=] is
-not used more than a certain number of times. For example, a [=verifiable
-credential=] representing an event ticket might allow entry to multiple
-individuals if presented multiple times, undermining the purpose of the ticket
+A [=verifier=] might wish to limit the number of times that
+[=verifiable presentation=] can be used. For example, multiple individuals
+presenting the same [=verifiable credential=] representing an event ticket
+might be granted entry to the event, undermining the purpose of the ticket
 from the perspective of its [=issuer=]. To prevent such replay attacks,
 [=verifiers=] require [=holders=] to include additional security measures
 in their [=verifiable presentations=]. Examples include the following:
@@ -6033,8 +6039,8 @@ during which the [=verifiable presentation=] is valid.
         <h4>Spoofing Attack</h4>
 
         <p>
-A [=verifier=] has a vested interest in knowing that a [=holder=] is
-authorized to present the claims inside of a [=verifiable presentation=].
+[=Verifiers=] might have a vested interest in knowing that a [=holder=] is
+authorized to present the [=claims=] inside of a [=verifiable presentation=].
 While the data model outlines the structure and data elements necessary for a
 [=verifiable credential=], it does not include a mechanism to ascertain the
 authorization of presented [=credentials=]. To address this concern,
@@ -6049,25 +6055,24 @@ to enable proof of control.
 
         <p>
 It is considered best practice for [=issuers=] to atomize information in a
-[=credential=], or use a signature scheme that allows for selective
-disclosure. In the case of atomization, if it is not done securely by the
-[=issuer=], the [=holder=] might bundle together different
-[=credentials=] in a way that was not intended by the [=issuer=].
+[=credential=] or use a signature scheme that allows for selective
+disclosure. When atomizing information, if it is not done securely by the
+[=issuers=], the [=holders=] might bundle together [=claims=] from different
+[=credentials=] in ways that the [=issuers=] did not intend.
         </p>
 
         <p>
-For example, a university might issue two [=verifiable credentials=] to a
-person, each containing two [=properties=], which must be taken together
-to designate the "role" of that person in a given "department", such as "Staff
-Member" in the "Department of Computing", or "Post Graduate Student" in the
-"Department of Economics". If these [=verifiable credentials=] are atomized
-to put only one of these [=properties=] into each [=credential=] , then
-the university would issue four [=credentials=] to the person, each
-containing one of the following designations: "Staff Member", "Post Graduate
-Student", "Department of Computing", and "Department of Economics". The
-[=holder=] might then transfer the "Staff Member" and "Department of
-Economics" [=verifiable credentials=] to a [=verifier=], which together
-would comprise a false [=claim=].
+Consider a university issuing two [=verifiable credentials=] to an individual.
+Each [=credential=] contains two properties that, when combined, indicate the
+person's "role" in a specific "department." For instance, one [=credential=]
+pair might designate "Staff Member" in the "Department of Computing," while
+another could signify "Post Graduate Student" in the "Department of Economics."
+Atomizing these [=verifiable credentials=] results in the university issuing
+four separate [=credentials=] to the individual. Each [=credential=] contains
+a single designation: "Staff Member", "Post Graduate Student", "Department of
+Computing", or "Department of Economics". The [=holder=] might then present
+the "Staff Member" and "Department of Economics" [=verifiable credentials=] to
+a [=verifier=], which, together, would comprise a false [=claim=].
         </p>
       </section>
 
@@ -6075,16 +6080,15 @@ would comprise a false [=claim=].
         <h3>Highly Dynamic Information</h3>
 
         <p>
-When [=verifiable credentials=] are issued for highly dynamic information,
-implementers should ensure the validity periods are set appropriately. Validity
-periods longer than the timeframe where the [=verifiable credential=] is
-meant for use might create exploitable security vulnerabilities. Validity
+When [=verifiable credentials=] contain highly dynamic information, careful
+consideration of validity periods becomes crucial. Issuing [=verifiable
+credentials=] with validity periods that extend beyond their intended use creates
+potential security vulnerabilities that malicious actors could exploit. Validity
 periods shorter than the timeframe where the information expressed by the
 [=verifiable credential=] is expected to be used creates a burden on
-[=holders=] and [=verifiers=]. It is therefore important to set validity
-periods for [=verifiable credentials=] that are appropriate to the use case
-and the expected lifetime for the information contained in the
-[=verifiable credential=].
+[=holders=] and [=verifiers=]. It is, therefore, important to set validity
+periods for [=verifiable credentials=] appropriate to the use case and the
+expected lifetime of the information contained in the [=verifiable credential=].
         </p>
       </section>
 
@@ -6092,10 +6096,10 @@ and the expected lifetime for the information contained in the
         <h3>Device Theft and Impersonation</h3>
 
         <p>
-When [=verifiable credentials=] are stored on a device and that
-device is lost or stolen, it might be possible for an attacker to gain access
-to systems using the victim's [=verifiable credentials=]. Ways to mitigate
-this type of attack include:
+Storing [=verifiable credentials=] on a device poses risks if the device is
+lost or stolen. An attacker gaining possession of such a device potentially
+acquires unauthorized access to systems using the victim's [=verifiable
+credentials=]. Ways to mitigate this type of attack include:
         </p>
 
         <ul>
@@ -6120,48 +6124,46 @@ All or any combination of the above.
         </ul>
 
         <p>
-Furthermore, instances of impersonation can manifest in various forms, including
-situations where an [=entity=] attempts to disavow their actions. Elevating
-the level of trust and security within the realm of [=verifiable
-credentials=] entails more than just averting impersonation; it involves the
-implementation of non-repudiation mechanisms. These mechanisms solidify an
-[=entity=]'s responsibility for their actions or transactions, thereby
-reinforcing accountability and deterring malicious behaviors. The attainment of
-non-repudiation is a multifaceted endeavor, encompassing an array of techniques
-ranging from <a href="#securing-mechanisms">securing mechanisms</a>, proofs of
-possession, and authentication schemes in a variety of protocols designed to
-foster trust and reliability.
+Furthermore, instances of impersonation can manifest in various forms,
+including situations where an [=entity=] attempts to disavow its actions.
+Elevating trust and security within the realm of [=verifiable credentials=]
+entails more than averting impersonation; it also involves implementing
+non-repudiation mechanisms. These mechanisms solidify an [=entity's=]
+responsibility for its actions or transactions, reinforcing accountability and
+deterring malicious behavior. Attainment of non-repudiation is a
+multifaceted endeavor, encompassing an array of techniques including
+<a href="#securing-mechanisms">securing mechanisms</a>, proofs of possession,
+and authentication schemes in various protocols designed to foster trust and
+reliability.
         </p>
       </section>
       <section class="informative">
         <h3>Acceptable Use</h3>
 
         <p>
-Ensuring that there is alignment between an [=entity=]'s actions, such as
-[=presentation=], and the intended purpose of those actions, is of
-importance. It involves having the authorization to make use of [=verifiable
-credentials=] as well as using [=credentials=] in a manner that adheres to
-their designated scope(s) and objective(s). Two critical aspects that arise
-within this context are <i>Unauthorized Use</i> and <i>Inappropriate Use</i>.
+Ensuring alignment between an [=entity's=] actions &mdash; such as [=presentation=],
+and the intended purpose of those actions &mdash; is essential. It involves having the
+authorization to use [=verifiable credentials=] and using [=credentials=] in a
+manner that adheres to their designated scope(s) and objective(s). Two critical
+aspects in this context are <i>Unauthorized Use</i> and <i>Inappropriate Use</i>.
         </p>
         <h4>Unauthorized Use</h4>
         <p>
-Any attempt by entities to make use of [=verifiable credentials=] and
-[=verifiable presentations=] outside of their intended use can be seen as
-unauthorized. One class of unauthorized use is a <i>confidentiality
-violation</i>. Consider an example where a [=holder=] shares a [=verifiable
-presentation=] with a [=verifier=] to establish their age and residency
-status. If the [=verifier=] then proceeds to exploit the [=holder's=] data
-without proper consent, such as by selling the data to a data broker, that would
-constitute an unauthorized use of the data, violating an expectation of privacy
-that the [=holder=] might have in the transaction.
+Entities using [=verifiable credentials=] and [=verifiable presentations=]
+beyond their intended purpose are engaging in unauthorized activity. One class
+of unauthorized use is a <i>confidentiality violation</i>. Consider a [=holder=]
+that shares a [=verifiable presentation=] with a [=verifier=]
+to establish their age and residency status. If the [=verifier=] then proceeds
+to employ the [=holder's=] data without proper consent, such as by selling the
+data to a data broker, that would constitute an unauthorized use of the data,
+violating an expectation of privacy that the [=holder=] might have in the
+transaction.
         </p>
         <p>
-Similarly, an [=issuer=] could make use of a
-<a href="#terms-of-use">termsOfUse</a> property to stipulate how and when a
-credential might be used. A [=holder=] using credentials outside of the
-scopes defined in the `termsOfUse` would be considered unauthorized
-use.
+Similarly, an [=issuer=] can employ a <a href="#terms-of-use">termsOfUse</a>
+property to specify how and when a [=holder=] might be permitted and expected
+to use a [=credential=]. A [=holder=] using [=credentials=] outside of the
+scope(s) defined in the `termsOfUse` would be considered to be unauthorized.
         </p>
         <p class="note"
            title="Digital Rights Management is out of scope">
@@ -6173,15 +6175,15 @@ enforce authorized use of their data after [=presentation=].
 While valid cryptographic signatures and successful status checks signify the
 reliability of [=credentials=], they do not signify that all
 [=credentials=] are interchangeable for all contexts. It is crucial that
-[=verifiers=] also <a href="#validation">validate</a> any claims which
-might be relevant, considering the source and nature of the claim as well as
-privilege or service for which the credential is presented.
+[=verifiers=] also <a href="#validation">validate</a> any relevant [=claims=],
+considering the source and nature of the [=claim=] alongside the purpose
+for which the [=holder=] presents the [=credential=].
         </p>
         <p>
 For instance, in scenarios where a certified medical diagnosis is required, a
 self-asserted [=credential=] carrying the necessary data might not suffice
-because it lacks validity from an authoritative medical source. To ensure the
-propriety of [=credential=] use, stakeholders are urged to assess the
+because it lacks validity from an authoritative medical source. To ensure proper
+[=credential=] use, stakeholders need to assess the
 <a href="#dfn-credential">credential's</a> relevance and authority within the
 specific context of their intended application.
         </p>
@@ -6191,25 +6193,25 @@ specific context of their intended application.
         <h3>Code Injection</h3>
 
         <p>
-It is possible for data in [=verifiable credentials=] to include
-executable code or scripting languages. Authors of verifiable credentials are
-advised to avoid doing so, unless necessary, and the risks have been mitigated
-to the extent possible.
+Data in [=verifiable credentials=] can include injectable code or code from
+scripting languages. Authors of [=verifiable credentials=] benefit from avoiding
+such inclusions unless necessary and only after mitigating associated risks to
+the fullest extent possible.
+
         </p>
 
         <p>
-For example, when a single natural language string contains multiple languages
-or annotations, the contents of the string might require additional structure or
-markup in order to be presented correctly. It is possible to use markup
-languages, such as HTML, to label spans of text in different languages or to
-supply string-internal markup needed for the proper display of [=bidirectional
-text=]. It is also possible to use the `rdf:HTML` datatype to encode such values
-accurately in JSON-LD.
+For example, a single natural language string containing multiple languages or
+annotations often requires additional structure or markup for correct
+presentation. Markup languages, such as HTML, can label text spans in different
+languages or supply string-internal markup needed to display [=bidirectional
+text=] properly. It is also possible to use the `rdf:HTML` datatype to encode
+such values accurately in JSON-LD.
         </p>
 
         <p>
 Despite the ability to encode information as HTML, implementers are strongly
-discouraged from doing so, for the following reasons:
+discouraged from doing so for the following reasons:
         </p>
 
         <ul>
@@ -6218,9 +6220,9 @@ It requires some version of an HTML processor, which increases the burden of
 processing language and base direction information.
           </li>
           <li>
-It increases the security attack surface when utilizing this data model, because
-naively processing HTML could result in the execution of a `script` tag that
-an attacker injected at some point during the data production process.
+It increases the security attack surface when using this data model,
+because naively processing HTML could result in the execution of a `script`
+tag that an attacker injected at some point during the data production process.
           </li>
         </ul>
 
@@ -6228,9 +6230,10 @@ an attacker injected at some point during the data production process.
 If implementers feel they need to use HTML, or other markup languages capable of
 containing executable scripts, to address a specific use case, they are advised
 to analyze how an attacker could use the markup to mount injection attacks
-against a consumer of the markup, and then deploy mitigations against the
-identified attacks, such as running the HTML rendering engine in a sandbox with
-no ability to access the network.
+against a consumer of the markup. This analysis should be followed by the
+proactive deployment of mitigations against the identified attacks, such as
+running the HTML rendering engine in a sandbox with no ability to access the
+network.
         </p>
       </section>
 
@@ -6246,13 +6249,13 @@ implementation of any web standard or protocol, ignoring accessibility issues
 makes this information unusable by a large subset of the population. It is
 important to follow accessibility guidelines and standards, such as [[WCAG21]],
 to ensure that all people, regardless of ability, can make use of this data.
-This is especially important when establishing systems utilizing cryptography,
+This is especially important when establishing systems using cryptography,
 which have historically created problems for assistive technologies.
       </p>
 
       <p>
 This section details the general accessibility considerations to take into
-account when utilizing this data model.
+account when using this data model.
       </p>
 
       <section class="informative">
@@ -6266,7 +6269,7 @@ for people with vision impairments.
         </p>
 
         <p>
-When utilizing this data model to create [=verifiable credentials=], it is
+When using this data model to create [=verifiable credentials=], it is
 suggested that data model designers use a <em>data first</em> approach. For
 example, given the choice of using data or a graphical image to depict a
 [=credential=], designers should express every element of the image, such as
@@ -6304,7 +6307,7 @@ Implementation Guidelines [[VC-IMP-GUIDE]] document.
 
       <p>
 This section outlines general internationalization considerations to take into
-account when utilizing this data model and is intended to highlight specific
+account when using this data model and is intended to highlight specific
 parts of the <em>Strings on the Web: Language and Direction Metadata</em>
 document [[STRING-META]] that implementers might be interested in reading.
       </p>
@@ -6460,9 +6463,9 @@ direction associated with them SHOULD be treated as if the direction value is
 While this specification does not provide conformance criteria for the process
 of the [=validation=] of [=verifiable credentials=] or
 [=verifiable presentations=], readers might be curious about how the
-information in this data model is expected to be utilized by [=verifiers=]
+information in this data model is expected to be used by [=verifiers=]
 during the process of [=validation=]. This section captures a selection of
-conversations held by the Working Group related to the expected usage of the
+conversations held by the Working Group related to the expected use of the
 properties in this specification by [=verifiers=].
       </p>
 
@@ -6492,7 +6495,7 @@ an interaction with a [=holder=].
         <p>
 When a [=verifier=] requests a [=verifiable credential=] of a specific type,
 there will be a set of mandatory and optional [=claims=] that are associated
-with that type. A [=verifier=]'s validation of a [=verifiable credential=] will
+with that type. A [=verifier's=] validation of a [=verifiable credential=] will
 fail when mandatory [=claims=] are not included, and any [=claim=] that is
 not associated with the specific type will be ignored. In other words, a
 [=verifier=] will perform input validation on the [=verifiable credential=] it
@@ -6562,10 +6565,10 @@ the `holder` [=property=], is available to, or retrievable by, the
 [=verifier=]. For example, a [=holder=] can publish information containing
 the [=verification material=] used to secure [=verifiable presentations=]. This
 metadata is used when checking proofs on [=verifiable presentations=].
-Some cryptographic identifiers contain all necessary metadata in the identifier itself.
-In those cases, no additional metadata is required. Other identifiers use verifiable data
-registries where such metadata is automatically published for use by
-[=verifiers=], without any additional action by the [=holder=].
+Some cryptographic identifiers contain all necessary metadata in the identifier
+itself. In those cases, no additional metadata is required. Other identifiers
+use verifiable data registries where such metadata is automatically published
+for use by [=verifiers=], without any additional action by the [=holder=].
         </p>
         <p>
 See the <a data-cite="VC-IMP-GUIDE/#subject-holder-relationships"></a> and
@@ -6739,12 +6742,12 @@ franchise. Policy information expressed by the [=issuer=] in the
         <h3>"Artificial Intelligence" and "Machine Learning"</h3>
 
         <p>
-Systems using what is today commonly referred to as "artificial intelligence" and/or "machine learning" might be capable of performing
-complex tasks at a level that meets or exceeds human performance.
-This might include tasks such as the acquisition and use of
-[=verifiable credentials=].
-Using such tasks to distinguish between human and automated "bot" activity, as is
-commonly done today with a <a href="https://en.wikipedia.org/wiki/CAPTCHA">CAPTCHA</a>,
+Systems using what is today commonly referred to as "artificial intelligence"
+and/or "machine learning" might be capable of performing complex tasks at a
+level that meets or exceeds human performance. This might include tasks such as
+the acquisition and use of [=verifiable credentials=]. Using such tasks to
+distinguish between human and automated "bot" activity, as is commonly done
+today with a <a href="https://en.wikipedia.org/wiki/CAPTCHA">CAPTCHA</a>,
 for instance, might thereby cease to provide adequate or acceptable protection.
         </p>
 
@@ -6752,12 +6755,13 @@ for instance, might thereby cease to provide adequate or acceptable protection.
 Implementers of security architectures that use [=verifiable credentials=]
 and/or perform validation on their content are urged to consider the existence
 of machine-based actors, such as those which are today commonly referred to as
-"artificial intelligence", that might legitimately hold [=verifiable credentials=]
-for use in interactions with other systems. Implementers might also consider how
-threat actors could couple such "artificial intelligence" systems with [=verifiable
-credentials=] to pose as humans when interacting with their systems. Such systems
-might include, but not be limited to, global infrastructure such as social media,
-election, energy distribution, supply chain, and autonomous vehicle systems.
+"artificial intelligence", that might legitimately hold [=verifiable
+credentials=] for use in interactions with other systems. Implementers might
+also consider how threat actors could couple such "artificial intelligence"
+systems with [=verifiable credentials=] to pose as humans when interacting with
+their systems. Such systems might include, but not be limited to, global
+infrastructure such as social media, election, energy distribution, supply
+chain, and autonomous vehicle systems.
         </p>
 
       </section>
@@ -6799,7 +6803,7 @@ Unix command interface line:
         </p>
         <p>
 It is strongly advised that all JSON-LD Context URLs used by an
-application utilize the same mechanism, or a functionally equivalent mechanism,
+application use the same mechanism, or a functionally equivalent mechanism,
 to ensure end-to-end security. Implementations are expected to throw errors
 if a cryptographic hash value for a resource does not match the expected hash
 value.
@@ -7073,7 +7077,7 @@ include additional type values in the array. Many verifiers will request a
 value could make it more difficult for verifiers to inform the holder which
 [=verifiable credential=] they require. When a [=verifiable credential=]
 has multiple subtypes, listing all of them in the `type`
-property is sensible. The usage of the `type` property in a
+property is sensible. The use of the `type` property in a
 [[JSON-LD11]] representation of a [=verifiable credential=] enables to enforce
 the semantics of the [=verifiable credential=] because the machine is able to
 check the semantics. With [[JSON-LD11]], the technology is not only describing the
@@ -7129,13 +7133,13 @@ term definitions of the data, and can be used to define the structure of the
         </p>
 
         <p>
-While it is possible to use some [[JSON-LD11]] features to allude to the contents
-of the [=verifiable credential=], it's not generally suggested to use
-`@context` to constrain the data types of the data model. For
-example, `"@type": "@json"` is useful for leaving the semantics
-open-ended and not strictly defined. This can be dangerous if the implementer is
-looking to constrain the data type of the claims in the
-[=credential=], and is expected not to be used.
+While it is possible to use some [[JSON-LD11]] features to allude to the
+contents of the [=verifiable credential=], it's not generally suggested to use
+`@context` to constrain the data types of the data model. For example,
+`"@type": "@json"` is useful for leaving the semantics open-ended and not
+strictly defined. This can be dangerous if the implementer is looking to
+constrain the data type of the claims in the [=credential=], and is expected
+not to be used.
           </p>
 
         <p>
@@ -7151,8 +7155,8 @@ and [=verifiable presentation=].
       <h2>IANA Considerations</h2>
 
       <p>
-This section will be submitted to the Internet Engineering Steering Group (IESG)
-for review, approval, and registration with IANA.
+This section will be submitted to the Internet Engineering Steering Group
+(IESG) for review, approval, and registration with IANA.
       </p>
 
       <section id="vc-ld-media-type">
@@ -7179,8 +7183,8 @@ identifying documents conforming to the [=verifiable credentials=] format.
             <td>
 Resources that use the `application/vc` media type are required to conform to
 all of the requirements for the `application/ld+json` media type and are
-therefore subject to the same encoding considerations specified in Section 11 of
-[[[RFC7159]]].
+therefore subject to the same encoding considerations specified in Section 11
+of [[[RFC7159]]].
             </td>
           </tr>
           <tr>
@@ -7210,9 +7214,9 @@ payload.
         <p>
 The credential is expected to be a valid
 <a data-cite="JSON-LD11#dfn-json-ld-document">JSON-LD document</a>.
-[=Verifiable credentials=] served with the `application/vc` media type are expected
-to have all [[[JSON-LD11]]] context information, including references to
-external contexts, within the body of the document. Contexts linked via a
+[=Verifiable credentials=] served with the `application/vc` media type are
+expected to have all [[[JSON-LD11]]] context information, including references
+to external contexts, within the body of the document. Contexts linked via a
 `http://www.w3.org/ns/json-ld#context` HTTP Link Header
 (see <a data-cite="JSON-LD11#interpreting-json-as-json-ld">Section 6.1</a>
 of [[[JSON-LD11]]]) are ignored.
@@ -7243,8 +7247,8 @@ identifying documents conforming to the [=verifiable presentations=] format.
             <td>
 Resources that use the `application/vp` media type are required to conform to
 all of the requirements for the `application/ld+json` media type and are
-therefore subject to the same encoding considerations specified in Section 11 of
-[[[RFC7159]]].
+therefore subject to the same encoding considerations specified in Section 11
+of [[[RFC7159]]].
             </td>
           </tr>
           <tr>
@@ -7326,19 +7330,21 @@ with value 'Example Presenter Public Key 11'; 'created' with value
 parenthetical remark '(a named graph)'
             ">
       <figcaption style="text-align: center;">
-        A variant of [[[#info-graph-vp]]]: information [=graphs=] associated with a [=verifiable presentation=]
-        referring to two
-        verifiable credentials, using an [=embedded proof=] based on [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
+        A variant of [[[#info-graph-vp]]]: information [=graphs=] associated
+        with a [=verifiable presentation=] referring to two verifiable
+        credentials, using an [=embedded proof=] based on
+        [[[VC-DATA-INTEGRITY]]] [[?VC-DATA-INTEGRITY]].
       </figcaption>
       </figure>
 
       <p>
-        [[[#info-graph-vp-jwt-mult-creds]]] below shows the same [=verifiable presentation=]
-        as [[[#info-graph-vp-mult-creds]]], but using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
+        [[[#info-graph-vp-jwt-mult-creds]]] below shows the same
+        [=verifiable presentation=] as [[[#info-graph-vp-mult-creds]]], but
+        using an [=enveloping proof=] based on [[?VC-JOSE-COSE]].
         Each [=verifiable credential graph=] contains a single
-        <a href="#defn-EnvelopedVerifiableCredential">`EnvelopedVerifiableCredential`</a> instance,
-        referring, via a `data:` URL [[RFC2397]], to a verifiable credential secured via
-        an [=enveloping proof=].
+        <a href="#defn-EnvelopedVerifiableCredential">`EnvelopedVerifiableCredential`</a>
+        instance, referring, via a `data:` URL [[RFC2397]], to a verifiable
+        credential secured via an [=enveloping proof=].
       </p>
 
       <figure id="info-graph-vp-jwt-mult-creds">
@@ -7370,8 +7376,10 @@ separate rectangle, containing a single text field:
 'cYjaSdfIoJH45NIqw3MYnasGIba...'.
         ">
         <figcaption style="text-align: center;">
-          A variant of [[[#info-graph-vp-jwt]]]: information [=graphs=] associated with a [=verifiable presentation=]
-          referring to two verifiable credentials using [=enveloping proofs=] based on JOSE [[?VC-JOSE-COSE]].
+          A variant of [[[#info-graph-vp-jwt]]]: information [=graphs=]
+          associated with a [=verifiable presentation=] referring to two
+          verifiable credentials using [=enveloping proofs=] based on JOSE
+          [[?VC-JOSE-COSE]].
         </figcaption>
       </figure>
 
@@ -7385,6 +7393,41 @@ separate rectangle, containing a single text field:
 This section contains the substantive changes that have been made to this
 specification over time.
       </p>
+
+      <p>
+Changes since the
+<a href="https://www.w3.org/TR/2024/CR-vc-data-model-2.0-20240201/">
+v2.0 First Candidate Recommendation</a>:
+      </p>
+      <ul>
+        <li>
+Many editorial updates to clarify grammar, flow, and understanding of the
+specification contents.
+        </li>
+        <li>
+Required that the verifier check digest values if they are provided by the
+issuer.
+        </li>
+        <li>
+Removed the ProblemDetail integer error codes.
+        </li>
+        <li>
+Removed `@vocab` from the base context and added warnings about its use in
+application-specific context files.
+        </li>
+        <li>
+Added support for two digest formats for resource integrity.
+        </li>
+        <li>
+Finalized media types for `application/vc` and `application/vp`.
+        </li>
+        <li>
+Updates to the v2 JSON-LD Context to match new additions.
+        </li>
+        <li>
+Added a section on enveloped verifiable presentations.
+        </li>
+      </ul>
 
       <p>
 Changes since the
@@ -7476,7 +7519,7 @@ Add section on media type precision and interpretation.
         </li>
         <li>
 Ensure that `dateTimeStamp` is used for time values. Provide further guidance
-on proper usage of time values and timezones.
+on proper use of time values and timezones.
         </li>
         <li>
 Make `validFrom` optional.
@@ -7574,7 +7617,7 @@ Add this revision history section.
         <li>
 Update previous normative references that pointed to RFC3339 for date-time
 details to now normatively reference the date-time details described in
-XMLSCHEMA11-2 which more accurately reflects the usage in examples and
+XMLSCHEMA11-2 which more accurately reflect date-time use in examples and
 libraries.
         </li>
 
@@ -7642,11 +7685,14 @@ group through the W3C standardization process.
       </p>
 
       <p>
-Portions of the work on this specification have been funded by the
-United States Department of Homeland Security's Science and Technology
-Directorate under contract HSHQDC-17-C-00019. The content of this specification
-does not necessarily reflect the position or the policy of the U.S. Government
-and no official endorsement should be inferred.
+Portions of the work on this specification have been funded by the United States
+Department of Homeland Security's Science and Technology Directorate under
+contracts HSHQDC-17-C-00019, 70RSAT20T00000010/P00001, 70RSAT20T00000029,
+70RSAT21T00000016/P00001, 70RSAT23T00000005, 70RSAT23C00000030,
+70RSAT23R00000006, 70RSAT24T00000014, 70RSAT22T00000001, and the National Science
+Foundation under NSF 22-572. The content of this specification does not
+necessarily reflect the position or the policy of the U.S. Government and no
+official endorsement should be inferred.
       </p>
 
       <p>
