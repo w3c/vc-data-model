@@ -58,21 +58,6 @@
             status: "ETSI Standard TS 119 612 V2.1.1 (2015-07)",
             publisher: "ETSI"
           },
-          "VC-CONTROLLER-DOCUMENT": {
-            title: "Verifiable Credential Controller Document",
-            href: "https://w3c.github.io/vc-controller-document/",
-            authors: [
-              "Manu Sporny",
-              "Dave Longley",
-              "Markus Sabadello",
-              "Drummond Reed",
-              "Orie Steele",
-              "Christopher Allen",
-              "Michael B. Jones"
-            ],
-            status: "ED",
-            publisher: "Verifiable Credentials Working Group"
-          },
           'DEMOGRAPHICS': {
             title: 'Simple Demographics Often Identify People Uniquely',
             href: 'https://dataprivacylab.org/projects/identifiability/paper1.pdf',
@@ -184,7 +169,7 @@
             note: "v2.0", w3cid: 7382, orcid: "0000-0003-0782-2704"
           }
         ],
-        xref: ["URL", "I18N-GLOSSARY", "INFRA", "CONTROLLER-DOCUMENT"],
+        xref: ["URL", "I18N-GLOSSARY", "INFRA", "cid-1.0"],
         lint: { "informative-dfn": false },
         maxTocLevel: 3,
         inlineCSS: true
@@ -1816,7 +1801,7 @@ The value of the `issuer` [=property=] MUST be either a
 whose value is a [=URL=]; in either case, the issuer selects this
 [=URL=] to identify itself in a globally unambiguous
 way. It is RECOMMENDED that the [=URL=] be one which, if dereferenced, results
-in a controller document, as defined in [[CONTROLLER-DOCUMENT]], about the
+in a controlled identifier document, as defined in [[CID-1.0]], about the
 [=issuer=] that can be used to [=verify=] the information expressed in the
 [=credential=].
           </dd>
@@ -4672,7 +4657,7 @@ a controller of the verification method associated with the securing mechanism
           </li>
           <li>
 a controller document that is associated with the verification method used
-to verify the securing mechanism ([=map=] |controllerDocument|)
+to verify the securing mechanism ([=map=] |controlledIdentifierDocument|)
           </li>
           <li>
 zero or more warnings ([=list=] of [=ProblemDetails=] |warnings|)
@@ -4706,7 +4691,7 @@ expects a [=map=], provide |inputMediaType| and the result of [=parse JSON
 bytes to an Infra value=] given |inputData|. Set |result| to the result of the
 call to the |verifyProof| function. If the call was successful, |result| will
 contain the |status|, |document|, |mediaType|, |controller|,
-|controllerDocument|, |warnings|, and |errors| properties.
+|controlledIdentifierDocument|, |warnings|, and |errors| properties.
               </li>
               <li>
 If |result|.|status| is set to `false`, add a
