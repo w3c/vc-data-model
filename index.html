@@ -58,21 +58,6 @@
             status: "ETSI Standard TS 119 612 V2.1.1 (2015-07)",
             publisher: "ETSI"
           },
-          "VC-CONTROLLER-DOCUMENT": {
-            title: "Verifiable Credential Controller Document",
-            href: "https://w3c.github.io/vc-controller-document/",
-            authors: [
-              "Manu Sporny",
-              "Dave Longley",
-              "Markus Sabadello",
-              "Drummond Reed",
-              "Orie Steele",
-              "Christopher Allen",
-              "Michael B. Jones"
-            ],
-            status: "ED",
-            publisher: "Verifiable Credentials Working Group"
-          },
           'DEMOGRAPHICS': {
             title: 'Simple Demographics Often Identify People Uniquely',
             href: 'https://dataprivacylab.org/projects/identifiability/paper1.pdf',
@@ -184,7 +169,7 @@
             note: "v2.0", w3cid: 7382, orcid: "0000-0003-0782-2704"
           }
         ],
-        xref: ["URL", "I18N-GLOSSARY", "INFRA", "CONTROLLER-DOCUMENT"],
+        xref: ["URL", "I18N-GLOSSARY", "INFRA", "CID"],
         lint: { "informative-dfn": false },
         maxTocLevel: 3,
         inlineCSS: true
@@ -1811,13 +1796,12 @@ A [=verifiable credential=] MUST have an `issuer` [=property=].
         <dl>
           <dt><var id="defn-issuer">issuer</var></dt>
           <dd>
-The value of the `issuer` [=property=] MUST be either a
-[=URL=] or an object containing an `id` [=property=]
-whose value is a [=URL=]; in either case, the issuer selects this
-[=URL=] to identify itself in a globally unambiguous
-way. It is RECOMMENDED that the [=URL=] be one which, if dereferenced, results
-in a controller document, as defined in [[CONTROLLER-DOCUMENT]], about the
-[=issuer=] that can be used to [=verify=] the information expressed in the
+The value of the `issuer` [=property=] MUST be either a [=URL=] or an object
+containing an `id` [=property=] whose value is a [=URL=]; in either case, the
+issuer selects this [=URL=] to identify itself in a globally unambiguous way. It
+is RECOMMENDED that the [=URL=] be one which, if dereferenced, results in a
+controlled identifier document, as defined in the [[[CID]]] specification, about
+the [=issuer=] that can be used to [=verify=] the information expressed in the
 [=credential=].
           </dd>
         </dl>
@@ -4671,8 +4655,8 @@ a controller of the verification method associated with the securing mechanism
 ([=string=] |controller|)
           </li>
           <li>
-a controller document that is associated with the verification method used
-to verify the securing mechanism ([=map=] |controllerDocument|)
+a controlled identifier document that is associated with the verification method
+used to verify the securing mechanism ([=map=] |controllerDocument|)
           </li>
           <li>
 zero or more warnings ([=list=] of [=ProblemDetails=] |warnings|)
