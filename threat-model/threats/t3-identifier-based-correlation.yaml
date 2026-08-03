@@ -1,0 +1,43 @@
+id: T3
+name: Identifier-Based Correlation
+elements: [E2, P8, F3, E3]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Information Disclosure
+description: >-
+  A [=verifiable credential=] can contain long-lived identifiers that are
+  used to correlate a [=subject=] across contexts. These include
+  [=subject=] identifiers in <code>credentialSubject.id</code>, credential
+  identifiers, email addresses, government-issued identifiers, and
+  organization-issued identifiers. When a [=E2|holder=]
+  [=P8|generates a presentation=] and [=F3|exchanges=] it, any such
+  identifier disclosed to a [=E3|verifier=] can be linked to identifiers
+  disclosed elsewhere. Two [=E3|verifiers=], or an [=E1|issuer=] and a
+  [=E3|verifier=], can then collude to track the [=E2|holder=] across
+  domains and build a profile. Whether this threat is present depends on
+  deployment choices: which identifiers an [=E1|issuer=] places in a
+  credential, whether they can be selectively disclosed, and whether a
+  [=E2|holder=]'s software warns before sharing them.
+response:
+  - id: R1
+    name: Selectively Disclosable and Single-Use Identifiers
+    type: Reduce
+    description: >-
+      Deployments requiring anti-correlation properties use identifiers that
+      are selectively disclosable, bound to a single origin, single-use, or
+      replaced by short-lived single-use bearer tokens. [=Holders=] prefer
+      [=verifiable credentials=] from [=issuers=] that support selectively
+      disclosing correlating identifiers, and securing-mechanism authors
+      avoid designs that require correlating identifiers that cannot be
+      selectively disclosed.
+  - id: R2
+    name: Warn Holders Before Sharing Correlatable Identifiers
+    type: Reduce
+    description: >-
+      Software for [=E2|holders=] detects identifiers in a
+      [=verifiable credential=] that could be used to correlate the
+      [=subject=], and warns the [=E2|holder=] before they
+      [=F3|share this information=]. This lets the [=holder=] decide whether
+      the disclosure is acceptable for the interaction. It reduces
+      unintended correlation but does not prevent a [=holder=] from choosing
+      to disclose a correlatable identifier.
