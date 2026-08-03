@@ -1,0 +1,46 @@
+id: T5
+name: Cryptographic Suite Obsolescence
+elements: [P3, P10, F2, F3]
+tags: [security]
+taxonomyName: STRIDE
+taxonomyClass: Tampering
+description: >-
+  The authenticity and integrity guarantees of a [=verifiable credential=]
+  depend on the cryptography suites and libraries used to
+  [=P3|issue=] and [=P10|verify=] it. Cryptography suites and libraries have
+  a shelf life and eventually succumb to new attacks and advances in
+  technology, including the future arrival of cryptographically relevant
+  quantum computers. When a suite that secures issued [=credentials=] is
+  broken, an attacker can forge or modify a [=verifiable credential=] while
+  it is [=F2|delivered to the holder=] or [=F3|exchanged with a verifier=],
+  and the [=P10|verify=] process still reports it as authentic. This risk is
+  inherited from the cryptographic dependencies of the data model rather than
+  from the data model itself.
+response:
+  - id: R1
+    name: Cryptographic Agility and Credential Replacement
+    type: Reduce
+    description: >-
+      Production systems provide mechanisms to upgrade expired or broken
+      cryptography suites and libraries, and to invalidate and replace
+      existing [=credentials=] that were secured with them. Supporting more
+      than one securing mechanism, and being able to reissue affected
+      [=credentials=], allows a deployment to migrate away from a suite once
+      it is weakened.
+  - id: R2
+    name: Monitoring and Bounded Cryptoperiods
+    type: Reduce
+    description: >-
+      Operators monitor the state of the cryptography suites and libraries
+      they depend on so that weaknesses are detected and acted on. Bounding
+      key cryptoperiods and credential validity periods limits the window in
+      which a broken or compromised suite can be exploited before affected
+      [=credentials=] expire.
+  - id: R3
+    name: Audit and Red Teaming of Cryptographic Implementations
+    type: Reduce
+    description: >-
+      Implementing and auditing cryptography systems requires substantial
+      experience. Deployments reduce the chance of a latent weakness by
+      having experienced reviewers audit the suites and libraries they use,
+      and by using red teaming to remove bias from those security reviews.
