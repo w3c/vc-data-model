@@ -1,0 +1,76 @@
+%% Data Flow Diagram — W3C Verifiable Credentials Data Model Threat Model
+%% Notation follows the W3C Threat Modeling Guide and reuses the visual
+%% language of the vc-recognized-entities DFD:
+%%   E = External Entity (blue rectangle)   P = Process (green rounded rect)
+%%   F = Data Flow (labelled arrow)          S = Data Store (pink cylinder)
+%%   O = Data Object (mauve trapezoid)       C = Contained System (dashed box)
+flowchart LR
+
+  %% ---------- Issuer System (C1) ----------
+  subgraph C1["C1: Issuer System"]
+    direction TB
+    E1["E1: Issuer"]
+    P1("P1: Establish Confidence")
+    P2("P2: Assemble Verifiable Credential")
+    P3("P3: Issue Verifiable Credential")
+    P4("P4: Publish Status List")
+    P5("P5: Update Status List")
+    S1[("S1: Status List Storage")]
+
+    P1 --> P2
+    P2 --> P3
+    P4 --> S1
+    P5 --> S1
+  end
+
+  %% ---------- Holder System (C2) ----------
+  subgraph C2["C2: Holder System"]
+    direction TB
+    E2["E2: Holder"]
+    P6("P6: Store Verifiable Credential")
+    P7("P7: Engage in Workflow (Holder)")
+    P8("P8: Generate Presentation")
+    S2[("S2: Holder Storage")]
+
+    P6 --> S2
+    S2 --> P8
+    P7 --> P8
+  end
+
+  %% ---------- Verifier System (C3) ----------
+  subgraph C3["C3: Verifier System"]
+    direction TB
+    E3["E3: Verifier"]
+    P9("P9: Engage in Workflow (Verifier)")
+    P10("P10: Verify Presentation")
+    P11("P11: Verify Credential Status")
+    P12("P12: Validate Credential(s)")
+
+    P9 --> P10
+    P10 --> P11
+    P11 --> P12
+  end
+
+  %% ---------- Force C1 -> C2 -> C3 left-to-right ordering ----------
+  C1 ~~~ C2
+  C2 ~~~ C3
+
+  %% ---------- Cross-boundary Data Flows (labelled arrows) ----------
+  P7 -- "F1: Establish Confidence in Subject" --> P1
+  P3 -- "F2: Deliver Verifiable Credential" --> P6
+  P8 -- "F3: Exchange Presentation" --> P9
+  P11 -- "F4: Check Credential Status" --> S1
+
+  %% ---------- Element styling (matches vc-recognized-entities palette) ----------
+  classDef entity  fill:#c9daf8,stroke:#000,color:#000;
+  classDef process fill:#d9ead3,stroke:#000,color:#000,rx:10,ry:10;
+  classDef store   fill:#f4cccc,stroke:#000,color:#000;
+  classDef object  fill:#c27ba0,stroke:#000,color:#000;
+
+  class E1,E2,E3 entity;
+  class P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12 process;
+  class S1,S2 store;
+
+  style C1 fill:#fff0e5,stroke:#333,stroke-dasharray:6 4;
+  style C2 fill:#fff0e5,stroke:#333,stroke-dasharray:6 4;
+  style C3 fill:#fff0e5,stroke:#333,stroke-dasharray:6 4;
