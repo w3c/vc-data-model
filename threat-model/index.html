@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Verifiable Credentials Data Model Threat Model</title>
+  <script src="https://www.w3.org/Tools/respec/respec-w3c"
+    class="remove"></script>
+  <script src="threats/js-yaml.min.js"></script>
+  <script src="threats/threat-model.js"></script>
+
+  <script class='remove'>
+    // See https://github.com/w3c/respec/wiki/ for how to configure ReSpec
+    var respecConfig = {
+      specStatus: "NOTE",
+      group: "vc",
+      edDraftURI: "https://w3c.github.io/vc-data-model/threat-model/",
+      latestVersion: "https://www.w3.org/TR/vc-data-model/threat-model/",
+      github: {
+        repoURL: "https://github.com/w3c/vc-data-model/",
+        branch: "main"
+      },
+      editors: [{
+        name: "Manu Sporny",
+        company: "Digital Bazaar",
+        w3cid: 41758
+      }],
+      noRecTrack: "true",
+      maxTocLevel: 4,
+      xref: ["VC-DATA-MODEL-2.0", "CID", "DID", "VC-DATA-INTEGRITY"],
+      preProcess: [window.ThreatModel.render],
+      postProcess: [(config, document) => {
+        config.thisVersion =
+          config.thisVersion.replace(/\/$/, '') + '/threat-model/';
+        const link = document.querySelector(".head a.u-url");
+        if(link) {
+          link.href = config.thisVersion;
+          link.textContent = config.thisVersion;
+        }
+      }]
+    };
+  </script>
+  <link rel="stylesheet" href="threats/threat-model.css" />
+  <!--
+    The threat definitions are loaded at render time from
+    threats/outline.yaml and the YAML threat files it lists. When
+    previewing this document locally, serve the directory over HTTP (for
+    example, `npx http-server`); browsers cannot fetch() the YAML files
+    from a file:// URL.
+  -->
+</head>
+
+<body>
+  <section id="abstract">
+    <p>
+This document describes a threat model for the
+<a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials Data
+Model</a> specification. It identifies and analyzes security and privacy
+threats specific to ecosystems in which [=issuers=] issue
+[=verifiable credentials=] to [=holders=], who in turn present
+[=verifiable presentations=] to [=verifiers=].
+    </p>
+  </section>
+  <section id="sotd">
+    <p>
+This threat model is a work in progress. It is published alongside the
+Verifiable Credentials Data Model specification to inform implementers and
+ecosystem designers of the security and privacy considerations relevant to
+deployments of the specification. Feedback and proposed additions are
+welcome via the
+<a href="https://github.com/w3c/vc-data-model/issues">issue tracker</a>.
+    </p>
+  </section>
+  <section id="Introduction">
+    <h2>Introduction</h2>
+    <p>
+Threat modeling is a vital part of specification development. This document
+provides a threat model for the Verifiable Credentials Data Model
+specification, which defines a data model for expressing cryptographically
+verifiable claims made by an [=issuer=] about one or more [=subjects=].
+    </p>
+    <p>
+This threat model follows the methodology described in the
+<a href="https://www.w3.org/TR/threat-modeling-guide/">W3C Threat Modeling
+Guide</a> and classifies threats using the STRIDE taxonomy. Threats are
+grouped into five categories:
+    </p>
+    <ul>
+      <li>
+<strong>Target Threats</strong> are threats the specification was designed
+to address.
+      </li>
+      <li>
+<strong>Implementation Threats</strong> are threats that implementers must
+handle; the specification leaves the choice of mitigation open.
+      </li>
+      <li>
+<strong>Deployment Threats</strong> are threats that arise from how systems
+are configured and operated.
+      </li>
+      <li>
+<strong>External Threats</strong> are real-world risks acknowledged as out
+of scope for this version of the specification.
+      </li>
+      <li>
+<strong>Dependency Threats</strong> are threats inherited from technologies
+the specification depends upon.
+      </li>
+    </ul>
+
+    <section id="threat-model-description">
+      <h3>Description</h3>
+      <p>
+The Verifiable Credentials Data Model defines how an [=issuer=] makes
+cryptographically verifiable claims about one or more [=subjects=]. For this
+threat model, we consider a minimal instantiation of a verifiable
+credentials ecosystem consisting of three roles: the
+<strong>[=E1|Issuer=] (E1)</strong>, who establishes confidence in a
+[=subject=] and issues a [=verifiable credential=]; the
+<strong>[=E2|Holder=] (E2)</strong>, who stores [=verifiable credentials=]
+and generates [=verifiable presentations=] from them; and the
+<strong>[=E3|Verifier=] (E3)</strong>, who receives a
+[=verifiable presentation=], verifies it, checks the status of any
+[=verifiable credentials=] it contains, and validates the result against its
+own policy.
+      </p>
+      <p>
+The core property the specification provides is that a [=E3|verifier=]
+receiving a [=verifiable presentation=] can determine, in an automated and
+cryptographically verifiable way, whether the [=verifiable credentials=] it
+contains are authentic, unrevoked, and fit for the verifier's purpose. This
+holds even when a credential arrives long after it was issued, over
+untrusted networks, and through the [=holder=], and it requires no direct
+contact between the [=verifier=] and the [=issuer=] beyond retrieving public
+status information.
+      </p>
+      <p class="note" role="note">
+<span class="marker">Note:</span> We do NOT model potential attackers as
+first-class elements, as over-characterizing attackers can lead to analysis
+bias that is better avoided.
+      </p>
+    </section>
+
+    <section id="threat-model-data-flow-diagram">
+      <h3>Data Flow Diagram for the Verifiable Credentials Ecosystem</h3>
+      <p>
+The data flow diagram below illustrates the key elements and data flows in a
+minimal verifiable credentials ecosystem. It shows the [=E1|Issuer=] (E1)
+establishing confidence in the [=E2|Holder=] (E2) as a [=subject=]
+([=F1|F1=]), assembling and issuing a [=verifiable credential=] that is
+delivered to the holder ([=F2|F2=]) and placed in [=S2|Holder Storage=]
+(S2). The holder later generates a [=verifiable presentation=] and exchanges
+it with the [=E3|Verifier=] (E3) ([=F3|F3=]), whose verification pipeline
+verifies the presentation, checks credential status against the issuer's
+[=S1|Status List Storage=] (S1) ([=F4|F4=]), and validates the result.
+      </p>
+
+      <img src="diagrams/dfd.svg"
+        alt="Data flow diagram showing three dashed system boundaries: the
+Issuer System (C1) containing the Establish Confidence (P1), Assemble
+Verifiable Credential (P2), Issue Verifiable Credential (P3), Publish Status
+List (P4), and Update Status List (P5) processes and Status List Storage
+(S1); the Holder System (C2) containing the Store Verifiable Credential
+(P6), Engage in Workflow (P7), and Generate Presentation (P8) processes and
+Holder Storage (S2); and the Verifier System (C3) containing the Engage in
+Workflow (P9), Verify Presentation (P10), Verify Credential Status (P11),
+and Validate Credentials (P12) processes. Confidence is established from the
+Holder System to the Issuer System via flow F1, a verifiable credential is
+delivered from the Issuer System to the Holder System via flow F2, a
+verifiable presentation is exchanged from the Holder System to the Verifier
+System via flow F3, and the Verifier System checks credential status against
+the Issuer System's Status List Storage via flow F4.">
+
+      <p>
+The following notation is used in the diagram description and dictionary:
+      </p>
+      <ul>
+        <li>
+<strong>E</strong> denotes an External Entity (a human or legal person
+outside the system boundary)
+        </li>
+        <li>
+<strong>P</strong> denotes a Process (a running algorithm that transforms
+data)
+        </li>
+        <li>
+<strong>F</strong> denotes a Data Flow (movement of data between elements)
+        </li>
+        <li>
+<strong>S</strong> denotes a Data Store (persistent or ephemeral storage)
+        </li>
+        <li>
+<strong>O</strong> denotes a Data Object (a self-contained, transferable
+artifact)
+        </li>
+        <li>
+<strong>C</strong> denotes a Contained System Boundary (a collection of
+elements under a single authority)
+        </li>
+      </ul>
+    </section>
+
+    <section id="threat-model-architecture-dictionary">
+      <h3>Dictionary</h3>
+      <style>
+        table.dictionary,
+        table.dictionary th,
+        table.dictionary td {
+          border: thin solid rgb(176, 176, 176);
+          border-collapse: collapse;
+          padding: 5px;
+        }
+        table.dictionary td.left {
+          width: 12em;
+        }
+      </style>
+      <p class="issue" title="Dictionary entries are placeholders">
+The dictionary entries below are starting-point definitions to be reviewed
+and expanded. Each entry should describe the element in enough detail to
+support the threat analysis that references it.
+      </p>
+      <table class="dictionary">
+        <tbody>
+          <tr>
+            <td class="left">
+              <dfn data-lt="E1|Issuer">E1 Issuer</dfn>
+            </td>
+            <td>
+An entity that establishes confidence in a [=subject=], assembles a
+[=verifiable credential=] expressing claims about that subject, issues it,
+and publishes and maintains the status information used to determine whether
+the credential remains valid.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="E2|Holder">E2 Holder</dfn>
+            </td>
+            <td>
+A person or organization that receives [=verifiable credentials=], stores
+them, and generates [=verifiable presentations=] to share selected claims
+with [=verifiers=]. The holder is typically, though not always, the
+[=subject=] of the credentials it holds.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="E3|Verifier">E3 Verifier</dfn>
+            </td>
+            <td>
+An entity that receives a [=verifiable presentation=] and must determine
+whether to rely on the [=verifiable credentials=] it contains, by verifying
+the presentation, checking credential status, and validating the result
+against its own policy.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P1|Establish Confidence">P1 Establish
+Confidence</dfn>
+            </td>
+            <td>
+The process by which an issuer gains sufficient confidence in the identity
+or attributes of a [=subject=] before issuing a [=verifiable credential=].
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P2|Assemble Verifiable Credential">P2 Assemble
+Verifiable Credential</dfn>
+            </td>
+            <td>
+The process by which an issuer composes the claims, metadata, and status
+information of a [=verifiable credential=] prior to securing it.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P3|Issue Verifiable Credential">P3 Issue
+Verifiable Credential</dfn>
+            </td>
+            <td>
+The process by which an issuer secures the assembled credential and delivers
+it to the holder.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P4|Publish Status List">P4 Publish Status
+List</dfn>
+            </td>
+            <td>
+The process by which an issuer publishes the status information used by
+verifiers to determine whether a credential has been revoked or suspended.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P5|Update Status List">P5 Update Status
+List</dfn>
+            </td>
+            <td>
+The process by which an issuer updates the published status information, for
+example to revoke or suspend a previously issued credential.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P6|Store Verifiable Credential">P6 Store
+Verifiable Credential</dfn>
+            </td>
+            <td>
+The process by which a holder places a received [=verifiable credential=]
+into [=S2|Holder Storage=] and retrieves it later.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P7|Engage in Workflow (Holder)">P7 Engage in
+Workflow (Holder)</dfn>
+            </td>
+            <td>
+The process by which a holder participates in an interaction workflow,
+including responding to requests and consenting to share credentials.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P8|Generate Presentation">P8 Generate
+Presentation</dfn>
+            </td>
+            <td>
+The process by which a holder produces a [=verifiable presentation=] from
+one or more stored [=verifiable credentials=].
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P9|Engage in Workflow (Verifier)">P9 Engage in
+Workflow (Verifier)</dfn>
+            </td>
+            <td>
+The process by which a verifier participates in an interaction workflow,
+including requesting and receiving a [=verifiable presentation=].
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P10|Verify Presentation">P10 Verify
+Presentation</dfn>
+            </td>
+            <td>
+The process by which a verifier cryptographically checks a received
+[=verifiable presentation=] and the [=verifiable credentials=] it contains.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P11|Verify Credential Status">P11 Verify
+Credential Status</dfn>
+            </td>
+            <td>
+The process by which a verifier checks the status of a [=verifiable
+credential=] against the issuer's published status information in
+[=S1|Status List Storage=].
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="P12|Validate Credential(s)">P12 Validate
+Credential(s)</dfn>
+            </td>
+            <td>
+The process by which a verifier evaluates the verified, unrevoked
+credential(s) against its own business policy to decide whether to accept
+them.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="F1|Establish Confidence in Subject">F1 Establish
+Confidence in Subject</dfn>
+            </td>
+            <td>
+The data flow by which the holder (as [=subject=]) provides the issuer with
+the information it needs to establish confidence prior to issuance. This
+flow crosses the trust boundary between the holder's authority and the
+issuer's authority.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="F2|Deliver Verifiable Credential">F2 Deliver
+Verifiable Credential</dfn>
+            </td>
+            <td>
+The data flow by which a [=verifiable credential=] travels from the
+[=C1|issuer system=] to the [=C2|holder system=].
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="F3|Exchange Presentation">F3 Exchange
+Presentation</dfn>
+            </td>
+            <td>
+The data flow by which a holder delivers a [=verifiable presentation=] to
+the [=C3|verifier system=]. This flow crosses the trust boundary between the
+holder's authority and the verifier's authority.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="F4|Check Credential Status">F4 Check Credential
+Status</dfn>
+            </td>
+            <td>
+The data flow by which the verifier retrieves published status information
+from the issuer's [=S1|Status List Storage=]. This flow crosses the trust
+boundary between the verifier's authority and the issuer's authority.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="S1|Status List Storage">S1 Status List
+Storage</dfn>
+            </td>
+            <td>
+The storage within the [=C1|issuer system=] holding the published status
+information for issued credentials, retrievable by verifiers.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="S2|Holder Storage">S2 Holder Storage</dfn>
+            </td>
+            <td>
+The persistent storage within the [=C2|holder system=] where [=verifiable
+credentials=] are kept, typically the storage of a digital wallet
+application.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="C1|Issuer System">C1 Issuer System</dfn>
+            </td>
+            <td>
+The system boundary, typically a server or service operated by or for the
+issuer, within which the issuer's processes run and [=S1|Status List
+Storage=] resides.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="C2|Holder System">C2 Holder System</dfn>
+            </td>
+            <td>
+The system boundary, typically a mobile or desktop digital wallet
+application, within which the holder's processes run and [=S2|Holder
+Storage=] resides.
+            </td>
+          </tr>
+          <tr>
+            <td class="left">
+              <dfn data-lt="C3|Verifier System">C3 Verifier System</dfn>
+            </td>
+            <td>
+The system boundary, typically an automated verification service, within
+which the verifier's processes run and its trust and policy decisions are
+configured.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+
+  <section id="threat-model-stakeholders">
+    <h2>Stakeholders</h2>
+
+    <h3>E1 Issuer</h3>
+    <p>
+An issuer is an entity that makes cryptographically verifiable claims about
+one or more [=subjects=] by issuing [=verifiable credentials=]. Issuers
+range from universities, government agencies, and employers to automated
+services.
+    </p>
+    <p>
+The issuer's primary goals are that only credentials it intends to issue
+carry its authority, that it can revoke or suspend credentials it has
+issued, and that the credentials it issues remain verifiable by the parties
+intended to rely on them.
+    </p>
+
+    <h3>E2 Holder</h3>
+    <p>
+A holder is a person or organization that receives [=verifiable
+credentials=] and presents them to verifiers. The holder is typically the
+[=subject=] of the credentials it holds and stores them in a digital wallet.
+    </p>
+    <p>
+The holder's primary goal is that the presentations they make are accepted
+by verifiers. Holders also have a strong interest in privacy: they do not
+want the act of presenting credentials to enable issuers, verifiers, or
+third parties to track their activities across contexts, and they want to
+disclose no more information than each interaction requires.
+    </p>
+
+    <h3>E3 Verifier</h3>
+    <p>
+A verifier is an entity that receives [=verifiable presentations=] and must
+decide whether to rely on them. Verifiers range from automated services
+processing high volumes of presentations to individuals checking a single
+credential.
+    </p>
+    <p>
+The verifier's primary goal is to accept only credentials that are
+authentic, unrevoked, and used for the purpose and in the context the issuer
+intended. Verifiers also have a strong interest in availability:
+verification must complete within their operational time budgets even when
+processing untrusted, and potentially malicious, input.
+    </p>
+  </section>
+
+  <section id="threat-model-threats">
+    <h2>Threats</h2>
+    <section class="tm-toc">
+    </section>
+    <section class="tm-details">
+    </section>
+  </section>
+
+  <section id="threat-model-contributing">
+    <h3>Contributing</h3>
+    <p>
+This threat model is maintained alongside the Verifiable Credentials Data
+Model specification. Feedback, bug reports, and proposed additions are
+welcome via the
+<a href="https://github.com/w3c/vc-data-model/issues/new">issue
+tracker</a>.
+    </p>
+    <section id="threat-model-adding-a-threat">
+      <h4>Adding a Threat</h4>
+      <p>
+To add a new threat to the model, provide the following components:
+      </p>
+      <ol>
+        <li>A short, descriptive name</li>
+        <li>
+A unique ID (letter <strong>T</strong> followed by an integer,
+e.g., <strong>T1</strong>)
+        </li>
+        <li>
+A description of the threat with enough detail for readers to understand
+its scope
+        </li>
+        <li>
+One or more responses, each with a name, unique ID (letter <strong>R
+</strong> followed by an integer), response type (Eliminate, Reduce,
+Transfer, or Accept), and description
+        </li>
+        <li>
+A list of affected DFD elements drawn from the dictionary above
+        </li>
+        <li>
+The threat taxonomy used (e.g., STRIDE) and the threat class within that
+taxonomy
+        </li>
+      </ol>
+      <p>
+Create a YAML file following the pattern of the Data Integrity threat
+model's threat files, then register it in <code>threats/outline.yaml</code>
+by adding its filename to the <code>files</code> list and its threat ID to
+the appropriate category in the <code>categories</code> list. No changes to
+<code>index.html</code> are required.
+      </p>
+    </section>
+  </section>
+
+</body>
+
+</html>
