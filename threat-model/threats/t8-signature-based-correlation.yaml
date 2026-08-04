@@ -1,0 +1,32 @@
+id: T8
+name: Signature-Based Correlation
+elements: [E1, E3, P8, F3, P10]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Information Disclosure
+description: >-
+  The values that make up a [=securing mechanism=] on a [=verifiable
+  credential=] can themselves be correlating, independent of the claims they
+  protect. When the binary value of a digital signature, the timestamp
+  associated with its creation, or cryptographic material such as a public key
+  identifier remains the same across multiple sessions or domains, a
+  [=E3|verifier=] that receives the credential more than once, or two
+  [=E3|verifiers=] acting in collusion, can link those presentations to the same
+  [=E2|holder=] even when no correlating identifier appears in the payload. This
+  threat depends on the [=securing mechanism=] an [=E1|issuer=] chooses when it
+  [=P8|generates=] and secures a credential.
+response:
+  - id: R1
+    name: Unlinkable Disclosure
+    type: Reduce
+    description: >-
+      When strong anti-correlation properties are required, [=E1|issuers=]
+      produce [=verifiable credentials=] whose signature values and metadata are
+      regenerated for each [=verifiable presentation=], using a securing
+      mechanism that supports unlinkable disclosure such as [[[?VC-DI-BBS]]].
+      [=E3|Verifiers=] prefer [=verifiable presentations=] that use such
+      technology to enhance privacy for [=holders=] and [=subjects=]. Unlinkable
+      signatures do not remove correlation that comes from other information in
+      the credential, which is addressed by
+      [[[#t3-identifier-based-correlation]]] and
+      [[[#t7-excessive-data-disclosure]]].
