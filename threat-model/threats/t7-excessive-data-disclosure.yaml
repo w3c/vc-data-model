@@ -1,0 +1,43 @@
+id: T7
+name: Excessive Data Disclosure
+elements: [E1, E2, E3, P2, P8, P9, F3]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Information Disclosure
+description: >-
+  A [=verifiable credential=] can carry more personally identifiable
+  information than an interaction requires. An [=E1|issuer=] that
+  [=P2|assembles=] a credential containing specific data, such as a full date
+  of birth, a home address, or a driver's identification number, exposes the
+  [=subject=] to disclosure of that data whenever the credential is used, even
+  when the [=E3|verifier=] needs only a narrow fact such as whether the subject
+  is over a certain age. A [=E3|verifier=] that requests more than the minimum
+  necessary compounds the exposure and takes on liability for handling
+  sensitive data it does not need. Even data that appears innocuous, such as a
+  birthdate combined with a postal code, has strong de-anonymization power once
+  disclosed. This threat arises from choices made when credentials are designed
+  and when verifiers frame their requests, rather than from the data model
+  itself.
+response:
+  - id: R1
+    name: Abstract Claims and Selective Disclosure
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] limit the information in a [=verifiable credential=] to the
+      smallest set required for its intended purposes. One approach expresses an
+      abstract [=property=], such as <code>ageOver</code>, that answers a
+      [=E3|verifier's=] question without revealing the underlying sensitive
+      value such as a birthdate. Another approach atomizes the information or
+      uses a securing mechanism that supports [=selective disclosure=], so the
+      [=E2|holder=] discloses only the individual properties an interaction
+      requires.
+  - id: R2
+    name: Verifier Data Minimization
+    type: Reduce
+    description: >-
+      [=E3|Verifiers=] request only the information strictly necessary for a
+      specific transaction. This reduces the verifier's liability for handling
+      sensitive data and enhances the [=subject's=] and [=E2|holder's=] privacy.
+      Software for [=E2|holders=] discloses what a [=verifier=] is requesting so
+      the [=holder=] can decline to share information that is unnecessary, and
+      gives the [=holder=] access to a log of what was shared.
