@@ -1,0 +1,43 @@
+id: T10
+name: Device Tracking and Fingerprinting
+elements: [E2, E3, P8, P11, F4, C2]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Information Disclosure
+description: >-
+  Mechanisms external to [=verifiable credentials=] track and correlate
+  individuals on the Internet, including Internet protocol address tracking, web
+  browser fingerprinting, evercookies, advertising network trackers, mobile
+  network position information, and Global Positioning System interfaces. Using
+  [=verifiable credentials=] alongside these technologies can reveal new
+  correlatable information; for example, a birthdate combined with a device's
+  location can strongly correlate an individual across multiple websites.
+  Fetching an external resource associated with a credential, such as a linked
+  image or a revocation list, also signals activity to the server hosting it. A
+  [=E2|holder's=] wallet fetching such a resource reveals the holder's activity,
+  and a [=E3|verifier=] fetching a status list signals to the [=E1|issuer=] that
+  it has received a specific credential. These tracking technologies exist
+  outside the data model, so this risk arises from the operating environment
+  rather than from the specification.
+response:
+  - id: R1
+    name: Oblivious Retrieval of External Resources
+    type: Reduce
+    description: >-
+      Implementers fetch external resources associated with a
+      [=verifiable credential=] or [=verifiable presentation=] using a
+      privacy-preserving transport such as Oblivious HTTP [[?RFC9458]], which
+      lets a client make requests to an origin server without that server being
+      able to link the requests to the client or identify them as coming from a
+      single client. This reduces the chance that a [=E2|holder=] is tracked
+      when a wallet fetches linked content, and the chance that a
+      [=E3|verifier=] signals to an [=E1|issuer=] that it has received a
+      specific credential.
+  - id: R2
+    name: Prevent Combination with Tracking Technologies
+    type: Reduce
+    description: >-
+      Privacy-respecting systems aim to prevent the combination of other
+      tracking technologies with [=verifiable credentials=]. In some cases,
+      tracking technologies are disabled on devices that transmit
+      [=verifiable credentials=] on behalf of a [=E2|holder=].
