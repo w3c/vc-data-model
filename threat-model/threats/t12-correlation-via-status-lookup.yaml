@@ -1,0 +1,43 @@
+id: T12
+name: Correlation via Status and Revocation Lookup
+elements: [E1, E3, P5, P11, F4, S1]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Information Disclosure
+description: >-
+  When a [=E3|verifier=] [=P11|checks the status=] of a [=verifiable
+  credential=], the act of looking up status information can leak that an
+  interaction is taking place. A revocation or status mechanism that is unique
+  per [=credential=], or that requires submitting a [=credential's=] identifier
+  to a centralized query interface, tells the [=E1|issuer=] operating
+  [=S1|status list storage=] which credential is being checked and, by
+  inference, that a specific [=E3|verifier=] is likely interacting with the
+  [=E2|holder=]. This enables an [=E1|issuer=] to learn everywhere a credential
+  is presented and enables [=issuers=] and [=verifiers=] to collude to correlate
+  the holder. Even a bulk, privacy-preserving status list leaks information when
+  the [=E1|issuer=] [=P5|updates the status list=] frequently: a [=E3|verifier=]
+  refetches it often to stay current, and that pattern of retrieval reveals the
+  verifier's interest in that particular status list and, by extension, in the
+  population of [=subjects=] the list covers. Whether this threat is present
+  depends on the status mechanism an [=E1|issuer=] deploys and how often it is
+  updated.
+response:
+  - id: R1
+    name: Privacy-Preserving Status Mechanisms
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] avoid status mechanisms, such as per-credential revocation
+      lists, that reveal which [=credential=] is being checked during
+      [=P11|verification=]. Status mechanisms that do not depend on submitting a
+      unique [=credential=] identifier to a query interface, such as a
+      privacy-preserving status list retrieved in bulk, avoid signaling
+      individual lookups. Serving status information from a globally distributed
+      service further reduces the ability to correlate lookups.
+  - id: R2
+    name: Warn and Reject on Privacy-Harming Status Checks
+    type: Reduce
+    description: >-
+      Software for [=E2|holders=] warns when a [=credential=] carries status
+      information that could lead to a privacy violation during verification.
+      [=E3|Verifiers=] consider rejecting [=credentials=] whose status checks
+      produce privacy violations or enable substandard privacy practices.
