@@ -1,0 +1,29 @@
+id: T15
+name: Disclosure to a Malicious or Deceptive Verifier
+elements: [E2, E3, P8, F3]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Spoofing
+description: >-
+  When a [=E2|holder=] chooses to share information with a [=E3|verifier=], the
+  verifier can be acting in bad faith and request information that could harm
+  the holder. For example, a [=E3|verifier=] might ask for a bank account
+  number, which could then be combined with other information to defraud the
+  [=E2|holder=] or their bank. The data model describes the structure of a
+  [=verifiable presentation=] but does not by itself prevent a holder from
+  disclosing sensitive values to the wrong party, so this threat arises from the
+  interaction rather than from the specification.
+response:
+  - id: R1
+    name: Tokenize Sensitive Values
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] tokenize as much information as possible so that
+      accidentally transmitting a [=credential=] to the wrong [=E3|verifier=] is
+      not catastrophic. For example, instead of a bank account number, a bank
+      issues a [=verifiable credential=] containing a balance-checking token
+      that lets a [=verifier=] confirm a balance is above a threshold without
+      learning the account number or the exact balance, and the value of the
+      token is bounded by a short validity period. Even if the [=holder=] shares
+      the token with the wrong party, the attacker cannot recover the underlying
+      sensitive value.
