@@ -1,0 +1,42 @@
+id: T14
+name: Correlation via Patterns of Use
+elements: [E2, E3, P8, F3, P9]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Information Disclosure
+description: >-
+  Even when individual disclosures are minimized, the pattern in which
+  [=verifiable credentials=] are presented can lead to de-anonymization. When
+  the same [=verifiable credential=] is presented to the same [=E3|verifier=]
+  more than once, the verifier can infer it is dealing with the same individual.
+  When the same credential is presented to different [=E3|verifiers=] who
+  collude, or a third party has access to transaction records from both, an
+  observer can infer the same person controls both accounts. A [=subject=]
+  identifier that is stable across [=presentations=] links them even when the
+  credentials differ, and underlying information such as a postal code, age, and
+  gender can be matched against an existing profile. In some settings
+  correlation is a deliberate requirement, such as prescription monitoring, and
+  in others it is intended, such as logging in with a common persona; the threat
+  is the unintended or unexpected correlation that arises from presentation.
+  Whether it is present depends on how [=holders=] and [=E1|issuers=] design and
+  use credentials.
+response:
+  - id: R1
+    name: Single-Use Credentials and Fresh Identifiers
+    type: Reduce
+    description: >-
+      Software for [=E2|holders=] provides a globally unique [=subject=]
+      identifier for a given [=verifiable credential=] and does not reuse that
+      credential, so a credential itself cannot be used to track the holder.
+      Preferring single-use [=verifiable credentials=] wherever possible also
+      assures [=E3|verifiers=] that the data is fresh and leaves attackers
+      nothing to steal.
+  - id: R2
+    name: Avoid Long-Lived Correlating Identifiers
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] avoid associating personally identifiable information with
+      any long-lived [=subject=] identifier, and avoid issuing [=credentials=]
+      whose reuse enables them to correlate patterns of use. These techniques
+      are not always practical or compatible with a required use, so some
+      correlation remains unavoidable.
