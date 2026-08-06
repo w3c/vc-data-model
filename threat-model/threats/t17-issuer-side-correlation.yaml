@@ -1,0 +1,40 @@
+id: T17
+name: Issuer-Side Correlation and Privacy Subversion
+elements: [E1, E2, P2, P3, P4, F2]
+tags: [privacy]
+taxonomyName: STRIDE
+taxonomyClass: Information Disclosure
+description: >-
+  Many privacy protections depend on active support from the [=E1|issuer=], and
+  on the issuer not deliberately subverting them. An [=E1|issuer=] that makes
+  its [=verifiable credentials=] short-lived with automatic renewal can
+  correlate a [=E2|holder's=] behavior by learning each time a credential is
+  renewed, even when the holder uses the credential without the issuer's direct
+  knowledge. An issuer can also undermine a protection it appears to offer; for
+  example, signing with a scheme that protects against signature-based
+  correlation while minting a unique key for each issued [=credential=], which
+  lets the issuer track [=presentations=] even though a [=E3|verifier=] cannot.
+  Finally, the identifiers and claim types an issuer chooses can leak data, such
+  as a driver's license revealing the issuer's jurisdiction and the
+  [=subject's=] residence. This threat depends on issuer behavior and is not
+  something the data model can prevent on its own.
+response:
+  - id: R1
+    name: Avoid Correlating Issuance Practices
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] avoid issuance practices that let them correlate patterns
+      of use, such as very short validity periods combined with automatic
+      renewal, and avoid minting a unique key per [=credential=] when using a
+      signature scheme intended to prevent signature-based correlation. Software
+      for [=E2|holders=] warns the holder when it repeatedly uses credentials
+      with short lifespans that could enable behavior correlation.
+  - id: R2
+    name: Mask Leaky Metadata
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] limit the data they leak through identifiers and claim
+      types, for example by using a shared [=issuer=] identifier at a state or
+      national level rather than one that reveals a smaller municipality.
+      [=E3|Verifiers=] use [=holder=] attestation mechanisms that prove an
+      [=issuer=] belongs to a trusted set without disclosing the exact issuer.
