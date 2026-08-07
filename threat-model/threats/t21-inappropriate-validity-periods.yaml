@@ -1,0 +1,27 @@
+id: T21
+name: Inappropriate Validity Periods
+elements: [E1, P2, P3, P10, P12]
+tags: [security]
+taxonomyName: STRIDE
+taxonomyClass: Tampering
+description: >-
+  When a [=verifiable credential=] carries highly dynamic information, the
+  choice of validity period affects security. A validity period that extends
+  beyond the time the information is intended to be used leaves a window in
+  which a malicious actor can rely on stale information that no longer reflects
+  reality. A validity period shorter than the information's useful lifetime
+  places a burden on [=E2|holders=] and [=E3|verifiers=] through frequent
+  reissuance and checking. Setting a validity period that does not match the
+  volatility of the underlying information is therefore a source of risk. This
+  threat depends on choices an [=E1|issuer=] makes when it [=P2|assembles=] a
+  credential.
+response:
+  - id: R1
+    name: Match Validity Period to Information Lifetime
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] set the validity period of a [=verifiable credential=] to
+      match the use case and the expected lifetime of the information it
+      contains, so that highly dynamic information is not treated as current for
+      longer than it remains accurate, while stable information does not impose
+      unnecessary reissuance on [=E2|holders=] and [=E3|verifiers=].
