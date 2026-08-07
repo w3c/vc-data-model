@@ -1,0 +1,39 @@
+id: T19
+name: Tampering with Unprotected External Resources
+elements: [P2, P10, P12, F2, C3]
+tags: [security]
+taxonomyName: STRIDE
+taxonomyClass: Tampering
+description: >-
+  A [=verifiable credential=] often contains URLs to data that resides outside
+  the credential, such as images, JSON-LD extension contexts, JSON Schemas, and
+  other machine-readable data. Because this linked content lives outside the
+  protection of the [=securing mechanism=], it is not protected against
+  tampering. An attacker who modifies an external resource whose content affects
+  how a credential is processed can introduce vulnerabilities into a consumer's
+  application, even though the credential's own [=P10|verification=] still
+  succeeds. The specification leaves the choice of whether and how to protect
+  external resources to implementers.
+response:
+  - id: R1
+    name: Related Resource Integrity Protection
+    type: Reduce
+    description: >-
+      For external resources whose content changes could introduce security
+      vulnerabilities, implementers use the integrity-protection mechanism for
+      related resources defined by this specification, which binds a digest of
+      each external resource into the protected credential so that tampering is
+      detected. The mechanism is not needed for external resources that do not
+      affect the credential's security.
+  - id: R2
+    name: Use Known-Good Cached Values
+    type: Reduce
+    description: >-
+      For external references whose content is fixed and permanently cacheable,
+      such as JSON-LD context files and JSON Schemas, consumers resolve them
+      from a local store of known-good values rather than fetching them from the
+      network at processing time. Pinning these resources to vetted, immutable
+      copies removes the opportunity for an attacker to alter them and also
+      avoids the network request that would otherwise leak activity,
+      complementing the protections in
+      [[[#t10-device-tracking-and-fingerprinting]]].
