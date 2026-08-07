@@ -1,0 +1,36 @@
+id: T18
+name: Signing Key Compromise and Mismanagement
+elements: [E1, P3, P10, S1, C1]
+tags: [security]
+taxonomyName: STRIDE
+taxonomyClass: Spoofing
+description: >-
+  The authenticity and integrity guarantees of a [=verifiable credential=]
+  depend on the quality and protection of the private signing keys used to
+  secure it. A compromised private signing key lets an attacker forge
+  [=credentials=] that a [=P10|verify=] process reports as authentic. Poor key
+  management makes compromise more likely: reusing a private signing key for
+  more than one purpose, such as for both encryption and signing; keeping a key
+  in service for an over-long cryptoperiod; and using [=verification material=]
+  without first confirming its validity. This threat concerns how keys are
+  handled rather than whether the underlying algorithm is sound, which is
+  addressed by [[[#t5-cryptographic-suite-obsolescence]]].
+response:
+  - id: R1
+    name: Key Separation and Bounded Cryptoperiods
+    type: Reduce
+    description: >-
+      Operators follow established key-management guidance such as
+      [[NIST-SP-800-57-Part-1]]: a private signing key is used for a single
+      purpose and not, for example, for both signing and encryption, and private
+      signing keys and public verification keys are given limited cryptoperiods.
+      Bounding the cryptoperiod limits the window in which a compromised key can
+      be exploited.
+  - id: R2
+    name: Compromise Response and Material Validation
+    type: Reduce
+    description: >-
+      Operators put protective measures, harm-reduction steps, and revocation
+      procedures in place to deal with potential private key compromise, as
+      described in [[NIST-SP-800-57-Part-1]]. Before relying on any
+      [=verification material=], a [=P10|verify=] process confirms its validity.
