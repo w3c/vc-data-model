@@ -1,0 +1,47 @@
+id: T20
+name: Presentation Exchange Attacks (MITM, Replay, and Spoofing)
+elements: [E2, E3, P8, F3, P10, P12]
+tags: [security]
+taxonomyName: STRIDE
+taxonomyClass: Spoofing
+description: >-
+  The data model does not by itself prevent man-in-the-middle, replay, and
+  spoofing attacks on the [=F3|exchange of a presentation=]. In a
+  man-in-the-middle attack, a [=E3|verifier=] cannot be sure it is the intended
+  recipient of a [=verifiable presentation=] rather than the target of an
+  adversary relaying it. In a replay attack, the same [=verifiable
+  presentation=] is reused, for example when multiple individuals present the
+  same credential representing an event ticket, undermining the ticket's
+  purpose. In a spoofing attack, the [=E3|verifier=] has no built-in way to
+  confirm that the [=E2|holder=] presenting the [=claims=] is authorized to do
+  so. Both online and offline exchanges can be susceptible, and an unsecured
+  protocol is susceptible to all three.
+response:
+  - id: R1
+    name: Bind the Presentation to Its Audience
+    type: Reduce
+    description: >-
+      To counter man-in-the-middle attacks, [=E3|verifiers=] use a
+      [=securing mechanism=] that lets a [=verifiable presentation=] specify its
+      intended audience or domain, as [[[VC-DATA-INTEGRITY]]] does, so a
+      presentation relayed to an unintended recipient is not accepted.
+      Approaches that tie the request for a presentation to the response further
+      secure the protocol.
+  - id: R2
+    name: Enforce Freshness to Prevent Replay
+    type: Reduce
+    description: >-
+      To counter replay attacks, [=E3|verifiers=] require [=E2|holders=] to
+      include additional measures in a [=verifiable presentation=], such as a
+      challenge supplied by the verifier whose uniqueness the verifier enforces,
+      or a validity period that limits the window during which the presentation
+      is accepted.
+  - id: R3
+    name: Bind the Presentation to the Holder
+    type: Reduce
+    description: >-
+      To counter spoofing, implementers explore methods that establish the
+      [=E2|holder's=] authority to present the [=claims=], such as binding
+      [=verifiable credentials=] to strong authentication mechanisms or using
+      additional properties in [=verifiable presentations=] that enable proof of
+      control.
