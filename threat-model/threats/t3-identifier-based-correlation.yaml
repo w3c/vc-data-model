@@ -5,31 +5,32 @@ tags: [privacy]
 taxonomyName: STRIDE
 taxonomyClass: Information Disclosure
 description: >-
-  A [=verifiable credential=] can contain long-lived identifiers that are
-  used to correlate a [=subject=] across contexts. These include
+  A [=verifiable credential=] can contain long-lived identifiers that can
+  be used to correlate a [=subject=] across contexts. These include
   [=subject=] identifiers in <code>credentialSubject.id</code>, credential
   identifiers, email addresses, government-issued identifiers, and
   organization-issued identifiers. When a [=E2|holder=]
   [=P8|generates a presentation=] and [=F3|exchanges=] it, any such
-  identifier disclosed to a [=E3|verifier=] can be linked to identifiers
+  identifier that is disclosed to a [=E3|verifier=] can be linked to identifiers
   disclosed elsewhere. Two [=E3|verifiers=], or an [=E1|issuer=] and a
   [=E3|verifier=], can then collude to track the [=E2|holder=] across
   domains and build a profile. Whether this threat is present depends on
   deployment choices: which identifiers an [=E1|issuer=] places in a
-  credential, whether they can be selectively disclosed, and whether a
-  [=E2|holder=]'s software warns before sharing them.
+  credential; whether they can be selectively disclosed; and whether a
+  [=E2|holder=]'s software warns before sharing them; among other choices.
 response:
   - id: R1
-    name: Selectively Disclosable and Single-Use Identifiers
+    name: Selectively Disclosable and/or Single-Use Identifiers
     type: Reduce
     description: >-
-      Deployments requiring anti-correlation properties use identifiers that
+      Deployments requiring anti-correlation properties can use identifiers that
       are selectively disclosable, bound to a single origin, single-use, or
       replaced by short-lived single-use bearer tokens. [=Holders=] prefer
-      [=verifiable credentials=] from [=issuers=] that support selectively
-      disclosing correlating identifiers, and securing-mechanism authors
+      [=verifiable credentials=] from [=issuers=] that support selective
+      disclosure of correlating identifiers, and securing-mechanism authors
       avoid designs that require correlating identifiers that cannot be
-      selectively disclosed.
+      selectively disclosed or the use of verifiable credentials that do
+      not support selective disclosure.
   - id: R2
     name: Warn Holders Before Sharing Correlatable Identifiers
     type: Reduce
