@@ -1,0 +1,42 @@
+id: T25
+name: Identity Proofing Failure at Issuance
+elements: [E1, E2, P1, F1, P2, P3]
+tags: [security]
+taxonomyName: STRIDE
+taxonomyClass: Spoofing
+description: >-
+  Before issuing a [=verifiable credential=], an [=E1|issuer=] carries out a
+  [=P1|establish confidence=] process to gain confidence in the identity or
+  attributes of a [=subject=]. When that process fails, the [=E1|issuer=] can
+  identify the individual incorrectly and issue a credential to the wrong
+  person. An attacker who presents another person's information during
+  [=F1|establish confidence in subject=], or who otherwise defeats weak
+  proofing, receives an authentic credential that names the victim as its
+  [=subject=]. Because the credential is genuinely issued and correctly
+  secured, every downstream [=P10|verification=] succeeds, and the attacker can
+  use it to impersonate the victim, effectively enlisting the [=E1|issuer=] as
+  an unwitting participant in identity theft. The strength of the proofing
+  process is a choice the [=E1|issuer=] makes and is not something the data
+  model can enforce on its own.
+response:
+  - id: R1
+    name: Rigorous Identity Proofing
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] establish confidence in a [=subject=] using an
+      identity-proofing process whose rigor matches the risk of the
+      [=credential=] being issued, following an established framework such as
+      the Identity Assurance Levels (IAL) defined in [[NIST-SP-800-63A]]. Higher
+      assurance levels call for stronger evidence and verification of the
+      claimed identity, reducing the chance that a credential is issued to
+      someone other than the person it names.
+  - id: R2
+    name: Match Assurance Level to Credential Risk
+    type: Reduce
+    description: >-
+      [=E1|Issuers=] select the identity assurance level appropriate to how a
+      [=credential=] will be relied upon, and [=E3|verifiers=] take the
+      assurance level of the [=P1|establish confidence=] process into account
+      when they [=P12|validate=] a credential, rather than treating a successful
+      cryptographic [=P10|verification=] as evidence that the [=subject=] was
+      correctly identified at issuance.
