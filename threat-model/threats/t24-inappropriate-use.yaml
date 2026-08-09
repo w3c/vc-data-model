@@ -1,0 +1,26 @@
+id: T24
+name: Inappropriate or Out-of-Context Credential Use
+elements: [E3, P10, P12]
+tags: [security]
+taxonomyName: STRIDE
+taxonomyClass: Tampering
+description: >-
+  A valid cryptographic signature and a successful status check show that a
+  [=verifiable credential=] is authentic and unrevoked, but they do not show
+  that the credential is appropriate for the context in which it is being used.
+  A [=E3|verifier=] that treats verification as sufficient can accept a
+  credential whose source and nature do not fit the purpose at hand. For
+  example, a self-asserted [=credential=] carrying medical data can verify
+  correctly yet lack the authority required where a certified medical diagnosis
+  is needed. Not all [=credentials=] are interchangeable across contexts, and
+  relying on one outside its appropriate context is a validation failure.
+response:
+  - id: R1
+    name: Validate Fitness for Purpose
+    type: Reduce
+    description: >-
+      Beyond verifying a [=credential=], [=E3|verifiers=] [=P12|validate=] the
+      relevant [=claims=], weighing the source and nature of each [=claim=]
+      against the purpose for which the [=E2|holder=] presents the credential.
+      Verifiers assess whether the credential's authority is adequate for the
+      specific context of their intended application before relying on it.
