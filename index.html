@@ -375,10 +375,12 @@ validity period, or terms of use).
         </ul>
 
         <p>
-A [=verifiable credential=] can represent all the same information that a
-physical [=credential=] represents. Adding technologies such as
-digital signatures can make [=verifiable credentials=] more tamper-evident and
-trustworthy than their physical counterparts.
+A [=verifiable credential=] is a tamper-evident digital [=credential=] whose
+authorship can be cryptographically [=verified=]. Any information that a
+physical [=credential=] can represent can also be represented by a digital
+[=credential=], and so by a [=verifiable credential=]. Adding technologies
+such as digital signatures can make [=verifiable credentials=] more
+tamper-evident and trustworthy than their physical counterparts.
         </p>
 
         <p>
@@ -400,7 +402,11 @@ While this specification attempts to improve the ease of expressing digital
 privacy-preserving goals. The persistence of digital information, and the ease
 with which disparate sources of digital data can be collected and correlated,
 comprise a privacy concern that the use of [=verifiable=] and easily
-machine-readable [=credentials=] threatens to make worse. This document
+machine-readable [=credentials=] threatens to make worse. Additionally, while
+the security measures used by physical [=credentials=] (such as holograms or
+watermarks) are at least familiar to many people, the cryptographic mechanisms
+that secure digital [=credentials=] can be difficult for non-experts to
+understand or evaluate. This document
 outlines and attempts to address several of these issues in Section
 [[[#privacy-considerations]]]. Examples of how to use this data model
 using privacy-enhancing technologies, such as zero-knowledge proofs, are also
@@ -411,13 +417,14 @@ provided throughout this document.
 The word "verifiable" in the terms [=verifiable credential=] and
 [=verifiable presentation=] refers to the characteristic of a [=credential=]
 or [=presentation=] as being able to be [=verified=] by a [=verifier=],
-as defined in this document. Verifiability of a credential does not imply
-the truth of [=claims=] encoded therein. Instead, upon establishing the
-authenticity and currency of a [=verifiable credential=] or
-[=verifiable presentation=], a [=verifier=] validates the included [=claims=] using
-their own business rules before relying on them. Such reliance only occurs after
-evaluating the issuer, the proof, the subject, and the claims against one or
-more verifier policies.
+as defined in this document. [=Verification=] establishes only that a
+[=verifiable credential=] or [=verifiable presentation=] is an authentic and
+current statement of its [=issuer=] or presenter; it does not imply that the
+[=claims=] encoded inside it are true. Before relying on those [=claims=], a
+[=verifier=] separately performs [=validation=]: determining, according to
+its own policies, whether the [=issuer=] is trusted to make those [=claims=]
+and whether the [=claims=] are acceptable for the [=verifier's=] purpose.
+This process is described further in Appendix [[[#validation]]].
         </p>
       </section>
 
@@ -439,8 +446,10 @@ roles:
 A role an [=entity=] might perform by possessing one or more [=verifiable
 credentials=] and generating [=verifiable presentations=] from them. A holder is
 often, but not always, a [=subject=] of the [=verifiable credentials=] they are
-holding. Holders store their [=credentials=] in [=credential repositories=].
-Example holders include students, employees, and customers.
+holding. For example, the holder of a passport is usually the person the
+passport identifies. Holders store their [=credentials=] in
+[=credential repositories=]. Example holders include students, employees, and
+customers.
           </dd>
           <dt>[=issuer=]</dt>
           <dd>
@@ -458,20 +467,28 @@ animals, and things.
           <dt>[=verifier=]</dt>
           <dd>
 A role an [=entity=] performs by receiving one or more [=verifiable
-credentials=], optionally inside a [=verifiable presentation=] for processing.
-Example verifiers include employers, security personnel, and websites.
+credentials=], optionally inside a [=verifiable presentation=], and performing
+[=verification=] on them. Verification establishes the authenticity and
+currency of the [=credential=] or [=presentation=]. Determining whether the
+[=claims=] inside are true or acceptable is a separate process, called
+[=validation=], that a verifier performs according to its own policies (see
+Appendix [[[#validation]]]). Example verifiers include an employer checking an
+applicant's educational credentials, security personnel checking a
+government-issued identification credential, and a website checking that a
+visitor holds a membership credential issued by a particular organization.
           </dd>
           <dt>[=verifiable data registry=]</dt>
           <dd>
-A role a system might perform by mediating the creation and [=verification=] of
-identifiers, [=verification material=], and other relevant data, such as
-[=verifiable credential=] schemas, revocation registries, and so on, which might
-require using [=verifiable credentials=]. Some configurations might require
-correlatable identifiers for [=subjects=]. Some registries, such as ones for
-UUIDs and [=verification material=], might just act as namespaces for
-identifiers. Examples of verifiable data registries include trusted databases,
-decentralized databases, government ID databases, and distributed ledgers. Often,
-more than one type of verifiable data registry used in an ecosystem.
+A role a system, such as a database or distributed ledger, might perform by
+mediating the creation and [=verification=] of identifiers,
+[=verification material=], and other relevant data, such as
+[=verifiable credential=] schemas and revocation registries. Some
+configurations might require correlatable identifiers for [=subjects=]. Some
+registries, such as ones for UUIDs and [=verification material=], might just
+act as namespaces for identifiers. Examples of verifiable data registries
+include trusted databases, decentralized databases, government ID databases,
+and distributed ledgers. Often, more than one type of verifiable data registry
+is used in an ecosystem.
           </dd>
         </dl>
 
@@ -488,6 +505,15 @@ more than one type of verifiable data registry used in an ecosystem.
           </figcaption>
         </figure>
 
+        <p>
+As shown in [[[#roles]]], any of the roles can use a
+[=verifiable data registry=] to verify identifiers. For example, an [=issuer=]
+might verify that an identifier belongs to a particular [=entity=] by
+retrieving the [=verification material=] associated with the identifier from
+the registry and then challenging the [=entity=] to prove possession of the
+corresponding private cryptographic key.
+        </p>
+
         <p class="note" title="Other types of ecosystems exist">
 [[[#roles]]] above provides an example ecosystem to ground the
 rest of the concepts in this specification. Other ecosystems exist, such as
@@ -501,11 +527,23 @@ provider models. An identity provider, sometimes abbreviated as <em>IdP</em>,
 is a system for creating, maintaining, and managing identity information for
 [=holders=] while providing authentication services to [=relying party=]
 applications within a federation or distributed network. In a federated
-identity model, the [=holder=] is tightly bound to the identity provider.
-This specification avoids using "identity provider," "federated identity," or
+identity model, a [=holder's=] identity is tightly bound to the identity
+provider (but do note that a [=holder=] may have any number of identities,
+each with their own associated identifier and identity provider; these may
+be appropriate to support privacy, business vs. personal, and other concerns):
+
+each time a [=relying party=] needs information about an identified [=holder=],
+it obtains that information directly from the identity provider, which therefore
+participates in, and learns about, every such transaction. In contrast, this
+specification describes a three-party model that decouples the identity
+provider concept into two distinct concepts: the [=issuer=] and the
+[=holder=]. The [=issuer=] provides [=verifiable credentials=] to the
+[=holder=] in one interaction, and the [=holder=] later presents them to
+[=verifiers=] in separate interactions in which the [=issuer=] does not
+participate and of which the [=issuer=] need not even be aware. This
+specification avoids using "identity provider," "federated identity," or
 "relying party" terminology, except when comparing or mapping these concepts
-to other specifications. This specification decouples the identity provider
-concept into two distinct concepts: the [=issuer=] and the [=holder=].
+to other specifications.
         </p>
 
         <p class="note" title="Subjects are not always Holders">
@@ -717,10 +755,10 @@ verified. Verifiable credentials can be used to build
         </dd>
         <dt><dfn class="export" data-lt="verifiable data registries">verifiable data registry</dfn></dt>
         <dd>
-A role a system might perform by mediating the creation and [=verification=]
-of identifiers, [=verification material=], and other relevant data, such as
-[=verifiable credential=] schemas, revocation registries,
-and so on, which might require using [=verifiable credentials=]. Some
+A role a system, such as a database or distributed ledger, might perform by
+mediating the creation and [=verification=] of identifiers,
+[=verification material=], and other relevant data, such as
+[=verifiable credential=] schemas and revocation registries. Some
 configurations might require correlatable identifiers for [=subjects=]. Some
 registries, such as ones for UUIDs and [=verification material=], might act
 as namespaces for identifiers.
