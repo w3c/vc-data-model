@@ -1659,7 +1659,7 @@ serve these purposes.
           <dd>
 An OPTIONAL property that expresses the name of the [=credential=]. If
 present, the value of the `name` [=property=] MUST be a string or
-a language value object as described in
+a [=language value object=] as described in
 [[[#language-and-base-direction]]]. Ideally, the name of a
 [=credential=] is concise, human-readable, and could enable an individual to
 quickly differentiate one [=credential=] from any other [=credentials=]
@@ -1669,7 +1669,7 @@ they might hold.
           <dd>
 An OPTIONAL property that conveys specific details about a [=credential=]. If
 present, the value of the `description` [=property=] MUST be a
-string or a language value object as described in
+string or a [=language value object=] as described in
 [[[#language-and-base-direction]]]. Ideally, the description of a
 [=credential=] is no more than a few sentences in length and conveys enough
 information about the [=credential=] to remind an individual of its contents
@@ -6290,17 +6290,17 @@ document [[STRING-META]] that implementers might be interested in reading.
 
         <p>
 Data publishers are strongly encouraged to read the section on
-Cross-Syntax Expression in the <em>Strings on the Web: Language and Direction
-Metadata</em> document [[STRING-META]] to ensure that expressing
+Cross-Syntax Expression in [[[STRING-META]]] to ensure that expressing
 language and <dfn data-cite="i18n-glossary">base direction</dfn> information is
-possible across multiple expression syntaxes, such as [[JSON-LD11]], [[JSON]],
-and CBOR [[?RFC7049]].
+possible across multiple expression syntaxes, such as [[[JSON-LD11]]],
+[[[JSON]]], and [[[?RFC7049]]].
         </p>
 
         <p>
-The general design pattern is to use the following markup template when
-expressing a text string that is tagged with a language and, optionally, a
-specific base direction.
+A <dfn class="export">language value object</dfn> is a human-readable text
+string, its corresponding language, and, optionally, its text direction. The
+following template outlines the general pattern of expressing a [=language
+value object=] in a [=verifiable credential=]:
         </p>
 
         <pre class="example nohighlight" title="Design pattern for natural language strings">
@@ -6312,17 +6312,17 @@ specific base direction.
         </pre>
 
         <p>
-When the language value object is used in place of a string value, the object
-MUST contain a `@value` property whose value is a string, and SHOULD contain a
-`@language` property whose value is a string containing a well-formed
-`Language-Tag` as defined by [[BCP47]], and MAY contain a `@direction` property
-whose value is a [=base direction=] string defined by the `@direction`
-property in [[JSON-LD11]]. The language value object MUST NOT include any other
-keys beyond `@value`, `@language`, and `@direction`.
+When the [=language value object=] is used in place of a string value, the
+object MUST contain a `@value` property whose value is a string, and SHOULD
+contain a `@language` property whose value is a string containing a well-formed
+`Language-Tag` as defined by [[[BCP47]]], and MAY contain a `@direction`
+property whose value is a [=base direction=] string defined by the `@direction`
+property in [[[JSON-LD11]]]. The [=language value object=] MUST NOT include any
+other keys beyond `@value`, `@language`, and `@direction`.
         </p>
 
         <p>
-Using the design pattern above, the following example expresses the title of a
+Using the template above, the following example expresses the title of a
 book in the English language without specifying a text direction.
         </p>
 
@@ -6354,7 +6354,7 @@ use the first character of a text string to determine its [=base direction=].
         </p>
 
         <p>
-Multiple language value objects MAY be provided as an array value for the
+Multiple [=language value objects=] MAY be provided as an array value for the
 property:
         </p>
 
@@ -6412,9 +6412,9 @@ property:
 
         <p>
 The language and base direction of each natural language string property value
-SHOULD be provided, either via the language value structure for each property
+SHOULD be provided, either via the [=language value object=] for each property
 value, or via a default language and base direction for all values in the entire
-credential. Using the per-value language value structure is preferred, because
+credential. Using the per-value [=language value object=] is preferred, because
 using document defaults can result in a requirement that downstream processors
 perform JSON-LD expansion-based transformation which is otherwise optional. See
 the <a data-cite="JSON-LD11#string-internationalization">
