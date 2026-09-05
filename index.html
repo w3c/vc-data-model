@@ -384,7 +384,7 @@ physical [=credential=] can represent can also be represented by a digital
 [=credential=], and so by a [=verifiable credential=]. Using technologies
 such as digital signatures can make [=verifiable credentials=] more
 tamper-evident and trustworthy than their physical counterparts.
-With the use of [[[?VC-BARCODES]]], physical credentials can even 
+With the use of [[[?VC-BARCODES]]], physical credentials can even
 include [=verifiable credentials=], achieving these same benefits.
         </p>
 
@@ -3725,40 +3725,62 @@ shown below.
 {
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
-    "https://w3id.org/citizenship/v3"
+    "https://w3id.org/citizenship/v4rc1"
   ],
-  "type": ["VerifiableCredential", "PermanentResidentCard"],
+  "type": [
+    "VerifiableCredential",
+    "PermanentResidentCardCredential"
+  ],
   "issuer": {
-    "id": "did:web:credentials.utopia.example",
-    "image": "data:image/png;base64,iVBORw0KGgo...YII="
+    "id": "did:web:utopia.example",
+    "image": "data:image/png;base64,iVBORw0KGg...VORK5CYII="
   },
-  "identifier": "83627465",
   "name": "Permanent Resident Card",
   "description": "Government of Utopia Permanent Resident Card.",
-  "validFrom": "2024-08-01T00:00:00Z",
-  "validUntil": "2029-12-01T00:00:00Z",
   "credentialSubject": {
-    "type": ["PermanentResident", "Person"],
+    "type": [
+      "PermanentResident",
+      "Person"
+    ],
     "givenName": "JANE",
     "familyName": "SMITH",
     "gender": "Female",
-    "image": "data:image/png;base64,iVBORw0KGgoAA...Jggg==",
+    "image": "data:image/png;base64,iVBORw0KGgo...g==",
     "residentSince": "2015-01-01",
-    "lprCategory": "C09",
-    "lprNumber": "999-999-999",
     "commuterClassification": "C1",
     "birthCountry": "Arcadia",
-    "birthDate": "1978-07-17"
+    "birthDate": "1978-07-17",
+    "permanentResidentCard": {
+      "type": [
+        "PermanentResidentCard"
+      ],
+      "identifier": "83627465",
+      "lprCategory": "C09",
+      "lprNumber": "999-999-999"
+    }
   },
-  "proof": <span class="highlight">{
-    "type": "DataIntegrityProof",
-    "verificationMethod": "did:web:playground.alpha.chapi.io#zUC75LjjCLGKRxSissX1nAebRDmY4Bv4T6MAbzgaap9Q8rAGf6SEjc2Hf4nH6bUPDwky3GWoYcUjMCcEqRRQfXEiNwfeDwNYLoeqk1J1W2Ye8vCdwv4fSd8AZ1yS6UoNzcsQoPS",
-    "cryptosuite": "bbs-2023",
-    "proofPurpose": "assertionMethod",
-    "proofValue": "u2V0ChVhQjYs9O7wUb3KRSMaIRX7jmafVHYDPYBLD4ta85_qmuXTBU_t2Ir7pNujwRE6fERsBUEZRSjJjtI-hqOqDs3VvBvH6gd3o2KeUS2V_zpuphPpYQEkapOeQgRTak9lHKSTqEQqa4j2lyHqekEeGvzPlqcHQGFccGifvLUXtP59jCuGJ86HDA9HL5kDzUT6n4Gi50HlYYIzNqhbjIxlqOuxO2IgIppSTWjQGeer34-PmKnOzKX8m_9DHPhif7TUf5uTV4OQWdhb0SxHnJ-CPu_z9FJ5ACekBQhz6YWS0_CY6j_ibucXzeVfZwLv1W47pjbt-l1Vl5VggSn2xVt69Q0GD9mPKpOhkKV_hyOL7i6haf7bq-gOKAwWDZy9pc3N1ZXJtL2lzc3VhbmNlRGF0ZW8vZXhwaXJhdGlvbkRhdGU"
-  }</span>
+  "validFrom": "2026-09-05T00:00:00Z",
+  "validUntil": "2027-09-05T23:59:59Z",
+  "proof": [
+    {
+      "type": "DataIntegrityProof",
+      "created": "2026-09-05T17:21:31Z",
+      "verificationMethod": "did:web:utopia.example#zDnae...QGW8",
+      "cryptosuite": "ecdsa-rdfc-2019",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "z4fJttfr...kn9P"
+    },
+    {<span class="highlight">
+      "type": "DataIntegrityProof",
+      "verificationMethod": "did:web:utopia.example#zUC7EwMqo9vCjFmj7ArU2SivcbeccAY6hd4nw5fVD6xD4W2vm9eVy6VqVnciAZRmPLXnuxuka5JTJVmgz66CxDno6eqZmvUViCckCcKg8A4s1R4i2JjyzrdTQs5zrfY4jJCHFCp",
+      "cryptosuite": "bbs-2023",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "u2V0ChVhQiJsvokWSE4Cq999Bw9aluhWuToMG7qGNtAx5I2_LmNjRPCMcTLoiBc_HV8gjvgvSNnrFNK50Ubf1gIN8i8sHUWwUzqdDMevqlO8qVOWgki1YQM6iv5KVLQKPLTMEAHhSEWyz3z3hrSSQJTjO8vIFJgMWaLnxEOgYUkAwn3mL9Hhr-t6oc0OXaYjMBPYyPIQUnwdYYKipusluRJ7SzUrZmv4RxeebXFP1W0GGgnhEIBufF7eulvisZDSTSVWCkn1KMnStOgmhPPjOCIDvXVY2Xxbm61KFgc2pSZJwhV5kLxZV9igRbX8uzqgdbnLyerjY7DzJdVggryiDkfzraDE3VOas9Ls5wKk4oBfAtvO0QZikpLOL1VeBZy9pc3N1ZXI"
+     </span>
+    }
+  ]
 }
-        </pre>
+            </pre>
 
         <p>
 The example above is a [=verifiable credential=] where the [=issuer=] has
@@ -3770,34 +3792,45 @@ particular pieces of information from the original [=verifiable credential=].
         <pre class="example nohighlight"
              title="Verifiable presentation using the Data Integrity BBS Cryptosuite with a derived credential and proof">
 {
-  @context: "https://www.w3.org/ns/credentials/v2"
-  type: "VerifiablePresentation",
-  verifiableCredential: {
-    "@context": [
-      "https://www.w3.org/ns/credentials/v2",
-      "https://w3id.org/citizenship/v3"
-    ],
-    "type": ["VerifiableCredential", "PermanentResidentCard"],
-    "issuer": {
-      "id": "did:web:issuer.utopia.example",
-      "image": "data:image/png;base64,iVBORw0KGgo...YII="
-    },
-    "name": "Permanent Resident Card",
-    "description": "Government of Utopia Permanent Resident Card.",
-    "validFrom": "2024-08-01T00:00:00Z",
-    "validUntil": "2029-12-01T00:00:00Z",
-    "credentialSubject": {
-      "type": ["PermanentResident", "Person"],
-      "birthCountry": "Arcadia"
-    },
-    "proof": <span class="highlight">{
-      type: "DataIntegrityProof",
-      verificationMethod: "did:web:issuer.utopia.example#zUC75LjjCLGKRxSissX1nAebRDmY4Bv4T6MAbzgaap9Q8rAGf6SEjc2Hf4nH6bUPDwky3GWoYcUjMCcEqRRQfXEiNwfeDwNYLoeqk1J1W2Ye8vCdwv4fSd8AZ1yS6UoNzcsQoPS",
-      cryptosuite: "bbs-2023",
-      proofPurpose: "assertionMethod",
-      proofValue: "u2V0DhVkCkLdnshxHtgeHJBBUGPBqcEooPp9ahgqs08RsoqW5EJFmsi70jqf2X368VcmfdJdYcYJwObPIg5dlyaoBm34N9BqcZ4RlTZvgwX79ivGnqLALC0EqKn2wOj5hRO76xUakfLGIcT4mE-G7CxA1FTs8sRCWy5p6FozelBYiZU2YlhUpJ7pBwelZ9wnlcbj4q-KyxAj5GU2iWp7-FxU-E624DmdT-yvCkAGRRrYej6lMwg7jB9uCHypOXXH2dVZ-jpf74YBaE4rMTxPFh60GN4o3S65F1fMsJbEMLdrXa8Vs6ZSlmveUcY1X7oPr1UIxo17ehVTCjOxWunYqrtLi9cVkYOD2s9XMk1oFVWBB3UY29axXQQXlZVfvTIUsfVc667mnlYbF7a-ko_SUfeY2n3s1DOAap5keeNU0v2KVPCbxA2WGz7UJy4xJv2a8olMOWPKjAEUruCx_dsbyicd-9KGwhYoUEO3HoAzmtI6qXVhMbJKxPrhtcp8hOdD9izVS5ed4CxHNaDGPSopF_MBwjxwPcpUufNNNdQwesrbtFJo0-P-1CrX_jSxKFMle2b3t24UbHRbZw7QnX4OG-SSVucem5jpMXTDFZ8PLFCqXX0zncJ_MQ-_u-liE-MwJu3ZemsXBp1JoB2twS0TqDVzSWR7bpFZKI9_07fKUAmQNSV_no9iAgYRLuPrnnsW1gQgCV-nNqzbcCOpzkHdCqro6nPSATq5Od3Einfc683gm5VGWxIldM0aBPytOymNz7PIZ6wkgcMABMe5Vw46B54ftW-TN5YZPDmCJ_kt7Mturn0OeQr9KJCu7S0I-SN14mL9KtGE1XDnIeR-C_YZhSA3vX4923v1l3vNFsKasqy9iEPHKM0hcogABAQCGAAECBAUGhAMJCgtYUnsiY2hhbGxlbmdlIjoiNGd2OFJyaERPdi1OSHByYlZNQlM1IiwiZG9tYWluIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmFscGhhLmNoYXBpLmlvIn0"
-    }</span>
-  }
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "type": [
+    "VerifiablePresentation"
+  ],
+  "verifiableCredential": [
+    {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://w3id.org/citizenship/v4rc1"
+      ],
+      "type": [
+        "VerifiableCredential",
+        "PermanentResidentCardCredential"
+      ],
+      "issuer": {
+        "id": "did:web:vcplayground.org",
+        "image": "data:image/png;base64,iVBORw0KG...YII="
+      },
+      "credentialSubject": {
+        "type": [
+          "PermanentResident",
+          "Person"
+        ],
+        <span class="highlight">"birthCountry": "Arcadia"</span>
+      },
+      "proof": [
+        {<span class="highlight">
+          "type": "DataIntegrityProof",
+          "verificationMethod": "did:web:utopia.example#zUC7EwMqo9vCjFmj7ArU2SivcbeccAY6hd4nw5fVD6xD4W2vm9eVy6VqVnciAZRmPLXnuxuka5JTJVmgz66CxDno6eqZmvUViCckCcKg8A4s1R4i2JjyzrdTQs5zrfY4jJCHFCp",
+          "cryptosuite": "bbs-2023",
+          "proofPurpose": "assertionMethod",
+          "proofValue": "u2V0DhVkDEJOplpVKV9UBPos-YnSuy7u-_wuxUUcElOCVqJwekpfS8pDYv5mlIiADqJNm62CgfJMG1SeBV9Ri5DlmMAOaWayl51Aqc_fPn1V756d-P51JNwmlPQ9RmyYQPGfk3_8z0KF57H_seUFGZOYAtul85f9rypgN_emBvVApxUSMClqvNSgNVQ_sqVS1ICFkz9MIuTv6Ng6F8CNm0svtv1Tnkmjn6I4bgP0b46j57-lgiAP6Xb72RCnppHyfcuc6z9NB82BgIPCHzu2V3u8sWHyPS1JzVDLUiPVWUy6Oar0A4q9QLP4y92Q4JpJRx0Bl-x3cvCcBZp8ESDphMEDoMgEBqWVdWEZ_KQa2JrYuiWeHfK81WPNlJimOp4xl4CotHqx1NIinSB7jmrtcQ-0dIX_vz5wnYwhlP44rE7TgydrFE_16BYk0hkfKJw8sGCQNxqcUMHGh262ZOie2ASifU8OXd5TZOgTaUXRauwCrAPQZnQKnAQ8j8hBLgD_0Ujzt2Yk6dQueUv493jnmWJMnCbAy33MuRhHSqSxHVJBXOhhUX3s79HY0V-uLkGOZw_61HRpAi0W4spLv77ehUlwW5N35VFbs_THFXGA5AgY3Cg1vY-K5SyqpH5BlWhAcTRwoDKboqp0tOecM5qpZyuAORQ7fK2JddnEMHmvOKW7x_ugykAbQm6DeqhyGPtKxuiSulr-IHFK-KyGCXPAAKbk7X5Hkf29q7tOEGTIU4_9ga88PtiQKJTu7Ao8ABBEg9Gqt-KcfqfPgt8cqwxGtjW21sD3bSbtUiWNQO3ZDPelP9ToXbduEPpsNEYwxRbMtS5SF6YDqy16Bo8uyw41jnKvb-E5ABF-2MGjxB9zt8ZH_TJirGP_IMt0ssYrODZAlJbakLKiD5NH3g-xlvMTHxrD8VEzJakACnJIrm3X9J7MjUM_YTqth99oc2Yq2HLlgwYb1hD3T6jsIaY8zRPzA2ybKdXxZ3ahxyc_nbLDnP2fVNbUj8P9EX2Av_GvmnSYRsE5Wmcblhao6Ref1EF8YFF6JFT8SO2WiAAIBAIQABAUHhAABBxFYRXsiY2hhbGxlbmdlIjoiejFBREtDNVFBdW1Tb1Jud1NDSHRhUXBvQSIsImRvbWFpbiI6InZjcGxheWdyb3VuZC5vcmcifQ"
+          </span>
+        }
+      ]
+    }
+  ]
 }
         </pre>
 
