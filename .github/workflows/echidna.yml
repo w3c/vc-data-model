@@ -9,6 +9,16 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
+      - name: Generate static copy of the threat model
+        run: |
+          set -euo pipefail
+          npx --yes http-server -p 8000 -s . &
+          trap 'kill %1 2>/dev/null || true' EXIT
+          npx --yes wait-on -t 60000 http://127.0.0.1:8000/threat-model/index.html
+          npx --yes respec -s http://127.0.0.1:8000/threat-model/index.html \
+            -o threat-model/index.html --verbose -t 20
+          perl -pi -e 's/DNOTE-//g' threat-model/index.html
+          ! grep -q 'DNOTE-' threat-model/index.html
       - name: Publish as W3C Technical Report Snapshot
         uses: w3c/spec-prod@v2
         if: ${{ github.ref_name == 'main' }}
