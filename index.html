@@ -284,6 +284,7 @@ table.simple tbody tr:last-of-type {
     border-bottom: 2px solid #005a9c;
 }
     </style>
+    <link rel="stylesheet" href="threat-model/threats/threat-model.css" />
   </head>
   <body>
     <section id='abstract'>
@@ -430,7 +431,7 @@ the security measures used by physical [=credentials=] (such as holograms or
 watermarks) are at least familiar to many people, the cryptographic mechanisms
 that secure digital [=credentials=] can be difficult for non-experts to
 understand or evaluate. This document
-outlines several of these issues in Section [[[#privacy-considerations]]], and
+outlines several of these issues in [[[#privacy-considerations]]], and
 the <a href="./threat-model/index.html">Verifiable Credentials Data Model Threat
 Model</a> analyzes them in detail and describes responses to each of them.
 Examples of how to use this data model
@@ -4934,172 +4935,7 @@ in [[RFC9457]] for further guidance on using this mechanism.
 
     </section>
 
-    <section class="informative">
-      <h2>Privacy Considerations</h2>
 
-      <p>
-This section details the general privacy considerations and specific privacy
-implications of deploying the Verifiable Credentials Data Model into production
-environments.
-      </p>
-
-      <p>
-A detailed analysis of the privacy threats that arise in ecosystems built on
-this specification, together with responses to each of them, is provided in the
-<a href="./threat-model/index.html">Verifiable Credentials Data Model Threat
-Model</a>. Implementers are encouraged to read that document alongside this
-section.
-      </p>
-
-      <section class="informative">
-        <h3>Spectrum of Privacy</h3>
-
-        <p>
-It is important to recognize there is a spectrum of privacy ranging from
-pseudonymous to strongly identified. Depending on the use case, people have
-different comfort levels about the information they are willing to provide
-and the information that can be derived from it.
-        </p>
-
-        <figure>
-          <img style="margin: auto; display: block; width: 80%;"
-            src="diagrams/privacy-spectrum.svg" alt="Horizontal bar with
-            red on the left, orange in the middle, and green on the
-            right.  The red has the text 'Highly correlatable (global
-            IDs), for example, government ID, shipping address, credit card
-            number'.  The orange has the text 'Correlatable via collusion
-            (personally identifiable info), for example, name, birthday, zip
-            code'.  The green has the text 'Non-correlatable
-            (pseudonyms), for example, age over 21'.">
-          <figcaption style="text-align: center;">
-Privacy spectrum ranging from pseudonymous to fully identified.
-          </figcaption>
-        </figure>
-
-        <p>
-Privacy solutions are use case specific.
-For example, many people would prefer to remain anonymous when purchasing
-alcohol because the regulation is only to verify whether a purchaser is
-above a specific age. In contrast, when filling prescriptions written by
-a medical professional for a patient, the pharmacy is legally required
-to more strongly identify both the prescriber and the patient. No single
-approach to privacy works for all use cases.
-        </p>
-
-        <p class="note"
-           title="Proof of age might be insufficient for some use cases">
-Even those who want to remain anonymous when purchasing alcohol might need
-to provide photo identification to appropriately assure the merchant. The
-merchant might not need to know your name or any details other than that
-you are over a specific age, but in many cases, simple proof of age might
-be insufficient to meet regulations.
-        </p>
-
-        <p>
-The Verifiable Credentials Data Model strives to support the full privacy
-spectrum and does not take philosophical positions on the correct level of
-anonymity for any specific transaction. Implementers who want to avoid specific
-scenarios that are hostile to privacy are guided by the privacy threats and
-responses documented in the
-<a href="./threat-model/index.html">Verifiable Credentials Data Model Threat
-Model</a>.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Bearer Credentials</h3>
-
-        <p>
-A <dfn data-lt="bearer credentials">bearer credential</dfn> is a
-privacy-enhancing piece of information, such as a concert ticket, that entitles
-its [=holder=] to a specific resource without requiring the [=holder=] to
-divulge sensitive information. In low-risk scenarios, entities often use bearer
-credentials where multiple [=holders=] presenting the same [=verifiable credential=]
-is not a concern or would not result in large economic or reputational losses.
-        </p>
-
-        <p>
-[=Verifiable credentials=] that are [=bearer credentials=] are made
-possible by not specifying the [=subject=] identifier, expressed using the
-`id` [=property=], which is nested in the
-`credentialSubject` [=property=]. For example, the following
-[=verifiable credential=] is a [=bearer credential=]:
-        </p>
-
-        <pre class="example nohighlight vc"
-          title="Use of issuer properties"
-          data-vc-tabs="ecdsa-rdfc-2019 ecdsa-sd-2023 bbs-2023 jose sd-jwt cose"
-          data-vc-vm="https://university.example/issuers/14#keys-1">
-{
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2",
-    "https://www.w3.org/ns/credentials/examples/v2"
-  ],
-  "id": "http://university.example/credentials/temporary/28934792387492384",
-  "type": ["VerifiableCredential", "ExampleDegreeCredential"],
-  "issuer": "https://university.example/issuers/14",
-  "validFrom": "2017-10-22T12:23:48Z",
-  "credentialSubject": {
-    <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
-    "degree": {
-      "type": "ExampleBachelorDegree",
-      "name": "Bachelor of Science and Arts"
-    }
-  }
-}
-        </pre>
-
-        <p>
-While [=bearer credentials=] are privacy-enhancing, [=issuers=] still need to
-take care in their design to avoid unintentionally divulging more information
-than the [=holder=] of the [=bearer credential=] expects. The correlation
-risks that arise from the design and reuse of [=bearer credentials=], and the
-responses to them, are described in
-<a href="./threat-model/index.html#t11-bearer-credential-reuse-and-correlation">Bearer
-Credential Reuse and Correlation</a> in the Verifiable Credentials Data Model
-Threat Model.
-        </p>
-      </section>
-
-      <section class="informative">
-        <h3>Private Browsing</h3>
-
-        <p>
-In an ideal private browsing scenario, no PII will be revealed. Because many
-[=credentials=] include PII, organizations providing software to
-[=holders=] ought to warn them about the possibility of this information
-being revealed if they use [=credentials=] and [=presentations=] while in
-private browsing mode. As each browser vendor handles private browsing
-differently, and some browsers might not have this feature, it is
-important that implementers not depend on private browsing mode to provide
-any privacy protections. Instead, implementers are advised to rely on
-tooling that directly usable by their software to provide privacy guarantees.
-        </p>
-
-      </section>
-    </section>
-
-    <section class="informative">
-      <h2>Security Considerations</h2>
-
-      <p>
-[=Issuers=], [=holders=], and [=verifiers=] should be aware of a number of
-security considerations when processing data described by this specification.
-Ignoring or not understanding the implications of these considerations can
-result in security vulnerabilities.
-      </p>
-
-      <p>
-The security threats that arise in ecosystems built on this specification,
-together with responses to each of them, are analyzed in the
-<a href="./threat-model/index.html">Verifiable Credentials Data Model Threat
-Model</a>. That analysis is a partial list. Implementers of mission-critical
-systems using the technology described in this specification are strongly
-encouraged to consult security and cryptography professionals for comprehensive
-guidance.
-      </p>
-
-    </section>
 
     <section class="informative">
       <h2>Accessibility Considerations</h2>
@@ -5313,6 +5149,402 @@ associated with them SHOULD be treated as if the language value is `undefined`
 (language tag "`und`"). Natural language string values that do not have a base
 direction associated with them SHOULD be treated as if the direction value is
 "`auto`".
+        </p>
+      </section>
+
+    </section>
+
+    <section class="appendix informative" id="threat-model">
+      <h2>Threat Model</h2>
+
+      <p>
+This section details the general threat model for this specification, including
+security considerations and privacy considerations. The full analysis of each
+threat, together with the responses to it, is provided in the
+<a href="./threat-model/index.html">Verifiable Credentials Data Model Threat
+Model</a>. Implementers are expected to apply the advice given there to each
+specific feature provided by this specification.
+      </p>
+
+      <section>
+        <h3>Target Threats</h3>
+        <ol class="threat-toc">
+          <li value="1">
+            <a href="threat-model/index.html#t1-credential-content-tampering">
+Credential Content Tampering</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+An attacker with access to a [=verifiable credential=] after it is issued modifies its
+contents to alter the [=claims=] it expresses, or strips its securing mechanism in the
+hope that a downstream verification process consumes it without detecting that
+integrity protection is absent.
+          </li>
+          <li value="25">
+            <a href="threat-model/index.html#t25-identity-proofing-failure-at-issuance">
+Identity Proofing Failure at Issuance</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+An [=issuer's=] process for establishing confidence in a [=subject=] fails, so an attacker
+who presents another person's information receives an authentic [=credential=] naming the
+victim as its [=subject=], and every downstream verification succeeds.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Implementation Threats</h3>
+        <ol class="threat-toc">
+          <li value="2">
+            <a href="threat-model/index.html#t2-code-injection-via-credential-content">
+Code Injection via Credential Content</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+A [=verifiable credential=] carries values containing injectable code, such as markup in
+an <code>rdf:HTML</code> value, and a consumer that renders the content without adequate
+handling is made to execute it.
+          </li>
+          <li value="8">
+            <a href="threat-model/index.html#t8-signature-based-correlation">
+Signature-Based Correlation</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+The values that make up a [=securing mechanism=], such as a signature value, its timestamp,
+or a public key identifier, remain the same across sessions and domains, letting
+[=verifiers=] link [=presentations=] to the same [=holder=] even when no correlating
+identifier appears in the payload.
+          </li>
+          <li value="12">
+            <a href="threat-model/index.html#t12-correlation-via-status-and-revocation-lookup">
+Correlation via Status and Revocation Lookup</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+The act of checking a [=credential's=] status leaks that an interaction is taking place,
+letting an [=issuer=] learn everywhere a [=credential=] is presented and enabling
+[=issuers=] and [=verifiers=] to collude to correlate the [=holder=].
+          </li>
+          <li value="18">
+            <a href="threat-model/index.html#t18-signing-key-compromise-and-mismanagement">
+Signing Key Compromise and Mismanagement</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+A compromised private signing key lets an attacker forge [=credentials=] that verification
+reports as authentic; reusing a key for more than one purpose or keeping it in service for
+an over-long cryptoperiod makes compromise more likely.
+          </li>
+          <li value="19">
+            <a href="threat-model/index.html#t19-tampering-with-unprotected-external-resources">
+Tampering with Unprotected External Resources</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+Content linked from a [=verifiable credential=], such as an image, JSON-LD context, or JSON
+Schema, lives outside the protection of the [=securing mechanism=], so an attacker who
+modifies it introduces vulnerabilities even though verification still succeeds.
+          </li>
+          <li value="20">
+            <a href="threat-model/index.html#t20-presentation-exchange-attacks-mitm-replay-and-spoofing">
+Presentation Exchange Attacks (MITM, Replay, and Spoofing)</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+The data model does not by itself prevent man-in-the-middle, replay, and spoofing attacks
+on the exchange of a [=verifiable presentation=]: a [=verifier=] cannot be sure it is the
+intended recipient, that a [=presentation=] is not being reused, or that the [=holder=] is
+authorized to present the [=claims=].
+          </li>
+          <li value="24">
+            <a href="threat-model/index.html#t24-inappropriate-or-out-of-context-credential-use">
+Inappropriate or Out-of-Context Credential Use</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+A valid signature and a successful status check do not show that a [=credential=] is
+appropriate for the context in which it is used, so a [=verifier=] that treats verification
+as sufficient accepts a [=credential=] whose source and nature do not fit the purpose at hand.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Deployment Threats</h3>
+        <ol class="threat-toc">
+          <li value="3">
+            <a href="threat-model/index.html#t3-identifier-based-correlation">
+Identifier-Based Correlation</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+A [=verifiable credential=] contains long-lived identifiers, such as a [=subject=]
+identifier, email address, or government-issued identifier, that let two [=verifiers=], or
+an [=issuer=] and a [=verifier=], collude to track the [=holder=] across domains.
+          </li>
+          <li value="6">
+            <a href="threat-model/index.html#t6-untrustworthy-user-agent-software">
+Untrustworthy User-Agent Software</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+Software acting as an [=entity's=] user agent, above all a [=holder's=] digital wallet,
+operates against the user's interest by disclosing more than the [=holder=] authorized, or
+cannot act in the best interest of every party when it serves more than one role at once.
+          </li>
+          <li value="7">
+            <a href="threat-model/index.html#t7-excessive-data-disclosure">
+Excessive Data Disclosure</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+A [=verifiable credential=] carries more personally identifiable information than an
+interaction requires, or a [=verifier=] requests more than the minimum necessary, exposing
+the [=subject=] to disclosure every time the [=credential=] is used.
+          </li>
+          <li value="9">
+            <a href="threat-model/index.html#t9-metadata-based-correlation">
+Metadata-Based Correlation</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+The choice of extensions, [=credential=] types, and technology profiles acts as a
+correlating fingerprint when relatively few [=issuers=] use a specific combination,
+reducing the pseudonymity a [=holder=] expects.
+          </li>
+          <li value="11">
+            <a href="threat-model/index.html#t11-bearer-credential-reuse-and-correlation">
+Bearer Credential Reuse and Correlation</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+Repeated use of the same [=bearer credential=] across multiple sites lets those sites
+collude to track the [=holder=], and information that appears non-identifying on its own
+can statistically identify an individual.
+          </li>
+          <li value="14">
+            <a href="threat-model/index.html#t14-correlation-via-patterns-of-use">
+Correlation via Patterns of Use</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+Even when individual disclosures are minimized, the pattern in which [=verifiable
+credentials=] are presented leads to de-anonymization, whether through repeat presentation
+to one [=verifier=], collusion between several, or a [=subject=] identifier that is stable
+across [=presentations=].
+          </li>
+          <li value="15">
+            <a href="threat-model/index.html#t15-disclosure-to-a-malicious-or-deceptive-verifier">
+Disclosure to a Malicious or Deceptive Verifier</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+A [=verifier=] acts in bad faith and requests information that could harm the [=holder=],
+such as a bank account number that is then combined with other information to commit fraud.
+          </li>
+          <li value="16">
+            <a href="threat-model/index.html#t16-data-theft-and-credential-honeypots">
+Data Theft and Credential Honeypots</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+Storing [=verifiable credentials=] and [=verifiable presentations=] creates honeypots of
+sensitive data that attract attackers, with retention and protection choices across the
+ecosystem determining the scale of a theft.
+          </li>
+          <li value="17">
+            <a href="threat-model/index.html#t17-issuer-side-correlation-and-privacy-subversion">
+Issuer-Side Correlation and Privacy Subversion</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+Many privacy protections depend on the [=issuer=] not subverting them; an [=issuer=] that
+issues short-lived, automatically renewed [=credentials=], or mints a unique key per
+[=credential=], correlates the [=holder's=] behavior even when a [=verifier=] cannot.
+          </li>
+          <li value="21">
+            <a href="threat-model/index.html#t21-inappropriate-validity-periods">
+Inappropriate Validity Periods</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+A validity period that extends beyond the time highly dynamic information is intended to be
+used leaves a window in which stale information is relied upon, while too short a period
+burdens [=holders=] and [=verifiers=] with frequent reissuance.
+          </li>
+          <li value="22">
+            <a href="threat-model/index.html#t22-device-theft-and-impersonation">
+Device Theft and Impersonation</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+An attacker who gains possession of a lost or stolen device gains unauthorized access to
+systems that rely on the victim's [=verifiable credentials=], impersonating the [=holder=].
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>External Threats</h3>
+        <ol class="threat-toc">
+          <li value="4">
+            <a href="threat-model/index.html#t4-storage-provider-data-mining-and-compelled-disclosure">
+Storage Provider Data Mining and Compelled Disclosure</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+A third-party [=credential repository=] exposes stored [=verifiable credentials=] to its
+operator, which mines the personal data or is compelled to disclose it through legal process.
+          </li>
+          <li value="10">
+            <a href="threat-model/index.html#t10-device-tracking-and-fingerprinting">
+Device Tracking and Fingerprinting</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+Tracking mechanisms external to [=verifiable credentials=], such as address tracking,
+browser fingerprinting, and advertising trackers, combine with [=credential=] data to reveal
+new correlatable information, and fetching a linked external resource signals activity to
+the server hosting it.
+          </li>
+          <li value="13">
+            <a href="threat-model/index.html#t13-credential-and-data-aggregation">
+Credential and Data Aggregation</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+Holding two pieces of information about the same [=subject=] reveals more than the two
+considered separately, letting a [=verifier=] or colluding sites build a profile that grows
+as more information leaks over time.
+          </li>
+          <li value="23">
+            <a href="threat-model/index.html#t23-unauthorized-post-presentation-use-of-data">
+Unauthorized Post-Presentation Use of Data</a>
+            <span class="threat-tag threat-tag-privacy">privacy</span> &mdash;
+After a [=holder=] shares a [=verifiable presentation=] for a stated purpose, the
+[=verifier=] uses the data beyond what the [=holder=] consented to, and the data model
+provides no way for the [=holder=] to enforce authorized use after [=presentation=].
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Dependency Threats</h3>
+        <ol class="threat-toc">
+          <li value="5">
+            <a href="threat-model/index.html#t5-cryptographic-suite-obsolescence">
+Cryptographic Suite Obsolescence</a>
+            <span class="threat-tag threat-tag-security">security</span> &mdash;
+The cryptography suites and libraries securing [=verifiable credentials=] have a shelf life
+and eventually succumb to new attacks and advances in technology, after which an attacker
+forges or modifies a [=credential=] and verification still reports it as authentic.
+          </li>
+        </ol>
+      </section>
+
+      <section class="informative notoc" id="privacy-considerations">
+        <h3>Privacy Considerations</h3>
+
+        <p>
+This section details the general privacy considerations and specific privacy
+implications of deploying the Verifiable Credentials Data Model into production
+environments. The privacy threats summarized above are analyzed in full, together
+with the responses to each of them, in the
+<a href="./threat-model/index.html">Verifiable Credentials Data Model Threat
+Model</a>.
+        </p>
+
+        <section class="informative notoc">
+          <h4>Spectrum of Privacy</h4>
+
+          <p>
+  It is important to recognize there is a spectrum of privacy ranging from
+  pseudonymous to strongly identified. Depending on the use case, people have
+  different comfort levels about the information they are willing to provide
+  and the information that can be derived from it.
+          </p>
+
+          <figure>
+            <img style="margin: auto; display: block; width: 80%;"
+              src="diagrams/privacy-spectrum.svg" alt="Horizontal bar with
+              red on the left, orange in the middle, and green on the
+              right.  The red has the text 'Highly correlatable (global
+              IDs), for example, government ID, shipping address, credit card
+              number'.  The orange has the text 'Correlatable via collusion
+              (personally identifiable info), for example, name, birthday, zip
+              code'.  The green has the text 'Non-correlatable
+              (pseudonyms), for example, age over 21'.">
+            <figcaption style="text-align: center;">
+  Privacy spectrum ranging from pseudonymous to fully identified.
+            </figcaption>
+          </figure>
+
+          <p>
+  Privacy solutions are use case specific.
+  For example, many people would prefer to remain anonymous when purchasing
+  alcohol because the regulation is only to verify whether a purchaser is
+  above a specific age. In contrast, when filling prescriptions written by
+  a medical professional for a patient, the pharmacy is legally required
+  to more strongly identify both the prescriber and the patient. No single
+  approach to privacy works for all use cases.
+          </p>
+
+          <p class="note"
+             title="Proof of age might be insufficient for some use cases">
+  Even those who want to remain anonymous when purchasing alcohol might need
+  to provide photo identification to appropriately assure the merchant. The
+  merchant might not need to know your name or any details other than that
+  you are over a specific age, but in many cases, simple proof of age might
+  be insufficient to meet regulations.
+          </p>
+
+          <p>
+  The Verifiable Credentials Data Model strives to support the full privacy
+  spectrum and does not take philosophical positions on the correct level of
+  anonymity for any specific transaction. Implementers who want to avoid specific
+  scenarios that are hostile to privacy are guided by the privacy threats and
+  responses documented in the
+  <a href="./threat-model/index.html">Verifiable Credentials Data Model Threat
+  Model</a>.
+          </p>
+        </section>
+
+        <section class="informative notoc">
+          <h4>Bearer Credentials</h4>
+
+          <p>
+  A <dfn data-lt="bearer credentials">bearer credential</dfn> is a
+  privacy-enhancing piece of information, such as a concert ticket, that entitles
+  its [=holder=] to a specific resource without requiring the [=holder=] to
+  divulge sensitive information. In low-risk scenarios, entities often use bearer
+  credentials where multiple [=holders=] presenting the same [=verifiable credential=]
+  is not a concern or would not result in large economic or reputational losses.
+          </p>
+
+          <p>
+  [=Verifiable credentials=] that are [=bearer credentials=] are made
+  possible by not specifying the [=subject=] identifier, expressed using the
+  `id` [=property=], which is nested in the
+  `credentialSubject` [=property=]. For example, the following
+  [=verifiable credential=] is a [=bearer credential=]:
+          </p>
+
+          <pre class="example nohighlight vc"
+            title="Use of issuer properties"
+            data-vc-tabs="ecdsa-rdfc-2019 ecdsa-sd-2023 bbs-2023 jose sd-jwt cose"
+            data-vc-vm="https://university.example/issuers/14#keys-1">
+  {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://www.w3.org/ns/credentials/examples/v2"
+    ],
+    "id": "http://university.example/credentials/temporary/28934792387492384",
+    "type": ["VerifiableCredential", "ExampleDegreeCredential"],
+    "issuer": "https://university.example/issuers/14",
+    "validFrom": "2017-10-22T12:23:48Z",
+    "credentialSubject": {
+      <span class="comment">// note that the 'id' property is not specified for bearer credentials</span>
+      "degree": {
+        "type": "ExampleBachelorDegree",
+        "name": "Bachelor of Science and Arts"
+      }
+    }
+  }
+          </pre>
+
+          <p>
+  While [=bearer credentials=] are privacy-enhancing, [=issuers=] still need to
+  take care in their design to avoid unintentionally divulging more information
+  than the [=holder=] of the [=bearer credential=] expects. The correlation
+  risks that arise from the design and reuse of [=bearer credentials=], and the
+  responses to them, are described in
+  <a href="./threat-model/index.html#t11-bearer-credential-reuse-and-correlation">Bearer
+  Credential Reuse and Correlation</a> in the Verifiable Credentials Data Model
+  Threat Model.
+          </p>
+        </section>
+
+        <section class="informative notoc">
+          <h4>Private Browsing</h4>
+
+          <p>
+  In an ideal private browsing scenario, no PII will be revealed. Because many
+  [=credentials=] include PII, organizations providing software to
+  [=holders=] ought to warn them about the possibility of this information
+  being revealed if they use [=credentials=] and [=presentations=] while in
+  private browsing mode. As each browser vendor handles private browsing
+  differently, and some browsers might not have this feature, it is
+  important that implementers not depend on private browsing mode to provide
+  any privacy protections. Instead, implementers are advised to rely on
+  tooling that directly usable by their software to provide privacy guarantees.
+          </p>
+
+        </section>
+      </section>
+
+      <section class="informative notoc" id="security-considerations">
+        <h3>Security Considerations</h3>
+        <p>
+W3C is migrating to a holistic threat modelling approach and is in the process
+of deprecating the Security Considerations sections in new specifications.
+Please refer to Appendix [[[#threat-model]]] for documentation related to
+security considerations.
         </p>
       </section>
 
