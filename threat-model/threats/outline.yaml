@@ -2,32 +2,61 @@
 #
 # This file defines:
 #   - categories: the threat categories (from the W3C Threat Modeling
-#     Guide) and which threat IDs belong to each, in display order;
+#     Guide) and the threat definition files belonging to each, in display
+#     order, resolved relative to this file's directory;
 #   - elements:   display labels for the data flow diagram elements
-#     defined in the Dictionary section of index.html;
-#   - files:      the threat definition files to load, relative to this
-#     file's directory.
+#     defined in the Dictionary section of index.html.
+#
+# Threat IDs are not stored anywhere. Each threat is numbered T1, T2, ... by
+# its position when the categories below are walked in order, so reordering
+# the lists renumbers the model. Anchors are derived from each threat's name
+# rather than its number, so renumbering does not break inbound links.
 #
 # To add a threat: create a new YAML file following the pattern of the
-# Data Integrity threat model's threat files, add its filename to `files`,
-# and add its threat ID to the appropriate category below.
+# Data Integrity threat model's threat files, name it after the threat, and
+# add its filename to the appropriate category below.
 
 categories:
   - name: Target Threats
     id: threat-model-target-threats
-    threats: [T1, T25]
+    threats:
+      - credential-content-tampering.yaml
+      - identity-proofing-failure-at-issuance.yaml
   - name: Implementation Threats
     id: threat-model-implementation-threats
-    threats: [T2, T8, T12, T18, T19, T20, T24]
+    threats:
+      - code-injection-via-credential-content.yaml
+      - signature-based-correlation.yaml
+      - correlation-via-status-and-revocation-lookup.yaml
+      - signing-key-compromise-and-mismanagement.yaml
+      - tampering-with-unprotected-external-resources.yaml
+      - presentation-exchange-attacks-mitm-replay-and-spoofing.yaml
+      - inappropriate-or-out-of-context-credential-use.yaml
   - name: Deployment Threats
     id: threat-model-deployment-threats
-    threats: [T3, T6, T7, T9, T11, T14, T15, T16, T17, T21, T22]
+    threats:
+      - identifier-based-correlation.yaml
+      - untrustworthy-user-agent-software.yaml
+      - excessive-data-disclosure.yaml
+      - metadata-based-correlation.yaml
+      - bearer-credential-reuse-and-correlation.yaml
+      - correlation-via-patterns-of-use.yaml
+      - disclosure-to-a-malicious-or-deceptive-verifier.yaml
+      - data-theft-and-credential-honeypots.yaml
+      - issuer-side-correlation-and-privacy-subversion.yaml
+      - inappropriate-validity-periods.yaml
+      - device-theft-and-impersonation.yaml
   - name: External Threats
     id: threat-model-external-threats
-    threats: [T4, T10, T13, T23]
+    threats:
+      - storage-provider-data-mining-and-compelled-disclosure.yaml
+      - device-tracking-and-fingerprinting.yaml
+      - credential-and-data-aggregation.yaml
+      - unauthorized-post-presentation-use-of-data.yaml
   - name: Dependency Threats
     id: threat-model-dependency-threats
-    threats: [T5]
+    threats:
+      - cryptographic-suite-obsolescence.yaml
 
 elements:
   E1: "E1: Issuer"
@@ -54,30 +83,3 @@ elements:
   C1: "C1: Issuer System"
   C2: "C2: Holder System"
   C3: "C3: Verifier System"
-
-files:
-  - t1-credential-content-tampering.yaml
-  - t2-code-injection-via-credential-content.yaml
-  - t3-identifier-based-correlation.yaml
-  - t4-storage-provider-data-mining.yaml
-  - t5-cryptographic-suite-obsolescence.yaml
-  - t6-untrustworthy-user-agent-software.yaml
-  - t7-excessive-data-disclosure.yaml
-  - t8-signature-based-correlation.yaml
-  - t9-metadata-based-correlation.yaml
-  - t10-device-tracking-and-fingerprinting.yaml
-  - t11-bearer-credential-reuse.yaml
-  - t12-correlation-via-status-lookup.yaml
-  - t13-credential-aggregation.yaml
-  - t14-correlation-via-patterns-of-use.yaml
-  - t15-disclosure-to-malicious-verifier.yaml
-  - t16-data-theft.yaml
-  - t17-issuer-side-correlation.yaml
-  - t18-signing-key-compromise.yaml
-  - t19-unprotected-external-resources.yaml
-  - t20-presentation-exchange-attacks.yaml
-  - t21-inappropriate-validity-periods.yaml
-  - t22-device-theft-and-impersonation.yaml
-  - t23-unauthorized-post-presentation-use.yaml
-  - t24-inappropriate-use.yaml
-  - t25-identity-proofing-failure.yaml
