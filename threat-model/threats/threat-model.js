@@ -388,6 +388,87 @@ limitations under the License.
     return tagsHtml;
   }
 
+  // renderConsiderations(config, document)
+  // Fills in the Security and Privacy Considerations summaries in a document
+  // that embeds them, such as the Verifiable Credentials Data Model
+  // specification. Each summary is a placeholder element of the form
+  //
+  //   <section class="threat" data-threat="<threat-file-basename>"></section>
+  //
+  // which is replaced with the threat's name and its `summary` from the
+  // threat's YAML file, followed by a link into the threat model for the full
+  // analysis. Keeping the summaries in the YAML means a threat's name and
+  // summary are written once and stay consistent between the two documents.
+  //
+  // This is the entry point for the embedding document's ReSpec preProcess
+  // hook; the threat model's own document calls render() instead.
+  ///////////////////////////////////////////////////////////////////////
+  async function renderConsiderations(config, document) {
+    console.log("Starting renderConsiderations");
+
+    const placeholders =
+      Array.from(document.querySelectorAll("section.threat[data-threat]"));
+    if (!placeholders.length) {
+      console.warn("No threat placeholders found. Selector: " +
+        "section.threat[data-threat]");
+      return;
+    }
+
+    try {
+      await loadDefinitions(config);
+    } catch (error) {
+      console.error("Failed to load threat model definitions.", error);
+      for (const placeholder of placeholders) {
+        placeholder.innerHTML = `<p class="issue">Failed to load the threat
+          model definitions (${error.message}). If you are viewing this
+          document from a <code>file://</code> URL, serve the directory over
+          HTTP instead (for example, <code>npx http-server</code>) so that
+          the YAML files can be fetched.</p>`;
+      }
+      return;
+    }
+
+    for (const placeholder of placeholders) {
+      placeholder.innerHTML =
+        renderConsideration(placeholder.dataset.threat, config);
+    }
+  }
+
+  // renderConsideration(name, config)
+  // Renders one threat summary. `name` is the threat's filename in
+  // threats/outline.yaml, with or without the .yaml extension.
+  ///////////////////////////////////////////////////////////////////////
+  function renderConsideration(name, config) {
+    const file = name.endsWith(".yaml") ? name : `${name}.yaml`;
+    const threat = getThreat(file);
+
+    if (!threat) {
+      console.error(`No threat definition found for "${name}".`);
+      return `<p class="issue">No threat definition found for
+        <code>${name}</code>. Check that a threat file of that name is listed
+        in a category in <code>threats/outline.yaml</code>.</p>`;
+    }
+
+    if (!threat.summary) {
+      console.error(`Threat "${name}" has no summary.`);
+      return `<p class="issue">The threat definition in
+        <code>${file}</code> has no <code>summary</code> entry.</p>`;
+    }
+
+    const base = config.threatModelURI ||
+      "https://www.w3.org/TR/vc-data-model-threat-model/";
+
+    return `
+          <h4>${threat.name}</h4>
+          <p>
+${threat.summary}
+See
+<a href="${base}#${makeId(threat)}">${threat.name}</a>
+in the [[[VC-DATA-MODEL-THREAT-MODEL]]] for the full analysis of this threat and
+the responses to it.
+          </p>`;
+  }
+
   function register(threat) {
     console.log("register", threat);
 
@@ -422,6 +503,7 @@ limitations under the License.
 
   var ThreatModel = {
     render,
+    renderConsiderations,
     renderToc,
     renderThreats,
     register,
