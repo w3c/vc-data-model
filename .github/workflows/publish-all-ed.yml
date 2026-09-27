@@ -17,7 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  main:
+    name: Publish All Editor's Drafts
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -25,11 +26,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout/@v4
-      - name: Setup Node.js
+      - name: Setup node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Generate VC vocabularies
+      - name: Generate vocabularies
         run: |
           npm install
           ./node_modules/.bin/yml2vocab -v vocab/credentials/v2/vocabulary.yml -t vocab/credentials/v2/template.html
