@@ -1,0 +1,26 @@
+name: Publish W3C Threat Model Draft Note
+on:
+  push:
+    branches: [main]
+    paths: ['threat-model/**']
+  # Allows workflow to be triggered manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  main:
+    name: Publish W3C Note
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Publish as W3C Technical Report Snapshot
+        uses: w3c/spec-prod@v2
+        if: ${{ github.ref_name == 'main' }}
+        with:
+          TOOLCHAIN: respec
+          SOURCE: threat-model/
+          W3C_ECHIDNA_TOKEN: ${{ secrets.W3C_TR_TM_TOKEN }}
+          W3C_WG_DECISION_URL: https://w3c.github.io/vc-wg/minutes/2026-09-09.html#fd92
+          W3C_BUILD_OVERRIDE: |
+             shortName: vc-data-model-threat-model-2.1
+             specStatus: DNOTE
