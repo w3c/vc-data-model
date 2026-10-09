@@ -1,7 +1,8 @@
-name: Publish to Github Pages
+name: Publish to Vocabulary to Github Pages
 on:
   push:
     branches: [main]
+    paths: ['vocab/credentials/v2.1/**']
   # Allows workflow to be triggered manually from the Actions tab
   workflow_dispatch:
 
@@ -28,11 +29,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 25
       - name: Generate VC vocabularies
         run: |
           npm install
-          ./node_modules/.bin/yml2vocab -v vocab/credentials/v2/vocabulary.yml -t vocab/credentials/v2/template.html
+          ./node_modules/.bin/yml2vocab -c -v vocab/credentials/v2.1/vocabulary.yml -t vocab/credentials/v2.1/template.html
           rm -rf node_modules
       - name: Setup Github Pages
         uses: actions/configure-pages@v5
