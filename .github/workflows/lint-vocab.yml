@@ -2,21 +2,21 @@ name: Lint Vocabulary
 on:
   pull_request:
     paths:
-    - 'vocab/credentials/v2/vocabulary.yml'
-    - 'vocab/credentials/v2/template.html'
+    - 'vocab/credentials/v2.1/vocabulary.yml'
+    - 'vocab/credentials/v2.1/template.html'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Setup environment
-        uses: actions/checkout/@v3
+        uses: actions/checkout/@v4
       - name: Setup node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
-      - name: Lint vocabularies
+          node-version: 25
+      - name: Lint VC vocabularies
         run: |
           npm install yml2vocab
           npm update yml2vocab
-          ./node_modules/.bin/yml2vocab -v vocab/credentials/v2/vocabulary.yml -t vocab/credentials/v2/template.html
+          ./node_modules/.bin/yml2vocab -c -v vocab/credentials/v2.1/vocabulary.yml -t vocab/credentials/v2.1/template.html
