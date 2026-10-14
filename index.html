@@ -84,20 +84,6 @@
             status: 'FPWD',
             publisher: 'W3C Verifiable Credentials Working Group'
           },
-          'VC-CONFIDENCE': {
-            title: 'Verifiable Credentials Confidence Method v1.0',
-            href: 'https://www.w3.org/TR/vc-confidence-method/',
-            authors: ['Joe Andrieu', 'Denken Chen'],
-            status: 'FPWD',
-            publisher: 'W3C Verifiable Credentials Working Group'
-          },
-          'VC-RENDER': {
-            title: 'Verifiable Credentials Render Method v1.0',
-            href: 'https://www.w3.org/TR/vc-render-method/',
-            authors: ['Dmitri Zagidulin', 'Manu Sporny', 'Patrick St. Louis'],
-            status: 'FPWD',
-            publisher: 'W3C Verifiable Credentials Working Group'
-          },
           'PRES-EX': {
             title: 'Presentation Exchange 2.0.0',
             href: 'https://identity.foundation/presentation-exchange/spec/v2.0.0/',
@@ -4014,17 +4000,12 @@ on top of this specification.
 
         <p>
 This specification reserves a number of [=properties=] to serve as possible
-extension points. While some implementers signaled interest in these properties,
-their inclusion in this specification was considered to be premature. It is
-important to note that none of these properties are defined by this
-specification. Consequently, implementers are cautioned that use of these
-properties is considered experimental.
-        </p>
-        <p>
-Implementers MAY use these properties, but SHOULD expect them and/or
-their meanings to change during the process of normatively specifying them.
-Implementers SHOULD NOT use these properties without a publicly disclosed
-specification describing their implementation.
+extension points. None of these properties are defined by this specification.
+Each is defined by a separate specification, referenced in the table below,
+and implementers SHOULD consult these specifications for the meanings and
+requirements of these properties. Implementers are cautioned that use of these
+properties is considered experimental until each defining specification is
+finalized.
         </p>
 
         <p>
@@ -4038,7 +4019,7 @@ see Section [[[#types]]].
           <thead>
             <tr>
               <th>Reserved&nbsp;Property</th>
-              <th>Description</th>
+              <th>Defining Specification</th>
             </tr>
           </thead>
 
@@ -4046,22 +4027,15 @@ see Section [[[#types]]].
             <tr>
               <td>`confidenceMethod`</td>
               <td>
-A property used for specifying one or more methods that a verifier might use to
-increase their confidence that the value of a property in or of a verifiable
-credential or verifiable presentation is accurate. The associated vocabulary
-URL MUST be `https://www.w3.org/2018/credentials#confidenceMethod`. Implementers
-that are interested in learning more about confidence method, including examples
-of usage, can refer to the [[[?VC-CONFIDENCE-METHOD]]] specification.
+Defined by the [[[?VC-CONFIDENCE-METHOD]]] specification. The associated
+vocabulary URL is `https://www.w3.org/2018/credentials#confidenceMethod`.
               </td>
             </tr>
             <tr>
               <td>`renderMethod`</td>
               <td>
-A property used for specifying one or more methods to render a credential into a
-visual, auditory, haptic, or other format. The associated vocabulary URL MUST be
-`https://www.w3.org/2018/credentials#renderMethod`. Implementers that are
-interested in learning more about render method, including examples of usage, can
-refer to the [[[?VC-RENDER-METHOD]]] specification.
+Defined by the [[[?VC-RENDER-METHOD]]] specification. The associated
+vocabulary URL is `https://www.w3.org/2018/credentials#renderMethod`.
               </td>
             </tr>
           </tbody>
@@ -6344,6 +6318,10 @@ Align required error condition fields between Working Group specifications.
         </li>
         <li>
 Clarify requirements around self-asserted [=verifiable credentials=].
+        </li>
+        <li>
+Remove the inline definitions of the reserved `confidenceMethod` and
+`renderMethod` properties and refer to their defining specifications instead.
         </li>
       </ul>
 
