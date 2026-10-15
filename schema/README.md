@@ -7,7 +7,7 @@ Currently, this implementation makes use of **JSON Schema version 2020-12**:
 - [JSON Schema Validation](https://json-schema.org/draft/2020-12/json-schema-validation.html)
 - [Relative JSON Pointers](https://json-schema.org/draft/2020-12/relative-json-pointer.html)
 
-String properties that hold URLs (such as `id`, `issuer`, and `verificationMethod`) carry `"format": "uri"`, and `validFrom`, `validUntil`, and `created` carry `"format": "date-time"`. JSON Schema treats `format` as an annotation by default, so validators only enforce these when format assertion is enabled (the tests here use [ajv-formats](https://github.com/ajv-validator/ajv-formats)). The date-time properties also keep a `pattern` so the shape is enforced even without format assertion.
+String properties that hold URLs (such as `id`, `issuer`, and `verificationMethod`) carry `"format": "uri"`, and properties that hold date-times (such as `validFrom`, `validUntil`, and `created`) carry `"format": "date-time"`. By default, JSON Schema treats `format` as an annotation, so validators only enforce these when format assertion is enabled (the tests here use [ajv-formats](https://github.com/ajv-validator/ajv-formats)). The date-time properties also keep a `pattern`, so the shape is enforced even without format assertion.
 
 # Schemas
 
