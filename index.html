@@ -3293,6 +3293,26 @@ MUST compute the digest of the retrieved resource. If the digest provided by the
 [=conforming verifier implementation=] MUST produce an error.
         </p>
 
+        <p class="note" title="digestMultibase and digestSRI">
+Both properties express one or more cryptographic digests of a related resource,
+and a [=conforming verifier implementation=] checks either one by computing the
+digest of the retrieved resource and comparing it with the digests in the
+value. They differ in how the value is encoded and in which hash algorithms can
+be used. A `digestMultibase` value uses the Multibase and Multihash encodings
+that [[VC-DATA-INTEGRITY]] adopts from [[?CID]], in which a code in the decoded
+value identifies the hash algorithm. Hash algorithms other than those listed in
+[[?CID]] can be used, but without a guarantee of interoperability. A `digestSRI`
+value uses the form of an HTML `integrity` attribute value, in which a name in
+the value identifies the hash algorithm. Hash algorithms other than SHA-256,
+SHA-384, and SHA-512, the three that [[SRI-20160623]] requires user agents to
+support, can be used only after a future version of this specification adds
+them. With either property, the same digest can be written in more than one
+way: with a different Multibase header in `digestMultibase`, or, in `digestSRI`,
+with or without base64 padding or with a different letter case in the algorithm
+name. The comparison required above is therefore between decoded digests, not
+between strings.
+        </p>
+
         <p>
 Implementers are urged to consult appropriate sources, such as the
 <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf">
