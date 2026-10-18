@@ -3293,6 +3293,38 @@ MUST compute the digest of the retrieved resource. If the digest provided by the
 [=conforming verifier implementation=] MUST produce an error.
         </p>
 
+        <div class="note" title="digestMultibase and digestSRI">
+          <p>
+Both `digestMultibase` and `digestSRI` properties express one or more
+cryptographic digests of a related resource. A
+[=conforming verifier implementation=] can check either one by computing the
+relevant digest of the retrieved resource and comparing it with the digests in
+the associated property value. These properties differ in the ways their values
+are encoded and in the hash algorithms that can be used in each.
+          </p>
+          <p>
+A `digestMultibase` value uses the Multibase and Multihash encodings that
+[[[VC-DATA-INTEGRITY]]] [[VC-DATA-INTEGRITY]] adopts from [[[?CID]]] [[?CID]],
+where a code in the decoded value identifies the hash algorithm. Hash algorithms
+not listed in [[[?CID]]] [[?CID]] can be used, but this removes the guarantee of
+interoperability.
+          </p>
+          <p>
+A `digestSRI` value uses the form of an HTML `integrity` attribute value, in
+which a name in the value identifies the hash algorithm. [[[SRI-20160623]]]
+[[SRI-20160623]] requires user agents to support three hash algorithms —
+SHA-256, SHA-384, and SHA-512. Other hash algorithms can be used only after a
+future version of the Verifiable Credentials Data Model adds them.
+          </p>
+          <p>
+With either property, the same digest can be written in more than one way: for
+example, with different Multibase headers in `digestMultibase`; or with or
+without base64 padding, or with different letter casing in the algorithm name in
+`digestSRI`. The comparisons required above are therefore between decoded
+digests, not between strings.
+          </p>
+        </div>
+
         <p>
 Implementers are urged to consult appropriate sources, such as the
 <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf">
