@@ -3236,9 +3236,9 @@ IANA Media Types</a> registry.
                   <td>`digestSRI`</td>
                   <td>
 One or more cryptographic digests, as defined by the `hash-expression` ABNF
-grammar defined in the [[[SRI]]] specification,
-<a data-cite="SRI#the-integrity-attribute">Section 3.5: The `integrity`
-attribute</a>.
+grammar defined in the [[[SRI-20160623]]] specification [[SRI-20160623]],
+<a data-cite="SRI-20160623#the-integrity-attribute">Section 3.5: The `integrity`
+attribute</a>, with the restrictions defined below.
                   </td>
                 </tr>
                 <tr>
@@ -3291,6 +3291,42 @@ corresponding cryptographic digest appearing in a `relatedResource` object value
 MUST compute the digest of the retrieved resource. If the digest provided by the
 [=issuer=] does not match the digest computed for the retrieved resource, the
 [=conforming verifier implementation=] MUST produce an error.
+        </p>
+
+        <p>
+The value of a `digestSRI` property MUST be a string or a non-empty list of
+strings. Each such string MUST be an `integrity-metadata` value as defined by
+the ABNF grammar in
+<a data-cite="SRI-20160623#the-integrity-attribute">Section 3.5: The
+`integrity` attribute</a> of the [[[SRI-20160623]]] specification
+[[SRI-20160623]] that contains one or more `hash-with-options`, separated as
+that grammar allows. Each `hash-with-options` is a `hash-expression`, that is, a
+`hash-algo`, a `-` character, and a `base64-value`, optionally followed by one
+or more option expressions, each introduced by a `?` character. Each `hash-algo`
+MUST be an
+<a data-cite="INFRA#ascii-case-insensitive">ASCII case-insensitive</a> match
+for one of `sha256`, `sha384`, or `sha512`, identifying the SHA-256, SHA-384, or
+SHA-512 hash function, respectively, and SHOULD be expressed in lowercase. Each
+`base64-value` MUST be the base64 encoding, as defined in Section 4 of
+[[RFC4648]], of the digest of the resource computed with that hash function,
+with or without the trailing `=` padding; a `base64-value` whose unused trailing
+bits are not zero does not meet this requirement.
+        </p>
+
+        <p>
+When a [=conforming verifier implementation=] computes the digest of a retrieved
+resource for a `digestSRI` value, as required above, it MUST, for every
+`hash-expression` in the value, compute the digest named by its `hash-algo` over
+the bytes of the retrieved resource and compare it with the octets obtained by
+base64-decoding its `base64-value`. The [=conforming verifier implementation=]
+MUST match
+each `hash-algo` against the three values listed in the previous paragraph in an
+<a data-cite="INFRA#ascii-case-insensitive">ASCII case-insensitive</a> manner,
+consistent with the ABNF grammar of [[SRI-20160623]], MUST ignore option
+expressions, and MUST produce an error if the value does not meet the MUST-level
+requirements in the previous paragraph, or if any of the digests does not
+match. The `integrity` attribute processing, metadata-set selection, and fetch
+semantics of [[SRI-20160623]] do not apply to `digestSRI`.
         </p>
 
         <p>
@@ -5953,8 +5989,10 @@ the <a href="#terms-of-use">termsOfUse</a> property.
 
             <p>
 The `sriString` datatype is associated with a value to provide the integrity
-information for a resource using the method specified in the [[[SRI]]]
-specification. The `sriString` datatype is defined as follows:
+information for a resource using the `integrity` attribute syntax specified in
+the [[[SRI-20160623]]] specification [[SRI-20160623]], as restricted in Section
+[[[#integrity-of-related-resources]]]. The `sriString` datatype is defined as
+follows:
             </p>
 
             <dl>
@@ -5962,25 +6000,41 @@ specification. The `sriString` datatype is defined as follows:
               <dd>`https://www.w3.org/2018/credentials#sriString`</dd>
               <dt>The lexical space</dt>
               <dd>
-See the <a href="https://www.w3.org/TR/SRI/#the-integrity-attribute">ABNF
-grammar</a>, defining the `integrity` attribute in the [[SRI]] specification,
-for the restrictions on the string format.
+An `integrity-metadata` value, as defined by the
+<a data-cite="SRI-20160623#the-integrity-attribute">ABNF grammar</a> of the
+`integrity` attribute in the [[SRI-20160623]] specification, that contains one
+or more `hash-with-options`, in which every `hash-algo` is an
+<a data-cite="INFRA#ascii-case-insensitive">ASCII case-insensitive</a> match
+for one of `sha256`, `sha384`, or `sha512`, and in which every `base64-value` is
+a base64 encoding, as defined in Section 4 of [[RFC4648]], with or without the
+trailing `=` padding and with unused trailing bits set to zero, of exactly as
+many octets as the hash function identified by its `hash-algo` produces. See
+Section [[[#integrity-of-related-resources]]] for the other requirements.
               </dd>
               <dt>The value space</dt>
               <dd>
-A (possibly empty) list of <i>(alg,val)</i> pairs, where <i>alg</i> identifies a
-hash function, and <i>val</i> is an integer as a standard mathematical concept.
+A non-empty list of <i>(alg,val)</i> pairs, where <i>alg</i> is one of the
+SHA-256, SHA-384, or SHA-512 hash functions, and <i>val</i> is a non-negative
+integer less than 2<sup><i>n</i></sup>, where <i>n</i> is the output length of
+<i>alg</i> in bits.
               </dd>
               <dt>The lexical-to-value mapping</dt>
               <dd>
-Any element of the lexical space is mapped to the value space by following the
-<a href="https://www.w3.org/TR/SRI/#parse-metadata">parse metadata algorithm</a>
-based on the <a href="https://www.w3.org/TR/SRI/#the-integrity-attribute">ABNF
-grammar</a> in the [[SRI]] specification.
+Any element of the lexical space is mapped to the list that has, for each
+`hash-expression` in it, in order, the <i>(alg,val)</i> pair where <i>alg</i> is
+the hash function identified by its `hash-algo`, and <i>val</i> is the integer
+whose unsigned big-endian representation is the octet sequence obtained by
+base64-decoding its `base64-value`. Option expressions do not contribute to the
+value.
               </dd>
               <dt>The canonical mapping</dt>
               <dd>
-The canonical mapping consists of the lexical-to-value mapping.
+A value is mapped to the string that contains, for each <i>(alg,val)</i> pair in
+order, the name of <i>alg</i> in lowercase (`sha256`, `sha384`, or `sha512`), a
+`-` character, and the base64 encoding with padding, as defined in Section 4 of
+[[RFC4648]], of the unsigned big-endian representation of <i>val</i> in as many
+octets as <i>alg</i> produces, with the pairs separated by single space
+characters.
               </dd>
             </dl>
         </section>
