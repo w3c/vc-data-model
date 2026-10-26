@@ -3288,7 +3288,10 @@ SHOULD NOT be included as an object in the `relatedResource` array.
 A [=conforming verifier implementation=] that makes use of a resource based on
 the `id` of a `relatedResource` object inside a [=conforming document=] with a
 corresponding cryptographic digest appearing in a `relatedResource` object value
-MUST compute the digest of the retrieved resource. If the digest provided by the
+MUST compute the digest of the retrieved resource. The digest is computed over
+the representation data of the retrieved resource, after every content coding
+listed in its `Content-Encoding` header field has been removed
+([[?RFC9110]] Section 8.4). If the digest provided by the
 [=issuer=] does not match the digest computed for the retrieved resource, the
 [=conforming verifier implementation=] MUST produce an error.
         </p>
