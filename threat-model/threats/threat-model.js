@@ -381,8 +381,10 @@ limitations under the License.
     if (!tags || !tags.length)
       return '';
 
+    // a multi-word tag such as "market competition" is hyphenated for the
+    // class name; a space there would read as two separate classes
     let tagsHtml = tags.map(tag => `
-          <span class="threat-tag threat-tag-${tag}">${tag}</span>
+          <span class="threat-tag threat-tag-${tag.replace(/\s+/g, "-")}">${tag}</span>
         `).join("");
 
     return tagsHtml;
@@ -455,8 +457,14 @@ limitations under the License.
         <code>${file}</code> has no <code>summary</code> entry.</p>`;
     }
 
-    const base = config.threatModelURI ||
+    // The threat model this document summarizes is named by the embedding
+    // document: threatModelUrl is the base the per-threat links resolve
+    // against, and threatModelReference is the ReSpec reference whose title
+    // is rendered in the sentence pointing at it.
+    const base = config.threatModelUrl ||
       "https://www.w3.org/TR/vc-data-model-threat-model/";
+    const reference = config.threatModelReference ||
+      "VC-DATA-MODEL-THREAT-MODEL";
 
     return `
           <h4>${threat.name}</h4>
@@ -464,7 +472,7 @@ limitations under the License.
 ${threat.summary}
 See
 <a href="${base}#${makeId(threat)}">${threat.name}</a>
-in the [[[VC-DATA-MODEL-THREAT-MODEL]]] for the full analysis of this threat and
+in the [[[${reference}]]] for the full analysis of this threat and
 the responses to it.
           </p>`;
   }
